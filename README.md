@@ -1,2 +1,2 @@
-# CTF machines attempted
-Material from CTFs I attempted. Spoilers beware.
+# CTF machines repo
+Repo containing material from my CTF attempts. Beware spoilers.
