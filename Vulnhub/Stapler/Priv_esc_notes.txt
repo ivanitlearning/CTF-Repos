@@ -1,0 +1,79 @@
+Stapler enum
+
+[-] It looks like we have some admin users:
+uid=104(syslog) gid=108(syslog) groups=108(syslog),4(adm)
+uid=1000(peter) gid=1000(peter) groups=1000(peter),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),110(lxd),113(lpadmin),114(sambashare)		# Peter is admin
+
+[-] Files not owned by user but writable by group:  # Looks interesting
+-rwxrwxrwx 1 www www 0 Jun  3  2016 /etc/authbind/byport/80
+-rwxrwxrwx 1 root root 51 Jun  3  2016 /usr/local/sbin/cron-logrotate.sh
+
+[-] Files owned by our user:
+-rw------- 1 www-data mail 65780 Nov 12 00:35 /var/mail/www-data		#Review user mail
+
+### SERVICES #############################################
+[-] Running processes: # Interesting processes. PHP lines not seen in Tiki Wiki VM
+root      1774  0.0  0.2   5724  2880 ?        S    Nov13   0:00 /bin/bash /root/python.sh
+root      1776  0.0  0.2   5724  2644 ?        S    Nov13   0:00 /bin/bash /usr/local/src/nc.sh
+root      1778  0.0  0.3   6476  3192 ?        S    Nov13   0:00 su -c authbind php -S 0.0.0.0:80 -t /home/www/ &>/dev/null www
+root      1784  0.0  0.1   4748  1440 tty1     Ss+  Nov13   0:00 /sbin/agetty --noclear tty1 linux
+root      1791  0.0  0.3   6476  3172 ?        S    Nov13   0:00 su -c cd /home/JKanode; python2 -m SimpleHTTPServer 8888 &>/dev/null JKanode
+root      1792  0.0  0.0   2688   712 ?        S    Nov13   0:00 nc -nlvp 666
+JKanode   1809  0.0  0.2   5440  2688 ?        Ss   Nov13   0:00 bash -c cd /home/JKanode; python2 -m SimpleHTTPServer 8888 &>/dev/null
+www       1810  0.0  0.0   5436   684 ?        Ss   Nov13   0:00 bash -c authbind php -S 0.0.0.0:80 -t /home/www/ &>/dev/null
+www       1811  0.0  2.3 125856 24216 ?        S    Nov13   0:00 php -S 0.0.0.0:80 -t /home/www/
+JKanode   1812  0.0  0.9  14432  9684 ?        S    Nov13   0:00 python2 -m SimpleHTTPServer 8888
+
+Note how the WP php files are non-writable
+
+[-] Can we read/write sensitive files: # /etc/group is writable in root group, but can't see how to exploit.
+-rw-r--r-- 1 root root 2908 Jun  4  2016 /etc/passwd
+-rw-rw-r-- 1 root root 1253 Jun  4  2016 /etc/group
+-rw-r--r-- 1 root root 575 Oct 22  2015 /etc/profile
+-rw-r----- 1 root shadow 4518 Jun  5  2016 /etc/shadow
+
+[-] SUID files:
+-rwsr-xr-x 1 root root 9760 Jul 26  2015 /usr/lib/authbind/helper
+
+[-] SGID files:
+-r-xr-sr-x 1 root postdrop 17716 Apr 13  2016 /usr/sbin/postqueue
+-r-xr-sr-x 1 root postdrop 13636 Apr 13  2016 /usr/sbin/postdrop
+
+[-] World-writable files (excluding /proc and /sys):
+-rwxrwxrwx 1 www www 0 Jun  3  2016 /etc/authbind/byport/80
+-rwxrwxrwx 1 root root 51 Jun  3  2016 /usr/local/sbin/cron-logrotate.sh
+
+[-] Location and contents (if accessible) of .bash_history file(s):
+/home/JKanode/.bash_history
+id
+whoami
+ls -lah
+pwd
+ps aux
+sshpass -p thisimypassword ssh JKanode@localhost	#What is sshpass?
+apt-get install sshpass
+sshpass -p JZQuyIN5 peter@localhost
+ps -ef
+top
+kill -9 3747
+exit
+
+[-] Any interesting mail in /var/mail:
+total 84
+drwxrwsr-x  2 root     mail  4096 Nov 14 00:25 .
+drwxr-xr-x 16 root     root  4096 Jun  6  2016 ..
+-rw-r--r--  1 root     mail  1297 Nov 14 00:25 root
+-rw-------  1 www-data mail 65780 Nov 12 00:35 www-data
+
+
+[+] We can read /var/mail/root! (snippet below)
+
+From www-data@red.localdomain  Thu Nov 14 00:25:03 2019
+Return-Path: <www-data@red.localdomain>
+X-Original-To: root
+Delivered-To: root@red.localdomain
+Received: by red.localdomain (Postfix, from userid 33)
+	id 984AC25D8; Thu, 14 Nov 2019 00:25:03 +0000 (GMT)
+To: root@red.localdomain
+From: www-data@red.localdomain
+Auto-Submitted: auto-generated
