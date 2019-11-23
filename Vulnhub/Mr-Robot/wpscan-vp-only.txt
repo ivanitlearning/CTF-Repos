@@ -1,0 +1,422 @@
+root@Kali:~/Vulnhub/Mr-Robot/WIP# wpscan --verbose --enumerate vp --plugins-detection aggressive --url http://192.168.92.133
+_______________________________________________________________
+        __          _______   _____
+        \ \        / /  __ \ / ____|
+         \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+          \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+           \  /\  /  | |     ____) | (__| (_| | | | |
+            \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+        WordPress Security Scanner by the WPScan Team
+                       Version 3.5.4
+          Sponsored by Sucuri - https://sucuri.net
+      @_WPScan_, @ethicalhack3r, @erwan_lr, @_FireFart_
+_______________________________________________________________
+
+[+] URL: http://192.168.92.133/
+[+] Started: Sun Nov 17 19:39:52 2019
+
+Interesting Finding(s):
+
+[+] http://192.168.92.133/
+ | Interesting Entries:
+ |  - Server: Apache
+ |  - X-Mod-Pagespeed: 1.9.32.3-4523
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] http://192.168.92.133/robots.txt
+ | Found By: Robots Txt (Aggressive Detection)
+ | Confidence: 100%
+
+[+] http://192.168.92.133/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access
+
+[+] http://192.168.92.133/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] http://192.168.92.133/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 4.3.21 identified (Latest, released on 2019-10-14).
+ | Detected By: Rss Generator (Aggressive Detection)
+ |  - http://192.168.92.133/feed/, &lt;generator&gt;https://wordpress.org/?v=4.3.21&lt;/generator&gt;
+ |  - http://192.168.92.133/comments/feed/, &lt;generator&gt;https://wordpress.org/?v=4.3.21&lt;/generator&gt;
+
+[i] The main theme could not be detected.
+
+[+] Enumerating Vulnerable Plugins (via Aggressive Methods)
+ Checking Known Locations - Time: 00:00:57 &lt;====================================================================&gt; (2141 / 2141) 100.00% Time: 00:00:57
+[+] Checking Plugin Versions (via Passive and Aggressive Methods)
+
+[i] Plugin(s) Identified:
+
+[+] akismet
+ | Location: http://192.168.92.133/wp-content/plugins/akismet/
+ | Latest Version: 4.1.3
+ | Last Updated: 2019-11-13T20:46:00.000Z
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 1 vulnerability identified:
+ |
+ | [!] Title: Akismet 2.5.0-3.1.4 - Unauthenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 3.1.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8215
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9357
+ |      - http://blog.akismet.com/2015/10/13/akismet-3-1-5-wordpress/
+ |      - https://blog.sucuri.net/2015/10/security-advisory-stored-xss-in-akismet-wordpress-plugin.html
+ |
+ | The version could not be determined.
+
+[+] all-in-one-seo-pack
+ | Location: http://192.168.92.133/wp-content/plugins/all-in-one-seo-pack/
+ | Last Updated: 2019-10-17T15:07:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/all-in-one-seo-pack/readme.txt
+ | [!] The version is out of date, the latest version is 3.2.10
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 8 vulnerabilities identified:
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.1.5 - aioseop_functions.php new_meta Parameter XSS
+ |     Fixed in: 2.1.6
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/6888
+ |      - https://blog.sucuri.net/2014/05/vulnerability-found-in-the-all-in-one-seo-pack-wordpress-plugin.html
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.1.5 - Unspecified Privilege Escalation
+ |     Fixed in: 2.1.6
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/6889
+ |      - https://blog.sucuri.net/2014/05/vulnerability-found-in-the-all-in-one-seo-pack-wordpress-plugin.html
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.2.5.1 - Information Disclosure
+ |     Fixed in: 2.2.6
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7881
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-0902
+ |      - http://jvn.jp/en/jp/JVN75615300/index.html
+ |      - http://semperfiwebdesign.com/blog/all-in-one-seo-pack/all-in-one-seo-pack-release-history/
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.2.6.1 - Cross-Site Scripting (XSS)
+ |     Fixed in: 2.2.6.2
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7916
+ |      - https://blog.sucuri.net/2015/04/security-advisory-xss-vulnerability-affecting-multiple-wordpress-plugins.html
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.3.6.1 - Unauthenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 2.3.7
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8538
+ |      - https://seclists.org/fulldisclosure/2016/Jul/23
+ |      - https://semperfiwebdesign.com/blog/all-in-one-seo-pack/all-in-one-seo-pack-release-history/
+ |      - https://sumofpwn.nl/advisory/2016/persistent_cross_site_scripting_in_all_in_one_seo_pack_wordpress_plugin.html
+ |      - https://wptavern.com/all-in-one-seo-2-3-7-patches-persistent-xss-vulnerability
+ |      - https://www.wordfence.com/blog/2016/07/xss-vulnerability-all-in-one-seo-pack-plugin/
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.3.7 -  Unauthenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 2.3.8
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8558
+ |      - https://www.wordfence.com/blog/2016/07/new-xss-vulnerability-all-in-one-seo-pack/
+ |      - https://semperfiwebdesign.com/blog/all-in-one-seo-pack/all-in-one-seo-pack-release-history/
+ |
+ | [!] Title: All in One SEO Pack &lt;= 2.9.1.1 - Authenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 2.10
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9159
+ |      - https://www.ripstech.com/php-security-calendar-2018/#day-4
+ |      - https://wordpress.org/support/topic/a-critical-vulnerability-has-been-detected-in-this-plugin/
+ |      - https://semperfiwebdesign.com/all-in-one-seo-pack-release-history/
+ |
+ | [!] Title: All In One SEO Pack &lt; 3.2.7 - Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 3.2.7
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9915
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16520
+ |      - https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-04_WordPress_Plugin_All_in_One_SEO_Pack
+ |
+ | Version: 2.0.4 (50% confidence)
+ | Detected By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/all-in-one-seo-pack/readme.txt
+
+[+] all-in-one-wp-migration
+ | Location: http://192.168.92.133/wp-content/plugins/all-in-one-wp-migration/
+ | Last Updated: 2019-10-01T12:30:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/all-in-one-wp-migration/readme.txt
+ | [!] The version is out of date, the latest version is 7.8
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 3 vulnerabilities identified:
+ |
+ | [!] Title: All-in-One WP Migration &lt;= 2.0.4 - Unauthenticated Database Export
+ |     Fixed in: 2.0.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7857
+ |      - http://www.pritect.net/blog/all-in-one-wp-migration-2-0-4-security-vulnerability
+ |      - https://www.rapid7.com/db/modules/auxiliary/gather/wp_all_in_one_migration_export
+ |
+ | [!] Title: All-in-One WP Migration &lt;= 6.45 - Reflected Cross-Site Scripting (XSS)
+ |     Fixed in: 6.46
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8851
+ |      - https://wordpress.org/plugins/all-in-one-wp-migration/#developers
+ |
+ | [!] Title: All-in-One WP Migration &lt;= 6.97 - Authenticated Cross-Site Scripting (XSS)
+ |     Fixed in: 7.0
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9461
+ |      - https://plugins.trac.wordpress.org/changeset/2124441
+ |      - https://wptavern.com/all-in-one-wp-migration-7-0-patches-xss-vulnerability
+ |
+ | Version: 2.0.4 (100% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/all-in-one-wp-migration/readme.txt
+ | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/all-in-one-wp-migration/readme.txt
+
+[+] contact-form-7
+ | Location: http://192.168.92.133/wp-content/plugins/contact-form-7/
+ | Last Updated: 2019-08-04T16:33:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/contact-form-7/readme.txt
+ | [!] The version is out of date, the latest version is 5.1.4
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 1 vulnerability identified:
+ |
+ | [!] Title: Contact Form 7 &lt;= 5.0.3 - register_post_type() Privilege Escalation
+ |     Fixed in: 5.0.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9127
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-20979
+ |      - https://contactform7.com/2018/09/04/contact-form-7-504/
+ |      - https://plugins.trac.wordpress.org/changeset/1935726/contact-form-7
+ |      - https://plugins.trac.wordpress.org/changeset/1934594/contact-form-7
+ |      - https://plugins.trac.wordpress.org/changeset/1934343/contact-form-7
+ |      - https://plugins.trac.wordpress.org/changeset/1934327/contact-form-7
+ |      - https://www.ripstech.com/php-security-calendar-2018/#day-18
+ |
+ | Version: 4.1 (100% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/contact-form-7/readme.txt
+ | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/contact-form-7/readme.txt
+
+[+] google-analytics-for-wordpress
+ | Location: http://192.168.92.133/wp-content/plugins/google-analytics-for-wordpress/
+ | Last Updated: 2019-10-02T15:47:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/google-analytics-for-wordpress/readme.txt
+ | [!] The version is out of date, the latest version is 7.9.0
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 5 vulnerabilities identified:
+ |
+ | [!] Title: Google Analytics by Yoast &lt;= 5.3.2 - Cross-Site Scripting (XSS)
+ |     Fixed in: 5.3.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7838
+ |      - https://packetstormsecurity.com/files/130716/
+ |
+ | [!] Title: Google Analytics by Yoast &lt;= 5.3.2 - Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 5.3.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7856
+ |      - https://yoast.com/ga-plugin-security-update-more/
+ |      - http://klikki.fi/adv/yoast_analytics.html
+ |      - https://packetstormsecurity.com/files/130935/
+ |
+ | [!] Title: Google Analytics by Yoast &lt;= 5.3.3 - Unauthenticated Cross-Site Scripting (XSS)
+ |     Fixed in: 5.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7914
+ |      - https://yoast.com/coordinated-security-release/
+ |      - https://blog.sucuri.net/2015/04/security-advisory-xss-vulnerability-affecting-multiple-wordpress-plugins.html
+ |      - http://klikki.fi/adv/yoast_analytics2.html
+ |
+ | [!] Title: Google Analytics by Yoast &lt;= 5.4.4 - Authenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 5.4.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8147
+ |      - https://security.dxw.com/advisories/xss-in-google-analytics-by-yoast-premium-by-privileged-users/
+ |
+ | [!] Title: Google Analytics by Monster Insights &lt;= 7.1.0 - Authenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 7.2.0
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9157
+ |      - https://www.ripstech.com/php-security-calendar-2018/
+ |
+ | Version: 5.3.2 (100% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/google-analytics-for-wordpress/readme.txt
+ | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/google-analytics-for-wordpress/readme.txt
+
+[+] google-sitemap-generator
+ | Location: http://192.168.92.133/wp-content/plugins/google-sitemap-generator/
+ | Last Updated: 2019-11-13T21:21:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/google-sitemap-generator/readme.txt
+ | [!] The version is out of date, the latest version is 4.1.0
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 2 vulnerabilities identified:
+ |
+ | [!] Title: Google XML Sitemaps &lt;= 4.0.8 - Authenticated Reflected XSS (via HOST header)
+ |     Fixed in: 4.0.9
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8762
+ |      - https://plugins.trac.wordpress.org/browser/google-sitemap-generator/trunk/sitemap-ui.php#L1310
+ |
+ | [!] Title: Google XML Sitemaps &lt;= 4.0.9 - Authenticated Cross-Site Scripting (XSS)
+ |     Fixed in: 4.1.0
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9189
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-16204
+ |      - http://jvn.jp/en/jp/JVN27052429/index.html
+ |
+ | Version: 4.0.7.1 (80% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/google-sitemap-generator/readme.txt
+
+[+] jetpack
+ | Location: http://192.168.92.133/wp-content/plugins/jetpack/
+ | Last Updated: 2019-10-01T13:09:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/jetpack/readme.txt
+ | [!] The version is out of date, the latest version is 7.8
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 8 vulnerabilities identified:
+ |
+ | [!] Title: Jetpack 3.0-3.4.2 - Cross-Site Scripting (XSS)
+ |     Fixed in: 3.4.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7915
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9359
+ |      - https://blog.sucuri.net/2015/04/security-advisory-xss-vulnerability-affecting-multiple-wordpress-plugins.html
+ |      - https://jetpack.me/2015/04/20/jetpack-3-4-3-coordinated-security-update/
+ |
+ | [!] Title: Jetpack &lt;= 3.5.2 - Unauthenticated DOM Cross-Site Scripting (XSS)
+ |     Fixed in: 3.5.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7964
+ |      - https://blog.sucuri.net/2015/05/jetpack-and-twentyfifteen-vulnerable-to-dom-based-xss-millions-of-wordpress-websites-affected-millions-of-wordpress-websites-affected.html
+ |
+ | [!] Title: Jetpack &lt;= 3.7.0 - Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 3.7.1
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8201
+ |      - https://jetpack.me/2015/09/30/jetpack-3-7-1-and-3-7-2-security-and-maintenance-releases/
+ |      - https://blog.sucuri.net/2015/10/security-advisory-stored-xss-in-jetpack.html
+ |
+ | [!] Title: Jetpack &lt;= 3.7.0 - Information Disclosure
+ |     Fixed in: 3.7.1
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8202
+ |      - https://jetpack.me/2015/09/30/jetpack-3-7-1-and-3-7-2-security-and-maintenance-releases/
+ |
+ | [!] Title: Jetpack &lt;= 3.9.1 - LaTeX HTML Element XSS
+ |     Fixed in: 3.9.2
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8472
+ |      - https://jetpack.com/2016/02/25/jetpack-3-9-2-maintenance-and-security-release/
+ |      - https://github.com/Automattic/jetpack/commit/dbc33b9105c4dbb0de81544e682a8b6d5ab7e446
+ |
+ | [!] Title: Jetpack 2.0-4.0.2 - Shortcode Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 4.0.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8500
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-10706
+ |      - https://jetpack.com/2016/05/27/jetpack-4-0-3-critical-security-update/
+ |      - http://wptavern.com/jetpack-4-0-3-patches-a-critical-xss-vulnerability
+ |      - https://blog.sucuri.net/2016/05/security-advisory-stored-xss-jetpack-2.html
+ |
+ | [!] Title: Jetpack &lt;= 4.0.3 - Multiple Vulnerabilities
+ |     Fixed in: 4.0.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/8517
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-10705
+ |      - https://jetpack.com/2016/06/20/jetpack-4-0-4-bug-fixes/
+ |
+ | [!] Title: Jetpack &lt;= 6.4.2 - Authenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 6.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9168
+ |      - https://www.ripstech.com/php-security-calendar-2018/#day-11
+ |
+ | Version: 3.3.2 (100% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/jetpack/readme.txt
+ | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/jetpack/readme.txt
+
+[+] wp-mail-smtp
+ | Location: http://192.168.92.133/wp-content/plugins/wp-mail-smtp/
+ | Last Updated: 2019-09-02T14:28:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/wp-mail-smtp/readme.txt
+ | [!] The version is out of date, the latest version is 1.6.2
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 1 vulnerability identified:
+ |
+ | [!] Title: WP Mail SMTP by WPForms &lt;= 1.3.3 - Authenticated Stored Cross-Site Scripting (XSS)
+ |     Fixed in: 1.4.0
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9158
+ |      - https://www.ripstech.com/php-security-calendar-2018/
+ |      - https://plugins.trac.wordpress.org/changeset/1982773/wp-mail-smtp
+ |
+ | Version: 0.9.5 (100% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/wp-mail-smtp/readme.txt
+ | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/wp-mail-smtp/readme.txt
+
+[+] wptouch
+ | Location: http://192.168.92.133/wp-content/plugins/wptouch/
+ | Last Updated: 2019-04-13T17:33:00.000Z
+ | Readme: http://192.168.92.133/wp-content/plugins/wptouch/readme.txt
+ | [!] The version is out of date, the latest version is 4.3.37
+ |
+ | Detected By: Known Locations (Aggressive Detection)
+ |
+ | [!] 1 vulnerability identified:
+ |
+ | [!] Title: WPtouch Mobile Plugin &lt;= 3.7.5.3 - Cross-Site Scripting (XSS)
+ |     Fixed in: 3.7.6
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/7920
+ |      - https://blog.sucuri.net/2015/04/security-advisory-xss-vulnerability-affecting-multiple-wordpress-plugins.html
+ |
+ | Version: 3.7.3 (100% confidence)
+ | Detected By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/wptouch/readme.txt
+ | Confirmed By: Translation File (Aggressive Detection)
+ |  - http://192.168.92.133/wp-content/plugins/wptouch/lang/wptouch.pot, Match: 'oject-Id-Version: WPtouch Mobile Plugin 3.7.3'
+
+
+[+] Finished: Sun Nov 17 19:40:52 2019
+[+] Requests Done: 2212
+[+] Cached Requests: 27
+[+] Data Sent: 473.528 KB
+[+] Data Received: 1022.043 KB
+[+] Memory used: 215.719 MB
+[+] Elapsed time: 00:01:00

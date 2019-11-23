@@ -1,0 +1,1767 @@
+root@Kali:~/Vulnhub/Mr-Robot# nmap -Pn -n -sV -p 80,443 --script=vuln,discovery 192.168.92.133
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-11-17 16:03 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:f5:97:ba
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::860:29a0:cd21:f477: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff21:f477         (NDP Solicited-node)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ff4b:3f9c         (Solicited-Node Address)
+|       ff02::c                   (SSDP)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|   fe80::20c:29ff:feb3:a1bd: 
+|     device: eth0
+|     mac: 00:0c:29:b3:a1:bd
+|     multicast_ips: 
+|       ff02::1:ff0c:26b0         (Solicited-Node Address)
+|       ff02::1:ff0c:26b0         (Solicited-Node Address)
+|       ff02::1:ff0c:26b0         (Solicited-Node Address)
+|_      ff02::1:ff0c:26b0         (Solicited-Node Address)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-echo: 
+|   IP: fe80::20c:29ff:feb3:a1bd  MAC: 00:0c:29:b3:a1:bd  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::20c:29ff:feb3:a1bd  MAC: 00:0c:29:b3:a1:bd  IFACE: eth0
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::860:29a0:cd21:f477   MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::7920:7d5e:aa4b:3f9c  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::20c:29ff:feb3:a1bd   MAC: 00:0c:29:b3:a1:bd  IFACE: eth0
+|   IP: fe80::e4bb:84e8:ff0c:26b0  MAC: 00:0c:29:b3:a1:bd  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.92.133
+Host is up (0.00038s latency).
+
+PORT    STATE SERVICE  VERSION
+80/tcp  open  http     Apache httpd
+|_http-apache-negotiation: mod_negotiation enabled.
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.133
+|   url                                    method
+|_  http://192.168.92.133:80/wp-login.php  FORM
+|_http-backup-finder: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 273.18ms; min: 206.40ms; max: 421.69ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.133
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 86
+|     Comment: 
+|         <!-- .widget-area -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1174
+|     Comment: 
+|         /* must have higher specificity than alternative color schemes inline styles */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 726
+|     Comment: 
+|         /* Stop screen readers to read the text as capital letters */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 640
+|     Comment: 
+|         /**
+|          * 6.1 Links
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 656
+|     Comment: 
+|         /**
+|          * 6.2 Menus
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 409
+|     Comment: 
+|         /* Prevents HTML tables from becoming too wide */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 201
+|     Comment: 
+|         /**
+|          * 3.0 Typography
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2385
+|     Comment: 
+|         /**
+|          * 13.0 Footer
+|          */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 123
+|     Comment: 
+|         <!-- .site-info -->
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 64
+|     Comment: 
+|         <!-- .site-header -->
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 100
+|     Comment: 
+|         <!-- .page-header -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2667
+|     Comment: 
+|         /**
+|          * 16.0 Media Queries
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2478
+|     Comment: 
+|         /**
+|          * 14.1 Captions
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2671
+|     Comment: 
+|         /*
+|          * Does the same thing as <meta name="viewport" content="width=device-width">,
+|          * but in the future W3C standard way. -ms- prefix is required for IE10+ to
+|          * render responsive styling in Windows 8 "snapped" views; IE10+ does not honor
+|          * the meta tag. See https://core.trac.wordpress.org/ticket/25888.
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5938
+|     Comment: 
+|         /* Make sure sticky sidebar doesn't affect to print */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 90
+|     Comment: 
+|         <!-- .sidebar -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5849
+|     Comment: 
+|         /**
+|          * 17.0 Print
+|          */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 36
+|     Comment: 
+|         <!--[if lt IE 9]>
+|         <link rel='stylesheet' id='twentyfifteen-ie-css'  href='http://192.168.92.133/wp-content/themes/twentyfifteen/css/ie.css?ver=20141010' type='text/css' media='all' />
+|         <![endif]-->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 4052
+|     Comment: 
+|         /**
+|          * 16.4 Desktop Small 955px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 18
+|     Comment: 
+|         /**
+|          * Table of Contents
+|          *
+|          * 1.0 - Reset
+|          * 2.0 - Genericons
+|          * 3.0 - Typography
+|          * 4.0 - Elements
+|          * 5.0 - Forms
+|          * 6.0 - Navigations
+|          *   6.1 - Links
+|          *   6.2 - Menus
+|          * 7.0 - Accessibility
+|          * 8.0 - Alignments
+|          * 9.0 - Clearings
+|          * 10.0 - Header
+|          * 11.0 - Widgets
+|          * 12.0 - Content
+|          *    12.1 - Posts and pages
+|          *    12.2 - Post Formats
+|          *    12.3 - Comments
+|          * 13.0 - Footer
+|          * 14.0 - Media
+|          *    14.1 - Captions
+|          *    14.2 - Galleries
+|          * 15.0 - Multisite
+|          * 16.0 - Media Queries
+|          *    16.1 - Mobile Large
+|          *    16.2 - Tablet Small
+|          *    16.3 - Tablet Large
+|          *    16.4 - Desktop Small
+|          *    16.5 - Desktop Medium
+|          *    16.6 - Desktop Large
+|          *    16.7 - Desktop X-Large
+|          * 17.0 - Print
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1545
+|     Comment: 
+|         /**
+|          * 12.0 Content
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1160
+|     Comment: 
+|         /**
+|          * 7.0 Accessibility
+|          */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 114
+|     Comment: 
+|         <!-- .site-main -->
+|     
+|     Path: http://192.168.92.133:80/
+|     Line number: 3
+|     Comment: 
+|          //~~\ |   |    /\  |~~\|~~  |\  | /~~\~~|~~    /\  |  /~~\ |\  ||~~
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 111
+|     Comment: 
+|         <!-- .page-content -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 502
+|     Comment: 
+|         /* Removing the inner shadow on iOS inputs */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2574
+|     Comment: 
+|         /**
+|          * 15.0 Multisite
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5297
+|     Comment: 
+|         /**
+|          * 16.6 Desktop Large 1240px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 473
+|     Comment: 
+|         /**
+|          * 5.0 Forms
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-includes/js/jquery/jquery.js?ver=1.11.3
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1204
+|     Comment: 
+|         /**
+|          * 8.0 Alignments
+|          */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 118
+|     Comment: 
+|         <!-- .site-content -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1327
+|     Comment: 
+|         /**
+|          * 11.0 Widgets
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2685
+|     Comment: 
+|         /**
+|          * 16.1 Mobile Large 620px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 55
+|     Comment: 
+|         /**
+|          * 1.0 - Reset
+|          *
+|          * Resetting and rebuilding styles have been helped along thanks to the fine
+|          * work of Eric Meyer, Nicolas Gallagher, Jonathan Neal, and Blueprint.
+|          */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 126
+|     Comment: 
+|         <!-- .site -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1251
+|     Comment: 
+|         /**
+|          * 9.0 Clearings
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1164
+|     Comment: 
+|         /* Text meant only for screen readers */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5884
+|     Comment: 
+|         /* Make sure color schemes dont't affect to print */
+|     
+|     Path: http://192.168.92.133:80/wp-login.php
+|     Line number: 5
+|     Comment: 
+|         <!--[if !(IE 8) ]><!-->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1
+|     Comment: 
+|         /*
+|         Theme Name: Twenty Fifteen
+|         Theme URI: https://wordpress.org/themes/twentyfifteen/
+|         Author: the WordPress team
+|         Author URI: https://wordpress.org/
+|         Description: Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer.
+|         Version: 1.3
+|         License: GNU General Public License v2 or later
+|         License URI: http://www.gnu.org/licenses/gpl-2.0.html
+|         Tags: black, blue, gray, pink, purple, white, yellow, dark, light, two-columns, left-sidebar, fixed-layout, responsive-layout, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+|         Text Domain: twentyfifteen
+|         
+|         This theme, like WordPress, is licensed under the GPL.
+|         Use it to make something cool, have fun, and share what you've learned with others.
+|         */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 124
+|     Comment: 
+|         <!-- .site-footer -->
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 112
+|     Comment: 
+|         <!-- .error-404 -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5911
+|     Comment: 
+|         /* Make sure color schemes don't affect to print */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 88
+|     Comment: 
+|         <!-- .secondary -->
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 8
+|     Comment: 
+|         <!--[if lt IE 9]>
+|         	<script src="http://192.168.92.133/wp-content/themes/twentyfifteen/js/html5.js"></script>
+|         	<![endif]-->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1017
+|     Comment: 
+|         /* reset screen-reader-text */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 449
+|     Comment: 
+|         /* Placeholder text color -- selectors need to be separate to work. */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2096
+|     Comment: 
+|         /**
+|          * 12.2 Post Formats
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-login.php
+|     Line number: 7
+|     Comment: 
+|         <!--<![endif]-->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2879
+|     Comment: 
+|         /**
+|          * 16.2 Tablet Small 740px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery Migrate v1.2.1 | (c) 2005, 2013 jQuery Foundation, Inc. and other contributors | jquery.org/license */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5855
+|     Comment: 
+|         /* Brute force since user agents all print differently. */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5837
+|     Comment: 
+|         /**
+|          * 16.7 Desktop X-Large 1403px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 4759
+|     Comment: 
+|         /**
+|          * 16.5 Desktop Medium 1100px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2503
+|     Comment: 
+|         /**
+|          * 14.2 Galleries
+|          */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 115
+|     Comment: 
+|         <!-- .content-area -->
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 63
+|     Comment: 
+|         <!-- .site-branding -->
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 132
+|     Comment: 
+|         /* ]]> */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 39
+|     Comment: 
+|         <!--[if lt IE 8]>
+|         <link rel='stylesheet' id='twentyfifteen-ie7-css'  href='http://192.168.92.133/wp-content/themes/twentyfifteen/css/ie7.css?ver=20141010' type='text/css' media='all' />
+|         <![endif]-->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 464
+|     Comment: 
+|         /* Since FF19 lowers the opacity of the placeholder by default */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 4068
+|     Comment: 
+|         /* Fixes flashing bug with scrolling on Safari */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1572
+|     Comment: 
+|         /**
+|          * 12.1 Posts and pages
+|          */
+|     
+|     Path: http://192.168.92.133:80/
+|     Line number: 19
+|     Comment: 
+|         <!--[if lt IE 9]>
+|               <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+|             
+|         
+|             <!-- Google Plus confirmation -->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 3504
+|     Comment: 
+|         /**
+|          * 16.3 Tablet Large 880px
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 157
+|     Comment: 
+|         /**
+|          * 2.0 - Genericons
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-login.php
+|     Line number: 2
+|     Comment: 
+|         <!--[if IE 8]>
+|         		<html xmlns="http://www.w3.org/1999/xhtml" class="ie8" lang="en-US">
+|         	<![endif]-->
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2130
+|     Comment: 
+|         /**
+|          * 12.3 Comments
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 635
+|     Comment: 
+|         /**
+|          * 6.0 Navigations
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2841
+|     Comment: 
+|         /* restore screen-reader-text */
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Line number: 130
+|     Comment: 
+|         /* <![CDATA[ */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2413
+|     Comment: 
+|         /**
+|          * 14.0 Media
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 355
+|     Comment: 
+|         /**
+|          * 4.0 Elements
+|          */
+|     
+|     Path: http://192.168.92.133:80/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1290
+|     Comment: 
+|         /**
+|          * 10.0 Header
+|          */
+|     
+|     Path: http://192.168.92.133:80/
+|     Line number: 2
+|     Comment: 
+|         <!--
+|         \   //~~\ |   |    /\  |~~\|~~  |\  | /~~\~~|~~    /\  |  /~~\ |\  ||~~
+|          \ /|    ||   |   /__\ |__/|--  | \ ||    | |     /__\ | |    || \ ||--
+|           |  \__/  \_/   /    \|  \|__  |  \| \__/  |    /    \|__\__/ |  \||__
+|_        -->
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.133
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://192.168.92.133:80/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."+"forcedLinkTrackingTimeout)s.forcedLinkTrackingTimeout=250;setTimeout('if(window.s_c_il)window.s_c_il['+s._in+'].bcr()',s.forcedLinkTrackingTimeout);}else
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."+"forcedLinkTrackingTimeout)s.forcedLinkTrackingTimeout=250;setTimeout('if(window.s_c_il)window.s_c_il['+s._in+'].bcr()',s.forcedLinkTrackingTimeout);}else
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/u;c.appendChild(o);'+(n?'o.c=0;o.i=setTimeout(f2,100)':'')+'}}catch(e){o=0}return
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/u;c.appendChild(o);'+(n?'o.c=0;o.i=setTimeout(f2,100)':'')+'}}catch(e){o=0}return
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/BASE_URL+%22/live/%22);this.firstBoot?(this.firstBoot=!1,this.track.omni("Email
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/BASE_URL+%22/live/%22);this.firstBoot?(this.firstBoot=!1,this.track.omni("Email
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/js/vendor/null,this.tags.length=0%7d,t.get=function()%7bif(0==this.tags.length)return
+|     Form id: 
+|     Form action: http://192.168.92.133/
+|     
+|     Path: http://192.168.92.133:80/wp-login.php
+|     Form id: loginform
+|_    Form action: http://192.168.92.133/wp-login.php
+|_http-date: Sun, 17 Nov 2019 08:03:40 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /admin/: Possible admin folder
+|   /admin/index.html: Possible admin folder
+|   /wp-login.php: Possible admin folder
+|   /robots.txt: Robots file
+|   /readme.html: Wordpress version: 2 
+|   /feed/: Wordpress version: 4.3.1
+|   /wp-includes/images/rss.png: Wordpress version 2.2 found.
+|   /wp-includes/js/jquery/suggest.js: Wordpress version 2.5 found.
+|   /wp-includes/images/blank.gif: Wordpress version 2.6 found.
+|   /wp-includes/js/comment-reply.js: Wordpress version 2.7 found.
+|   /wp-login.php: Wordpress login page.
+|   /wp-admin/upgrade.php: Wordpress login page.
+|   /readme.html: Interesting, a readme.
+|   /0/: Potentially interesting folder
+|_  /image/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://192.168.92.133:80/: 
+|     (1) ip: 
+|       + 208.185.115.6
+|   (1) http://192.168.92.133:80/css/A.main-600a9791.css.pagespeed.cf.8O3Mm-7GTY.css: 
+|     (1) ip: 
+|       + 192.168.92.133
+|   (1) http://192.168.92.133:80/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."+"forcedLinkTrackingTimeout)s.forcedLinkTrackingTimeout=250;setTimeout('if(window.s_c_il)window.s_c_il['+s._in+'].bcr()',s.forcedLinkTrackingTimeout);}else: 
+|     (1) ip: 
+|_      + 172.16.58.187
+| http-headers: 
+|   Date: Sun, 17 Nov 2019 08:03:49 GMT
+|   Server: Apache
+|   X-Frame-Options: SAMEORIGIN
+|   Accept-Ranges: bytes
+|   Vary: Accept-Encoding
+|   X-Mod-Pagespeed: 1.9.32.3-4523
+|   Cache-Control: max-age=0, no-cache
+|   Content-Length: 1188
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-passwd: ERROR: Script execution failed (use -d to debug)
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   X_Frame_Options: 
+|     Header: X-Frame-Options: SAMEORIGIN
+|     Description: The browser must not display this content in any frame from a page of different origin than the content itself.
+|   Cache_Control: 
+|_    Header: Cache-Control: max-age=0, no-cache
+|_http-server-header: Apache
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 2
+|     /comments/feed/
+|       Other: 1
+|     /css/
+|       css: 1
+|     /feed/
+|       Other: 1
+|     /js/
+|       js: 2
+|     /js/vendor/
+|       js: 1
+|     /wp-content/themes/twentyfifteen/
+|       css: 1
+|     /wp-includes/
+|       xml: 1
+|     /wp-includes/js/jquery/
+|       js: 2
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /wp-includes/js/jquery/
+|   Total files found (by extension):
+|_    Other: 3; css: 2; js: 5; php: 2; xml: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+| http-wordpress-enum: 
+| Search limited to top 100 themes/plugins
+|   plugins
+|     akismet
+|     contact-form-7 4.1
+|     jetpack 3.3.2
+|     all-in-one-seo-pack 
+|     google-sitemap-generator 4.0.7.1
+|     google-analytics-for-wordpress 5.3.2
+|     wptouch 3.7.3
+|     advanced-custom-fields
+|     mailchimp-for-wp
+|     all-in-one-wp-migration 2.0.4
+|     wp-mail-smtp 0.9.5
+|   themes
+|     twentythirteen 1.6
+|     twentyfourteen 1.5
+|     twentyfifteen 1.3
+|     pinboard
+|     thematic
+|     sparkling
+|     catch-box
+|     make
+|     colormag
+|     enigma
+|     custom-community
+|     mystique
+|_    alexandria
+|_http-xssed: No previously reported XSS vuln.
+443/tcp open  ssl/http Apache httpd
+|_http-apache-negotiation: mod_negotiation enabled.
+|_http-backup-finder: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 522.48ms; min: 158.40ms; max: 1971.81ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.133
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 86
+|     Comment: 
+|         <!-- .widget-area -->
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 39
+|     Comment: 
+|         <!--[if lt IE 8]>
+|         <link rel='stylesheet' id='twentyfifteen-ie7-css'  href='https://192.168.92.133/wp-content/themes/twentyfifteen/css/ie7.css?ver=20141010' type='text/css' media='all' />
+|         <![endif]-->
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 132
+|     Comment: 
+|         /* ]]> */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 284
+|     Comment: 
+|         /* You may insert any plugins you wish to use here.                 */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 6
+|     Comment: 
+|          // The document.documentElement dimensions seem to be identical to
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 376
+|     Comment: 
+|         /*
+|          * Utility manageVars v1.4 - clear variable values (requires split 1.5)
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 640
+|     Comment: 
+|         /**
+|          * 6.1 Links
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 313
+|     Comment: 
+|         /*
+|          * Plugin: getNewRepeat 1.0 - Return whether user is new or repeat
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 361
+|     Comment: 
+|         /*
+|          * Plugin: exitLinkHandler 0.8 - identify and report exit links
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 635
+|     Comment: 
+|         /**
+|          * 6.0 Navigations
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 8
+|     Comment: 
+|         <!--[if lt IE 9]>
+|         	<script src="https://192.168.92.133/wp-content/themes/twentyfifteen/js/html5.js"></script>
+|         	<![endif]-->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 116
+|     Comment: 
+|         /* Duplicate external campaign tracking to eVar30 (30-day exp) with getValOnce for deduplication per session */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 409
+|     Comment: 
+|         /* Prevents HTML tables from becoming too wide */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 201
+|     Comment: 
+|         /**
+|          * 3.0 Typography
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 71
+|     Comment: 
+|         /************************** CONFIG SECTION **************************/
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2385
+|     Comment: 
+|         /**
+|          * 13.0 Footer
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 123
+|     Comment: 
+|         <!-- .site-info -->
+|     
+|     Path: https://192.168.92.133:443/wp-login.php
+|     Line number: 7
+|     Comment: 
+|         <!--<![endif]-->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 259
+|     Comment: 
+|          // set device type 
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1174
+|     Comment: 
+|         /* must have higher specificity than alternative color schemes inline styles */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 111
+|     Comment: 
+|         /* external campaign tracking with getValOnce for deduplication per session */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 100
+|     Comment: 
+|         <!-- .page-header -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 401
+|     Comment: 
+|         /*
+|          * Plugin Utility: apl v1.1
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2478
+|     Comment: 
+|         /**
+|          * 14.1 Captions
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2671
+|     Comment: 
+|         /*
+|          * Does the same thing as <meta name="viewport" content="width=device-width">,
+|          * but in the future W3C standard way. -ms- prefix is required for IE10+ to
+|          * render responsive styling in Windows 8 "snapped" views; IE10+ does not honor
+|          * the meta tag. See https://core.trac.wordpress.org/ticket/25888.
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5938
+|     Comment: 
+|         /* Make sure sticky sidebar doesn't affect to print */
+|     
+|     Path: https://192.168.92.133:443/wp-includes/js/jquery/jquery.js?ver=1.11.3
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 90
+|     Comment: 
+|         <!-- .sidebar -->
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5849
+|     Comment: 
+|         /**
+|          * 17.0 Print
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery Migrate v1.2.1 | (c) 2005, 2013 jQuery Foundation, Inc. and other contributors | jquery.org/license */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 112
+|     Comment: 
+|         <!-- .error-404 -->
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 4052
+|     Comment: 
+|         /**
+|          * 16.4 Desktop Small 955px
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 140
+|     Comment: 
+|          //evar68 is only used on pages with responsive design
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1545
+|     Comment: 
+|         /**
+|          * 12.0 Content
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5884
+|     Comment: 
+|         /* Make sure color schemes dont't affect to print */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5855
+|     Comment: 
+|         /* Brute force since user agents all print differently. */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5837
+|     Comment: 
+|         /**
+|          * 16.7 Desktop X-Large 1403px
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5297
+|     Comment: 
+|         /**
+|          * 16.6 Desktop Large 1240px
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1160
+|     Comment: 
+|         /**
+|          * 7.0 Accessibility
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 4759
+|     Comment: 
+|         /**
+|          * 16.5 Desktop Medium 1100px
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 4068
+|     Comment: 
+|         /* Fixes flashing bug with scrolling on Safari */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 331
+|     Comment: 
+|         /*
+|          * Plugin: getPageName v2.1 - parse URL and return
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 3504
+|     Comment: 
+|         /**
+|          * 16.3 Tablet Large 880px
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 76
+|     Comment: 
+|         /* Link Tracking Config */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 304
+|     Comment: 
+|         /*
+|          * Plugin: getValOnce_v1.11
+|          */
+|     
+|     Path: https://192.168.92.133:443/
+|     Line number: 3
+|     Comment: 
+|          //~~\ |   |    /\  |~~\|~~  |\  | /~~\~~|~~    /\  |  /~~\ |\  ||~~
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 253
+|     Comment: 
+|          // set screen height
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2879
+|     Comment: 
+|         /**
+|          * 16.2 Tablet Small 740px
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 19
+|     Comment: 
+|          // string, which is currently only available on these devices.
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 1
+|     Comment: 
+|         /* device detection code */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2667
+|     Comment: 
+|         /**
+|          * 16.0 Media Queries
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 111
+|     Comment: 
+|         <!-- .page-content -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 283
+|     Comment: 
+|         /************************** PLUGINS SECTION *************************/
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 502
+|     Comment: 
+|         /* Removing the inner shadow on iOS inputs */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2574
+|     Comment: 
+|         /**
+|          * 15.0 Multisite
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 274
+|     Comment: 
+|         
+|         //copying over evar 68 -> 72 in to prop68 - > 72
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 256
+|     Comment: 
+|          // set screen width
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 74
+|     Comment: 
+|         /* Conversion Config */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 473
+|     Comment: 
+|         /**
+|          * 5.0 Forms
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 63
+|     Comment: 
+|         <!-- .site-branding -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 409
+|     Comment: 
+|         /*
+|          * Plugin: getAndPersistValue 0.3 - get a value on every page
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 118
+|     Comment: 
+|         <!-- .site-content -->
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1327
+|     Comment: 
+|         /**
+|          * 11.0 Widgets
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 286
+|     Comment: 
+|         /*
+|          * Plugin: getQueryParam 2.3
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2685
+|     Comment: 
+|         /**
+|          * 16.1 Mobile Large 620px
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 13
+|     Comment: 
+|          // If the screen orientation is defined we are in a modern mobile OS
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 238
+|     Comment: 
+|          // set breakpoint
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 55
+|     Comment: 
+|         /**
+|          * 1.0 - Reset
+|          *
+|          * Resetting and rebuilding styles have been helped along thanks to the fine
+|          * work of Eric Meyer, Nicolas Gallagher, Jonathan Neal, and Blueprint.
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2413
+|     Comment: 
+|         /**
+|          * 14.0 Media
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2130
+|     Comment: 
+|         /**
+|          * 12.3 Comments
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 87
+|     Comment: 
+|         /* Plugin Config */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 15
+|     Comment: 
+|          // If touch events are defined we are in a modern touch screen OS
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2096
+|     Comment: 
+|         /**
+|          * 12.2 Post Formats
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1251
+|     Comment: 
+|         /**
+|          * 9.0 Clearings
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1572
+|     Comment: 
+|         /**
+|          * 12.1 Posts and pages
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1290
+|     Comment: 
+|         /**
+|          * 10.0 Header
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1204
+|     Comment: 
+|         /**
+|          * 8.0 Alignments
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 417
+|     Comment: 
+|         /*
+|          * Plugin: Dynamically Build s.hier3 value
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 236
+|     Comment: 
+|         
+|         // New Tracking Features
+|     
+|     Path: https://192.168.92.133:443/wp-login.php
+|     Line number: 5
+|     Comment: 
+|         <!--[if !(IE 8) ]><!-->
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1
+|     Comment: 
+|         /*
+|         Theme Name: Twenty Fifteen
+|         Theme URI: https://wordpress.org/themes/twentyfifteen/
+|         Author: the WordPress team
+|         Author URI: https://wordpress.org/
+|         Description: Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer.
+|         Version: 1.3
+|         License: GNU General Public License v2 or later
+|         License URI: http://www.gnu.org/licenses/gpl-2.0.html
+|         Tags: black, blue, gray, pink, purple, white, yellow, dark, light, two-columns, left-sidebar, fixed-layout, responsive-layout, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+|         Text Domain: twentyfifteen
+|         
+|         This theme, like WordPress, is licensed under the GPL.
+|         Use it to make something cool, have fun, and share what you've learned with others.
+|         */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 124
+|     Comment: 
+|         <!-- .site-footer -->
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1164
+|     Comment: 
+|         /* Text meant only for screen readers */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 439
+|     Comment: 
+|         /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 1017
+|     Comment: 
+|         /* reset screen-reader-text */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 10
+|     Comment: 
+|          // We need to eliminate Symbian, Series 60, Windows Mobile and Blackberry
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 726
+|     Comment: 
+|         /* Stop screen readers to read the text as capital letters */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 656
+|     Comment: 
+|         /**
+|          * 6.2 Menus
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 5911
+|     Comment: 
+|         /* Make sure color schemes don't affect to print */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 355
+|     Comment: 
+|         /**
+|          * 4.0 Elements
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 88
+|     Comment: 
+|         <!-- .secondary -->
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 36
+|     Comment: 
+|         <!--[if lt IE 9]>
+|         <link rel='stylesheet' id='twentyfifteen-ie-css'  href='https://192.168.92.133/wp-content/themes/twentyfifteen/css/ie.css?ver=20141010' type='text/css' media='all' />
+|         <![endif]-->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 91
+|     Comment: 
+|         /* Set app VisID to Web view on Sync apps */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 449
+|     Comment: 
+|         /* Placeholder text color -- selectors need to be separate to work. */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 394
+|     Comment: 
+|         /*
+|          * Utility Function: split v1.5 (JS 1.0 compatible)
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 157
+|     Comment: 
+|         /**
+|          * 2.0 - Genericons
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 18
+|     Comment: 
+|         /**
+|          * Table of Contents
+|          *
+|          * 1.0 - Reset
+|          * 2.0 - Genericons
+|          * 3.0 - Typography
+|          * 4.0 - Elements
+|          * 5.0 - Forms
+|          * 6.0 - Navigations
+|          *   6.1 - Links
+|          *   6.2 - Menus
+|          * 7.0 - Accessibility
+|          * 8.0 - Alignments
+|          * 9.0 - Clearings
+|          * 10.0 - Header
+|          * 11.0 - Widgets
+|          * 12.0 - Content
+|          *    12.1 - Posts and pages
+|          *    12.2 - Post Formats
+|          *    12.3 - Comments
+|          * 13.0 - Footer
+|          * 14.0 - Media
+|          *    14.1 - Captions
+|          *    14.2 - Galleries
+|          * 15.0 - Multisite
+|          * 16.0 - Media Queries
+|          *    16.1 - Mobile Large
+|          *    16.2 - Tablet Small
+|          *    16.3 - Tablet Large
+|          *    16.4 - Desktop Small
+|          *    16.5 - Desktop Medium
+|          *    16.6 - Desktop Large
+|          *    16.7 - Desktop X-Large
+|          * 17.0 - Print
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 130
+|     Comment: 
+|         /* <![CDATA[ */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 126
+|     Comment: 
+|         <!-- .site -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 432
+|     Comment: 
+|         /* WARNING: Changing any of the below variables will cause drastic
+|         changes to how your visitor data is collected.  Changes should only be
+|         made when instructed to do so by your account manager.*/
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 72
+|     Comment: 
+|         /* You may add or alter any code config here. */
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2503
+|     Comment: 
+|         /**
+|          * 14.2 Galleries
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 115
+|     Comment: 
+|         <!-- .content-area -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 121
+|     Comment: 
+|         /* internal campaign/promo tracking with getValOnce for deduplication per session */
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 114
+|     Comment: 
+|         <!-- .site-main -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 29
+|     Comment: 
+|          // a mobile and touch OS then we can be 99% certain that it's Android.
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 464
+|     Comment: 
+|         /* Since FF19 lowers the opacity of the placeholder by default */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 251
+|     Comment: 
+|          // Desktop Large | Desktop | Tablet Landscape | Tablet Portrait | Smartphone Portrait
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 16
+|     Comment: 
+|          //var touchOS = Modernizr.touch;
+|     
+|     Path: https://192.168.92.133:443/
+|     Line number: 19
+|     Comment: 
+|         <!--[if lt IE 9]>
+|               <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+|             
+|         
+|             <!-- Google Plus confirmation -->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 347
+|     Comment: 
+|         /*
+|          * Plugin: linkHandler 0.5 - identify and report custom links
+|          */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 325
+|     Comment: 
+|         /*
+|          * Utility Function: Determine If A Particular Value Exists Within An Array
+|          */
+|     
+|     Path: https://192.168.92.133:443/wp-login.php
+|     Line number: 2
+|     Comment: 
+|         <!--[if IE 8]>
+|         		<html xmlns="http://www.w3.org/1999/xhtml" class="ie8" lang="en-US">
+|         	<![endif]-->
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 18
+|     Comment: 
+|          // iPhone and iPad can be reliably identified with the navigator.platform
+|     
+|     Path: https://192.168.92.133:443/js/rs;if(s.useForcedLinkTracking||s.bcf){if(!s."
+|     Line number: 64
+|     Comment: 
+|         <!-- .site-header -->
+|     
+|     Path: https://192.168.92.133:443/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+|     Line number: 2841
+|     Comment: 
+|         /* restore screen-reader-text */
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 27
+|     Comment: 
+|          // If the user agent string contains "android" then it's Android. If it
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 28
+|     Comment: 
+|          // doesn't but it's not another browser, not an iOS device and we're in
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 7
+|     Comment: 
+|          // the screen dimensions on all the mobile browsers I've tested so far
+|     
+|     Path: https://192.168.92.133:443/js/s_code.js
+|     Line number: 11
+|     Comment: 
+|          // browsers for this quick and dirty check. This can be done with the user agent.
+|     
+|     Path: https://192.168.92.133:443/
+|     Line number: 2
+|     Comment: 
+|         <!--
+|         \   //~~\ |   |    /\  |~~\|~~  |\  | /~~\~~|~~    /\  |  /~~\ |\  ||~~
+|          \ /|    ||   |   /__\ |__/|--  | \ ||    | |     /__\ | |    || \ ||--
+|           |  \__/  \_/   /    \|  \|__  |  \| \__/  |    /    \|__\__/ |  \||__
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 17 Nov 2019 08:03:45 GMT; -2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) https://192.168.92.133:443/: 
+|     (1) ip: 
+|_      + 208.185.115.6
+| http-headers: 
+|   Date: Sun, 17 Nov 2019 08:03:53 GMT
+|   Server: Apache
+|   X-Frame-Options: SAMEORIGIN
+|   Accept-Ranges: bytes
+|   Vary: Accept-Encoding
+|   X-Mod-Pagespeed: 1.9.32.3-4523
+|   Cache-Control: max-age=0, no-cache
+|   Content-Length: 1077
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-passwd: ERROR: Script execution failed (use -d to debug)
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|     HSTS not configured in HTTPS Server
+|   X_Frame_Options: 
+|     Header: X-Frame-Options: SAMEORIGIN
+|     Description: The browser must not display this content in any frame from a page of different origin than the content itself.
+|   Cache_Control: 
+|_    Header: Cache-Control: max-age=0, no-cache
+|_http-server-header: Apache
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 2
+|     /comments/feed/
+|       Other: 1
+|     /css/
+|       css: 1
+|     /feed/
+|       Other: 1
+|     /js/
+|       js: 2
+|     /js/vendor/
+|       js: 1
+|     /wp-content/themes/twentyfifteen/
+|       css: 1
+|     /wp-includes/
+|       xml: 1
+|     /wp-includes/js/jquery/
+|       js: 2
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /wp-content/themes/twentyfifteen/
+|   Total files found (by extension):
+|_    Other: 3; css: 2; js: 5; php: 2; xml: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+| http-wordpress-enum: 
+| Search limited to top 100 themes/plugins
+|   plugins
+|     akismet
+|     contact-form-7 4.1
+|     wordpress-seo
+|     jetpack 3.3.2
+|     all-in-one-seo-pack 
+|     wordfence
+|     woocommerce
+|     google-sitemap-generator 4.0.7.1
+|     wordpress-importer
+|     nextgen-gallery
+|     google-analytics-for-wordpress 5.3.2
+|     wp-super-cache
+|     tinymce-advanced
+|     wptouch 3.7.3
+|     better-wp-security
+|     siteorigin-panels
+|     updraftplus
+|     w3-total-cache
+|     google-analytics-dashboard-for-wp
+|     wp-pagenavi
+|     si-contact-form
+|     advanced-custom-fields
+|     mailchimp-for-wp
+|     the-events-calendar
+|     add-to-any
+|     duplicator
+|     wysija-newsletters
+|     ninja-forms
+|     wp-smushit
+|     buddypress
+|     ewww-image-optimizer
+|     so-widgets-bundle
+|     really-simple-captcha
+|     ml-slider
+|     black-studio-tinymce-widget
+|     photo-gallery
+|     broken-link-checker
+|     regenerate-thumbnails
+|     google-analyticator
+|     redirection
+|     captcha
+|     duplicate-post
+|     breadcrumb-navxt
+|     backwpup
+|     user-role-editor
+|     yet-another-related-posts-plugin
+|     contact-form-plugin
+|     newsletter
+|     bbpress
+|     all-in-one-wp-security-and-firewall
+|     disable-comments
+|     social-networks-auto-poster-facebook-twitter-g
+|     wp-optimize
+|     addthis
+|     wp-statistics
+|     wp-e-commerce
+|     all-in-one-wp-migration 2.0.4
+|     backupwordpress
+|     si-captcha-for-wordpress
+|     wp-slimstat
+|     wp-google-maps
+|     wp-spamshield
+|     wp-maintenance-mode
+|     googleanalytics
+|     worker
+|     yith-woocommerce-wishlist
+|     wp-multibyte-patch
+|     wp-to-twitter
+|     image-widget
+|     wp-db-backup
+|     shortcodes-ultimate
+|     ultimate-tinymce
+|     share-this
+|     disqus-comment-system
+|     gallery-bank
+|     types
+|     wp-polls
+|     custom-post-type-ui
+|     shareaholic
+|     polylang
+|     post-types-order
+|     gtranslate
+|     bulletproof-security
+|     wp-fastest-cache
+|     facebook
+|     sociable
+|     iwp-client
+|     nextgen-facebook
+|     seo-ultimate
+|     wp-postviews
+|     formidable
+|     squirrly-seo
+|     wp-mail-smtp 0.9.5
+|     tablepress
+|     redux-framework
+|     page-links-to
+|     youtube-embed-plus
+|     contact-bank
+|     maintenance
+|     wp-retina-2x
+|   themes
+|     twentythirteen 1.6
+|     twentyfourteen 1.5
+|_    twentyfifteen 1.3
+|_http-xssed: No previously reported XSS vuln.
+| ssl-cert: Subject: commonName=www.example.com
+| Not valid before: 2015-09-16T10:45:03
+|_Not valid after:  2025-09-13T10:45:03
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       Weak certificate signature: SHA1
+|_  least strength: A
+|_sslv2-drown: 
+MAC Address: 00:0C:29:B3:A1:BD (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.92.133"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 80    0       380.10     46.40   0.0%
+|_443   0       397.50     68.11   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 104.12 seconds
