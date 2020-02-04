@@ -1,0 +1,52 @@
+root@Kali:~/Vulnhub/PwnLab-Init# gobuster dir -u http://192.168.92.136 -w /usr/share/dirb/wordlists/common.txt
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://192.168.92.136
+[+] Threads:        10
+[+] Wordlist:       /usr/share/dirb/wordlists/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2019/11/24 00:28:42 Starting gobuster
+===============================================================
+/.htpasswd (Status: 403)
+/.hta (Status: 403)
+/.htaccess (Status: 403)
+/images (Status: 301)
+/index.php (Status: 200)
+/server-status (Status: 403)
+/upload (Status: 301)
+===============================================================
+2019/11/24 00:28:44 Finished
+===============================================================
+
+
+root@Kali:~/Tools/recursive-gobuster# ./recursive-gobuster.pyz -w /usr/share/dirb/wordlists/common.txt http://192.168.92.136
+http://192.168.92.136/.htaccess
+http://192.168.92.136/.hta
+http://192.168.92.136/.htpasswd
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/.hta/a81c3a8a-197f-4073-93e6-ae10290f6152 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/.htaccess/322dd628-ce50-40cf-bd30-bfcad4903b19 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.136/images
+http://192.168.92.136/index.php
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/.htpasswd/69369f72-9033-4f3b-884c-30d1ad64a561 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/index.php/6981f046-8944-4771-9a5b-c5b682de1eb7 => 200. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.136/server-status
+http://192.168.92.136/images/.hta
+http://192.168.92.136/upload
+http://192.168.92.136/images/.htaccess
+http://192.168.92.136/images/.htpasswd
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/server-status/8d5edab4-a098-4832-ad1c-8769861e2e0c => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/images/.hta/12300a8e-cd5d-43b4-9818-a835a7141a86 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/images/.htpasswd/58c3316d-00bf-4c4a-a064-392de686b192 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/images/.htaccess/e89d5912-8644-455d-b150-ff4319bc8b4b => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.136/upload/.hta
+http://192.168.92.136/upload/.htaccess
+http://192.168.92.136/upload/.htpasswd
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/upload/.hta/836f858a-a823-4d1b-82aa-288e2fa43328 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/upload/.htpasswd/2fd381ff-ce9f-4aeb-b96f-dc4931235ff9 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.136/upload/.htaccess/11470cf6-fbac-4fb0-b4f7-70933008cbb3 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+All scans complete. Cleaning up.
