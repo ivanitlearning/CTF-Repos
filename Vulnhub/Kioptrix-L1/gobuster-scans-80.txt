@@ -1,0 +1,78 @@
+root@Kali:~/Vulnhub/Kioptrix-1# gobuster dir -u http://192.168.92.138 -w /usr/share/dirb/wordlists/common.txt
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://192.168.92.138
+[+] Threads:        10
+[+] Wordlist:       /usr/share/dirb/wordlists/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2020/01/26 08:53:00 Starting gobuster
+===============================================================
+/.hta (Status: 403)
+/.htaccess (Status: 403)
+/.htpasswd (Status: 403)
+/~root (Status: 403)
+/~operator (Status: 403)
+/cgi-bin/ (Status: 403)
+/index.html (Status: 200)
+/manual (Status: 301)
+/mrtg (Status: 301)
+/usage (Status: 301)
+===============================================================
+2020/01/26 08:53:01 Finished
+===============================================================
+
+root@Kali:~/Vulnhub/Kioptrix-1# ~/Tools/recursive-gobuster/recursive-gobuster.pyz -w /usr/share/dirb/wordlists/common.txt http://192.168.92.138
+http://192.168.92.138/.hta
+http://192.168.92.138/.htpasswd
+http://192.168.92.138/.htaccess
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/.hta/d94c8a71-3405-4cb8-8f7b-794811b2d897 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/~root
+http://192.168.92.138/~operator
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/.htpasswd/e7842ff1-c258-476a-9fb0-f3b6fed0022c => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/.htaccess/c8da4545-1af6-4d6a-bc8f-4da9c31eff8a => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/~operator/0398d36f-a4ea-4161-8db3-88d327e46f44 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/~root/fe23e6c8-1595-4487-9122-d9ce5584a0a5 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/cgi-bin/
+http://192.168.92.138/cgi-bin//.htaccess
+http://192.168.92.138/cgi-bin//.htpasswd
+http://192.168.92.138/cgi-bin//.hta
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/cgi-bin//.htaccess/97176b36-fa63-4822-bf3e-ae737929fddc => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/cgi-bin//.hta/d1ca8df4-082e-4468-8cfa-a2c4e32f880a => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/cgi-bin//.htpasswd/41fd8581-ae81-4faf-82f3-320b414eebb1 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/index.html
+http://192.168.92.138/manual
+http://192.168.92.138/manual/.htaccess
+http://192.168.92.138/manual/.hta
+http://192.168.92.138/manual/.htpasswd
+http://192.168.92.138/mrtg
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/manual/.htaccess/903600d9-485d-4936-b522-303e81d0113c => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/manual/.htpasswd/27151189-0b9b-435a-8e35-6060babfce59 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/mrtg/.htaccess
+http://192.168.92.138/mrtg/.hta
+http://192.168.92.138/mrtg/.htpasswd
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/manual/.hta/8451c664-e7f7-4522-9c9c-88f3dc4b46ce => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/mrtg/.htaccess/b70c410a-1340-4848-b34f-40a67e22ce63 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/mrtg/.htpasswd/d8dcf0d1-6cca-4b06-afe6-f153760924f7 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/mrtg/.hta/2933945e-10d4-4c60-a590-3fc4176e64b8 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/usage
+http://192.168.92.138/usage/.htaccess
+http://192.168.92.138/usage/.hta
+http://192.168.92.138/usage/.htpasswd
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/usage/.htaccess/abd06022-0680-4ea4-9e83-63adc3605b60 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/usage/.hta/6cc204d8-a4d2-4c04-b3b7-15513ab5aa5d => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/usage/.htpasswd/8d155e68-efe3-4d1a-b7ec-0fe6ba70228b => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/mrtg/index.html
+http://192.168.92.138/manual/mod
+http://192.168.92.138/manual/mod/.hta
+http://192.168.92.138/manual/mod/.htpasswd
+http://192.168.92.138/manual/mod/.htaccess
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/manual/mod/.hta/7badb9d3-bc2d-4db9-8f42-f8e79a00d0f2 => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/manual/mod/.htpasswd/67c01b46-7b41-46bd-9618-023f4025f5cb => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+Error: the server returns a status code that matches the provided options for non existing urls. http://192.168.92.138/manual/mod/.htaccess/596c0d38-9500-4c8e-b70e-bd77d7f739ad => 403. To force processing of Wildcard responses, specify the '--wildcard' switch
+http://192.168.92.138/usage/index.html
+All scans complete. Cleaning up.
