@@ -1,0 +1,88 @@
+root@Kali:~/Vulnhub/Kioptrix-3# unicornscan -mU -v -I -p a 192.168.92.140
+adding 192.168.92.140/32 mode `UDPscan' ports `a' pps 300
+using interface(s) eth0
+scaning 1.00e+00 total hosts with 6.55e+04 total packets, should take a little longer than 3 Minutes, 45 Seconds
+UDP open 192.168.92.2:53  ttl 128
+sender statistics 299.1 pps with 65545 packets sent total
+listener statistics 4 packets recieved 0 packets droped and 0 interface drops
+UDP open	          domain[   53]		from 192.168.92.2  ttl 128 
+
+root@Kali:~/Vulnhub/Kioptrix-3# nmap -Pn -n -sUV -p53 192.168.92.140 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-01-27 01:08 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:f5:97:ba
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::20c:29ff:fe68:9cd8: 
+|     device: eth0
+|     mac: 00:0c:29:68:9c:d8
+|     multicast_ips: 
+|       ff02::1:ff68:9cd8         (NDP Solicited-node)
+|   fe80::860:29a0:cd21:f477: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff21:f477         (NDP Solicited-node)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ff51:aa9b         (Solicited-Node Address)
+|       ff02::1:ff51:aa9b         (Solicited-Node Address)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::c                   (SSDP)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-echo: 
+|   IP: fe80::20c:29ff:fe68:9cd8  MAC: 00:0c:29:68:9c:d8  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-invalid-dst: 
+|   IP: fe80::20c:29ff:fe68:9cd8  MAC: 00:0c:29:68:9c:d8  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::20c:29ff:fe68:9cd8  MAC: 00:0c:29:68:9c:d8  IFACE: eth0
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::20c:29ff:fe68:9cd8   MAC: 00:0c:29:68:9c:d8  IFACE: eth0
+|   IP: fe80::860:29a0:cd21:f477   MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::5566:495c:9351:aa9b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.92.140
+Host is up (0.00041s latency).
+
+PORT   STATE  SERVICE VERSION
+53/udp closed domain
+MAC Address: 00:0C:29:68:9C:D8 (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.92.140"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_path-mtu: PMTU == 1500
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 14.95 seconds
