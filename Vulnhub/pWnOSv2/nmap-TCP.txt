@@ -1,0 +1,193 @@
+root@Kali:~/Vulnhub/pWnOSv2# nmap -Pn -n -sV -p22,80 10.10.10.100 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-16 14:17 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   10.10.10.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   10.10.10.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   10.10.10.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:f5:97:ba
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::860:29a0:cd21:f477: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff21:f477         (NDP Solicited-node)
+|       ff02::1:ffd4:1d93         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ffd4:1d93         (Solicited-Node Address)
+|       ff02::c                   (SSDP)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|   fe80::20c:29ff:fee5:c4ee: 
+|     device: eth0
+|     mac: 00:0c:29:e5:c4:ee
+|     multicast_ips: 
+|_      ff02::1:ffe5:c4ee         (NDP Solicited-node)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-echo: 
+|   IP: fe80::20c:29ff:fee5:c4ee  MAC: 00:0c:29:e5:c4:ee  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-invalid-dst: 
+|   IP: fe80::20c:29ff:fee5:c4ee  MAC: 00:0c:29:e5:c4:ee  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::20c:29ff:fee5:c4ee  MAC: 00:0c:29:e5:c4:ee  IFACE: eth0
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::860:29a0:cd21:f477   MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::2d89:570c:a3d4:1d93  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::20c:29ff:fee5:c4ee   MAC: 00:0c:29:e5:c4:ee  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 10.10.10.100
+Host is up (0.00072s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 5.8p1 Debian 1ubuntu3 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_5.8p1 Debian-1ubuntu3
+| ssh-hostkey: 
+|   1024 85:d3:2b:01:09:42:7b:20:4e:30:03:6d:d1:8f:95:ff (DSA)
+|   2048 30:7a:31:9a:1b:b8:17:e7:15:df:89:92:0e:cd:58:28 (RSA)
+|_  256 10:12:64:4b:7d:ff:6a:87:37:26:38:b1:44:9f:cf:5e (ECDSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (7)
+|   server_host_key_algorithms: (3)
+|   encryption_algorithms: (13)
+|   mac_algorithms: (7)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.2.17 ((Ubuntu))
+|_http-apache-negotiation: mod_negotiation enabled.
+|_http-chrono: Request times for /; avg: 172.96ms; min: 154.83ms; max: 213.79ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.100
+|     
+|     Path: http://10.10.10.100:80/register.php
+|     Line number: 12
+|     Comment: 
+|         <!-- End of Header -->
+|     
+|     Path: http://10.10.10.100:80/register.php
+|     Line number: 34
+|     Comment: 
+|_        <!-- End of Content -->
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.100
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.100:80/login.php
+|     Form id: 
+|     Form action: login.php
+|     
+|     Path: http://10.10.10.100:80/register.php
+|     Form id: 
+|_    Form action: register.php
+|_http-date: Sun, 22 Dec 2019 14:33:01 GMT; -55d15h44m52s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.100:80/: 
+|     (1) email: 
+|_      + admin@isints.com
+| http-headers: 
+|   Date: Sun, 22 Dec 2019 14:33:15 GMT
+|   Server: Apache/2.2.17 (Ubuntu)
+|   X-Powered-By: PHP/5.3.5-1ubuntu7
+|   Set-Cookie: PHPSESSID=rgj11pfpl610rm0j9l2a6kk4m3; path=/
+|   Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|   Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+|   Pragma: no-cache
+|   Vary: Accept-Encoding
+|   Content-Length: 854
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-phpself-xss: ERROR: Script execution failed (use -d to debug)
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Cache_Control: 
+|     Header: Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+|   Pragma: 
+|     Header: Pragma: no-cache
+|   Expires: 
+|_    Header: Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|_http-server-header: Apache/2.2.17 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 3
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; php: 3
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Welcome to this Site!
+| http-useragent-tester: 
+|   Change in Status Code: 
+|     URI::Fetch: 200
+|     MFC_Tear_Sample: 200
+|     WWW-Mechanize/1.34: 200
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html): 200
+|     lwp-trivial: 200
+|     GT::WWW: 200
+|     Python-urllib/2.5: 200
+|     HTTP::Lite: 200
+|     PECL::HTTP: 200
+|     libwww: 200
+|     libcurl-agent/1.0: 200
+|     http client: 200
+|     Snoopy: 200
+|     Zend_Http_Client: 200
+|     Wget/1.13.4 (linux-gnu): 200
+|     PHP/: 200
+|_    PHPCrawl: 200
+| http-vhosts: 
+| 48 names had status ERROR
+|_79 names had status 200
+|_http-vuln-cve2014-3704: ERROR: Script execution failed (use -d to debug)
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.100"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 22    0       803.70     108.44  0.0%
+|_80    0       770.10     156.11  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 61.72 seconds
