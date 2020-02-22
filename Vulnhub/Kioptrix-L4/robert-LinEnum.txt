@@ -1,0 +1,822 @@
+robert@Kioptrix4:~$ ./LinEnum.sh -t -s
+
+#########################################################
+# Local Linux Enumeration & Privilege Escalation Script #
+#########################################################
+# www.rebootuser.com
+# version 0.98
+
+[-] Debug Info
+[+] Thorough tests = Enabled
+[+] Please enter password - INSECURE - really only for CTF use!
+
+
+
+Scan started at:
+Thu Feb 13 19:05:39 EST 2020
+
+
+### SYSTEM ##############################################
+[-] Kernel information:
+Linux Kioptrix4 2.6.24-24-server #1 SMP Tue Jul 7 20:21:17 UTC 2009 i686 GNU/Linux
+
+
+[-] Kernel information (continued):
+Linux version 2.6.24-24-server (buildd@palmer) (gcc version 4.2.4 (Ubuntu 4.2.4-1ubuntu4)) #1 SMP Tue Jul 7 20:21:17 UTC 2009
+
+
+[-] Specific release information:
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=8.04
+DISTRIB_CODENAME=hardy
+DISTRIB_DESCRIPTION="Ubuntu 8.04.3 LTS"
+
+
+[-] Hostname:
+Kioptrix4
+
+
+### USER/GROUP ##########################################
+[-] Current user/group info:
+uid=1002(robert) gid=1002(robert) groups=1002(robert)
+
+
+[-] Users that have previously logged onto the system:
+Username         Port     From             Latest
+loneferret       tty1                      Mon Feb  6 20:05:44 -0500 2012
+john             pts/0    192.168.92.134   Tue Feb 11 19:21:42 -0500 2020
+robert           pts/0    192.168.92.134   Thu Feb 13 19:02:47 -0500 2020
+
+
+[-] Who else is logged on:
+ 19:05:39 up 7 min,  1 user,  load average: 0.00, 0.03, 0.01
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+robert   pts/0    192.168.92.134   19:02    0.00s  0.10s  0.00s /bin/bash ./LinEnum.sh -t -s
+
+
+[-] Group memberships:
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=100(libuuid) gid=101(libuuid) groups=101(libuuid)
+uid=101(dhcp) gid=102(dhcp) groups=102(dhcp)
+uid=102(syslog) gid=103(syslog) groups=103(syslog)
+uid=103(klog) gid=104(klog) groups=104(klog)
+uid=104(mysql) gid=108(mysql) groups=108(mysql)
+uid=105(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=1000(loneferret) gid=1000(loneferret) groups=1000(loneferret),4(adm),20(dialout),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),107(fuse),112(sambashare),114(lpadmin),115(admin)
+uid=1001(john) gid=1001(john) groups=1001(john)
+uid=1002(robert) gid=1002(robert) groups=1002(robert)
+
+
+[-] It looks like we have some admin users:
+uid=1000(loneferret) gid=1000(loneferret) groups=1000(loneferret),4(adm),20(dialout),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),107(fuse),112(sambashare),114(lpadmin),115(admin)
+
+
+[-] Contents of /etc/passwd:
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+sys:x:3:3:sys:/dev:/bin/sh
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+news:x:9:9:news:/var/spool/news:/bin/sh
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+proxy:x:13:13:proxy:/bin:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+dhcp:x:101:102::/nonexistent:/bin/false
+syslog:x:102:103::/home/syslog:/bin/false
+klog:x:103:104::/home/klog:/bin/false
+mysql:x:104:108:MySQL Server,,,:/var/lib/mysql:/bin/false
+sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin
+loneferret:x:1000:1000:loneferret,,,:/home/loneferret:/bin/bash
+john:x:1001:1001:,,,:/home/john:/bin/kshell
+robert:x:1002:1002:,,,:/home/robert:/bin/kshell
+
+
+[-] Super user account(s):
+root
+
+
+[+] We can sudo without supplying a password!
+usage: sudo -h | -K | -k | -L | -l | -V | -v
+usage: sudo [-bEHPS] [-p prompt] [-u username|#uid] [VAR=value]
+            {-i | -s | <command>}
+usage: sudo -e [-S] [-p prompt] [-u username|#uid] file ...
+
+
+[+] Possible sudo pwnage!
+file
+
+
+[-] Accounts that have recently used sudo:
+/home/loneferret/.sudo_as_admin_successful
+
+
+[+] We can read root's home directory!
+total 44K
+drwxr-xr-x  4 root       root       4.0K 2012-02-06 18:46 .
+drwxr-xr-x 21 root       root       4.0K 2012-02-06 18:41 ..
+-rw-------  1 root       root         59 2012-02-06 20:24 .bash_history
+-rw-r--r--  1 root       root       2.2K 2007-10-20 07:51 .bashrc
+-rw-r--r--  1 root       root        625 2012-02-06 10:48 congrats.txt
+-rw-r--r--  1 root       root          1 2012-02-05 10:38 .lhistory
+drwxr-xr-x  8 loneferret loneferret 4.0K 2012-02-04 17:01 lshell-0.9.12
+-rw-------  1 root       root          1 2012-02-05 10:38 .mysql_history
+-rw-------  1 root       root          5 2012-02-06 18:38 .nano_history
+-rw-r--r--  1 root       root        141 2007-10-20 07:51 .profile
+drwx------  2 root       root       4.0K 2012-02-06 11:43 .ssh
+
+
+[-] Are permissions on /home directories lax:
+total 20K
+drwxr-xr-x  5 root       root       4.0K 2012-02-04 18:05 .
+drwxr-xr-x 21 root       root       4.0K 2012-02-06 18:41 ..
+drwxr-xr-x  2 john       john       4.0K 2012-02-04 18:39 john
+drwxr-xr-x  2 loneferret loneferret 4.0K 2012-02-06 16:38 loneferret
+drwxr-xr-x  2 robert     robert     4.0K 2020-02-13 19:04 robert
+
+
+[-] Files owned by our user:
+-rw-r--r-- 1 robert robert 220 2012-02-04 18:05 /home/robert/.bash_logout
+-rw------- 1 robert robert 29 2020-02-12 19:46 /home/robert/.bash_history
+-rwxr-xr-x 1 robert robert 46108 2020-02-13 11:03 /home/robert/LinEnum.sh
+-rw-r--r-- 1 robert robert 586 2012-02-04 18:05 /home/robert/.profile
+-rw-r--r-- 1 robert robert 2940 2012-02-04 18:05 /home/robert/.bashrc
+-rw-r--r-- 1 robert robert 1369 2020-02-12 19:46 /home/robert/.lhistory
+
+
+[-] Hidden files:
+-rw-r--r-- 1 robert robert 220 2012-02-04 18:05 /home/robert/.bash_logout
+-rw------- 1 robert robert 29 2020-02-12 19:46 /home/robert/.bash_history
+-rw-r--r-- 1 robert robert 586 2012-02-04 18:05 /home/robert/.profile
+-rw-r--r-- 1 robert robert 2940 2012-02-04 18:05 /home/robert/.bashrc
+-rw-r--r-- 1 robert robert 1369 2020-02-12 19:46 /home/robert/.lhistory
+-rw-r--r-- 1 john john 220 2012-02-04 18:04 /home/john/.bash_logout
+-rw------- 1 john john 61 2012-02-04 23:31 /home/john/.bash_history
+-rw-r--r-- 1 john john 586 2012-02-04 18:04 /home/john/.profile
+-rw-r--r-- 1 john john 2940 2012-02-04 18:04 /home/john/.bashrc
+-rw-r--r-- 1 john john 309 2020-02-11 19:26 /home/john/.lhistory
+-rw------- 1 loneferret loneferret 9 2012-02-06 16:39 /home/loneferret/.nano_history
+-rw------- 1 loneferret loneferret 1 2012-02-05 10:38 /home/loneferret/.mysql_history
+-rw-r--r-- 1 loneferret loneferret 220 2012-02-04 09:58 /home/loneferret/.bash_logout
+-rw------- 1 root root 1 2012-02-04 10:05 /home/loneferret/.mysql.5086
+-rw-r--r-- 1 loneferret loneferret 0 2012-02-04 10:01 /home/loneferret/.sudo_as_admin_successful
+-rw------- 1 root root 68 2012-02-04 10:05 /home/loneferret/.my.cnf.5086
+-rw------- 1 loneferret loneferret 62 2012-02-06 20:24 /home/loneferret/.bash_history
+-rw-r--r-- 1 loneferret loneferret 586 2012-02-04 09:58 /home/loneferret/.profile
+-rw-r--r-- 1 loneferret loneferret 2940 2012-02-04 09:58 /home/loneferret/.bashrc
+-rw-r--r-- 1 loneferret loneferret 1 2012-02-05 10:37 /home/loneferret/.lhistory
+-rw-r--r-- 1 root root 34 2012-02-04 09:57 /var/lib/python-support/python2.5/.path
+-rw-r--r-- 1 root root 0 2020-02-13 18:58 /dev/.initramfs-tools
+-rw-r--r-- 1 root root 102 2009-05-12 17:48 /etc/cron.d/.placeholder
+-rw-r--r-- 1 root root 220 2008-05-12 14:33 /etc/skel/.bash_logout
+-rw-r--r-- 1 root root 586 2008-05-12 14:33 /etc/skel/.profile
+-rw-r--r-- 1 root root 2940 2008-05-12 14:33 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 102 2009-05-12 17:48 /etc/cron.daily/.placeholder
+-rw-r--r-- 1 root root 102 2009-05-12 17:48 /etc/cron.hourly/.placeholder
+-rw-r--r-- 1 root root 102 2009-05-12 17:48 /etc/cron.weekly/.placeholder
+-rw-r--r-- 1 root root 102 2009-05-12 17:48 /etc/cron.monthly/.placeholder
+-rw------- 1 root root 0 2012-02-04 09:51 /etc/.pwd.lock
+-rw-r--r-- 1 root root 2 2007-08-29 17:55 /usr/share/python-support/python-gnupginterface/.version
+-rw------- 1 root root 5 2012-02-06 18:38 /root/.nano_history
+-rw------- 1 root root 1 2012-02-05 10:38 /root/.mysql_history
+-rw------- 1 root root 59 2012-02-06 20:24 /root/.bash_history
+-rw-r--r-- 1 root root 141 2007-10-20 07:51 /root/.profile
+-rw-r--r-- 1 root root 2227 2007-10-20 07:51 /root/.bashrc
+-rw-r--r-- 1 root root 1 2012-02-05 10:38 /root/.lhistory
+
+
+[-] World-readable files within /home:
+-rw-r--r-- 1 robert robert 220 2012-02-04 18:05 /home/robert/.bash_logout
+-rwxr-xr-x 1 robert robert 46108 2020-02-13 11:03 /home/robert/LinEnum.sh
+-rw-r--r-- 1 robert robert 586 2012-02-04 18:05 /home/robert/.profile
+-rw-r--r-- 1 robert robert 2940 2012-02-04 18:05 /home/robert/.bashrc
+-rw-r--r-- 1 robert robert 1369 2020-02-12 19:46 /home/robert/.lhistory
+-rw-r--r-- 1 john john 220 2012-02-04 18:04 /home/john/.bash_logout
+-rw-r--r-- 1 john john 586 2012-02-04 18:04 /home/john/.profile
+-rw-r--r-- 1 john john 2940 2012-02-04 18:04 /home/john/.bashrc
+-rw-r--r-- 1 john john 309 2020-02-11 19:26 /home/john/.lhistory
+-rw-r--r-- 1 loneferret loneferret 220 2012-02-04 09:58 /home/loneferret/.bash_logout
+-rw-r--r-- 1 loneferret loneferret 0 2012-02-04 10:01 /home/loneferret/.sudo_as_admin_successful
+-rw-r--r-- 1 loneferret loneferret 586 2012-02-04 09:58 /home/loneferret/.profile
+-rw-r--r-- 1 loneferret loneferret 2940 2012-02-04 09:58 /home/loneferret/.bashrc
+-rw-r--r-- 1 loneferret loneferret 1 2012-02-05 10:37 /home/loneferret/.lhistory
+
+
+[-] Home directory contents:
+total 76K
+drwxr-xr-x 2 robert robert 4.0K 2020-02-13 19:04 .
+drwxr-xr-x 5 root   root   4.0K 2012-02-04 18:05 ..
+-rw------- 1 robert robert   29 2020-02-12 19:46 .bash_history
+-rw-r--r-- 1 robert robert  220 2012-02-04 18:05 .bash_logout
+-rw-r--r-- 1 robert robert 2.9K 2012-02-04 18:05 .bashrc
+-rw-r--r-- 1 robert robert 1.4K 2020-02-12 19:46 .lhistory
+-rwxr-xr-x 1 robert robert  46K 2020-02-13 11:03 LinEnum.sh
+-rw-r--r-- 1 robert robert  586 2012-02-04 18:05 .profile
+
+
+[-] Root is allowed to login via SSH:
+PermitRootLogin yes
+
+
+### ENVIRONMENTAL #######################################
+[-] Environment information:
+TERM=xterm-256color
+SHELL=/bin/kshell
+SSH_CLIENT=192.168.92.134 56576 22
+SSH_TTY=/dev/pts/0
+USER=robert
+COLUMNS=150
+MAIL=/var/mail/robert
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+PWD=/home/robert
+LANG=en_US.UTF-8
+LINES=40
+LSHELL_ARGS=['--config', '/etc/lshell.conf']
+HISTCONTROL=ignoreboth
+HOME=/home/robert
+SHLVL=2
+LOGNAME=robert
+SSH_CONNECTION=192.168.92.134 56576 192.168.92.141 22
+LESSOPEN=| /usr/bin/lesspipe %s
+LESSCLOSE=/usr/bin/lesspipe %s %s
+_=/usr/bin/env
+
+
+[-] Path information:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+
+
+[-] Available shells:
+# /etc/shells: valid login shells
+/bin/csh
+/bin/sh
+/usr/bin/es
+/usr/bin/ksh
+/bin/ksh
+/usr/bin/rc
+/usr/bin/tcsh
+/bin/tcsh
+/usr/bin/esh
+/bin/dash
+/bin/bash
+/bin/rbash
+
+
+[-] Current umask value:
+u=rwx,g=rx,o=rx
+0022
+
+
+[-] Password and storage information:
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+
+
+### JOBS/TASKS ##########################################
+[-] Cron jobs:
+-rw-r--r-- 1 root root  724 2009-05-12 17:48 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x  2 root root 4096 2012-02-04 09:57 .
+drwxr-xr-x 67 root root 4096 2020-02-13 18:58 ..
+-rw-r--r--  1 root root  492 2009-04-17 10:36 php5
+-rw-r--r--  1 root root  102 2009-05-12 17:48 .placeholder
+
+/etc/cron.daily:
+total 56
+drwxr-xr-x  2 root root 4096 2012-02-04 09:57 .
+drwxr-xr-x 67 root root 4096 2020-02-13 18:58 ..
+-rwxr-xr-x  1 root root  633 2009-06-18 04:53 apache2
+-rwxr-xr-x  1 root root 8101 2009-04-17 12:30 apt
+-rwxr-xr-x  1 root root  314 2008-04-04 05:56 aptitude
+-rwxr-xr-x  1 root root  502 2007-12-12 08:59 bsdmainutils
+-rwxr-xr-x  1 root root   89 2008-10-09 13:14 logrotate
+-rwxr-xr-x  1 root root  954 2008-03-12 09:24 man-db
+-rwxr-xr-x  1 root root  183 2008-03-08 13:22 mlocate
+-rw-r--r--  1 root root  102 2009-05-12 17:48 .placeholder
+-rwxr-xr-x  1 root root  383 2009-03-09 06:26 samba
+-rwxr-xr-x  1 root root 3295 2009-05-12 17:48 standard
+-rwxr-xr-x  1 root root 1309 2007-11-23 04:06 sysklogd
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 2012-02-04 09:57 .
+drwxr-xr-x 67 root root 4096 2020-02-13 18:58 ..
+-rw-r--r--  1 root root  102 2009-05-12 17:48 .placeholder
+
+/etc/cron.monthly:
+total 16
+drwxr-xr-x  2 root root 4096 2012-02-04 09:57 .
+drwxr-xr-x 67 root root 4096 2020-02-13 18:58 ..
+-rw-r--r--  1 root root  102 2009-05-12 17:48 .placeholder
+-rwxr-xr-x  1 root root  129 2009-05-12 17:48 standard
+
+/etc/cron.weekly:
+total 24
+drwxr-xr-x  2 root root 4096 2012-02-04 09:57 .
+drwxr-xr-x 67 root root 4096 2020-02-13 18:58 ..
+-rwxr-xr-x  1 root root  528 2008-03-12 09:24 man-db
+-rw-r--r--  1 root root  102 2009-05-12 17:48 .placeholder
+-rwxr-xr-x  1 root root 2522 2008-01-28 12:47 popularity-contest
+-rwxr-xr-x  1 root root 1220 2007-11-23 04:06 sysklogd
+
+
+[-] Crontab contents:
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user	command
+17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
+25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+#
+
+
+### NETWORKING  ##########################################
+[-] Network and IP info:
+eth1      Link encap:Ethernet  HWaddr 00:0c:29:e6:60:87  
+          inet addr:192.168.92.141  Bcast:192.168.92.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:620 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:533 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:97620 (95.3 KB)  TX bytes:82074 (80.1 KB)
+          Interrupt:17 Base address:0x2000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:200 (200.0 B)  TX bytes:200 (200.0 B)
+
+
+[-] ARP history:
+? (192.168.92.2) at 00:50:56:F5:97:BA [ether] on eth1
+? (192.168.92.134) at 00:0C:29:73:7D:DA [ether] on eth1
+
+
+[-] Nameserver(s):
+nameserver 192.168.92.2
+
+
+[-] Default route:
+default         192.168.92.2    0.0.0.0         UG    0      0        0 eth1
+
+
+[-] Listening TCP:
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      -               
+
+
+[-] Listening UDP:
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+udp        0      0 192.168.92.141:137      0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:137             0.0.0.0:*                           -               
+udp        0      0 192.168.92.141:138      0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:138             0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:68              0.0.0.0:*                           -               
+
+
+### SERVICES #############################################
+[-] Running processes:
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.2  0.1   2844  1692 ?        Ss   18:58   0:01 /sbin/init
+root         2  0.0  0.0      0     0 ?        S<   18:58   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S<   18:58   0:00 [migration/0]
+root         4  0.0  0.0      0     0 ?        R<   18:58   0:00 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S<   18:58   0:00 [watchdog/0]
+root         6  0.0  0.0      0     0 ?        S<   18:58   0:00 [events/0]
+root         7  0.0  0.0      0     0 ?        S<   18:58   0:00 [khelper]
+root        41  0.0  0.0      0     0 ?        S<   18:58   0:00 [kblockd/0]
+root        44  0.0  0.0      0     0 ?        S<   18:58   0:00 [kacpid]
+root        45  0.0  0.0      0     0 ?        S<   18:58   0:00 [kacpi_notify]
+root       175  0.0  0.0      0     0 ?        S<   18:58   0:00 [kseriod]
+root       214  0.0  0.0      0     0 ?        S    18:58   0:00 [pdflush]
+root       215  0.0  0.0      0     0 ?        S    18:58   0:00 [pdflush]
+root       216  0.0  0.0      0     0 ?        S<   18:58   0:00 [kswapd0]
+root       258  0.0  0.0      0     0 ?        S<   18:58   0:00 [aio/0]
+root      1482  0.0  0.0      0     0 ?        S<   18:58   0:00 [ata/0]
+root      1485  0.0  0.0      0     0 ?        S<   18:58   0:00 [ata_aux]
+root      1494  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_0]
+root      1500  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_1]
+root      1513  0.0  0.0      0     0 ?        S<   18:58   0:00 [ksuspend_usbd]
+root      1517  0.0  0.0      0     0 ?        S<   18:58   0:00 [khubd]
+root      2369  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_2]
+root      2501  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_3]
+root      2502  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_4]
+root      2503  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_5]
+root      2504  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_6]
+root      2505  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_7]
+root      2506  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_8]
+root      2507  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_9]
+root      2508  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_10]
+root      2509  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_11]
+root      2510  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_12]
+root      2511  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_13]
+root      2512  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_14]
+root      2513  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_15]
+root      2514  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_16]
+root      2515  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_17]
+root      2516  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_18]
+root      2517  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_19]
+root      2518  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_20]
+root      2519  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_21]
+root      2520  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_22]
+root      2521  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_23]
+root      2522  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_24]
+root      2523  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_25]
+root      2524  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_26]
+root      2525  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_27]
+root      2526  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_28]
+root      2527  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_29]
+root      2528  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_30]
+root      2529  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_31]
+root      2530  0.0  0.0      0     0 ?        S<   18:58   0:00 [scsi_eh_32]
+root      2717  0.0  0.0      0     0 ?        S<   18:58   0:00 [kjournald]
+root      2886  0.0  0.0   2224   660 ?        S<s  18:58   0:00 /sbin/udevd --daemon
+root      3188  0.0  0.0      0     0 ?        S<   18:58   0:00 [kgameportd]
+root      3363  0.0  0.0      0     0 ?        S<   18:58   0:00 [kpsmoused]
+root      4644  0.0  0.0   1716   488 tty4     Ss+  18:58   0:00 /sbin/getty 38400 tty4
+root      4647  0.0  0.0   1716   492 tty5     Ss+  18:58   0:00 /sbin/getty 38400 tty5
+root      4653  0.0  0.0   1716   488 tty2     Ss+  18:58   0:00 /sbin/getty 38400 tty2
+root      4656  0.0  0.0   1716   492 tty3     Ss+  18:58   0:00 /sbin/getty 38400 tty3
+root      4661  0.0  0.0   1716   488 tty6     Ss+  18:58   0:00 /sbin/getty 38400 tty6
+syslog    4693  0.0  0.0   1936   652 ?        Ss   18:58   0:00 /sbin/syslogd -u syslog
+root      4712  0.0  0.0   1872   536 ?        S    18:58   0:00 /bin/dd bs 1 if /proc/kmsg of /var/run/klogd/kmsg
+klog      4714  0.0  0.1   3164  2036 ?        Ss   18:58   0:00 /sbin/klogd -P /var/run/klogd/kmsg
+root      4733  0.0  0.0   5316   984 ?        Ss   18:58   0:00 /usr/sbin/sshd
+root      4789  0.0  0.0   1772   524 ?        S    18:58   0:00 /bin/sh /usr/bin/mysqld_safe
+root      4831  0.0  1.5 126988 16228 ?        Sl   18:58   0:00 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=root --pid-file=/var/
+root      4833  0.0  0.0   1700   560 ?        S    18:58   0:00 logger -p daemon.err -t mysqld_safe -i -t mysqld
+root      4906  0.0  0.1   6532  1352 ?        Ss   18:58   0:00 /usr/sbin/nmbd -D
+root      4908  0.0  0.2  10108  2328 ?        Ss   18:58   0:00 /usr/sbin/smbd -D
+root      4922  0.0  0.1   8084  1340 ?        Ss   18:58   0:00 /usr/sbin/winbindd
+root      4924  0.0  0.1   8084  1164 ?        S    18:58   0:00 /usr/sbin/winbindd
+daemon    4943  0.0  0.0   1984   420 ?        Ss   18:58   0:00 /usr/sbin/atd
+root      4954  0.0  0.0   2104   884 ?        Ss   18:58   0:00 /usr/sbin/cron
+root      4976  0.0  0.5  20464  6192 ?        Ss   18:58   0:00 /usr/sbin/apache2 -k start
+root      4981  0.0  0.1   8092  1276 ?        S    18:58   0:00 /usr/sbin/winbindd
+www-data  4986  0.0  0.3  20464  3280 ?        S    18:58   0:00 /usr/sbin/apache2 -k start
+www-data  4987  0.0  0.3  20464  3280 ?        S    18:58   0:00 /usr/sbin/apache2 -k start
+www-data  4990  0.0  0.3  20464  3280 ?        S    18:58   0:00 /usr/sbin/apache2 -k start
+www-data  4992  0.0  0.3  20464  3280 ?        S    18:58   0:00 /usr/sbin/apache2 -k start
+www-data  4994  0.0  0.3  20464  3280 ?        S    18:58   0:00 /usr/sbin/apache2 -k start
+root      5009  0.0  0.0   8084   872 ?        S    18:58   0:00 /usr/sbin/winbindd
+root      5014  0.0  0.0  10108  1028 ?        S    18:58   0:00 /usr/sbin/smbd -D
+dhcp      5028  0.0  0.0   2440   548 ?        Ss   18:58   0:00 dhclient eth1
+root      5035  0.0  0.0   1716   492 tty1     Ss+  18:58   0:00 /sbin/getty 38400 tty1
+root      5036  0.0  0.3  11360  3720 ?        Ss   19:02   0:00 sshd: robert [priv]
+robert    5038  0.0  0.1  11360  1840 ?        S    19:02   0:00 sshd: robert@pts/0
+robert    5039  0.0  0.3   5888  3808 pts/0    Ss   19:02   0:00 python /bin/kshell
+robert    5040  0.0  0.0   1772   484 pts/0    S    19:02   0:00 sh -c /bin/bash
+robert    5041  0.0  0.2   5440  2868 pts/0    S    19:02   0:00 /bin/bash
+robert    5083  0.0  0.1   4212  1688 pts/0    S+   19:05   0:00 /bin/bash ./LinEnum.sh -t -s
+robert    5084  0.1  0.1   4748  1516 pts/0    R+   19:05   0:00 /bin/bash ./LinEnum.sh -t -s
+robert    5086  0.0  0.0   2932   616 pts/0    S+   19:05   0:00 tee -a
+robert    5369  0.0  0.1   4748  1312 pts/0    R+   19:05   0:00 /bin/bash ./LinEnum.sh -t -s
+robert    5370  0.0  0.0   2644  1008 pts/0    R+   19:05   0:00 ps aux
+
+
+[-] Process binaries and associated permissions (from above list):
+-rwxr-xr-x 1 root root  702160 2008-05-12 14:33 /bin/bash
+-rwxr-xr-x 1 root root   48308 2008-04-04 02:42 /bin/dd
+lrwxrwxrwx 1 root root       4 2012-02-04 09:51 /bin/sh -> dash
+-rwxr-xr-x 1 root root   15168 2008-09-26 08:43 /sbin/getty
+-rwxr-xr-x 1 root root   89604 2008-04-11 09:50 /sbin/init
+-rwxr-xr-x 1 root root   23048 2007-11-23 04:06 /sbin/klogd
+-rwxr-xr-x 1 root root   32080 2007-11-23 04:06 /sbin/syslogd
+-rwxr-xr-x 1 root root   67608 2009-04-14 17:45 /sbin/udevd
+-rwxr-xr-x 1 root root  348908 2009-06-18 04:53 /usr/sbin/apache2
+-rwxr-xr-x 1 root root   16040 2007-02-20 08:41 /usr/sbin/atd
+-rwxr-xr-x 1 root root   31904 2009-05-12 17:48 /usr/sbin/cron
+-rwxr-xr-x 1 root root 7399552 2008-11-14 14:17 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root 1077056 2009-03-09 06:26 /usr/sbin/nmbd
+-rwxr-xr-x 1 root root 3874172 2009-03-09 06:26 /usr/sbin/smbd
+-rwxr-xr-x 1 root root  375684 2008-05-14 10:35 /usr/sbin/sshd
+-rwxr-xr-x 1 root root 2575832 2009-03-09 06:26 /usr/sbin/winbindd
+
+
+[-] /etc/init.d/ binary permissions:
+total 300
+drwxr-xr-x  2 root root  4096 2012-02-04 09:57 .
+drwxr-xr-x 67 root root  4096 2020-02-13 18:58 ..
+-rwxr-xr-x  1 root root  5736 2009-06-18 04:42 apache2
+-rwxr-xr-x  1 root root  2653 2009-05-06 06:39 apparmor
+-rwxr-xr-x  1 root root   969 2007-02-20 08:41 atd
+-rwxr-xr-x  1 root root  3597 2009-01-23 10:01 bootclean
+-rwxr-xr-x  1 root root  2121 2009-01-23 10:01 bootlogd
+-rwxr-xr-x  1 root root  1768 2009-01-23 10:01 bootmisc.sh
+-rwxr-xr-x  1 root root  3454 2009-01-23 10:01 checkfs.sh
+-rwxr-xr-x  1 root root 10602 2009-01-23 10:01 checkroot.sh
+-rwxr-xr-x  1 root root  6355 2007-05-30 08:29 console-screen.sh
+-rwxr-xr-x  1 root root  1634 2008-11-27 13:47 console-setup
+-rwxr-xr-x  1 root root  1761 2009-05-12 17:48 cron
+-rwxr-xr-x  1 root root  1223 2007-06-22 00:55 dns-clean
+-rwxr-xr-x  1 root root  7195 2008-09-12 10:32 glibc.sh
+-rwxr-xr-x  1 root root  1228 2009-01-23 10:01 halt
+-rwxr-xr-x  1 root root   909 2009-01-23 10:01 hostname.sh
+-rwxr-xr-x  1 root root  4528 2008-09-26 08:43 hwclockfirst.sh
+-rwxr-xr-x  1 root root  4521 2008-09-26 08:43 hwclock.sh
+-rwxr-xr-x  1 root root  1376 2008-11-27 13:47 keyboard-setup
+-rwxr-xr-x  1 root root   944 2009-01-23 10:01 killprocs
+-rwxr-xr-x  1 root root  1729 2007-11-23 04:06 klogd
+-rwxr-xr-x  1 root root   748 2006-01-23 13:47 loopback
+-rwxr-xr-x  1 root root  1399 2008-10-06 08:51 module-init-tools
+-rwxr-xr-x  1 root root   596 2009-01-23 10:01 mountall-bootclean.sh
+-rwxr-xr-x  1 root root  2430 2009-01-23 10:01 mountall.sh
+-rwxr-xr-x  1 root root  1465 2009-01-23 10:01 mountdevsubfs.sh
+-rwxr-xr-x  1 root root  1544 2009-01-23 10:01 mountkernfs.sh
+-rwxr-xr-x  1 root root   594 2009-01-23 10:01 mountnfs-bootclean.sh
+-rwxr-xr-x  1 root root  1244 2009-01-23 10:01 mountoverflowtmp
+-rwxr-xr-x  1 root root  3123 2009-01-23 10:01 mtab.sh
+-rwxr-xr-x  1 root root  5755 2008-11-14 12:54 mysql
+-rwxr-xr-x  1 root root  2515 2008-11-14 12:54 mysql-ndb
+-rwxr-xr-x  1 root root  1905 2008-11-14 12:54 mysql-ndb-mgm
+-rwxr-xr-x  1 root root  1772 2007-12-03 15:50 networking
+-rwxr-xr-x  1 root root  2377 2007-10-23 13:03 pcmciautils
+-rwxr-xr-x  1 root root   375 2007-10-04 15:56 pppd-dns
+-rwxr-xr-x  1 root root  1261 2008-07-10 05:28 procps
+-rwxr-xr-x  1 root root  7891 2009-01-23 10:01 rc
+-rwxr-xr-x  1 root root   522 2009-01-23 10:01 rc.local
+-rwxr-xr-x  1 root root   117 2009-01-23 10:01 rcS
+-rw-r--r--  1 root root  1335 2009-01-23 10:01 README
+-rwxr-xr-x  1 root root   692 2009-01-23 10:01 reboot
+-rwxr-xr-x  1 root root  1000 2009-01-23 10:01 rmnologin
+-rwxr-xr-x  1 root root  4945 2008-04-10 20:12 rsync
+-rwxr-xr-x  1 root root  2663 2009-03-09 06:17 samba
+-rwxr-xr-x  1 root root  1199 2009-01-23 10:01 sendsigs
+-rwxr-xr-x  1 root root   585 2009-01-23 10:01 single
+-rwxr-xr-x  1 root root  4215 2009-01-23 10:01 skeleton
+-rwxr-xr-x  1 root root  3840 2012-02-05 09:42 ssh
+-rwxr-xr-x  1 root root   510 2009-01-23 10:01 stop-bootlogd
+-rwxr-xr-x  1 root root   647 2009-01-23 10:01 stop-bootlogd-single
+-rwxr-xr-x  1 root root  3343 2007-11-23 04:06 sysklogd
+-rwxr-xr-x  1 root root  2488 2009-04-14 17:44 udev
+-rwxr-xr-x  1 root root   706 2009-04-14 17:44 udev-finish
+-rwxr-xr-x  1 root root  7239 2009-01-20 07:51 ufw
+-rwxr-xr-x  1 root root  4030 2009-01-23 10:01 umountfs
+-rwxr-xr-x  1 root root  1833 2009-01-23 10:01 umountnfs.sh
+-rwxr-xr-x  1 root root  1863 2009-01-23 10:01 umountroot
+-rwxr-xr-x  1 root root  1815 2009-01-23 10:01 urandom
+-rwxr-xr-x  1 root root  2445 2009-01-23 10:01 waitnfs.sh
+-rwxr-xr-x  1 root root  1224 2009-03-09 06:17 winbind
+-rwxr-xr-x  1 root root  1626 2008-03-12 17:27 wpa-ifupdown
+
+
+### SOFTWARE #############################################
+[-] Sudo version:
+Sudo version 1.6.9p10
+
+
+[-] MYSQL version:
+mysql  Ver 14.12 Distrib 5.0.51a, for debian-linux-gnu (i486) using readline 5.2
+
+
+[+] We can connect to the local MYSQL service as 'root' and without a password!
+mysqladmin  Ver 8.41 Distrib 5.0.51a, for debian-linux-gnu on i486
+Copyright (C) 2000-2006 MySQL AB
+This software comes with ABSOLUTELY NO WARRANTY. This is free software,
+and you are welcome to modify and redistribute it under the GPL license
+
+Server version		5.0.51a-3ubuntu5.4
+Protocol version	10
+Connection		Localhost via UNIX socket
+UNIX socket		/var/run/mysqld/mysqld.sock
+Uptime:			6 min 55 sec
+
+Threads: 1  Questions: 35  Slow queries: 0  Opens: 24  Flush tables: 1  Open tables: 18  Queries per second avg: 0.084
+
+
+[-] Apache version:
+Server version: Apache/2.2.8 (Ubuntu)
+Server built:   Jun 18 2009 08:47:00
+
+
+[-] Apache user configuration:
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+
+
+[-] www home dir contents:
+/var/www/:
+total 44K
+drwxr-xr-x  5 root root 4.0K 2012-02-06 11:44 .
+drwxr-xr-x 14 root root 4.0K 2012-02-04 09:57 ..
+-rw-r--r--  1 root root 1.5K 2012-02-06 11:31 checklogin.php
+-rw-r--r--  1 root root  298 2012-02-04 11:11 database.sql
+drwxr-xr-x  2 root root 4.0K 2012-02-06 11:44 images
+-rw-r--r--  1 root root 1.3K 2012-02-06 12:07 index.php
+drwxr-xr-x  2 root root 4.0K 2012-02-04 18:33 john
+-rw-r--r--  1 root root  176 2012-02-04 12:39 login_success.php
+-rw-r--r--  1 root root   78 2012-02-04 11:33 logout.php
+-rw-r--r--  1 root root  606 2012-02-06 15:42 member.php
+drwxr-xr-x  2 root root 4.0K 2012-02-04 18:30 robert
+
+/var/www/images:
+total 40K
+drwxr-xr-x 2 root root 4.0K 2012-02-06 11:44 .
+drwxr-xr-x 5 root root 4.0K 2012-02-06 11:44 ..
+-rw-r--r-- 1 root root  29K 2012-02-06 11:43 cartoon_goat.png
+
+/var/www/john:
+total 12K
+drwxr-xr-x 2 root root 4.0K 2012-02-04 18:33 .
+drwxr-xr-x 5 root root 4.0K 2012-02-06 11:44 ..
+-rw-r--r-- 1 root root 2.2K 2012-02-04 18:33 john.php
+
+/var/www/robert:
+total 12K
+drwxr-xr-x 2 root root 4.0K 2012-02-04 18:30 .
+drwxr-xr-x 5 root root 4.0K 2012-02-06 11:44 ..
+-rw-r--r-- 1 root root 2.2K 2012-02-04 18:33 robert.php
+
+
+### INTERESTING FILES ####################################
+[-] Useful file locations:
+/bin/netcat
+/usr/bin/wget
+
+
+[-] Can we read/write sensitive files:
+-rw-r--r-- 1 root root 1145 2012-02-04 18:05 /etc/passwd
+-rw-r--r-- 1 root root 827 2012-02-04 18:05 /etc/group
+-rw-r--r-- 1 root root 497 2012-02-04 09:51 /etc/profile
+-rw-r----- 1 root shadow 855 2012-02-05 00:30 /etc/shadow
+
+
+[-] SUID files:
+-rwsr-xr-- 1 root www-data 10276 2009-06-18 04:53 /usr/lib/apache2/suexec
+-rwsr-xr-x 1 root root 4588 2008-08-22 19:10 /usr/lib/eject/dmcrypt-get-device
+-rwsr-xr-x 1 root root 168340 2008-05-14 10:35 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root 9624 2008-09-12 10:32 /usr/lib/pt_chown
+-rwsr-xr-x 1 root root 23952 2008-12-08 04:14 /usr/bin/chsh
+-rwsr-xr-x 2 root root 107936 2009-02-16 22:17 /usr/bin/sudo
+-rwsr-xr-x 1 root root 12296 2007-12-10 12:33 /usr/bin/traceroute6.iputils
+-rwsr-xr-x 1 root root 19144 2008-12-08 04:14 /usr/bin/newgrp
+-rwsr-xr-x 2 root root 107936 2009-02-16 22:17 /usr/bin/sudoedit
+-rwsr-xr-x 1 root root 28624 2008-12-08 04:14 /usr/bin/chfn
+-rwsr-xr-x 1 root root 11048 2007-12-10 12:33 /usr/bin/arping
+-rwsr-xr-x 1 root root 37360 2008-12-08 04:14 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root 46084 2008-03-31 00:32 /usr/bin/mtr
+-rwsr-xr-x 1 root root 29104 2008-12-08 04:14 /usr/bin/passwd
+-rwsr-sr-x 1 daemon daemon 38464 2007-02-20 08:41 /usr/bin/at
+-rwsr-xr-- 1 root dip 269256 2007-10-04 15:57 /usr/sbin/pppd
+-rwsr-sr-x 1 libuuid libuuid 12336 2008-03-27 13:25 /usr/sbin/uuidd
+-rwsr-xr-- 1 root dhcp 2960 2008-04-02 09:38 /lib/dhcp3-client/call-dhclient-script
+-rwsr-xr-x 1 root root 81368 2008-09-26 08:43 /bin/mount
+-rwsr-xr-x 1 root root 26684 2007-12-10 12:33 /bin/ping6
+-rwsr-xr-- 1 root fuse 20056 2008-02-26 13:25 /bin/fusermount
+-rwsr-xr-x 1 root root 25540 2008-12-08 04:14 /bin/su
+-rwsr-xr-x 1 root root 30856 2007-12-10 12:33 /bin/ping
+-rwsr-xr-x 1 root root 63584 2008-09-26 08:43 /bin/umount
+-rwsr-xr-x 1 root root 9260 2009-03-09 06:26 /sbin/umount.cifs
+-rwsr-xr-x 1 root root 23340 2009-03-09 06:26 /sbin/mount.cifs
+
+
+[+] Possibly interesting SUID files:
+-rwsr-xr-- 1 root dhcp 2960 2008-04-02 09:38 /lib/dhcp3-client/call-dhclient-script
+
+
+[-] SGID files:
+-rwxr-sr-x 1 root tty 9960 2008-09-26 08:43 /usr/bin/wall
+-rwxr-sr-x 1 root shadow 16424 2008-12-08 04:14 /usr/bin/expiry
+-rwxr-sr-x 1 root crontab 26928 2009-05-12 17:48 /usr/bin/crontab
+-rwxr-sr-x 1 root tty 8192 2007-12-12 08:59 /usr/bin/bsd-write
+-rwxr-sr-x 1 root mlocate 30508 2008-03-08 13:22 /usr/bin/mlocate
+-rwsr-sr-x 1 daemon daemon 38464 2007-02-20 08:41 /usr/bin/at
+-rwxr-sr-x 1 root shadow 37904 2008-12-08 04:14 /usr/bin/chage
+-rwxr-sr-x 1 root ssh 76580 2008-05-14 10:35 /usr/bin/ssh-agent
+-rwsr-sr-x 1 libuuid libuuid 12336 2008-03-27 13:25 /usr/sbin/uuidd
+-rwxr-sr-x 1 root shadow 19584 2008-05-16 11:21 /sbin/unix_chkpwd
+
+
+[+] Private SSH keys found!:
+/home/robert/LinEnum.sh
+
+
+[+] AWS secret keys found!:
+/home/robert/LinEnum.sh
+
+
+[-] World-writable files (excluding /proc and /sys):
+-rw-rw-rw- 1 root root 12896 2012-02-04 10:08 /usr/lib/lib_mysqludf_sys.so
+
+
+[-] NFS displaying partitions and filesystems - you need to check if exotic filesystems
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# /dev/sda1
+UUID=40a5b382-9839-460b-89cd-99323c331651 /               ext3    relatime,errors=remount-ro 0       1
+# /dev/sda5
+UUID=e1b49fcb-122e-4463-97db-fbff15e6ffde none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+
+[-] Can't search *.conf files as no keyword was entered
+
+[-] Can't search *.php files as no keyword was entered
+
+[-] Can't search *.log files as no keyword was entered
+
+[-] Can't search *.ini files as no keyword was entered
+
+[-] All *.conf files in /etc (recursive 1 level):
+-rw-r--r-- 1 root root 0 2012-02-04 09:57 /etc/inetd.conf
+-rw-r--r-- 1 root root 2401 2012-02-04 16:45 /etc/sysctl.conf
+-rw-r--r-- 1 root root 2975 2012-02-04 09:51 /etc/adduser.conf
+-rw-r--r-- 1 root root 214 2008-03-08 13:22 /etc/updatedb.conf
+-rw-r--r-- 1 root root 34 2008-02-18 23:33 /etc/e2fsck.conf
+-rw-r----- 1 root fuse 216 2008-02-26 13:25 /etc/fuse.conf
+-rw-r--r-- 1 root root 92 2007-10-20 07:51 /etc/host.conf
+-rw-r--r-- 1 root root 599 2008-10-09 13:14 /etc/logrotate.conf
+-rw-r--r-- 1 root root 34 2012-02-04 09:51 /etc/ld.so.conf
+-rw-r--r-- 1 root root 417 2008-03-27 13:25 /etc/mke2fs.conf
+-rw-r--r-- 1 root root 1260 2008-02-21 02:22 /etc/ucf.conf
+-rw-r--r-- 1 root root 4793 2008-03-28 18:26 /etc/hdparm.conf
+-rw-r--r-- 1 root root 2407 2012-02-04 18:45 /etc/lshell.conf
+-rw-r--r-- 1 root root 13144 2007-11-16 07:04 /etc/ltrace.conf
+-rw-r--r-- 1 root root 354 2007-03-05 01:54 /etc/fdmount.conf
+-rw-r--r-- 1 root root 2689 2008-09-12 08:45 /etc/gai.conf
+-rw-r--r-- 1 root root 342 2012-02-04 09:57 /etc/popularity-contest.conf
+-rw-r--r-- 1 root root 600 2007-10-23 11:01 /etc/deluser.conf
+-rw-r--r-- 1 root root 43 2020-02-13 18:58 /etc/resolv.conf
+-rw-r--r-- 1 root root 2969 2008-03-11 11:51 /etc/debconf.conf
+-rw-r--r-- 1 root root 475 2007-10-20 07:51 /etc/nsswitch.conf
+-rw-r--r-- 1 root root 552 2008-05-16 11:18 /etc/pam.conf
+-rw-r--r-- 1 root root 1614 2007-11-23 04:06 /etc/syslog.conf
+-rw-r--r-- 1 root root 240 2012-02-04 09:58 /etc/kernel-img.conf
+
+
+[-] Current user's history files:
+-rw------- 1 robert robert 29 2020-02-12 19:46 /home/robert/.bash_history
+
+
+[+] Root's history files are accessible!
+-rw------- 1 root root 59 2012-02-06 20:24 /root/.bash_history
+-rw------- 1 root root  1 2012-02-05 10:38 /root/.mysql_history
+-rw------- 1 root root  5 2012-02-06 18:38 /root/.nano_history
+
+
+[-] Location and contents (if accessible) of .bash_history file(s):
+/home/robert/.bash_history
+ls -lah
+env
+cat .bashrc
+exit
+/home/john/.bash_history
+/home/loneferret/.bash_history
+
+
+[-] Any interesting mail in /var/mail:
+total 8
+drwxrwsr-x  2 root mail 4096 2012-02-04 09:51 .
+drwxr-xr-x 14 root root 4096 2012-02-04 09:57 ..
+
+
+### SCAN COMPLETE ####################################

@@ -1,0 +1,277 @@
+root@Kali:~/Vulnhub/Kioptrix-4# unicornscan -v -I -p a 192.168.92.141
+adding 192.168.92.141/32 mode `TCPscan' ports `a' pps 300
+using interface(s) eth0
+scaning 1.00e+00 total hosts with 6.55e+04 total packets, should take a little longer than 3 Minutes, 45 Seconds
+TCP open 192.168.92.141:22  ttl 64
+TCP open 192.168.92.141:445  ttl 64
+TCP open 192.168.92.141:139  ttl 64
+TCP open 192.168.92.141:80  ttl 64
+sender statistics 297.2 pps with 65536 packets sent total
+listener statistics 48938 packets recieved 0 packets droped and 0 interface drops
+TCP open	             ssh[   22]		from 192.168.92.141  ttl 64 
+TCP open	            http[   80]		from 192.168.92.141  ttl 64 
+TCP open	     netbios-ssn[  139]		from 192.168.92.141  ttl 64 
+TCP open	    microsoft-ds[  445]		from 192.168.92.141  ttl 64 
+
+root@Kali:~/Vulnhub/Kioptrix-4# nmap -Pn -n -sV -p22,80,139,445 192.168.92.141 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-11 00:39 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:f5:97:ba
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::860:29a0:cd21:f477: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff21:f477         (NDP Solicited-node)
+|       ff02::1:ffba:27aa         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ffba:27aa         (Solicited-Node Address)
+|       ff02::fb                  (mDNSv6)
+|       ff02::c                   (SSDP)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::860:29a0:cd21:f477   MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::5de2:e210:c1ba:27aa  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.92.141
+Host is up (0.00037s latency).
+
+PORT    STATE SERVICE     VERSION
+22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1.2 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1.2
+| ssh-hostkey: 
+|   1024 9b:ad:4f:f2:1e:c5:f2:39:14:b9:d3:a0:0b:e8:41:71 (DSA)
+|_  2048 85:40:c6:d5:41:26:05:34:ad:f8:6e:f2:a7:6b:4f:0e (RSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (4)
+|   server_host_key_algorithms: (2)
+|   encryption_algorithms: (13)
+|   mac_algorithms: (7)
+|_  compression_algorithms: (2)
+80/tcp  open  http        Apache httpd 2.2.8 ((Ubuntu) PHP/5.2.4-2ubuntu5.6 with Suhosin-Patch)
+|_http-apache-negotiation: mod_negotiation enabled.
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.141
+|   url                                 method
+|   http://192.168.92.141:80/           FORM
+|_  http://192.168.92.141:80/index.php  FORM
+|_http-chrono: Request times for /; avg: 185.11ms; min: 183.51ms; max: 187.41ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.141
+|     
+|     Path: http://192.168.92.141:80/index.php
+|     Line number: 32
+|     Comment: 
+|_        <!-- Image from http://www.wpclipart.com-->
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.141
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://192.168.92.141:80/
+|     Form id: myusername
+|     Form action: checklogin.php
+|     
+|     Path: http://192.168.92.141:80/checklogin.php
+|     Form id: 
+|     Form action: index.php
+|     
+|     Path: http://192.168.92.141:80/index.php
+|     Form id: myusername
+|_    Form action: checklogin.php
+|_http-date: Tue, 11 Feb 2020 00:39:41 GMT; +8h00m03s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /database.sql: Possible database backup
+|   /icons/: Potentially interesting folder w/ directory listing
+|   /images/: Potentially interesting directory w/ listing on 'apache/2.2.8 (ubuntu) php/5.2.4-2ubuntu5.6 with suhosin-patch'
+|_  /index/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Tue, 11 Feb 2020 00:39:43 GMT
+|   Server: Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.6 with Suhosin-Patch
+|   X-Powered-By: PHP/5.2.4-2ubuntu5.6
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+| http-php-version: Versions from logo query (less accurate): 5.1.3 - 5.1.6, 5.2.0 - 5.2.17
+| Versions from credits query (more accurate): 5.2.3 - 5.2.5, 5.2.6RC3
+|_Version from header x-powered-by: PHP/5.2.4-2ubuntu5.6
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.6 with Suhosin-Patch
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 2
+|     /images/
+|       png: 1
+|   Longest directory structure:
+|     Depth: 1
+|     Dir: /images/
+|   Total files found (by extension):
+|_    Other: 1; php: 2; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+|_http-trace: TRACE is enabled
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp open  netbios-ssn Samba smbd 3.0.28a (workgroup: WORKGROUP)
+MAC Address: 00:0C:29:E6:60:87 (VMware)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.92.141"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_msrpc-enum: NT_STATUS_OBJECT_NAME_NOT_FOUND
+|_nbstat: NetBIOS name: KIOPTRIX4, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 22    0       346.40     50.90   50.0%
+| 80    1       444.60     90.87   50.0%
+| 139   0       381.60     38.82   50.0%
+|_445   0       385.00     38.32   20.0%
+| smb-enum-domains: 
+|   Builtin
+|     Groups: n/a
+|     Users: n/a
+|     Creation time: unknown
+|     Passwords: min length: 5; min age: n/a days; max age: n/a days; history: n/a passwords
+|     Account lockout disabled
+|   KIOPTRIX4
+|     Groups: n/a
+|     Users: nobody\x00, robert\x00, root\x00, john\x00, loneferret\x00
+|     Creation time: unknown
+|     Passwords: min length: 5; min age: n/a days; max age: n/a days; history: n/a passwords
+|_    Account lockout disabled
+| smb-enum-sessions: 
+|_  <nobody>
+| smb-enum-shares: 
+|   account_used: guest
+|   \\192.168.92.141\IPC$: 
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: IPC Service (Kioptrix4 server (Samba, Ubuntu))
+|     Users: 3
+|     Max Users: <unlimited>
+|     Path: C:\tmp
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\192.168.92.141\print$: 
+|     Type: STYPE_DISKTREE
+|     Comment: Printer Drivers
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\var\lib\samba\printers
+|     Anonymous access: <none>
+|_    Current user access: <none>
+| smb-mbenum: 
+|   DFS Root
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Master Browser
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Potential Browser
+|     DELL  0.0  
+|   Print server
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Server
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Server service
+|     DELL       0.0  
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Unix server
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Windows NT/2000/XP/2003 server
+|     DELL       0.0  
+|     KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+|   Workstation
+|     DELL       0.0  
+|_    KIOPTRIX4  0.0  Kioptrix4 server (Samba, Ubuntu)
+| smb-os-discovery: 
+|   OS: Unix (Samba 3.0.28a)
+|   Computer name: Kioptrix4
+|   NetBIOS computer name: 
+|   Domain name: localdomain
+|   FQDN: Kioptrix4.localdomain
+|_  System time: 2020-02-10T19:39:43-05:00
+| smb-protocols: 
+|   dialects: 
+|_    NT LM 0.12 (SMBv1) [dangerous, but default]
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb-system-info: ERROR: Script execution failed (use -d to debug)
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: false
+| smb-vuln-regsvc-dos: 
+|   VULNERABLE:
+|   Service regsvc in Microsoft Windows systems vulnerable to denial of service
+|     State: VULNERABLE
+|       The service regsvc in Microsoft Windows 2000 systems is vulnerable to denial of service caused by a null deference
+|       pointer. This script will crash the service if it is vulnerable. This vulnerability was discovered by Ron Bowes
+|       while working on smb-enum-sessions.
+|_          
+|_smb2-time: Protocol negotiation failed (SMB2)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 409.38 seconds
+
