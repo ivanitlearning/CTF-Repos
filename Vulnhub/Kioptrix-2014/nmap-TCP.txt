@@ -1,0 +1,196 @@
+root@Kali:~/Vulnhub/Kioptrix-2014# nmap -Pn -n -sV -p22,80,8080 192.168.92.142 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-15 10:28 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:f5:97:ba
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::860:29a0:cd21:f477: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff21:f477         (NDP Solicited-node)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ff05:f1ad         (Solicited-Node Address)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::c                   (SSDP)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::860:29a0:cd21:f477  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::44dc:111:4705:f1ad  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.92.142
+Host is up (0.00038s latency).
+
+PORT     STATE  SERVICE VERSION
+22/tcp   closed ssh
+80/tcp   open   http    Apache httpd 2.2.21 ((FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8)
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 9697.51ms; min: 150.22ms; max: 16079.25ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.142
+|     
+|     Path: http://192.168.92.142:80/
+|     Line number: 3
+|     Comment: 
+|         <!--
+|           <META HTTP-EQUIV="refresh" CONTENT="5;URL=pChart2.1.3/index.php">
+|_          -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Sat, 15 Feb 2020 02:33:08 GMT
+|   Server: Apache/2.2.21 (FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8
+|   Last-Modified: Sat, 29 Mar 2014 17:22:52 GMT
+|   ETag: "105c6-98-4f5c211723300"
+|   Accept-Ranges: bytes
+|   Content-Length: 152
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-traceroute: ERROR: Script execution failed (use -d to debug)
+| http-useragent-tester: 
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 123 names had status ERROR
+| intranet : 200
+| oracle : 200
+| backup : 200
+|_dns1 : 200
+|_http-vuln-cve2014-3704: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+8080/tcp open   http    Apache httpd 2.2.21 ((FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8)
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 7097.23ms; min: 100.75ms; max: 16045.80ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=192.168.92.142
+|   Found the following error pages: 
+|   
+|   Error Code: 403
+|_  	http://192.168.92.142:8080/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Sat, 15 Feb 2020 02:34:28 GMT
+|   Server: Apache/2.2.21 (FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8
+|   Content-Length: 202
+|   Connection: close
+|   Content-Type: text/html; charset=iso-8859-1
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-traceroute: ERROR: Script execution failed (use -d to debug)
+| http-useragent-tester: 
+|   Allowed User Agents: 
+|     libcurl-agent/1.0
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|     WWW-Mechanize/1.34
+|   Change in Status Code: 
+|     libwww: 403
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html): 403
+|     lwp-trivial: 403
+|_    PHP/: 403
+| http-vhosts: 
+| demo : 403
+| admin : 403
+|_125 names had status ERROR
+|_http-xssed: No previously reported XSS vuln.
+MAC Address: 00:0C:29:27:70:60 (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.92.142"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 22    0       370.25     105.34  60.0%
+| 80    0       414.00     83.44   80.0%
+|_8080  0       457.67     25.17   70.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 366.77 seconds
