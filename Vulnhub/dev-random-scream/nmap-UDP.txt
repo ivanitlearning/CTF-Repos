@@ -1,0 +1,191 @@
+root@Kali:~/Vulnhub/dev-random-scream# unicornscan -mU -v -I -p a 192.168.116.131
+adding 192.168.116.131/32 mode `UDPscan' ports `a' pps 300
+using interface(s) eth0
+scaning 1.00e+00 total hosts with 6.55e+04 total packets, should take a little longer than 3 Minutes, 45 Seconds
+UDP open 192.168.116.131:1033  ttl 128
+UDP open 192.168.116.131:137  ttl 128
+UDP open 1.1.1.1:53  ttl 63
+sender statistics 297.6 pps with 65545 packets sent total
+listener statistics 108 packets recieved 0 packets droped and 0 interface drops
+UDP open	          domain[   53]		from 1.1.1.1  ttl 63 
+UDP open	      netbios-ns[  137]		from 192.168.116.131  ttl 128 
+UDP open	   netinfo-local[ 1033]		from 192.168.116.131  ttl 128 
+
+# Unreliable UDP scans
+
+root@Kali:~/Vulnhub/dev-random-scream# unicornscan -mU -v -I -p a 192.168.116.131
+adding 192.168.116.131/32 mode `UDPscan' ports `a' pps 300
+using interface(s) eth0
+scaning 1.00e+00 total hosts with 6.55e+04 total packets, should take a little longer than 3 Minutes, 45 Seconds
+UDP open 1.1.1.1:53  ttl 63
+UDP open 192.168.116.131:1474  ttl 128
+UDP open 192.168.116.131:1475  ttl 128
+UDP open 192.168.116.131:1476  ttl 128
+UDP open 192.168.116.131:1477  ttl 128
+sender statistics 295.0 pps with 65545 packets sent total
+listener statistics 450 packets recieved 0 packets droped and 0 interface drops
+UDP open	          domain[   53]		from 1.1.1.1  ttl 63 
+UDP open	      telefinder[ 1474]		from 192.168.116.131  ttl 128 
+UDP open	     taligent-lm[ 1475]		from 192.168.116.131  ttl 128 
+UDP open	        clvm-cfg[ 1476]		from 192.168.116.131  ttl 128 
+UDP open	   ms-sna-server[ 1477]		from 192.168.116.131  ttl 128 
+
+
+root@Kali:~/Vulnhub/dev-random-scream# nmap -Pn -n -sUV -p53,137,1033 192.168.116.131 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-23 01:35 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.116.2  MAC: 00:50:56:e1:18:f7
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::6912:6d79:3054:6b2b: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff54:6b2b         (NDP Solicited-node)
+|       ff02::1:ff51:639b         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:2                 (All-dhcp-agents)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::c                   (SSDP)
+|       ff02::fb                  (mDNSv6)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| lltd-discovery: 
+|   192.168.116.131
+|     Hostname: Scream
+|     Mac: 00:0c:29:cc:7f:56 (VMware)
+|_  Use the newtargets script-arg to add the results as targets
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::b9e5:c529:6351:639b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.116.131
+Host is up (0.00044s latency).
+
+PORT     STATE         SERVICE       VERSION
+53/udp   open|filtered domain
+|_dns-cache-snoop: 0 of 100 tested domains are cached.
+|_dns-nsec-enum: Can't determine domain for host 192.168.116.131; use dns-nsec-enum.domains script arg.
+|_dns-nsec3-enum: Can't determine domain for host 192.168.116.131; use dns-nsec3-enum.domains script arg.
+137/udp  open|filtered netbios-ns
+1033/udp open|filtered netinfo-local
+MAC Address: 00:0C:29:CC:7F:56 (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.116.131"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 912.69 seconds
+
+# Scanned port 69 again
+
+root@Kali:~/Vulnhub/dev-random-scream# nmap -Pn -n -sUV -p69 192.168.116.131 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-24 00:14 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.116.2  MAC: 00:50:56:e1:18:f7
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::6912:6d79:3054:6b2b: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff54:6b2b         (NDP Solicited-node)
+|       ff02::1:ffd3:a247         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:2                 (All-dhcp-agents)
+|       ff02::c                   (SSDP)
+|       ff02::1:ffd3:a247         (Solicited-Node Address)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| lltd-discovery: 
+|   192.168.116.131
+|     Hostname: Scream
+|     Mac: 00:0c:29:cc:7f:56 (VMware)
+|_  Use the newtargets script-arg to add the results as targets
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::2c42:f040:b1d3:a247  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.116.131
+Host is up (0.00028s latency).
+
+PORT   STATE SERVICE VERSION
+69/udp open  tftp
+| fingerprint-strings: 
+|   DNSStatusRequest: 
+|_    Unknown Transfer Id
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port69-UDP:V=7.70%I=7%D=2/24%Time=5E52A4FD%P=x86_64-pc-linux-gnu%r(DNSS
+SF:tatusRequest,18,"\0\x05\0\x05Unknown\x20Transfer\x20Id\0");
+MAC Address: 00:0C:29:CC:7F:56 (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.116.131"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 57.94 seconds
+
+Nothing found in nmap UDP scan
+root@Kali:~/Vulnhub/dev-random-scream# nmap -sU -p- 192.168.116.131
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-26 22:05 +08
+Nmap scan report for 192.168.116.131
+Host is up (0.00039s latency).
+All 65535 scanned ports on 192.168.116.131 are open|filtered
+MAC Address: 00:0C:29:CC:7F:56 (VMware)
+
+Nmap done: 1 IP address (1 host up) scanned in 1321.19 seconds

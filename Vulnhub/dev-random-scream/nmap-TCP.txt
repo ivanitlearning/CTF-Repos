@@ -1,0 +1,409 @@
+root@Kali:~/Vulnhub/dev-random-scream# nmap -Pn -n -sV -p21,22,23,80 192.168.116.131 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-23 01:36 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.116.2  MAC: 00:50:56:e1:18:f7
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::6912:6d79:3054:6b2b: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff54:6b2b         (NDP Solicited-node)
+|       ff02::1:ff51:639b         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::c                   (SSDP)
+|       ff02::1:2                 (All-dhcp-agents)
+|       ff02::fb                  (mDNSv6)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| lltd-discovery: 
+|   192.168.116.131
+|     Hostname: Scream
+|     Mac: 00:0c:29:cc:7f:56 (VMware)
+|_  Use the newtargets script-arg to add the results as targets
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::b9e5:c529:6351:639b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.116.131
+Host is up (0.00037s latency).
+
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     WAR-FTPD 1.65 (Name Scream XP (SP2) FTP Service)
+|_banner: 220- Scream XP (SP2) FTP Service WAR-FTPD 1.65 Ready\x0D\x0A...
+| ftp-syst: 
+|_  SYST: UNIX emulated by FileZilla
+|_sslv2-drown: 
+22/tcp open  ssh     WeOnlyDo sshd 2.1.3 (protocol 2.0)
+|_banner: SSH-2.0-WeOnlyDo 2.1.3
+| ssh-hostkey: 
+|   1024 2c:23:77:67:d3:e0:ae:2a:a8:01:a4:9e:54:97:db:2c (DSA)
+|_  1024 fa:11:a5:3d:63:95:4a:ae:3e:16:49:2f:bb:4b:f1:de (RSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (2)
+|   server_host_key_algorithms: (2)
+|   encryption_algorithms: (9)
+|   mac_algorithms: (4)
+|_  compression_algorithms: (2)
+23/tcp open  telnet
+|_banner: \xFF\xFB\x01\xFF\xFE"\xFF\xFE\x00\xFF\xFD\x03\xFF\xFD\x18\xF...
+| fingerprint-strings: 
+|   GenericLines, NCP, RPCCheck, tn3270: 
+|     Scream Telnet Service
+|     login:
+|   GetRequest: 
+|     HTTP/1.0
+|     Scream Telnet Service
+|     login:
+|   Help: 
+|     HELP
+|     Scream Telnet Service
+|     login:
+|   SIPOptions: 
+|     OPTIONS sip:nm SIP/2.0
+|     Via: SIP/2.0/TCP nm;branch=foo
+|     From: <sip:nm@nm>;tag=root
+|     <sip:nm2@nm2>
+|     Call-ID: 50000
+|     CSeq: 42 OPTIONS
+|     Max-Forwards: 70
+|     Content-Length: 0
+|     Contact: <sip:nm@nm>
+|     Accept: application/sdp
+|     Scream Telnet Service
+|_    login:
+| telnet-encryption: 
+|_  Telnet server does not support encryption
+80/tcp open  http    Tinyweb httpd 1.93
+|_http-chrono: Request times for /; avg: 171.21ms; min: 152.85ms; max: 226.93ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 22 Feb 2020 17:37:48 GMT; +3s from local time.
+| http-default-accounts: 
+|   [Arris 2307] at /logo_t.gif
+|_    <blank>:<blank>
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=192.168.116.131
+|   Found the following error pages: 
+|   
+|   Error Code: 403
+|_  	http://192.168.116.131:80/styles.css
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Sat, 22 Feb 2020 17:37:53 GMT
+|   Server: TinyWeb/1.93
+|   Content-Length: 14539
+|   Content-Type: text/html
+|   Last-Modified: Wed, 31 Oct 2012 14:53:51 GMT
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: TinyWeb/1.93
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: The Scream - Edvard Munch
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+| http-wordpress-enum: 
+| Search limited to top 100 themes/plugins
+|   themes
+|     twentyeleven
+|     twentytwelve
+|     twentyten
+|     twentythirteen
+|     twentyfourteen
+|     twentyfifteen
+|     responsive
+|     customizr
+|     zerif-lite
+|     virtue
+|     storefront
+|     atahualpa
+|     twentysixteen
+|     vantage
+|     hueman
+|     spacious
+|     evolve
+|     colorway
+|     graphene
+|     sydney
+|     ifeature
+|     mh-magazine-lite
+|     generatepress
+|     mantra
+|     omega
+|     onetone
+|     coraline
+|     pinboard
+|     thematic
+|     sparkling
+|     catch-box
+|     make
+|     colormag
+|     enigma
+|     custom-community
+|     mystique
+|     alexandria
+|     delicate
+|     lightword
+|     attitude
+|     inove
+|     magazine-basic
+|     raindrops
+|     minamaze
+|     zbench
+|     point
+|     eclipse
+|     portfolio-press
+|     twentyseventeen
+|     travelify
+|     swift-basic
+|     iconic-one
+|     arcade-basic
+|     bouquet
+|     pixel
+|     sliding-door
+|     pilcrow
+|     simple-catch
+|     tempera
+|     destro
+|     p2
+|     sunspot
+|     sundance
+|     dusk-to-dawn
+|     onepress
+|     moesia
+|     dynamic-news-lite
+|     parabola
+|     parament
+|     dazzling
+|     accesspress-lite
+|     optimizer
+|     one-page
+|     chaostheory
+|     business-lite
+|     duster
+|     constructor
+|     nirvana
+|     sixteen
+|     esquire
+|     beach
+|     next-saturday
+|     flat
+|     hatch
+|     minimatica
+|     radiate
+|     accelerate
+|     oxygen
+|     accesspress-parallax
+|     swift
+|     spun
+|     wp-creativix
+|     suevafree
+|     hemingway
+|     pink-touch-2
+|     motion
+|     fruitful
+|     steira
+|     news
+|     llorix-one-lite
+|   plugins
+|     akismet
+|     contact-form-7
+|     wordpress-seo
+|     jetpack
+|     all-in-one-seo-pack
+|     wordfence
+|     woocommerce
+|     google-sitemap-generator
+|     wordpress-importer
+|     nextgen-gallery
+|     google-analytics-for-wordpress
+|     wp-super-cache
+|     tinymce-advanced
+|     wptouch
+|     better-wp-security
+|     siteorigin-panels
+|     updraftplus
+|     w3-total-cache
+|     google-analytics-dashboard-for-wp
+|     wp-pagenavi
+|     si-contact-form
+|     advanced-custom-fields
+|     mailchimp-for-wp
+|     the-events-calendar
+|     add-to-any
+|     duplicator
+|     wysija-newsletters
+|     ninja-forms
+|     wp-smushit
+|     buddypress
+|     ewww-image-optimizer
+|     so-widgets-bundle
+|     really-simple-captcha
+|     ml-slider
+|     black-studio-tinymce-widget
+|     photo-gallery
+|     broken-link-checker
+|     regenerate-thumbnails
+|     google-analyticator
+|     redirection
+|     captcha
+|     duplicate-post
+|     breadcrumb-navxt
+|     backwpup
+|     user-role-editor
+|     yet-another-related-posts-plugin
+|     contact-form-plugin
+|     newsletter
+|     bbpress
+|     all-in-one-wp-security-and-firewall
+|     disable-comments
+|     social-networks-auto-poster-facebook-twitter-g
+|     wp-optimize
+|     addthis
+|     wp-statistics
+|     wp-e-commerce
+|     all-in-one-wp-migration
+|     backupwordpress
+|     si-captcha-for-wordpress
+|     wp-slimstat
+|     wp-google-maps
+|     wp-spamshield
+|     wp-maintenance-mode
+|     googleanalytics
+|     worker
+|     yith-woocommerce-wishlist
+|     wp-multibyte-patch
+|     wp-to-twitter
+|     image-widget
+|     wp-db-backup
+|     shortcodes-ultimate
+|     ultimate-tinymce
+|     share-this
+|     disqus-comment-system
+|     gallery-bank
+|     types
+|     wp-polls
+|     custom-post-type-ui
+|     shareaholic
+|     polylang
+|     post-types-order
+|     gtranslate
+|     bulletproof-security
+|     wp-fastest-cache
+|     facebook
+|     sociable
+|     iwp-client
+|     nextgen-facebook
+|     seo-ultimate
+|     wp-postviews
+|     formidable
+|     squirrly-seo
+|     wp-mail-smtp
+|     tablepress
+|     redux-framework
+|     page-links-to
+|     youtube-embed-plus
+|     contact-bank
+|     maintenance
+|_    wp-retina-2x
+|_http-xssed: No previously reported XSS vuln.
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port23-TCP:V=7.70%I=7%D=2/23%Time=5E5166BF%P=x86_64-pc-linux-gnu%r(NULL
+SF:,12,"\xff\xfb\x01\xff\xfe\"\xff\xfe\0\xff\xfd\x03\xff\xfd\x18\xff\xfd\x
+SF:1f")%r(GenericLines,34,"\xff\xfb\x01\xff\xfe\"\xff\xfe\0\xff\xfd\x03\xf
+SF:f\xfd\x18\xff\xfd\x1f\r\n\r\nScream\x20Telnet\x20Service\r\nlogin:\x20"
+SF:)%r(tn3270,3C,"\xff\xfb\x01\xff\xfe\"\xff\xfe\0\xff\xfd\x03\xff\xfd\x18
+SF:\xff\xfd\x1f\xff\xfc\x18\xff\xfe\x19\xff\xfc\x19\xff\xfb\0Scream\x20Tel
+SF:net\x20Service\r\nlogin:\x20")%r(GetRequest,42,"\xff\xfb\x01\xff\xfe\"\
+SF:xff\xfe\0\xff\xfd\x03\xff\xfd\x18\xff\xfd\x1fGET\x20/\x20HTTP/1\.0\r\n\
+SF:r\nScream\x20Telnet\x20Service\r\nlogin:\x20")%r(RPCCheck,5C,"\xff\xfb\
+SF:x01\xff\xfe\"\xff\xfe\0\xff\xfd\x03\xff\xfd\x18\xff\xfd\x1f\x80\0\0\(r\
+SF:xfe\x1d\x13\0\0\0\0\0\0\0\x02\0\x01\x86\xa0\0\x01\x97\|\0\0\0\0\0\0\0\0
+SF:\0\0\0\0\0\0\0\0\0\0\0\0Scream\x20Telnet\x20Service\r\nlogin:\x20")%r(H
+SF:elp,36,"\xff\xfb\x01\xff\xfe\"\xff\xfe\0\xff\xfd\x03\xff\xfd\x18\xff\xf
+SF:d\x1fHELP\r\nScream\x20Telnet\x20Service\r\nlogin:\x20")%r(SIPOptions,1
+SF:0F,"\xff\xfb\x01\xff\xfe\"\xff\xfe\0\xff\xfd\x03\xff\xfd\x18\xff\xfd\x1
+SF:fOPTIONS\x20sip:nm\x20SIP/2\.0\r\nVia:\x20SIP/2\.0/TCP\x20nm;branch=foo
+SF:\r\nFrom:\x20<sip:nm@nm>;tag=root\r\nTo:\x20<sip:nm2@nm2>\r\nCall-ID:\x
+SF:2050000\r\nCSeq:\x2042\x20OPTIONS\r\nMax-Forwards:\x2070\r\nContent-Len
+SF:gth:\x200\r\nContact:\x20<sip:nm@nm>\r\nAccept:\x20application/sdp\r\n\
+SF:r\nScream\x20Telnet\x20Service\r\nlogin:\x20")%r(NCP,31,"\xff\xfb\x01\x
+SF:ff\xfe\"\xff\xfe\0\xff\xfd\x03\xff\xfd\x18\xff\xfd\x1f\x13Scream\x20Tel
+SF:net\x20Service\r\nlogin:\x20");
+MAC Address: 00:0C:29:CC:7F:56 (VMware)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.116.131"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Random Positive Increments
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 21    0       425.70     50.79   0.0%
+| 22    0       438.00     122.02  0.0%
+| 23    0       452.00     140.36  0.0%
+|_80    0       399.40     76.47   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 427.95 seconds
