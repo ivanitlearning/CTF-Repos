@@ -1,0 +1,1231 @@
+root@Kali:~/Vulnhub/Vulnix# unicornscan -v -I -p a 192.168.116.134
+adding 192.168.116.134/32 mode `TCPscan' ports `a' pps 300
+using interface(s) eth0
+scaning 1.00e+00 total hosts with 6.55e+04 total packets, should take a little longer than 3 Minutes, 45 Seconds
+TCP open 192.168.116.134:25  ttl 64
+TCP open 192.168.116.134:79  ttl 64
+TCP open 192.168.116.134:110  ttl 64
+TCP open 192.168.116.134:52320  ttl 64
+TCP open 192.168.116.134:42871  ttl 64
+TCP open 192.168.116.134:513  ttl 64
+TCP open 192.168.116.134:512  ttl 64
+TCP open 192.168.116.134:55021  ttl 64
+TCP open 192.168.116.134:993  ttl 64
+TCP open 192.168.116.134:995  ttl 64
+TCP open 192.168.116.134:143  ttl 64
+TCP open 192.168.116.134:111  ttl 64
+TCP open 192.168.116.134:58111  ttl 64
+TCP open 192.168.116.134:2049  ttl 64
+TCP open 192.168.116.134:514  ttl 64
+TCP open 192.168.116.134:53381  ttl 64
+TCP open 192.168.116.134:22  ttl 64
+sender statistics 296.6 pps with 65536 packets sent total
+listener statistics 130980 packets recieved 0 packets droped and 0 interface drops
+TCP open	             ssh[   22]		from 192.168.116.134  ttl 64 
+TCP open	            smtp[   25]		from 192.168.116.134  ttl 64 
+TCP open	          finger[   79]		from 192.168.116.134  ttl 64 
+TCP open	            pop3[  110]		from 192.168.116.134  ttl 64 
+TCP open	          sunrpc[  111]		from 192.168.116.134  ttl 64 
+TCP open	            imap[  143]		from 192.168.116.134  ttl 64 
+TCP open	            exec[  512]		from 192.168.116.134  ttl 64 
+TCP open	           login[  513]		from 192.168.116.134  ttl 64 
+TCP open	           shell[  514]		from 192.168.116.134  ttl 64 
+TCP open	           imaps[  993]		from 192.168.116.134  ttl 64 
+TCP open	           pop3s[  995]		from 192.168.116.134  ttl 64 
+TCP open	           shilp[ 2049]		from 192.168.116.134  ttl 64 
+TCP open	         unknown[42871]		from 192.168.116.134  ttl 64 
+TCP open	         unknown[52320]		from 192.168.116.134  ttl 64 
+TCP open	         unknown[53381]		from 192.168.116.134  ttl 64 
+TCP open	         unknown[55021]		from 192.168.116.134  ttl 64 
+TCP open	         unknown[58111]		from 192.168.116.134  ttl 64 
+
+root@Kali:~/Vulnhub/Vulnix# nmap -Pn -n -sV -p21,22,25,79,110,111,143,512-514,993,995,2049,42871,52320,53381,55021,58111 192.168.116.134 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-03-04 00:08 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.116.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.116.2  MAC: 00:50:56:e1:18:f7
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::6912:6d79:3054:6b2b: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ff54:6b2b         (NDP Solicited-node)
+|       ff02::1:fffa:6c57         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:2                 (All-dhcp-agents)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::c                   (SSDP)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|   fe80::20c:29ff:fe5f:2955: 
+|     device: eth0
+|     mac: 00:0c:29:5f:29:55
+|     multicast_ips: 
+|       ff02::1:ff1e:6615         (Solicited-Node Address)
+|       ff02::1:ff1e:6615         (Solicited-Node Address)
+|_      ff02::1:ff1e:6615         (Solicited-Node Address)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-invalid-dst: 
+|   IP: fe80::20c:29ff:fe5f:2955  MAC: 00:0c:29:5f:29:55  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::20c:29ff:fe5f:2955   MAC: 00:0c:29:5f:29:55  IFACE: eth0
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::50f9:1027:f71e:6615  MAC: 00:0c:29:5f:29:55  IFACE: eth0
+|   IP: fe80::20c:29ff:fe5f:2955   MAC: 00:0c:29:5f:29:55  IFACE: eth0
+|   IP: fe80::6912:6d79:3054:6b2b  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::5c3d:f6c:51fa:6c57   MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.116.134
+Host is up (0.00019s latency).
+
+PORT      STATE  SERVICE    VERSION
+21/tcp    closed ftp
+22/tcp    open   ssh        OpenSSH 5.9p1 Debian 5ubuntu1 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_5.9p1 Debian-5ubuntu1
+| ssh-hostkey: 
+|   1024 10:cd:9e:a0:e4:e0:30:24:3e:bd:67:5f:75:4a:33:bf (DSA)
+|   2048 bc:f9:24:07:2f:cb:76:80:0d:27:a6:48:52:0a:24:3a (RSA)
+|_  256 4d:bb:4a:c1:18:e8:da:d1:82:6f:58:52:9c:ee:34:5f (ECDSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (7)
+|   server_host_key_algorithms: (3)
+|   encryption_algorithms: (13)
+|   mac_algorithms: (11)
+|_  compression_algorithms: (2)
+25/tcp    open   smtp       Postfix smtpd
+|_banner: 220 vulnix ESMTP Postfix (Ubuntu)
+|_smtp-commands: vulnix, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, 
+|_smtp-open-relay: Server doesn't seem to be an open relay, all tests failed
+| smtp-vuln-cve2010-4344: 
+|_  The SMTP server is not Exim: NOT VULNERABLE
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      http://www.cvedetails.com/cve/2014-0224
+|_ssl-date: 2020-03-03T16:09:12+00:00; +2s from scanner time.
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use anonymous
+|       Diffie-Hellman key exchange only provide protection against passive
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks
+|       which could completely compromise the confidentiality and integrity
+|       of any data exchanged over the resulting session.
+|     Check results:
+|       ANONYMOUS DH GROUP 1
+|             Cipher Suite: TLS_DH_anon_WITH_AES_256_CBC_SHA256
+|             Modulus Type: Safe prime
+|             Modulus Source: postfix builtin
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|       https://www.ietf.org/rfc/rfc2246.txt
+|   
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2015-4000  OSVDB:122331
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://weakdh.org
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|       http://osvdb.org/122331
+|   
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: postfix builtin
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_DES_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_DES_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_DH_anon_WITH_SEED_CBC_SHA - F
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_RC4_128_SHA - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_DES_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_DES_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_DES_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_DH_anon_WITH_SEED_CBC_SHA - F
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_RC4_128_SHA - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_DES_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_DES_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_DES_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_DH_anon_WITH_SEED_CBC_SHA - F
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_RC4_128_SHA - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_DES_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_DES_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA256 - F
+|       TLS_DH_anon_WITH_AES_128_GCM_SHA256 - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA256 - F
+|       TLS_DH_anon_WITH_AES_256_GCM_SHA384 - F
+|       TLS_DH_anon_WITH_CAMELLIA_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_DES_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_DH_anon_WITH_SEED_CBC_SHA - F
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_ECDH_anon_WITH_RC4_128_SHA - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_DES_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|_  least strength: F
+| ssl-heartbleed: 
+|   VULNERABLE:
+|   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows for stealing information intended to be protected by SSL/TLS encryption.
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL versions 1.0.1 and 1.0.2-beta releases (including 1.0.1f and 1.0.2-beta1) of OpenSSL are affected by the Heartbleed bug. The bug allows for reading memory of systems protected by the vulnerable OpenSSL versions and could allow for disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+|           
+|     References:
+|       http://www.openssl.org/news/secadv_20140407.txt 
+|       http://cvedetails.com/cve/2014-0160/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2014-3566  OSVDB:113251
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       http://osvdb.org/113251
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_sslv2-drown: 
+79/tcp    open   finger     Linux fingerd
+|_finger: No one logged on.\x0D
+110/tcp   open   pop3       Dovecot pop3d
+|_banner: +OK Dovecot ready.
+|_pop3-capabilities: STLS SASL CAPA RESP-CODES PIPELINING UIDL TOP
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      http://www.cvedetails.com/cve/2014-0224
+|_ssl-date: 2020-03-03T16:08:57+00:00; +3s from scanner time.
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|_  least strength: D
+| ssl-heartbleed: 
+|   VULNERABLE:
+|   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows for stealing information intended to be protected by SSL/TLS encryption.
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL versions 1.0.1 and 1.0.2-beta releases (including 1.0.1f and 1.0.2-beta1) of OpenSSL are affected by the Heartbleed bug. The bug allows for reading memory of systems protected by the vulnerable OpenSSL versions and could allow for disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+|           
+|     References:
+|       http://www.openssl.org/news/secadv_20140407.txt 
+|       http://cvedetails.com/cve/2014-0160/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2014-3566  OSVDB:113251
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       http://osvdb.org/113251
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_sslv2-drown: 
+111/tcp   open   rpcbind    2-4 (RPC #100000)
+| nfs-ls: Volume /home/vulnix
+|_  access: NoRead NoLookup NoModify NoExtend NoDelete NoExecute
+| nfs-showmount: 
+|_  /home/vulnix *
+| nfs-statfs: 
+|   Filesystem    1K-blocks  Used      Available  Use%  Maxfilesize  Maxlink
+|_  /home/vulnix  792040.0   721328.0  30984.0    96%   8.0T         32000
+| rpcinfo: 
+|   program version   port/proto  service
+|   100000  2,3,4        111/tcp  rpcbind
+|   100000  2,3,4        111/udp  rpcbind
+|   100003  2,3,4       2049/tcp  nfs
+|   100003  2,3,4       2049/udp  nfs
+|   100005  1,2,3      42987/udp  mountd
+|   100005  1,2,3      58111/tcp  mountd
+|   100021  1,3,4      36663/udp  nlockmgr
+|   100021  1,3,4      55021/tcp  nlockmgr
+|   100024  1          42871/tcp  status
+|   100024  1          50351/udp  status
+|   100227  2,3         2049/tcp  nfs_acl
+|_  100227  2,3         2049/udp  nfs_acl
+143/tcp   open   imap       Dovecot imapd
+|_banner: * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ...
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      http://www.cvedetails.com/cve/2014-0224
+|_ssl-date: 2020-03-03T16:08:57+00:00; +3s from scanner time.
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|_  least strength: D
+| ssl-heartbleed: 
+|   VULNERABLE:
+|   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows for stealing information intended to be protected by SSL/TLS encryption.
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL versions 1.0.1 and 1.0.2-beta releases (including 1.0.1f and 1.0.2-beta1) of OpenSSL are affected by the Heartbleed bug. The bug allows for reading memory of systems protected by the vulnerable OpenSSL versions and could allow for disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+|           
+|     References:
+|       http://www.openssl.org/news/secadv_20140407.txt 
+|       http://cvedetails.com/cve/2014-0160/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2014-3566  OSVDB:113251
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       http://osvdb.org/113251
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_sslv2-drown: 
+512/tcp   open   exec       netkit-rsh rexecd
+|_banner: \x01Where are you?
+513/tcp   open   login
+514/tcp   open   tcpwrapped
+993/tcp   open   ssl/imaps?
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      http://www.cvedetails.com/cve/2014-0224
+|_ssl-date: 2020-03-03T16:08:55+00:00; +2s from scanner time.
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|_  least strength: D
+| ssl-heartbleed: 
+|   VULNERABLE:
+|   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows for stealing information intended to be protected by SSL/TLS encryption.
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL versions 1.0.1 and 1.0.2-beta releases (including 1.0.1f and 1.0.2-beta1) of OpenSSL are affected by the Heartbleed bug. The bug allows for reading memory of systems protected by the vulnerable OpenSSL versions and could allow for disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+|           
+|     References:
+|       http://www.openssl.org/news/secadv_20140407.txt 
+|       http://cvedetails.com/cve/2014-0160/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2014-3566  OSVDB:113251
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       http://osvdb.org/113251
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_sslv2-drown: 
+995/tcp   open   ssl/pop3s?
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      http://www.cvedetails.com/cve/2014-0224
+|_ssl-date: 2020-03-03T16:08:55+00:00; +2s from scanner time.
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 2048) - C
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Key exchange (dh 1024) of lower strength than certificate key
+|       Weak certificate signature: SHA1
+|_  least strength: D
+| ssl-heartbleed: 
+|   VULNERABLE:
+|   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows for stealing information intended to be protected by SSL/TLS encryption.
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL versions 1.0.1 and 1.0.2-beta releases (including 1.0.1f and 1.0.2-beta1) of OpenSSL are affected by the Heartbleed bug. The bug allows for reading memory of systems protected by the vulnerable OpenSSL versions and could allow for disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+|           
+|     References:
+|       http://www.openssl.org/news/secadv_20140407.txt 
+|       http://cvedetails.com/cve/2014-0160/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2014-3566  OSVDB:113251
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       http://osvdb.org/113251
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_sslv2-drown: 
+2049/tcp  open   nfs_acl    2-3 (RPC #100227)
+42871/tcp open   status     1 (RPC #100024)
+52320/tcp open   mountd     1-3 (RPC #100005)
+| nfs-showmount: 
+|_  /home/vulnix *
+53381/tcp open   mountd     1-3 (RPC #100005)
+| nfs-showmount: 
+|_  /home/vulnix *
+55021/tcp open   nlockmgr   1-4 (RPC #100021)
+58111/tcp open   mountd     1-3 (RPC #100005)
+| nfs-showmount: 
+|_  /home/vulnix *
+MAC Address: 00:0C:29:5F:29:55 (VMware)
+Service Info: Host:  vulnix; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.116.134"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 21    0       422.90     24.57   0.0%
+| 22    0       407.70     38.31   0.0%
+| 25    0       388.30     62.30   0.0%
+| 79    1       381.60     46.18   0.0%
+| 110   0       425.40     16.03   0.0%
+| 111   0       426.90     23.28   0.0%
+| 143   0       414.30     15.15   0.0%
+| 512   0       417.20     12.67   0.0%
+|_513   0       411.50     22.10   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 266.36 seconds
