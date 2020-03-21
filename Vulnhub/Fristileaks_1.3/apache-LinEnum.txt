@@ -1,0 +1,1220 @@
+./LinEnum.sh -t
+
+#########################################################
+# Local Linux Enumeration & Privilege Escalation Script #
+#########################################################
+# www.rebootuser.com
+# version 0.98
+
+[-] Debug Info
+[+] Thorough tests = Enabled
+
+
+Scan started at:
+Sat Mar  7 20:56:21 EST 2020
+
+
+### SYSTEM ##############################################
+[-] Kernel information:
+Linux localhost.localdomain 2.6.32-573.8.1.el6.x86_64 #1 SMP Tue Nov 10 18:01:38 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+
+[-] Kernel information (continued):
+Linux version 2.6.32-573.8.1.el6.x86_64 (mockbuild@c6b8.bsys.dev.centos.org) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-16) (GCC) ) #1 SMP Tue Nov 10 18:01:38 UTC 2015
+
+
+[-] Specific release information:
+CentOS release 6.7 (Final)
+CentOS release 6.7 (Final)
+CentOS release 6.7 (Final)
+
+
+[-] Hostname:
+localhost.localdomain
+
+
+### USER/GROUP ##########################################
+[-] Current user/group info:
+uid=48(apache) gid=48(apache) groups=48(apache)
+
+
+[-] Users that have previously logged onto the system:
+Username         Port     From             Latest
+root             tty1                      Wed Nov 25 05:27:24 -0500 2015
+
+
+[-] Who else is logged on:
+ 20:56:21 up  1:15,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+
+
+[-] Group memberships:
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(bin) gid=1(bin) groups=1(bin),2(daemon),3(sys)
+uid=2(daemon) gid=2(daemon) groups=2(daemon),1(bin),4(adm),7(lp)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys)
+uid=4(lp) gid=7(lp) groups=7(lp)
+uid=5(sync) gid=0(root) groups=0(root)
+uid=6(shutdown) gid=0(root) groups=0(root)
+uid=7(halt) gid=0(root) groups=0(root)
+uid=8(mail) gid=12(mail) groups=12(mail)
+uid=10(uucp) gid=14(uucp) groups=14(uucp)
+uid=11(operator) gid=0(root) groups=0(root)
+uid=12(games) gid=100(users) groups=100(users)
+uid=13(gopher) gid=30(gopher) groups=30(gopher)
+uid=14(ftp) gid=50(ftp) groups=50(ftp)
+uid=99(nobody) gid=99(nobody) groups=99(nobody)
+uid=69(vcsa) gid=69(vcsa) groups=69(vcsa)
+uid=499(saslauth) gid=76(saslauth) groups=76(saslauth)
+uid=89(postfix) gid=89(postfix) groups=89(postfix),12(mail)
+uid=74(sshd) gid=74(sshd) groups=74(sshd)
+uid=48(apache) gid=48(apache) groups=48(apache)
+uid=27(mysql) gid=27(mysql) groups=27(mysql)
+uid=498(vboxadd) gid=1(bin) groups=1(bin)
+uid=500(eezeepz) gid=500(eezeepz) groups=500(eezeepz)
+uid=501(admin) gid=501(admin) groups=501(admin)
+uid=502(fristigod) gid=502(fristigod) groups=502(fristigod)
+uid=503(fristi) gid=100(users) groups=100(users),502(fristigod)
+
+
+[-] It looks like we have some admin users:
+uid=2(daemon) gid=2(daemon) groups=2(daemon),1(bin),4(adm),7(lp)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys)
+
+
+[-] Contents of /etc/passwd:
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin
+saslauth:x:499:76:Saslauthd user:/var/empty/saslauth:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+apache:x:48:48:Apache:/var/www:/sbin/nologin
+mysql:x:27:27:MySQL Server:/var/lib/mysql:/bin/bash
+vboxadd:x:498:1::/var/run/vboxadd:/bin/false
+eezeepz:x:500:500::/home/eezeepz:/bin/bash
+admin:x:501:501::/home/admin:/bin/bash
+fristigod:x:502:502::/var/fristigod:/bin/bash
+fristi:x:503:100::/var/www:/sbin/nologin
+
+
+[-] Super user account(s):
+root
+
+
+[-] Are permissions on /home directories lax:
+total 28K
+drwxr-xr-x.  5 root      root      4.0K Nov 19  2015 .
+dr-xr-xr-x. 22 root      root      4.0K Mar  7 19:40 ..
+drwx------.  2 admin     admin     4.0K Nov 19  2015 admin
+drwx---r-x.  5 eezeepz   eezeepz    12K Nov 18  2015 eezeepz
+drwx------   2 fristigod fristigod 4.0K Nov 19  2015 fristigod
+
+
+[-] Files owned by our user:
+-rw-r--r-- 1 apache apache 62 Nov 17  2015 /var/www/html/robots.txt
+-rw-r--r-- 1 apache apache 703 Nov 17  2015 /var/www/html/index.html
+-rw-r--r--. 1 apache apache 1396 Nov 17  2015 /var/www/html/fristi/main_login.php
+-rw-r--r--. 1 apache apache 45 Nov 17  2015 /var/www/html/fristi/logout.php
+-rw-r--r--. 1 apache apache 372 Nov 17  2015 /var/www/html/fristi/upload.php
+-rw-r--r-- 1 apache apache 3047 Mar  7 20:44 /var/www/html/fristi/uploads/payload.php.png
+-rw-r--r-- 1 apache apache 30 Mar  7 20:10 /var/www/html/fristi/uploads/0.png
+-rw-r--r-- 1 apache apache 30 Mar  7 19:57 /var/www/html/fristi/uploads/shell.png
+-rw-r--r-- 1 apache apache 107815 Mar  7 19:46 /var/www/html/fristi/uploads/3037440.jpg
+-rw-r--r-- 1 apache apache 30 Mar  7 20:37 /var/www/html/fristi/uploads/shell.php%00.png
+-rw-r--r-- 1 apache apache 30 Mar  7 20:22 /var/www/html/fristi/uploads/shell.php;.png
+-r--r--r--. 1 apache apache 4 Nov 17  2015 /var/www/html/fristi/uploads/index.html
+-rw-r--r-- 1 apache apache 34480 Mar  7 19:49 /var/www/html/fristi/uploads/keep-calm.png
+-rw-r--r-- 1 apache apache 30 Mar  7 20:40 /var/www/html/fristi/uploads/shell.php.png
+-rw-r--r-- 1 apache apache 30 Mar  7 20:23 /var/www/html/fristi/uploads/shell.php%0delete0.png
+-rw-r--r--. 1 apache apache 1216 Nov 17  2015 /var/www/html/fristi/do_upload.php
+-rw-r--r--. 1 apache apache 131736 Nov 17  2015 /var/www/html/fristi/pic.b64
+-rw-r--r--. 1 apache apache 1642 Nov 17  2015 /var/www/html/fristi/pic2.b64
+-rw-r--r--. 1 apache apache 191 Nov 17  2015 /var/www/html/fristi/login_success.php
+-rw-r--r--. 1 apache apache 1310 Nov 17  2015 /var/www/html/fristi/checklogin.php
+-rw-r--r-- 1 apache apache 107815 Nov 25  2015 /var/www/html/images/3037440.jpg
+-rw-r--r-- 1 apache apache 34480 Nov 17  2015 /var/www/html/images/keep-calm.png
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_sgn8obmt07desfb6bcl09cu625
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_d2m0kl7d6fvh7d34f4rcdjgfv2
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_s2sl4rf31lsqukgvedfrudn0i6
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_d0vj05jc03p45i09llaeva8iq4
+-rw-------. 1 apache apache 26 Nov 17  2015 /var/lib/php/session/sess_c06141si40e8t1e8fbqcnfqcd6
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_r8imne4to6p9eqbv0ve62dv647
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_cl2p3l395c29qe3fffojdc97p2
+-rw------- 1 apache apache 26 Mar  7 16:24 /var/lib/php/session/sess_4d3bfi86d7t3a31kfrrpl8om74
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_fb50k3rreura82egdmmfjq9v77
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_sjjcfuc9fr3fqr5crtt3s7d3f5
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_0gbbeoi29i74nt6bnkunuouci0
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_7t84773bup6o54egnkjtum0q87
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_qcjf8lrh94rcesd41tvi746ls0
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_fb7dj9tqqpila69m2grhfmmo45
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_qqt1rqieamv5b3t5i6o5srvgc7
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_7nueuse6eik62qarnncs6tpqt4
+-rw------- 1 apache apache 26 Nov 17  2015 /var/lib/php/session/sess_b382m5qugddkq2ps8196e745c1
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_u1gt82f4s0p2ehnagvger8glg0
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_hijetlf7s6nns9o3hi7a2h8nj7
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_svl94mt3ot5lvpiplnnijkrnb4
+-rw------- 1 apache apache 26 Mar  7 20:44 /var/lib/php/session/sess_qu85mtcl12udk6c7c3224fvru2
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_jjh2g0fu4anm7suu68udhdp2e4
+-rw-------. 1 apache apache 0 Nov 17  2015 /var/lib/php/session/sess_t1i5t4coc4jcc0tgd3i9o3kn00
+-rwxr-xr-x 1 apache apache 46108 Mar  7 12:55 /tmp/LinEnum.sh
+
+
+[-] Hidden files:
+-rw-r--r--. 1 root root 65 Oct 24  2013 /lib64/.libgcrypt.so.11.hmac
+-rw-r--r--. 1 root root 65 Oct 15  2014 /lib64/.libcryptsetup.so.1.1.0.hmac
+-rw-r--r--. 1 root root 65 Dec  7  2011 /lib64/.libfipscheck.so.1.1.0.hmac
+-rw-r--r--. 1 root root 65 Oct 15  2014 /lib64/.libcryptsetup.so.1.hmac
+-rw-------. 1 root root 0 Nov 17  2015 /etc/.pwd.lock
+-rw-r--r--. 1 root root 18 Sep 22  2015 /etc/skel/.bash_logout
+-rw-r--r--. 1 root root 124 Sep 22  2015 /etc/skel/.bashrc
+-rw-r--r--. 1 root root 176 Sep 22  2015 /etc/skel/.bash_profile
+-rw-r--r--. 1 root root 166 Jul 23  2015 /boot/.vmlinuz-2.6.32-573.el6.x86_64.hmac
+-rw-r--r--. 1 root root 170 Nov 10  2015 /boot/.vmlinuz-2.6.32-573.8.1.el6.x86_64.hmac
+-rw-r--r--. 1 root root 65 Jul 23  2015 /usr/lib64/.libssl.so.1.0.1e.hmac
+-rw-r--r--. 1 root root 65 Jul 23  2015 /usr/lib64/.libcrypto.so.1.0.1e.hmac
+-rw-r--r--. 1 root root 65 Dec  7  2011 /usr/bin/.fipscheck.hmac
+-rw-r--r--. 1 root root 65 Aug 13  2015 /usr/bin/.ssh.hmac
+-rw-r--r--. 1 root root 55 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/dtc/.gitignore
+-rw-r--r--. 1 root root 1430 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/.kallsyms.cmd
+-rw-r--r--. 1 root root 21 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/selinux/mdp/.gitignore
+-rw-r--r--. 1 root root 1743 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/selinux/mdp/.mdp.cmd
+-rw-r--r--. 1 root root 2088 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/selinux/genheaders/.genheaders.cmd
+-rw-r--r--. 1 root root 20 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/basic/.gitignore
+-rw-r--r--. 1 root root 2711 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/basic/.fixdep.cmd
+-rw-r--r--. 1 root root 2266 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/basic/.docproc.cmd
+-rw-r--r--. 1 root root 1423 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/basic/.hash.cmd
+-rw-r--r--. 1 root root 85 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/.gitignore
+-rw-r--r--. 1 root root 37 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/genksyms/.gitignore
+-rw-r--r--. 1 root root 145 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/genksyms/.genksyms.cmd
+-rw-r--r--. 1 root root 1024 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/genksyms/.parse.o.cmd
+-rw-r--r--. 1 root root 1715 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/genksyms/.genksyms.o.cmd
+-rw-r--r--. 1 root root 2227 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/genksyms/.lex.o.cmd
+-rw-r--r--. 1 root root 1789 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/.pnmtologo.cmd
+-rw-r--r--. 1 root root 1485 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/.conmakehash.cmd
+-rw-r--r--. 1 root root 172 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/kconfig/.gitignore
+-rw-r--r--. 1 root root 3157 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/kconfig/.zconf.tab.o.cmd
+-rw-r--r--. 1 root root 1806 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/kconfig/.kxgettext.o.cmd
+-rw-r--r--. 1 root root 2158 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/kconfig/.conf.o.cmd
+-rw-r--r--. 1 root root 110 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/kconfig/.conf.cmd
+-rw-r--r--. 1 root root 31 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/kconfig/lxdialog/.gitignore
+-rw-r--r--. 1 root root 1631 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/.unifdef.cmd
+-rw-r--r--. 1 root root 111 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.elfconfig.h.cmd
+-rw-r--r--. 1 root root 129 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.modpost.cmd
+-rw-r--r--. 1 root root 1771 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.empty.o.cmd
+-rw-r--r--. 1 root root 34 Dec  2  2009 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.gitignore
+-rw-r--r--. 1 root root 2455 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.mod-extract.cmd
+-rw-r--r--. 1 root root 2780 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.sumversion.o.cmd
+-rw-r--r--. 1 root root 2308 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.modpost.o.cmd
+-rw-r--r--. 1 root root 1556 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.mk_elfconfig.cmd
+-rw-r--r--. 1 root root 2011 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/scripts/mod/.file2alias.o.cmd
+-rw-r--r--. 1 root root 107134 Jul 23  2015 /usr/src/kernels/2.6.32-573.el6.x86_64/.config
+-rw-r--r--. 1 root root 55 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/dtc/.gitignore
+-rw-r--r--. 1 root root 1430 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/.kallsyms.cmd
+-rw-r--r--. 1 root root 21 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/selinux/mdp/.gitignore
+-rw-r--r--. 1 root root 1743 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/selinux/mdp/.mdp.cmd
+-rw-r--r--. 1 root root 2088 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/selinux/genheaders/.genheaders.cmd
+-rw-r--r--. 1 root root 20 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/basic/.gitignore
+-rw-r--r--. 1 root root 2711 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/basic/.fixdep.cmd
+-rw-r--r--. 1 root root 2266 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/basic/.docproc.cmd
+-rw-r--r--. 1 root root 1423 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/basic/.hash.cmd
+-rw-r--r--. 1 root root 85 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/.gitignore
+-rw-r--r--. 1 root root 37 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/genksyms/.gitignore
+-rw-r--r--. 1 root root 145 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/genksyms/.genksyms.cmd
+-rw-r--r--. 1 root root 1024 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/genksyms/.parse.o.cmd
+-rw-r--r--. 1 root root 1715 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/genksyms/.genksyms.o.cmd
+-rw-r--r--. 1 root root 2227 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/genksyms/.lex.o.cmd
+-rw-r--r--. 1 root root 1789 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/.pnmtologo.cmd
+-rw-r--r--. 1 root root 1485 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/.conmakehash.cmd
+-rw-r--r--. 1 root root 172 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/kconfig/.gitignore
+-rw-r--r--. 1 root root 3157 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/kconfig/.zconf.tab.o.cmd
+-rw-r--r--. 1 root root 1806 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/kconfig/.kxgettext.o.cmd
+-rw-r--r--. 1 root root 2158 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/kconfig/.conf.o.cmd
+-rw-r--r--. 1 root root 110 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/kconfig/.conf.cmd
+-rw-r--r--. 1 root root 31 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/kconfig/lxdialog/.gitignore
+-rw-r--r--. 1 root root 1631 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/.unifdef.cmd
+-rw-r--r--. 1 root root 111 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.elfconfig.h.cmd
+-rw-r--r--. 1 root root 129 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.modpost.cmd
+-rw-r--r--. 1 root root 1803 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.empty.o.cmd
+-rw-r--r--. 1 root root 34 Dec  2  2009 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.gitignore
+-rw-r--r--. 1 root root 2455 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.mod-extract.cmd
+-rw-r--r--. 1 root root 2780 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.sumversion.o.cmd
+-rw-r--r--. 1 root root 2308 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.modpost.o.cmd
+-rw-r--r--. 1 root root 1556 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.mk_elfconfig.cmd
+-rw-r--r--. 1 root root 2011 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/scripts/mod/.file2alias.o.cmd
+-rw-r--r--. 1 root root 107138 Nov 10  2015 /usr/src/kernels/2.6.32-573.8.1.el6.x86_64/.config
+-rw-r--r--. 1 root root 65 Aug 13  2015 /usr/sbin/.sshd.hmac
+-rw-r--r--. 1 root root 40 Sep 22  2015 /usr/share/man/man1/..1.gz
+-rw-r--r--. 1 root root 42 Jul 23  2015 /usr/share/man/man5/.k5identity.5.gz
+-rw-r--r--. 1 root root 39 Jul 23  2015 /usr/share/man/man5/.k5login.5.gz
+-rw-r--r-- 1 root root 0 Mar  7 19:40 /.autofsck
+-rw-r--r--. 1 eezeepz eezeepz 18 Sep 22  2015 /home/eezeepz/.bash_logout
+-rw-r--r--. 1 eezeepz eezeepz 124 Sep 22  2015 /home/eezeepz/.bashrc
+-rw-r--r--. 1 eezeepz eezeepz 176 Sep 22  2015 /home/eezeepz/.bash_profile
+-rw-r--r--. 1 root root 0 Nov 17  2015 /var/cache/yum/x86_64/6/.gpgkeyschecked.yum
+-rw-r--r--. 1 root root 0 Nov 17  2015 /var/lib/rpm/.rpm.lock
+-rw-r--r-- 1 root root 0 Nov 17  2015 /.autorelabel
+
+
+[-] World-readable files within /home:
+-rwxr-xr-x. 1 eezeepz eezeepz 24376 Nov 17  2015 /home/eezeepz/MAKEDEV
+-rwxr-xr-x. 1 eezeepz eezeepz 504400 Nov 17  2015 /home/eezeepz/xfs_repair
+-rwxr-xr-x. 1 eezeepz eezeepz 48712 Nov 17  2015 /home/eezeepz/chmod
+-rwxr-xr-x. 1 eezeepz eezeepz 5344 Nov 17  2015 /home/eezeepz/ctrlaltdel
+-rwxr-xr-x. 1 eezeepz eezeepz 21112 Nov 17  2015 /home/eezeepz/true
+-rwxr-xr-x. 1 eezeepz eezeepz 41704 Nov 17  2015 /home/eezeepz/cut
+-rwxr-xr-x. 1 eezeepz eezeepz 12304 Nov 17  2015 /home/eezeepz/tracepath6
+-rwxr-xr-x. 1 eezeepz eezeepz 5512 Nov 17  2015 /home/eezeepz/netreport
+-rwxr-xr-x. 1 eezeepz eezeepz 13712 Nov 17  2015 /home/eezeepz/hostname
+-rwxr-xr-x. 1 eezeepz eezeepz 11440 Nov 17  2015 /home/eezeepz/tracepath
+-rwxr-xr-x. 1 eezeepz eezeepz 14832 Nov 17  2015 /home/eezeepz/halt
+-rwxr-xr-x. 1 eezeepz eezeepz 16472 Nov 17  2015 /home/eezeepz/killall5
+-rwxr-xr-x. 1 eezeepz eezeepz 129992 Nov 17  2015 /home/eezeepz/cpio
+-rw-r--r--. 1 eezeepz eezeepz 18 Sep 22  2015 /home/eezeepz/.bash_logout
+-rwxr-xr-x. 1 eezeepz eezeepz 12216 Nov 17  2015 /home/eezeepz/wipefs
+-rwxr-xr-x. 1 eezeepz eezeepz 171784 Nov 17  2015 /home/eezeepz/nano
+-rwxr-xr-x. 1 eezeepz eezeepz 4736 Nov 17  2015 /home/eezeepz/nologin
+-rw-r--r--. 1 eezeepz eezeepz 124 Sep 22  2015 /home/eezeepz/.bashrc
+-rwxr-xr-x. 1 eezeepz eezeepz 249000 Nov 17  2015 /home/eezeepz/tc
+-rwxr-xr-x. 1 eezeepz eezeepz 11576 Nov 17  2015 /home/eezeepz/kill
+-rwxr-xr-x. 1 eezeepz eezeepz 13892 Nov 17  2015 /home/eezeepz/new-kernel-pkg
+-rwxr-xr-x. 1 eezeepz eezeepz 15410 Nov 17  2015 /home/eezeepz/weak-modules
+-rwxr-xr-x. 1 eezeepz eezeepz 52936 Nov 17  2015 /home/eezeepz/chgrp
+-rwxr-xr-x. 1 eezeepz eezeepz 44528 Nov 17  2015 /home/eezeepz/clock
+-rwxr-xr-x. 1 eezeepz eezeepz 11352 Nov 17  2015 /home/eezeepz/taskset
+-rwxr-xr-x. 1 eezeepz eezeepz 4808 Nov 17  2015 /home/eezeepz/consoletype
+-rwxr-xr-x. 1 eezeepz eezeepz 32928 Nov 17  2015 /home/eezeepz/kpartx
+-rwxr-xr-x. 1 eezeepz eezeepz 62 Nov 17  2015 /home/eezeepz/zcat
+-rwxr-xr-x. 1 eezeepz eezeepz 56720 Nov 17  2015 /home/eezeepz/cfdisk
+-rwxr-xr-x. 1 eezeepz eezeepz 31800 Nov 17  2015 /home/eezeepz/chkconfig
+-rwxr-xr-x. 1 eezeepz eezeepz 51536 Nov 17  2015 /home/eezeepz/telinit
+-rwxr-xr-x. 1 eezeepz eezeepz 13712 Nov 17  2015 /home/eezeepz/nisdomainname
+-rwxr-xr-x. 1 eezeepz eezeepz 44528 Nov 17  2015 /home/eezeepz/hwclock
+-rwxr-xr-x. 1 eezeepz eezeepz 38608 Nov 17  2015 /home/eezeepz/cryptsetup
+-r--r--r--. 1 eezeepz eezeepz 514 Nov 18  2015 /home/eezeepz/notes.txt
+-rwxr-xr-x. 1 eezeepz eezeepz 35608 Nov 17  2015 /home/eezeepz/tune2fs
+-rwxr-xr-x. 1 eezeepz eezeepz 47928 Nov 17  2015 /home/eezeepz/touch
+-rwxr-xr-x. 1 eezeepz eezeepz 13712 Nov 17  2015 /home/eezeepz/ypdomainname
+-rwxr-xr-x. 1 eezeepz eezeepz 6976 Nov 17  2015 /home/eezeepz/cciss_id
+-rwxr-xr-x. 1 eezeepz eezeepz 390616 Nov 17  2015 /home/eezeepz/tar
+-rw-r--r--. 1 eezeepz eezeepz 176 Sep 22  2015 /home/eezeepz/.bash_profile
+-rwxr-xr-x. 1 eezeepz eezeepz 47520 Nov 17  2015 /home/eezeepz/zic
+-rwxr-xr-x. 1 eezeepz eezeepz 7920 Nov 17  2015 /home/eezeepz/kbd_mode
+-rwxr-xr-x. 1 eezeepz eezeepz 11464 Nov 17  2015 /home/eezeepz/nameif
+-rwxr-xr-x. 1 eezeepz eezeepz 25208 Nov 17  2015 /home/eezeepz/nice
+-rwxr-xr-x. 1 eezeepz eezeepz 123360 Nov 17  2015 /home/eezeepz/netstat
+-rwxr-xr-x. 1 eezeepz eezeepz 25072 Nov 17  2015 /home/eezeepz/chcpu
+-rwxr-xr-x. 1 eezeepz eezeepz 53640 Nov 17  2015 /home/eezeepz/chown
+-rwxr-xr-x. 1 eezeepz eezeepz 33559 Nov 17  2015 /home/eezeepz/cbq
+
+
+[-] Home directory contents:
+total 28K
+drwxr-xr-x.  6 root root 4.0K Nov 17  2015 .
+drwxr-xr-x. 19 root root 4.0K Nov 19  2015 ..
+drwxr-xr-x.  2 root root 4.0K Aug 24  2015 cgi-bin
+drwxr-xr-x.  3 root root 4.0K Nov 17  2015 error
+drwxr-xr-x.  7 root root 4.0K Nov 25  2015 html
+drwxr-xr-x.  3 root root 4.0K Nov 17  2015 icons
+-rw-r--r--   1 root root   98 Nov 17  2015 notes.txt
+
+
+### ENVIRONMENTAL #######################################
+[-] Environment information:
+TERM=linux
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+runlevel=3
+RUNLEVEL=3
+LANGSH_SOURCED=1
+PWD=/tmp
+LANG=C
+previous=N
+PREVLEVEL=N
+CONSOLETYPE=vt
+SHLVL=5
+UPSTART_INSTANCE=
+UPSTART_EVENTS=runlevel
+UPSTART_JOB=rc
+_=/bin/env
+
+
+[-] SELinux seems to be present:
+SELinux status:                 disabled
+
+
+[-] Path information:
+/sbin:/usr/sbin:/bin:/usr/bin
+
+
+[-] Available shells:
+/bin/sh
+/bin/bash
+/sbin/nologin
+/bin/dash
+
+
+[-] Current umask value:
+0022
+u=rwx,g=rx,o=rx
+
+
+[-] umask value as specified in /etc/login.defs:
+UMASK           077
+
+
+[-] Password and storage information:
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512 
+
+
+### JOBS/TASKS ##########################################
+[-] Cron jobs:
+-rw-------. 1 root root    0 Nov 10  2015 /etc/cron.deny
+-rw-r--r--. 1 root root  457 Sep 26  2011 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x.  2 root root 4096 Nov 17  2015 .
+drwxr-xr-x. 70 root root 4096 Mar  7 19:40 ..
+-rw-r--r--.  1 root root  113 Nov 10  2015 0hourly
+-rw-------.  1 root root  108 May 20  2015 raid-check
+
+/etc/cron.daily:
+total 12
+drwxr-xr-x.  2 root root 4096 Nov 17  2015 .
+drwxr-xr-x. 70 root root 4096 Mar  7 19:40 ..
+-rwx------.  1 root root  180 Jul  9  2003 logrotate
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x.  2 root root 4096 Nov 17  2015 .
+drwxr-xr-x. 70 root root 4096 Mar  7 19:40 ..
+-rwxr-xr-x.  1 root root  409 Nov 10  2015 0anacron
+
+/etc/cron.monthly:
+total 8
+drwxr-xr-x.  2 root root 4096 Sep 26  2011 .
+drwxr-xr-x. 70 root root 4096 Mar  7 19:40 ..
+
+/etc/cron.weekly:
+total 8
+drwxr-xr-x.  2 root root 4096 Sep 26  2011 .
+drwxr-xr-x. 70 root root 4096 Mar  7 19:40 ..
+
+
+[-] Crontab contents:
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+HOME=/
+
+# For details see man 4 crontabs
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+
+
+[-] Anacron jobs and associated file permissions:
+-rw-------. 1 root root 541 Nov 10  2015 /etc/anacrontab
+
+
+[-] When were jobs last executed (/var/spool/anacron contents):
+total 20
+drwxr-xr-x. 2 root root 4096 Nov 10  2015 .
+drwxr-xr-x. 8 root root 4096 Nov 17  2015 ..
+-rw-------. 1 root root    9 Mar  7 15:43 cron.daily
+-rw-------. 1 root root    9 Mar  7 16:23 cron.monthly
+-rw-------. 1 root root    9 Mar  7 16:03 cron.weekly
+
+
+### NETWORKING  ##########################################
+[-] Network and IP info:
+eth0      Link encap:Ethernet  HWaddr 08:00:27:A5:A6:76  
+          inet addr:192.168.116.136  Bcast:192.168.116.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fea5:a676/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:948 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1013 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:411874 (402.2 KiB)  TX bytes:596756 (582.7 KiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+
+[-] ARP history:
+? (192.168.116.129) at 00:0c:29:73:7d:da [ether] on eth0
+? (192.168.116.254) at 00:50:56:f9:16:4d [ether] on eth0
+? (192.168.116.2) at 00:50:56:e1:18:f7 [ether] on eth0
+
+
+[-] Nameserver(s):
+nameserver 192.168.116.2
+
+
+[-] Default route:
+default         192.168.116.2   0.0.0.0         UG    0      0        0 eth0
+
+
+[-] Listening TCP:
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      -                   
+tcp        0      0 :::80                       :::*                        LISTEN      -                   
+
+
+[-] Listening UDP:
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+udp        0      0 0.0.0.0:68                  0.0.0.0:*                               -                   
+
+
+### SERVICES #############################################
+[-] Running processes:
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.2  19232  1492 ?        Ss   19:40   0:01 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    19:40   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    19:40   0:00 [migration/0]
+root         4  0.0  0.0      0     0 ?        S    19:40   0:00 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S    19:40   0:00 [stopper/0]
+root         6  0.0  0.0      0     0 ?        S    19:40   0:00 [watchdog/0]
+root         7  0.0  0.0      0     0 ?        S    19:40   0:01 [events/0]
+root         8  0.0  0.0      0     0 ?        S    19:40   0:00 [events/0]
+root         9  0.0  0.0      0     0 ?        S    19:40   0:00 [events_long/0]
+root        10  0.0  0.0      0     0 ?        S    19:40   0:00 [events_power_ef]
+root        11  0.0  0.0      0     0 ?        S    19:40   0:00 [cgroup]
+root        12  0.0  0.0      0     0 ?        S    19:40   0:00 [khelper]
+root        13  0.0  0.0      0     0 ?        S    19:40   0:00 [netns]
+root        14  0.0  0.0      0     0 ?        S    19:40   0:00 [async/mgr]
+root        15  0.0  0.0      0     0 ?        S    19:40   0:00 [pm]
+root        16  0.0  0.0      0     0 ?        S    19:40   0:00 [sync_supers]
+root        17  0.0  0.0      0     0 ?        S    19:40   0:00 [bdi-default]
+root        18  0.0  0.0      0     0 ?        S    19:40   0:00 [kintegrityd/0]
+root        19  0.0  0.0      0     0 ?        S    19:40   0:00 [kblockd/0]
+root        20  0.0  0.0      0     0 ?        S    19:40   0:00 [kacpid]
+root        21  0.0  0.0      0     0 ?        S    19:40   0:00 [kacpi_notify]
+root        22  0.0  0.0      0     0 ?        S    19:40   0:00 [kacpi_hotplug]
+root        23  0.0  0.0      0     0 ?        S    19:40   0:00 [ata_aux]
+root        24  0.0  0.0      0     0 ?        S    19:40   0:00 [ata_sff/0]
+root        25  0.0  0.0      0     0 ?        S    19:40   0:00 [ksuspend_usbd]
+root        26  0.0  0.0      0     0 ?        S    19:40   0:00 [khubd]
+root        27  0.0  0.0      0     0 ?        S    19:40   0:00 [kseriod]
+root        28  0.0  0.0      0     0 ?        S    19:40   0:00 [md/0]
+root        29  0.0  0.0      0     0 ?        S    19:40   0:00 [md_misc/0]
+root        30  0.0  0.0      0     0 ?        S    19:40   0:00 [linkwatch]
+root        32  0.0  0.0      0     0 ?        S    19:40   0:00 [khungtaskd]
+root        33  0.0  0.0      0     0 ?        S    19:40   0:00 [kswapd0]
+root        34  0.0  0.0      0     0 ?        SN   19:40   0:00 [ksmd]
+root        35  0.0  0.0      0     0 ?        S    19:40   0:00 [aio/0]
+root        36  0.0  0.0      0     0 ?        S    19:40   0:00 [crypto/0]
+root        43  0.0  0.0      0     0 ?        S    19:40   0:00 [kthrotld/0]
+root        44  0.0  0.0      0     0 ?        S    19:40   0:00 [pciehpd]
+root        46  0.0  0.0      0     0 ?        S    19:40   0:00 [kpsmoused]
+root        47  0.0  0.0      0     0 ?        S    19:40   0:00 [usbhid_resumer]
+root        48  0.0  0.0      0     0 ?        S    19:40   0:00 [deferwq]
+root        81  0.0  0.0      0     0 ?        S    19:40   0:00 [kdmremove]
+root        82  0.0  0.0      0     0 ?        S    19:40   0:00 [kstriped]
+root       206  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_0]
+root       214  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_1]
+root       280  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_2]
+root       281  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_3]
+root       282  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_4]
+root       283  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_5]
+root       284  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_6]
+root       285  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_7]
+root       286  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_8]
+root       287  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_9]
+root       288  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_10]
+root       289  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_11]
+root       290  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_12]
+root       291  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_13]
+root       292  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_14]
+root       293  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_15]
+root       294  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_16]
+root       295  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_17]
+root       296  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_18]
+root       297  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_19]
+root       298  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_20]
+root       299  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_21]
+root       300  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_22]
+root       301  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_23]
+root       302  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_24]
+root       303  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_25]
+root       304  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_26]
+root       305  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_27]
+root       306  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_28]
+root       307  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_29]
+root       308  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_30]
+root       309  0.0  0.0      0     0 ?        S    19:40   0:00 [scsi_eh_31]
+root       445  0.0  0.0      0     0 ?        S    19:40   0:00 [kdmflush]
+root       447  0.0  0.0      0     0 ?        S    19:40   0:00 [kdmflush]
+root       465  0.0  0.0      0     0 ?        S    19:40   0:00 [jbd2/dm-0-8]
+root       466  0.0  0.0      0     0 ?        S    19:40   0:00 [ext4-dio-unwrit]
+root       545  0.0  0.2  11160  1256 ?        S<s  19:40   0:00 /sbin/udevd -d
+root       803  0.0  0.0      0     0 ?        S    19:40   0:00 [vmmemctl]
+root       946  0.0  0.2  11160  1268 ?        S<   19:40   0:00 /sbin/udevd -d
+root       954  0.0  0.2  11144  1268 ?        S<   19:40   0:00 /sbin/udevd -d
+root       978  0.0  0.0      0     0 ?        S    19:40   0:00 [jbd2/sda1-8]
+root       979  0.0  0.0      0     0 ?        S    19:40   0:00 [ext4-dio-unwrit]
+root      1029  0.0  0.0      0     0 ?        S    19:40   0:00 [kauditd]
+root      1241  0.0  0.0      0     0 ?        S    19:40   0:00 [flush-253:0]
+root      1284  0.0  0.1   9120   972 ?        Ss   19:41   0:00 /sbin/dhclient -1 -q -lf /var/lib/dhclient/dhclient-eth0.leases -pf /var/run/dhclient-eth0.pid eth0
+root      1352  0.0  0.1  27596   804 ?        S<sl 19:41   0:00 auditd
+root      1374  0.0  0.3 249084  1600 ?        Sl   19:41   0:00 /sbin/rsyslogd -i /var/run/syslogd.pid -c 5
+root      1513  0.0  0.3 108168  1568 ?        S    19:41   0:00 /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --pid-file=/var/run/mysqld/mysqld.pid --basedir=/usr --user=mysql
+mysql     1615  0.0  4.0 377032 20368 ?        Sl   19:41   0:00 /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --log-error=/var/log/mysqld.log --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/lib/mysql/mysql.sock
+root      1642  0.0  1.8 251916  9064 ?        Ss   19:41   0:00 /usr/sbin/httpd
+apache    1650  0.0  1.4 253048  7496 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1651  0.0  1.4 253040  7052 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1652  0.0  1.3 253040  6776 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1653  0.0  1.3 252536  6760 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1654  0.0  1.4 252620  7252 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1656  0.0  1.4 253048  7232 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1657  0.0  1.4 252536  7236 ?        S    19:41   0:00 /usr/sbin/httpd
+apache    1658  0.0  1.4 253048  7440 ?        S    19:41   0:00 /usr/sbin/httpd
+root      1662  0.0  0.2 116860  1220 ?        Ss   19:41   0:00 crond
+root      1675  0.0  0.1   4064   596 tty1     Ss+  19:41   0:00 /sbin/mingetty /dev/tty1
+root      1677  0.0  0.1   4064   600 tty2     Ss+  19:41   0:00 /sbin/mingetty /dev/tty2
+root      1679  0.0  0.1   4064   600 tty3     Ss+  19:41   0:00 /sbin/mingetty /dev/tty3
+root      1681  0.0  0.1   4064   600 tty4     Ss+  19:41   0:00 /sbin/mingetty /dev/tty4
+root      1683  0.0  0.1   4064   596 tty5     Ss+  19:41   0:00 /sbin/mingetty /dev/tty5
+root      1685  0.0  0.1   4064   596 tty6     Ss+  19:41   0:00 /sbin/mingetty /dev/tty6
+apache    2113  0.0  0.3  11828  1864 ?        S    20:56   0:00 /bin/bash ./LinEnum.sh -t
+apache    2114  0.0  0.2  11832  1460 ?        S    20:56   0:00 /bin/bash ./LinEnum.sh -t
+apache    2115  0.0  0.1   4072   544 ?        S    20:56   0:00 tee -a
+root      2200  0.0  0.0      0     0 ?        S    20:56   0:00 [flush-8:0]
+apache    2493  0.0  0.2  11832  1168 ?        S    20:56   0:00 /bin/bash ./LinEnum.sh -t
+apache    2494  0.0  0.2  13368  1064 ?        R    20:56   0:00 ps aux
+
+
+[-] Process binaries and associated permissions (from above list):
+-rwxr-xr-x. 1 root root  906152 Sep 22  2015 /bin/bash
+lrwxrwxrwx. 1 root root       4 Nov 17  2015 /bin/sh -> bash
+-rwxr-xr-x. 1 root root  576384 Jul 24  2015 /sbin/dhclient
+-rwxr-xr-x. 1 root root  150352 Mar 12  2014 /sbin/init
+-rwxr-xr-x. 1 root root   15256 Sep 23  2011 /sbin/mingetty
+-rwxr-xr-x. 1 root root  391360 Dec 17  2014 /sbin/rsyslogd
+-rwxr-xr-x. 1 root root  129120 Jul 24  2015 /sbin/udevd
+-rwxr-xr-x. 1 root root 7589488 Jun 22  2015 /usr/libexec/mysqld
+-rwxr-xr-x. 1 root root  355712 Aug 24  2015 /usr/sbin/httpd
+
+
+[-] /etc/init.d/ binary permissions:
+lrwxrwxrwx. 1 root root 11 Nov 17  2015 /etc/init.d -> rc.d/init.d
+
+
+[-] /etc/rc.d/init.d binary permissions:
+total 228
+drwxr-xr-x.  2 root root  4096 Nov 17  2015 .
+drwxr-xr-x. 10 root root  4096 Nov 17  2015 ..
+-rwxr-xr-x.  1 root root  3580 Oct 15  2014 auditd
+-r-xr-xr-x.  1 root root  1340 Sep 22  2015 blk-availability
+-rwxr-xr-x.  1 root root  2826 Nov 10  2015 crond
+-rw-r--r--.  1 root root 19697 Apr  9  2015 functions
+-rwxr-xr-x.  1 root root  5929 Apr  9  2015 halt
+-rwxr-xr-x.  1 root root  2001 Aug 24  2015 htcacheclean
+-rwxr-xr-x.  1 root root  3371 Aug 24  2015 httpd
+-rwxr-xr-x.  1 root root 11169 Jul 23  2015 ip6tables
+-rwxr-xr-x.  1 root root 11048 Jul 23  2015 iptables
+-rwxr-xr-x.  1 root root  4535 Feb 26  2015 iscsi
+-rwxr-xr-x.  1 root root  3990 Feb 26  2015 iscsid
+-rwxr-xr-x.  1 root root   652 Apr  9  2015 killall
+-r-xr-xr-x.  1 root root  2134 Sep 22  2015 lvm2-lvmetad
+-r-xr-xr-x.  1 root root  3042 Sep 22  2015 lvm2-monitor
+-rwxr-xr-x.  1 root root  2571 May 20  2015 mdmonitor
+-rwxr-xr-x.  1 root root  2523 Jul 23  2015 multipathd
+-rwxr-xr-x.  1 root root  7026 Jun 22  2015 mysqld
+-rwxr-xr-x.  1 root root  2989 Apr  9  2015 netconsole
+-rwxr-xr-x.  1 root root  7570 Apr  9  2015 netfs
+-rwxr-xr-x.  1 root root  6406 Apr  9  2015 network
+-rwxr-xr-x.  1 root root  3912 Nov 10  2015 postfix
+-rwxr-xr-x.  1 root root  1513 Dec 11  2014 rdisc
+-rwxr-xr-x.  1 root root  1822 Jul 24  2015 restorecond
+-rwxr-xr-x.  1 root root  2011 Dec 10  2014 rsyslog
+-rwxr-xr-x.  1 root root  1698 Jul 24  2015 sandbox
+-rwxr-xr-x.  1 root root  2056 Feb 27  2015 saslauthd
+-rwxr-xr-x.  1 root root   647 Apr  9  2015 single
+-rwxr-xr-x.  1 root root  4621 Aug 13  2015 sshd
+-rwxr-xr-x.  1 root root  2294 Jul 24  2015 udev-post
+-rwxr-xr-x.  1 root root 15566 Nov 17  2015 vboxadd
+-rwxr-xr-x.  1 root root  4535 Nov 17  2015 vboxadd-service
+-rwxr-xr-x.  1 root root 22252 Nov 17  2015 vboxadd-x11
+
+
+[-] /etc/init/ config file permissions:
+total 64
+drwxr-xr-x.  2 root root 4096 Nov 17  2015 .
+drwxr-xr-x. 70 root root 4096 Mar  7 19:40 ..
+-rw-r--r--.  1 root root  412 Apr  9  2015 control-alt-delete.conf
+-rw-r--r--.  1 root root  130 Mar 12  2014 init-system-dbus.conf
+-rw-r--r--.  1 root root  463 Apr  9  2015 kexec-disable.conf
+-rw-r--r--.  1 root root  560 Apr  9  2015 plymouth-shutdown.conf
+-rw-r--r--.  1 root root  357 Apr  9  2015 prefdm.conf
+-rw-r--r--.  1 root root  505 Apr  9  2015 quit-plymouth.conf
+-rw-r--r--.  1 root root  417 Apr  9  2015 rc.conf
+-rw-r--r--.  1 root root  430 Apr  9  2015 rcS-emergency.conf
+-rw-r--r--.  1 root root  725 Apr  9  2015 rcS-sulogin.conf
+-rw-r--r--.  1 root root 1046 Apr  9  2015 rcS.conf
+-rw-r--r--.  1 root root 1302 Apr  9  2015 serial.conf
+-rw-r--r--.  1 root root  791 Apr  9  2015 splash-manager.conf
+-rw-r--r--.  1 root root  473 Apr  9  2015 start-ttys.conf
+-rw-r--r--.  1 root root  335 Apr  9  2015 tty.conf
+
+
+### SOFTWARE #############################################
+[-] Sudo version:
+Sudo version 1.8.6p3
+
+
+[-] MYSQL version:
+mysql  Ver 14.14 Distrib 5.1.73, for redhat-linux-gnu (x86_64) using readline 5.1
+
+
+[-] Apache version:
+Server version: Apache/2.2.15 (Unix)
+Server built:   Aug 24 2015 17:52:49
+
+
+[-] Installed Apache modules:
+Loaded Modules:
+ core_module (static)
+ mpm_prefork_module (static)
+ http_module (static)
+ so_module (static)
+ auth_basic_module (shared)
+ auth_digest_module (shared)
+ authn_file_module (shared)
+ authn_alias_module (shared)
+ authn_anon_module (shared)
+ authn_dbm_module (shared)
+ authn_default_module (shared)
+ authz_host_module (shared)
+ authz_user_module (shared)
+ authz_owner_module (shared)
+ authz_groupfile_module (shared)
+ authz_dbm_module (shared)
+ authz_default_module (shared)
+ ldap_module (shared)
+ authnz_ldap_module (shared)
+ include_module (shared)
+ log_config_module (shared)
+ logio_module (shared)
+ env_module (shared)
+ ext_filter_module (shared)
+ mime_magic_module (shared)
+ expires_module (shared)
+ deflate_module (shared)
+ headers_module (shared)
+ usertrack_module (shared)
+ setenvif_module (shared)
+ mime_module (shared)
+ dav_module (shared)
+ status_module (shared)
+ autoindex_module (shared)
+ info_module (shared)
+ dav_fs_module (shared)
+ vhost_alias_module (shared)
+ negotiation_module (shared)
+ dir_module (shared)
+ actions_module (shared)
+ speling_module (shared)
+ userdir_module (shared)
+ alias_module (shared)
+ substitute_module (shared)
+ rewrite_module (shared)
+ proxy_module (shared)
+ proxy_balancer_module (shared)
+ proxy_ftp_module (shared)
+ proxy_http_module (shared)
+ proxy_ajp_module (shared)
+ proxy_connect_module (shared)
+ cache_module (shared)
+ suexec_module (shared)
+ disk_cache_module (shared)
+ cgi_module (shared)
+ version_module (shared)
+ php5_module (shared)
+
+
+[-] www home dir contents:
+/var/www/:
+total 28K
+drwxr-xr-x.  6 root root 4.0K Nov 17  2015 .
+drwxr-xr-x. 19 root root 4.0K Nov 19  2015 ..
+drwxr-xr-x.  2 root root 4.0K Aug 24  2015 cgi-bin
+drwxr-xr-x.  3 root root 4.0K Nov 17  2015 error
+drwxr-xr-x.  7 root root 4.0K Nov 25  2015 html
+drwxr-xr-x.  3 root root 4.0K Nov 17  2015 icons
+-rw-r--r--   1 root root   98 Nov 17  2015 notes.txt
+
+/var/www/cgi-bin:
+total 8.0K
+drwxr-xr-x. 2 root root 4.0K Aug 24  2015 .
+drwxr-xr-x. 6 root root 4.0K Nov 17  2015 ..
+
+/var/www/error:
+total 208K
+drwxr-xr-x. 3 root root 4.0K Nov 17  2015 .
+drwxr-xr-x. 6 root root 4.0K Nov 17  2015 ..
+-rw-r--r--. 1 root root 8.9K Nov 13  2005 HTTP_BAD_GATEWAY.html.var
+-rw-r--r--. 1 root root 6.5K Nov 13  2005 HTTP_BAD_REQUEST.html.var
+-rw-r--r--. 1 root root  11K Nov 13  2005 HTTP_FORBIDDEN.html.var
+-rw-r--r--. 1 root root  13K Nov 13  2005 HTTP_GONE.html.var
+-rw-r--r--. 1 root root  13K Nov 13  2005 HTTP_INTERNAL_SERVER_ERROR.html.var
+-rw-r--r--. 1 root root 7.4K Nov 13  2005 HTTP_LENGTH_REQUIRED.html.var
+-rw-r--r--. 1 root root 6.7K Nov 13  2005 HTTP_METHOD_NOT_ALLOWED.html.var
+-rw-r--r--. 1 root root  13K Nov 13  2005 HTTP_NOT_FOUND.html.var
+-rw-r--r--. 1 root root 6.2K Nov 13  2005 HTTP_NOT_IMPLEMENTED.html.var
+-rw-r--r--. 1 root root 6.5K Nov 13  2005 HTTP_PRECONDITION_FAILED.html.var
+-rw-r--r--. 1 root root 7.7K Nov 13  2005 HTTP_REQUEST_ENTITY_TOO_LARGE.html.var
+-rw-r--r--. 1 root root 7.0K Nov 13  2005 HTTP_REQUEST_TIME_OUT.html.var
+-rw-r--r--. 1 root root 7.0K Nov 13  2005 HTTP_REQUEST_URI_TOO_LARGE.html.var
+-rw-r--r--. 1 root root 7.7K Nov 13  2005 HTTP_SERVICE_UNAVAILABLE.html.var
+-rw-r--r--. 1 root root  13K Nov 13  2005 HTTP_UNAUTHORIZED.html.var
+-rw-r--r--. 1 root root 6.3K Nov 13  2005 HTTP_UNSUPPORTED_MEDIA_TYPE.html.var
+-rw-r--r--. 1 root root 6.9K Nov 13  2005 HTTP_VARIANT_ALSO_VARIES.html.var
+-rw-r--r--. 1 root root 2.0K Jul 11  2006 README
+-rw-r--r--. 1 root root 4.2K Nov 13  2005 contact.html.var
+drwxr-xr-x. 2 root root 4.0K Nov 17  2015 include
+-rw-r--r--. 1 root root 4.9K Oct 19  2014 noindex.html
+
+/var/www/error/include:
+total 20K
+drwxr-xr-x. 2 root root 4.0K Nov 17  2015 .
+drwxr-xr-x. 3 root root 4.0K Nov 17  2015 ..
+-rw-r--r--. 1 root root  343 Nov 20  2004 bottom.html
+-rw-r--r--. 1 root root    9 Nov 20  2004 spacer.html
+-rw-r--r--. 1 root root  969 Nov 20  2004 top.html
+
+/var/www/html:
+total 36K
+drwxr-xr-x. 7 root   root   4.0K Nov 25  2015 .
+drwxr-xr-x. 6 root   root   4.0K Nov 17  2015 ..
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 beer
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 cola
+drwxr-xr-x  3 apache apache 4.0K Nov 17  2015 fristi
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 images
+-rw-r--r--  1 apache apache  703 Nov 17  2015 index.html
+-rw-r--r--  1 apache apache   62 Nov 17  2015 robots.txt
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 sisi
+
+/var/www/html/beer:
+total 12K
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 .
+drwxr-xr-x. 7 root   root   4.0K Nov 25  2015 ..
+-rw-r--r--  1 root   root     33 Nov 25  2015 index.html
+
+/var/www/html/cola:
+total 8.0K
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 .
+drwxr-xr-x. 7 root   root   4.0K Nov 25  2015 ..
+lrwxrwxrwx  1 root   root     29 Nov 25  2015 index.html -> /var/www/html/beer/index.html
+
+/var/www/html/fristi:
+total 172K
+drwxr-xr-x  3 apache apache 4.0K Nov 17  2015 .
+drwxr-xr-x. 7 root   root   4.0K Nov 25  2015 ..
+-rw-r--r--. 1 apache apache 1.3K Nov 17  2015 checklogin.php
+-rw-r--r--. 1 apache apache 1.2K Nov 17  2015 do_upload.php
+lrwxrwxrwx. 1 apache apache   14 Nov 17  2015 index.php -> main_login.php
+-rw-r--r--. 1 apache apache  191 Nov 17  2015 login_success.php
+-rw-r--r--. 1 apache apache   45 Nov 17  2015 logout.php
+-rw-r--r--. 1 apache apache 1.4K Nov 17  2015 main_login.php
+-rw-r--r--. 1 apache apache 129K Nov 17  2015 pic.b64
+-rw-r--r--. 1 apache apache 1.7K Nov 17  2015 pic2.b64
+-rw-r--r--. 1 apache apache  372 Nov 17  2015 upload.php
+drwxrwxrwx. 2 apache apache 4.0K Mar  7 20:44 uploads
+
+/var/www/html/fristi/uploads:
+total 184K
+drwxrwxrwx. 2 apache apache 4.0K Mar  7 20:44 .
+drwxr-xr-x  3 apache apache 4.0K Nov 17  2015 ..
+-rw-r--r--  1 apache apache   30 Mar  7 20:10 0.png
+-rw-r--r--  1 apache apache 106K Mar  7 19:46 3037440.jpg
+-r--r--r--. 1 apache apache    4 Nov 17  2015 index.html
+-rw-r--r--  1 apache apache  34K Mar  7 19:49 keep-calm.png
+-rw-r--r--  1 apache apache 3.0K Mar  7 20:44 payload.php.png
+-rw-r--r--  1 apache apache   30 Mar  7 20:37 shell.php%00.png
+-rw-r--r--  1 apache apache   30 Mar  7 20:23 shell.php%0delete0.png
+-rw-r--r--  1 apache apache   30 Mar  7 20:40 shell.php.png
+-rw-r--r--  1 apache apache   30 Mar  7 20:22 shell.php;.png
+-rw-r--r--  1 apache apache   30 Mar  7 19:57 shell.png
+
+/var/www/html/images:
+total 152K
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 .
+drwxr-xr-x. 7 root   root   4.0K Nov 25  2015 ..
+-rw-r--r--  1 apache apache 106K Nov 25  2015 3037440.jpg
+-rw-r--r--  1 apache apache  34K Nov 17  2015 keep-calm.png
+
+/var/www/html/sisi:
+total 8.0K
+drwxr-xr-x  2 apache apache 4.0K Nov 25  2015 .
+drwxr-xr-x. 7 root   root   4.0K Nov 25  2015 ..
+lrwxrwxrwx  1 root   root     29 Nov 25  2015 index.html -> /var/www/html/beer/index.html
+
+/var/www/icons:
+total 696K
+drwxr-xr-x. 3 root root 4.0K Nov 17  2015 .
+drwxr-xr-x. 6 root root 4.0K Nov 17  2015 ..
+-rw-r--r--. 1 root root 5.0K Aug 28  2007 README
+-rw-r--r--. 1 root root  36K Aug 28  2007 README.html
+-rw-r--r--. 1 root root  246 Nov 20  2004 a.gif
+-rw-r--r--. 1 root root  306 Nov 26  2008 a.png
+-rw-r--r--. 1 root root  242 Nov 20  2004 alert.black.gif
+-rw-r--r--. 1 root root  293 Nov 26  2008 alert.black.png
+-rw-r--r--. 1 root root  247 Nov 20  2004 alert.red.gif
+-rw-r--r--. 1 root root  314 Nov 26  2008 alert.red.png
+-rw-r--r--. 1 root root 2.3K Nov 20  2004 apache_pb.gif
+-rw-r--r--. 1 root root 2.1K Nov 26  2008 apache_pb.png
+-rw-r--r--. 1 root root 1.8K Nov 26  2008 apache_pb2.gif
+-rw-r--r--. 1 root root 1.5K Nov 26  2008 apache_pb2.png
+-rw-r--r--. 1 root root 2.4K Nov 26  2008 apache_pb2_ani.gif
+-rw-r--r--. 1 root root  216 Nov 20  2004 back.gif
+-rw-r--r--. 1 root root  308 Nov 26  2008 back.png
+-rw-r--r--. 1 root root  233 Nov 20  2004 ball.gray.gif
+-rw-r--r--. 1 root root  298 Nov 26  2008 ball.gray.png
+-rw-r--r--. 1 root root  205 Nov 20  2004 ball.red.gif
+-rw-r--r--. 1 root root  289 Nov 26  2008 ball.red.png
+-rw-r--r--. 1 root root  246 Nov 20  2004 binary.gif
+-rw-r--r--. 1 root root  310 Nov 26  2008 binary.png
+-rw-r--r--. 1 root root  246 Nov 20  2004 binhex.gif
+-rw-r--r--. 1 root root  319 Nov 26  2008 binhex.png
+-rw-r--r--. 1 root root  148 Nov 20  2004 blank.gif
+-rw-r--r--. 1 root root  215 Nov 26  2008 blank.png
+-rw-r--r--. 1 root root  308 Nov 20  2004 bomb.gif
+-rw-r--r--. 1 root root  375 Nov 26  2008 bomb.png
+-rw-r--r--. 1 root root  251 Nov 20  2004 box1.gif
+-rw-r--r--. 1 root root  325 Aug 28  2007 box1.png
+-rw-r--r--. 1 root root  268 Nov 20  2004 box2.gif
+-rw-r--r--. 1 root root  336 Aug 28  2007 box2.png
+-rw-r--r--. 1 root root  247 Nov 20  2004 broken.gif
+-rw-r--r--. 1 root root  320 Nov 26  2008 broken.png
+-rw-r--r--. 1 root root  235 Nov 20  2004 burst.gif
+-rw-r--r--. 1 root root  341 Nov 26  2008 burst.png
+-rw-r--r--. 1 root root  242 Nov 20  2004 c.gif
+-rw-r--r--. 1 root root  299 Nov 26  2008 c.png
+-rw-r--r--. 1 root root  251 Nov 20  2004 comp.blue.gif
+-rw-r--r--. 1 root root  330 Aug 28  2007 comp.blue.png
+-rw-r--r--. 1 root root  246 Nov 20  2004 comp.gray.gif
+-rw-r--r--. 1 root root  318 Nov 26  2008 comp.gray.png
+-rw-r--r--. 1 root root 1.1K Nov 20  2004 compressed.gif
+-rw-r--r--. 1 root root 1.1K Aug 28  2007 compressed.png
+-rw-r--r--. 1 root root  214 Nov 20  2004 continued.gif
+-rw-r--r--. 1 root root  296 Nov 26  2008 continued.png
+-rw-r--r--. 1 root root  225 Nov 20  2004 dir.gif
+-rw-r--r--. 1 root root  295 Nov 26  2008 dir.png
+-rw-r--r--. 1 root root  167 Nov 20  2004 diskimg.gif
+-rw-r--r--. 1 root root  215 Aug 28  2007 diskimg.png
+-rw-r--r--. 1 root root  163 Nov 20  2004 down.gif
+-rw-r--r--. 1 root root  256 Nov 26  2008 down.png
+-rw-r--r--. 1 root root  238 Nov 20  2004 dvi.gif
+-rw-r--r--. 1 root root  305 Nov 26  2008 dvi.png
+-rw-r--r--. 1 root root  236 Nov 20  2004 f.gif
+-rw-r--r--. 1 root root  296 Nov 26  2008 f.png
+-rw-r--r--. 1 root root  225 Nov 20  2004 folder.gif
+-rw-r--r--. 1 root root  242 Nov 20  2004 folder.open.gif
+-rw-r--r--. 1 root root  332 Nov 26  2008 folder.open.png
+-rw-r--r--. 1 root root  295 Nov 26  2008 folder.png
+-rw-r--r--. 1 root root  243 Nov 20  2004 folder.sec.gif
+-rw-r--r--. 1 root root  313 Aug 28  2007 folder.sec.png
+-rw-r--r--. 1 root root  219 Nov 20  2004 forward.gif
+-rw-r--r--. 1 root root  308 Nov 26  2008 forward.png
+-rw-r--r--. 1 root root  221 Nov 20  2004 generic.gif
+-rw-r--r--. 1 root root  275 Nov 26  2008 generic.png
+-rw-r--r--. 1 root root  220 Nov 20  2004 generic.red.gif
+-rw-r--r--. 1 root root  283 Nov 26  2008 generic.red.png
+-rw-r--r--. 1 root root  249 Nov 20  2004 generic.sec.gif
+-rw-r--r--. 1 root root  295 Nov 26  2008 generic.sec.png
+-rw-r--r--. 1 root root  217 Nov 20  2004 hand.right.gif
+-rw-r--r--. 1 root root  311 Nov 26  2008 hand.right.png
+-rw-r--r--. 1 root root  223 Nov 20  2004 hand.up.gif
+-rw-r--r--. 1 root root  304 Nov 26  2008 hand.up.png
+-rw-r--r--. 1 root root  12K Nov 20  2004 icon.sheet.gif
+-rw-r--r--. 1 root root 8.9K Aug 28  2007 icon.sheet.png
+-rw-r--r--. 1 root root  274 Nov 20  2004 image1.gif
+-rw-r--r--. 1 root root  325 Nov 26  2008 image1.png
+-rw-r--r--. 1 root root  309 Nov 20  2004 image2.gif
+-rw-r--r--. 1 root root  371 Nov 26  2008 image2.png
+-rw-r--r--. 1 root root  286 Nov 20  2004 image3.gif
+-rw-r--r--. 1 root root  338 Nov 26  2008 image3.png
+-rw-r--r--. 1 root root  268 Nov 20  2004 index.gif
+-rw-r--r--. 1 root root  332 Nov 26  2008 index.png
+-rw-r--r--. 1 root root  276 Nov 20  2004 layout.gif
+-rw-r--r--. 1 root root  323 Nov 26  2008 layout.png
+-rw-r--r--. 1 root root  172 Nov 20  2004 left.gif
+-rw-r--r--. 1 root root  257 Nov 26  2008 left.png
+-rw-r--r--. 1 root root  249 Nov 20  2004 link.gif
+-rw-r--r--. 1 root root  314 Nov 26  2008 link.png
+-rw-r--r--. 1 root root  243 Nov 20  2004 movie.gif
+-rw-r--r--. 1 root root  272 Nov 26  2008 movie.png
+-rw-r--r--. 1 root root  237 Nov 20  2004 p.gif
+-rw-r--r--. 1 root root  298 Nov 26  2008 p.png
+-rw-r--r--. 1 root root  251 Nov 20  2004 patch.gif
+-rw-r--r--. 1 root root  310 Nov 26  2008 patch.png
+-rw-r--r--. 1 root root  249 Nov 20  2004 pdf.gif
+-rw-r--r--. 1 root root  304 Nov 26  2008 pdf.png
+-rw-r--r--. 1 root root 2.5K Jul  9  2015 php.gif
+-rw-r--r--. 1 root root  188 Nov 20  2004 pie0.gif
+-rw-r--r--. 1 root root  259 Nov 26  2008 pie0.png
+-rw-r--r--. 1 root root  198 Nov 20  2004 pie1.gif
+-rw-r--r--. 1 root root  279 Nov 26  2008 pie1.png
+-rw-r--r--. 1 root root  198 Nov 20  2004 pie2.gif
+-rw-r--r--. 1 root root  272 Nov 26  2008 pie2.png
+-rw-r--r--. 1 root root  191 Nov 20  2004 pie3.gif
+-rw-r--r--. 1 root root  276 Nov 26  2008 pie3.png
+-rw-r--r--. 1 root root  193 Nov 20  2004 pie4.gif
+-rw-r--r--. 1 root root  258 Nov 26  2008 pie4.png
+-rw-r--r--. 1 root root  189 Nov 20  2004 pie5.gif
+-rw-r--r--. 1 root root  277 Nov 26  2008 pie5.png
+-rw-r--r--. 1 root root  186 Nov 20  2004 pie6.gif
+-rw-r--r--. 1 root root  273 Nov 26  2008 pie6.png
+-rw-r--r--. 1 root root  185 Nov 20  2004 pie7.gif
+-rw-r--r--. 1 root root  275 Nov 26  2008 pie7.png
+-rw-r--r--. 1 root root  173 Nov 20  2004 pie8.gif
+-rw-r--r--. 1 root root  259 Nov 26  2008 pie8.png
+-rw-r--r--. 1 root root  254 Nov 20  2004 portal.gif
+-rw-r--r--. 1 root root  319 Aug 28  2007 portal.png
+lrwxrwxrwx. 1 root root   40 Nov 17  2015 poweredby.png -> ../../../usr/share/pixmaps/poweredby.png
+-rw-r--r--. 1 root root  244 Nov 20  2004 ps.gif
+-rw-r--r--. 1 root root  303 Nov 26  2008 ps.png
+-rw-r--r--. 1 root root  267 Nov 20  2004 quill.gif
+-rw-r--r--. 1 root root  329 Aug 28  2007 quill.png
+-rw-r--r--. 1 root root  172 Nov 20  2004 right.gif
+-rw-r--r--. 1 root root  254 Nov 26  2008 right.png
+-rw-r--r--. 1 root root  258 Nov 20  2004 screw1.gif
+-rw-r--r--. 1 root root  328 Nov 26  2008 screw1.png
+-rw-r--r--. 1 root root  263 Nov 20  2004 screw2.gif
+-rw-r--r--. 1 root root  333 Nov 26  2008 screw2.png
+-rw-r--r--. 1 root root  242 Nov 20  2004 script.gif
+-rw-r--r--. 1 root root  290 Nov 26  2008 script.png
+drwxr-xr-x. 2 root root 4.0K Nov 17  2015 small
+-rw-r--r--. 1 root root  248 Nov 20  2004 sound1.gif
+-rw-r--r--. 1 root root  331 Aug 28  2007 sound1.png
+-rw-r--r--. 1 root root  221 Nov 20  2004 sound2.gif
+-rw-r--r--. 1 root root  315 Nov 26  2008 sound2.png
+-rw-r--r--. 1 root root  285 Nov 20  2004 sphere1.gif
+-rw-r--r--. 1 root root  347 Nov 26  2008 sphere1.png
+-rw-r--r--. 1 root root  264 Nov 20  2004 sphere2.gif
+-rw-r--r--. 1 root root  339 Aug 28  2007 sphere2.png
+-rw-r--r--. 1 root root  219 Nov 20  2004 tar.gif
+-rw-r--r--. 1 root root  261 Nov 26  2008 tar.png
+-rw-r--r--. 1 root root  251 Nov 20  2004 tex.gif
+-rw-r--r--. 1 root root  310 Nov 26  2008 tex.png
+-rw-r--r--. 1 root root  229 Nov 20  2004 text.gif
+-rw-r--r--. 1 root root  288 Nov 26  2008 text.png
+-rw-r--r--. 1 root root  242 Nov 20  2004 transfer.gif
+-rw-r--r--. 1 root root  334 Nov 26  2008 transfer.png
+-rw-r--r--. 1 root root  245 Nov 20  2004 unknown.gif
+-rw-r--r--. 1 root root  307 Nov 26  2008 unknown.png
+-rw-r--r--. 1 root root  164 Nov 20  2004 up.gif
+-rw-r--r--. 1 root root  255 Nov 26  2008 up.png
+-rw-r--r--. 1 root root  236 Nov 20  2004 uu.gif
+-rw-r--r--. 1 root root  296 Nov 26  2008 uu.png
+-rw-r--r--. 1 root root  236 Nov 20  2004 uuencoded.gif
+-rw-r--r--. 1 root root  296 Nov 26  2008 uuencoded.png
+-rw-r--r--. 1 root root  228 Nov 20  2004 world1.gif
+-rw-r--r--. 1 root root  332 Aug 28  2007 world1.png
+-rw-r--r--. 1 root root  261 Nov 20  2004 world2.gif
+-rw-r--r--. 1 root root  363 Nov 26  2008 world2.png
+
+/var/www/icons/small:
+total 264K
+drwxr-xr-x. 2 root root 4.0K Nov 17  2015 .
+drwxr-xr-x. 3 root root 4.0K Nov 17  2015 ..
+-rw-r--r--. 1 root root  129 Nov 20  2004 back.gif
+-rw-r--r--. 1 root root  181 Aug 28  2007 back.png
+-rw-r--r--. 1 root root  134 Nov 20  2004 binary.gif
+-rw-r--r--. 1 root root  172 Aug 28  2007 binary.png
+-rw-r--r--. 1 root root  131 Nov 20  2004 binhex.gif
+-rw-r--r--. 1 root root  178 Aug 28  2007 binhex.png
+-rw-r--r--. 1 root root   55 Nov 20  2004 blank.gif
+-rw-r--r--. 1 root root  100 Aug 28  2007 blank.png
+-rw-r--r--. 1 root root  139 Nov 20  2004 broken.gif
+-rw-r--r--. 1 root root  184 Aug 28  2007 broken.png
+-rw-r--r--. 1 root root  128 Nov 20  2004 burst.gif
+-rw-r--r--. 1 root root  210 Aug 28  2007 burst.png
+-rw-r--r--. 1 root root  130 Nov 20  2004 comp1.gif
+-rw-r--r--. 1 root root  216 Aug 28  2007 comp1.png
+-rw-r--r--. 1 root root  131 Nov 20  2004 comp2.gif
+-rw-r--r--. 1 root root  215 Aug 28  2007 comp2.png
+-rw-r--r--. 1 root root  128 Nov 20  2004 compressed.gif
+-rw-r--r--. 1 root root  212 Aug 28  2007 compressed.png
+-rw-r--r--. 1 root root  114 Nov 20  2004 continued.gif
+-rw-r--r--. 1 root root  163 Aug 28  2007 continued.png
+-rw-r--r--. 1 root root  132 Nov 20  2004 dir.gif
+-rw-r--r--. 1 root root  175 Nov 20  2004 dir.png
+-rw-r--r--. 1 root root  122 Nov 20  2004 dir2.gif
+-rw-r--r--. 1 root root  161 Nov 20  2004 dir2.png
+-rw-r--r--. 1 root root  191 Nov 20  2004 doc.gif
+-rw-r--r--. 1 root root  222 Aug 28  2007 doc.png
+-rw-r--r--. 1 root root  125 Nov 20  2004 forward.gif
+-rw-r--r--. 1 root root  174 Aug 28  2007 forward.png
+-rw-r--r--. 1 root root  116 Nov 20  2004 generic.gif
+-rw-r--r--. 1 root root  149 Aug 28  2007 generic.png
+-rw-r--r--. 1 root root  127 Nov 20  2004 generic2.gif
+-rw-r--r--. 1 root root  179 Aug 28  2007 generic2.png
+-rw-r--r--. 1 root root  113 Nov 20  2004 generic3.gif
+-rw-r--r--. 1 root root  171 Aug 28  2007 generic3.png
+-rw-r--r--. 1 root root  126 Nov 20  2004 image.gif
+-rw-r--r--. 1 root root  197 Aug 28  2007 image.png
+-rw-r--r--. 1 root root  138 Nov 20  2004 image2.gif
+-rw-r--r--. 1 root root  203 Aug 28  2007 image2.png
+-rw-r--r--. 1 root root  145 Nov 20  2004 index.gif
+-rw-r--r--. 1 root root  225 Aug 28  2007 index.png
+-rw-r--r--. 1 root root  187 Nov 20  2004 key.gif
+-rw-r--r--. 1 root root  210 Aug 28  2007 key.png
+-rw-r--r--. 1 root root  134 Nov 20  2004 movie.gif
+-rw-r--r--. 1 root root  159 Aug 28  2007 movie.png
+-rw-r--r--. 1 root root  182 Nov 20  2004 patch.gif
+-rw-r--r--. 1 root root  211 Aug 28  2007 patch.png
+-rw-r--r--. 1 root root  184 Nov 20  2004 ps.gif
+-rw-r--r--. 1 root root  217 Aug 28  2007 ps.png
+-rw-r--r--. 1 root root 3.8K Nov 20  2004 rainbow.gif
+-rw-r--r--. 1 root root 2.4K Aug 28  2007 rainbow.png
+-rw-r--r--. 1 root root  130 Nov 20  2004 sound.gif
+-rw-r--r--. 1 root root  197 Aug 28  2007 sound.png
+-rw-r--r--. 1 root root  119 Nov 20  2004 sound2.gif
+-rw-r--r--. 1 root root  171 Aug 28  2007 sound2.png
+-rw-r--r--. 1 root root  132 Nov 20  2004 tar.gif
+-rw-r--r--. 1 root root  173 Aug 28  2007 tar.png
+-rw-r--r--. 1 root root  128 Nov 20  2004 text.gif
+-rw-r--r--. 1 root root  163 Aug 28  2007 text.png
+-rw-r--r--. 1 root root  124 Nov 20  2004 transfer.gif
+-rw-r--r--. 1 root root  211 Aug 28  2007 transfer.png
+-rw-r--r--. 1 root root  131 Nov 20  2004 unknown.gif
+-rw-r--r--. 1 root root  172 Aug 28  2007 unknown.png
+-rw-r--r--. 1 root root  125 Nov 20  2004 uu.gif
+-rw-r--r--. 1 root root  166 Aug 28  2007 uu.png
+
+
+### INTERESTING FILES ####################################
+[-] Useful file locations:
+/usr/bin/wget
+/usr/bin/gcc
+/usr/bin/curl
+
+
+[-] Can we read/write sensitive files:
+-rw-r--r-- 1 root root 1165 Nov 25  2015 /etc/passwd
+-rw-r--r-- 1 root root 544 Nov 25  2015 /etc/group
+-rw-r--r--. 1 root root 1796 Nov 19  2015 /etc/profile
+---------- 1 root root 1057 Nov 25  2015 /etc/shadow
+
+
+[-] SUID files:
+-rwsr-xr-x. 1 root root 77336 Oct 15  2014 /bin/mount
+-rwsr-x---. 1 root fuse 27968 Dec  7  2011 /bin/fusermount
+-rwsr-xr-x. 1 root root 53472 Oct 15  2014 /bin/umount
+-rwsr-xr-x. 1 root root 34904 Nov 10  2015 /bin/su
+-rwsr-xr-x. 1 root root 38200 Jul 23  2015 /bin/ping
+-rwsr-xr-x. 1 root root 36488 Jul 23  2015 /bin/ping6
+-rwsr-xr-x. 1 root root 10272 Aug 18  2015 /sbin/pam_timestamp_check
+-rwsr-xr-x. 1 root root 34840 Aug 18  2015 /sbin/unix_chkpwd
+-rwsr-xr-x. 1 root root 51784 Nov 10  2015 /usr/bin/crontab
+-rws--x--x. 1 root root 20056 Oct 15  2014 /usr/bin/chsh
+---s--x--x. 1 root root 123832 Aug 13  2015 /usr/bin/sudo
+-rws--x--x. 1 root root 20184 Oct 15  2014 /usr/bin/chfn
+-rwsr-xr-x. 1 root root 36144 Apr  7  2015 /usr/bin/newgrp
+-rwsr-xr-x. 1 root root 66352 Apr  7  2015 /usr/bin/chage
+-rwsr-xr-x. 1 root root 71480 Apr  7  2015 /usr/bin/gpasswd
+-rwsr-xr-x. 1 root root 30768 Feb 22  2012 /usr/bin/passwd
+-rwsr-xr-x. 1 root root 257824 Aug 13  2015 /usr/libexec/openssh/ssh-keysign
+-rws--x--x. 1 root root 14280 Sep 22  2015 /usr/libexec/pt_chown
+-r-s--x---. 1 root apache 13984 Aug 24  2015 /usr/sbin/suexec
+-rwsr-xr-x. 1 root root 9000 Nov 10  2015 /usr/sbin/usernetctl
+
+
+[-] SGID files:
+-rwxr-sr-x. 1 root root 5512 Nov 10  2015 /sbin/netreport
+-rwxr-sr-x. 1 root tty 12016 Oct 15  2014 /usr/bin/write
+-rwxr-sr-x. 1 root nobody 141384 Aug 13  2015 /usr/bin/ssh-agent
+-r-xr-sr-x. 1 root tty 11104 Jul 23  2015 /usr/bin/wall
+-rwx--s--x. 1 root utmp 6800 Aug 18  2010 /usr/libexec/utempter/utempter
+-rwxr-sr-x. 1 root postdrop 217832 Nov 10  2015 /usr/sbin/postqueue
+-rwxr-sr-x. 1 root postdrop 184904 Nov 10  2015 /usr/sbin/postdrop
+
+
+[-] NFS config details: 
+-rw-r--r--. 1 root root 0 Jan 12  2010 /etc/exports
+
+
+[-] NFS displaying partitions and filesystems - you need to check if exotic filesystems
+
+#
+# /etc/fstab
+# Created by anaconda on Tue Nov 17 03:13:39 2015
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup-lv_root /                       ext4    defaults        1 1
+UUID=f8fbe1d0-ca27-42c9-af3c-6496b65d310c /boot                   ext4    defaults        1 2
+/dev/mapper/VolGroup-lv_swap swap                    swap    defaults        0 0
+tmpfs                   /dev/shm                tmpfs   defaults        0 0
+devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
+sysfs                   /sys                    sysfs   defaults        0 0
+proc                    /proc                   proc    defaults        0 0
+
+
+[-] Can't search *.conf files as no keyword was entered
+
+[-] Can't search *.php files as no keyword was entered
+
+[-] Can't search *.log files as no keyword was entered
+
+[-] Can't search *.ini files as no keyword was entered
+
+[-] All *.conf files in /etc (recursive 1 level):
+-rw-r--r--. 1 root root 519 Jul 24  2015 /etc/dracut.conf
+-rw-r--r--. 1 root root 2293 Jul 25  2015 /etc/libuser.conf
+-rw-r--r--. 1 root root 827 Jul 24  2015 /etc/mke2fs.conf
+-rw-r-----. 1 root root 1786 Sep 25  2012 /etc/sudo.conf
+-rw-r--r--. 1 root root 662 Aug 29  2007 /etc/logrotate.conf
+-rw-r--r--. 1 root root 2875 Dec 10  2014 /etc/rsyslog.conf
+-rw-r--r--. 1 root root 81 Mar  7 19:41 /etc/resolv.conf
+-rw-r--r--. 1 root root 969 Jul 24  2015 /etc/yum.conf
+-rw-r--r--. 1 root root 449 Apr 10  2015 /etc/krb5.conf
+-rw-r-----. 1 root root 3181 Jul 29  2015 /etc/sudo-ldap.conf
+-rw-r--r--. 1 root root 9 Oct  2  2013 /etc/host.conf
+-rw-r-----. 1 root root 191 Jun  3  2014 /etc/libaudit.conf
+-rw-r--r--. 1 root root 28 Jul 24  2013 /etc/ld.so.conf
+-rw-r--r--. 1 root root 1688 May  4  2010 /etc/nsswitch.conf
+-rw-r--r--. 1 root root 0 Sep 22  2015 /etc/gai.conf
+-rw-r--r--. 1 root root 998 Nov 10  2015 /etc/sysctl.conf
+-rw-r--r--. 1 root root 148 May 14  2009 /etc/asound.conf
+-rw-r--r--. 1 root root 216 Jul 24  2015 /etc/sestatus.conf
+
+
+[-] Any interesting mail in /var/mail:
+lrwxrwxrwx. 1 root root 10 Nov 17  2015 /var/mail -> spool/mail
+
+
+### SCAN COMPLETE ####################################
