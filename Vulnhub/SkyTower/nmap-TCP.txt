@@ -1,0 +1,177 @@
+root@Kali:~/Vulnhub/SkyTower# nmap -Pn -n -sV -p80,3128 192.168.92.130 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-03-23 19:12 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:fc:70:be
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::b041:cdc8:aed5:1dee: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ffd5:1dee         (NDP Solicited-node)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ff3e:8939         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:ff3e:8939         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::fb                  (mDNSv6)
+|       ff02::c                   (SSDP)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|   fe80::20c:29ff:fea0:869d: 
+|     device: eth0
+|     mac: 00:0c:29:a0:86:9d
+|     multicast_ips: 
+|_      ff02::1:ffa0:869d         (NDP Solicited-node)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-echo: 
+|   IP: fe80::20c:29ff:fea0:869d  MAC: 00:0c:29:a0:86:9d  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-invalid-dst: 
+|   IP: fe80::20c:29ff:fea0:869d  MAC: 00:0c:29:a0:86:9d  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::20c:29ff:fea0:869d   MAC: 00:0c:29:a0:86:9d  IFACE: eth0
+|   IP: fe80::b041:cdc8:aed5:1dee  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::b041:cdc8:aed5:1dee  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::4837:8bda:eb3e:8939  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::20c:29ff:fea0:869d   MAC: 00:0c:29:a0:86:9d  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+Nmap scan report for 192.168.92.130
+Host is up (0.00022s latency).
+
+PORT     STATE SERVICE    VERSION
+80/tcp   open  http       Apache httpd 2.2.22 ((Debian))
+|_http-apache-negotiation: mod_negotiation enabled.
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.130
+|   url                        method
+|_  http://192.168.92.130:80/  FORM
+|_http-chrono: Request times for /; avg: 165.21ms; min: 153.31ms; max: 206.25ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.130
+|     
+|     Path: http://192.168.92.130:80/
+|     Line number: 18
+|     Comment: 
+|_        /* this is half the height of your div*/
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.92.130
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://192.168.92.130:80/
+|     Form id: 
+|_    Form action: login.php
+|_http-date: Mon, 23 Mar 2020 19:13:32 GMT; +8h00m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|_  /login.php: Possible admin folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Mon, 23 Mar 2020 19:13:26 GMT
+|   Server: Apache/2.2.22 (Debian)
+|   Last-Modified: Fri, 20 Jun 2014 11:23:36 GMT
+|   ETag: "57-470-4fc42b97adc0a"
+|   Accept-Ranges: bytes
+|   Content-Length: 1136
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.2.22 (Debian)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; php: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+3128/tcp open  http-proxy Squid http proxy 3.1.20
+|_http-chrono: Request times for /; avg: 203.18ms; min: 156.86ms; max: 373.80ms
+|_http-date: Mon, 23 Mar 2020 19:13:27 GMT; +8h00m02s from local time.
+| http-headers: 
+|   Server: squid/3.1.20
+|   Mime-Version: 1.0
+|   Date: Mon, 23 Mar 2020 19:13:33 GMT
+|   Content-Type: text/html
+|   Content-Length: 3151
+|   X-Squid-Error: ERR_INVALID_URL 0
+|   Vary: Accept-Language
+|   Content-Language: en
+|   X-Cache: MISS from localhost
+|   X-Cache-Lookup: NONE from localhost:3128
+|   Via: 1.0 localhost (squid/3.1.20)
+|   Connection: close
+|   
+|_  (Request type: GET)
+|_http-server-header: squid/3.1.20
+|_http-title: ERROR: The requested URL could not be retrieved
+| http-vhosts: 
+|_127 names had status 400
+MAC Address: 00:0C:29:A0:86:9D (VMware)
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.92.130"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 80    0       866.67     217.99  10.0%
+|_3128  0       852.40     255.80  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 335.50 seconds
