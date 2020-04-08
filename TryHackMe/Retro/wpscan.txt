@@ -1,0 +1,203 @@
+root@Kali:~/TryHackme/Retro# wpscan --verbose --enumerate vp --url http://localhost:80/retro
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.7.11
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[+] URL: http://localhost/retro/ [::1]
+[+] Started: Sat Mar 28 22:25:04 2020
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entries:
+ |  - Server: Microsoft-IIS/10.0
+ |  - X-Powered-By: PHP/7.1.29
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://localhost/retro/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access
+
+[+] http://localhost/retro/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://localhost/retro/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 5.2.1 identified (Insecure, released on 2019-05-21).
+ | Found By: Rss Generator (Passive Detection)
+ |  - http://localhost/retro/index.php/feed/, <generator>https://wordpress.org/?v=5.2.1</generator>
+ |  - http://localhost/retro/index.php/comments/feed/, <generator>https://wordpress.org/?v=5.2.1</generator>
+ |
+ | [!] 12 vulnerabilities identified:
+ |
+ | [!] Title: WordPress <= 5.2.2 - Cross-Site Scripting (XSS) in URL Sanitisation
+ |     Fixed in: 5.2.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9867
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16222
+ |      - https://wordpress.org/news/2019/09/wordpress-5-2-3-security-and-maintenance-release/
+ |      - https://github.com/WordPress/WordPress/commit/30ac67579559fe42251b5a9f887211bf61a8ed68
+ |      - https://hackerone.com/reports/339483
+ |
+ | [!] Title: WordPress 5.0-5.2.2 - Authenticated Stored XSS in Shortcode Previews
+ |     Fixed in: 5.2.3
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9864
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16219
+ |      - https://wordpress.org/news/2019/09/wordpress-5-2-3-security-and-maintenance-release/
+ |      - https://fortiguard.com/zeroday/FG-VD-18-165
+ |      - https://www.fortinet.com/blog/threat-research/wordpress-core-stored-xss-vulnerability.html
+ |
+ | [!] Title: WordPress <= 5.2.3 - Stored XSS in Customizer
+ |     Fixed in: 5.2.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9908
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17674
+ |      - https://wordpress.org/news/2019/10/wordpress-5-2-4-security-release/
+ |      - https://blog.wpscan.org/wordpress/security/release/2019/10/15/wordpress-524-security-release-breakdown.html
+ |
+ | [!] Title: WordPress <= 5.2.3 - Unauthenticated View Private/Draft Posts
+ |     Fixed in: 5.2.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9909
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17671
+ |      - https://wordpress.org/news/2019/10/wordpress-5-2-4-security-release/
+ |      - https://blog.wpscan.org/wordpress/security/release/2019/10/15/wordpress-524-security-release-breakdown.html
+ |      - https://github.com/WordPress/WordPress/commit/f82ed753cf00329a5e41f2cb6dc521085136f308
+ |      - https://0day.work/proof-of-concept-for-wordpress-5-2-3-viewing-unauthenticated-posts/
+ |
+ | [!] Title: WordPress <= 5.2.3 - Stored XSS in Style Tags
+ |     Fixed in: 5.2.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9910
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17672
+ |      - https://wordpress.org/news/2019/10/wordpress-5-2-4-security-release/
+ |      - https://blog.wpscan.org/wordpress/security/release/2019/10/15/wordpress-524-security-release-breakdown.html
+ |
+ | [!] Title: WordPress <= 5.2.3 - JSON Request Cache Poisoning
+ |     Fixed in: 5.2.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9911
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17673
+ |      - https://wordpress.org/news/2019/10/wordpress-5-2-4-security-release/
+ |      - https://github.com/WordPress/WordPress/commit/b224c251adfa16a5f84074a3c0886270c9df38de
+ |      - https://blog.wpscan.org/wordpress/security/release/2019/10/15/wordpress-524-security-release-breakdown.html
+ |
+ | [!] Title: WordPress <= 5.2.3 - Server-Side Request Forgery (SSRF) in URL Validation 
+ |     Fixed in: 5.2.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9912
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17669
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17670
+ |      - https://wordpress.org/news/2019/10/wordpress-5-2-4-security-release/
+ |      - https://github.com/WordPress/WordPress/commit/9db44754b9e4044690a6c32fd74b9d5fe26b07b2
+ |      - https://blog.wpscan.org/wordpress/security/release/2019/10/15/wordpress-524-security-release-breakdown.html
+ |
+ | [!] Title: WordPress <= 5.2.3 - Admin Referrer Validation
+ |     Fixed in: 5.2.4
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9913
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17675
+ |      - https://wordpress.org/news/2019/10/wordpress-5-2-4-security-release/
+ |      - https://github.com/WordPress/WordPress/commit/b183fd1cca0b44a92f0264823dd9f22d2fd8b8d0
+ |      - https://blog.wpscan.org/wordpress/security/release/2019/10/15/wordpress-524-security-release-breakdown.html
+ |
+ | [!] Title: WordPress <= 5.3 - Improper Access Controls in REST API
+ |     Fixed in: 5.2.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9973
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20043
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16788
+ |      - https://wordpress.org/news/2019/12/wordpress-5-3-1-security-and-maintenance-release/
+ |      - https://github.com/WordPress/wordpress-develop/security/advisories/GHSA-g7rg-hchx-c2gw
+ |
+ | [!] Title: WordPress <= 5.3 - Stored XSS via Crafted Links
+ |     Fixed in: 5.2.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9975
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20042
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16773
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16773
+ |      - https://wordpress.org/news/2019/12/wordpress-5-3-1-security-and-maintenance-release/
+ |      - https://hackerone.com/reports/509930
+ |      - https://github.com/WordPress/wordpress-develop/commit/1f7f3f1f59567e2504f0fbebd51ccf004b3ccb1d
+ |      - https://github.com/WordPress/wordpress-develop/security/advisories/GHSA-xvg2-m2f4-83m7
+ |
+ | [!] Title: WordPress <= 5.3 - Stored XSS via Block Editor Content
+ |     Fixed in: 5.2.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/9976
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16781
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16780
+ |      - https://wordpress.org/news/2019/12/wordpress-5-3-1-security-and-maintenance-release/
+ |      - https://github.com/WordPress/wordpress-develop/security/advisories/GHSA-pg4x-64rh-3c9v
+ |
+ | [!] Title: WordPress <= 5.3 - wp_kses_bad_protocol() Colon Bypass
+ |     Fixed in: 5.2.5
+ |     References:
+ |      - https://wpvulndb.com/vulnerabilities/10004
+ |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-20041
+ |      - https://wordpress.org/news/2019/12/wordpress-5-3-1-security-and-maintenance-release/
+ |      - https://github.com/WordPress/wordpress-develop/commit/b1975463dd995da19bb40d3fa0786498717e3c53
+
+[+] WordPress theme in use: 90s-retro
+ | Location: http://localhost/retro/wp-content/themes/90s-retro/
+ | Latest Version: 1.4.10 (up to date)
+ | Last Updated: 2019-04-15T00:00:00.000Z
+ | Readme: http://localhost/retro/wp-content/themes/90s-retro/readme.txt
+ | Style URL: http://localhost/retro/wp-content/themes/90s-retro/style.css?ver=5.2.1
+ | Style Name: 90s Retro
+ | Style URI: https://organicthemes.com/retro-theme/
+ | Description: Have you ever wished your WordPress blog looked like an old Geocities site from the 90s!? Probably not! The 90s Retro Theme is designed to look like an old website with pixel fonts, neon colors, background music and animated GIFs — mostly because we thought it would be funny. However, it's a great theme for gamers, guilds, video game reviews, collectors, kids and nostalgic adults.
+ | Author: Organic Themes
+ | Author URI: https://organicthemes.com
+ | License: GNU General Public License v2 or later
+ | License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ | Tags: one-column, two-columns, right-sidebar, custom-background, custom-header, custom-menu, featured-images, featured-image-header, flexible-header, full-width-template, translation-ready, sticky-post, threaded-comments, editor-style, theme-options
+ | Text Domain: 90s-retro
+ |
+ | Found By: Css Style In Homepage (Passive Detection)
+ |
+ | Version: 1.4.10 (80% confidence)
+ | Found By: Style (Passive Detection)
+ |  - http://localhost/retro/wp-content/themes/90s-retro/style.css?ver=5.2.1, Match: 'Version: 1.4.10'
+
+[+] Enumerating Vulnerable Plugins (via Passive Methods)
+
+[i] No plugins Found.
+
+[+] WPVulnDB API OK
+ | Plan: free
+ | Requests Done (during the scan): 2
+ | Requests Remaining: 48
+
+[+] Finished: Sat Mar 28 22:25:29 2020
+[+] Requests Done: 33
+[+] Cached Requests: 5
+[+] Data Sent: 7.159 KB
+[+] Data Received: 184.925 KB
+[+] Memory used: 169.496 MB
+[+] Elapsed time: 00:00:24
