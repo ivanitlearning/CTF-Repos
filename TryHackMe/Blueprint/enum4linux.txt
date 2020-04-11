@@ -1,0 +1,150 @@
+root@Kali:~/TryHackme/Blueprint# enum4linux -v -a 10.10.66.36
+[V] Dependent program "nmblookup" found in /usr/bin/nmblookup
+[V] Dependent program "net" found in /usr/bin/net
+[V] Dependent program "rpcclient" found in /usr/bin/rpcclient
+[V] Dependent program "smbclient" found in /usr/bin/smbclient
+[V] Dependent program "polenum" found in /usr/bin/polenum
+[V] Dependent program "ldapsearch" found in /usr/bin/ldapsearch
+Starting enum4linux v0.8.9 ( http://labs.portcullis.co.uk/application/enum4linux/ ) on Sat Mar 28 18:22:37 2020
+
+ ========================== 
+|    Target Information    |
+ ========================== 
+Target ........... 10.10.66.36
+RID Range ........ 500-550,1000-1050
+Username ......... ''
+Password ......... ''
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+
+ =================================================== 
+|    Enumerating Workgroup/Domain on 10.10.66.36    |
+ =================================================== 
+[V] Attempting to get domain name with command: nmblookup -A '10.10.66.36'
+[+] Got domain/workgroup name: WORKGROUP
+
+ =========================================== 
+|    Nbtstat Information for 10.10.66.36    |
+ =========================================== 
+Looking up status of 10.10.66.36
+	BLUEPRINT       <00> -         B <ACTIVE>  Workstation Service
+	WORKGROUP       <00> - <GROUP> B <ACTIVE>  Domain/Workgroup Name
+	BLUEPRINT       <20> -         B <ACTIVE>  File Server Service
+	WORKGROUP       <1e> - <GROUP> B <ACTIVE>  Browser Service Elections
+	WORKGROUP       <1d> -         B <ACTIVE>  Master Browser
+	..__MSBROWSE__. <01> - <GROUP> B <ACTIVE>  Master Browser
+
+	MAC Address = 02-01-56-45-B7-16
+
+ ==================================== 
+|    Session Check on 10.10.66.36    |
+ ==================================== 
+[V] Attempting to make null session using command: smbclient -W 'WORKGROUP' //'10.10.66.36'/ipc$ -U''%'' -c 'help' 2>&1
+[+] Server 10.10.66.36 allows sessions using username '', password ''
+
+ ========================================== 
+|    Getting domain SID for 10.10.66.36    |
+ ========================================== 
+[V] Attempting to get domain SID with command: rpcclient -W 'WORKGROUP' -U''%'' 10.10.66.36 -c 'lsaquery' 2>&1
+could not initialise lsa pipe. Error was NT_STATUS_ACCESS_DENIED
+could not obtain sid from server
+error: NT_STATUS_ACCESS_DENIED
+[+] Can't determine if host is part of domain or part of a workgroup
+
+ ===================================== 
+|    OS information on 10.10.66.36    |
+ ===================================== 
+[V] Attempting to get OS info with command: smbclient -W 'WORKGROUP' //'10.10.66.36'/ipc$ -U''%'' -c 'q' 2>&1
+Use of uninitialized value $os_info in concatenation (.) or string at ./enum4linux.pl line 464.
+[+] Got OS info for 10.10.66.36 from smbclient: 
+[V] Attempting to get OS info with command: rpcclient -W 'WORKGROUP' -U''%'' -c 'srvinfo' '10.10.66.36' 2>&1
+[E] Can't get OS info with srvinfo: NT_STATUS_ACCESS_DENIED
+
+ ============================ 
+|    Users on 10.10.66.36    |
+ ============================ 
+[V] Attempting to get userlist with command: rpcclient -W 'WORKGROUP' -c querydispinfo -U''%'' '10.10.66.36' 2>&1
+[E] Couldn't find users using querydispinfo: NT_STATUS_ACCESS_DENIED
+
+[V] Attempting to get userlist with command: rpcclient -W 'WORKGROUP' -c enumdomusers -U''%'' '10.10.66.36' 2>&1
+[E] Couldn't find users using enumdomusers: NT_STATUS_ACCESS_DENIED
+
+ ======================================== 
+|    Share Enumeration on 10.10.66.36    |
+ ======================================== 
+[V] Attempting to get share list using authentication
+WARNING: The "syslog" option is deprecated
+WARNING: The "syslog" option is deprecated
+smb1cli_req_writev_submit: called for dialect[SMB2_10] server[10.10.66.36]
+do_connect: Connection to 10.10.66.36 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+
+	Sharename       Type      Comment
+	---------       ----      -------
+Error returning browse list: NT_STATUS_REVISION_MISMATCH
+Reconnecting with SMB1 for workgroup listing.
+Failed to connect with SMB1 -- no workgroup available
+
+[+] Attempting to map shares on 10.10.66.36
+
+ =================================================== 
+|    Password Policy Information for 10.10.66.36    |
+ =================================================== 
+[V] Attempting to get Password Policy info with command: polenum '':''@'10.10.66.36' 2>&1
+[E] Unexpected error from polenum:
+
+
+[+] Attaching to 10.10.66.36 using a NULL share
+
+[+] Trying protocol 445/SMB...
+
+	[!] Protocol failed: SMB SessionError: STATUS_ACCESS_DENIED({Access Denied} A process has requested access to an object but has not been granted those access rights.)
+
+[+] Trying protocol 139/SMB...
+
+	[!] Protocol failed: Cannot request session (Called Name:10.10.66.36)
+
+[V] Attempting to get Password Policy info with command: rpcclient -W 'WORKGROUP' -U''%'' '10.10.66.36' -c "getdompwinfo" 2>&1
+
+[E] Failed to get password policy with rpcclient
+
+
+ ============================= 
+|    Groups on 10.10.66.36    |
+ ============================= 
+[V] Getting builtin groups with command: rpcclient -W 'WORKGROUP' -U''%'' '10.10.66.36' -c 'enumalsgroups builtin' 2>&1
+
+[+] Getting builtin groups:
+[E] Can't get builtin groups: NT_STATUS_ACCESS_DENIED
+
+[+] Getting builtin group memberships:
+[V] Getting local groups with command: rpcclient -W 'WORKGROUP' -U''%'' '10.10.66.36' -c 'enumalsgroups domain' 2>&1
+
+[+] Getting local groups:
+[E] Can't get local groups: NT_STATUS_ACCESS_DENIED
+
+[+] Getting local group memberships:
+[V] Getting domain groups with command: rpcclient -W 'WORKGROUP' -U''%'' '10.10.66.36' -c "enumdomgroups" 2>&1
+
+[+] Getting domain groups:
+[E] Can't get domain groups: NT_STATUS_ACCESS_DENIED
+
+[+] Getting domain group memberships:
+
+ ====================================================================== 
+|    Users on 10.10.66.36 via RID cycling (RIDS: 500-550,1000-1050)    |
+ ====================================================================== 
+[V] Attempting to get SID from 10.10.66.36 with command: rpcclient -W 'WORKGROUP' -U''%'' '10.10.66.36' -c 'lookupnames administrator' 2>&1
+[V] Assuming that user "administrator" exists
+[E] Couldn't get SID: NT_STATUS_ACCESS_DENIED.  RID cycling not possible.
+[V] Attempting to get SIDs from 10.10.66.36 with command: rpcclient -W 'WORKGROUP' -U''%'' '10.10.66.36' -c lsaenumsid 2>&1
+
+ ============================================ 
+|    Getting printer info for 10.10.66.36    |
+ ============================================ 
+[V] Attempting to get printer info with command: rpcclient -W 'WORKGROUP' -U''%'' -c 'enumprinters' '10.10.66.36' 2>&1
+could not initialise lsa pipe. Error was NT_STATUS_ACCESS_DENIED
+could not obtain sid from server
+error: NT_STATUS_ACCESS_DENIED
+
+
+enum4linux complete on Sat Mar 28 18:23:22 2020

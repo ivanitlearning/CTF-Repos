@@ -1,0 +1,3035 @@
+root@Kali:~/TryHackme/Blueprint# nmap -Pn -n -sV -e tun0 -p80,135,137,139,443,445,3306,8080,49152-49160 10.10.66.36 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-03-28 17:52 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.66.36
+Host is up (0.45s latency).
+
+PORT      STATE  SERVICE      VERSION
+80/tcp    open   http         Microsoft IIS httpd 7.5
+|_http-chrono: Request times for /; avg: 1105.94ms; min: 533.04ms; max: 2984.51ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.66.36
+|     
+|     Path: http://10.10.66.36:80/
+|     Line number: 7
+|     Comment: 
+|         <!--
+|         body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
+|         fieldset{padding:0 15px 10px 15px;} 
+|         h1{font-size:2.4em;margin:0;color:#FFF;}
+|         h2{font-size:1.7em;margin:0;color:#CC0000;} 
+|         h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
+|         #header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
+|         background-color:#555555;}
+|         #content{margin:0 0 0 2%;position:relative;}
+|         .content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 28 Mar 2020 09:56:15 GMT; -1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.66.36
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.66.36:80/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Server: Microsoft-IIS/7.5
+|   Date: Sat, 28 Mar 2020 09:56:21 GMT
+|   Connection: close
+|   Content-Length: 1245
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-IIS/7.5
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: 404 - File or directory not found.
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+135/tcp   open   msrpc        Microsoft Windows RPC
+137/tcp   closed netbios-ns
+139/tcp   open   netbios-ssn  Microsoft Windows netbios-ssn
+443/tcp   open   ssl/http     Apache httpd 2.4.23 (OpenSSL/1.0.2h PHP/5.6.28)
+| http-apache-server-status: 
+|   Heading: Apache Server Status for 10.10.66.36 (via 10.10.66.36)
+|   Server Version: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
+|   Server Uptime: 10 minutes 52 seconds
+|   Server Load: -1.00 -1.00 -1.00
+|   VHosts: 
+|     localhost:8080
+|_    www.example.com:443
+|_http-chrono: Request times for /; avg: 6734.12ms; min: 1160.59ms; max: 28080.98ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.66.36
+|     
+|     Path: https://10.10.66.36:443/oscommerce-2.3.4/catalog/
+|     Line number: 92
+|     Comment: 
+|         <!-- bodyWrapper //-->
+|     
+|     Path: https://10.10.66.36:443/oscommerce-2.3.4/catalog/
+|     Line number: 59
+|     Comment: 
+|         <!-- bodyContent //-->
+|     
+|     Path: https://10.10.66.36:443/oscommerce-2.3.4/catalog/
+|     Line number: 59
+|     Comment: 
+|_         //-->
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.66.36
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: https://10.10.66.36:443/oscommerce-2.3.4/catalog/
+|     Form id: 
+|     Form action: http://localhost:8080/oscommerce-2.3.4/catalog/index.php
+|     
+|     Path: https://10.10.66.36:443/oscommerce-2.3.4/catalog/
+|     Form id: 
+|     Form action: http://localhost:8080/oscommerce-2.3.4/catalog/advanced_search_result.php
+|     
+|     Path: https://10.10.66.36:443/oscommerce-2.3.4/catalog/
+|     Form id: 
+|_    Form action: http://localhost:8080/oscommerce-2.3.4/catalog/index.php
+|_http-date: Sat, 28 Mar 2020 09:55:26 GMT; -4s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|_  /: Root directory w/ listing on 'apache/2.4.23 (win32) openssl/1.0.2h php/5.6.28'
+|_http-errors: ERROR: Script execution failed (use -d to debug)
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) https://10.10.66.36:443/: 
+|     (1) ip: 
+|_      + 10.10.66.36
+| http-headers: 
+|   Date: Sat, 28 Mar 2020 09:54:17 GMT
+|   Server: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
+|   Connection: close
+|   Content-Type: text/html;charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|_    HSTS not configured in HTTPS Server
+|_http-server-header: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|     /icons/
+|       gif: 3
+|     /oscommerce-2.3.4/
+|       Other: 1
+|     /oscommerce-2.3.4/catalog/
+|       Other: 1
+|     /oscommerce-2.3.4/docs/
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /oscommerce-2.3.4/docs/
+|   Total files found (by extension):
+|_    Other: 4; gif: 3
+| http-sql-injection: 
+|   Possible sqli for queries:
+|     https://10.10.66.36:443/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/addons/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/addons/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/addons/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/addons/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=S%3bO%3dA%27%20OR%20sqlspider
+|_    https://10.10.66.36:443/oscommerce-2.3.4/docs/?C=M%3bO%3dA%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Index of /
+|_http-trace: TRACE is enabled
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 124 names had status 200
+| alerts : 400
+| fileserver : 400
+|_ns : 400
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+| ssl-cert: Subject: commonName=localhost
+| Not valid before: 2009-11-10T23:48:47
+|_Not valid after:  2019-11-08T23:48:47
+|_ssl-date: TLS randomness does not represent time
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: RFC2409/Oakley Group 2
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - D
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_IDEA_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher IDEA vulnerable to SWEET32 attack
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - D
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_IDEA_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher IDEA vulnerable to SWEET32 attack
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - D
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_IDEA_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher IDEA vulnerable to SWEET32 attack
+|       Weak certificate signature: SHA1
+|_  least strength: D
+|_sslv2-drown: 
+| tls-alpn: 
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|   http/1.1
+|_  http/1.1
+445/tcp   open   microsoft-ds Windows 7 Home Basic 7601 Service Pack 1 microsoft-ds (workgroup: WORKGROUP)
+3306/tcp  open   mysql        MariaDB (unauthorized)
+|_banner: d\x00\x00\x00\xFFj\x04Host 'ip-10-9-21-147.eu-west-1.compute...
+|_mysql-vuln-cve2012-2122: ERROR: Script execution failed (use -d to debug)
+8080/tcp  open   http         Apache httpd 2.4.23 (OpenSSL/1.0.2h PHP/5.6.28)
+| http-apache-server-status: 
+|   Heading: Apache Server Status for 10.10.66.36 (via 10.10.66.36)
+|   Server Version: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
+|   Server Uptime: 12 minutes 33 seconds
+|   Server Load: -1.00 -1.00 -1.00
+|   VHosts: 
+|     localhost:8080
+|_    www.example.com:443
+|_http-chrono: Request times for /; avg: 641.36ms; min: 523.69ms; max: 803.09ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.66.36
+|     
+|     Path: http://10.10.66.36:8080/oscommerce-2.3.4/catalog/
+|     Line number: 92
+|     Comment: 
+|         <!-- bodyWrapper //-->
+|     
+|     Path: http://10.10.66.36:8080/oscommerce-2.3.4/catalog/
+|     Line number: 59
+|     Comment: 
+|         <!-- bodyContent //-->
+|     
+|     Path: http://10.10.66.36:8080/oscommerce-2.3.4/catalog/
+|     Line number: 59
+|     Comment: 
+|_         //-->
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.66.36
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.66.36:8080/oscommerce-2.3.4/catalog/
+|     Form id: 
+|     Form action: http://localhost:8080/oscommerce-2.3.4/catalog/index.php
+|     
+|     Path: http://10.10.66.36:8080/oscommerce-2.3.4/catalog/
+|     Form id: 
+|     Form action: http://localhost:8080/oscommerce-2.3.4/catalog/advanced_search_result.php
+|     
+|     Path: http://10.10.66.36:8080/oscommerce-2.3.4/catalog/
+|     Form id: 
+|_    Form action: http://localhost:8080/oscommerce-2.3.4/catalog/index.php
+|_http-date: Sat, 28 Mar 2020 09:54:13 GMT; -2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /: Root directory w/ listing on 'apache/2.4.23 (win32) openssl/1.0.2h php/5.6.28'
+|   /icons/: Potentially interesting folder w/ directory listing
+|   /server-info/: Potentially interesting folder
+|_  /server-status/: Potentially interesting folder
+|_http-errors: ERROR: Script execution failed (use -d to debug)
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.66.36:8080/: 
+|     (1) ip: 
+|_      + 10.10.66.36
+| http-headers: 
+|   Date: Sat, 28 Mar 2020 09:55:18 GMT
+|   Server: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
+|   Connection: close
+|   Content-Type: text/html;charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|     /icons/
+|       gif: 3
+|     /oscommerce-2.3.4/
+|       Other: 1
+|     /oscommerce-2.3.4/catalog/
+|       Other: 1
+|     /oscommerce-2.3.4/docs/
+|       Other: 2
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /oscommerce-2.3.4/docs/
+|   Total files found (by extension):
+|_    Other: 5; gif: 3
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+| http-sql-injection: 
+|   Possible sqli for queries:
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/docs/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/docs/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/docs/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/docs/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.66.36:8080/oscommerce-2.3.4/?C=D%3bO%3dA%27%20OR%20sqlspider
+|_    http://10.10.66.36:8080/oscommerce-2.3.4/?C=N%3bO%3dA%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Index of /
+|_http-trace: TRACE is enabled
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+49152/tcp open   msrpc        Microsoft Windows RPC
+49153/tcp open   msrpc        Microsoft Windows RPC
+49154/tcp open   msrpc        Microsoft Windows RPC
+49155/tcp closed unknown
+49156/tcp closed unknown
+49157/tcp closed unknown
+49158/tcp open   msrpc        Microsoft Windows RPC
+49159/tcp open   msrpc        Microsoft Windows RPC
+49160/tcp open   msrpc        Microsoft Windows RPC
+Service Info: Hosts: www.example.com, BLUEPRINT, localhost; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.66.36"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+| msrpc-enum: 
+|   
+|     uuid: d95afe70-a6d5-4259-822e-2c84da1ddb0d
+|     ip_addr: 0.0.0.0
+|     tcp_port: 49152
+|   
+|     uuid: 4b112204-e19-11d3-b42b-0000f81feb9f
+|     ncalrpc: LRPC-8c4ed3725e2e15b236
+|   
+|     uuid: 6b5bdd1e-528c-422c-af8c-a4079be4fe48
+|     annotation: Remote Fw APIs
+|     tcp_port: 49160
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 12345678-1234-abcd-ef00-0123456789ab
+|     annotation: IPSec Policy agent endpoint
+|     tcp_port: 49160
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 12345678-1234-abcd-ef00-0123456789ab
+|     annotation: IPSec Policy agent endpoint
+|     ncalrpc: LRPC-eef64e247ad8d7fe25
+|   
+|     uuid: 367abb81-9844-35f1-ad32-98f038001003
+|     ip_addr: 0.0.0.0
+|     tcp_port: 49159
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \pipe\lsass
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: LRPC-f3d701b28190d87227
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: audit
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: securityevent
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: LSARPC_ENDPOINT
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: lsapolicylookup
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: lsasspirpc
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: protected_storage
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \PIPE\protected_storage
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ncalrpc: samss lpc
+|     exe: lsass.exe samr interface
+|   
+|     uuid: 12345778-1234-abcd-ef00-0123456789ac
+|     ip_addr: 0.0.0.0
+|     tcp_port: 49158
+|     exe: lsass.exe samr interface
+|   
+|     uuid: dd490425-5325-4565-b774-7e27d6c09c24
+|     annotation: Base Firewall Engine API
+|     ncalrpc: LRPC-2665763fe2ddcea914
+|   
+|     uuid: 7f9d11bf-7fb9-436b-a812-b2d50c5d4c03
+|     annotation: Fw APIs
+|     ncalrpc: LRPC-2665763fe2ddcea914
+|   
+|     uuid: 2fb92682-6599-42dc-ae13-bd2ca89bd11c
+|     annotation: Fw APIs
+|     ncalrpc: LRPC-2665763fe2ddcea914
+|   
+|     uuid: b6edbfa-4a24-4fc6-8a23-942b1eca65d1
+|     annotation: Spooler function endpoint
+|     ncalrpc: spoolss
+|   
+|     uuid: ae33069b-a2a8-46ee-a235-ddfd339be281
+|     annotation: Spooler base remote object endpoint
+|     ncalrpc: spoolss
+|   
+|     uuid: 4a452661-8290-4b36-8fbe-7f4093a94978
+|     annotation: Spooler function endpoint
+|     ncalrpc: spoolss
+|   
+|     uuid: 24019106-a203-4642-b88d-82dae9158929
+|     ncalrpc: LRPC-de2a6fea8cba8668c4
+|   
+|     uuid: 7ea70bcf-48af-4f6a-8968-6a440754d5fa
+|     annotation: NSI server endpoint
+|     ncalrpc: OLE07CE5A4D5155426AA11C54CFD6CB
+|   
+|     uuid: 7ea70bcf-48af-4f6a-8968-6a440754d5fa
+|     annotation: NSI server endpoint
+|     ncalrpc: LRPC-b5fe503913caf95d8f
+|   
+|     uuid: 3473dd4d-2e88-4006-9cba-22570909dd10
+|     annotation: WinHttp Auto-Proxy Service
+|     ncalrpc: OLE07CE5A4D5155426AA11C54CFD6CB
+|   
+|     uuid: 3473dd4d-2e88-4006-9cba-22570909dd10
+|     annotation: WinHttp Auto-Proxy Service
+|     ncalrpc: LRPC-b5fe503913caf95d8f
+|   
+|     uuid: c9ac6db5-82b7-4e55-ae8a-e464ed7b4277
+|     annotation: Impl friendly name
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: c9ac6db5-82b7-4e55-ae8a-e464ed7b4277
+|     annotation: Impl friendly name
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 2eb08e3e-639f-4fba-97b1-14f878961076
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 2eb08e3e-639f-4fba-97b1-14f878961076
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: c9ac6db5-82b7-4e55-ae8a-e464ed7b4277
+|     annotation: Impl friendly name
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: c9ac6db5-82b7-4e55-ae8a-e464ed7b4277
+|     annotation: Impl friendly name
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: c9ac6db5-82b7-4e55-ae8a-e464ed7b4277
+|     annotation: Impl friendly name
+|     ncalrpc: senssvc
+|   
+|     uuid: a74ef1c-41a4-4e06-83ae-dc74fb1cdd53
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: a74ef1c-41a4-4e06-83ae-dc74fb1cdd53
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: a74ef1c-41a4-4e06-83ae-dc74fb1cdd53
+|     ncalrpc: senssvc
+|   
+|     uuid: 1ff70682-a51-30e8-076d-740be8cee98b
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 1ff70682-a51-30e8-076d-740be8cee98b
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: 1ff70682-a51-30e8-076d-740be8cee98b
+|     ncalrpc: senssvc
+|   
+|     uuid: 1ff70682-a51-30e8-076d-740be8cee98b
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \PIPE\atsvc
+|   
+|     uuid: 378e52b0-c0a9-11cf-822d-00aa0051e40f
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 378e52b0-c0a9-11cf-822d-00aa0051e40f
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: 378e52b0-c0a9-11cf-822d-00aa0051e40f
+|     ncalrpc: senssvc
+|   
+|     uuid: 378e52b0-c0a9-11cf-822d-00aa0051e40f
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \PIPE\atsvc
+|   
+|     uuid: 86d35949-83c9-4044-b424-db363231fd0c
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 86d35949-83c9-4044-b424-db363231fd0c
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: 86d35949-83c9-4044-b424-db363231fd0c
+|     ncalrpc: senssvc
+|   
+|     uuid: 86d35949-83c9-4044-b424-db363231fd0c
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \PIPE\atsvc
+|   
+|     uuid: 86d35949-83c9-4044-b424-db363231fd0c
+|     ip_addr: 0.0.0.0
+|     tcp_port: 49154
+|   
+|     uuid: a398e520-d59a-4bdd-aa7a-3c1e0303a511
+|     annotation: IKE/Authip API
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: a398e520-d59a-4bdd-aa7a-3c1e0303a511
+|     annotation: IKE/Authip API
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: a398e520-d59a-4bdd-aa7a-3c1e0303a511
+|     annotation: IKE/Authip API
+|     ncalrpc: senssvc
+|   
+|     uuid: a398e520-d59a-4bdd-aa7a-3c1e0303a511
+|     netbios: \\BLUEPRINT
+|     annotation: IKE/Authip API
+|     ncacn_np: \PIPE\atsvc
+|   
+|     uuid: a398e520-d59a-4bdd-aa7a-3c1e0303a511
+|     annotation: IKE/Authip API
+|     tcp_port: 49154
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 98716d03-89ac-44c7-bb8c-285824e51c4a
+|     annotation: XactSrv service
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 98716d03-89ac-44c7-bb8c-285824e51c4a
+|     annotation: XactSrv service
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: 98716d03-89ac-44c7-bb8c-285824e51c4a
+|     annotation: XactSrv service
+|     ncalrpc: senssvc
+|   
+|     uuid: 98716d03-89ac-44c7-bb8c-285824e51c4a
+|     netbios: \\BLUEPRINT
+|     annotation: XactSrv service
+|     ncacn_np: \PIPE\atsvc
+|   
+|     uuid: 98716d03-89ac-44c7-bb8c-285824e51c4a
+|     annotation: XactSrv service
+|     tcp_port: 49154
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 552d076a-cb29-4e44-8b6a-d15e59e2c0af
+|     annotation: IP Transition Configuration endpoint
+|     ncalrpc: IUserProfile2
+|   
+|     uuid: 552d076a-cb29-4e44-8b6a-d15e59e2c0af
+|     annotation: IP Transition Configuration endpoint
+|     ncalrpc: OLEB535AB43477744C6A8FEC149AD5A
+|   
+|     uuid: 552d076a-cb29-4e44-8b6a-d15e59e2c0af
+|     annotation: IP Transition Configuration endpoint
+|     ncalrpc: senssvc
+|   
+|     uuid: 552d076a-cb29-4e44-8b6a-d15e59e2c0af
+|     netbios: \\BLUEPRINT
+|     annotation: IP Transition Configuration endpoint
+|     ncacn_np: \PIPE\atsvc
+|   
+|     uuid: 552d076a-cb29-4e44-8b6a-d15e59e2c0af
+|     annotation: IP Transition Configuration endpoint
+|     tcp_port: 49154
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 552d076a-cb29-4e44-8b6a-d15e59e2c0af
+|     netbios: \\BLUEPRINT
+|     annotation: IP Transition Configuration endpoint
+|     ncacn_np: \PIPE\srvsvc
+|   
+|     uuid: f6beaff7-1e19-4fbb-9f8f-b89e2018337c
+|     annotation: Event log TCPIP
+|     ncalrpc: eventlog
+|   
+|     uuid: f6beaff7-1e19-4fbb-9f8f-b89e2018337c
+|     netbios: \\BLUEPRINT
+|     annotation: Event log TCPIP
+|     ncacn_np: \pipe\eventlog
+|   
+|     uuid: f6beaff7-1e19-4fbb-9f8f-b89e2018337c
+|     annotation: Event log TCPIP
+|     tcp_port: 49153
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 30adc50c-5cbc-46ce-9a0e-91914789e23c
+|     annotation: NRP server endpoint
+|     ncalrpc: eventlog
+|   
+|     uuid: 30adc50c-5cbc-46ce-9a0e-91914789e23c
+|     netbios: \\BLUEPRINT
+|     annotation: NRP server endpoint
+|     ncacn_np: \pipe\eventlog
+|   
+|     uuid: 30adc50c-5cbc-46ce-9a0e-91914789e23c
+|     annotation: NRP server endpoint
+|     tcp_port: 49153
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 30adc50c-5cbc-46ce-9a0e-91914789e23c
+|     annotation: NRP server endpoint
+|     ncalrpc: AudioClientRpc
+|   
+|     uuid: 30adc50c-5cbc-46ce-9a0e-91914789e23c
+|     annotation: NRP server endpoint
+|     ncalrpc: Audiosrv
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5
+|     annotation: DHCP Client LRPC Endpoint
+|     ncalrpc: eventlog
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5
+|     netbios: \\BLUEPRINT
+|     annotation: DHCP Client LRPC Endpoint
+|     ncacn_np: \pipe\eventlog
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5
+|     annotation: DHCP Client LRPC Endpoint
+|     tcp_port: 49153
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5
+|     annotation: DHCP Client LRPC Endpoint
+|     ncalrpc: AudioClientRpc
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5
+|     annotation: DHCP Client LRPC Endpoint
+|     ncalrpc: Audiosrv
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5
+|     annotation: DHCP Client LRPC Endpoint
+|     ncalrpc: dhcpcsvc
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     ncalrpc: eventlog
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     netbios: \\BLUEPRINT
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     ncacn_np: \pipe\eventlog
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     tcp_port: 49153
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     ncalrpc: AudioClientRpc
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     ncalrpc: Audiosrv
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     ncalrpc: dhcpcsvc
+|   
+|     uuid: 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6
+|     annotation: DHCPv6 Client LRPC Endpoint
+|     ncalrpc: dhcpcsvc6
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     ncalrpc: eventlog
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     netbios: \\BLUEPRINT
+|     annotation: Security Center
+|     ncacn_np: \pipe\eventlog
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     tcp_port: 49153
+|     ip_addr: 0.0.0.0
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     ncalrpc: AudioClientRpc
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     ncalrpc: Audiosrv
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     ncalrpc: dhcpcsvc
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     ncalrpc: dhcpcsvc6
+|   
+|     uuid: 6bba54a-be05-49f9-b0a0-30f790261023
+|     annotation: Security Center
+|     ncalrpc: OLEAB81355BDFA949F5BC3018813829
+|   
+|     uuid: 76f226c3-ec14-4325-8a99-6a46348418af
+|     ncalrpc: WMsgKRpc04B2C1
+|   
+|     uuid: c9ac6db5-82b7-4e55-ae8a-e464ed7b4277
+|     annotation: Impl friendly name
+|     ncalrpc: LRPC-c0dcd5a42cffe47275
+|   
+|     uuid: 76f226c3-ec14-4325-8a99-6a46348418af
+|     ncalrpc: WMsgKRpc04AFD0
+|   
+|     uuid: 76f226c3-ec14-4325-8a99-6a46348418af
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \PIPE\InitShutdown
+|   
+|     uuid: 76f226c3-ec14-4325-8a99-6a46348418af
+|     ncalrpc: WindowsShutdown
+|   
+|     uuid: d95afe70-a6d5-4259-822e-2c84da1ddb0d
+|     ncalrpc: WMsgKRpc04AFD0
+|   
+|     uuid: d95afe70-a6d5-4259-822e-2c84da1ddb0d
+|     netbios: \\BLUEPRINT
+|     ncacn_np: \PIPE\InitShutdown
+|   
+|     uuid: d95afe70-a6d5-4259-822e-2c84da1ddb0d
+|_    ncalrpc: WindowsShutdown
+|_nbstat: NetBIOS name: BLUEPRINT, NetBIOS user: <unknown>, NetBIOS MAC: 02:01:56:45:b7:16 (unknown)
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV     LOSS (%)
+| 80     0       303103.00  84266.45   0.0%
+| 135    0       370122.40  133286.61  0.0%
+| 137    0       336148.40  53134.91   0.0%
+| 139    0       313273.20  72312.64   0.0%
+| 443    0       329525.50  103498.91  0.0%
+| 445    0       328813.80  66947.25   0.0%
+| 3306   0       325177.10  91160.65   0.0%
+| 8080   1       402909.70  118512.04  0.0%
+|_49152  0       316925.70  121058.87  0.0%
+|_smb-enum-domains: ERROR: Script execution failed (use -d to debug)
+| smb-enum-groups: 
+|   BLUEPRINT\TelnetClients (RID: 1001): <empty>
+|   Builtin\Administrators (RID: 544): Administrator
+|   Builtin\Users (RID: 545): Lab
+|   Builtin\Guests (RID: 546): Guest
+|   Builtin\Performance Monitor Users (RID: 558): <empty>
+|   Builtin\Performance Log Users (RID: 559): <empty>
+|   Builtin\Distributed COM Users (RID: 562): <empty>
+|   Builtin\IIS_IUSRS (RID: 568): <empty>
+|_  Builtin\Event Log Readers (RID: 573): <empty>
+| smb-enum-shares: 
+|   account_used: guest
+|   \\10.10.66.36\ADMIN$: 
+|     Type: STYPE_DISKTREE_HIDDEN
+|     Comment: Remote Admin
+|     Anonymous access: <none>
+|     Current user access: <none>
+|   \\10.10.66.36\C$: 
+|     Type: STYPE_DISKTREE_HIDDEN
+|     Comment: Default share
+|     Anonymous access: <none>
+|     Current user access: <none>
+|   \\10.10.66.36\IPC$: 
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: Remote IPC
+|     Anonymous access: READ
+|     Current user access: READ/WRITE
+|   \\10.10.66.36\Users: 
+|     Type: STYPE_DISKTREE
+|     Comment: 
+|     Anonymous access: <none>
+|     Current user access: READ
+|   \\10.10.66.36\Windows: 
+|     Type: STYPE_DISKTREE
+|     Comment: 
+|     Anonymous access: <none>
+|_    Current user access: READ
+| smb-ls: Volume \\10.10.66.36\Users
+| SIZE   TIME                 FILENAME
+| <DIR>  2009-07-14 10:37:05  .
+| <DIR>  2009-07-14 10:37:05  ..
+| <DIR>  2009-07-14 10:37:05  Public
+| <DIR>  2009-07-14 10:37:05  Public\Documents
+| <DIR>  2009-07-14 10:37:05  Public\Downloads
+| <DIR>  2009-07-14 10:37:05  Public\Music
+| <DIR>  2009-07-14 10:37:05  Public\Pictures
+| <DIR>  2009-07-14 10:37:05  Public\Videos
+|_
+| smb-mbenum: 
+|   Master Browser
+|     BLUEPRINT  6.1  
+|   Potential Browser
+|     BLUEPRINT  6.1  
+|   Server service
+|     BLUEPRINT  6.1  
+|   Windows NT/2000/XP/2003 server
+|     BLUEPRINT  6.1  
+|   Workstation
+|_    BLUEPRINT  6.1  
+| smb-os-discovery: 
+|   OS: Windows 7 Home Basic 7601 Service Pack 1 (Windows 7 Home Basic 6.1)
+|   OS CPE: cpe:/o:microsoft:windows_7::sp1
+|   Computer name: BLUEPRINT
+|   NetBIOS computer name: BLUEPRINT\x00
+|   Workgroup: WORKGROUP\x00
+|_  System time: 2020-03-28T09:54:32+00:00
+| smb-protocols: 
+|   dialects: 
+|     NT LM 0.12 (SMBv1) [dangerous, but default]
+|     2.02
+|_    2.10
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: NT_STATUS_OBJECT_NAME_NOT_FOUND
+| smb2-capabilities: 
+|   2.02: 
+|     Distributed File System
+|   2.10: 
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2020-03-28 17:55:58
+|_  start_date: 2020-03-28 17:43:26
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1446.06 seconds

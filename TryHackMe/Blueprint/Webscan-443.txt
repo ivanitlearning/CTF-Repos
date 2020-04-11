@@ -1,0 +1,96 @@
+root@Kali:~/TryHackme/Blueprint# gobuster dir -u http://10.10.66.36:443 -k -w /usr/share/dirb/wordlists/common.txt
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://10.10.66.36:443
+[+] Threads:        10
+[+] Wordlist:       /usr/share/dirb/wordlists/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2020/03/28 18:58:16 Starting gobuster
+===============================================================
+===============================================================
+2020/03/28 19:03:02 Finished
+===============================================================
+
+root@Kali:~/TryHackme/Blueprint# nikto -h https://10.10.66.36:443
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          10.10.66.36
++ Target Hostname:    10.10.66.36
++ Target Port:        443
+---------------------------------------------------------------------------
++ SSL Info:        Subject:  /CN=localhost
+                   Ciphers:  ECDHE-RSA-AES256-GCM-SHA384
+                   Issuer:   /CN=localhost
++ Start Time:         2020-03-28 18:51:16 (GMT8)
+---------------------------------------------------------------------------
++ Server: Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The site uses SSL and the Strict-Transport-Security HTTP header is not defined.
++ The site uses SSL and Expect-CT header is not present.
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ OSVDB-3268: /: Directory indexing found.
++ Apache mod_negotiation is enabled with MultiViews, which allows attackers to easily brute force file names. See http://www.wisec.it/sectou.php?id=4698ebdc59d15. The following alternatives for 'index' were found: HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var, HTTP_NOT_FOUND.html.var
++ Apache/2.4.23 appears to be outdated (current is at least Apache/2.4.37). Apache 2.2.34 is the EOL for the 2.x branch.
++ PHP/5.6.28 appears to be outdated (current is at least 7.2.12). PHP 5.6.33, 7.0.27, 7.1.13, 7.2.1 may also current release for each branch.
++ OpenSSL/1.0.2h appears to be outdated (current is at least 1.1.1). OpenSSL 1.0.0o and 0.9.8zc are also current.
++ Hostname '10.10.66.36' does not match certificate's names: localhost
++ Allowed HTTP Methods: GET, HEAD, POST, OPTIONS, TRACE 
++ OSVDB-877: HTTP TRACE method is active, suggesting the host is vulnerable to XST
++ OSVDB-3268: /./: Directory indexing found.
++ /./: Appending '/./' to a directory allows indexing
++ OSVDB-3268: //: Directory indexing found.
++ //: Apache on Red Hat Linux release 9 reveals the root directory listing by default if there is no index page.
++ OSVDB-3268: /%2e/: Directory indexing found.
++ OSVDB-576: /%2e/: Weblogic allows source code or directory listing, upgrade to v6.0 SP1 or higher. http://www.securityfocus.com/bid/2513.
++ OSVDB-3268: ///: Directory indexing found.
++ OSVDB-561: /server-status: This reveals Apache information. Comment out appropriate line in the Apache conf file or restrict access to allowed sources.
++ OSVDB-119: /?PageServices: The remote server may allow directory listings through Web Publisher by forcing the server to show all files via 'open directory browsing'. Web Publisher should be disabled. http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0269.
++ OSVDB-119: /?wp-cs-dump: The remote server may allow directory listings through Web Publisher by forcing the server to show all files via 'open directory browsing'. Web Publisher should be disabled. http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-0269.
++ ERROR: Error limit (20) reached for host, giving up. Last error: opening stream: can't connect: Connect failed: ; Connection timed out at /var/lib/nikto/plugins/LW2.pm line 5157.
+: Connection timed out
++ Scan terminated:  20 error(s) and 23 item(s) reported on remote host
++ End Time:           2020-03-28 19:51:53 (GMT8) (3637 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+
+root@Kali:~/TryHackme/Blueprint# gobuster dir -u https://10.10.66.36:443 -k -w /usr/share/dirb/wordlists/common.txt
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            https://10.10.66.36:443
+[+] Threads:        10
+[+] Wordlist:       /usr/share/dirb/wordlists/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2020/03/28 18:54:03 Starting gobuster
+===============================================================
+/.hta (Status: 403)
+/.htaccess (Status: 403)
+/.htpasswd (Status: 403)
+/aux (Status: 403)
+/cgi-bin/ (Status: 403)
+/com2 (Status: 403)
+/com3 (Status: 403)
+/com1 (Status: 403)
+/con (Status: 403)
+/licenses (Status: 403)
+/lpt1 (Status: 403)
+/lpt2 (Status: 403)
+/nul (Status: 403)
+/phpmyadmin (Status: 403)
+/prn (Status: 403)
+/server-status (Status: 200)
+/server-info (Status: 200)
+/webalizer (Status: 403)
+===============================================================
+2020/03/28 18:56:25 Finished
+===============================================================
