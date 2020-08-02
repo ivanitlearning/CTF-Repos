@@ -1,0 +1,46 @@
+root@Kali:~/HTB/Arctic# masscan -p1-65535,U:1-65535 10.10.10.11 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-07-27 06:51:49 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 49154/tcp on 10.10.10.11                                  
+Discovered open port 8500/tcp on 10.10.10.11                                   
+Discovered open port 135/tcp on 10.10.10.11                                    
+
+root@Kali:~/HTB/Arctic# nmap -Pn -n -sV -e tun0 -p135,8500,49154 10.10.10.11 --script=vuln,discovery
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-07-27 15:05 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 3 address(es). 
+| 224.0.0.251
+| 224.0.23.12
+|_10.10.10.11
+Nmap scan report for 10.10.10.11
+Host is up (0.0052s latency).
+
+PORT      STATE SERVICE VERSION
+135/tcp   open  msrpc   Microsoft Windows RPC
+8500/tcp  open  fmtp?
+49154/tcp open  msrpc   Microsoft Windows RPC
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.11"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Incremental!
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 135    0       12178.00   18315.08  0.0%
+| 8500   0       6470.10    945.96    0.0%
+|_49154  0       6545.20    788.69    0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 151.58 seconds
