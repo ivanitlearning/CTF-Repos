@@ -1,0 +1,109 @@
+root@Kali:~/HTB/Bounty# nmap -Pn -n -sV -p80 --script=vuln,discovery 10.10.10.93 -e tun0
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-07-31 19:48 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.93
+Host is up (0.0066s latency).
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Microsoft IIS httpd 7.5
+|_http-chrono: Request times for /; avg: 164.91ms; min: 159.85ms; max: 166.77ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.93
+|     
+|     Path: http://10.10.10.93:80/
+|     Line number: 7
+|     Comment: 
+|         <!--
+|         body {
+|         	color:#000000;
+|         	background-color:#B3B3B3;
+|         	margin:0;
+|         }
+|         
+|         #container {
+|         	margin-left:auto;
+|         	margin-right:auto;
+|         	text-align:center;
+|         	}
+|         
+|         a img {
+|         	border:none;
+|         }
+|         
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Fri, 31 Jul 2020 11:48:51 GMT; +2s from local time.
+|_http-devframework: ASP.NET detected. Found related header.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Length: 630
+|   Content-Type: text/html
+|   Last-Modified: Thu, 31 May 2018 03:46:26 GMT
+|   Accept-Ranges: bytes
+|   ETag: "20ba8ef391f8d31:0"
+|   Server: Microsoft-IIS/7.5
+|   X-Powered-By: ASP.NET
+|   Date: Fri, 31 Jul 2020 11:48:54 GMT
+|   Connection: close
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-IIS/7.5
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; jpg: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; jpg: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Bounty
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.93"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Random Positive Increments
+|_path-mtu: PMTU == 1500
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 152.64 seconds
