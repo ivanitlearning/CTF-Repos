@@ -1,0 +1,89 @@
+root@Kali:~/HTB/Chatterbox# masscan -p1-65535,U:1-65535 10.10.10.74 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-03 15:58:24 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 9255/tcp on 10.10.10.74                                   
+Discovered open port 9256/tcp on 10.10.10.74       
+
+root@Kali:~/HTB/Chatterbox# nmap -Pn -n -sV -p9255,9256 --script=vuln,discovery 10.10.10.74 -e tun0
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-08-04 00:03 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 3 address(es). 
+| 224.0.0.251
+| 10.10.10.74
+|_224.0.23.12
+Nmap scan report for 10.10.10.74
+Host is up (0.0048s latency).
+
+PORT     STATE SERVICE VERSION
+9255/tcp open  http    AChat chat system httpd
+|_http-chrono: Request times for /; avg: 203.45ms; min: 201.60ms; max: 205.54ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Connection: close
+|   Server: AChat
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: AChat
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title.
+| http-useragent-tester: 
+|   Status for browser useragent: 204
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 204
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+9256/tcp open  achat   AChat chat system
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.74"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Random Positive Increments
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 9255  0       5152.50    896.02   0.0%
+|_9256  0       5277.90    1016.54  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 42.42 seconds
