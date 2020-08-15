@@ -4,10 +4,10 @@ import aiohttp
 import asyncio
 import time
 
-total_sessions = 240
+total_sessions = 640
 url = "http://natas18.natas.labs.overthewire.org:80/index.php"
 truestring = 'You are an admin. The credentials for the next level are:<br>'
-concurrency_limit = 240 #Not sure what limit to set, try lowering until it can't work? :) It works at 300 for me.
+concurrency_limit = 300 #Not sure what limit to set, try lowering until it can't work? :) It works at 300 for me.
 
 burp_proxy = 'http://127.0.0.1:8080'
 
