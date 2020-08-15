@@ -1,0 +1,353 @@
+root@Kali:~/HTB/Valentine# masscan -p1-65535,U:1-65535 10.10.10.79 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-06 17:01:22 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 443/tcp on 10.10.10.79                                    
+Discovered open port 80/tcp on 10.10.10.79                                     
+Discovered open port 22/tcp on 10.10.10.79                                     
+
+root@Kali:~/HTB/Valentine# nmap -Pn -n -sV -p22,80,443 --script=vuln,discovery 10.10.10.79 -e tun0
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-08-07 01:10 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.79
+Host is up (0.014s latency).
+
+PORT    STATE SERVICE  VERSION
+22/tcp  open  ssh      OpenSSH 5.9p1 Debian 5ubuntu1.10 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_5.9p1 Debian-5ubuntu1.10
+| ssh-hostkey: 
+|   1024 96:4c:51:42:3c:ba:22:49:20:4d:3e:ec:90:cc:fd:0e (DSA)
+|   2048 46:bf:1f:cc:92:4f:1d:a0:42:b3:d2:16:a8:58:31:33 (RSA)
+|_  256 e6:2b:25:19:cb:7e:54:cb:0a:b9:ac:16:98:c6:7d:a9 (ECDSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (7)
+|   server_host_key_algorithms: (3)
+|   encryption_algorithms: (13)
+|   mac_algorithms: (11)
+|_  compression_algorithms: (2)
+80/tcp  open  http     Apache httpd 2.2.22 ((Ubuntu))
+|_http-apache-negotiation: mod_negotiation enabled.
+|_http-chrono: Request times for /; avg: 217.48ms; min: 177.92ms; max: 268.51ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 06 Aug 2020 17:11:00 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /dev/: Potentially interesting directory w/ listing on 'apache/2.2.22 (ubuntu)'
+|_  /index/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Thu, 06 Aug 2020 17:11:02 GMT
+|   Server: Apache/2.2.22 (Ubuntu)
+|   X-Powered-By: PHP/5.3.10-1ubuntu3.26
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+| http-php-version: Versions from logo query (less accurate): 5.3.0 - 5.3.29, 5.4.0 - 5.4.45
+| Versions from credits query (more accurate): 5.3.9 - 5.3.29
+|_Version from header x-powered-by: PHP/5.3.10-1ubuntu3.26
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.2.22 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; jpg: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; jpg: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+443/tcp open  ssl/http Apache httpd 2.2.22 ((Ubuntu))
+|_http-apache-negotiation: mod_negotiation enabled.
+|_http-chrono: Request times for /; avg: 181.49ms; min: 156.66ms; max: 226.33ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 06 Aug 2020 17:11:08 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /dev/: Potentially interesting directory w/ listing on 'apache/2.2.22 (ubuntu)'
+|_  /index/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Thu, 06 Aug 2020 17:10:59 GMT
+|   Server: Apache/2.2.22 (Ubuntu)
+|   X-Powered-By: PHP/5.3.10-1ubuntu3.26
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+| http-php-version: Versions from logo query (less accurate): 5.3.0 - 5.3.29, 5.4.0 - 5.4.45
+| Versions from credits query (more accurate): 5.3.9 - 5.3.29
+|_Version from header x-powered-by: PHP/5.3.10-1ubuntu3.26
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|_    HSTS not configured in HTTPS Server
+|_http-server-header: Apache/2.2.22 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; jpg: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; jpg: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-vuln-cve2014-3704: ERROR: Script execution failed (use -d to debug)
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+| ssl-ccs-injection: 
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|           
+|     References:
+|       http://www.openssl.org/news/secadv_20140605.txt
+|       http://www.cvedetails.com/cve/2014-0224
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+| ssl-cert: Subject: commonName=valentine.htb/organizationName=valentine.htb/stateOrProvinceName=FL/countryName=US
+| Not valid before: 2018-02-06T00:45:25
+|_Not valid after:  2019-02-06T00:45:25
+|_ssl-date: 2020-08-06T17:10:59+00:00; +2s from scanner time.
+| ssl-enum-ciphers: 
+|   SSLv3: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 2048) - C
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 2048) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Weak certificate signature: SHA1
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 2048) - C
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 2048) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 2048) - C
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 2048) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 2048) - C
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA (dh 2048) - A
+|       TLS_DHE_RSA_WITH_SEED_CBC_SHA (dh 2048) - A
+|       TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (secp256r1) - C
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_RC4_128_SHA (secp256r1) - C
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Weak certificate signature: SHA1
+|_  least strength: C
+| ssl-heartbleed: 
+|   VULNERABLE:
+|   The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. It allows for stealing information intended to be protected by SSL/TLS encryption.
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL versions 1.0.1 and 1.0.2-beta releases (including 1.0.1f and 1.0.2-beta1) of OpenSSL are affected by the Heartbleed bug. The bug allows for reading memory of systems protected by the vulnerable OpenSSL versions and could allow for disclosure of otherwise encrypted confidential information as well as the encryption keys themselves.
+|           
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160
+|       http://www.openssl.org/news/secadv_20140407.txt 
+|_      http://cvedetails.com/cve/2014-0160/
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  OSVDB:113251  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       http://osvdb.org/113251
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_sslv2-drown: 
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.79"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 22    0       17776.60   17027.97  0.0%
+| 80    0       15616.60   7966.70   0.0%
+|_443   0       12262.30   3220.73   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 68.05 seconds
