@@ -1,0 +1,35 @@
+root@Kali:~/HTB/Poison# amap 10.10.10.84 80
+amap v5.4 (www.thc.org/thc-amap) started at 2020-08-12 00:22:18 - APPLICATION MAPPING mode
+
+Protocol on 10.10.10.84:80/tcp matches http
+Protocol on 10.10.10.84:80/tcp matches http-apache-2
+
+Unidentified ports: none.
+
+amap v5.4 finished at 2020-08-12 00:22:24
+
+root@Kali:~/HTB/Poison# nikto -h http://10.10.10.84
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          10.10.10.84
++ Target Hostname:    10.10.10.84
++ Target Port:        80
++ Start Time:         2020-08-12 00:24:10 (GMT8)
+---------------------------------------------------------------------------
++ Server: Apache/2.4.29 (FreeBSD) PHP/5.6.32
++ Retrieved x-powered-by header: PHP/5.6.32
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ PHP/5.6.32 appears to be outdated (current is at least 7.2.12). PHP 5.6.33, 7.0.27, 7.1.13, 7.2.1 may also current release for each branch.
++ Apache/2.4.29 appears to be outdated (current is at least Apache/2.4.37). Apache 2.2.34 is the EOL for the 2.x branch.
++ Web Server returns a valid response with junk HTTP methods, this may cause false positives.
++ OSVDB-877: HTTP TRACE method is active, suggesting the host is vulnerable to XST
++ /phpinfo.php: Output from the phpinfo() function was found.
++ OSVDB-12184: /?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-3233: /phpinfo.php: PHP is installed, and a test script which runs phpinfo() was found. This gives a lot of system information.
++ 7862 requests: 0 error(s) and 11 item(s) reported on remote host
++ End Time:           2020-08-12 00:26:53 (GMT8) (163 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested

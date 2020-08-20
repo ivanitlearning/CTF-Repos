@@ -1,0 +1,2775 @@
+charix@Poison:/tmp % ./linpeas.sh -a
+
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+  linpeas v2.3.7 by carlospolop
+
+ADVISORY: linpeas should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: sed: sed: sed: sed: sed: sed: sed: 1: "s,3.2.0-53-generic-pae\ ...": unterminated substitute pattern1: "s,3.13.0-24-generic\|3. ...": unterminated substitute pattern1: "s,3.16.0-45-lowlatency\ ...": unterminated substitute pattern1: "s,2.6.24.7-74.el5rt\|2. ...": unterminated substitute pattern1: "s,2.6.33.9-rt31.66.el6r ...": unterminated substitute pattern1: "s,2.6.32-279.41.1.el6\| ...": unterminated substitute pattern1: "s,3.1.1-1400-linaro-lt- ...": unterminated substitute pattern
+
+
+
+
+
+
+User & Groups: uid=1001(charix) gid=1001(charix) groups=1001(charix)
+Hostname: Poison
+
+[+] /sbin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+sed: sed: sed: sed: sed: sed: 1: "s,3.2.0-53-generic-pae\ ...": unterminated substitute pattern1: "s,3.13.0-24-generic\|3. ...": unterminated substitute pattern1: "s,3.16.0-45-lowlatency\ ...": unterminated substitute pattern1: "s,2.6.24.7-74.el5rt\|2. ...": unterminated substitute pattern1: "s,2.6.33.9-rt31.66.el6r ...": unterminated substitute pattern1: "s,2.6.32-279.41.1.el6\| ...": unterminated substitute patternsed: 
+
+
+
+
+
+1: "s,3.1.1-1400-linaro-lt- ...": unterminated substitute pattern
+
+[+] Sudo version
+sudo Not Found
+
+[+] PATH
+[i] Any writable folder in original PATH? (a new completed path will be exported)
+/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/home/charix/bin
+New path exported: /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/home/charix/bin
+
+[+] Date
+Tue Aug 11 18:55:42 CEST 2020
+
+[+] System stats
+Filesystem     Size    Used   Avail Capacity  Mounted on
+/dev/da0s1a     18G    4.6G     12G    27%    /
+devfs          1.0K    1.0K      0B   100%    /dev
+free Not Found
+
+[+] Environment
+[i] Any private information inside environment variables?
+VENDOR=amd
+SSH_CLIENT=10.10.14.6 45400 22
+LOGNAME=charix
+PAGER=more
+OSTYPE=FreeBSD
+MACHTYPE=x86_64
+MAIL=/var/mail/charix
+HISTFILE=/dev/null
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/home/charix/bin
+EDITOR=vi
+HOST=Poison
+REMOTEHOST=10.10.14.6
+GROUP=charix
+TERM=xterm-256color
+SSH_TTY=/dev/pts/1
+HISTSIZE=0
+HOME=/home/charix
+USER=charix
+SSH_CONNECTION=10.10.14.6 45400 10.10.10.84 22
+HOSTTYPE=FreeBSD
+SHELL=/bin/csh
+HISTFILESIZE=0
+BLOCKSIZE=K
+SHLVL=1
+
+[+] Looking for Signature verification failed in dmseg
+ Not Found
+
+[+] selinux enabled? .............. sestatus Not Found
+[+] Printer? ...................... lpstat Not Found
+[+] Is this a container? .......... No
+[+] Is ASLR enabled? .............. /proc/sys/kernel/randomize_va_space Not Found
+
+=========================================( Devices )==========================================
+[+] Any sd* disk in /dev? (limit 20)
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nc
+/usr/local/bin/ncat
+/usr/local/bin/wget
+/sbin/ping
+/usr/bin/make
+/usr/bin/gdb
+/usr/local/bin/python
+/usr/local/bin/python2
+/usr/local/bin/python2.7
+/usr/local/bin/perl
+/usr/local/bin/php
+/usr/local/bin/ruby
+/usr/local/bin/xterm
+/usr/bin/fetch
+
+[+] Compilers Installed
+Compilers Not Found
+
+
+================================( Processes, Cron & Services )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+USER    PID %CPU %MEM    VSZ   RSS TT  STAT STARTED     TIME COMMAND
+root      1  0.0  0.1   5408  1040  -  ILs  17:35    0:00.00 /sbin/init --
+root    319  0.0  0.5   9560  5052  -  Ss   17:35    0:00.30 /sbin/devd
+root    390  0.0  0.2  10500  2448  -  Ss   17:35    0:00.18 /usr/sbin/syslogd -s
+root    543  0.0  0.5  56320  5400  -  S    17:35    0:03.12 /usr/local/bin/vmtoolsd -c /usr/local/share/vmware-tools/tools.conf -p /usr/local/lib/op
+root    620  0.0  0.7  57812  7052  -  Is   17:35    0:00.01 /usr/sbin/sshd
+root    625  0.0  1.1  99172 11516  -  Ss   17:36    0:00.37 /usr/local/sbin/httpd -DNOHTTPACCEPT
+root    642  0.0  0.6  20636  6140  -  Ss   17:37    0:00.09 sendmail: accepting connections (sendmail)
+smmsp   645  0.0  0.6  20636  5936  -  Is   17:38    0:00.00 sendmail: Queue runner@00:30:00 for /var/spool/clientmqueue (sendmail)
+root    649  0.0  0.2  12592  2436  -  Is   17:38    0:00.02 /usr/sbin/cron -s
+www     813  0.0  1.2  99172 11892  -  I    18:24    0:01.20 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www     877  0.0  1.4 101220 13932  -  I    18:24    0:04.09 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www     884  0.0  1.4 101220 13936  -  I    18:24    0:03.40 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www     893  0.0  1.2  99172 11916  -  I    18:24    0:01.19 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www     916  0.0  1.2 101220 12060  -  I    18:24    0:01.13 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www     928  0.0  1.2 101220 12068  -  I    18:24    0:01.21 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www     977  0.0  1.2  99172 11908  -  I    18:24    0:01.19 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www    1023  0.0  1.2  99172 11904  -  I    18:24    0:01.13 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www    1028  0.0  1.2 101220 12064  -  S    18:24    0:01.18 /usr/local/sbin/httpd -DNOHTTPACCEPT
+www    1032  0.0  1.2 101220 12060  -  I    18:24    0:01.04 /usr/local/sbin/httpd -DNOHTTPACCEPT
+charix 1089  0.0  0.8  85228  7904  -  S    18:52    0:00.04 sshd: charix@pts/1 (sshd)
+root    529  0.0  0.9  23620  8872 v0- I    17:35    0:00.03 Xvnc :1 -desktop X -httpd /usr/local/share/tightvnc/classes -auth /root/.Xauthority -geo
+root    540  0.0  0.7  67220  7064 v0- I    17:35    0:00.02 xterm -geometry 80x24+10+10 -ls -title X Desktop
+root    541  0.0  0.5  37620  5312 v0- I    17:35    0:00.01 twm
+root    696  0.0  0.2  10484  2076 v0  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv0
+root    697  0.0  0.2  10484  2076 v1  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv1
+root    698  0.0  0.2  10484  2076 v2  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv2
+root    699  0.0  0.2  10484  2076 v3  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv3
+root    700  0.0  0.2  10484  2076 v4  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv4
+root    701  0.0  0.2  10484  2076 v5  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv5
+root    702  0.0  0.2  10484  2076 v6  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv6
+root    703  0.0  0.2  10484  2076 v7  Is+  17:38    0:00.00 /usr/libexec/getty Pc ttyv7
+root    561  0.0  0.4  19660  3616  0  Is+  17:35    0:00.01 -csh (csh)
+charix 1090  0.0  0.4  19660  3596  1  Ss   18:52    0:00.02 -csh (csh)
+charix 1183  0.0  0.3  13180  2940  1  S+   18:55    0:00.02 /bin/sh ./linpeas.sh -a
+charix 1363  0.0  0.3  21208  2668  1  R+   18:55    0:00.00 ps aux
+charix 1368  0.0  0.2   8356  2016  1  S+   18:55    0:00.00 sed s,/init$\\|upstart-udev-bridge\\|udev\\|/getty\\|cron\\|apache2\\|java\\|tomcat\\|/v
+charix 1369  0.0  0.2   8356  2016  1  S+   18:55    0:00.00 sed s,daemon:\\|daemon\\s\\|^daemon$\\|message+\\|syslog\\|www\\|www-data\\|mail\\|nobob
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-r-xr-xr-x  1 root  wheel   161936 Jul 21  2017 /bin/sh
+-r-xr-xr-x  1 root  wheel  1203224 Jul 21  2017 /sbin/devd
+-r-xr-xr-x  1 root  wheel  1081600 Jul 21  2017 /sbin/init
+-r-xr-xr-x  1 root  wheel    31008 Jul 21  2017 /usr/libexec/getty
+-rwxr-xr-x  1 root  wheel    42792 Mar 16  2018 /usr/local/bin/vmtoolsd
+-rwxr-xr-x  1 root  wheel   788153 Jan  2  2018 /usr/local/sbin/httpd
+-r-xr-xr-x  1 root  wheel    45304 Jul 21  2017 /usr/sbin/cron
+-r-xr-xr-x  1 root  wheel   313112 Jul 21  2017 /usr/sbin/sshd
+-r-xr-xr-x  1 root  wheel    45296 Jul 21  2017 /usr/sbin/syslogd
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-jobs
+-rw-r--r--  1 root  wheel  730 Jul 21  2017 /etc/crontab
+
+/etc/cron.d:
+total 8
+drwxr-xr-x   2 root  wheel   512 Jul 21  2017 .
+drwxr-xr-x  27 root  wheel  2560 Mar 19  2018 ..
+Binary file (standard input) matches
+
+[+] Services
+[i] Search for outdated versions
+
+Usage:
+service -e
+service -R
+service [-v] -l | -r
+service [-v] <rc.d script> start|stop|etc.
+service -h
+
+-e	Show services that are enabled
+-R	Stop and start enabled /usr/local/etc/rc.d services
+-l	List all scripts in /etc/rc.d and /usr/local/etc/rc.d
+-r	Show the results of boot time rcorder
+-v	Verbose
+
+service|chkconfig|rc-status Not Found
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+dnsdomainname Not Found
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Networks and neighbours
+# $FreeBSD: releng/11.1/etc/networks 50472 1999-08-27 23:37:10Z peter $
+#	@(#)networks	5.1 (Berkeley) 6/30/90
+#
+# Your Local Networks Database
+#
+your-net	127				# your comment
+your-netmask	255.255.255			# subnet mask for your-net
+
+#
+# Your subnets
+#
+subnet1		127.0.1		alias1		# comment 1
+subnet2		127.0.2		alias2		# comment 2
+
+#
+# Internet networks (from nic.ddn.mil)
+#
+le0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+	options=8<VLAN_MTU>
+	ether 00:50:56:b9:17:10
+	hwaddr 00:50:56:b9:17:10
+	inet 10.10.10.84 netmask 0xffffff00 broadcast 10.10.10.255 
+	nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
+	media: Ethernet autoselect
+	status: active
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> metric 0 mtu 16384
+	options=600003<RXCSUM,TXCSUM,RXCSUM_IPV6,TXCSUM_IPV6>
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x2 
+	inet 127.0.0.1 netmask 0xff000000 
+	nd6 options=21<PERFORMNUD,AUTO_LINKLOCAL>
+	groups: lo 
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#internal-open-ports
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#groups
+uid=1001(charix) gid=1001(charix) groups=1001(charix)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Testing 'sudo -l' without password & /etc/sudoers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user charix...
+  You can login as charix using password: 
+  You can login as charix using password: charix
+  You can login as charix using password: xirahc
+  You can login as charix using password: 123456
+  You can login as charix using password: password
+  You can login as charix using password: 123456789
+  You can login as charix using password: 12345678
+  You can login as charix using password: 12345
+  You can login as charix using password: qwerty
+  You can login as charix using password: 123123
+  You can login as charix using password: 111111
+  You can login as charix using password: abc123
+  You can login as charix using password: 1234567
+  You can login as charix using password: dragon
+  You can login as charix using password: 1q2w3e4r
+  You can login as charix using password: sunshine
+  You can login as charix using password: 654321
+  You can login as charix using password: master
+  You can login as charix using password: 1234
+  You can login as charix using password: football
+  You can login as charix using password: 1234567890
+  You can login as charix using password: 000000
+  You can login as charix using password: computer
+  You can login as charix using password: superman
+  You can login as charix using password: 666666
+  You can login as charix using password: michael
+  You can login as charix using password: internet
+  You can login as charix using password: iloveyou
+  You can login as charix using password: daniel
+  You can login as charix using password: 1qaz2wsx
+  You can login as charix using password: monkey
+  You can login as charix using password: shadow
+  You can login as charix using password: jessica
+  You can login as charix using password: letmein
+  You can login as charix using password: baseball
+  You can login as charix using password: whatever
+  You can login as charix using password: princess
+  You can login as charix using password: abcd1234
+  You can login as charix using password: 123321
+  You can login as charix using password: 121212
+  You can login as charix using password: starwars
+  You can login as charix using password: thomas
+  You can login as charix using password: zxcvbnm
+  You can login as charix using password: trustno1
+  You can login as charix using password: killer
+  You can login as charix using password: welcome
+  You can login as charix using password: jordan
+  You can login as charix using password: aaaaaa
+  You can login as charix using password: 123qwe
+  You can login as charix using password: freedom
+  You can login as charix using password: password1
+  You can login as charix using password: charlie
+  You can login as charix using password: batman
+  You can login as charix using password: jennifer
+  You can login as charix using password: 7777777
+  You can login as charix using password: michelle
+  You can login as charix using password: diamond
+  You can login as charix using password: oliver
+  You can login as charix using password: mercedes
+  You can login as charix using password: benjamin
+  You can login as charix using password: 11111111
+  You can login as charix using password: snoopy
+  You can login as charix using password: samantha
+  You can login as charix using password: victoria
+  You can login as charix using password: matrix
+  You can login as charix using password: george
+  You can login as charix using password: alexander
+  You can login as charix using password: secret
+  You can login as charix using password: cookie
+  You can login as charix using password: asdfgh
+  You can login as charix using password: 987654321
+  You can login as charix using password: 123abc
+  You can login as charix using password: orange
+  You can login as charix using password: fuckyou
+  You can login as charix using password: asdf1234
+  You can login as charix using password: pepper
+  You can login as charix using password: hunter
+  You can login as charix using password: silver
+  You can login as charix using password: joshua
+  You can login as charix using password: banana
+  You can login as charix using password: 1q2w3e
+  You can login as charix using password: chelsea
+  You can login as charix using password: 1234qwer
+  You can login as charix using password: summer
+  You can login as charix using password: qwertyuiop
+  You can login as charix using password: phoenix
+  You can login as charix using password: andrew
+  You can login as charix using password: q1w2e3r4
+  You can login as charix using password: elephant
+  You can login as charix using password: rainbow
+  You can login as charix using password: mustang
+  You can login as charix using password: merlin
+  You can login as charix using password: london
+  You can login as charix using password: garfield
+  You can login as charix using password: robert
+  You can login as charix using password: 112233
+  You can login as charix using password: chocolate
+  You can login as charix using password: samsung
+  You can login as charix using password: qazwsx
+  You can login as charix using password: matthew
+  You can login as charix using password: buster
+  You can login as charix using password: jonathan
+  You can login as charix using password: ginger
+  You can login as charix using password: flower
+  You can login as charix using password: 555555
+  You can login as charix using password: test
+  You can login as charix using password: caroline
+  You can login as charix using password: amanda
+  You can login as charix using password: maverick
+  You can login as charix using password: midnight
+  You can login as charix using password: martin
+  You can login as charix using password: junior
+  You can login as charix using password: anthony
+  You can login as charix using password: 88888888
+  You can login as charix using password: jasmine
+  You can login as charix using password: creative
+  You can login as charix using password: patrick
+  You can login as charix using password: mickey
+  You can login as charix using password: 123
+  You can login as charix using password: qwerty123
+  You can login as charix using password: cocacola
+  You can login as charix using password: chicken
+  You can login as charix using password: passw0rd
+  You can login as charix using password: forever
+  You can login as charix using password: william
+  You can login as charix using password: nicole
+  You can login as charix using password: hello
+  You can login as charix using password: yellow
+  You can login as charix using password: nirvana
+  You can login as charix using password: justin
+  You can login as charix using password: friends
+  You can login as charix using password: tigger
+  You can login as charix using password: cheese
+  You can login as charix using password: liverpool
+  You can login as charix using password: mother
+  You can login as charix using password: asdfghjkl
+  You can login as charix using password: andrea
+  You can login as charix using password: blink182
+  You can login as charix using password: spider
+  You can login as charix using password: scooter
+  You can login as charix using password: richard
+  You can login as charix using password: rachel
+  You can login as charix using password: soccer
+  You can login as charix using password: morgan
+  You can login as charix using password: purple
+  You can login as charix using password: jackson
+  You can login as charix using password: melissa
+  You can login as charix using password: arsenal
+  You can login as charix using password: 222222
+  You can login as charix using password: gabriel
+  You can login as charix using password: qwe123
+  You can login as charix using password: jasper
+  You can login as charix using password: ferrari
+  You can login as charix using password: danielle
+  You can login as charix using password: bandit
+  You can login as charix using password: angela
+  You can login as charix using password: scorpion
+  You can login as charix using password: prince
+  You can login as charix using password: maggie
+  You can login as charix using password: austin
+  You can login as charix using password: veronica
+  You can login as charix using password: nicholas
+  You can login as charix using password: monster
+  You can login as charix using password: dexter
+  You can login as charix using password: carlos
+  You can login as charix using password: thunder
+  You can login as charix using password: success
+  You can login as charix using password: hannah
+  You can login as charix using password: ashley
+  You can login as charix using password: 131313
+  You can login as charix using password: stella
+  You can login as charix using password: brandon
+  You can login as charix using password: pokemon
+  You can login as charix using password: joseph
+  You can login as charix using password: asdfasdf
+  You can login as charix using password: 999999
+  You can login as charix using password: metallica
+  You can login as charix using password: december
+  You can login as charix using password: chester
+  You can login as charix using password: taylor
+  You can login as charix using password: sophie
+  You can login as charix using password: samuel
+  You can login as charix using password: rabbit
+  You can login as charix using password: crystal
+  You can login as charix using password: barney
+  You can login as charix using password: xxxxxx
+  You can login as charix using password: steven
+  You can login as charix using password: ranger
+  You can login as charix using password: patricia
+  You can login as charix using password: christian
+  You can login as charix using password: asshole
+  You can login as charix using password: spiderman
+  You can login as charix using password: sandra
+  You can login as charix using password: hockey
+  You can login as charix using password: angels
+  You can login as charix using password: security
+  You can login as charix using password: parker
+  You can login as charix using password: heather
+  You can login as charix using password: 888888
+  You can login as charix using password: victor
+  You can login as charix using password: harley
+  You can login as charix using password: 333333
+  You can login as charix using password: system
+  You can login as charix using password: slipknot
+  You can login as charix using password: november
+  You can login as charix using password: jordan23
+  You can login as charix using password: canada
+  You can login as charix using password: tennis
+  You can login as charix using password: qwertyui
+  You can login as charix using password: casper
+  You can login as charix using password: gemini
+  You can login as charix using password: asd123
+  You can login as charix using password: winter
+  You can login as charix using password: hammer
+  You can login as charix using password: cooper
+  You can login as charix using password: america
+  You can login as charix using password: albert
+  You can login as charix using password: 777777
+  You can login as charix using password: winner
+  You can login as charix using password: charles
+  You can login as charix using password: butterfly
+  You can login as charix using password: swordfish
+  You can login as charix using password: popcorn
+  You can login as charix using password: penguin
+  You can login as charix using password: dolphin
+  You can login as charix using password: carolina
+  You can login as charix using password: access
+  You can login as charix using password: 987654
+  You can login as charix using password: hardcore
+  You can login as charix using password: corvette
+  You can login as charix using password: apples
+  You can login as charix using password: 12341234
+  You can login as charix using password: sabrina
+  You can login as charix using password: remember
+  You can login as charix using password: qwer1234
+  You can login as charix using password: edward
+  You can login as charix using password: dennis
+  You can login as charix using password: cherry
+  You can login as charix using password: sparky
+  You can login as charix using password: natasha
+  You can login as charix using password: arthur
+  You can login as charix using password: vanessa
+  You can login as charix using password: marina
+  You can login as charix using password: leonardo
+  You can login as charix using password: johnny
+  You can login as charix using password: dallas
+  You can login as charix using password: antonio
+  You can login as charix using password: winston
+  You can login as charix using password: snickers
+  You can login as charix using password: olivia
+  You can login as charix using password: nothing
+  You can login as charix using password: iceman
+  You can login as charix using password: destiny
+  You can login as charix using password: coffee
+  You can login as charix using password: apollo
+  You can login as charix using password: 696969
+  You can login as charix using password: windows
+  You can login as charix using password: williams
+  You can login as charix using password: school
+  You can login as charix using password: madison
+  You can login as charix using password: dakota
+  You can login as charix using password: angelina
+  You can login as charix using password: anderson
+  You can login as charix using password: 159753
+  You can login as charix using password: 1111
+  You can login as charix using password: yamaha
+  You can login as charix using password: rebecca
+  You can login as charix using password: trinity
+  You can login as charix using password: guitar
+  You can login as charix using password: nathan
+  You can login as charix using password: compaq
+  You can login as charix using password: 123123123
+  You can login as charix using password: toyota
+  You can login as charix using password: shannon
+  You can login as charix using password: playboy
+  You can login as charix using password: peanut
+  You can login as charix using password: pakistan
+  You can login as charix using password: diablo
+  You can login as charix using password: abcdef
+  You can login as charix using password: maxwell
+  You can login as charix using password: golden
+  You can login as charix using password: asdasd
+  You can login as charix using password: 123654
+  You can login as charix using password: murphy
+  You can login as charix using password: marlboro
+  You can login as charix using password: kimberly
+  You can login as charix using password: monica
+  You can login as charix using password: gateway
+  You can login as charix using password: bailey
+  You can login as charix using password: 00000000
+  You can login as charix using password: snowball
+  You can login as charix using password: scooby
+  You can login as charix using password: nikita
+  You can login as charix using password: falcon
+  You can login as charix using password: august
+  You can login as charix using password: test123
+  You can login as charix using password: sebastian
+  You can login as charix using password: panther
+  You can login as charix using password: love
+  You can login as charix using password: johnson
+  You can login as charix using password: godzilla
+  You can login as charix using password: genesis
+  You can login as charix using password: brandy
+  You can login as charix using password: adidas
+  You can login as charix using password: zxcvbn
+  You can login as charix using password: wizard
+  You can login as charix using password: porsche
+  You can login as charix using password: online
+  You can login as charix using password: hello123
+  You can login as charix using password: fuckoff
+  You can login as charix using password: eagles
+  You can login as charix using password: champion
+  You can login as charix using password: bubbles
+  You can login as charix using password: boston
+  You can login as charix using password: smokey
+  You can login as charix using password: precious
+  You can login as charix using password: mercury
+  You can login as charix using password: lauren
+  You can login as charix using password: einstein
+  You can login as charix using password: cricket
+  You can login as charix using password: cameron
+  You can login as charix using password: angel
+  You can login as charix using password: admin
+  You can login as charix using password: napoleon
+  You can login as charix using password: mountain
+  You can login as charix using password: lovely
+  You can login as charix using password: friend
+  You can login as charix using password: flowers
+  You can login as charix using password: dolphins
+  You can login as charix using password: david
+  You can login as charix using password: chicago
+  You can login as charix using password: sierra
+  You can login as charix using password: knight
+  You can login as charix using password: yankees
+  You can login as charix using password: wilson
+  You can login as charix using password: warrior
+  You can login as charix using password: simple
+  You can login as charix using password: nelson
+  You can login as charix using password: muffin
+  You can login as charix using password: charlotte
+  You can login as charix using password: calvin
+  You can login as charix using password: spencer
+  You can login as charix using password: newyork
+  You can login as charix using password: fernando
+  You can login as charix using password: florida
+  You can login as charix using password: basketball
+  You can login as charix using password: claudia
+  You can login as charix using password: barcelona
+  You can login as charix using password: 87654321
+  You can login as charix using password: willow
+  You can login as charix using password: stupid
+  You can login as charix using password: samson
+  You can login as charix using password: police
+  You can login as charix using password: paradise
+  You can login as charix using password: motorola
+  You can login as charix using password: manager
+  You can login as charix using password: jaguar
+  You can login as charix using password: jackie
+  You can login as charix using password: family
+  You can login as charix using password: doctor
+  You can login as charix using password: bullshit
+  You can login as charix using password: brooklyn
+  You can login as charix using password: tigers
+  You can login as charix using password: stephanie
+  You can login as charix using password: slayer
+  You can login as charix using password: peaches
+  You can login as charix using password: miller
+  You can login as charix using password: heaven
+  You can login as charix using password: elizabeth
+  You can login as charix using password: bulldog
+  You can login as charix using password: animal
+  You can login as charix using password: 789456
+  You can login as charix using password: scorpio
+  You can login as charix using password: rosebud
+  You can login as charix using password: qwerty12
+  You can login as charix using password: franklin
+  You can login as charix using password: claire
+  You can login as charix using password: american
+  You can login as charix using password: vincent
+  You can login as charix using password: testing
+  You can login as charix using password: pumpkin
+  You can login as charix using password: platinum
+  You can login as charix using password: louise
+  You can login as charix using password: general
+  You can login as charix using password: kitten
+  You can login as charix using password: united
+  You can login as charix using password: turtle
+  You can login as charix using password: marine
+  You can login as charix using password: icecream
+  You can login as charix using password: hacker
+  You can login as charix using password: darkness
+  You can login as charix using password: cristina
+  You can login as charix using password: colorado
+  You can login as charix using password: boomer
+  You can login as charix using password: alexandra
+  You can login as charix using password: steelers
+  You can login as charix using password: serenity
+  You can login as charix using password: please
+  You can login as charix using password: montana
+  You can login as charix using password: mitchell
+  You can login as charix using password: marcus
+  You can login as charix using password: lollipop
+  You can login as charix using password: jessie
+  You can login as charix using password: happy
+  You can login as charix using password: cowboy
+  You can login as charix using password: 102030
+  You can login as charix using password: marshall
+  You can login as charix using password: jupiter
+  You can login as charix using password: jeremy
+  You can login as charix using password: gibson
+  You can login as charix using password: fucker
+  You can login as charix using password: barbara
+  You can login as charix using password: adrian
+  You can login as charix using password: 1qazxsw2
+  You can login as charix using password: 12344321
+  You can login as charix using password: 11111
+  You can login as charix using password: startrek
+  You can login as charix using password: fishing
+  You can login as charix using password: digital
+  You can login as charix using password: christine
+  You can login as charix using password: business
+  You can login as charix using password: abcdefg
+  You can login as charix using password: genius
+  You can login as charix using password: nintendo
+  You can login as charix using password: 12qwaszx
+  You can login as charix using password: walker
+  You can login as charix using password: q1w2e3
+  You can login as charix using password: player
+  You can login as charix using password: legend
+  You can login as charix using password: carmen
+  You can login as charix using password: booboo
+  You can login as charix using password: tomcat
+  You can login as charix using password: ronaldo
+  You can login as charix using password: people
+  You can login as charix using password: pamela
+  You can login as charix using password: marvin
+  You can login as charix using password: jackass
+  You can login as charix using password: google
+  You can login as charix using password: fender
+  You can login as charix using password: asdfghjk
+  You can login as charix using password: Password
+  You can login as charix using password: 1q2w3e4r5t
+  You can login as charix using password: zaq12wsx
+  You can login as charix using password: scotland
+  You can login as charix using password: phantom
+  You can login as charix using password: hercules
+  You can login as charix using password: fluffy
+  You can login as charix using password: explorer
+  You can login as charix using password: alexis
+  You can login as charix using password: walter
+  You can login as charix using password: trouble
+  You can login as charix using password: tester
+  You can login as charix using password: qwerty1
+  You can login as charix using password: melanie
+  You can login as charix using password: manchester
+  You can login as charix using password: gordon
+  You can login as charix using password: firebird
+  You can login as charix using password: engineer
+  You can login as charix using password: azerty
+  You can login as charix using password: 147258
+  You can login as charix using password: virginia
+  You can login as charix using password: tiger
+  You can login as charix using password: simpsons
+  You can login as charix using password: passion
+  You can login as charix using password: lakers
+  You can login as charix using password: james
+  You can login as charix using password: angelica
+  You can login as charix using password: 55555
+  You can login as charix using password: vampire
+  You can login as charix using password: tiffany
+  You can login as charix using password: september
+  You can login as charix using password: private
+  You can login as charix using password: maximus
+  You can login as charix using password: loveme
+  You can login as charix using password: isabelle
+  You can login as charix using password: isabella
+  You can login as charix using password: eclipse
+  You can login as charix using password: dreamer
+  You can login as charix using password: changeme
+  You can login as charix using password: cassie
+  You can login as charix using password: badboy
+  You can login as charix using password: 123456a
+  You can login as charix using password: stanley
+  You can login as charix using password: sniper
+  You can login as charix using password: rocket
+  You can login as charix using password: passport
+  You can login as charix using password: pandora
+  You can login as charix using password: justice
+  You can login as charix using password: infinity
+  You can login as charix using password: cookies
+  You can login as charix using password: barbie
+  You can login as charix using password: xavier
+  You can login as charix using password: unicorn
+  You can login as charix using password: superstar
+  You can login as charix using password: stephen
+  You can login as charix using password: rangers
+  You can login as charix using password: orlando
+  You can login as charix using password: money
+  You can login as charix using password: domino
+  You can login as charix using password: courtney
+  You can login as charix using password: viking
+  You can login as charix using password: tucker
+  You can login as charix using password: travis
+  You can login as charix using password: scarface
+  You can login as charix using password: pavilion
+  You can login as charix using password: nicolas
+  You can login as charix using password: natalie
+  You can login as charix using password: gandalf
+  You can login as charix using password: freddy
+  You can login as charix using password: donald
+  You can login as charix using password: captain
+  You can login as charix using password: abcdefgh
+  You can login as charix using password: a1b2c3d4
+  You can login as charix using password: speedy
+  You can login as charix using password: peter
+  You can login as charix using password: nissan
+  You can login as charix using password: loveyou
+  You can login as charix using password: harrison
+  You can login as charix using password: friday
+  You can login as charix using password: francis
+  You can login as charix using password: dancer
+  You can login as charix using password: 159357
+  You can login as charix using password: 101010
+  You can login as charix using password: spitfire
+  You can login as charix using password: saturn
+  You can login as charix using password: nemesis
+  You can login as charix using password: little
+  You can login as charix using password: dreams
+  You can login as charix using password: catherine
+  You can login as charix using password: brother
+  You can login as charix using password: birthday
+  You can login as charix using password: 1111111
+  You can login as charix using password: wolverine
+  You can login as charix using password: victory
+  You can login as charix using password: student
+  You can login as charix using password: france
+  You can login as charix using password: fantasy
+  You can login as charix using password: enigma
+  You can login as charix using password: copper
+  You can login as charix using password: bonnie
+  You can login as charix using password: teresa
+  You can login as charix using password: mexico
+  You can login as charix using password: guinness
+  You can login as charix using password: georgia
+  You can login as charix using password: california
+  You can login as charix using password: sweety
+  You can login as charix using password: logitech
+  You can login as charix using password: julian
+  You can login as charix using password: hotdog
+  You can login as charix using password: emmanuel
+  You can login as charix using password: butter
+  You can login as charix using password: beatles
+  You can login as charix using password: 11223344
+  You can login as charix using password: tristan
+  You can login as charix using password: sydney
+  You can login as charix using password: spirit
+  You can login as charix using password: october
+  You can login as charix using password: mozart
+  You can login as charix using password: lolita
+  You can login as charix using password: ireland
+  You can login as charix using password: goldfish
+  You can login as charix using password: eminem
+  You can login as charix using password: douglas
+  You can login as charix using password: cowboys
+  You can login as charix using password: control
+  You can login as charix using password: cheyenne
+  You can login as charix using password: alex
+  You can login as charix using password: testtest
+  You can login as charix using password: stargate
+  You can login as charix using password: raiders
+  You can login as charix using password: microsoft
+  You can login as charix using password: diesel
+  You can login as charix using password: debbie
+  You can login as charix using password: danger
+  You can login as charix using password: chance
+  You can login as charix using password: asdf
+  You can login as charix using password: anything
+  You can login as charix using password: aaaaaaaa
+  You can login as charix using password: welcome1
+  You can login as charix using password: qwert
+  You can login as charix using password: hahaha
+  You can login as charix using password: forest
+  You can login as charix using password: eternity
+  You can login as charix using password: disney
+  You can login as charix using password: denise
+  You can login as charix using password: carter
+  You can login as charix using password: alaska
+  You can login as charix using password: zzzzzz
+  You can login as charix using password: titanic
+  You can login as charix using password: shorty
+  You can login as charix using password: shelby
+  You can login as charix using password: pookie
+  You can login as charix using password: pantera
+  You can login as charix using password: england
+  You can login as charix using password: chris
+  You can login as charix using password: zachary
+  You can login as charix using password: westside
+  You can login as charix using password: tamara
+  You can login as charix using password: password123
+  You can login as charix using password: pass
+  You can login as charix using password: maryjane
+  You can login as charix using password: lincoln
+  You can login as charix using password: willie
+  You can login as charix using password: teacher
+  You can login as charix using password: pierre
+  You can login as charix using password: michael1
+  You can login as charix using password: leslie
+  You can login as charix using password: lawrence
+  You can login as charix using password: kristina
+  You can login as charix using password: kawasaki
+  You can login as charix using password: college
+  You can login as charix using password: drowssap
+  You can login as charix using password: babygirl
+  You can login as charix using password: blahblah
+  You can login as charix using password: avatar
+  You can login as charix using password: alicia
+  You can login as charix using password: regina
+  You can login as charix using password: qqqqqq
+  You can login as charix using password: poohbear
+  You can login as charix using password: miranda
+  You can login as charix using password: madonna
+  You can login as charix using password: florence
+  You can login as charix using password: sapphire
+  You can login as charix using password: norman
+  You can login as charix using password: hamilton
+  You can login as charix using password: greenday
+  You can login as charix using password: galaxy
+  You can login as charix using password: frankie
+  You can login as charix using password: black
+  You can login as charix using password: awesome
+  You can login as charix using password: suzuki
+  You can login as charix using password: spring
+  You can login as charix using password: qazwsxedc
+  You can login as charix using password: magnum
+  You can login as charix using password: lovers
+  You can login as charix using password: liberty
+  You can login as charix using password: gregory
+  You can login as charix using password: 232323
+  You can login as charix using password: twilight
+  You can login as charix using password: timothy
+  You can login as charix using password: swimming
+  You can login as charix using password: super
+  You can login as charix using password: stardust
+  You can login as charix using password: sophia
+  You can login as charix using password: sharon
+  You can login as charix using password: robbie
+  You can login as charix using password: penelope
+  You can login as charix using password: predator
+  You can login as charix using password: margaret
+  You can login as charix using password: michigan
+  You can login as charix using password: jesus
+  You can login as charix using password: hawaii
+  You can login as charix using password: green
+  You can login as charix using password: brittany
+  You can login as charix using password: badger
+  You can login as charix using password: brenda
+  You can login as charix using password: a1b2c3
+  You can login as charix using password: 444444
+  You can login as charix using password: wesley
+  You can login as charix using password: voodoo
+  You can login as charix using password: winnie
+  You can login as charix using password: skippy
+  You can login as charix using password: shithead
+  You can login as charix using password: redskins
+  You can login as charix using password: pussycat
+  You can login as charix using password: qwertyu
+  You can login as charix using password: houston
+  You can login as charix using password: gunner
+  You can login as charix using password: horses
+  You can login as charix using password: fireball
+  You can login as charix using password: donkey
+  You can login as charix using password: cherokee
+  You can login as charix using password: australia
+  You can login as charix using password: arizona
+  You can login as charix using password: 1234abcd
+  You can login as charix using password: skyline
+  You can login as charix using password: power
+  You can login as charix using password: perfect
+  You can login as charix using password: lovelove
+  You can login as charix using password: kermit
+  You can login as charix using password: kenneth
+  You can login as charix using password: katrina
+  You can login as charix using password: eugene
+  You can login as charix using password: christ
+  You can login as charix using password: thailand
+  You can login as charix using password: support
+  You can login as charix using password: special
+  You can login as charix using password: runner
+  You can login as charix using password: lasvegas
+  You can login as charix using password: fuckme
+  You can login as charix using password: jason
+  You can login as charix using password: butthead
+  You can login as charix using password: blizzard
+  You can login as charix using password: athena
+  You can login as charix using password: abigail
+  You can login as charix using password: 8675309
+  You can login as charix using password: violet
+  You can login as charix using password: tweety
+  You can login as charix using password: spanky
+  You can login as charix using password: shamrock
+  You can login as charix using password: red123
+  You can login as charix using password: rascal
+  You can login as charix using password: melody
+  You can login as charix using password: joanna
+  You can login as charix using password: hello1
+  You can login as charix using password: driver
+  You can login as charix using password: biteme
+  You can login as charix using password: bluebird
+  You can login as charix using password: apple
+  You can login as charix using password: atlantis
+  You can login as charix using password: arnold
+  You can login as charix using password: alison
+  You can login as charix using password: taurus
+  You can login as charix using password: random
+  You can login as charix using password: pirate
+  You can login as charix using password: monitor
+  You can login as charix using password: maria
+  You can login as charix using password: lizard
+  You can login as charix using password: kevin
+  You can login as charix using password: hummer
+  You can login as charix using password: holland
+  You can login as charix using password: buffalo
+  You can login as charix using password: 147258369
+  You can login as charix using password: 007007
+  You can login as charix using password: valentine
+  You can login as charix using password: potter
+  You can login as charix using password: roberto
+  You can login as charix using password: juventus
+  You can login as charix using password: magnolia
+  You can login as charix using password: indigo
+  You can login as charix using password: indian
+  You can login as charix using password: harvey
+  You can login as charix using password: diamonds
+  You can login as charix using password: duncan
+  You can login as charix using password: daniela
+  You can login as charix using password: christopher
+  You can login as charix using password: bradley
+  You can login as charix using password: bananas
+  You can login as charix using password: warcraft
+  You can login as charix using password: sunset
+  You can login as charix using password: simone
+  You can login as charix using password: renegade
+  You can login as charix using password: redsox
+  You can login as charix using password: philip
+  You can login as charix using password: mohammed
+  You can login as charix using password: monday
+  You can login as charix using password: energy
+  You can login as charix using password: indiana
+  You can login as charix using password: bond007
+  You can login as charix using password: avalon
+  You can login as charix using password: terminator
+  You can login as charix using password: skipper
+  You can login as charix using password: shopping
+  You can login as charix using password: scotty
+  You can login as charix using password: savannah
+  You can login as charix using password: raymond
+  You can login as charix using password: morris
+  You can login as charix using password: mnbvcxz
+  You can login as charix using password: michele
+  You can login as charix using password: lucifer
+  You can login as charix using password: lucky
+  You can login as charix using password: kingdom
+  You can login as charix using password: karina
+  You can login as charix using password: cynthia
+  You can login as charix using password: giovanni
+  You can login as charix using password: 147852
+  You can login as charix using password: a123456
+  You can login as charix using password: 12121212
+  You can login as charix using password: wildcats
+  You can login as charix using password: portugal
+  You can login as charix using password: ronald
+  You can login as charix using password: mike
+  You can login as charix using password: helpme
+  You can login as charix using password: froggy
+  You can login as charix using password: dragons
+  You can login as charix using password: cancer
+  You can login as charix using password: bullet
+  You can login as charix using password: beautiful
+  You can login as charix using password: alabama
+  You can login as charix using password: 212121
+  You can login as charix using password: unknown
+  You can login as charix using password: sunflower
+  You can login as charix using password: sports
+  You can login as charix using password: siemens
+  You can login as charix using password: santiago
+  You can login as charix using password: kathleen
+  You can login as charix using password: hamster
+  You can login as charix using password: hotmail
+  You can login as charix using password: golfer
+  You can login as charix using password: father
+  You can login as charix using password: future
+  You can login as charix using password: clifford
+  You can login as charix using password: christina
+  You can login as charix using password: enterprise
+  You can login as charix using password: camille
+  You can login as charix using password: camaro
+  You can login as charix using password: 55555555
+  You can login as charix using password: beauty
+  You can login as charix using password: vision
+  You can login as charix using password: tornado
+  You can login as charix using password: something
+  You can login as charix using password: rosemary
+  You can login as charix using password: qweasd
+  You can login as charix using password: patches
+  You can login as charix using password: magic
+  You can login as charix using password: helena
+  You can login as charix using password: denver
+  You can login as charix using password: cracker
+  You can login as charix using password: beaver
+  You can login as charix using password: basket
+  You can login as charix using password: atlanta
+  You can login as charix using password: vacation
+  You can login as charix using password: smiles
+  You can login as charix using password: ricardo
+  You can login as charix using password: pascal
+  You can login as charix using password: newton
+  You can login as charix using password: jeffrey
+  You can login as charix using password: jasmin
+  You can login as charix using password: january
+  You can login as charix using password: honey
+  You can login as charix using password: hollywood
+  You can login as charix using password: gloria
+  You can login as charix using password: holiday
+  You can login as charix using password: chandler
+  You can login as charix using password: booger
+  You can login as charix using password: element
+  You can login as charix using password: angelo
+  You can login as charix using password: allison
+  You can login as charix using password: action
+  You can login as charix using password: 99999999
+  You can login as charix using password: target
+  You can login as charix using password: snowman
+  You can login as charix using password: miguel
+  You can login as charix using password: marley
+  You can login as charix using password: lorraine
+  You can login as charix using password: howard
+  You can login as charix using password: harmony
+  You can login as charix using password: children
+  You can login as charix using password: celtic
+  You can login as charix using password: beatrice
+  You can login as charix using password: airborne
+  You can login as charix using password: wicked
+  You can login as charix using password: voyager
+  You can login as charix using password: valentin
+  You can login as charix using password: thx1138
+  You can login as charix using password: thumper
+  You can login as charix using password: samurai
+  You can login as charix using password: moonlight
+  You can login as charix using password: mmmmmm
+  You can login as charix using password: karate
+  You can login as charix using password: kamikaze
+  You can login as charix using password: jamaica
+  You can login as charix using password: bubble
+  You can login as charix using password: emerald
+  You can login as charix using password: brooke
+  You can login as charix using password: zombie
+  You can login as charix using password: strawberry
+  You can login as charix using password: software
+  You can login as charix using password: spooky
+  You can login as charix using password: simpson
+  You can login as charix using password: service
+  You can login as charix using password: sarah
+  You can login as charix using password: racing
+  You can login as charix using password: qazxsw
+  You can login as charix using password: philips
+  You can login as charix using password: oscar
+  You can login as charix using password: minnie
+  You can login as charix using password: lalala
+  You can login as charix using password: ironman
+  You can login as charix using password: goddess
+  You can login as charix using password: extreme
+  You can login as charix using password: empire
+  You can login as charix using password: elaine
+  You can login as charix using password: drummer
+  You can login as charix using password: classic
+  You can login as charix using password: carrie
+  You can login as charix using password: berlin
+  You can login as charix using password: asdfg
+  You can login as charix using password: 22222222
+  You can login as charix using password: valerie
+  You can login as charix using password: tintin
+  You can login as charix using password: therock
+  You can login as charix using password: sunday
+  You can login as charix using password: skywalker
+  You can login as charix using password: salvador
+  You can login as charix using password: pegasus
+  You can login as charix using password: packers
+  You can login as charix using password: panthers
+  You can login as charix using password: network
+  You can login as charix using password: mission
+  You can login as charix using password: mark
+  You can login as charix using password: legolas
+  You can login as charix using password: lacrosse
+  You can login as charix using password: kitty
+  You can login as charix using password: kelly
+  You can login as charix using password: jester
+  You can login as charix using password: italia
+  You can login as charix using password: hiphop
+  You can login as charix using password: freeman
+  You can login as charix using password: charlie1
+  You can login as charix using password: cardinal
+  You can login as charix using password: bbbbbb
+  You can login as charix using password: bluemoon
+  You can login as charix using password: bastard
+  You can login as charix using password: alyssa
+  You can login as charix using password: 0123456789
+  You can login as charix using password: zeppelin
+  You can login as charix using password: tinker
+  You can login as charix using password: surfer
+  You can login as charix using password: smile
+  You can login as charix using password: rockstar
+  You can login as charix using password: operator
+  You can login as charix using password: naruto
+  You can login as charix using password: freddie
+  You can login as charix using password: dragonfly
+  You can login as charix using password: dickhead
+  You can login as charix using password: connor
+  You can login as charix using password: anaconda
+  You can login as charix using password: amsterdam
+  You can login as charix using password: alfred
+  You can login as charix using password: a12345
+  You can login as charix using password: 789456123
+  You can login as charix using password: 77777777
+  You can login as charix using password: trooper
+  You can login as charix using password: skittles
+  You can login as charix using password: shalom
+  You can login as charix using password: raptor
+  You can login as charix using password: pioneer
+  You can login as charix using password: personal
+  You can login as charix using password: ncc1701
+  You can login as charix using password: nascar
+  You can login as charix using password: music
+  You can login as charix using password: kristen
+  You can login as charix using password: global
+  You can login as charix using password: kingkong
+  You can login as charix using password: geronimo
+  You can login as charix using password: country
+  You can login as charix using password: germany
+  You can login as charix using password: christmas
+  You can login as charix using password: bernard
+  You can login as charix using password: benson
+  You can login as charix using password: wrestling
+  You can login as charix using password: warren
+  You can login as charix using password: techno
+  You can login as charix using password: sunrise
+  You can login as charix using password: stefan
+  You can login as charix using password: sister
+  You can login as charix using password: russell
+  You can login as charix using password: savage
+  You can login as charix using password: robinson
+  You can login as charix using password: oracle
+  You can login as charix using password: millie
+  You can login as charix using password: maddog
+  You can login as charix using password: lightning
+  You can login as charix using password: kingston
+  You can login as charix using password: kennedy
+  You can login as charix using password: hannibal
+  You can login as charix using password: download
+  You can login as charix using password: garcia
+  You can login as charix using password: dollar
+  You can login as charix using password: darkstar
+  You can login as charix using password: brutus
+  You can login as charix using password: bobby
+  You can login as charix using password: autumn
+  You can login as charix using password: vanilla
+  You can login as charix using password: webster
+  You can login as charix using password: undertaker
+  You can login as charix using password: tinkerbell
+  You can login as charix using password: sweetpea
+  You can login as charix using password: ssssss
+  You can login as charix using password: softball
+  You can login as charix using password: rafael
+  You can login as charix using password: pa55word
+  You can login as charix using password: panasonic
+  You can login as charix using password: keyboard
+  You can login as charix using password: isabel
+  You can login as charix using password: hector
+  You can login as charix using password: fisher
+  You can login as charix using password: dominic
+  You can login as charix using password: darkside
+  You can login as charix using password: cleopatra
+  You can login as charix using password: blue
+  You can login as charix using password: assassin
+  You can login as charix using password: amelia
+  You can login as charix using password: vladimir
+  You can login as charix using password: roland
+  You can login as charix using password: nigger
+  You can login as charix using password: national
+  You can login as charix using password: molly
+  You can login as charix using password: monique
+  You can login as charix using password: godfather
+  You can login as charix using password: matthew1
+  You can login as charix using password: frank
+  You can login as charix using password: curtis
+  You can login as charix using password: change
+  You can login as charix using password: central
+  You can login as charix using password: cartman
+  You can login as charix using password: boogie
+  You can login as charix using password: archie
+  You can login as charix using password: brothers
+  You can login as charix using password: warriors
+  You can login as charix using password: universe
+  You can login as charix using password: turkey
+  You can login as charix using password: topgun
+  You can login as charix using password: solomon
+  You can login as charix using password: sakura
+  You can login as charix using password: sherry
+  You can login as charix using password: rush2112
+  You can login as charix using password: qwaszx
+  You can login as charix using password: office
+  You can login as charix using password: mushroom
+  You can login as charix using password: marion
+  You can login as charix using password: monika
+  You can login as charix using password: john
+  You can login as charix using password: lorenzo
+  You can login as charix using password: herman
+  You can login as charix using password: connect
+  You can login as charix using password: chopper
+  You can login as charix using password: burton
+  You can login as charix using password: blondie
+  You can login as charix using password: bitch
+  You can login as charix using password: bigdaddy
+  You can login as charix using password: amber
+  You can login as charix using password: 456789
+  You can login as charix using password: 1a2b3c4d
+  You can login as charix using password: ultimate
+  You can login as charix using password: tanner
+  You can login as charix using password: tequila
+  You can login as charix using password: sweetie
+  You can login as charix using password: scott
+  You can login as charix using password: rocky
+  You can login as charix using password: popeye
+  You can login as charix using password: peterpan
+  You can login as charix using password: loverboy
+  You can login as charix using password: packard
+  You can login as charix using password: leonard
+  You can login as charix using password: jimmy
+  You can login as charix using password: harry
+  You can login as charix using password: griffin
+  You can login as charix using password: design
+  You can login as charix using password: buddha
+  You can login as charix using password: 1
+  You can login as charix using password: wallace
+  You can login as charix using password: truelove
+  You can login as charix using password: trombone
+  You can login as charix using password: toronto
+  You can login as charix using password: tarzan
+  You can login as charix using password: shirley
+  You can login as charix using password: sammy
+  You can login as charix using password: pebbles
+  You can login as charix using password: natalia
+  You can login as charix using password: marcel
+  You can login as charix using password: malcolm
+  You can login as charix using password: madeline
+  You can login as charix using password: gilbert
+  You can login as charix using password: jerome
+  You can login as charix using password: dingdong
+  You can login as charix using password: gangster
+  You can login as charix using password: buddy
+  You can login as charix using password: catalina
+  You can login as charix using password: blazer
+  You can login as charix using password: billy
+  You can login as charix using password: bianca
+  You can login as charix using password: alejandro
+  You can login as charix using password: 54321
+  You can login as charix using password: 252525
+  You can login as charix using password: 111222
+  You can login as charix using password: 0000
+  You can login as charix using password: sucker
+  You can login as charix using password: water
+  You can login as charix using password: rooster
+  You can login as charix using password: potato
+  You can login as charix using password: norton
+  You can login as charix using password: lucky1
+  You can login as charix using password: loving
+  You can login as charix using password: lol123
+  You can login as charix using password: ladybug
+  You can login as charix using password: kittycat
+  You can login as charix using password: fuck
+  You can login as charix using password: forget
+  You can login as charix using password: flipper
+  You can login as charix using password: digger
+  You can login as charix using password: fireman
+  You can login as charix using password: baxter
+  You can login as charix using password: bonjour
+  You can login as charix using password: audrey
+  You can login as charix using password: aquarius
+  You can login as charix using password: 1111111111
+  You can login as charix using password: pppppp
+  You can login as charix using password: planet
+  You can login as charix using password: pencil
+  You can login as charix using password: patriots
+  You can login as charix using password: oxford
+  You can login as charix using password: million
+  You can login as charix using password: martha
+  You can login as charix using password: lindsay
+  You can login as charix using password: laura
+  You can login as charix using password: ihateyou
+  You can login as charix using password: jamesbond
+  You can login as charix using password: goober
+  You can login as charix using password: giants
+  You can login as charix using password: garden
+  You can login as charix using password: diana
+  You can login as charix using password: cecilia
+  You can login as charix using password: brazil
+  You can login as charix using password: blessing
+  You can login as charix using password: bishop
+  You can login as charix using password: bigdog
+  You can login as charix using password: airplane
+  You can login as charix using password: Password1
+  You can login as charix using password: tomtom
+  You can login as charix using password: stingray
+  You can login as charix using password: psycho
+  You can login as charix using password: pickle
+  You can login as charix using password: outlaw
+  You can login as charix using password: number1
+  You can login as charix using password: mylove
+  You can login as charix using password: maurice
+  You can login as charix using password: madman
+  You can login as charix using password: maddie
+  You can login as charix using password: lester
+  You can login as charix using password: hendrix
+  You can login as charix using password: hellfire
+  You can login as charix using password: happy1
+  You can login as charix using password: guardian
+  You can login as charix using password: flamingo
+  You can login as charix using password: enter
+  You can login as charix using password: chichi
+  You can login as charix using password: 0987654321
+  You can login as charix using password: twister
+  You can login as charix using password: western
+  You can login as charix using password: trumpet
+  You can login as charix using password: trixie
+  You can login as charix using password: socrates
+  You can login as charix using password: singer
+  You can login as charix using password: sergio
+  You can login as charix using password: sandman
+  You can login as charix using password: richmond
+  You can login as charix using password: piglet
+  You can login as charix using password: pass123
+  You can login as charix using password: osiris
+  You can login as charix using password: monkey1
+  You can login as charix using password: martina
+  You can login as charix using password: justine
+  You can login as charix using password: english
+  You can login as charix using password: electric
+  You can login as charix using password: church
+  You can login as charix using password: castle
+  You can login as charix using password: caesar
+  You can login as charix using password: birdie
+  You can login as charix using password: aurora
+  You can login as charix using password: artist
+  You can login as charix using password: amadeus
+  You can login as charix using password: alberto
+  You can login as charix using password: 246810
+  You can login as charix using password: whitney
+  You can login as charix using password: thankyou
+  You can login as charix using password: sterling
+  You can login as charix using password: star
+  You can login as charix using password: pussy
+  You can login as charix using password: ronnie
+  You can login as charix using password: picasso
+  You can login as charix using password: printer
+  You can login as charix using password: morpheus
+  You can login as charix using password: munchkin
+  You can login as charix using password: kaiser
+  You can login as charix using password: julius
+  You can login as charix using password: madmax
+  You can login as charix using password: imperial
+  You can login as charix using password: happiness
+  You can login as charix using password: goodluck
+  You can login as charix using password: counter
+  You can login as charix using password: columbia
+  You can login as charix using password: campbell
+  You can login as charix using password: blackjack
+  You can login as charix using password: blessed
+  You can login as charix using password: 999999999
+  You can login as charix using password: alpha
+  You can login as charix using password: wombat
+  You can login as charix using password: 142536
+  You can login as charix using password: wildcat
+  You can login as charix using password: trevor
+  You can login as charix using password: telephone
+  You can login as charix using password: smiley
+  You can login as charix using password: saints
+  You can login as charix using password: pretty
+  You can login as charix using password: oblivion
+  You can login as charix using password: newcastle
+  You can login as charix using password: mariana
+  You can login as charix using password: janice
+  You can login as charix using password: israel
+  You can login as charix using password: imagine
+  You can login as charix using password: freedom1
+  You can login as charix using password: detroit
+  You can login as charix using password: deedee
+  You can login as charix using password: darren
+  You can login as charix using password: catfish
+  You can login as charix using password: adriana
+  You can login as charix using password: washington
+  You can login as charix using password: warlock
+  You can login as charix using password: valentina
+  You can login as charix using password: valencia
+  You can login as charix using password: thebest
+  You can login as charix using password: spectrum
+  You can login as charix using password: sheila
+  You can login as charix using password: skater
+  You can login as charix using password: shaggy
+  You can login as charix using password: poiuyt
+  You can login as charix using password: member
+  You can login as charix using password: jessica1
+  You can login as charix using password: jeremiah
+  You can login as charix using password: jack
+  You can login as charix using password: insane
+  You can login as charix using password: iloveu
+  You can login as charix using password: handsome
+  You can login as charix using password: goldberg
+  You can login as charix using password: gabriela
+  You can login as charix using password: elijah
+  You can login as charix using password: damien
+  You can login as charix using password: buttons
+  You can login as charix using password: daisy
+  You can login as charix using password: bigboy
+  You can login as charix using password: blabla
+  You can login as charix using password: apache
+  You can login as charix using password: anthony1
+  You can login as charix using password: xxxxxxxx
+  You can login as charix using password: a1234567
+  You can login as charix using password: toshiba
+  You can login as charix using password: sailor
+  You can login as charix using password: tommy
+  You can login as charix using password: peekaboo
+  You can login as charix using password: motherfucker
+  You can login as charix using password: montreal
+  You can login as charix using password: manuel
+  You can login as charix using password: madrid
+  You can login as charix using password: kramer
+  You can login as charix using password: katherine
+  You can login as charix using password: kangaroo
+  You can login as charix using password: jenny
+  You can login as charix using password: immortal
+  You can login as charix using password: harris
+  You can login as charix using password: hamlet
+  You can login as charix using password: gracie
+  You can login as charix using password: fucking
+  You can login as charix using password: firefly
+  You can login as charix using password: chocolat
+  You can login as charix using password: bentley
+  You can login as charix using password: account
+  You can login as charix using password: 321321
+  You can login as charix using password: 2222
+  You can login as charix using password: 1a2b3c
+  You can login as charix using password: thompson
+  You can login as charix using password: theman
+  You can login as charix using password: strike
+  You can login as charix using password: stacey
+  You can login as charix using password: science
+  You can login as charix using password: running
+  You can login as charix using password: research
+  You can login as charix using password: polaris
+  You can login as charix using password: oklahoma
+  You can login as charix using password: mariposa
+  You can login as charix using password: marie
+  You can login as charix using password: leader
+  You can login as charix using password: julia
+  You can login as charix using password: island
+  You can login as charix using password: idontknow
+  You can login as charix using password: hitman
+  You can login as charix using password: german
+  You can login as charix using password: felipe
+  You can login as charix using password: fatcat
+  You can login as charix using password: fatboy
+  You can login as charix using password: defender
+  You can login as charix using password: applepie
+  You can login as charix using password: annette
+  You can login as charix using password: 010203
+  You can login as charix using password: watson
+  You can login as charix using password: travel
+  You can login as charix using password: sublime
+  You can login as charix using password: stewart
+  You can login as charix using password: steve
+  You can login as charix using password: squirrel
+  You can login as charix using password: simon
+  You can login as charix using password: sexy
+  You can login as charix using password: pineapple
+  You can login as charix using password: phoebe
+  You can login as charix using password: paris
+  You can login as charix using password: panzer
+  You can login as charix using password: nadine
+  You can login as charix using password: master1
+  You can login as charix using password: mario
+  You can login as charix using password: kelsey
+  You can login as charix using password: joker
+  You can login as charix using password: hongkong
+  You can login as charix using password: gorilla
+  You can login as charix using password: dinosaur
+  You can login as charix using password: connie
+  You can login as charix using password: bowling
+  You can login as charix using password: bambam
+  You can login as charix using password: babydoll
+  You can login as charix using password: aragorn
+  You can login as charix using password: andreas
+  You can login as charix using password: 456123
+  You can login as charix using password: 151515
+  You can login as charix using password: wolves
+  You can login as charix using password: wolfgang
+  You can login as charix using password: semperfi
+  You can login as charix using password: turner
+  You can login as charix using password: reaper
+  You can login as charix using password: patience
+  You can login as charix using password: marilyn
+  You can login as charix using password: fletcher
+  You can login as charix using password: drpepper
+  You can login as charix using password: dorothy
+  You can login as charix using password: creation
+  You can login as charix using password: brian
+  You can login as charix using password: bluesky
+  You can login as charix using password: andre
+  You can login as charix using password: yankee
+  You can login as charix using password: sweet
+  You can login as charix using password: wordpass
+  You can login as charix using password: spunky
+  You can login as charix using password: sidney
+  You can login as charix using password: serena
+  You can login as charix using password: preston
+  You can login as charix using password: pauline
+  You can login as charix using password: passwort
+  You can login as charix using password: original
+  You can login as charix using password: nightmare
+  You can login as charix using password: miriam
+  You can login as charix using password: martinez
+  You can login as charix using password: labrador
+  You can login as charix using password: kristin
+  You can login as charix using password: kissme
+  You can login as charix using password: henry
+  You can login as charix using password: gerald
+  You can login as charix using password: garrett
+  You can login as charix using password: flash
+  You can login as charix using password: excalibur
+  You can login as charix using password: discovery
+  You can login as charix using password: dddddd
+  You can login as charix using password: danny
+  You can login as charix using password: collins
+  You can login as charix using password: casino
+  You can login as charix using password: broncos
+  You can login as charix using password: brendan
+  You can login as charix using password: brasil
+  You can login as charix using password: apple123
+  You can login as charix using password: yvonne
+  You can login as charix using password: wonder
+  You can login as charix using password: window
+  You can login as charix using password: tomato
+  You can login as charix using password: sundance
+  You can login as charix using password: sasha
+  You can login as charix using password: reggie
+  You can login as charix using password: poison
+  You can login as charix using password: redwings
+  You can login as charix using password: mypassword
+  You can login as charix using password: monopoly
+  You can login as charix using password: mariah
+  You can login as charix using password: margarita
+  You can login as charix using password: lionking
+  You can login as charix using password: king
+  You can login as charix using password: football1
+  You can login as charix using password: director
+  You can login as charix using password: darling
+  You can login as charix using password: bubba
+  You can login as charix using password: biscuit
+  You can login as charix using password: 44444444
+  You can login as charix using password: wisdom
+  You can login as charix using password: vivian
+  You can login as charix using password: sylvester
+  You can login as charix using password: virgin
+  You can login as charix using password: street
+  You can login as charix using password: stones
+  You can login as charix using password: sprite
+  You can login as charix using password: spike
+  You can login as charix using password: single
+  You can login as charix using password: sherlock
+  You can login as charix using password: sandy
+  You can login as charix using password: rocker
+  You can login as charix using password: robin
+  You can login as charix using password: matt
+  You can login as charix using password: marianne
+  You can login as charix using password: linda
+  You can login as charix using password: lancelot
+  You can login as charix using password: jeanette
+  You can login as charix using password: hobbes
+  You can login as charix using password: fred
+  You can login as charix using password: ferret
+  You can login as charix using password: dodger
+  You can login as charix using password: cotton
+  You can login as charix using password: corona
+  You can login as charix using password: clayton
+  You can login as charix using password: celine
+  You can login as charix using password: cannabis
+  You can login as charix using password: andromeda
+  You can login as charix using password: bella
+  You can login as charix using password: 7654321
+  You can login as charix using password: 4444
+  You can login as charix using password: werewolf
+  You can login as charix using password: starcraft
+  You can login as charix using password: sampson
+  You can login as charix using password: redrum
+  You can login as charix using password: pyramid
+  You can login as charix using password: prodigy
+  You can login as charix using password: paul
+  You can login as charix using password: michel
+  You can login as charix using password: martini
+  You can login as charix using password: marathon
+  You can login as charix using password: longhorn
+  You can login as charix using password: leopard
+  You can login as charix using password: judith
+  You can login as charix using password: joanne
+  You can login as charix using password: jesus1
+  You can login as charix using password: inferno
+  You can login as charix using password: holly
+  You can login as charix using password: harold
+  You can login as charix using password: happy123
+  You can login as charix using password: esther
+  You can login as charix using password: dudley
+  You can login as charix using password: dragon1
+  You can login as charix using password: darwin
+  You can login as charix using password: celeste
+  You can login as charix using password: clinton
+  You can login as charix using password: brucelee
+  You can login as charix using password: catdog
+  You can login as charix using password: argentina
+  You can login as charix using password: alpine
+  You can login as charix using password: 147852369
+  You can login as charix using password: wrangler
+  You can login as charix using password: william1
+  You can login as charix using password: vikings
+  You can login as charix using password: trigger
+  You can login as charix using password: stranger
+  You can login as charix using password: silvia
+  You can login as charix using password: shotgun
+  You can login as charix using password: scarlett
+  You can login as charix using password: scarlet
+  You can login as charix using password: redhead
+  You can login as charix using password: raider
+  You can login as charix using password: qweasdzxc
+  You can login as charix using password: playstation
+  You can login as charix using password: mystery
+  You can login as charix using password: morrison
+  You can login as charix using password: honda
+  You can login as charix using password: fantasia
+  You can login as charix using password: february
+  You can login as charix using password: designer
+  You can login as charix using password: coyote
+  You can login as charix using password: cool
+  You can login as charix using password: bulldogs
+  You can login as charix using password: bernie
+  You can login as charix using password: baby
+  You can login as charix using password: angel1
+  You can login as charix using password: asdfghj
+  You can login as charix using password: adam
+  You can login as charix using password: always
+  You can login as charix using password: 202020
+  You can login as charix using password: wanker
+  You can login as charix using password: sullivan
+  You can login as charix using password: stealth
+  You can login as charix using password: skeeter
+  You can login as charix using password: saturday
+  You can login as charix using password: rodney
+  You can login as charix using password: prelude
+  You can login as charix using password: pingpong
+  You can login as charix using password: phillip
+  You can login as charix using password: peewee
+  You can login as charix using password: peanuts
+  You can login as charix using password: peace
+  You can login as charix using password: nugget
+  You can login as charix using password: newport
+  You can login as charix using password: myself
+  You can login as charix using password: mouse
+  You can login as charix using password: memphis
+  You can login as charix using password: lover
+  You can login as charix using password: lancer
+  You can login as charix using password: kristine
+  You can login as charix using password: james1
+  You can login as charix using password: hobbit
+  You can login as charix using password: halloween
+  You can login as charix using password: fuckyou1
+  You can login as charix using password: fearless
+  You can login as charix using password: finger
+  You can login as charix using password: dodgers
+  You can login as charix using password: delete
+  You can login as charix using password: cougar
+  You can login as charix using password: charmed
+  You can login as charix using password: caitlin
+  You can login as charix using password: cassandra
+  You can login as charix using password: bismillah
+  You can login as charix using password: believe
+  You can login as charix using password: alice
+  You can login as charix using password: airforce
+  You can login as charix using password: 7777
+  You can login as charix using password: viper
+  You can login as charix using password: theodore
+  You can login as charix using password: tony
+  You can login as charix using password: sylvia
+  You can login as charix using password: suzanne
+  You can login as charix using password: starfish
+  You can login as charix using password: sparkle
+  You can login as charix using password: samsam
+  You can login as charix using password: server
+  You can login as charix using password: public
+  You can login as charix using password: qweqwe
+  You can login as charix using password: pass1234
+  You can login as charix using password: neptune
+  You can login as charix using password: marian
+  You can login as charix using password: kkkkkk
+  You can login as charix using password: krishna
+  You can login as charix using password: jungle
+  You can login as charix using password: bitches
+  You can login as charix using password: cinnamon
+  You can login as charix using password: trojan
+  You can login as charix using password: 741852
+  You can login as charix using password: theresa
+  You can login as charix using password: sweetheart
+  You can login as charix using password: speaker
+  You can login as charix using password: salmon
+  You can login as charix using password: powers
+  You can login as charix using password: overlord
+  You can login as charix using password: pizza
+  You can login as charix using password: michaela
+  You can login as charix using password: masters
+  You can login as charix using password: meredith
+  You can login as charix using password: lindsey
+  You can login as charix using password: history
+  You can login as charix using password: farmer
+  You can login as charix using password: express
+  You can login as charix using password: escape
+  You can login as charix using password: cuddles
+  You can login as charix using password: carson
+  You can login as charix using password: candy
+  You can login as charix using password: buttercup
+  You can login as charix using password: brownie
+  You can login as charix using password: broken
+  You can login as charix using password: abc12345
+  You can login as charix using password: Passw0rd
+  You can login as charix using password: aardvark
+  You can login as charix using password: 141414
+  You can login as charix using password: 124578
+  You can login as charix using password: 123789
+  You can login as charix using password: 12345678910
+  You can login as charix using password: 00000
+  You can login as charix using password: universal
+  You can login as charix using password: trinidad
+  You can login as charix using password: tobias
+  You can login as charix using password: thursday
+  You can login as charix using password: surfing
+  You can login as charix using password: stuart
+  You can login as charix using password: stinky
+  You can login as charix using password: standard
+  You can login as charix using password: roller
+  You can login as charix using password: porter
+  You can login as charix using password: pearljam
+  You can login as charix using password: mobile
+  You can login as charix using password: mirage
+  You can login as charix using password: markus
+  You can login as charix using password: loulou
+  You can login as charix using password: jjjjjj
+  You can login as charix using password: herbert
+  You can login as charix using password: grace
+  You can login as charix using password: goldie
+  You can login as charix using password: frosty
+  You can login as charix using password: fighter
+  You can login as charix using password: fatima
+  You can login as charix using password: eagle
+  You can login as charix using password: evelyn
+  You can login as charix using password: crimson
+  You can login as charix using password: desire
+  You can login as charix using password: cheryl
+  You can login as charix using password: coconut
+  You can login as charix using password: anonymous
+  You can login as charix using password: beavis
+  You can login as charix using password: andres
+  You can login as charix using password: africa
+  You can login as charix using password: 134679
+  You can login as charix using password: whiskey
+  You can login as charix using password: velvet
+  You can login as charix using password: stormy
+  You can login as charix using password: springer
+  You can login as charix using password: soldier
+  You can login as charix using password: ragnarok
+  You can login as charix using password: portland
+  You can login as charix using password: oranges
+  You can login as charix using password: nobody
+  You can login as charix using password: nathalie
+  You can login as charix using password: malibu
+  You can login as charix using password: looking
+  You can login as charix using password: lemonade
+  You can login as charix using password: hitler
+  You can login as charix using password: lavender
+  You can login as charix using password: gotohell
+  You can login as charix using password: hearts
+  You can login as charix using password: gladiator
+  You can login as charix using password: gggggg
+  You can login as charix using password: freckles
+  You can login as charix using password: david1
+  You can login as charix using password: fashion
+  You can login as charix using password: crusader
+  You can login as charix using password: cosmos
+  You can login as charix using password: commando
+  You can login as charix using password: clover
+  You can login as charix using password: clarence
+  You can login as charix using password: cadillac
+  You can login as charix using password: center
+  You can login as charix using password: brooks
+  You can login as charix using password: bronco
+  You can login as charix using password: bonita
+  You can login as charix using password: babylon
+  You can login as charix using password: alexandre
+  You can login as charix using password: archer
+  You can login as charix using password: 123654789
+  You can login as charix using password: verbatim
+  You can login as charix using password: umbrella
+  You can login as charix using password: thanks
+  You can login as charix using password: sunny
+  You can login as charix using password: stalker
+  You can login as charix using password: splinter
+  You can login as charix using password: sparrow
+  You can login as charix using password: selena
+  You can login as charix using password: russia
+  You can login as charix using password: roberts
+  You can login as charix using password: register
+  You can login as charix using password: qwert123
+  You can login as charix using password: penguins
+  You can login as charix using password: panda
+  You can login as charix using password: ncc1701d
+  You can login as charix using password: miracle
+  You can login as charix using password: lonely
+  You can login as charix using password: melvin
+  You can login as charix using password: lexmark
+  You can login as charix using password: kitkat
+  You can login as charix using password: julie
+  You can login as charix using password: graham
+  You can login as charix using password: frances
+  You can login as charix using password: estrella
+  You can login as charix using password: downtown
+  You can login as charix using password: doodle
+  You can login as charix using password: deborah
+  You can login as charix using password: cooler
+  You can login as charix using password: colombia
+  You can login as charix using password: chemistry
+  You can login as charix using password: cactus
+  You can login as charix using password: bollocks
+  You can login as charix using password: bridge
+  You can login as charix using password: anastasia
+  You can login as charix using password: beetle
+  You can login as charix using password: 69696969
+  You can login as charix using password: 741852963
+  You can login as charix using password: sweets
+  You can login as charix using password: unique
+  You can login as charix using password: station
+  You can login as charix using password: showtime
+  You can login as charix using password: sheena
+  You can login as charix using password: santos
+  You can login as charix using password: rock
+  You can login as charix using password: revolution
+  You can login as charix using password: reading
+  You can login as charix using password: qwerasdf
+  You can login as charix using password: password2
+  You can login as charix using password: mongoose
+  You can login as charix using password: marlene
+  You can login as charix using password: maiden
+  You can login as charix using password: machine
+  You can login as charix using password: juliet
+  You can login as charix using password: illusion
+  You can login as charix using password: hayden
+  You can login as charix using password: fabian
+  You can login as charix using password: derrick
+  You can login as charix using password: crazy
+  You can login as charix using password: cooldude
+  You can login as charix using password: chipper
+  You can login as charix using password: blonde
+  You can login as charix using password: bomber
+  You can login as charix using password: bigred
+  You can login as charix using password: amazing
+  You can login as charix using password: aliens
+  You can login as charix using password: abracadabra
+  You can login as charix using password: wwwwww
+  You can login as charix using password: treasure
+  You can login as charix using password: 123qweasd
+  You can login as charix using password: timber
+  You can login as charix using password: shelly
+  You can login as charix using password: smith
+  You can login as charix using password: sesame
+  You can login as charix using password: pirates
+  You can login as charix using password: pinkfloyd
+  You can login as charix using password: passwords
+  You can login as charix using password: nature
+  You can login as charix using password: marlin
+  You can login as charix using password: marines
+  You can login as charix using password: linkinpark
+  You can login as charix using password: larissa
+  You can login as charix using password: laptop
+  You can login as charix using password: gambit
+  You can login as charix using password: hotrod
+  You can login as charix using password: elvis
+  You can login as charix using password: education
+  You can login as charix using password: dustin
+  You can login as charix using password: damian
+  You can login as charix using password: devils
+  You can login as charix using password: braves
+  You can login as charix using password: christy
+  You can login as charix using password: baller
+  You can login as charix using password: white
+  You can login as charix using password: anarchy
+  You can login as charix using password: underground
+  You can login as charix using password: valeria
+  You can login as charix using password: strong
+  You can login as charix using password: poopoo
+  You can login as charix using password: monalisa
+  You can login as charix using password: memory
+  You can login as charix using password: lizzie
+  You can login as charix using password: keeper
+  You can login as charix using password: justdoit
+  You can login as charix using password: house
+  You can login as charix using password: homer
+  You can login as charix using password: gerard
+  You can login as charix using password: ericsson
+  You can login as charix using password: emily
+  You can login as charix using password: divine
+  You can login as charix using password: colleen
+  You can login as charix using password: chelsea1
+  You can login as charix using password: cccccc
+  You can login as charix using password: camera
+  You can login as charix using password: bonbon
+  You can login as charix using password: billie
+  You can login as charix using password: bigfoot
+  You can login as charix using password: badass
+  You can login as charix using password: asterix
+  You can login as charix using password: anna
+  You can login as charix using password: andy
+  You can login as charix using password: animals
+  You can login as charix using password: achilles
+  You can login as charix using password: violin
+  You can login as charix using password: veronika
+  You can login as charix using password: a1s2d3f4
+  You can login as charix using password: vegeta
+  You can login as charix using password: tyler
+  You can login as charix using password: test1234
+  You can login as charix using password: teddybear
+  You can login as charix using password: tatiana
+  You can login as charix using password: sporting
+  You can login as charix using password: spartan
+  You can login as charix using password: shelley
+  You can login as charix using password: sharks
+  You can login as charix using password: respect
+  You can login as charix using password: raven
+  You can login as charix using password: pentium
+  You can login as charix using password: papillon
+  You can login as charix using password: nevermind
+  You can login as charix using password: marketing
+  You can login as charix using password: manson
+  You can login as charix using password: madness
+  You can login as charix using password: juliette
+  You can login as charix using password: jericho
+  You can login as charix using password: gabrielle
+  You can login as charix using password: fuckyou2
+  You can login as charix using password: forgot
+  You can login as charix using password: firewall
+  You can login as charix using password: faith
+  You can login as charix using password: evolution
+  You can login as charix using password: eric
+  You can login as charix using password: eduardo
+  You can login as charix using password: dagger
+  You can login as charix using password: cristian
+  You can login as charix using password: cavalier
+  You can login as charix using password: canadian
+  You can login as charix using password: bruno
+  You can login as charix using password: blowjob
+  You can login as charix using password: blackie
+  You can login as charix using password: beagle
+  You can login as charix using password: admin123
+  You can login as charix using password: 010101
+  You can login as charix using password: together
+  You can login as charix using password: spongebob
+  You can login as charix using password: snakes
+  You can login as charix using password: sherman
+  You can login as charix using password: reddog
+  You can login as charix using password: reality
+  You can login as charix using password: ramona
+  You can login as charix using password: pedro
+  You can login as charix using password: puppies
+  You can login as charix using password: pacific
+  You can login as charix using password: omega
+  You can login as charix using password: pa55w0rd
+  You can login as charix using password: noodle
+  You can login as charix using password: murray
+  You can login as charix using password: mollie
+  You can login as charix using password: mister
+  You can login as charix using password: halflife
+  You can login as charix using password: franco
+  You can login as charix using password: foster
+  You can login as charix using password: formula1
+  You can login as charix using password: felix
+  You can login as charix using password: dragonball
+  You can login as charix using password: desiree
+  You can login as charix using password: default
+  You can login as charix using password: chris1
+  You can login as charix using password: bunny
+  You can login as charix using password: bobcat
+  You can login as charix using password: asdf123
+  You can login as charix using password: 951753
+  You can login as charix using password: 5555
+  You can login as charix using password: 242424
+  You can login as charix using password: thirteen
+  You can login as charix using password: tattoo
+  You can login as charix using password: stonecold
+  You can login as charix using password: stinger
+  You can login as charix using password: shiloh
+  You can login as charix using password: seattle
+  You can login as charix using password: santana
+  You can login as charix using password: roger
+  You can login as charix using password: roberta
+  You can login as charix using password: rastaman
+  You can login as charix using password: pickles
+  You can login as charix using password: orion
+  You can login as charix using password: mustang1
+  You can login as charix using password: felicia
+  You can login as charix using password: dracula
+  You can login as charix using password: doggie
+  You can login as charix using password: cucumber
+  You can login as charix using password: cassidy
+  You can login as charix using password: britney
+  You can login as charix using password: brianna
+  You can login as charix using password: blaster
+  You can login as charix using password: belinda
+  You can login as charix using password: apple1
+  You can login as charix using password: 753951
+  You can login as charix using password: teddy
+  You can login as charix using password: stevie
+  You can login as charix using password: soleil
+  You can login as charix using password: striker
+  You can login as charix using password: skateboard
+  You can login as charix using password: snake
+  You can login as charix using password: sheridan
+  You can login as charix using password: sexsex
+  You can login as charix using password: roxanne
+  You can login as charix using password: redman
+  You can login as charix using password: qqqqqqqq
+  You can login as charix using password: panama
+  You can login as charix using password: punisher
+  You can login as charix using password: paladin
+  You can login as charix using password: none
+  You can login as charix using password: lovelife
+  You can login as charix using password: lights
+  You can login as charix using password: iverson
+  You can login as charix using password: jerry
+  You can login as charix using password: inside
+  You can login as charix using password: hornet
+  You can login as charix using password: holden
+  You can login as charix using password: groovy
+  You can login as charix using password: gretchen
+  You can login as charix using password: grandma
+  You can login as charix using password: gangsta
+  You can login as charix using password: faster
+  You can login as charix using password: eddie
+  You can login as charix using password: chester1
+  You can login as charix using password: chevelle
+  You can login as charix using password: carrot
+  You can login as charix using password: cannon
+  You can login as charix using password: button
+  You can login as charix using password: administrator
+  You can login as charix using password: a
+  You can login as charix using password: 1212
+  You can login as charix using password: zxc123
+  You can login as charix using password: wireless
+  You can login as charix using password: volleyball
+  You can login as charix using password: vietnam
+  You can login as charix using password: twinkle
+  You can login as charix using password: sandiego
+  You can login as charix using password: terror
+  You can login as charix using password: rose
+  You can login as charix using password: pokemon1
+  You can login as charix using password: parrot
+  You can login as charix using password: picture
+  You can login as charix using password: movies
+  You can login as charix using password: moose
+  You can login as charix using password: mirror
+  You can login as charix using password: milton
+  You can login as charix using password: mayday
+  You can login as charix using password: maestro
+  You can login as charix using password: lollypop
+  You can login as charix using password: katana
+  You can login as charix using password: johanna
+  You can login as charix using password: hunting
+  You can login as charix using password: hudson
+  You can login as charix using password: grizzly
+  You can login as charix using password: gorgeous
+  You can login as charix using password: garbage
+  You can login as charix using password: fish
+  You can login as charix using password: ernest
+  You can login as charix using password: dolores
+  You can login as charix using password: conrad
+  You can login as charix using password: chickens
+  You can login as charix using password: charity
+  You can login as charix using password: casey
+  You can login as charix using password: blueberry
+  You can login as charix using password: blackman
+  You can login as charix using password: blackbird
+  You can login as charix using password: bill
+  You can login as charix using password: beckham
+  You can login as charix using password: battle
+  You can login as charix using password: atlantic
+  You can login as charix using password: wildfire
+  You can login as charix using password: weasel
+  You can login as charix using password: trance
+  You can login as charix using password: waterloo
+  You can login as charix using password: storm
+  You can login as charix using password: singapore
+  You can login as charix using password: shooter
+  You can login as charix using password: rocknroll
+  You can login as charix using password: richie
+  You can login as charix using password: poop
+  You can login as charix using password: mississippi
+  You can login as charix using password: pitbull
+  You can login as charix using password: kisses
+  You can login as charix using password: karen
+  You can login as charix using password: james123
+  You can login as charix using password: juliana
+  You can login as charix using password: iguana
+  You can login as charix using password: homework
+  You can login as charix using password: fire
+  You can login as charix using password: elliot
+  You can login as charix using password: highland
+  You can login as charix using password: eldorado
+  You can login as charix using password: ducati
+  You can login as charix using password: discover
+  You can login as charix using password: computer1
+  You can login as charix using password: buddy1
+  You can login as charix using password: antonia
+  You can login as charix using password: alphabet
+  You can login as charix using password: 159951
+  You can login as charix using password: 123456789a
+  You can login as charix using password: 1123581321
+  You can login as charix using password: zaq1xsw2
+  You can login as charix using password: 0123456
+  You can login as charix using password: webmaster
+  You can login as charix using password: vagina
+  You can login as charix using password: unreal
+  You can login as charix using password: university
+  You can login as charix using password: tropical
+  You can login as charix using password: swimmer
+  You can login as charix using password: sugar
+  You can login as charix using password: southpark
+  You can login as charix using password: silence
+  You can login as charix using password: sammie
+  You can login as charix using password: ravens
+  You can login as charix using password: question
+  You can login as charix using password: presario
+  You can login as charix using password: poiuytrewq
+  You can login as charix using password: palmer
+  You can login as charix using password: notebook
+  You can login as charix using password: newman
+  You can login as charix using password: nebraska
+  You can login as charix using password: manutd
+  You can login as charix using password: lucas
+  You can login as charix using password: hermes
+  You can login as charix using password: gators
+  You can login as charix using password: dave
+  You can login as charix using password: dalton
+  You can login as charix using password: cheetah
+  You can login as charix using password: cedric
+  You can login as charix using password: camilla
+  You can login as charix using password: bullseye
+  You can login as charix using password: bingo
+  You can login as charix using password: bridget
+  You can login as charix using password: ashton
+  You can login as charix using password: 123asd
+  You can login as charix using password: yahoo
+  You can login as charix using password: volume
+  You can login as charix using password: valhalla
+  You can login as charix using password: tomorrow
+  You can login as charix using password: starlight
+  You can login as charix using password: scruffy
+  You can login as charix using password: roscoe
+  You can login as charix using password: richard1
+  You can login as charix using password: positive
+  You can login as charix using password: plymouth
+  You can login as charix using password: pepsi
+  You can login as charix using password: patrick1
+  You can login as charix using password: paradox
+  You can login as charix using password: milano
+  You can login as charix using password: maxima
+  You can login as charix using password: lestat
+  You can login as charix using password: loser
+  You can login as charix using password: gizmo
+  You can login as charix using password: ghetto
+  You can login as charix using password: emerson
+  You can login as charix using password: faithful
+  You can login as charix using password: elliott
+  You can login as charix using password: dominique
+  You can login as charix using password: doberman
+  You can login as charix using password: dillon
+  You can login as charix using password: criminal
+  You can login as charix using password: crackers
+  You can login as charix using password: converse
+  You can login as charix using password: chrissy
+  You can login as charix using password: casanova
+  You can login as charix using password: attitude
+  You can login as charix using password: blowme
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:*:0:0:Charlie &:/root:/bin/csh
+toor:*:0:0:Bourne-again Superuser:/root:
+
+[+] Users with console
+charix:*:1001:1001:charix:/home/charix:/bin/csh
+root:*:0:0:Charlie &:/root:/bin/csh
+
+[+] All users & groups
+uid=0(root) gid=0(wheel) groups=0(wheel),5(operator)
+uid=0(toor) gid=0(wheel) groups=0(wheel)
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+uid=1001(charix) gid=1001(charix) groups=1001(charix)
+uid=160(_ypldap) gid=160(_ypldap) groups=160(_ypldap)
+uid=193(cups) gid=193(cups) groups=193(cups)
+uid=2(operator) gid=5(operator) groups=5(operator)
+uid=22(sshd) gid=22(sshd) groups=22(sshd)
+uid=25(smmsp) gid=25(smmsp) groups=25(smmsp)
+uid=26(mailnull) gid=26(mailnull) groups=26(mailnull)
+uid=3(bin) gid=7(bin) groups=7(bin)
+uid=4(tty) gid=65533(nogroup) groups=65533(nogroup)
+uid=5(kmem) gid=65533(nogroup) groups=65533(nogroup)
+uid=53(bind) gid=53(bind) groups=53(bind)
+uid=556(messagebus) gid=556(messagebus) groups=556(messagebus)
+uid=558(avahi) gid=558(avahi) groups=558(avahi)
+uid=59(unbound) gid=59(unbound) groups=59(unbound)
+uid=601(_tss) gid=601(_tss) groups=601(_tss)
+uid=62(proxy) gid=62(proxy) groups=62(proxy)
+uid=64(_pflogd) gid=64(_pflogd) groups=64(_pflogd)
+uid=65(_dhcp) gid=65(_dhcp) groups=65(_dhcp)
+uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+uid=66(uucp) gid=66(uucp) groups=66(uucp)
+uid=68(pop) gid=6(mail) groups=6(mail)
+uid=7(games) gid=13(games) groups=13(games)
+uid=78(auditdistd) gid=77(audit) groups=77(audit)
+uid=8(news) gid=8(news) groups=8(news)
+uid=80(www) gid=80(www) groups=80(www)
+uid=845(hast) gid=845(hast) groups=845(hast)
+uid=9(man) gid=9(man) groups=9(man)
+
+[+] Login now
+ 6:56PM  up  1:21, 1 users, load averages: 2.17, 0.97, 2.89
+USER       TTY      FROM                                      LOGIN@  IDLE WHAT
+charix     pts/1    10.10.14.6                                6:52PM     - sed s,root,\^[[1;31m&\^[[0m,
+
+[+] Last logons
+shutdown time                              Wed Jan 24 05:04
+root       pts/2    :1.0                   Wed Jan 24 04:42 - shutdown  (00:22)
+root       pts/2    :1.0                   Wed Jan 24 04:40 - 04:42  (00:01)
+root       pts/2    :1                     Wed Jan 24 04:32 - 04:40  (00:08)
+root       pts/2    :1                     Wed Jan 24 04:22 - 04:31  (00:09)
+root       pts/0    192.168.253.133        Wed Jan 24 02:13 - 04:44  (02:30)
+root       ttyv0                           Wed Jan 24 02:08 - shutdown  (02:56)
+boot time                                  Wed Jan 24 02:07
+
+utx.log begins Wed Jan 24 02:07:09 CET 2018
+
+[+] Last time logon each user
+
+[+] Password policy
+/etc/login.defs Not Found
+
+[+] User timers
+ Not Found
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Looking for mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.29 (FreeBSD)
+Server built:   unknown
+
+[+] Looking for PHPCookies
+ Not Found
+
+[+] Looking for Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Looking for Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+
+[+] Looking for supervisord configuration file
+supervisord.conf Not Found
+
+[+] Looking for cesi configuration file
+cesi.conf Not Found
+
+[+] Looking for Rsyncd config file
+rsyncd.conf Not Found
+[+] Looking for Hostapd config file
+[+] Hostapd conf was found
+/usr/share/examples/hostapd/hostapd.conf
+#private_key_passwd=secret passphrase
+# wpa_psk or wpa_passphrase must be set and wpa_key_mgmt must include WPA-PSK.
+# Instead of wpa_psk / wpa_passphrase, wpa_psk_radius might suffice.
+# secret in hex format (64 hex digits), wpa_psk, or as an ASCII passphrase
+# so the PSK changes when ASCII passphrase is used and the SSID is changed.
+# wpa_passphrase (dot11RSNAConfigPSKPassPhrase)
+#wpa_passphrase=secret passphrase
+# Optionally, WPA passphrase can be received from RADIUS authentication server
+# 1 = optional; use default passphrase/psk if RADIUS server does not include
+# default PSK (wpa_psk/wpa_passphrase) will be delivered to Enrollees. Use of
+
+[+] Looking for wifi conns file
+ Not Found
+
+[+] Looking for Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Looking for .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Looking for ldap directories and their hashes
+.vnc Not Found
+
+[+] Looking for .ovpn files and credentials
+.ovpn Not Found
+
+[+] Looking for ssl/ssh files
+PermitRootLogin yes
+  --> Some certificates were found:
+/usr/ports/www/py-hyper/files/files-server.crt
+/etc/mail/certs/cacert.pem
+
+
+Looking inside /etc/ssh/ssh_config for interesting info
+
+[+] Looking for unexpected auth lines in /etc/pam.d/sshd
+auth		sufficient	pam_opie.so		no_warn no_fake_prompts
+auth		requisite	pam_opieaccess.so	no_warn allow_local
+auth		required	pam_unix.so		no_warn try_first_pass
+
+[+] Looking for Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Looking for kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Looking for Kibana yaml
+kibana.yml Not Found
+
+[+] Looking for Knock configuration
+Knock.config Not Found
+
+[+] Looking for logstash files
+/usr/ports/sysutils/logstash
+cat: /usr/ports/sysutils/logstash/conf.d/out*: No such file or directory
+cat: /usr/ports/sysutils/logstash/conf.d/filt*: No such file or directory
+
+[+] Looking for elasticsearch files
+ Not Found
+
+[+] Looking for Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Looking for AD cached hahses
+cached hashes Not Found
+
+[+] Looking for screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Looking for tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Looking for Couchdb directory
+
+[+] Looking for redis.conf
+
+[+] Looking for dovecot files
+dovecot credentials Not Found
+
+[+] Looking for mosquitto.conf
+
+[+] Looking for neo4j auth file
+Found readable /usr/ports/databases/neo4j
+
+[+] Looking Cloud-Init conf file
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/sbin/traceroutett--->tLBL_Traceroute_[2000-11-15]
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/lprtt--->tBSD/OS2.1/FreeBSD2.1.5/NeXTstep4.x/IRIX6.4/SunOS4.1.3/4.1.4(09-1996)
+/usr/bin/attt--->tRTru64_UNIX_4.0g(CVE-2002-1614)
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/attt--->tRTru64_UNIX_4.0g(CVE-2002-1614)rm
+/usr/bin/attt--->tRTru64_UNIX_4.0g(CVE-2002-1614)q
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/chpasstt--->t2Vulns:OpenBSD_6.1_to_OpenBSD
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/passwdtt--->tApple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/logintt--->tIBM_AIX_3.2.5/SGI_IRIX_6.4
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/rshtt--->tApple_Mac_OSX_10.9.5/10.10.5(09-2015)
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/bin/rcptt--->tRedHat_6.2
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/sbin/lpctt--->tS.u.S.E_Linux_5.2
+/usr/libexec/sendmail/sendmailtt--->tSendmail_8.10.1/Sendmail_8.11.x/Linux_Kernel_2.2.x_2.4.0-test1_(SGI_ProPack_1.2/1.3)
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+/usr/bin/lprtt--->tBSD/OS2.1/FreeBSD2.1.5/NeXTstep4.x/IRIX6.4/SunOS4.1.3/4.1.4(09-1996)
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+sed: 1: "s,/abuild-sudo$\|/accto ...": unterminated substitute pattern
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+
+[+] Users with capabilities
+/etc/security/capability.conf Not Found
+
+[+] .sh files in path
+/usr/bin/lesspipe.sh
+/usr/local/bin/gettext.sh
+
+[+] Files (scripts) in /etc/profile.d/
+ls: /etc/profile.d/: No such file or directory
+
+[+] Hashes inside passwd file? ........... # $FreeBSD: releng/11.1/etc/master.passwd 299365 2016-05-10 12:47:36Z bcr $
+#
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read root folder? .............. total 0
+No
+
+[+] Looking for root files in home dirs (limit 20)
+/home
+/home/charix/user.txt
+/home/charix/secret.zip
+
+[+] Looking for others files in folders owned by me
+
+[+] Readable files belonging to root and readable by me but not world readable
+-rw-r-----  1 root  charix  33 Mar 19  2018 /home/charix/user.txt
+-rw-r-----  1 root  charix  166 Mar 19  2018 /home/charix/secret.zip
+
+[+] Modified interesting files in the last 5mins
+/var/log/auth.log
+/var/log/cron
+/var/log/messages
+
+[+] Writable log files (logrotten)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+Writable folder: /usr/share/man/man5/audit.log.5.gz
+Writable folder: /usr/ports/www/asterisk-stat/files/pgsql__patch-call.log.php
+Writable folder: /var/log/utx.log
+Writable folder: /var/log/httpd-error.log
+Writable folder: /var/log/auth.log
+Writable folder: /var/log/debug.log
+Writable folder: /var/log/ppp.log
+Writable folder: /var/log/devd.log
+Writable folder: /var/log/httpd-access.log
+Writable folder: /var/log/Xorg.0.log
+Writable folder: /var/log/vmware-vmsvc.log
+
+[+] Files inside /home/charix (limit 20)
+total 48
+drwxr-x---  2 charix  charix   512 Mar 19  2018 .
+drwxr-xr-x  3 root    wheel    512 Mar 19  2018 ..
+-rw-r-----  1 charix  charix  1041 Mar 19  2018 .cshrc
+-rw-rw----  1 charix  charix     0 Mar 19  2018 .history
+-rw-r-----  1 charix  charix   254 Mar 19  2018 .login
+-rw-r-----  1 charix  charix   163 Mar 19  2018 .login_conf
+-rw-r-----  1 charix  charix   379 Mar 19  2018 .mail_aliases
+-rw-r-----  1 charix  charix   336 Mar 19  2018 .mailrc
+-rw-r-----  1 charix  charix   802 Mar 19  2018 .profile
+-rw-r-----  1 charix  charix   281 Mar 19  2018 .rhosts
+-rw-r-----  1 charix  charix   849 Mar 19  2018 .shrc
+-rw-r-----  1 root    charix   166 Mar 19  2018 secret.zip
+-rw-r-----  1 root    charix    33 Mar 19  2018 user.txt
+
+[+] Files inside others home (limit 20)
+
+[+] Looking for installed mail applications
+rc.sendmail
+sendmail
+
+[+] Mails (limit 50)
+/var/mail/_tss
+/var/mail/messagebus
+/var/mail/avahi
+/var/mail/cups
+/var/mail/charix
+/var/mail/root
+
+[+] Backup files?
+-rwxr-xr-x  1 root  wheel  1746 Jul 21  2017 /var/db/etcupdate/current/etc/periodic/daily/200.backup-passwd
+-rwxr-xr-x  1 root  wheel  1001 Jul 21  2017 /var/db/etcupdate/current/etc/periodic/daily/210.backup-aliases
+-rwxr-xr-x  1 root  wheel  1001 Jul 21  2017 /etc/periodic/daily/210.backup-aliases
+-rwxr-xr-x  1 root  wheel  1746 Jul 21  2017 /etc/periodic/daily/200.backup-passwd
+-rw-r--r--  1 root  wheel  44 Jan 24  2018 /etc/resolv.conf.bak
+
+[+] Looking for tables inside readable .db/.sqlite files (limit 100)
+ -> Extracting tables from /var/db/services.db (limit 20)
+ -> Extracting tables from /var/db/pkg/local.sqlite (limit 20)
+ -> Extracting tables from /var/db/pkg/repo-FreeBSD.sqlite (limit 20)
+ -> Extracting tables from /etc/pwd.db (limit 20)
+ -> Extracting tables from /etc/login.conf.db (limit 20)
+
+[+] Web files?(output limit)
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r--  1 root  wheel  116 Jul 21  2017 /etc/hosts.equiv
+-rw-r-----  1 charix  charix  281 Mar 19  2018 /home/charix/.rhosts
+-rw-r-----  1 charix  charix  802 Mar 19  2018 /home/charix/.profile
+-r--r--r--  1 root  wheel  116 Jul 21  2017 /usr/share/examples/etc/hosts.equiv
+-rw-r--r--  1 root  wheel  21199 Jan 24  2018 /usr/local/etc/apache24/httpd.conf
+Reading /usr/local/etc/apache24/httpd.conf
+grep: The -P option is not supported
+
+-rw-r--r--  1 root  wheel  2119 Jul 21  2017 /usr/ports/www/validator/files/patch-httpd_conf_httpd.conf
+Reading /usr/ports/www/validator/files/patch-httpd_conf_httpd.conf
+grep: The -P option is not supported
+
+drwxr-xr-x  2 root  wheel  512 Jul 21  2017 /usr/ports/finance/trytond28_account_invoice_history
+Looking for possible passwords inside /usr/ports/finance/trytond28_account_invoice_history
+
+drwxr-xr-x  2 root  wheel  512 Jul 21  2017 /usr/ports/finance/trytond28_product_cost_history
+Looking for possible passwords inside /usr/ports/finance/trytond28_product_cost_history
+
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r--  1 root  wheel  230 Jan  2  2018 /usr/local/share/doc/llvm50/clang/html/.buildinfo
+-rw-r--r--  1 root  wheel  230 Jan  2  2018 /usr/local/share/doc/llvm50/llvm/html/.buildinfo
+-rw-r--r--  1 root  wheel  230 Jan  2  2018 /usr/local/share/doc/llvm50/clang-tools/html/.buildinfo
+-rw-r--r--  1 root  wheel  230 Jan  2  2018 /usr/local/share/doc/llvm50/lld/html/.buildinfo
+-rw-r--r--  1 root  wheel  138789 Dec 10  2017 /usr/local/lib/perl5/5.24/mach/.packlist
+-rw-r--r--  1 root  wheel  85 Jul 21  2017 /usr/ports/.arcconfig
+-rw-r--r--  1 root  wheel  898 Jul 21  2017 /usr/ports/.gitattributes
+-r--r--r--  1 root  wheel  11 Aug 11 17:35 /tmp/.X1-lock
+-rw-r--r--  2 root  wheel  957 Jul 21  2017 /var/db/etcupdate/current/root/.cshrc
+-rw-r--r--  1 root  wheel  149 Jul 21  2017 /var/db/etcupdate/current/root/.k5login
+-rw-r--r--  1 root  wheel  295 Jul 21  2017 /var/db/etcupdate/current/root/.login
+-rw-r--r--  2 root  wheel  957 Jul 21  2017 /var/db/etcupdate/current/.cshrc
+-rw-r--r--  2 root  wheel  943 Mar 19  2018 /.cshrc
+-rw-------  1 root  wheel  1024 Jan 24  2018 /.rnd
+-rw-r-----  1 charix  charix  1041 Mar 19  2018 /home/charix/.cshrc
+-rw-r-----  1 charix  charix  849 Mar 19  2018 /home/charix/.shrc
+-rw-r-----  1 charix  charix  379 Mar 19  2018 /home/charix/.mail_aliases
+-rw-r-----  1 charix  charix  336 Mar 19  2018 /home/charix/.mailrc
+-rw-r-----  1 charix  charix  163 Mar 19  2018 /home/charix/.login_conf
+-rw-r-----  1 charix  charix  254 Mar 19  2018 /home/charix/.login
+-rw-rw----  1 charix  charix  0 Mar 19  2018 /home/charix/.history
+-r--------  1 root  wheel  33554432 Jan 24  2018 /.sujournal
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups(limit 70)
+-rwxr-xr-x  1 charix  wheel  159864 Mar 23 14:40 /tmp/linpeas.sh
+-r--r--r--  1 root  wheel  11 Aug 11 17:35 /tmp/.X1-lock
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/home/charix
+/tmp
+/tmp/.ICE-unix
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/tmp/.font-unix
+/tmp/linpeas.sh
+/var/mail/charix
+/var/tmp
+/var/tmp/vi.recover
+
+[+] Interesting GROUP writable files (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group charix:
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+1464731 /var/log/httpd-access.log:10.10.14.6
+208425 /var/log/httpd-error.log:10.10.14.6
+  41 10.10.10.84
+  18 192.168.253.133
+  10 10.10.14.4
+   6 /var/log/messages:10.10.14.6
+   6 /var/log/httpd-access.log:10.10.14.4
+   4 10.10.14.6
+   2 /var/log/utx.log:192.168.253.133
+   1 255.255.255.255
+   1 10.10.10.10
+   1 0.9.6.2
+   1 /var/log/utx.lastlogin:10.10.14.6
+   1 /var/log/httpd-access.log:192.168.253.133
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/bsdinstall_log:DEBUG: variable.subr: New variable VAR_GROUP_PASSWORD -> groupPassword
+/var/log/bsdinstall_log:DEBUG: variable.subr: New variable VAR_USER_PASSWORD -> userPassword
+/var/log/bsdinstall_log:DEBUG: variable.subr: New variable VAR_USER_PASSWORD_EXPIRE -> userPasswordExpire
+/var/log/httpd-access.log:10.10.14.6 - - [11/Aug/2020:18:24:39 +0200] "GET /cgi-bin/handler/netsonar;cat /etc/passwd|?data=Download" 400 226 "-" "-"
+
+[+] Finding emails inside logs (limit 70)
+   1 /var/log/Xorg.0.log:root@releng2.nyi.freebsd.org
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/etc/defaults/periodic.conf:security_status_passwdless_enable="YES"
+/etc/defaults/periodic.conf:security_status_passwdless_period="daily"
+/etc/login.conf:	:passwd_format=sha512:\
+/etc/nsswitch.conf:passwd: compat
+/etc/nsswitch.conf:passwd_compat: nis
+/etc/periodic/daily/200.backup-passwd:		cp -p /etc/master.passwd $bak/master.passwd.bak || rc=3
+/etc/periodic/daily/200.backup-passwd:		echo "$host passwd diffs:"
+/etc/periodic/daily/200.backup-passwd:	    echo "Backup passwd and group files:"
+/etc/security/audit_event:6163:AUE_passwd:passwd:lo
+/tmp/linpeas.sh:    SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+
+[+] Finding possible password variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+sed: 1: "s,Dgpg.passphrase|Dsona ...": unterminated substitute pattern
+
+[+] Finding 'username' string inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/etc/rc.d/sdpd:user="${sdpd_username:-nobody}"
+/tmp/linpeas.sh:    for f in $tomcat; do grep "username=" $f 2>/dev/null | grep "password=" | sed "s,.*,${C}[1;31m&${C}[0m,"; done
+
+[+] Looking for specific hashes inside files - less false positives (limit 70)
+
+[+] Looking for md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/freebsd-update.conf: 800651ef4b4c71c27e60786d7b487188970f4b4169cc055784e21eb71d410cc5
+/etc/portsnap.conf:=9b5feee6d69f170e3dd0a2c8e469ddbd64f13f978f2f3aede40c98633216c330
+/home/charix/user.txt:eaacdfb2d141b72a589233063604209c

@@ -1,0 +1,123 @@
+root@Kali:~/HTB/Poison# masscan -p1-65535,U:1-65535 10.10.10.84 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-11 15:43:56 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 22/tcp on 10.10.10.84                                     
+Discovered open port 80/tcp on 10.10.10.84                                     
+
+root@Kali:~/HTB/Poison# nmap -Pn -n -sV -p22,80 --script=vuln,discovery 10.10.10.84 -e tun0
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-08-12 00:09 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.84
+Host is up (0.0044s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2 (FreeBSD 20161230; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.2 FreeBSD-20161230
+| ssh-hostkey: 
+|   2048 e3:3b:7d:3c:8f:4b:8c:f9:cd:7f:d2:3a:ce:2d:ff:bb (RSA)
+|   256 4c:e8:c6:02:bd:fc:83:ff:c9:80:01:54:7d:22:81:72 (ECDSA)
+|_  256 0b:8f:d5:71:85:90:13:85:61:8b:eb:34:13:5f:94:3b (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (6)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (9)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.4.29 ((FreeBSD) PHP/5.6.32)
+|_http-chrono: Request times for /; avg: 161.20ms; min: 151.99ms; max: 173.34ms
+|_http-comments-displayer: Couldn't find any comments.
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.84
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.84:80/
+|     Form id: 
+|_    Form action: /browse.php
+|_http-date: Tue, 11 Aug 2020 16:10:21 GMT; +4s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /info.php: Possible information file
+|_  /phpinfo.php: Possible information file
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Tue, 11 Aug 2020 16:10:22 GMT
+|   Server: Apache/2.4.29 (FreeBSD) PHP/5.6.32
+|   X-Powered-By: PHP/5.6.32
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-php-version: Version from header x-powered-by: PHP/5.6.32
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.4.29 (FreeBSD) PHP/5.6.32
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; php: 1
+| http-sql-injection: 
+|   Possible sqli for forms:
+|     Form at path: /, form's action: /browse.php. Fields that might be vulnerable:
+|_      file
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+|_http-trace: TRACE is enabled
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: FreeBSD; CPE: cpe:/o:freebsd:freebsd
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.84"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       5704.60    2386.16  0.0%
+|_80    0       5165.00    584.20   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 47.42 seconds
