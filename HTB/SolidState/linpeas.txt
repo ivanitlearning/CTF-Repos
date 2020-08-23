@@ -1,0 +1,977 @@
+mindy@solidstate ~ $ ./linpeas.sh -a
+
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+  linpeas v2.3.7 by carlospolop
+
+ADVISORY: linpeas should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.9.0-3-686-pae (debian-kernel@lists.debian.org) (gcc version 6.3.0 20170516 (Debian 6.3.0-18) ) #1 SMP Debian 4.9.30-2+deb9u3 (2017-08-06)
+User & Groups: uid=1001(mindy) gid=1001(mindy) groups=1001(mindy)
+Hostname: solidstate
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.9.0-3-686-pae (debian-kernel@lists.debian.org) (gcc version 6.3.0 20170516 (Debian 6.3.0-18) ) #1 SMP Debian 4.9.30-2+deb9u3 (2017-08-06)
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 9.0 (stretch)
+Release:	9.0
+Codename:	stretch
+
+[+] Sudo version
+sudo Not Found
+
+[+] PATH
+[i] Any writable folder in original PATH? (a new completed path will be exported)
+/usr/local/bin:/usr/bin:/bin:/usr/games
+New path exported: /usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/sbin
+
+[+] Date
+Sun Aug 16 06:44:33 EDT 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+udev            241M     0  241M   0% /dev
+tmpfs            50M  3.8M   47M   8% /run
+/dev/sda1        95G  4.2G   86G   5% /
+tmpfs           249M  4.0K  249M   1% /dev/shm
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs           249M     0  249M   0% /sys/fs/cgroup
+tmpfs            50M   32K   50M   1% /run/user/116
+tmpfs            50M     0   50M   0% /run/user/1001
+              total        used        free      shared  buff/cache   available
+Mem:         509704      184160       11188        3080      314356      309164
+Swap:       3175420        2776     3172644
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+MAIL=/var/mail/mindy
+USER=mindy
+SSH_CLIENT=10.10.14.47 43108 22
+SHLVL=2
+HOME=/home/mindy
+SSH_TTY=/dev/pts/0
+PS1=\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus
+LOGNAME=mindy
+_=./linpeas.sh
+XDG_SESSION_ID=65
+TERM=xterm-256color
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/sbin
+XDG_RUNTIME_DIR=/run/user/1001
+LANG=en_US.UTF-8
+HISTSIZE=0
+SHELL=/bin/rbash
+SSH_CONNECTION=10.10.14.47 43108 10.10.10.51 22
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Looking for Signature verification failed in dmseg
+ Not Found
+
+[+] selinux enabled? .............. sestatus Not Found
+[+] Printer? ...................... lpstat Not Found
+[+] Is this a container? .......... No
+[+] Is ASLR enabled? .............. Yes
+
+=========================================( Devices )==========================================
+[+] Any sd* disk in /dev? (limit 20)
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=a28a8ba2-4b0a-4d2e-a369-12c85145f384 /               ext4    errors=remount-ro 0       1
+UUID=6cc53764-aad4-4383-9519-855f6d30eab8 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/bin/nc
+/bin/netcat
+/bin/nc.traditional
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/xterm
+
+[+] Compilers Installed
+Compilers Not Found
+
+
+================================( Processes, Cron & Services )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  1.1  26984  6080 ?        Ss   04:20   0:01 /sbin/init
+root       197  0.0  0.9  24792  4680 ?        Ss   04:20   0:00 /lib/systemd/systemd-journald
+root       217  0.0  0.5  16316  3040 ?        Ss   04:20   0:00 /lib/systemd/systemd-udevd
+systemd+   272  0.0  0.7  16964  3924 ?        Ssl  04:20   0:00 /lib/systemd/systemd-timesyncd
+message+   366  0.0  0.8   6832  4248 ?        Ss   04:20   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root       369  0.0  1.2  38336  6288 ?        Ssl  04:20   0:00 /usr/lib/accountsservice/accounts-daemon
+root       370  0.0  0.9   7432  4652 ?        Ss   04:20   0:00 /lib/systemd/systemd-logind
+root       371  0.0  2.0  84172 10676 ?        Ssl  04:20   0:00 /usr/sbin/NetworkManager --no-daemon
+root       375  0.0  0.5   5264  2788 ?        Ss   04:20   0:00 /usr/sbin/cron -f
+root       376  0.0  0.6  23108  3128 ?        Ssl  04:20   0:00 /usr/sbin/rsyslogd -n
+root       379  0.0  1.2  42764  6124 ?        Ssl  04:20   0:00 /usr/sbin/ModemManager
+root       380  0.0  0.1   2332   608 ?        Ss   04:20   0:00 /bin/sh /opt/james-2.3.2/bin/run.sh
+rtkit      385  0.0  0.6  24100  3088 ?        SNsl 04:20   0:00 /usr/lib/rtkit/rtkit-daemon
+avahi      391  0.0  0.0   6256   296 ?        S    04:20   0:00 avahi-daemon: chroot helper
+root       410  0.1  8.3 446492 42756 ?        Sl   04:20   0:16 /usr/lib/jvm/java-8-openjdk-i386//bin/java -Djava.ext.dirs=/opt/james-2.3.2/lib:/opt/james-2.3.2/tools/lib -Djava.security.manager -Djava.security.policy=jar:file:/opt/james-2.3.2/bin/phoenix-loader.jar!/META-INF/java.policy -Dnetworkaddress.cache.ttl=300 -Dphoenix.home=/opt/james-2.3.2 -Djava.io.tmpdir=/opt/james-2.3.2/temp -jar /opt/james-2.3.2/bin/phoenix-loader.jar
+root       416  0.0  1.5  38624  7968 ?        Ssl  04:20   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root       528  0.0  0.8  10472  4112 ?        Ss   04:20   0:00 /usr/sbin/sshd -D
+root       537  0.0  0.0   2236    60 ?        Ss   04:20   0:00 /usr/sbin/minissdpd -i 0.0.0.0
+root       548  0.0  1.2  40204  6608 ?        Ssl  04:20   0:00 /usr/sbin/gdm3
+root       570  0.0  0.8   6408  4348 ?        Ss   04:20   0:00 /usr/sbin/apache2 -k start
+Debian-+   573  0.0  1.1   9456  6024 ?        Ss   04:20   0:00 /lib/systemd/systemd --user
+Debian-+   575  0.0  0.1  10560   900 ?        S    04:20   0:00 (sd-pam)
+www-data   577  0.8  0.7 230988  3840 ?        Sl   04:20   1:17 /usr/sbin/apache2 -k start
+www-data   578  0.8  0.9 231036  4896 ?        Sl   04:20   1:16 /usr/sbin/apache2 -k start
+Debian-+   636  0.0  0.8  27632  4312 tty1     Ssl+ 04:20   0:00 /usr/lib/gdm3/gdm-wayland-session gnome-session --autostart /usr/share/gdm/greeter/autostart
+Debian-+   639  0.0  0.7   6360  3856 ?        Ss   04:20   0:00 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation
+Debian-+   641  0.0  1.9  75020  9880 tty1     Sl+  04:20   0:00 /usr/lib/gnome-session/gnome-session-binary --autostart /usr/share/gdm/greeter/autostart
+Debian-+   650  0.1 19.5 824504 99836 tty1     Sl+  04:20   0:13 /usr/bin/gnome-shell
+root       655  0.0  1.4  50316  7248 ?        Ssl  04:20   0:00 /usr/lib/upower/upowerd
+Debian-+   669  0.0  3.1  81916 15912 tty1     S+   04:20   0:00 /usr/bin/Xwayland :1024 -rootless -noreset -listen 4 -listen 5 -displayfd 6
+Debian-+   693  0.0  1.0  44412  5536 ?        Ssl  04:20   0:00 /usr/lib/at-spi2-core/at-spi-bus-launcher
+Debian-+   699  0.0  0.6   6260  3424 ?        S    04:20   0:00 /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 3
+Debian-+   701  0.0  1.1  30484  5740 ?        Sl   04:20   0:00 /usr/lib/at-spi2-core/at-spi2-registryd --use-gnome-session
+Debian-+   707  0.0  1.8 888536  9376 ?        Ssl  04:20   0:00 /usr/bin/pulseaudio --daemonize=no
+root       776  0.0  2.1  46496 11016 ?        Ssl  04:21   0:00 /usr/lib/packagekit/packagekitd
+Debian-+   777  0.0  5.6 447980 28752 tty1     Sl+  04:21   0:00 /usr/lib/gnome-settings-daemon/gnome-settings-daemon
+root       798  0.0  0.8  10772  4340 ?        Ss   04:21   0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+colord     809  0.0  2.6  45664 13388 ?        Ssl  04:21   0:00 /usr/lib/colord/colord
+root       966  0.0  1.3  14652  7000 ?        Ss   04:25   0:00 /usr/sbin/cupsd -l
+root       968  0.0  1.3  35424  6960 ?        Ssl  04:25   0:00 /usr/sbin/cups-browsed
+www-data  1159  1.2  0.6 230836  3320 ?        Sl   04:57   1:18 /usr/sbin/apache2 -k start
+mindy     1711  0.0  1.1   9488  5832 ?        Ss   06:38   0:00 /lib/systemd/systemd --user
+mindy     1712  0.0  0.2  28040  1040 ?        S    06:38   0:00 (sd-pam)
+mindy     1720  0.0  0.7  11300  3912 ?        S    06:38   0:00 sshd: mindy@pts/0
+mindy     1721  0.0  0.7   5688  3680 pts/0    Ss   06:38   0:00 bash --noprofile
+mindy     1854  1.0  0.3   2332  1664 pts/0    S+   06:44   0:00 /bin/sh ./linpeas.sh -a
+mindy     2036  0.0  0.6   7672  3336 pts/0    R+   06:44   0:00 ps aux
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+lrwxrwxrwx 1 root root       4 Jan 24  2017 /bin/sh -> dash
+-rwxr-xr-x 1 root root 1083260 Jun  4  2017 /lib/systemd/systemd
+-rwxr-xr-x 1 root root  116380 Jun  4  2017 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root  210632 Jun  4  2017 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root   38500 Jun  4  2017 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root  460688 Jun  4  2017 /lib/systemd/systemd-udevd
+lrwxrwxrwx 1 root root      20 Jun  4  2017 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root 2465772 Feb 20  2017 /sbin/wpa_supplicant
+-rwxr-xr-x 1 root root  259940 Apr  5  2017 /usr/bin/dbus-daemon
+-rwxr-xr-x 1 root root   14272 Apr 26  2017 /usr/bin/gnome-shell
+-rwxr-xr-x 1 root root   87496 Jan 19  2017 /usr/bin/pulseaudio
+-rwxr-xr-x 1 root root 2475104 Jul  7  2017 /usr/bin/Xwayland
+-rwxr-xr-x 1 root root  158628 Dec 29  2016 /usr/lib/accountsservice/accounts-daemon
+-rwxr-xr-x 1 root root   90764 May  9  2017 /usr/lib/at-spi2-core/at-spi2-registryd
+-rwxr-xr-x 1 root root   17768 May  9  2017 /usr/lib/at-spi2-core/at-spi-bus-launcher
+-rwxr-xr-x 1 root root  329192 Sep  6  2016 /usr/lib/colord/colord
+-rwxr-xr-x 1 root root   59808 Jun  6  2017 /usr/lib/gdm3/gdm-wayland-session
+-rwxr-xr-x 1 root root  318972 Mar  9  2017 /usr/lib/gnome-session/gnome-session-binary
+-rwxr-xr-x 1 root root   38956 Apr 24  2017 /usr/lib/gnome-settings-daemon/gnome-settings-daemon
+lrwxrwxrwx 1 root root      15 Jul 23  2017 /usr/lib/jvm/java-8-openjdk-i386//bin/java -> ../jre/bin/java
+-rwxr-xr-x 1 root root  312808 Mar  8  2017 /usr/lib/packagekit/packagekitd
+-rwxr-xr-x 1 root root   14088 May 24  2017 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root   63680 Oct 24  2015 /usr/lib/rtkit/rtkit-daemon
+-rwxr-xr-x 1 root root  251292 Sep 19  2016 /usr/lib/upower/upowerd
+-rwxr-xr-x 1 root root  647224 Jul 18  2017 /usr/sbin/apache2
+-rwxr-xr-x 1 root root   47280 May  3  2015 /usr/sbin/cron
+-rwxr-xr-x 1 root root  173632 Jan 19  2017 /usr/sbin/cups-browsed
+-rwxr-xr-x 1 root root  505740 Jan 31  2017 /usr/sbin/cupsd
+-rwxr-xr-x 1 root root  442068 Jun  6  2017 /usr/sbin/gdm3
+-rwxr-xr-x 1 root root   30064 May  8  2017 /usr/sbin/minissdpd
+-rwxr-xr-x 1 root root 1380552 Nov 16  2016 /usr/sbin/ModemManager
+-rwxr-xr-x 1 root root 2820188 Mar 18  2017 /usr/sbin/NetworkManager
+-rwxr-xr-x 1 root root  711000 Jan 18  2017 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root  957216 Jun 17  2017 /usr/sbin/sshd
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-jobs
+-rw-r--r-- 1 root root  722 May  3  2015 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x   2 root root  4096 Jun 18  2017 .
+drwxr-xr-x 121 root root 12288 Aug 27  2017 ..
+-rw-r--r--   1 root root   285 May 29  2017 anacron
+-rw-r--r--   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.daily:
+total 56
+drwxr-xr-x   2 root root  4096 Aug 22  2017 .
+drwxr-xr-x 121 root root 12288 Aug 27  2017 ..
+-rwxr-xr-x   1 root root   311 May 29  2017 0anacron
+-rwxr-xr-x   1 root root   539 Jul 18  2017 apache2
+-rwxr-xr-x   1 root root  1474 Jun  1  2017 apt-compat
+-rwxr-xr-x   1 root root   355 Oct 25  2016 bsdmainutils
+-rwxr-xr-x   1 root root   384 Dec 12  2012 cracklib-runtime
+-rwxr-xr-x   1 root root  1597 Feb 22  2017 dpkg
+-rwxr-xr-x   1 root root    89 May  5  2015 logrotate
+-rwxr-xr-x   1 root root  1065 Dec 13  2016 man-db
+-rwxr-xr-x   1 root root   249 May 17  2017 passwd
+-rw-r--r--   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.hourly:
+total 20
+drwxr-xr-x   2 root root  4096 Jun 18  2017 .
+drwxr-xr-x 121 root root 12288 Aug 27  2017 ..
+-rw-r--r--   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.monthly:
+total 24
+drwxr-xr-x   2 root root  4096 Jun 18  2017 .
+drwxr-xr-x 121 root root 12288 Aug 27  2017 ..
+-rwxr-xr-x   1 root root   313 May 29  2017 0anacron
+-rw-r--r--   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.weekly:
+total 28
+drwxr-xr-x   2 root root  4096 Jun 18  2017 .
+drwxr-xr-x 121 root root 12288 Aug 27  2017 ..
+-rwxr-xr-x   1 root root   312 May 29  2017 0anacron
+-rwxr-xr-x   1 root root   723 Dec 13  2016 man-db
+-rw-r--r--   1 root root   102 May  3  2015 .placeholder
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+HOME=/root
+LOGNAME=root
+
+1	5	cron.daily	run-parts --report /etc/cron.daily
+7	10	cron.weekly	run-parts --report /etc/cron.weekly
+@monthly	15	cron.monthly	run-parts --report /etc/cron.monthly
+
+[+] Services
+[i] Search for outdated versions
+ [ - ]  alsa-utils
+ [ - ]  anacron
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  avahi-daemon
+ [ - ]  bluetooth
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ + ]  cups
+ [ + ]  cups-browsed
+ [ + ]  dbus
+ [ + ]  gdm3
+ [ - ]  hwclock.sh
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ + ]  minissdpd
+ [ + ]  network-manager
+ [ + ]  networking
+ [ - ]  pppd-dns
+ [ + ]  procps
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  saned
+ [ + ]  speech-dispatcher
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  unattended-upgrades
+ [ - ]  x11-common
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+solidstate
+127.0.0.1	localhost
+127.0.1.1	osboxes
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Networks and neighbours
+default		0.0.0.0
+loopback	127.0.0.0
+link-local	169.254.0.0
+
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.51  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 fe80::250:56ff:feb9:63e1  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::250:56ff:feb9:63e1  prefixlen 64  scopeid 0x0<global>
+        ether 00:50:56:b9:63:e1  txqueuelen 1000  (Ethernet)
+        RX packets 2662626  bytes 483425960 (461.0 MiB)
+        RX errors 6535  dropped 14495  overruns 0  frame 0
+        TX packets 2319549  bytes 461368506 (439.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 19  base 0x2000  
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 54588  bytes 4445458 (4.2 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 54588  bytes 4445458 (4.2 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         gateway         0.0.0.0         UG    0      0        0 ens33
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 ens33
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#internal-open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -                   
+tcp        0    212 10.10.10.51:22          10.10.14.47:43108       ESTABLISHED -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+tcp6       0      0 ::1:631                 :::*                    LISTEN      -                   
+tcp6       0      0 :::119                  :::*                    LISTEN      -                   
+tcp6       0      0 :::25                   :::*                    LISTEN      -                   
+tcp6       0      0 :::4555                 :::*                    LISTEN      -                   
+tcp6       0      0 :::110                  :::*                    LISTEN      -                   
+tcp6       0      0 :::80                   :::*                    LISTEN      -                   
+tcp6       0      0 10.10.10.51:110         10.10.14.47:58638       TIME_WAIT   -                   
+udp        0      0 0.0.0.0:631             0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:42714           0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:1900            0.0.0.0:*                           -                   
+udp6       0      0 :::5353                 :::*                                -                   
+udp6       0      0 :::42094                :::*                                -                   
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#groups
+uid=1001(mindy) gid=1001(mindy) groups=1001(mindy)
+
+[+] Do I have PGP keys?
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Testing 'sudo -l' without password & /etc/sudoers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user james...
+  Bruteforcing user mindy...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+james:x:1000:1000:james:/home/james/:/bin/bash
+mindy:x:1001:1001:mindy:/home/mindy:/bin/rbash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1000(james) gid=1000(osboxes) groups=1000(osboxes),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),108(netdev),112(bluetooth),114(lpadmin),116(scanner)
+uid=1001(mindy) gid=1001(mindy) groups=1001(mindy)
+uid=100(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=101(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=102(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=103(systemd-bus-proxy) gid=105(systemd-bus-proxy) groups=105(systemd-bus-proxy)
+uid=104(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=105(usbmux) gid=46(plugdev) groups=46(plugdev)
+uid=106(rtkit) gid=110(rtkit) groups=110(rtkit)
+uid=107(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=108(messagebus) gid=111(messagebus) groups=111(messagebus)
+uid=109(geoclue) gid=115(geoclue) groups=115(geoclue)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=110(avahi) gid=117(avahi) groups=117(avahi)
+uid=111(colord) gid=118(colord) groups=118(colord)
+uid=112(saned) gid=119(saned) groups=119(saned),116(scanner)
+uid=113(speech-dispatcher) gid=29(audio) groups=29(audio)
+uid=114(pulse) gid=120(pulse) groups=120(pulse),29(audio)
+uid=115(hplip) gid=7(lp) groups=7(lp)
+uid=116(Debian-gdm) gid=122(Debian-gdm) groups=122(Debian-gdm)
+uid=117(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 06:46:36 up  2:25,  1 user,  load average: 0.44, 0.15, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+mindy    pts/0    10.10.14.47      06:38    2:04   1.18s  0.00s w
+
+[+] Last logons
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:38   still logged in
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:38 - 06:38  (00:00)
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:38 - 06:38  (00:00)
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:37 - 06:37  (00:00)
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:30 - 06:36  (00:06)
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:28 - 06:28  (00:00)
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:27 - 06:27  (00:00)
+mindy    pts/0        10.10.14.47      Sun Aug 16 06:19 - 06:27  (00:07)
+
+wtmp begins Sun Aug 16 06:19:44 2020
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             pts/0    10.10.14.2       Sat Dec 23 19:21:34 -0500 2017
+mindy            pts/0    10.10.14.47      Sun Aug 16 06:38:48 -0400 2020
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+[+] User timers
+ Not Found
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Looking for mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.25 (Debian)
+Server built:   2017-07-18T18:37:33
+
+[+] Looking for PHPCookies
+ Not Found
+
+[+] Looking for Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Looking for Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+
+[+] Looking for supervisord configuration file
+supervisord.conf Not Found
+
+[+] Looking for cesi configuration file
+cesi.conf Not Found
+
+[+] Looking for Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+	comment = public archive
+	path = /var/www/pub
+	use chroot = yes
+	lock file = /var/lock/rsyncd
+	read only = yes
+	list = yes
+	uid = nobody
+	gid = nogroup
+	strict modes = yes
+	ignore errors = no
+	ignore nonreadable = yes
+	transfer logging = no
+	timeout = 600
+	refuse options = checksum dry-run
+	dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Looking for Hostapd config file
+hostapd.conf Not Found
+
+[+] Looking for wifi conns file
+/etc/NetworkManager/system-connections/
+
+[+] Looking for Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Looking for .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Looking for ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Looking for .ovpn files and credentials
+.ovpn Not Found
+
+[+] Looking for ssl/ssh files
+PermitRootLogin yes
+ChallengeResponseAuthentication no
+UsePAM yes
+
+Looking inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Looking for unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Looking for Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Looking for kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Looking for Kibana yaml
+kibana.yml Not Found
+
+[+] Looking for Knock configuration
+Knock.config Not Found
+
+[+] Looking for logstash files
+ Not Found
+
+[+] Looking for elasticsearch files
+ Not Found
+
+[+] Looking for Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Looking for AD cached hahses
+cached hashes Not Found
+
+[+] Looking for screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Looking for tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Looking for Couchdb directory
+
+[+] Looking for redis.conf
+
+[+] Looking for dovecot files
+dovecot credentials Not Found
+
+[+] Looking for mosquitto.conf
+
+[+] Looking for neo4j auth file
+
+[+] Looking Cloud-Init conf file
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+/bin/su
+/bin/mount		--->	Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/bin/fusermount
+/bin/ping
+/bin/ntfs-3g		--->	Debian9/8/7/Ubuntu/Gentoo/others/Ubuntu_Server_16.10_and_others(02-2017)
+/bin/umount		--->	BSD/Linux(08-1996)
+/usr/bin/newgrp		--->	HP-UX_10.20
+/usr/bin/pkexec		--->	Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/bin/passwd		--->	Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/chsh
+/usr/bin/chfn		--->	SuSE_9.3/10
+/usr/bin/gpasswd
+/usr/sbin/pppd		--->	Apple_Mac_OSX_10.4.8(05-2007)
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/xorg/Xorg.wrap
+/usr/lib/spice-gtk/spice-client-glib-usb-acl-helper
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+/sbin/unix_chkpwd
+/usr/bin/wall
+/usr/bin/expiry
+/usr/bin/bsd-write
+/usr/bin/chage
+/usr/bin/crontab
+/usr/bin/dotlockfile
+/usr/bin/ssh-agent
+/usr/lib/i386-linux-gnu/utempter/utempter
+/usr/lib/evolution/camel-lock-helper-1.2
+/usr/lib/xorg/Xorg.wrap
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/usr/bin/arping = cap_net_raw+ep
+/usr/bin/gnome-keyring-daemon = cap_ipc_lock+ep
+/usr/lib/i386-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+
+[+] Users with capabilities
+
+[+] .sh files in path
+/usr/bin/gettext.sh
+
+[+] Files (scripts) in /etc/profile.d/
+total 24
+drwxr-xr-x   2 root root  4096 Jun 18  2017 .
+drwxr-xr-x 121 root root 12288 Aug 27  2017 ..
+-rw-r--r--   1 root root   663 Apr 12  2016 bash_completion.sh
+-rw-r--r--   1 root root  1941 Nov  7  2016 vte-2.91.sh
+
+[+] Hashes inside passwd file? ........... No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read root folder? .............. No
+
+[+] Looking for root files in home dirs (limit 20)
+/home
+/home/mindy/bin/cat
+/home/mindy/bin/env
+/home/mindy/bin/ls
+/home/mindy/.bash_logout
+/home/mindy/.ssh
+/home/mindy/.bash_history
+/home/mindy/.rhosts
+/home/mindy/.bashrc
+/home/mindy/.shosts
+/home/mindy/.bash_profile
+
+[+] Looking for others files in folders owned by me
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins
+/var/log/auth.log
+/var/log/syslog
+/var/log/daemon.log
+/opt/james-2.3.2/apps/james/logs/pop3server-2020-08-16-04-20.log
+/home/mindy/.gnupg/gpg.conf
+/home/mindy/.gnupg/pubring.kbx
+/home/mindy/.gnupg/trustdb.gpg
+
+[+] Writable log files (logrotten)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+
+[+] Files inside /home/mindy (limit 20)
+total 228
+drwxr-x--- 5 mindy mindy   4096 Aug 16 06:45 .
+drwxr-xr-x 4 root  root    4096 Aug 22  2017 ..
+-rw-r--r-- 1 root  root       0 Aug 22  2017 .bash_history
+-rw-r--r-- 1 root  root       0 Aug 22  2017 .bash_logout
+-rw-r--r-- 1 root  root     338 Aug 22  2017 .bash_profile
+-rw-r--r-- 1 root  root    1001 Aug 22  2017 .bashrc
+drwxr-x--- 2 mindy mindy   4096 Aug 22  2017 bin
+drwx------ 2 mindy mindy   4096 Aug 16 06:45 .gnupg
+-rwxr-xr-x 1 mindy mindy 159864 Mar 23 09:40 linpeas.sh
+-rwxr-xr-x 1 mindy mindy  34374 Mar 23 09:41 lse.sh
+-rw------- 1 root  root       0 Aug 22  2017 .rhosts
+-rw------- 1 root  root       0 Aug 22  2017 .shosts
+drw------- 2 root  root    4096 Aug 22  2017 .ssh
+-rw------- 1 mindy mindy     33 Sep  8  2017 user.txt
+
+[+] Files inside others home (limit 20)
+/home/james/.bash_logout
+/home/james/.ICEauthority
+/home/james/.local/share/tracker/data/tracker-store.journal
+/home/james/.local/share/tracker/data/tracker-store.ontology.journal
+/home/james/.local/share/gnome-settings-daemon/input-sources-converted
+/home/james/.local/share/xorg/Xorg.0.log
+/home/james/.local/share/xorg/Xorg.0.log.old
+/home/james/.local/share/folks/relationships.ini
+/home/james/.bash_history
+/home/james/.profile
+/home/james/.bashrc
+
+[+] Looking for installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 22679 Sep  3  2017 /var/log/Xorg.0.log.old
+-rwxr-xr-x 1 root root 6785 Feb 11  2017 /var/lib/app-info/icons/debian-stretch-main/64x64/luckybackup_luckybackup.png
+-rw-r--r-- 1 root root 191 Jun 18  2017 /var/lib/sgml-base/supercatalog.old
+-rw-r--r-- 1 root root 1219 Jun 18  2017 /etc/xml/sgml-data.xml.old
+-rw-r--r-- 1 root root 3319 Jun 18  2017 /etc/xml/catalog.old
+-rw-r--r-- 1 root root 10151 Jun 18  2017 /etc/xml/docbook-xml.xml.old
+-rw-r--r-- 1 root root 673 Jun 18  2017 /etc/xml/xml-core.xml.old
+-rw-r--r-- 1 james osboxes 21678 Jun 18  2017 /home/james/.local/share/xorg/Xorg.0.log.old
+
+[+] Looking for tables inside readable .db/.sqlite files (limit 100)
+ -> Extracting tables from /var/lib/apt/listchanges.db (limit 20)
+ -> Extracting tables from /var/lib/colord/storage.db (limit 20)
+
+ -> Extracting tables from /var/lib/colord/mapping.db (limit 20)
+
+ -> Extracting tables from /var/lib/PackageKit/transactions.db (limit 20)
+
+
+[+] Web files?(output limit)
+/var/www/:
+total 12K
+drwxr-xr-x  3 root root 4.0K Aug 22  2017 .
+drwxr-xr-x 12 root root 4.0K Aug 22  2017 ..
+drwxr-xr-x  4 root root 4.0K Dec 23  2017 html
+
+/var/www/html:
+total 68K
+drwxr-xr-x 4 root root 4.0K Dec 23  2017 .
+drwxr-xr-x 3 root root 4.0K Aug 22  2017 ..
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 1863 May 15  2017 /etc/bash.bashrc
+-rw-r--r-- 1 root root 675 May 15  2017 /etc/skel/.profile
+-rw-r--r-- 1 root root 3526 May 15  2017 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 0 Aug 22  2017 /home/mindy/.bash_history
+Looking for possible passwords inside /home/mindy/.bash_history
+
+-rw-r--r-- 1 root root 1001 Aug 22  2017 /home/mindy/.bashrc
+-rw-r--r-- 1 james osboxes 675 Jun 18  2017 /home/james/.profile
+-rw-r--r-- 1 james osboxes 3526 Jun 18  2017 /home/james/.bashrc
+-rw-r--r-- 1 root root 2778 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+-rw-r--r-- 1 root root 570 Jan 31  2010 /usr/share/base-files/dot.bashrc
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r-- 1 root root 220 May 15  2017 /etc/skel/.bash_logout
+-rw-r--r-- 1 root root 0 Jun 18  2017 /etc/.java/.systemPrefs/.systemRootModFile
+-rw-r--r-- 1 root root 0 Jun 18  2017 /etc/.java/.systemPrefs/.system.lock
+-rw------- 1 root root 0 Jun 18  2017 /etc/.pwd.lock
+-rw------- 1 Debian-gdm Debian-gdm 5562 Aug 16 04:20 /var/lib/gdm3/.ICEauthority
+-r--r--r-- 1 Debian-gdm Debian-gdm 11 Aug 16 04:20 /tmp/.X1024-lock
+-rw-r--r-- 1 root root 2555 Jul 23  2017 /usr/lib/jvm/.java-1.8.0-openjdk-i386.jinfo
+-rw-r--r-- 1 root root 0 Aug 16 04:20 /run/network/.ifstate.lock
+-rw-r--r-- 1 root root 0 Aug 22  2017 /home/mindy/.bash_logout
+-rw------- 1 root root 0 Aug 22  2017 /home/mindy/.shosts
+-rw-r--r-- 1 root root 338 Aug 22  2017 /home/mindy/.bash_profile
+-rw-r--r-- 1 james osboxes 220 Jun 18  2017 /home/james/.bash_logout
+-rw------- 1 james osboxes 640 Aug 22  2017 /home/james/.ICEauthority
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups(limit 70)
+-r--r--r-- 1 Debian-gdm Debian-gdm 11 Aug 16 04:20 /tmp/.X1024-lock
+-rw-r--r-- 1 root root 559 Jun 18  2017 /var/backups/dpkg.diversions.0
+-rw-r--r-- 1 root root 435427 Aug 22  2017 /var/backups/dpkg.status.4.gz
+-rw-r--r-- 1 root root 102400 Aug 22  2017 /var/backups/alternatives.tar.0
+-rw-r--r-- 1 root root 229 Jun 18  2017 /var/backups/dpkg.diversions.4.gz
+-rw-r--r-- 1 root root 229 Jun 18  2017 /var/backups/dpkg.diversions.2.gz
+-rw-r--r-- 1 root root 9701 Jun 18  2017 /var/backups/apt.extended_states.1.gz
+-rw-r--r-- 1 root root 1562682 Aug 22  2017 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 208 Jun 18  2017 /var/backups/dpkg.statoverride.3.gz
+-rw-r--r-- 1 root root 445607 Aug 22  2017 /var/backups/dpkg.status.2.gz
+-rw-r--r-- 1 root root 208 Jun 18  2017 /var/backups/dpkg.statoverride.1.gz
+-rw-r--r-- 1 root root 445607 Aug 22  2017 /var/backups/dpkg.status.3.gz
+-rw-r--r-- 1 root root 297 Jun 18  2017 /var/backups/dpkg.statoverride.0
+-rw-r--r-- 1 root root 445607 Aug 22  2017 /var/backups/dpkg.status.1.gz
+-rw-r--r-- 1 root root 208 Jun 18  2017 /var/backups/dpkg.statoverride.4.gz
+-rw-r--r-- 1 root root 229 Jun 18  2017 /var/backups/dpkg.diversions.3.gz
+-rw-r--r-- 1 root root 85619 Aug 22  2017 /var/backups/apt.extended_states.0
+-rw-r--r-- 1 root root 208 Jun 18  2017 /var/backups/dpkg.statoverride.2.gz
+-rw-r--r-- 1 root root 229 Jun 18  2017 /var/backups/dpkg.diversions.1.gz
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/dev/shm/linpeas.txt
+/home/mindy
+/opt/tmp.py
+/run/lock
+/run/user/1001
+/run/user/1001/gnupg
+/run/user/1001/systemd
+/run/user/1001/systemd/transient
+/tmp
+/tmp/.font-unix
+/tmp/.ICE-unix
+/tmp/.Test-unix
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/var/tmp
+
+[+] Interesting GROUP writable files (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group mindy:
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+    190 /var/log/dpkg.log.1:6.9.7.4
+     64 /var/log/dpkg.log.1:2.4.9.1
+     43 /var/log/dpkg.log.1:2.7.6.1
+     16 /var/log/dpkg.log.1:3.5.27.1
+     16 /var/log/dpkg.log.1:2.3.3.4
+     11 /var/log/installer/status:1.2.3.3
+      8 /var/log/wtmp:10.10.14.47
+      8 /var/log/dpkg.log.1:4.8.1.1
+      8 /var/log/dpkg.log.1:3.22.2.2
+      2 /var/log/wtmp.1:10.10.14.2
+      2 /var/log/installer/status:1.18.99.90
+      1 /var/log/lastlog:10.10.14.47
+      1 /var/log/lastlog:10.10.14.2
+      1 /var/log/installer/status:1.6.99.1
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/dpkg.log.1:2017-06-19 00:17:43 configure base-passwd:i386 3.5.43 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:43 install base-passwd:i386 <none> 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:43 status half-configured base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:43 status half-installed base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:43 status installed base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:43 status unpacked base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:51 status half-configured base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:51 status half-installed base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:51 status unpacked base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:51 upgrade base-passwd:i386 3.5.43 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:54 install passwd:i386 <none> 1:4.4-4.1
+/var/log/dpkg.log.1:2017-06-19 00:17:54 status half-installed passwd:i386 1:4.4-4.1
+/var/log/dpkg.log.1:2017-06-19 00:17:54 status unpacked passwd:i386 1:4.4-4.1
+/var/log/dpkg.log.1:2017-06-19 00:17:56 configure base-passwd:i386 3.5.43 <none>
+/var/log/dpkg.log.1:2017-06-19 00:17:56 status half-configured base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:56 status unpacked base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:57 status installed base-passwd:i386 3.5.43
+/var/log/dpkg.log.1:2017-06-19 00:17:58 configure passwd:i386 1:4.4-4.1 <none>
+/var/log/dpkg.log.1:2017-06-19 00:17:58 status half-configured passwd:i386 1:4.4-4.1
+/var/log/dpkg.log.1:2017-06-19 00:17:58 status installed passwd:i386 1:4.4-4.1
+/var/log/dpkg.log.1:2017-06-19 00:17:58 status unpacked passwd:i386 1:4.4-4.1
+/var/log/installer/status:Description: Set up users and passwords
+
+[+] Finding emails inside logs (limit 70)
+     43 /var/log/installer/status:debian-boot@lists.debian.org
+     15 /var/log/installer/status:debian-kernel@lists.debian.org
+      4 /var/log/installer/status:gcs@debian.org
+      2 /var/log/installer/status:pkg-lvm-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:pkg-iscsi-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:pkg-gnupg-maint@lists.alioth.debian.org
+      2 /var/log/installer/status:parted-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:mmind@debian.org
+      2 /var/log/installer/status:berni@debian.org
+      1 /var/log/installer/status:xnox@debian.org
+      1 /var/log/installer/status:tytso@mit.edu
+      1 /var/log/installer/status:rogershimizu@gmail.com
+      1 /var/log/installer/status:pkg-wpa-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-openssl-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-mdadm-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-grub-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-gnutls-maint@lists.alioth.debian.org
+      1 /var/log/installer/status:petere@debian.org
+      1 /var/log/installer/status:packages@release.debian.org
+      1 /var/log/installer/status:linux-xfs@vger.kernel.org
+      1 /var/log/installer/status:guus@debian.org
+      1 /var/log/installer/status:djpig@debian.org
+      1 /var/log/installer/status:anibal@debian.org
+      1 /var/log/installer/status:ah-util-linux@debian.org
+      1 /var/log/installer/status:aeb@debian.org
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/etc/bash_completion.d/grub:__grub_mkpasswd_pbkdf2_program="grub-mkpasswd-pbkdf2"
+/etc/nsswitch.conf:passwd:         compat
+/etc/profile.d/vte-2.91.sh:  local pwd='~'
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/home/mindy/linpeas.sh:    SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+/home/mindy/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) == 0 ] && echo $u; done | grep -v root'
+/home/mindy/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/home/mindy/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+/var/backups/dpkg.status.0:Depends: passwd, libc6 (>= 2.4)
+/var/backups/dpkg.status.0: used in a passwd like program. The idea is simple: try to prevent
+
+[+] Finding possible password variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+
+[+] Finding 'username' string inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+/home/mindy/linpeas.sh:    for f in $tomcat; do grep "username=" $f 2>/dev/null | grep "password=" | sed "s,.*,${C}[1;31m&${C}[0m,"; done
+/home/mindy/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+
+[+] Looking for specific hashes inside files - less false positives (limit 70)
+
+[+] Looking for md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/java-8-openjdk/security/blacklisted.certs:14E6D2764A4B06701C6CBC376A253775F79C782FBCB6C0EE6F99DE4BA1024ADD
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/etc/machine-id:3b14ced53cef4e38b9b241c6989e06d8
+/var/backups/dpkg.status.0: 4078a3f4ac00fc84e750302cad860730
+/home/mindy/user.txt:914d0a4ebc177889b5b89a23f556fd75

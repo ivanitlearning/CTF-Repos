@@ -1,0 +1,448 @@
+root@Kali:~/HTB/SolidState# masscan -p1-65535,U:1-65535 10.10.10.51 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-16 08:25:27 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 22/tcp on 10.10.10.51                                     
+Discovered open port 25/tcp on 10.10.10.51                                     
+Discovered open port 119/tcp on 10.10.10.51                                    
+Discovered open port 80/tcp on 10.10.10.51                                     
+Discovered open port 4555/tcp on 10.10.10.51                                   
+Discovered open port 110/tcp on 10.10.10.51                                    
+
+root@Kali:~/HTB/SolidState# nmap -Pn -n -sV -p22,25,80,110,119,4555 --script=vuln,discovery 10.10.10.51 -e tun0
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-08-16 16:44 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.51
+Host is up (0.0063s latency).
+
+PORT     STATE SERVICE     VERSION
+22/tcp   open  ssh         OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u1
+| ssh-hostkey: 
+|   2048 77:00:84:f5:78:b9:c7:d3:54:cf:71:2e:0d:52:6d:8b (RSA)
+|   256 78:b8:3a:f6:60:19:06:91:f5:53:92:1d:3f:48:ed:53 (ECDSA)
+|_  256 e4:45:e9:ed:07:4d:73:69:43:5a:12:70:9d:c4:af:76 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+25/tcp   open  smtp        JAMES smtpd 2.3.2
+|_banner: 220 solidstate SMTP Server (JAMES SMTP Server 2.3.2) ready S...
+|_smtp-commands: solidstate Hello nmap.scanme.org (10.10.14.47 [10.10.14.47]), PIPELINING, ENHANCEDSTATUSCODES, 
+|_smtp-open-relay: Server is an open relay (4/16 tests)
+| smtp-vuln-cve2010-4344: 
+|_  The SMTP server is not Exim: NOT VULNERABLE
+|_sslv2-drown: 
+80/tcp   open  http        Apache httpd 2.4.25 ((Debian))
+|_http-chrono: Request times for /; avg: 248.75ms; min: 225.01ms; max: 274.05ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.51
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 170
+|     Comment: 
+|         <!-- Scripts -->
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 10
+|     Comment: 
+|         <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+|     
+|     Path: http://10.10.10.51:80/assets/js/skel.min.js
+|     Line number: 1
+|     Comment: 
+|         /* skel.js v3.0.1 | (c) skel.io | MIT licensed */
+|     
+|     Path: http://10.10.10.51:80/assets/js/util.js
+|     Line number: 299
+|     Comment: 
+|         /**
+|         	 * Apply "placeholder" attribute polyfill to one or more forms.
+|         	 * @return {jQuery} jQuery object.
+|         	 */
+|     
+|     Path: http://10.10.10.51:80/services.html
+|     Line number: 50
+|     Comment: 
+|         <!-- Content -->
+|     
+|     Path: http://10.10.10.51:80/assets/js/util.js
+|     Line number: 521
+|     Comment: 
+|         /**
+|         	 * Moves elements to/from the first positions of their respective parents.
+|         	 * @param {jQuery} $elements Elements (or selector) to move.
+|         	 * @param {bool} condition If true, moves elements to the top. Otherwise, moves elements back to their original locations.
+|         	 */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 18
+|     Comment: 
+|         <!-- Header -->
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 175
+|     Comment: 
+|         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 78
+|     Comment: 
+|         <!-- Three -->
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 51
+|     Comment: 
+|         <!-- Wrapper -->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 1607
+|     Comment: 
+|         /* Basic */
+|     
+|     Path: http://10.10.10.51:80/assets/js/jquery.min.js
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 59
+|     Comment: 
+|         /* Grid */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 3267
+|     Comment: 
+|         /* Wrapper */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 129
+|     Comment: 
+|         <!-- Footer -->
+|     
+|     Path: http://10.10.10.51:80/assets/js/util.js
+|     Line number: 37
+|     Comment: 
+|         /**
+|         	 * Panel-ify an element.
+|         	 * @param {object} userConfig User config.
+|         	 * @return {jQuery} jQuery object.
+|         	 */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2141
+|     Comment: 
+|         /* Icon */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2711
+|     Comment: 
+|         /* Features */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 1896
+|     Comment: 
+|         /* Form */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 54
+|     Comment: 
+|         <!-- One -->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2791
+|     Comment: 
+|         /* Header */
+|     
+|     Path: http://10.10.10.51:80/assets/js/util.js
+|     Line number: 3
+|     Comment: 
+|         /**
+|         	 * Generate an indented list of links from a nav. Meant for use with panel().
+|         	 * @return {jQuery} jQuery object.
+|         	 */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2216
+|     Comment: 
+|         /* List */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2162
+|     Comment: 
+|         /* Image */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 8
+|     Comment: 
+|         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 3098
+|     Comment: 
+|         /* Banner */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 66
+|     Comment: 
+|         <!-- Two -->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 1644
+|     Comment: 
+|         /* Type */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 51
+|     Comment: 
+|         /* Box Model */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 4
+|     Comment: 
+|         /*
+|         	Solid State by HTML5 UP
+|         	html5up.net | @ajlkn
+|         	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+|         */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 1890
+|     Comment: 
+|         /* Section/Article */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2943
+|     Comment: 
+|         /* Menu */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2120
+|     Comment: 
+|         /* Box */
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 10
+|     Comment: 
+|         /* Reset */
+|     
+|     Path: http://10.10.10.51:80/assets/js/ie/html5shiv.js
+|     Line number: 1
+|     Comment: 
+|         /*
+|          HTML5 Shiv v3.6.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
+|         */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 26
+|     Comment: 
+|         <!-- Menu -->
+|     
+|     Path: http://10.10.10.51:80/assets/js/jquery.scrollex.min.js
+|     Line number: 1
+|     Comment: 
+|         /* jquery.scrollex v0.2.1 | (c) @ajlkn | github.com/ajlkn/jquery.scrollex | MIT licensed */
+|     
+|     Path: http://10.10.10.51:80/assets/js/ie/respond.min.js
+|     Line number: 1
+|     Comment: 
+|         /*! Respond.js v1.4.2: min/max-width media query polyfill
+|          * Copyright 2014 Scott Jehl
+|          * Licensed under MIT
+|          * http://j.mp/respondjs */
+|     
+|     Path: http://10.10.10.51:80/assets/js/main.js
+|     Line number: 1
+|     Comment: 
+|         /*
+|         	Solid State by HTML5 UP
+|         	html5up.net | @ajlkn
+|         	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+|         */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 11
+|     Comment: 
+|         <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 90
+|     Comment: 
+|         <!-- Four -->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2500
+|     Comment: 
+|         /* Table */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 15
+|     Comment: 
+|         <!-- Page Wrapper -->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 2568
+|     Comment: 
+|         /* Button */
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Line number: 40
+|     Comment: 
+|         <!-- Banner -->
+|     
+|     Path: http://10.10.10.51:80/assets/css/main.css
+|     Line number: 3721
+|     Comment: 
+|_        /* Footer */
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.51
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.51:80/
+|     Form id: name
+|     Form action: #
+|     
+|     Path: http://10.10.10.51:80/about.html
+|     Form id: name
+|     Form action: #
+|     
+|     Path: http://10.10.10.51:80/services.html
+|     Form id: name
+|     Form action: #
+|     
+|     Path: http://10.10.10.51:80/index.html
+|     Form id: name
+|_    Form action: #
+|_http-date: Sun, 16 Aug 2020 08:44:55 GMT; +3s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /README.txt: Interesting, a readme.
+|_  /images/: Potentially interesting directory w/ listing on 'apache/2.4.25 (debian)'
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.51:80/: 
+|     (1) email: 
+|       + webadmin@solid-state-security.com
+|   (1) http://10.10.10.51:80/assets/js/: 
+|     (1) ip: 
+|_      + 10.10.10.51
+| http-headers: 
+|   Date: Sun, 16 Aug 2020 08:44:58 GMT
+|   Server: Apache/2.4.25 (Debian)
+|   Last-Modified: Sat, 23 Dec 2017 23:16:12 GMT
+|   ETag: "1e60-5610a1e7a4c9b"
+|   Accept-Ranges: bytes
+|   Content-Length: 7776
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.4.25 (Debian)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; html: 3
+|     /assets/css/
+|       css: 2
+|     /assets/js/
+|       js: 3
+|     /images/
+|       jpg: 3
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /assets/js/
+|   Total files found (by extension):
+|_    Other: 1; css: 2; html: 3; jpg: 3; js: 3
+| http-sql-injection: 
+|   Possible sqli for queries:
+|     http://10.10.10.51:80/assets/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/ie/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/ie/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/ie/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/ie/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.51:80/assets/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|_    http://10.10.10.51:80/assets/js/?C=S%3bO%3dD%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Home - Solid State Security
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+110/tcp  open  pop3        JAMES pop3d 2.3.2
+|_banner: +OK solidstate POP3 server (JAMES POP3 Server 2.3.2) ready
+|_sslv2-drown: 
+119/tcp  open  nntp        JAMES nntpd (posting ok)
+|_banner: 200 solidstate NNTP Service Ready, posting permitted
+|_sslv2-drown: 
+4555/tcp open  james-admin JAMES Remote Admin 2.3.2
+|_banner: JAMES Remote Administration Tool 2.3.2\x0APlease enter your ...
+Service Info: Host: solidstate; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.51"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 22    0       21109.60   31242.99  0.0%
+| 25    0       11987.80   3561.50   0.0%
+| 80    0       17819.00   21606.40  0.0%
+| 110   0       10598.30   3953.39   0.0%
+| 119   0       17043.80   25082.37  0.0%
+|_4555  0       17728.70   24839.09  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 58.85 seconds
