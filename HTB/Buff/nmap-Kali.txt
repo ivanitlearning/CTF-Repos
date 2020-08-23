@@ -1,0 +1,81 @@
+root@Kali:~/HTB/Buff# nmap -Pn -n -sV -p3306,8888 --script=vuln,discovery 127.0.0.1
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-08-19 22:45 +08
+Pre-scan script results:
+| broadcast-igmp-discovery: 
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.92.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-ping: 
+|   IP: 192.168.92.2  MAC: 00:50:56:fc:70:be
+|_  Use --script-args=newtargets to add the results as targets
+| ipv6-multicast-mld-list: 
+|   fe80::b041:cdc8:aed5:1dee: 
+|     device: eth0
+|     mac: 00:50:56:c0:00:08
+|     multicast_ips: 
+|       ff02::1:ffd5:1dee         (NDP Solicited-node)
+|       ff02::1:ff2e:b286         (Solicited-Node Address)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|       ff02::c                   (SSDP)
+|       ff02::1:ff2e:b286         (Solicited-Node Address)
+|       ff02::fb                  (mDNSv6)
+|       ff02::1:3                 (Link-local Multicast Name Resolution)
+|_      ff02::1:3                 (Link-local Multicast Name Resolution)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-ipv6-multicast-mld: 
+|   IP: fe80::b041:cdc8:aed5:1dee  MAC: 00:50:56:c0:00:08  IFACE: eth0
+| 
+|_  Use --script-args=newtargets to add the results as targets
+| targets-ipv6-multicast-slaac: 
+|   IP: fe80::b041:cdc8:aed5:1dee  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|   IP: fe80::3de7:a9a2:c82e:b286  MAC: 00:50:56:c0:00:08  IFACE: eth0
+|_  Use --script-args=newtargets to add the results as targets
+sendto in send_ip_packet_sd: sendto(6, packet, 65536, 0, 127.0.0.1, 16) => Message too long
+Offending packet: TCP 127.0.0.1:14470 > 127.0.0.1:3306 S ttl=128 id=0 iplen=0  seq=328257581 win=3072 <mss 1460>
+Nmap scan report for 127.0.0.1
+Host is up (0.000037s latency).
+
+PORT     STATE SERVICE    VERSION
+3306/tcp open  mysql      MySQL 5.5.5-10.4.11-MariaDB
+|_banner: Y\x00\x00\x00\x0A5.5.5-10.4.11-MariaDB\x00Y\x00\x00\x00bcJ*/...
+| mysql-info: 
+|   Protocol: 10
+|   Version: 5.5.5-10.4.11-MariaDB
+|   Thread ID: 90
+|   Capabilities flags: 63486
+|   Some Capabilities: Support41Auth, ConnectWithDatabase, FoundRows, LongColumnFlag, ODBCClient, DontAllowDatabaseTableColumn, SupportsTransactions, IgnoreSigpipes, SupportsCompression, InteractiveClient, Speaks41ProtocolNew, IgnoreSpaceBeforeParenthesis, Speaks41ProtocolOld, SupportsLoadDataLocal, SupportsMultipleResults, SupportsAuthPlugins, SupportsMultipleStatments
+|   Status: Autocommit
+|   Salt: z&HzMR5Pqi=4+xAxX2.1
+|_  Auth Plugin Name: 94
+8888/tcp open  tcpwrapped
+
+Host script results:
+|_dns-brute: Can't guess domain of "127.0.0.1"; use dns-brute.domain script argument.
+|_fcrdns: PASS (localhost)
+|_ipidseq: All zeros
+|_path-mtu: 65535 <= PMTU < 65536
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 3306  0       165.90     109.82  0.0%
+|_8888  0       232.00     121.63  10.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 57.90 seconds
