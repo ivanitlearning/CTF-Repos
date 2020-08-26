@@ -1,0 +1,322 @@
+root@Kali:~/HTB/Mirai# masscan -p1-65535,U:1-65535 10.10.10.48 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-22 15:52:42 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 1559/tcp on 10.10.10.48                                   
+Discovered open port 32414/udp on 10.10.10.48                                  
+Discovered open port 80/tcp on 10.10.10.48                                     
+Discovered open port 22/tcp on 10.10.10.48                                     
+Discovered open port 32400/tcp on 10.10.10.48                                  
+Discovered open port 53/tcp on 10.10.10.48                                     
+Discovered open port 32469/tcp on 10.10.10.48                                  
+
+root@Kali:~/HTB/Mirai# nmap -Pn -n -sV -p22,53,80,1559,32469,32400,32414 --script=vuln,discovery 10.10.10.48 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-08-23 00:14 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.48
+Host is up (0.098s latency).
+
+PORT      STATE  SERVICE VERSION
+22/tcp    open   ssh     OpenSSH 6.7p1 Debian 5+deb8u3 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u3
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   1024 aa:ef:5c:e0:8e:86:97:82:47:ff:4a:e5:40:18:90:c5 (DSA)
+|   2048 e8:c1:9d:c5:43:ab:fe:61:23:3b:d7:e4:af:9b:74:18 (RSA)
+|   256 b6:a0:78:38:d0:c8:10:94:8b:44:b2:ea:a0:17:42:2b (ECDSA)
+|_  256 4d:68:40:f7:20:c4:e5:52:80:7a:44:38:b8:a2:a7:52 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (6)
+|   server_host_key_algorithms: (4)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+53/tcp    open   domain  dnsmasq 2.76
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_dns-nsec-enum: Can't determine domain for host 10.10.10.48; use dns-nsec-enum.domains script arg.
+|_dns-nsec3-enum: Can't determine domain for host 10.10.10.48; use dns-nsec3-enum.domains script arg.
+| dns-nsid: 
+|_  bind.version: dnsmasq-2.76
+80/tcp    open   http    lighttpd 1.4.35
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 221.16ms; min: 210.08ms; max: 258.42ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 22 Aug 2020 16:14:34 GMT; -15s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.48
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.10.48:80/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   X-Pi-hole: A black hole for Internet advertisements.
+|   Content-type: text/html; charset=UTF-8
+|   Content-Length: 0
+|   Connection: close
+|   Date: Sat, 22 Aug 2020 16:14:39 GMT
+|   Server: lighttpd/1.4.35
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: lighttpd/1.4.35
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+1559/tcp  open   upnp    Platinum UPnP 1.0.5.13 (UPnP/1.0 DLNADOC/1.50)
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+32400/tcp open   http    Plex Media Server httpd
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.48
+|   url                        method
+|_  http://10.10.10.48:32400/  HTTP: Server returned no authentication headers.
+|_http-chrono: Request times for /; avg: 206.29ms; min: 203.03ms; max: 209.00ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-cors: HEAD GET POST PUT DELETE OPTIONS
+| http-cross-domain-policy: 
+|   VULNERABLE:
+|   Cross-domain and Client Access policies.
+|     State: VULNERABLE
+|       A cross-domain policy file specifies the permissions that a web client such as Java, Adobe Flash, Adobe Reader,
+|       etc. use to access data across different domains. A client acces policy file is similar to cross-domain policy
+|       but is used for M$ Silverlight applications. Overly permissive configurations enables Cross-site Request
+|       Forgery attacks, and may allow third parties to access sensitive data meant for the user.
+|     Check results:
+|       /crossdomain.xml:
+|         <?xml version="1.0"?>
+|         <!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd">
+|         <cross-domain-policy>
+|           <site-control permitted-cross-domain-policies="all"/>
+|           <allow-access-from domain="*" secure="false"/>
+|           <allow-http-request-headers-from domain="*" headers="SOAPAction,Content-Type"/>
+|         </cross-domain-policy>
+|       /clientaccesspolicy.xml:
+|         <?xml version="1.0" encoding="utf-8"?>
+|         <access-policy>
+|           <cross-domain-access>
+|             <policy>
+|               <allow-from http-request-headers="*">
+|                 <domain uri="*"/>
+|               </allow-from>
+|               <grant-to>
+|                 <resource path="/" include-subpaths="true"/>
+|               </grant-to>
+|             </policy>
+|           </cross-domain-access>
+|         </access-policy>
+|     Extra information:
+|       Trusted domains:*, *, *
+|   
+|     References:
+|       http://acunetix.com/vulnerabilities/web/insecure-clientaccesspolicy-xml-file
+|       http://gursevkalra.blogspot.com/2013/08/bypassing-same-origin-policy-with-flash.html
+|       https://www.adobe.com/devnet/articles/crossdomain_policy_file_spec.html
+|       https://www.adobe.com/devnet-docs/acrobatetk/tools/AppSec/CrossDomain_PolicyFile_Specification.pdf
+|       https://www.owasp.org/index.php/Test_RIA_cross_domain_policy_%28OTG-CONFIG-008%29
+|_      http://sethsec.blogspot.com/2014/03/exploiting-misconfigured-crossdomainxml.html
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 22 Aug 2020 16:14:34 GMT; -15s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /weblog/: Blog
+|   /weblogs/: Blog
+|   /websvn/: WEBSVN Repository
+|   /webedition/: Web Edition
+|   /manager/: Possible admin folder
+|   /webadmin/: Possible admin folder
+|   /webadmin.html: Possible admin folder
+|   /webadmin.php: Possible admin folder
+|   /webadmin.cfm: Possible admin folder
+|   /webadmin.asp: Possible admin folder
+|   /webadmin.aspx: Possible admin folder
+|   /webadmin.jsp: Possible admin folder
+|   /clientaccesspolicy.xml: Microsoft Silverlight crossdomain policy
+|   /webmail/: Mail folder
+|   /crossdomain.xml: Adobe Flash crossdomain policy
+|   /websql/: phpMyAdmin
+|   /webadmin.nsf: Lotus Domino
+|   /web.nsf: Lotus Domino
+|   /weblink_cat_list.php: WHMCompleteSolution CMS
+|   /management/: Potentially interesting folder
+|   /security/: Potentially interesting folder
+|   /web800fo/: Potentially interesting folder
+|   /webaccess/: Potentially interesting folder
+|   /webadmin/: Potentially interesting folder
+|   /webAdmin/: Potentially interesting folder
+|   /webalizer/: Potentially interesting folder
+|   /webapps/: Potentially interesting folder
+|   /webboard/: Potentially interesting folder
+|   /webcart/: Potentially interesting folder
+|   /webcart-lite/: Potentially interesting folder
+|   /webcgi/: Potentially interesting folder
+|   /webdata/: Potentially interesting folder
+|   /webdav/: Potentially interesting folder
+|   /webdb/: Potentially interesting folder
+|   /webDB/: Potentially interesting folder
+|   /webimages2/: Potentially interesting folder
+|   /webimages/: Potentially interesting folder
+|   /web-inf/: Potentially interesting folder
+|   /webmaster/: Potentially interesting folder
+|   /webmaster_logs/: Potentially interesting folder
+|   /webMathematica/: Potentially interesting folder
+|   /webpub/: Potentially interesting folder
+|   /webpub-ui/: Potentially interesting folder
+|   /webreports/: Potentially interesting folder
+|   /webreps/: Potentially interesting folder
+|   /webshare/: Potentially interesting folder
+|   /website/: Potentially interesting folder
+|   /webstat/: Potentially interesting folder
+|   /webstats/: Potentially interesting folder
+|   /webtrace/: Potentially interesting folder
+|   /webtrends/: Potentially interesting folder
+|_  /web_usage/: Potentially interesting folder
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.48
+|   Found the following error pages: 
+|   
+|   Error Code: 401
+|_  	http://10.10.10.48:32400/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Length: 193
+|   Content-Type: text/html
+|   X-Plex-Protocol: 1.0
+|   Cache-Control: no-cache
+|   Date: Sat, 22 Aug 2020 16:14:57 GMT
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Cache_Control: 
+|_    Header: Cache-Control: no-cache
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Unauthorized
+| http-useragent-tester: 
+|   Status for browser useragent: 401
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 401
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+32414/tcp closed unknown
+32469/tcp open   upnp    Platinum UPnP 1.0.5.13 (UPnP/1.0 DLNADOC/1.50)
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.48"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22     0       96957.90   1254.76  0.0%
+| 53     0       96886.00   714.24   0.0%
+| 80     0       96436.80   841.41   0.0%
+| 1559   0       96631.80   1156.37  0.0%
+| 32400  0       97043.60   448.07   0.0%
+| 32414  0       96948.80   685.31   0.0%
+|_32469  0       96907.70   784.42   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 498.02 seconds
