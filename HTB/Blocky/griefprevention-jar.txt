@@ -1,0 +1,242 @@
+root@Kali:~/HTB/Blocky# mkdir griefprevention
+root@Kali:~/HTB/Blocky# unzip griefprevention -d griefprevention/
+griefprevention/                      griefprevention-1.11.2-3.1.1.298.jar  
+root@Kali:~/HTB/Blocky# unzip griefprevention-1.11.2-3.1.1.298.jar -d griefprevention/
+
+root@Kali:~/HTB/Blocky/griefprevention# tree
+.
+├── META-INF
+│   └── MANIFEST.MF
+├── mcmod.info
+└── me
+    └── ryanhamshire
+        └── griefprevention
+            ├── BlockPosCache.class
+            ├── DataStore.class
+            ├── DatabaseDataStore.class
+            ├── FlatFileDataStore.class
+            ├── GPApiProvider.class
+            ├── GPFlags.class
+            ├── GPPlayerData.class
+            ├── GPTimings.class
+            ├── GriefPrevention.class
+            ├── GriefPreventionPlugin$IgnoreMode.class
+            ├── GriefPreventionPlugin.class
+            ├── IpBanInfo.class
+            ├── ItemInfo.class
+            ├── MCClansApiProvider.class
+            ├── ShovelMode.class
+            ├── SiegeData.class
+            ├── api
+            │   ├── GriefPreventionApi.class
+            │   ├── claim
+            │   │   ├── Claim$Builder.class
+            │   │   ├── Claim.class
+            │   │   ├── ClaimManager.class
+            │   │   ├── ClaimResult.class
+            │   │   ├── ClaimResultType.class
+            │   │   ├── ClaimType.class
+            │   │   └── TrustType.class
+            │   ├── data
+            │   │   ├── ClaimData.class
+            │   │   └── PlayerData.class
+            │   └── event
+            │       ├── AttackPlayerEvent.class
+            │       ├── BorderClaimEvent.class
+            │       ├── ClaimEvent.class
+            │       ├── CreateClaimEvent.class
+            │       ├── DeleteClaimEvent$Abandon.class
+            │       ├── DeleteClaimEvent.class
+            │       ├── GPNamedCause.class
+            │       ├── ResizeClaimEvent.class
+            │       ├── TransferClaimEvent.class
+            │       ├── TrustClaimEvent$Add.class
+            │       ├── TrustClaimEvent$Remove.class
+            │       └── TrustClaimEvent.class
+            ├── claim
+            │   ├── ClaimContextCalculator.class
+            │   ├── ClaimsMode.class
+            │   ├── GPClaim$ClaimBuilder.class
+            │   ├── GPClaim.class
+            │   ├── GPClaimManager.class
+            │   └── GPClaimResult.class
+            ├── command
+            │   ├── BaseCommand.class
+            │   ├── CommandAccessTrust.class
+            │   ├── CommandAdjustBonusClaimBlocks.class
+            │   ├── CommandClaimAbandon.class
+            │   ├── CommandClaimAbandonAll.class
+            │   ├── CommandClaimAdmin.class
+            │   ├── CommandClaimAdminList.class
+            │   ├── CommandClaimBanItem.class
+            │   ├── CommandClaimBasic.class
+            │   ├── CommandClaimBook.class
+            │   ├── CommandClaimBuy.class
+            │   ├── CommandClaimClear.class
+            │   ├── CommandClaimCuboid.class
+            │   ├── CommandClaimDelete.class
+            │   ├── CommandClaimDeleteAll.class
+            │   ├── CommandClaimDeleteAllAdmin.class
+            │   ├── CommandClaimFarewell.class
+            │   ├── CommandClaimFlag$FlagType.class
+            │   ├── CommandClaimFlag.class
+            │   ├── CommandClaimFlagDebug.class
+            │   ├── CommandClaimFlagGroup.class
+            │   ├── CommandClaimFlagPlayer.class
+            │   ├── CommandClaimFlagReset.class
+            │   ├── CommandClaimGreeting.class
+            │   ├── CommandClaimIgnore.class
+            │   ├── CommandClaimInfo.class
+            │   ├── CommandClaimInherit.class
+            │   ├── CommandClaimList.class
+            │   ├── CommandClaimName.class
+            │   ├── CommandClaimOptionGroup.class
+            │   ├── CommandClaimOptionPlayer.class
+            │   ├── CommandClaimPermissionGroup.class
+            │   ├── CommandClaimPermissionPlayer.class
+            │   ├── CommandClaimSell.class
+            │   ├── CommandClaimSetSpawn.class
+            │   ├── CommandClaimSpawn.class
+            │   ├── CommandClaimSubdivide.class
+            │   ├── CommandClaimTransfer.class
+            │   ├── CommandClaimUnbanItem.class
+            │   ├── CommandContainerTrust.class
+            │   ├── CommandDebug.class
+            │   ├── CommandGivePet.class
+            │   ├── CommandGpReload.class
+            │   ├── CommandHelper.class
+            │   ├── CommandIgnorePlayer.class
+            │   ├── CommandIgnoredPlayerList.class
+            │   ├── CommandPermissionTrust.class
+            │   ├── CommandPlayerInfo.class
+            │   ├── CommandRestoreNature.class
+            │   ├── CommandRestoreNatureAggressive.class
+            │   ├── CommandRestoreNatureFill.class
+            │   ├── CommandSeparate.class
+            │   ├── CommandSetAccruedClaimBlocks.class
+            │   ├── CommandSiege.class
+            │   ├── CommandSoftMute.class
+            │   ├── CommandTrust.class
+            │   ├── CommandTrustAll.class
+            │   ├── CommandTrustList.class
+            │   ├── CommandUnignorePlayer.class
+            │   ├── CommandUnlockDrops.class
+            │   ├── CommandUnseparate.class
+            │   ├── CommandUntrust.class
+            │   └── CommandUntrustAll.class
+            ├── configuration
+            │   ├── ClaimDataConfig.class
+            │   ├── ClaimStorageData.class
+            │   ├── ClaimTemplateConfig.class
+            │   ├── ClaimTemplateStorage.class
+            │   ├── GriefPreventionConfig$Type.class
+            │   ├── GriefPreventionConfig.class
+            │   ├── IClaimData.class
+            │   ├── PlayerDataConfig.class
+            │   ├── PlayerStorageData.class
+            │   ├── SubDivisionDataConfig.class
+            │   ├── category
+            │   │   ├── ClaimCategory.class
+            │   │   ├── ConfigCategory.class
+            │   │   ├── DatabaseCategory.class
+            │   │   ├── EconomyCategory.class
+            │   │   ├── FlagCategory.class
+            │   │   ├── GeneralCategory.class
+            │   │   ├── LoggingCategory.class
+            │   │   ├── MigratorCategory.class
+            │   │   ├── PlayerDataCategory.class
+            │   │   ├── PvpCategory.class
+            │   │   ├── SiegeCategory.class
+            │   │   └── SpamCategory.class
+            │   └── type
+            │       ├── ConfigBase.class
+            │       ├── DimensionConfig.class
+            │       ├── GlobalConfig.class
+            │       └── WorldConfig.class
+            ├── event
+            │   ├── GPAttackPlayerEvent.class
+            │   ├── GPBorderClaimEvent.class
+            │   ├── GPClaimEvent.class
+            │   ├── GPCreateClaimEvent.class
+            │   ├── GPDeleteClaimEvent$Abandon.class
+            │   ├── GPDeleteClaimEvent.class
+            │   ├── GPResizeClaimEvent.class
+            │   ├── GPTransferClaimEvent.class
+            │   ├── GPTrustClaimEvent$Add.class
+            │   ├── GPTrustClaimEvent$Remove.class
+            │   └── GPTrustClaimEvent.class
+            ├── exception
+            │   └── NoTransferException.class
+            ├── listener
+            │   ├── BlockEventHandler.class
+            │   ├── EntityEventHandler$1.class
+            │   ├── EntityEventHandler$2.class
+            │   ├── EntityEventHandler.class
+            │   ├── EntityRemovalListener.class
+            │   ├── NucleusEventHandler.class
+            │   ├── PlayerEventHandler.class
+            │   └── WorldEventHandler.class
+            ├── logging
+            │   ├── CustomLogEntryTypes.class
+            │   ├── CustomLogger$1.class
+            │   ├── CustomLogger$EntryWriter.class
+            │   ├── CustomLogger$ExpiredLogRemover.class
+            │   └── CustomLogger.class
+            ├── message
+            │   ├── CustomizableMessage.class
+            │   ├── Messages.class
+            │   └── TextMode.class
+            ├── migrator
+            │   ├── PolisMigrator.class
+            │   └── RedProtectMigrator.class
+            ├── permission
+            │   ├── GPOptions.class
+            │   ├── GPPermissionHandler.class
+            │   └── GPPermissions.class
+            ├── task
+            │   ├── AutoExtendClaimTask$ExecuteExtendClaimTask.class
+            │   ├── AutoExtendClaimTask.class
+            │   ├── CheckForPortalTrapTask.class
+            │   ├── CleanupUnusedClaimsTask.class
+            │   ├── DeliverClaimBlocksTask.class
+            │   ├── IgnoreLoaderThread.class
+            │   ├── PlayerKickBanTask.class
+            │   ├── PvPImmunityValidationTask.class
+            │   ├── RestoreNatureExecutionTask.class
+            │   ├── RestoreNatureProcessingTask.class
+            │   ├── SecureClaimTask.class
+            │   ├── SendPlayerMessageTask.class
+            │   ├── SiegeCheckupTask.class
+            │   ├── VisualizationApplicationTask.class
+            │   ├── VisualizationReversionTask.class
+            │   └── WelcomeTask.class
+            ├── util
+            │   ├── BlockUtils.class
+            │   ├── NbtDataHelper.class
+            │   ├── PlayerUtils.class
+            │   └── WordFinder.class
+            └── visual
+                ├── Visualization.class
+                └── VisualizationType.class
+
+23 directories, 190 files
+
+
+root@Kali:~/HTB/Blocky/griefprevention# file mcmod.info 
+mcmod.info: JSON data
+root@Kali:~/HTB/Blocky/griefprevention# cat mcmod.info 
+[
+    {
+        "modid": "griefprevention",
+        "name": "GriefPrevention",
+        "version": "3.1.1",
+        "description": "This plugin is designed to prevent all forms of grief.",
+        "url": "https://github.com/MinecraftPortCentral/GriefPrevention",
+        "dependencies": [
+            "spongeapi@6.0.0-SNAPSHOT-6ff094e"
+        ],
+        "requiredMods": [
+            "spongeapi@6.0.0-SNAPSHOT-6ff094e"
+        ]
+    }
+]
