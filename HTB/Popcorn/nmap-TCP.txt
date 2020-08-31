@@ -1,0 +1,148 @@
+root@Kali:~/HTB/Popcorn# masscan -p1-65535,U:1-65535 10.10.10.6 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-27 14:38:53 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 80/tcp on 10.10.10.6                                      
+Discovered open port 22/tcp on 10.10.10.6                                      
+
+Forgot to specify but didn't matter cause default
+
+root@Kali:~/HTB/Popcorn# nmap -Pn -n -sV --script=vuln,discovery 10.10.10.6 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-08-27 22:59 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.6
+Host is up (0.0060s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 5.1p1 Debian 6ubuntu2 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_5.1p1 Debian-6ubuntu2
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   1024 3e:c8:1b:15:21:15:50:ec:6e:63:bc:c5:6b:80:7b:38 (DSA)
+|_  2048 aa:1f:79:21:b8:42:f4:8a:38:bd:b8:05:ef:1a:07:4d (RSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (4)
+|   server_host_key_algorithms: (2)
+|   encryption_algorithms: (13)
+|   mac_algorithms: (7)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.2.12 ((Ubuntu))
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_http-apache-negotiation: mod_negotiation enabled.
+|_http-chrono: Request times for /; avg: 194.76ms; min: 176.20ms; max: 211.81ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 27 Aug 2020 14:58:11 GMT; -1m40s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /test/: Test page
+|   /test.php: Test page
+|   /test/logon.html: Jetty
+|_  /icons/: Potentially interesting folder w/ directory listing
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Thu, 27 Aug 2020 14:58:11 GMT
+|   Server: Apache/2.2.12 (Ubuntu)
+|   Last-Modified: Fri, 17 Mar 2017 17:07:05 GMT
+|   ETag: "aa65-b1-54af035029fd5"
+|   Accept-Ranges: bytes
+|   Content-Length: 177
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.2.12 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+| http-vuln-cve2011-3192: 
+|   VULNERABLE:
+|   Apache byterange filter DoS
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2011-3192  BID:49303
+|       The Apache web server is vulnerable to a denial of service attack when numerous
+|       overlapping byte ranges are requested.
+|     Disclosure date: 2011-08-19
+|     References:
+|       https://www.tenable.com/plugins/nessus/55976
+|       https://seclists.org/fulldisclosure/2011/Aug/175
+|       https://www.securityfocus.com/bid/49303
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3192
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.6"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 1     0       13162.80   2889.43  0.0%
+| 22    0       13472.50   3027.67  0.0%
+|_80    0       13435.20   3366.21  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 334.34 seconds
