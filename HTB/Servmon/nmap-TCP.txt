@@ -1,0 +1,339 @@
+root@Kali:~/HTB/Servmon# masscan -p1-65535,U:1-65535 10.10.10.184 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-30 06:26:37 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 7680/tcp on 10.10.10.184                                  
+Discovered open port 49667/tcp on 10.10.10.184                                 
+Discovered open port 49669/tcp on 10.10.10.184                                 
+Discovered open port 49670/tcp on 10.10.10.184                                 
+Discovered open port 5666/tcp on 10.10.10.184                                  
+Discovered open port 8443/tcp on 10.10.10.184                                  
+Discovered open port 445/tcp on 10.10.10.184                                   
+Discovered open port 80/tcp on 10.10.10.184                                    
+Discovered open port 139/tcp on 10.10.10.184                                   
+Discovered open port 49664/tcp on 10.10.10.184                                 
+Discovered open port 49668/tcp on 10.10.10.184                                 
+Discovered open port 135/tcp on 10.10.10.184                                   
+Discovered open port 49665/tcp on 10.10.10.184                                 
+Discovered open port 21/tcp on 10.10.10.184                                    
+Discovered open port 22/tcp on 10.10.10.184                                    
+Discovered open port 5040/tcp on 10.10.10.184                                  
+Discovered open port 6063/tcp on 10.10.10.184                                  
+Discovered open port 49666/tcp on 10.10.10.184                                 
+Discovered open port 6699/tcp on 10.10.10.184                                  
+
+root@Kali:~/HTB/Servmon# nmap -Pn -n -sV -p7680,5666,8443,445,80,139,135,21,22,5040,6063,6699,49664-49670 --script=vuln,discovery 10.10.10.184 -e tun0Starting Nmap 7.80 ( https://nmap.org ) at 2020-08-30 14:47 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.184
+Host is up (0.12s latency).
+
+PORT      STATE SERVICE       VERSION
+21/tcp    open  ftp           Microsoft ftpd
+|_banner: 220 Microsoft FTP Service
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ftp-syst: 
+|_  SYST: Windows_NT
+|_sslv2-drown: 
+22/tcp    open  ssh           OpenSSH for_Windows_7.7 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_for_Windows_7.7
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   2048 b9:89:04:ae:b6:26:07:3f:61:89:75:cf:10:29:28:83 (RSA)
+|   256 71:4e:6c:c0:d3:6e:57:4f:06:b8:95:3d:c7:75:57:53 (ECDSA)
+|_  256 15:38:bd:75:06:71:67:7a:01:17:9c:5c:ed:4c:de:0e (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (1)
+80/tcp    open  http
+|_banner: HTTP/1.1 408 Request Timeout\x0D\x0AContent-type: text/html\...
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| fingerprint-strings: 
+|   GetRequest, HTTPOptions, RTSPRequest: 
+|     HTTP/1.1 200 OK
+|     Content-type: text/html
+|     Content-Length: 340
+|     Connection: close
+|     AuthInfo: 
+|     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+|     <html xmlns="http://www.w3.org/1999/xhtml">
+|     <head>
+|     <title></title>
+|     <script type="text/javascript">
+|     window.location.href = "Pages/login.htm";
+|     </script>
+|     </head>
+|     <body>
+|     </body>
+|     </html>
+|   NULL: 
+|     HTTP/1.1 408 Request Timeout
+|     Content-type: text/html
+|     Content-Length: 0
+|     Connection: close
+|_    AuthInfo:
+|_http-chrono: Request times for /; avg: 420.84ms; min: 255.13ms; max: 928.34ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-type: text/html
+|   Content-Length: 340
+|   Connection: close
+|   AuthInfo: 
+|   
+|_  (Request type: GET)
+|_http-majordomo2-dir-traversal: ERROR: Script execution failed (use -d to debug)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| home
+| dns1
+|_125 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+135/tcp   open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+445/tcp   open  microsoft-ds?
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+5040/tcp  open  unknown
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+5666/tcp  open  tcpwrapped
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+6063/tcp  open  x11?
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+6699/tcp  open  napster?
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+7680/tcp  open  pando-pub?
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+8443/tcp  open  ssl/https-alt
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| fingerprint-strings: 
+|   FourOhFourRequest, HTTPOptions, RTSPRequest, SIPOptions: 
+|     HTTP/1.1 404
+|     Content-Length: 18
+|     Document not found
+|   GetRequest: 
+|     HTTP/1.1 302
+|     Content-Length: 0
+|     Location: /index.html
+|     workers
+|_    jobs
+|_http-chrono: Request times for /; avg: 485.57ms; min: 423.58ms; max: 664.83ms
+| http-headers: 
+|   Content-Length: 5581
+|   Content-Type: text/html
+|   
+|_  (Request type: GET)
+| http-title: NSClient++
+|_Requested resource was /index.html
+| http-vhosts: 
+|_127 names had status 404
+| http-waf-detect: IDS/IPS/WAF detected:
+|_10.10.10.184:8443/?p4yl04d3=<script>alert(document.cookie)</script>
+| ssl-cert: Subject: commonName=localhost
+| Not valid before: 2020-01-14T13:24:20
+|_Not valid after:  2021-01-13T13:24:20
+|_ssl-date: TLS randomness does not represent time
+| ssl-enum-ciphers: 
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Forward Secrecy not supported by any cipher
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       Forward Secrecy not supported by any cipher
+|       Weak certificate signature: SHA1
+|_  least strength: C
+|_sslv2-drown: 
+49664/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49665/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49666/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49667/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49668/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49669/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49670/tcp open  msrpc         Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port80-TCP:V=7.80%I=7%D=8/30%Time=5F4B4B7A%P=x86_64-pc-linux-gnu%r(NULL
+SF:,6B,"HTTP/1\.1\x20408\x20Request\x20Timeout\r\nContent-type:\x20text/ht
+SF:ml\r\nContent-Length:\x200\r\nConnection:\x20close\r\nAuthInfo:\x20\r\n
+SF:\r\n")%r(GetRequest,1B4,"HTTP/1\.1\x20200\x20OK\r\nContent-type:\x20tex
+SF:t/html\r\nContent-Length:\x20340\r\nConnection:\x20close\r\nAuthInfo:\x
+SF:20\r\n\r\n\xef\xbb\xbf<!DOCTYPE\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20X
+SF:HTML\x201\.0\x20Transitional//EN\"\x20\"http://www\.w3\.org/TR/xhtml1/D
+SF:TD/xhtml1-transitional\.dtd\">\r\n\r\n<html\x20xmlns=\"http://www\.w3\.
+SF:org/1999/xhtml\">\r\n<head>\r\n\x20\x20\x20\x20<title></title>\r\n\x20\
+SF:x20\x20\x20<script\x20type=\"text/javascript\">\r\n\x20\x20\x20\x20\x20
+SF:\x20\x20\x20window\.location\.href\x20=\x20\"Pages/login\.htm\";\r\n\x2
+SF:0\x20\x20\x20</script>\r\n</head>\r\n<body>\r\n</body>\r\n</html>\r\n")
+SF:%r(HTTPOptions,1B4,"HTTP/1\.1\x20200\x20OK\r\nContent-type:\x20text/htm
+SF:l\r\nContent-Length:\x20340\r\nConnection:\x20close\r\nAuthInfo:\x20\r\
+SF:n\r\n\xef\xbb\xbf<!DOCTYPE\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\
+SF:x201\.0\x20Transitional//EN\"\x20\"http://www\.w3\.org/TR/xhtml1/DTD/xh
+SF:tml1-transitional\.dtd\">\r\n\r\n<html\x20xmlns=\"http://www\.w3\.org/1
+SF:999/xhtml\">\r\n<head>\r\n\x20\x20\x20\x20<title></title>\r\n\x20\x20\x
+SF:20\x20<script\x20type=\"text/javascript\">\r\n\x20\x20\x20\x20\x20\x20\
+SF:x20\x20window\.location\.href\x20=\x20\"Pages/login\.htm\";\r\n\x20\x20
+SF:\x20\x20</script>\r\n</head>\r\n<body>\r\n</body>\r\n</html>\r\n")%r(RT
+SF:SPRequest,1B4,"HTTP/1\.1\x20200\x20OK\r\nContent-type:\x20text/html\r\n
+SF:Content-Length:\x20340\r\nConnection:\x20close\r\nAuthInfo:\x20\r\n\r\n
+SF:\xef\xbb\xbf<!DOCTYPE\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\
+SF:.0\x20Transitional//EN\"\x20\"http://www\.w3\.org/TR/xhtml1/DTD/xhtml1-
+SF:transitional\.dtd\">\r\n\r\n<html\x20xmlns=\"http://www\.w3\.org/1999/x
+SF:html\">\r\n<head>\r\n\x20\x20\x20\x20<title></title>\r\n\x20\x20\x20\x2
+SF:0<script\x20type=\"text/javascript\">\r\n\x20\x20\x20\x20\x20\x20\x20\x
+SF:20window\.location\.href\x20=\x20\"Pages/login\.htm\";\r\n\x20\x20\x20\
+SF:x20</script>\r\n</head>\r\n<body>\r\n</body>\r\n</html>\r\n");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8443-TCP:V=7.80%T=SSL%I=7%D=8/30%Time=5F4B4B83%P=x86_64-pc-linux-gn
+SF:u%r(GetRequest,74,"HTTP/1\.1\x20302\r\nContent-Length:\x200\r\nLocation
+SF::\x20/index\.html\r\n\r\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x
+SF:04\0\0\0\0\0\0\x12\x02\x18\0\x1aC\n\x07workers\x12\n\n\x04jobs\x12\x02\
+SF:x18\x03\x12\x0f")%r(HTTPOptions,36,"HTTP/1\.1\x20404\r\nContent-Length:
+SF:\x2018\r\n\r\nDocument\x20not\x20found")%r(FourOhFourRequest,36,"HTTP/1
+SF:\.1\x20404\r\nContent-Length:\x2018\r\n\r\nDocument\x20not\x20found")%r
+SF:(RTSPRequest,36,"HTTP/1\.1\x20404\r\nContent-Length:\x2018\r\n\r\nDocum
+SF:ent\x20not\x20found")%r(SIPOptions,36,"HTTP/1\.1\x20404\r\nContent-Leng
+SF:th:\x2018\r\n\r\nDocument\x20not\x20found");
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.184"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 21    0       102533.30  2786.32  0.0%
+| 22    0       102232.20  3631.99  0.0%
+| 80    0       102765.40  3760.32  0.0%
+| 135   0       102788.50  2572.70  0.0%
+| 139   0       102117.90  553.08   0.0%
+| 445   0       102829.40  786.43   0.0%
+| 5040  0       102162.70  1034.45  0.0%
+|_5666  0       102067.90  1893.53  0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum: 
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols: 
+|   dialects: 
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities: 
+|   2.02: 
+|     Distributed File System
+|   2.10: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11: 
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2020-08-30T06:50:11
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1164.26 seconds
