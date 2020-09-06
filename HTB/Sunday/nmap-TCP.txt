@@ -1,0 +1,68 @@
+root@Kali:~/HTB/Sunday# masscan -p1-65535,U:1-65535 10.10.10.76 --rate=600 -e tun0
+
+Starting masscan 1.0.4 (http://bit.ly/14GZzcT) at 2020-08-26 15:01:57 GMT
+ -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+Initiating SYN Stealth Scan
+Scanning 1 hosts [131070 ports/host]
+Discovered open port 79/tcp on 10.10.10.76                                     
+Discovered open port 22022/tcp on 10.10.10.76                                  
+Discovered open port 111/tcp on 10.10.10.76                                    
+Discovered open port 34252/tcp on 10.10.10.76                                  
+Discovered open port 51706/tcp on 10.10.10.76                                  
+
+root@Kali:~/HTB/Sunday# nmap -Pn -n -sV -p79,111,22022,34252,51706 --script=vuln,discovery 10.10.10.76 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-08-26 23:11 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+NSOCK ERROR [39.1960s] mksock_bind_addr(): Bind to 0.0.0.0:22 failed (IOD #18): Address already in use (98)
+Nmap scan report for 10.10.10.76
+Host is up (0.0077s latency).
+
+PORT      STATE SERVICE VERSION
+79/tcp    open  finger  Sun Solaris fingerd
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_finger: No one logged on\x0D
+111/tcp   open  rpcbind
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+22022/tcp open  ssh     SunSSH 1.3 (protocol 2.0)
+|_banner: SSH-2.0-Sun_SSH_1.3
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   1024 d2:e5:cb:bd:33:c7:01:31:0b:3c:63:d9:82:d9:f1:4e (DSA)
+|_  1024 e4:2c:80:62:cf:15:17:79:ff:72:9d:df:8b:a6:c9:ac (RSA)
+| ssh2-enum-algos: 
+|   kex_algorithms: (3)
+|   server_host_key_algorithms: (2)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (4)
+|_  compression_algorithms: (2)
+34252/tcp open  unknown
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+51706/tcp open  unknown
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Solaris; CPE: cpe:/o:sun:sunos
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.76"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 79     0       5602.57    646.33    30.0%
+| 111    0       5866.71    716.85    30.0%
+| 22022  0       10375.29   12867.53  30.0%
+| 34252  0       5942.71    908.11    30.0%
+|_51706  0       5216.71    493.49    30.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 72.42 seconds

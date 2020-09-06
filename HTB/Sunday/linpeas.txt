@@ -1,0 +1,514 @@
+sunny@sunday:/tmp$ ./linpeas.sh -a
+cat: /etc/fstab: No such file or directory
+cat: /etc/fstab: No such file or directory
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try `grep --help' for more information.
+which: no fping in (/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/bin)
+
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+  linpeas v2.3.7 by carlospolop
+
+ADVISORY: linpeas should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: SunOS sunday 5.11 snv_111b i86pc i386 i86pc Solaris
+User & Groups: uid=65535(sunny) gid=1(other) groups=1(other)
+Hostname: sunday
+
+[+] /usr/sbin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[-] No port scan capabilities (nc not found)
+
+
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+SunOS sunday 5.11 snv_111b i86pc i386 i86pc Solaris
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.6.9p17
+
+[+] PATH
+[i] Any writable folder in original PATH? (a new completed path will be exported)
+/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin
+New path exported: /usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/bin
+
+[+] Date
+Wed Aug 26 22:09:13 IST 2020
+
+[+] System stats
+Filesystem            Size  Used Avail Use% Mounted on
+rpool/ROOT/opensolaris
+                      7.0G  3.0G  4.0G  43% /
+swap                  1.3G  312K  1.3G   1% /etc/svc/volatile
+/usr/lib/libc/libc_hwcap2.so.1
+                      7.0G  3.0G  4.0G  43% /lib/libc.so.1
+swap                  1.3G  168K  1.3G   1% /tmp
+swap                  1.3G   48K  1.3G   1% /var/run
+rpool/export          4.0G   21K  4.0G   1% /export
+rpool/export/home     4.0G  594K  4.0G   1% /export/home
+rpool/export/home/sammy
+                      4.0G  586K  4.0G   1% /export/home/sammy
+rpool                 4.0G   79K  4.0G   1% /rpool
+free Not Found
+
+[+] Environment
+[i] Any private information inside environment variables?
+_=/usr/gnu/bin/env
+HISTFILE=/dev/null
+HISTFILESIZE=0
+HISTSIZE=0
+HOME=/export/home/sunny
+LANG=en_US.UTF-8
+LOGNAME=sunny
+MAIL=/var/mail/sunny
+MANPATH=/usr/gnu/share/man:/usr/share/man:/usr/X11/share/man
+PAGER=/usr/bin/less -ins
+PATH=/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/bin
+SHELL=/bin/bash
+SHLVL=1
+SSH_CLIENT=10.10.14.78 34394 22022
+SSH_CONNECTION=10.10.14.78 34394 10.10.10.76 22022
+SSH_TTY=/dev/pts/3
+TERM=xterm-256color
+TZ=Asia/Kolkata
+USER=sunny
+A__z="*SHLVL
+
+[+] Looking for Signature verification failed in dmseg
+ Not Found
+
+[+] selinux enabled? .............. sestatus Not Found
+[+] Printer? ...................... [+] Is this a container? .......... No
+[+] Is ASLR enabled? .............. /proc/sys/kernel/randomize_va_space Not Found
+
+=========================================( Devices )==========================================
+[+] Any sd* disk in /dev? (limit 20)
+sdbc
+sdp
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/wget
+/usr/sbin/ping
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/perl
+/usr/X11/bin/xterm
+/usr/bin/sudo
+
+[+] Compilers Installed
+Compilers Not Found
+
+
+================================( Processes, Cron & Services )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+USER       PID %CPU %MEM   SZ  RSS TT       S    START  TIME COMMAND
+sunny     4007  0.2  0.2 6616 2600 pts/3    S 22:09:12  0:00 /bin/sh ./linpeas.
+root       534  0.2  0.311944 5476 ?        S 20:25:41  0:06 /usr/lib/vmware-to
+root         9  0.1  0.61362011748 ?        S 20:25:26  0:05 /lib/svc/bin/svc.c
+gdm        612  0.1  2.926668859384 ?        S 20:25:42  0:03 /usr/lib/gdmgreete
+sunny     3191  0.1  0.310180 4592 ?        S 21:55:25  0:00 /usr/lib/ssh/sshd
+root         3  0.1  0.0    0    0 ?        S 20:25:25  0:02 fsflush
+root       579  0.1  0.93964017596 ?        S 20:25:41  0:02 /usr/X11/bin/Xorg 
+sunny     4182  0.1  0.1 4736 1172 pts/3    O 22:09:13  0:00 ps aux
+root        69  0.0  0.312768 5392 ?        S 20:25:30  0:00 devfsadmd
+root       130  0.0  0.2 9300 4148 ?        S 20:25:32  0:00 /usr/sbin/nscd
+root       565  0.0  0.1 5888 2172 ?        S 20:25:41  0:00 /usr/bin/bash /roo
+sunny     3196  0.0  0.2 5872 2376 pts/3    S 21:55:28  0:00 -bash
+root         1  0.0  0.1 2732 1032 ?        S 20:25:25  0:00 /sbin/init
+root      4006  0.0  0.1 4068 1108 ?        S 22:09:09  0:00 /usr/gnu/bin/sleep
+daemon      51  0.0  0.3 9396 4836 ?        S 20:25:29  0:00 /lib/crypto/kcfd
+root         0  0.0  0.0    0    0 ?        T 20:25:25  0:00 sched
+root         2  0.0  0.0    0    0 ?        S 20:25:25  0:00 pageout
+root         7  0.0  0.513792 8728 ?        S 20:25:26  0:02 /lib/svc/bin/svc.s
+dladm       16  0.0  0.1 3060 1540 ?        S 20:25:26  0:00 /sbin/dlmgmtd
+root       127  0.0  0.1 2120 1532 ?        S 20:25:32  0:00 /usr/lib/power/pow
+root       143  0.0  0.2 7900 2504 ?        S 20:25:32  0:00 /usr/lib/sysevent/
+root       169  0.0  0.2 6496 2900 ?        S 20:25:33  0:00 /usr/lib/picl/picl
+root       269  0.0  0.1 4800 1800 ?        S 20:25:34  0:00 /usr/lib/dbus-daem
+root       273  0.0  0.3 6672 5136 ?        S 20:25:34  0:00 /usr/lib/hal/hald 
+root       275  0.0  0.1 3852 2024 ?        S 20:25:34  0:00 hald-runner
+root       296  0.0  0.1 3956 2100 ?        S 20:25:34  0:00 /usr/lib/hal/hald-
+root       309  0.0  0.1 4400 1336 ?        S 20:25:34  0:00 /usr/sbin/cron
+root       310  0.0  0.1 3968 2112 ?        S 20:25:34  0:00 /usr/lib/hal/hald-
+root       311  0.0  0.1 3868 2200 ?        S 20:25:34  0:00 /usr/lib/hal/hald-
+root       325  0.0  0.1 2756 1656 ?        S 20:25:35  0:00 /usr/lib/hal/hald-
+root       344  0.0  0.1 4192 2064 ?        S 20:25:36  0:00 /usr/lib/rmvolmgr 
+daemon     350  0.0  0.1 3368 1472 ?        S 20:25:37  0:00 /usr/sbin/rpcbind
+root       362  0.0  0.1 1636  928 ?        S 20:25:37  0:00 /usr/lib/utmpd
+root       363  0.0  0.1 2344 1252 ?        S 20:25:37  0:00 /usr/lib/saf/sac -
+root       365  0.0  0.2 8748 3496 ?        S 20:25:37  0:00 /usr/lib/inet/inet
+root       373  0.0  0.1 2008 1444 console  S 20:25:37  0:00 /usr/lib/saf/ttymo
+root       387  0.0  0.1 5136 1500 ?        S 20:25:37  0:00 /usr/lib/autofs/au
+root       388  0.0  0.1 5208 1480 ?        S 20:25:37  0:00 /usr/lib/autofs/au
+root       396  0.0  0.1 6740 1704 ?        S 20:25:37  0:00 /usr/lib/ssh/sshd
+root       402  0.0  0.61947211892 ?        S 20:25:37  0:01 /usr/lib/fm/fmd/fm
+root       408  0.0  0.1 2512 1352 ?        S 20:25:37  0:00 /usr/lib/saf/ttymo
+root       417  0.0  0.1 6648 2056 ?        S 20:25:37  0:00 /usr/sbin/syslogd
+noaccess   431  0.0  0.1 2692 1500 ?        S 20:25:38  0:00 /usr/lib/inet/mdns
+daemon     449  0.0  0.1 3068 1924 ?        S 20:25:38  0:00 /usr/sbin/avahi-da
+root       451  0.0  0.1 2572 1048 ?        S 20:25:38  0:00 /usr/lib/inet/in.n
+root       574  0.0  0.1 8092 2088 ?        S 20:25:41  0:00 /usr/sbin/gdm-bina
+root       575  0.0  0.2 9444 3120 ?        S 20:25:41  0:00 /usr/sbin/gdm-bina
+root       578  0.0  0.3 9136 5412 ?        S 20:25:41  0:00 /usr/perl5/bin/per
+root       609  0.0  0.1 3520 1436 ?        S 20:25:42  0:00 /usr/openwin/bin/f
+smmsp      685  0.0  0.1 6136 1728 ?        S 20:28:38  0:00 /usr/lib/sendmail 
+root       687  0.0  0.1 6136 2136 ?        S 20:28:38  0:00 /usr/lib/sendmail 
+root      3190  0.0  0.2 8116 3100 ?        S 21:55:25  0:00 /usr/lib/ssh/sshd
+sunny     4183  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4184  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4185  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4186  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4187  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4188  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4189  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4190  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4191  0.0  0.0 6612    ? pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+sunny     4192  0.0  0.2 6616 2600 pts/3    R 22:09:13  0:00 /bin/sh ./linpeas.
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+ 512 lrwxrwxrwx 1 root root     13 2018-04-15 19:52 /bin/sh -> ../../sbin/sh
+ 24K -r-xr-xr-x 1 root bin     24K 2009-05-14 21:18 /lib/crypto/kcfd
+ 44K -r-xr-xr-x 1 root bin     44K 2009-05-14 21:18 /sbin/dlmgmtd
+ 62K -r-xr-xr-x 1 root sys     61K 2009-05-14 21:18 /sbin/init
+771K -r-xr-xr-x 1 root bin    719K 2009-05-14 21:21 /usr/bin/bash
+ 24K -r-xr-xr-x 1 root bin     23K 2009-05-14 21:22 /usr/gnu/bin/sleep
+259K -r-xr-xr-x 1 root bin    254K 2009-05-14 21:21 /usr/lib/hal/hald
+ 53K -r-xr-xr-x 1 root bin     53K 2009-05-14 21:22 /usr/lib/rmvolmgr
+ 33K -r-xr-xr-x 1 root sys     33K 2009-05-14 21:18 /usr/lib/saf/sac
+1.1M -r-xr-sr-x 1 root smmsp 1017K 2009-05-14 21:22 /usr/lib/sendmail
+515K -r-xr-xr-x 1 root bin    388K 2009-05-14 21:22 /usr/lib/ssh/sshd
+ 19K -r-xr-xr-x 1 root bin     19K 2009-05-14 21:18 /usr/lib/utmpd
+ 69K -r-xr-xr-x 1 root sys     69K 2009-05-14 21:18 /usr/sbin/cron
+259K -r-xr-xr-x 1 root bin    214K 2009-05-14 21:18 /usr/sbin/nscd
+ 62K -r-xr-xr-x 1 root bin     62K 2009-05-14 21:18 /usr/sbin/rpcbind
+ 87K -r-xr-xr-x 1 root sys     87K 2009-05-14 21:18 /usr/sbin/syslogd
+
+/usr/lib/sysevent/:
+total 99K
+1.5K drwxr-xr-x   3 root bin    5 2018-04-15 19:47 .
+ 37K drwxr-xr-x 135 root bin 1.4K 2020-07-31 12:06 ..
+1.5K drwxr-xr-x   2 root bin    8 2018-04-15 19:47 modules
+ 24K -r-xr-xr-x   1 root bin  23K 2009-05-14 21:18 syseventconfd
+ 36K -r-xr-xr-x   1 root bin  35K 2009-05-14 21:18 syseventd
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-jobs
+lrwxrwxrwx 1 root root 16 2018-04-15 19:52 /etc/cron -> ../usr/sbin/cron
+
+/etc/cron.d:
+total 14
+drwxr-xr-x  2 root sys    7 2020-08-26 20:25 .
+drwxr-xr-x 78 root sys  225 2020-08-26 22:07 ..
+-rw-r--r--  1 root sys   17 2009-05-14 21:18 at.deny
+-rw-r--r--  1 root sys   17 2009-05-14 21:18 cron.deny
+prw-------  1 root root   0 2020-08-26 20:25 FIFO
+-rwxr--r--  1 root sys  982 2009-05-14 21:18 .proto
+-rw-r--r--  1 root sys   17 2009-05-14 21:18 queuedefs
+Binary file (standard input) matches
+
+[+] Services
+[i] Search for outdated versions
+service|chkconfig|rc-status Not Found
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+dnsdomainname Not Found
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Networks and neighbours
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License, Version 1.0 only
+# (the "License").  You may not use this file except in compliance
+# with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+# Copyright 1992 Sun Microsystems, Inc.  All rights reserved.
+# Use is subject to license terms.
+#
+#ident  "%Z%%M% %I%     %E% SMI"        /* SVr4.0 1.1   */
+#
+# The networks file associates Internet Protocol (IP) network numbers
+# with network names.  The format of this file is:
+# 
+#       network-name    network-number  nicnames . . .
+#
+
+#
+# The loopback network is used only for intra-machine communication
+#
+loopback        127
+
+#
+# Internet networks
+#
+arpanet         10              arpa    # Historical
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#internal-open-ports
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#groups
+uid=65535(sunny) gid=1(other) groups=1(other)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Testing 'sudo -l' without password & /etc/sudoers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+User sunny may run the following commands on this host:
+    (root) NOPASSWD: /root/troll
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+
+[+] Do not forget to test 'su' as any other user with shell: without password and with their names as password (I can't do it...)
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:Super-User:/root:/usr/bin/bash
+
+[+] Users with console
+postgres:x:90:90:PostgreSQL Reserved UID:/:/usr/bin/pfksh
+root:x:0:0:Super-User:/root:/usr/bin/bash
+sammy:x:101:10:sammy:/export/home/sammy:/bin/bash
+sunny:x:65535:1:sunny:/export/home/sunny:/bin/bash
+zfssnap:x:51:12:ZFS Automatic Snapshots Reserved UID:/:/usr/bin/pfsh
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root),1(other),2(bin),3(sys),4(adm),5(uucp),6(mail),7(tty),8(lp),9(nuucp),12(daemon)
+uid=101(sammy) gid=10(staff) groups=10(staff)
+uid=15(dladm) gid=3(sys) groups=3(sys)
+uid=1(daemon) gid=1(other) groups=1(other),2(bin),4(adm)
+uid=25(smmsp) gid=25(smmsp) groups=25(smmsp)
+uid=2(bin) gid=2(bin) groups=2(bin),3(sys)
+uid=37(listen) gid=4(adm) groups=4(adm)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=4(adm) gid=4(adm) groups=4(adm),3(sys),7(tty),8(lp)
+uid=50(gdm) gid=50(gdm) groups=50(gdm)
+uid=51(zfssnap) gid=12(daemon) groups=12(daemon)
+uid=5(uucp) gid=5(uucp) groups=5(uucp)
+uid=60001(nobody) gid=60001(nobody) groups=60001(nobody)
+uid=60002(noaccess) gid=60002(noaccess) groups=60002(noaccess)
+uid=60(xvm) gid=60(xvm) groups=60(xvm)
+uid=65534(nobody4) gid=65534(nogroup) groups=65534(nogroup)
+uid=65535(sunny) gid=1(other) groups=1(other)
+uid=70(mysql) gid=70(mysql) groups=70(mysql)
+uid=71(lp) gid=8(lp) groups=8(lp)
+uid=75(openldap) gid=75(openldap) groups=75(openldap)
+uid=80(webservd) gid=80(webservd) groups=80(webservd)
+uid=90(postgres) gid=90(postgres) groups=90(postgres)
+uid=95(svctag) gid=12(daemon) groups=12(daemon)
+uid=9(nuucp) gid=9(nuucp) groups=9(nuucp)
+
+[+] Login now
+ 10:09pm  up  1:44,  1 user,  load average: 0.27, 0.11, 0.04
+User     tty           login@  idle   JCPU   PCPU  what
+sunny    pts/3         9:55pm           31         /bin/sh ./linpeas.sh -a
+
+[+] Last logons
+sammy     sshd         10.22.1.4        Sun Apr 15 20:37 - 20:47  (00:10)
+sunny     pts/3        10.22.1.4        Sun Apr 15 20:30 - 20:37  (00:06)
+sunny     sshd         10.22.1.4        Sun Apr 15 20:30 - 20:37  (00:06)
+reboot    system boot                   Sun Apr 15 20:27 
+reboot    system down                   Sun Apr 15 20:26 
+reboot    system boot                   Sun Apr 15 20:13 
+reboot    system down                   Mon Apr 16 01:12 
+reboot    system boot                   Mon Apr 16 01:11 
+
+wtmp begins Mon Apr 16 01:11 
+
+[+] Last time logon each user
+
+[+] Password policy
+/etc/login.defs Not Found
+
+[+] User timers
+ Not Found
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Looking for mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] Apache server info
+ Not Found
+
+[+] Looking for PHPCookies
+ Not Found
+
+[+] Looking for Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Looking for Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+
+[+] Looking for supervisord configuration file
+supervisord.conf Not Found
+
+[+] Looking for cesi configuration file
+cesi.conf Not Found
+
+[+] Looking for Rsyncd config file
+rsyncd.conf Not Found
+[+] Looking for Hostapd config file
+hostapd.conf Not Found
+
+[+] Looking for wifi conns file
+ Not Found
+
+[+] Looking for Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Looking for .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Looking for ldap directories and their hashes
+/var/ldap
+/var/svc/manifest/network/ldap
+/usr/lib/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Looking for .ovpn files and credentials
+.ovpn Not Found
+
+[+] Looking for ssl/ssh files
+Port 22022
+ListenAddress ::
+GatewayPorts no
+PermitEmptyPasswords no
+PasswordAuthentication yes
+PermitRootLogin no
+
+Looking inside /etc/ssh/ssh_config for interesting info
+
+[+] Looking for unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Looking for Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Looking for kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Looking for Kibana yaml
+kibana.yml Not Found
+
+[+] Looking for Knock configuration
+Knock.config Not Found
+
+[+] Looking for logstash files
+ Not Found
+
+[+] Looking for elasticsearch files
+ Not Found
+
+[+] Looking for Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Looking for AD cached hahses
+cached hashes Not Found
+
+[+] Looking for screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+No Sockets found in /export/home/sunny/.screen.
+
+[+] Looking for tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Looking for Couchdb directory
+
+[+] Looking for redis.conf
+
+[+] Looking for dovecot files
+dovecot credentials Not Found
+
+[+] Looking for mosquitto.conf
+
+[+] Looking for neo4j auth file
+
+[+] Looking Cloud-Init conf file
+
+
+./linpeas.sh: line 1457: syntax error at line 1543: `(' unexpected
