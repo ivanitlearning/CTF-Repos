@@ -1,0 +1,159 @@
+root@Kali:~/HTB/Irked# nmap -Pn -n -sS -p- 10.10.10.117 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-06 15:46 +08
+Nmap scan report for 10.10.10.117
+Host is up (0.0081s latency).
+Not shown: 65528 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+80/tcp    open  http
+111/tcp   open  rpcbind
+6697/tcp  open  ircs-u
+8067/tcp  open  infi-async
+51401/tcp open  unknown
+65534/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 10.19 seconds
+
+root@Kali:~/HTB/Irked# nmap -Pn -n -sV -p22,80,111,6697,8067,51401,65534 --script=vuln,discovery 10.10.10.117 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-06 15:51 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.117
+Host is up (0.015s latency).
+
+PORT      STATE SERVICE VERSION
+22/tcp    open  ssh     OpenSSH 6.7p1 Debian 5+deb8u4 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u4
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   1024 6a:5d:f5:bd:cf:83:78:b6:75:31:9b:dc:79:c5:fd:ad (DSA)
+|   2048 75:2e:66:bf:b9:3c:cc:f7:7e:84:8a:8b:f0:81:02:33 (RSA)
+|   256 c8:a3:a2:5e:34:9a:c4:9b:90:53:f7:50:bf:ea:25:3b (ECDSA)
+|_  256 8d:1b:43:c7:d0:1a:4c:05:cf:82:ed:c1:01:63:a2:0c (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (6)
+|   server_host_key_algorithms: (4)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp    open  http    Apache httpd 2.4.10 ((Debian))
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 177.45ms; min: 149.85ms; max: 205.49ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 06 Sep 2020 07:51:32 GMT; 0s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|_  /manual/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Sun, 06 Sep 2020 07:51:31 GMT
+|   Server: Apache/2.4.10 (Debian)
+|   Last-Modified: Mon, 14 May 2018 18:00:02 GMT
+|   ETag: "48-56c2e413aa86b"
+|   Accept-Ranges: bytes
+|   Content-Length: 72
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.4.10 (Debian)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; jpg: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; jpg: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+111/tcp   open  rpcbind 2-4 (RPC #100000)
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| rpcinfo: 
+|   program version    port/proto  service
+|   100000  2,3,4        111/tcp   rpcbind
+|   100000  2,3,4        111/udp   rpcbind
+|   100000  3,4          111/tcp6  rpcbind
+|   100000  3,4          111/udp6  rpcbind
+|   100024  1          41705/udp   status
+|   100024  1          43966/udp6  status
+|   100024  1          47853/tcp6  status
+|_  100024  1          51401/tcp   status
+6697/tcp  open  irc     UnrealIRCd
+|_banner: ERROR :Closing Link: [10.10.14.78] (Throttled: Reconnecting ...
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| irc-botnet-channels: 
+|_  ERROR: Closing Link: [10.10.14.78] (Throttled: Reconnecting too fast) -Email djmardov@irked.htb for more information.
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+|_sslv2-drown: 
+8067/tcp  open  irc     UnrealIRCd
+|_banner: ERROR :Closing Link: [10.10.14.78] (Throttled: Reconnecting ...
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| irc-botnet-channels: 
+|_  ERROR: Closing Link: [10.10.14.78] (Throttled: Reconnecting too fast) -Email djmardov@irked.htb for more information.
+51401/tcp open  status  1 (RPC #100024)
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+65534/tcp open  irc     UnrealIRCd
+|_banner: ERROR :Closing Link: [10.10.14.78] (Throttled: Reconnecting ...
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| irc-botnet-channels: 
+|_  ERROR: Closing Link: [10.10.14.78] (Throttled: Reconnecting too fast) -Email djmardov@irked.htb for more information.
+Service Info: Host: irked.htb; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.117"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 22     0       8921.50    4260.67   0.0%
+| 80     0       9281.00    4798.01   0.0%
+| 111    0       19560.50   24899.45  0.0%
+| 6697   0       10139.50   3695.21   0.0%
+| 8067   0       8457.20    4462.09   0.0%
+| 51401  0       10256.10   3789.36   0.0%
+|_65534  0       8786.00    4282.41   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 127.75 seconds

