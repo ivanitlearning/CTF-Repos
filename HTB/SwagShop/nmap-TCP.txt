@@ -1,0 +1,1558 @@
+root@Kali:~/HTB/SwagShop# nmap -Pn -n -sS -p- 10.10.10.140 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-12 09:24 +08
+Nmap scan report for 10.10.10.140
+Host is up (0.0070s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 9.46 seconds
+
+root@Kali:~/HTB/SwagShop# nmap -Pn -n -sV -p22,80 --script=vuln,discovery 10.10.10.140 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-12 09:25 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.140
+Host is up (0.019s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   2048 b6:55:2b:d2:4e:8f:a3:81:72:61:37:9a:12:f6:24:ec (RSA)
+|   256 2e:30:00:7a:92:f0:89:30:59:c1:77:56:ad:51:c0:ba (ECDSA)
+|_  256 4c:50:d5:f2:70:c5:fd:c4:b2:f0:bc:42:20:32:64:34 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (6)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.140
+|   url                                                       method
+|_  http://10.10.10.140:80/index.php/customer/account/login/  FORM
+| http-backup-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.140
+|   http://10.10.10.140:80/index.php/customer/account/login/index.bak
+|   http://10.10.10.140:80/index.php/customer/account/login/index.php/customer/account/login/~
+|   http://10.10.10.140:80/index.php/customer/account/login/index copy.php/customer/account/login/
+|   http://10.10.10.140:80/index.php/customer/account/login/Copy of index.php/customer/account/login/
+|   http://10.10.10.140:80/index.php/customer/account/login/Copy (2) of index.php/customer/account/login/
+|   http://10.10.10.140:80/index.php/customer/account/login/index.php/customer/account/login/.1
+|_  http://10.10.10.140:80/index.php/customer/account/login/index.php/customer/account/login/.~1~
+|_http-chrono: Request times for /; avg: 328.81ms; min: 240.88ms; max: 398.34ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.140
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 131
+|     Comment: 
+|          // set default options
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 921
+|     Comment: 
+|          // Takes the IPE and its generated form, after editor, before controls.
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 249
+|     Comment: 
+|         /**
+|              * replace(/-/, 0) is only for fixing Safari bug which appears
+|              * when Math.abs(0).toFixed() executed on "0" number.
+|              * Result is "0.-0" :(
+|              */
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 42
+|     Comment: 
+|          //TODO: javascript cookies have different domain and path than php cookies
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 100
+|     Comment: 
+|          // array can hold nodes and text
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 398
+|     Comment: 
+|         
+|         //                   how many characters are required to do any match
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 226
+|     Comment: 
+|          //for now we don't need this difference so precision is requiredPrecision
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 23
+|     Comment: 
+|         
+|         //]]>
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 191
+|     Comment: 
+|          // needed to make click events working
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 304
+|     Comment: 
+|         /**
+|          * Quick Search form client model
+|          */
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 5
+|     Comment: 
+|         <!--[if IE 7 ]>    <html lang="en" id="top" class="no-js ie7"> <![endif]-->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 80
+|     Comment: 
+|          // Force carriage returns as token delimiters anyway
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 182
+|     Comment: 
+|          //]]>
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 878
+|     Comment: 
+|          // id|elt
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 216
+|     Comment: 
+|          //this.getEntry(this.index).scrollIntoView(true); useless
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 63
+|     Comment: 
+|          // Allowed values array
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 5
+|     Comment: 
+|         
+|         //  Justin Palmer (http://encytemedia.com/)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 9
+|     Comment: 
+|         
+|         //  Rob Wills
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 415
+|     Comment: 
+|          // content must be container with data
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 402
+|     Comment: 
+|         
+|         //                 Defaults to true.
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 197
+|     Comment: 
+|         /**
+|          * Parse SID and produces the correct URL
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 26
+|     Comment: 
+|          //       due to a Firefox bug
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 187
+|     Comment: 
+|         <!-- Account -->
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 666
+|     Comment: 
+|          // event type, bubbling, cancelable
+|     
+|     Path: http://10.10.10.140:80/js/mage/cookies.js
+|     Line number: 25
+|     Comment: 
+|         
+|         // old school cookie functions grabbed off the web
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 224
+|     Comment: 
+|         /*--------------------------------------------------------------------------*/
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 490
+|     Comment: 
+|          // Prevent executing on elements not in the layout flow
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 880
+|     Comment: 
+|         
+|         //    'SS': [new RegExp('^((6759[0-9]{12})|(5018|5020|5038|6304|6759|6761|6763[0-9]{12,19})|(49[013][1356][0-9]{12})|(6333[0-9]{12})|(6334[0-4]\d{11})|(633110[0-9]{10})|(564182[0-9]{10}))([0-9]{2,3})?$'), new RegExp('^([0-9]{3}|[0-9]{4})?$'), true],
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 26
+|     Comment: 
+|         
+|         // belongs in getUpdatedChoices.
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 391
+|     Comment: 
+|          // fix AppleWebKit rendering
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 32
+|     Comment: 
+|         
+|         // will incrementally autocomplete with a comma as the token.
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 553
+|     Comment: 
+|          // force Safari to render floated elements properly
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 1
+|     Comment: 
+|         /*
+|         * Really easy field validation with Prototype
+|         * http://tetlaw.id.au/view/javascript/really-easy-field-validation
+|         * Andrew Tetlaw
+|         * Version 1.5.4.1 (2007-01-05)
+|         *
+|         * Copyright (c) 2007 Andrew Tetlaw
+|         * Permission is hereby granted, free of charge, to any person
+|         * obtaining a copy of this software and associated documentation
+|         * files (the "Software"), to deal in the Software without
+|         * restriction, including without limitation the rights to use, copy,
+|         * modify, merge, publish, distribute, sublicense, and/or sell copies
+|         * of the Software, and to permit persons to whom the Software is
+|         * furnished to do so, subject to the following conditions:
+|         *
+|         * The above copyright notice and this permission notice shall be
+|         * included in all copies or substantial portions of the Software.
+|         *
+|         * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+|         * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+|         * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+|         * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+|         * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+|         * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+|         * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+|         * SOFTWARE.
+|         *
+|         */
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 87
+|     Comment: 
+|          // determine params called
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 169
+|     Comment: 
+|         /**
+|          * Set "odd", "even" and "last" CSS classes for list items
+|          * @see decorateGeneric()
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 469
+|     Comment: 
+|         
+|         // AJAX in-place editor and collection editor
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 502
+|     Comment: 
+|          // fixing elements class
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 502
+|     Comment: 
+|          // init color calculations
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 404
+|     Comment: 
+|         
+|         // It's possible to pass in a custom function as the 'selector'
+|     
+|     Path: http://10.10.10.140:80/js/varien/form.js
+|     Line number: 373
+|     Comment: 
+|          // find label
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 687
+|     Comment: 
+|          // build options for the droppables
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 181
+|     Comment: 
+|          // move unstarted effects after this effect
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 892
+|     Comment: 
+|          // If 1 and multi-line, uses autoRows
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 223
+|     Comment: 
+|          // find the handle (prevents issues with Safari)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 5
+|     Comment: 
+|         
+|         // script.aculo.us is freely distributable under the terms of an MIT-style license.
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 121
+|     Comment: 
+|          //global scope
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 654
+|     Comment: 
+|         /**
+|          * Executes event handler on the element. Works with event handlers attached by Prototype,
+|          * in a browser-agnostic fashion.
+|          * @param element The element object
+|          * @param event Event name, like 'change'
+|          *
+|          * @example fireEvent($('my-input', 'click'));
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 3
+|     Comment: 
+|         
+|         // Copyright (c) 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 632
+|     Comment: 
+|          // one of 'vertical', 'horizontal'
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 417
+|     Comment: 
+|          // 'box' or 'contents' or { } with provided values
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 30
+|     Comment: 
+|         
+|         // in the options parameter, e.g.:
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 26
+|     Comment: 
+|          // cache containers
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 173
+|     Comment: 
+|          // Mozilla-based browsers fire successive mousemove events with
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 34
+|     Comment: 
+|          // assure backwards compat
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 427
+|     Comment: 
+|          // Beginning matches
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 394
+|     Comment: 
+|         
+|         // - fullSsearch - Search anywhere in autocomplete array strings.
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 4
+|     Comment: 
+|         <!--[if lt IE 7 ]> <html lang="en" id="top" class="no-js ie6"> <![endif]-->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 74
+|     Comment: 
+|          // Initialize handles in reverse (make sure first handle is active)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 360
+|     Comment: 
+|          // make this work on IE on elements without 'layout'
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 12
+|     Comment: 
+|         
+|         // converts rgb() and #xxx to #xxxxxx format,
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 642
+|     Comment: 
+|         /*
+|         if (!("console" in window) || !("firebug" in console))
+|         {
+|             var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml",
+|             "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+|         
+|             window.console = {};
+|             for (var i = 0; i < names.length; ++i)
+|                 window.console[names[i]] = function() {}
+|         }
+|         */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 102
+|     Comment: 
+|          // 100= assume 66fps max.
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 527
+|     Comment: 
+|          //return Validation.get('IsEmpty').test(v) || /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/.test(v)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 741
+|     Comment: 
+|          // return all suitable-for-sortable elements in a guaranteed order
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 62
+|     Comment: 
+|          // workaround firefox 1.0.X bug
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 690
+|     Comment: 
+|          // SlideDown need to have the content of the element wrapped in a container element with fixed height!
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 733
+|     Comment: 
+|          // keep reference
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 668
+|     Comment: 
+|          // remove non-numerics
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 390
+|     Comment: 
+|         
+|         //                    strings in the autocomplete array. If you want to
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 535
+|     Comment: 
+|         /*strip leading and trailing spaces*/
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 784
+|     Comment: 
+|          // TODO: improve sanity check
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 276
+|     Comment: 
+|         
+|         // Version 1.0
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 3
+|     Comment: 
+|         
+|         // Copyright (c) 2005-2008 Marty Haught, Thomas Fuchs
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 528
+|     Comment: 
+|          //return Validation.get('IsEmpty').test(v) || /^[\!\#$%\*/?|\^\{\}`~&\'\+\-=_a-z0-9][\!\#$%\*/?|\^\{\}`~&\'\+\-=_a-z0-9\.]{1,30}[\!\#$%\*/?|\^\{\}`~&\'\+\-=_a-z0-9]@([a-z0-9_-]{1,30}\.){1,5}[a-z]{2,4}$/i.test(v)
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 872
+|     Comment: 
+|         /**
+|          * Hash with credit card types which can be simply extended in payment modules
+|          * 0 - regexp for card number
+|          * 1 - regexp for cvn
+|          * 2 - check or not credit card number trough Luhn algorithm by
+|          *     function validateCreditCard which you can find above in this file
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 30
+|     Comment: 
+|          // try innerHTML approach
+|     
+|     Path: http://10.10.10.140:80/js/varien/form.js
+|     Line number: 314
+|     Comment: 
+|          // Make Zip and its label required/optional
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 6
+|     Comment: 
+|         <!--[if IE 8 ]>    <html lang="en" id="top" class="no-js ie8"> <![endif]-->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 703
+|     Comment: 
+|          // fix for gecko engine
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 819
+|     Comment: 
+|          // mark on ghosting only
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 139
+|     Comment: 
+|          // overload options
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 669
+|     Comment: 
+|          // dispatch for IE before version 9
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 736
+|     Comment: 
+|          // for onupdate
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 609
+|     Comment: 
+|          // [$]1[##][,###]+[.##]
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 7
+|     Comment: 
+|         
+|         //  Martin Bialasinki
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 54
+|     Comment: 
+|         <!--[if  (lte IE 8) & (!IEMobile)]>
+|         <link rel="stylesheet" type="text/css" href="http://10.10.10.140/skin/frontend/rwd/default/css/styles-ie8.css" media="all" />
+|         <link rel="stylesheet" type="text/css" href="http://10.10.10.140/skin/frontend/rwd/default/css/madisonisland-ie8.css" media="all" />
+|         <![endif]-->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 709
+|     Comment: 
+|          // drop on empty handling
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 947
+|     Comment: 
+|         
+|         // Returns true if child is contained within element
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 658
+|     Comment: 
+|          // build options for the draggables
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 655
+|     Comment: 
+|          // clear any old sortable with same element
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 647
+|     Comment: 
+|          // used for better initialization performance
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 378
+|     Comment: 
+|         
+|         // The constructor takes four parameters. The first two are, as usual,
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 646
+|     Comment: 
+|          // these take arrays of elements or ids and can be
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 3
+|     Comment: 
+|         
+|         // Copyright (c) 2005-2010 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 942
+|     Comment: 
+|         
+|         // Delayed observer, like Form.Element.Observer,
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 634
+|     Comment: 
+|          // also takes array of elements (or id's); or false
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 633
+|     Comment: 
+|          // one of 'vertical', 'horizontal', false
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 628
+|     Comment: 
+|          // assumes li children, override with tag: 'tagname'
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 492
+|     Comment: 
+|          // Disable background image during the effect
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 5
+|     Comment: 
+|         
+|         //           (c) 2005-2008 Jon Tirsen (http://www.tirsen.com)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 202
+|     Comment: 
+|          // element instead of observer fixes mem leaks
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 251
+|     Comment: 
+|          // false, or xy or [x,y] or function(x,y){ return [x,y] }
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 207
+|     Comment: 
+|          // 'onStart', 'onEnd', 'onDrag'
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 102
+|     Comment: 
+|          // elements[0].addClassName('first'); // will cause bug in IE (#5587)
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 675
+|     Comment: 
+|         /**
+|          * Returns more accurate results of floating-point modulo division
+|          * E.g.:
+|          * 0.6 % 0.2 = 0.19999999999999996
+|          * modulo(0.6, 0.2) = 0
+|          *
+|          * @param dividend
+|          * @param divisor
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 305
+|     Comment: 
+|          // abort on form elements, fixes a Firefox issue
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 10
+|     Comment: 
+|         
+|         // options:
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 161
+|     Comment: 
+|          // allows keypress events if window isn't currently focused, fails for Safari
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 39
+|     Comment: 
+|          // fix IE
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 635
+|     Comment: 
+|          // or a CSS class
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 33
+|     Comment: 
+|          // prevent IE "feature": http://dev.rubyonrails.org/ticket/2707
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 858
+|     Comment: 
+|         /* Get the element containing the children and recurse over it */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 28
+|     Comment: 
+|         
+|         // Tokenized incremental autocompletion is enabled automatically
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 406
+|     Comment: 
+|         
+|         // In that case, the other options above will not apply unless
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 474
+|     Comment: 
+|         
+|         // waits 1 ms (with setTimeout) until it does the activation
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 472
+|     Comment: 
+|         
+|         // Use this if you notice weird scrolling problems on some browsers,
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 103
+|     Comment: 
+|          // true for combining
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 166
+|     Comment: 
+|         <!-- Search -->
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 20
+|     Comment: 
+|         
+|         //<![CDATA[
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 334
+|     Comment: 
+|         
+|         // means Monday, etc.
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 294
+|     Comment: 
+|          // First day of the week. "0" means display Sunday first, "1" means display Monday first, etc.
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 332
+|     Comment: 
+|         
+|         // This may be locale-dependent. It specifies the week-end days, as an array
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 101
+|     Comment: 
+|          // seconds
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 392
+|     Comment: 
+|         
+|         //                    the option fullSearch to true (default: off).
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 22
+|     Comment: 
+|         
+|         // should get the text for which to provide autocompletion by
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 300
+|     Comment: 
+|         
+|         // tooltips
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 111
+|     Comment: 
+|         <!-- Skip Links -->
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 696
+|     Comment: 
+|         /**
+|          * createContextualFragment is not supported in IE9. Adding its support.
+|          */
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 297
+|     Comment: 
+|          // am/pm
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 402
+|     Comment: 
+|         
+|         // for backwards compatibility
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 852
+|     Comment: 
+|         
+|         //**** DEPRECATION LAYER FOR InPlace[Collection]Editor! ****
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 296
+|     Comment: 
+|          // short month names
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 295
+|     Comment: 
+|          // full month names
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 293
+|     Comment: 
+|          // short day names
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 25
+|     Comment: 
+|          // note: For Firefox < 1.5, OPTION and OPTGROUP tags are currently broken,
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 292
+|     Comment: 
+|          // full day names
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 291
+|     Comment: 
+|          // en_US locale reference
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 388
+|     Comment: 
+|         
+|         //                    autocomplete array. Defaults to true, which will
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 944
+|     Comment: 
+|         
+|         // Ideal for live-search fields
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 24
+|     Comment: 
+|         
+|         // this.element.value. This is to allow incremental tokenized
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 854
+|     Comment: 
+|         
+|         //**** users adapt to  the new API.  Read up on the new ****
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 213
+|     Comment: 
+|         /**
+|          * Formats currency using patern
+|          * format - JSON (pattern, decimal, decimalsDelimeter, groupsDelimeter)
+|          * showPlus - true (always show '+'or '-'),
+|          *      false (never show '-' even if number is negative)
+|          *      null (show '-' if number is negative)
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 73
+|     Comment: 
+|          // text, or array of children
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 681
+|     Comment: 
+|          // remove credit card number delimiters such as "-" and space
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 612
+|     Comment: 
+|          // [$].##
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 532
+|     Comment: 
+|         /* ------------- combination effects ------------- */
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 611
+|     Comment: 
+|          // [$]0.##
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 610
+|     Comment: 
+|          // [$]1###+[.##]
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 386
+|     Comment: 
+|         
+|         // - partialSearch - If false, the autocompleter will match entered
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 596
+|     Comment: 
+|          //return Validation.get('IsEmpty').test(v) || /(^[A-z0-9]{2,10}([\s]{0,1}|[\-]{0,1})[A-z0-9]{2,10}$)/.test(v);
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 286
+|     Comment: 
+|          //}
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 145
+|     Comment: 
+|          // decorate
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 279
+|     Comment: 
+|          //if(!elm[prop]) {
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 100
+|     Comment: 
+|          // Thanks Mike!
+|     
+|     Path: http://10.10.10.140:80/js/mage/cookies.js
+|     Line number: 1
+|     Comment: 
+|         /**
+|          * Magento
+|          *
+|          * NOTICE OF LICENSE
+|          *
+|          * This source file is subject to the Academic Free License (AFL 3.0)
+|          * that is bundled with this package in the file LICENSE_AFL.txt.
+|          * It is also available through the world-wide-web at this URL:
+|          * http://opensource.org/licenses/afl-3.0.php
+|          * If you did not receive a copy of the license and are unable to
+|          * obtain it through the world-wide-web, please send an email
+|          * to license@magentocommerce.com so we can send you a copy immediately.
+|          *
+|          * DISCLAIMER
+|          *
+|          * Do not edit or add to this file if you wish to upgrade Magento to newer
+|          * versions in the future. If you wish to customize Magento for your
+|          * needs please refer to http://www.magentocommerce.com for more information.
+|          *
+|          * @category    Mage
+|          * @package     js
+|          * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+|          * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 552
+|     Comment: 
+|          // No HTML breaks conversion anymore
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 874
+|     Comment: 
+|          // Use when multi-line w/ rows == 1
+|     
+|     Path: http://10.10.10.140:80/js/varien/form.js
+|     Line number: 84
+|     Comment: 
+|          // TODO: array of relation and caching
+|     
+|     Path: http://10.10.10.140:80/index.php/hack-the-box-logo-t-shirt.html
+|     Line number: 398
+|     Comment: 
+|          // Remove custom datetime validators
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 58
+|     Comment: 
+|         <!--[if (gte IE 9) | (IEMobile)]><!-->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 908
+|     Comment: 
+|          // the element directly.  It was too often customized, so we don't break it.
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 45
+|     Comment: 
+|          // abort if nothing could be created
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 907
+|     Comment: 
+|          // For backward compatibility, this one is bound to the IPE, and passes
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 45
+|     Comment: 
+|          // Will be used to align the handle onto the track, if necessary
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 34
+|     Comment: 
+|         
+|         // a token array, e.g. { tokens: [',', '\n'] } which
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 880
+|     Comment: 
+|          // 'activate'|'focus'|false
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 875
+|     Comment: 
+|          // 'link'|'button'|false
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 214
+|     Comment: 
+|          // hide non-current advice after delay
+|     
+|     Path: http://10.10.10.140:80/js/varien/form.js
+|     Line number: 357
+|     Comment: 
+|          // Ajax-request and normal content load compatibility
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 163
+|     Comment: 
+|         /* ------------- core effects ------------- */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 890
+|     Comment: 
+|         /* Construct a [i] index for a particular node */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 38
+|     Comment: 
+|          // see if browser added wrapping tags
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 10
+|     Comment: 
+|         
+|         //
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 48
+|     Comment: 
+|          // attributes (or text)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 384
+|     Comment: 
+|         
+|         // - choices - How many autocompletion choices to offer
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 8
+|     Comment: 
+|         <!--[if (gt IE 9)|!(IE)]><!-->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 487
+|     Comment: 
+|          // DEPRECATION LAYER!!!
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 341
+|     Comment: 
+|         
+|         // date formats
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 374
+|     Comment: 
+|         
+|         // The local array autocompleter. Used when you'd prefer to
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 78
+|     Comment: 
+|          //]]></script></head>
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 36
+|     Comment: 
+|         
+|         // useful when one of the tokens is \n (a newline), as it
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 8
+|     Comment: 
+|         <!--<![endif]-->
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 329
+|     Comment: 
+|         
+|         // the following is to inform that "%s" is to be the first day of week
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 396
+|     Comment: 
+|         
+|         // - partialChars - How many characters to enter before triggering
+|     
+|     Path: http://10.10.10.140:80/js/varien/form.js
+|     Line number: 352
+|     Comment: 
+|          // Country ISO 2-letter codes must be pre-defined
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 124
+|     Comment: 
+|         /**
+|          * Decorate table rows and cells, tbody etc
+|          * @see decorateGeneric()
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/slider.js
+|     Line number: 14
+|     Comment: 
+|         
+|         //  onChange(value)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 174
+|     Comment: 
+|          // the same coordinates, prevent needless redrawing (moz bug?)
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 376
+|     Comment: 
+|         
+|         // than sending out Ajax queries, which can be quite slow sometimes.
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 204
+|     Comment: 
+|         <!-- <div id="header-cart" class="skip-content">
+|                     <div class="mini-cart">
+|                         <div class="menu-wrapper">
+|                             <div class="menu cart-menu">
+|                                 <div class="empty">Your cart is empty.</div>
+|                             </div>
+|                         </div>
+|                     </div>
+|                 </div> -->
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 179
+|     Comment: 
+|          //<![CDATA[
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 408
+|     Comment: 
+|          // id prefix
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 191
+|     Comment: 
+|          // start effect after last queued effect has finished
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 101
+|     Comment: 
+|          // decorate elements
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 428
+|     Comment: 
+|          // Inside matches
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 129
+|     Comment: 
+|         <!-- Cart -->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 20
+|     Comment: 
+|         
+|         // a getUpdatedChoices function that will be invoked every time
+|     
+|     Path: http://10.10.10.140:80/js/varien/form.js
+|     Line number: 1
+|     Comment: 
+|         /**
+|          * Magento
+|          *
+|          * NOTICE OF LICENSE
+|          *
+|          * This source file is subject to the Academic Free License (AFL 3.0)
+|          * that is bundled with this package in the file LICENSE_AFL.txt.
+|          * It is also available through the world-wide-web at this URL:
+|          * http://opensource.org/licenses/afl-3.0.php
+|          * If you did not receive a copy of the license and are unable to
+|          * obtain it through the world-wide-web, please send an email
+|          * to license@magentocommerce.com so we can send you a copy immediately.
+|          *
+|          * DISCLAIMER
+|          *
+|          * Do not edit or add to this file if you wish to upgrade Magento to newer
+|          * versions in the future. If you wish to customize Magento for your
+|          * needs please refer to http://www.magentocommerce.com for more information.
+|          *
+|          * @category    Varien
+|          * @package     js
+|          * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+|          * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+|          */
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 160
+|     Comment: 
+|         <!-- Navigation -->
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 14
+|     Comment: 
+|         
+|         // Autocompleter.Base handles all the autocompletion functionality
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 380
+|     Comment: 
+|         
+|         // The third is the array you want to autocomplete from, and the fourth
+|     
+|     Path: http://10.10.10.140:80/js/prototype/validation.js
+|     Line number: 695
+|     Comment: 
+|          // Other card type or switch or solo card
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 18
+|     Comment: 
+|         <!--[if lt IE 7]>
+|         <script type="text/javascript">
+|         //<![CDATA[
+|             var BLANK_URL = 'http://10.10.10.140/js/blank.html';
+|             var BLANK_IMG = 'http://10.10.10.140/js/spacer.gif';
+|         //]]>
+|         </script>
+|         <![endif]-->
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 664
+|     Comment: 
+|          // dispatch for all browsers except IE before version 9
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 16
+|     Comment: 
+|         
+|         // includes drawing the autocompletion menu, observing keyboard
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 73
+|     Comment: 
+|         /**
+|          * Add classes to specified elements.
+|          * Supported classes are: 'odd', 'even', 'first', 'last'
+|          *
+|          * @param elements - array of elements to be decorated
+|          * [@param decorateParams] - array of classes to be set. If omitted, all available will be used
+|          */
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 7
+|     Comment: 
+|         
+|         //  Richard Livsey
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 746
+|     Comment: 
+|          // Can't use triggerCallback due to backward compatibility: requires
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Line number: 7
+|     Comment: 
+|         <!--[if IE 9 ]>    <html lang="en" id="top" class="no-js ie9"> <![endif]-->
+|     
+|     Path: http://10.10.10.140:80/js/varien/js.js
+|     Line number: 225
+|     Comment: 
+|          //precision = (precision > requiredPrecision) ? precision : requiredPrecision;
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/controls.js
+|     Line number: 747
+|     Comment: 
+|          // binding + direct element
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/dragdrop.js
+|     Line number: 495
+|     Comment: 
+|          // fix gecko rendering
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/builder.js
+|     Line number: 42
+|     Comment: 
+|          // fallback to createElement approach
+|     
+|     Path: http://10.10.10.140:80/js/scriptaculous/effects.js
+|     Line number: 745
+|     Comment: 
+|         
+|_        // Bug in opera makes the TD containing this element expand for a instance after finish
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.140
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.140:80/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/privacy-policy-cookie-restriction-mode/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/privacy-policy-cookie-restriction-mode/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/about-magento-demo-store/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/about-magento-demo-store/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/checkout/cart/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/checkout/cart/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/customer/account/login/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/customer/account/login/
+|     Form id: login-form
+|     Form action: http://10.10.10.140/index.php/customer/account/loginPost/
+|     
+|     Path: http://10.10.10.140:80/index.php/customer/account/login/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/hack-the-box-logo-t-shirt.html
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/hack-the-box-logo-t-shirt.html
+|     Form id: product_addtocart_form
+|     Form action: http://10.10.10.140/index.php/checkout/cart/add/uenc/aHR0cDovLzEwLjEwLjEwLjE0MC9pbmRleC5waHAvaGFjay10aGUtYm94LWxvZ28tdC1zaGlydC5odG1sP19fX1NJRD1V/product/1/form_key/5w0YQJ9yZlmqGxKG/
+|     
+|     Path: http://10.10.10.140:80/index.php/hack-the-box-logo-t-shirt.html
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/contacts/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/contacts/
+|     Form id: contactform
+|     Form action: http://10.10.10.140/index.php/contacts/index/post/
+|     
+|     Path: http://10.10.10.140:80/index.php/contacts/
+|     Form id: newsletter-validate-detail
+|     Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Form id: search_mini_form
+|     Form action: http://10.10.10.140/index.php/catalogsearch/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Form id: form-validate
+|     Form action: http://10.10.10.140/index.php/catalogsearch/advanced/result/
+|     
+|     Path: http://10.10.10.140:80/index.php/catalogsearch/advanced/
+|     Form id: newsletter-validate-detail
+|_    Form action: http://10.10.10.140/index.php/newsletter/subscriber/new/
+|_http-date: Sat, 12 Sep 2020 01:25:56 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /app/: Potentially interesting directory w/ listing on 'apache/2.4.18 (ubuntu)'
+|   /errors/: Potentially interesting directory w/ listing on 'apache/2.4.18 (ubuntu)'
+|   /includes/: Potentially interesting directory w/ listing on 'apache/2.4.18 (ubuntu)'
+|_  /lib/: Potentially interesting directory w/ listing on 'apache/2.4.18 (ubuntu)'
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.140:80/: 
+|     (1) ip: 
+|       + 10.10.10.140
+|   (1) http://10.10.10.140:80/js/varien/js.js: 
+|     (1) email: 
+|       + license@magentocommerce.com
+|   (1) http://10.10.10.140:80/index.php/privacy-policy-cookie-restriction-mode/: 
+|     (1) email: 
+|       + owner@example.com
+|   (1) http://10.10.10.140:80/js/scriptaculous/controls.js: 
+|     (1) email: 
+|       + tdd@tddsworld.com
+|   (1) http://10.10.10.140:80/js/prototype/validation.js: 
+|     (1) email: 
+|_      + johndoe@domain.com
+| http-headers: 
+|   Date: Sat, 12 Sep 2020 01:25:56 GMT
+|   Server: Apache/2.4.18 (Ubuntu)
+|   Set-Cookie: frontend=rsdv4ihk1af0jp1o4rsapqr1p1; expires=Sat, 12-Sep-2020 02:25:56 GMT; Max-Age=3600; path=/; domain=10.10.10.140; HttpOnly
+|   Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|   Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+|   Pragma: no-cache
+|   X-Frame-Options: SAMEORIGIN
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   X_Frame_Options: 
+|     Header: X-Frame-Options: SAMEORIGIN
+|     Description: The browser must not display this content in any frame from a page of different origin than the content itself.
+|   Cache_Control: 
+|     Header: Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+|   Pragma: 
+|     Header: Pragma: no-cache
+|   Expires: 
+|_    Header: Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|     /index.php/
+|       Other: 1; html: 1
+|     /index.php/about-magento-demo-store/
+|       Other: 1
+|     /index.php/catalogsearch/advanced/
+|       Other: 1
+|     /index.php/checkout/cart/
+|       Other: 1
+|     /index.php/contacts/
+|       Other: 1
+|     /index.php/customer/account/login/
+|       Other: 1
+|     /index.php/privacy-policy-cookie-restriction-mode/
+|       Other: 1
+|     /js/mage/
+|       js: 2
+|     /js/prototype/
+|       js: 1
+|     /js/scriptaculous/
+|       js: 5
+|     /js/varien/
+|       js: 2
+|   Longest directory structure:
+|     Depth: 4
+|     Dir: /index.php/customer/account/login/
+|   Total files found (by extension):
+|_    Other: 8; html: 1; js: 10
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Home page
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 302
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.140"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 22    0       5112.40    622.50  0.0%
+|_80    0       5219.80    719.23  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 334.39 seconds
