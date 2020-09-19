@@ -1,0 +1,3068 @@
+root@Kali:~/HTB/Postman# nmap -Pn -n -sS -p- 10.10.10.160 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-15 21:26 +08
+Nmap scan report for 10.10.10.160
+Host is up (0.0073s latency).
+Not shown: 65531 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+80/tcp    open  http
+6379/tcp  open  redis
+10000/tcp open  snet-sensor-mgmt
+
+Nmap done: 1 IP address (1 host up) scanned in 10.81 seconds
+
+root@Kali:~/HTB/Postman# nmap -Pn -n -sV -p22,80,6379,10000 --script=vuln,discovery 10.10.10.160 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-15 21:28 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.160
+Host is up (0.014s latency).
+
+PORT      STATE SERVICE VERSION
+22/tcp    open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.6p1 Ubuntu-4ubuntu0.3
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| ssh-hostkey: 
+|   2048 46:83:4f:f1:38:61:c0:1c:74:cb:b5:d1:4a:68:4d:77 (RSA)
+|   256 2d:8d:27:d2:df:15:1a:31:53:05:fb:ff:f0:62:26:89 (ECDSA)
+|_  256 ca:7c:82:aa:5a:d3:72:ca:8b:8a:38:3a:80:41:a0:45 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp    open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 222.57ms; min: 179.87ms; max: 287.55ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.160
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 445
+|     Comment: 
+|         /**
+|         	 * Initializes the carousel.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 338
+|     Comment: 
+|         /**
+|            * ------------------------------------------------------------------------
+|            * Data Api implementation
+|            * ------------------------------------------------------------------------
+|            */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 127
+|     Comment: 
+|         /**
+|            * --------------------------------------------------------------------------
+|            * Public Util Api
+|            * --------------------------------------------------------------------------
+|            */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1714
+|     Comment: 
+|         /**
+|         		 * Reference to the core.
+|         		 * @protected
+|         		 * @type {Owl}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 300
+|     Comment: 
+|          // remove default user background
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 53
+|     Comment: 
+|         /**
+|         		 * References to the running plugins of this carousel.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 1
+|     Comment: 
+|         /*! Lity - v2.2.2 - 2017-07-17
+|         * http://sorgalla.com/lity/
+|         * Copyright (c) 2015-2017 Jan Sorgalla; Licensed MIT */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 785
+|     Comment: 
+|          // check URL
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2979
+|     Comment: 
+|         /**
+|         	 * Extends event data.
+|         	 * @protected
+|         	 * @param {Event} event - The event object which gets thrown.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 84
+|     Comment: 
+|         /**
+|         		 * Current breakpoint.
+|         		 * @todo Real media queries would be nice.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 346
+|     Comment: 
+|         /**
+|            * ------------------------------------------------------------------------
+|            * jQuery
+|            * ------------------------------------------------------------------------
+|            */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2615
+|     Comment: 
+|         /**
+|         	 * Gets a new timeout
+|         	 * @private
+|         	 * @param {Number} [timeout] - The interval before the next animation starts.
+|         	 * @param {Number} [speed] - The animation speed for the animations.
+|         	 * @return {Timeout}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 551
+|     Comment: 
+|         /**
+|         	 * Prepares an item before add.
+|         	 * @todo Rename event parameter `content` to `item`.
+|         	 * @protected
+|         	 * @returns {jQuery|HTMLElement} - The item container.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1588
+|     Comment: 
+|          // up
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 3424
+|     Comment: 
+|          // overrides
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 183
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): alert.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 437
+|     Comment: 
+|          // scroll distance and height for image
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 17
+|     Comment: 
+|          // distance to the element when triggering the animation (default is 0)
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 592
+|     Comment: 
+|         /**
+|         	 * Gets the width of the view.
+|         	 * @public
+|         	 * @param {Owl.Width} [dimension=Owl.Width.Default] - The dimension to return.
+|         	 * @returns {Number} - The width of the view in pixel.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 807
+|     Comment: 
+|          // parse vimeo ID
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1428
+|     Comment: 
+|         /**
+|         	 * Operators to calculate right-to-left and left-to-right.
+|         	 * @protected
+|         	 * @param {Number} [a] - The left side operand.
+|         	 * @param {String} [o] - The operator.
+|         	 * @param {Number} [b] - The right side operand.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 150
+|     Comment: 
+|          // add styles to element
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 258
+|     Comment: 
+|          // discussion - https://github.com/nk-o/jarallax/issues/9
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 13
+|     Comment: 
+|         /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 726
+|     Comment: 
+|          // thanks http://stackoverflow.com/questions/18096715/implement-deferred-object-without-using-jquery
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1380
+|     Comment: 
+|          // KeyboardEvent.which value for down arrow key
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1058
+|     Comment: 
+|         /**
+|         	 * Gets the minimum position for the current item.
+|         	 * @public
+|         	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
+|         	 * @returns {Number}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 538
+|     Comment: 
+|          // calculate on how percent of section is visible
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1130
+|     Comment: 
+|         /**
+|         	 * Gets the coordinate of an item.
+|         	 * @todo The name of this method is missleanding.
+|         	 * @public
+|         	 * @param {Number} position - The absolute position of the item within `minimum()` and `maximum()`.
+|         	 * @returns {Number|Array.<Number>} - The coordinate of the item in pixel or all coordinates.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1451
+|     Comment: 
+|         /**
+|         	 * Attaches to an internal event.
+|         	 * @protected
+|         	 * @param {HTMLElement} element - The event source.
+|         	 * @param {String} event - The event name.
+|         	 * @param {Function} listener - The event handler to attach.
+|         	 * @param {Boolean} capture - Wether the event should be handled at the capturing phase or not.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2365
+|     Comment: 
+|         /**
+|          * Animate Plugin
+|          * @version 2.1.0
+|          * @author Bartosz Wojciechowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 328
+|     Comment: 
+|          // remove from instances list
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2067
+|     Comment: 
+|         /**
+|         		 * Cache all video URLs.
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 215
+|     Comment: 
+|          // set relative position and z-index to the parent
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 988
+|     Comment: 
+|         /**
+|         	 * Normalizes an absolute or a relative position of an item.
+|         	 * @public
+|         	 * @param {Number} position - The absolute or relative position to normalize.
+|         	 * @param {Boolean} [relative=false] - Whether the given position is relative or not.
+|         	 * @returns {Number} - The normalized position.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 106
+|     Comment: 
+|          // stop init if android or ios
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1224
+|     Comment: 
+|         /**
+|         	 * Slides to the next item.
+|         	 * @public
+|         	 * @param {Number} [speed] - The time in milliseconds for the transition.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2417
+|     Comment: 
+|         /**
+|         	 * Toggles the animation classes whenever an translations starts.
+|         	 * @protected
+|         	 * @returns {Boolean|undefined}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 540
+|     Comment: 
+|         /**
+|         	 * Updates option logic if necessery.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 317
+|     Comment: 
+|          // TAB key
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3193
+|     Comment: 
+|         /**
+|          * Support Plugin
+|          *
+|          * @version 2.1.0
+|          * @author Vivid Planet Software GmbH
+|          * @author Artus Kolanowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 1199
+|     Comment: 
+|         /*********************
+|             TESTIMONIALS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 3
+|     Comment: 
+|         /*!
+|          * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
+|          * Copyright 2011-2017 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 16
+|     Comment: 
+|          // animation css class (default is animated)
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1040
+|     Comment: 
+|          // loop
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 111
+|     Comment: 
+|          // fix speed option [-1.0, 2.0]
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 12
+|     Comment: 
+|         /* Chrome10-25,Safari5.1-6 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 97
+|     Comment: 
+|          // events
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 192
+|     Comment: 
+|         /**
+|            * ------------------------------------------------------------------------
+|            * Constants
+|            * ------------------------------------------------------------------------
+|            */
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 1093
+|     Comment: 
+|         /*********************
+|             WIDGETS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1244
+|     Comment: 
+|         /**
+|         	 * Handles the end of an animation.
+|         	 * @protected
+|         	 * @param {Event} event - The event arguments.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1483
+|     Comment: 
+|         /**
+|         	 * Triggers a public event.
+|         	 * @todo Remove `status`, `relatedTarget` should be used instead.
+|         	 * @protected
+|         	 * @param {String} name - The event name.
+|         	 * @param {*} [data=null] - The event data.
+|         	 * @param {String} [namespace=carousel] - The event namespace.
+|         	 * @param {String} [state] - The state which is associated with the event.
+|         	 * @param {Boolean} [enter=false] - Indicates if the call enters the specified state or not.
+|         	 * @returns {Event} - The event arguments.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 70
+|     Comment: 
+|         /*************** ORANGE ***************/
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2023
+|     Comment: 
+|          // the following methods are used to handle overflowing modals
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 258
+|     Comment: 
+|         /**
+|         	 * Contains all registered plugins.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/css/all.css
+|     Line number: 7
+|     Comment: 
+|         /**************************************
+|         ANIMATE
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1947
+|     Comment: 
+|         /**
+|          * AutoHeight Plugin
+|          * @version 2.1.0
+|          * @author Bartosz Wojciechowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1058
+|     Comment: 
+|          // check for end of video and play again or stop
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1245
+|     Comment: 
+|          // coerce string values
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 53
+|     Comment: 
+|         /*********************
+|             DEFAULT
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 1
+|     Comment: 
+|         /**************************************
+|             Template Name: Micrology
+|             Created By: HTML.Design
+|             https://html.design
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 514
+|     Comment: 
+|          // We return focus only if the current focus is inside this instance
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1396
+|     Comment: 
+|          // remove parent iframe element (created by VideoWorker)
+|     
+|     Path: http://10.10.10.160:80/css/bootstrap.css
+|     Line number: 9320
+|     Comment: 
+|         /*# sourceMappingURL=bootstrap.css.map */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 609
+|     Comment: 
+|         /**
+|         	 * Refreshes the carousel primarily for adaptive purposes.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 18
+|     Comment: 
+|         /**************************************
+|         CLICK SCROLLING
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1603
+|     Comment: 
+|         /**
+|         	 * Gets unified pointer coordinates from event.
+|         	 * @todo #261
+|         	 * @protected
+|         	 * @param {Event} - The `mousedown` or `touchstart` event.
+|         	 * @returns {Object} - Contains `x` and `y` coordinates of current pointer position.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 797
+|     Comment: 
+|         /**
+|         	 * Handles the `touchend` and `mouseup` events.
+|         	 * @todo #261
+|         	 * @todo Threshold for click event
+|         	 * @protected
+|         	 * @param {Event} event - The event arguments.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 24
+|     Comment: 
+|          // optional scroll container selector, otherwise use window
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 769
+|     Comment: 
+|         /*********************
+|             HEROS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 62
+|     Comment: 
+|          // IE 9 or older
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 96
+|     Comment: 
+|         /**
+|         		 * All real items.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 10
+|     Comment: 
+|          // Adapted from https://gist.github.com/paulirish/1579671
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1392
+|     Comment: 
+|         /**
+|         	 * Destroys the carousel.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 78
+|     Comment: 
+|         <!-- end footer -->
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1409
+|     Comment: 
+|          // add video height over than need to hide controls
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2374
+|     Comment: 
+|         /**
+|         	 * Creates the animate plugin.
+|         	 * @class The Navigation Plugin
+|         	 * @param {Owl} scope - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2024
+|     Comment: 
+|          // todo (fat): these should probably be refactored out of modal.js
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1811
+|     Comment: 
+|         /**
+|          * Lazy Plugin
+|          * @version 2.1.0
+|          * @author Bartosz Wojciechowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2166
+|     Comment: 
+|         /*
+|         					Parses the id's out of the following urls (and probably more):
+|         					https://www.youtube.com/watch?v=:id
+|         					https://youtu.be/:id
+|         					https://vimeo.com/:id
+|         					https://vimeo.com/channels/:channel/:id
+|         					https://vimeo.com/groups/:group/videos/:id
+|         					https://app.vzaar.com/videos/:id
+|         
+|         					Visual example: https://regexper.com/#(http%3A%7Chttps%3A%7C)%5C%2F%5C%2F(player.%7Cwww.%7Capp.)%3F(vimeo%5C.com%7Cyoutu(be%5C.com%7C%5C.be%7Cbe%5C.googleapis%5C.com)%7Cvzaar%5C.com)%5C%2F(video%5C%2F%7Cvideos%5C%2F%7Cembed%5C%2F%7Cchannels%5C%2F.%2B%5C%2F%7Cgroups%5C%2F.%2B%5C%2F%7Cwatch%5C%3Fv%3D%7Cv%5C%2F)%3F(%5BA-Za-z0-9._%25-%5D*)(%5C%26%5CS%2B)%3F
+|         			*/
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 75
+|     Comment: 
+|         <!-- end copy -->
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 138
+|     Comment: 
+|          // position absolute is needed on IE9 and FireFox because fixed position have glitches
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 17
+|     Comment: 
+|         <!-- Site Icons -->
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 246
+|     Comment: 
+|          // use div with background image
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 632
+|     Comment: 
+|          // global definition
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1181
+|     Comment: 
+|         /**
+|         	 * Slides to the specified item.
+|         	 * @public
+|         	 * @param {Number} position - The position of the item.
+|         	 * @param {Number} [speed] - The time in milliseconds for the transition.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 3437
+|     Comment: 
+|          // we use append for html objects to maintain js events
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 672
+|     Comment: 
+|         /**
+|         	 * Registers event handlers.
+|         	 * @todo Check `msPointerEnabled`
+|         	 * @todo #261
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 65
+|     Comment: 
+|         <!-- end col -->
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 1004
+|     Comment: 
+|         /*********************
+|             SLIDE WIDGETS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2885
+|     Comment: 
+|         /**
+|         	 * Destroys the plugin.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2746
+|     Comment: 
+|         /**
+|            * Check for Tether dependency
+|            * Tether - http://tether.io/
+|            */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 88
+|     Comment: 
+|          // supported value from -1 to 2
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2516
+|     Comment: 
+|         /**
+|         		 * Indicates whenever the autoplay is paused.
+|         		 * @type {Boolean}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2717
+|     Comment: 
+|         /**
+|         		 * The current paging indexes.
+|         		 * @protected
+|         		 * @type {Array}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1956
+|     Comment: 
+|         /**
+|         	 * Creates the auto height plugin.
+|         	 * @class The Auto Height Plugin
+|         	 * @param {Owl} carousel - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 28
+|     Comment: 
+|         <!--[if lt IE 9]>
+|               <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+|               <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+|             <![endif]-->
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1721
+|     Comment: 
+|         /**
+|         		 * Refresh interval.
+|         		 * @protected
+|         		 * @type {number}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1033
+|     Comment: 
+|          // autoplay
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 257
+|     Comment: 
+|          // private
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 919
+|     Comment: 
+|         /**
+|         	 * Sets the absolute position of the current item.
+|         	 * @public
+|         	 * @param {Number} [position] - The new absolute position or nothing to leave it unchanged.
+|         	 * @returns {Number} - The absolute position of the current item.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2022
+|     Comment: 
+|          // ----------------------------------------------------------------------
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 18
+|     Comment: 
+|          // trigger animations on mobile devices (default is true)
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 11
+|     Comment: 
+|         /* FF3.6-15 */
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 14
+|     Comment: 
+|         /* IE6-9 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 778
+|     Comment: 
+|          // start / end video time in ms
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1708
+|     Comment: 
+|         /**
+|         	 * Creates the auto refresh plugin.
+|         	 * @class The Auto Refresh Plugin
+|         	 * @param {Owl} carousel - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 526
+|     Comment: 
+|          // focused in IE11
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1928
+|     Comment: 
+|         /**
+|         	 * Destroys the plugin.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2832
+|     Comment: 
+|         /**
+|         	 * Initializes the layout of the plugin and extends the carousel.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 800
+|     Comment: 
+|          // parse youtube ID
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 29
+|     Comment: 
+|         /**
+|         		 * Current settings for the carousel.
+|         		 * @public
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1155
+|     Comment: 
+|          // check for the start time and start with it
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 20
+|     Comment: 
+|         <!-- All core CSS -->
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 66
+|     Comment: 
+|         <!-- end row -->
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 182
+|     Comment: 
+|         /**
+|         	 * Default options for the carousel.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 547
+|     Comment: 
+|          // KeyboardEvent.which value for left arrow key
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 27
+|     Comment: 
+|         /*************** GRADIENT 03 (BLACK & DARK BLUE) ***************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2143
+|     Comment: 
+|         /**
+|         	 * Gets the video ID and the type (YouTube/Vimeo/vzaar only).
+|         	 * @protected
+|         	 * @param {jQuery} target - The target containing the video data.
+|         	 * @param {jQuery} item - The item containing the video.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 876
+|     Comment: 
+|         /*********************
+|             BUTTONS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/jquery.min.js
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery v1.12.4 | (c) jQuery Foundation | jquery.org/license */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1311
+|     Comment: 
+|          // Creates deferred so, other players know when to wait.
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2074
+|     Comment: 
+|         /**
+|         		 * Current playing item.
+|         		 * @protected
+|         		 * @type {jQuery}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 40
+|     Comment: 
+|          // Checking if the target was focused
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 279
+|     Comment: 
+|          // add position to parallax block
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 640
+|     Comment: 
+|          // Don't call next when the page isn't visible
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 7
+|     Comment: 
+|         /**************************************
+|         ANIMATE JS
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1491
+|     Comment: 
+|          // Destroy video parallax
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1537
+|     Comment: 
+|         /**
+|         	 * Leaves a state.
+|         	 * @param name - The state name.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 30
+|     Comment: 
+|         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#090c1e+0,000000+100 */
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 10
+|     Comment: 
+|         /* Old browsers */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2687
+|     Comment: 
+|         /**
+|          * Navigation Plugin
+|          * @version 2.1.0
+|          * @author Artus Kolanowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 44
+|     Comment: 
+|          // Set focus again
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 51
+|     Comment: 
+|         /**************************************
+|         BACK TO TOP
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1841
+|     Comment: 
+|         /**
+|         		 * Event handlers.
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 635
+|     Comment: 
+|          // thanks: http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1005
+|     Comment: 
+|          // Youtube
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 362
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): button.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 3086
+|     Comment: 
+|          // content is a DOM node or a jQuery
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 550
+|     Comment: 
+|          // opacity
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1094
+|     Comment: 
+|          // Vimeo
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1476
+|     Comment: 
+|          // prevent default image loading when not local video
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1460
+|     Comment: 
+|          // hide image
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 35
+|     Comment: 
+|         /**
+|         		 * Current options set by the caller including defaults.
+|         		 * @public
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 135
+|     Comment: 
+|          // use <img> instead of background image - more smoothly
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1402
+|     Comment: 
+|          // cover video
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1372
+|     Comment: 
+|          // append video after init Jarallax
+|     
+|     Path: http://10.10.10.160:80/css/responsive.css
+|     Line number: 7
+|     Comment: 
+|         /*********** RESPONSIVE ***********/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 60
+|     Comment: 
+|          // IE 11
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2642
+|     Comment: 
+|         /**
+|         	 * Stops the autoplay.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1378
+|     Comment: 
+|          // KeyboardEvent.which value for Escape (Esc) key
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 67
+|     Comment: 
+|         <!-- end container -->
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 73
+|     Comment: 
+|          // need to render all in one scroll/resize event
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 10
+|     Comment: 
+|         /**************************************
+|         TOOLTIP
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1306
+|     Comment: 
+|          // Listen for global YT player callback
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1286
+|     Comment: 
+|          // add script in head section
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1272
+|     Comment: 
+|          // load Vimeo API
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1266
+|     Comment: 
+|          // load Youtube API
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 435
+|     Comment: 
+|          // scroll parallax
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2510
+|     Comment: 
+|         /**
+|         		 * The autoplay timeout.
+|         		 * @type {Timeout}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 222
+|     Comment: 
+|         /**
+|            * ------------------------------------------------------------------------
+|            * Class Definition
+|            * ------------------------------------------------------------------------
+|            */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 116
+|     Comment: 
+|          // get first item from array
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1171
+|     Comment: 
+|          // Local
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 66
+|     Comment: 
+|         /**************************************
+|         SLIDE WIDGETS
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2169
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): scrollspy.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1547
+|     Comment: 
+|         /**
+|         	 * Registers an event or state.
+|         	 * @public
+|         	 * @param {Object} object - The event or state to register.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1088
+|     Comment: 
+|          // get video width and height
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1029
+|     Comment: 
+|          // mute
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1015
+|     Comment: 
+|          // hide controls
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 83
+|     Comment: 
+|         <!-- Core JavaScript
+|             ================================================== -->
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 997
+|     Comment: 
+|          // generate new iframe
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1068
+|     Comment: 
+|         /**
+|         	 * Gets an item at the specified relative position.
+|         	 * @public
+|         	 * @param {Number} [position] - The relative position of the item.
+|         	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 513
+|     Comment: 
+|          // check if in viewport
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 979
+|     Comment: 
+|          // Error :(
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 910
+|     Comment: 
+|         /**
+|         	 * Checks whether the carousel is in a specific state or not.
+|         	 * @param {String} state - The state to check.
+|         	 * @returns {Boolean} - The flag which indicates if the carousel is busy.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 974
+|     Comment: 
+|          // Success!
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 102
+|     Comment: 
+|         /**
+|         		 * All cloned items.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 235
+|     Comment: 
+|         /**
+|         	 * Enumeration for width.
+|         	 * @public
+|         	 * @readonly
+|         	 * @enum {String}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 524
+|     Comment: 
+|          // stop calculations if item is not in viewport
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 41
+|     Comment: 
+|         /**
+|         		 * Plugin element.
+|         		 * @public
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 69
+|     Comment: 
+|         <!-- end section -->
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1445
+|     Comment: 
+|          // if mobile we use a backdrop because click events don't delegate
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1379
+|     Comment: 
+|          // KeyboardEvent.which value for up arrow key
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 960
+|     Comment: 
+|          // try another size
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 956
+|     Comment: 
+|          // ok
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 954
+|     Comment: 
+|          // if no thumbnail, youtube add their own image with width = 120px
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 581
+|     Comment: 
+|          // call onScroll event
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 855
+|     Comment: 
+|          // add new callback in events list
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 77
+|     Comment: 
+|         /**
+|         		 * Coordinates of all items in pixel.
+|         		 * @todo The name of this member is missleading.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 814
+|     Comment: 
+|          // parse local string
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 788
+|     Comment: 
+|          // init
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 877
+|     Comment: 
+|          // call with all arguments
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 991
+|     Comment: 
+|          // return generated iframe
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 672
+|     Comment: 
+|          // jQuery support
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 725
+|     Comment: 
+|          // Deferred
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 634
+|     Comment: 
+|          // check for dom element
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 579
+|     Comment: 
+|         /* Safari 6.0 - 9.0 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1581
+|     Comment: 
+|         /**
+|         	 * Suppresses events.
+|         	 * @protected
+|         	 * @param {Array.<String>} events - The events to suppress.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1381
+|     Comment: 
+|          // MouseEvent.which value for the right button (assuming a right-handed mouse)
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 617
+|     Comment: 
+|          // cover image and clip needed only when parallax container was changed
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 600
+|     Comment: 
+|          // init events
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 664
+|     Comment: 
+|          // no conflict
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 120
+|     Comment: 
+|         /**
+|         		 * Invalidated parts within the update process.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 549
+|     Comment: 
+|          // -- Initialization --
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 91
+|     Comment: 
+|         /**
+|         		 * Current width of the plugin element.
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 567
+|     Comment: 
+|          // scroll
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2206
+|     Comment: 
+|         /**
+|         	 * Creates video thumbnail.
+|         	 * @protected
+|         	 * @param {jQuery} target - The target containing the video data.
+|         	 * @param {Object} info - The video info object.
+|         	 * @see `fetch`
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 552
+|     Comment: 
+|          // empty to add translateZ(0) where it is possible
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 529
+|     Comment: 
+|          // calculate parallax helping variables
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 691
+|     Comment: 
+|          // data-jarallax initialization
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1691
+|     Comment: 
+|         /**
+|         	 * The constructor for the jQuery Plugin
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 463
+|     Comment: 
+|          // center parallax image
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 477
+|     Comment: 
+|          // store scroll distance
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 472
+|     Comment: 
+|          // fix if parallax block in absolute position
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 192
+|     Comment: 
+|          // get image src
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 480
+|     Comment: 
+|          // apply result to item
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 3354
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): popover.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 556
+|     Comment: 
+|          // scale
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 59
+|     Comment: 
+|          // IE 10 or older
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1234
+|     Comment: 
+|         /**
+|         	 * Slides to the previous item.
+|         	 * @public
+|         	 * @param {Number} [speed] - The time in milliseconds for the transition.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1374
+|     Comment: 
+|         /**
+|         	 * Preloads images with auto width.
+|         	 * @todo Replace by a more generic approach
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/custom.js
+|     Line number: 43
+|     Comment: 
+|          // Adding tabindex for elements not focusable
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 444
+|     Comment: 
+|          // size for scroll parallax
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 878
+|     Comment: 
+|         /**
+|         	 * Animates the stage.
+|         	 * @todo #270
+|         	 * @public
+|         	 * @param {Number} coordinate - The coordinate in pixels.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 98
+|     Comment: 
+|         /**************************************
+|         LIGHTBOX
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 98
+|     Comment: 
+|          // function(calculations) {}
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 379
+|     Comment: 
+|          // overlapping occur due to an image position fixed inside absolute position element (webkit based browsers works without any fix)
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 378
+|     Comment: 
+|          // it will remove some image overlapping
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3080
+|     Comment: 
+|         /**
+|         	 * Creates the hash plugin.
+|         	 * @class The Hash Plugin
+|         	 * @param {Owl} carousel - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 357
+|     Comment: 
+|          // delete jarallax from item
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2009
+|     Comment: 
+|         /**
+|         	 * Updates the view.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 8
+|     Comment: 
+|         /*********************
+|             FONTS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 1
+|     Comment: 
+|         /**************************************
+|             File Name: style.css
+|             Template Name: Micrology
+|             Created By: HTML.Design
+|             https://html.design
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 346
+|     Comment: 
+|          // remove additional dom elements
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1592
+|     Comment: 
+|         /**
+|         	 * Releases suppressed events.
+|         	 * @protected
+|         	 * @param {Array.<String>} events - The events to release.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 43
+|     Comment: 
+|         <!--/.container inside nav-->
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 431
+|     Comment: 
+|          // Run inline and iframe handlers after all other handlers
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 336
+|     Comment: 
+|          // return styles on container as before jarallax init
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 314
+|     Comment: 
+|          // load image and get width and height
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 4
+|     Comment: 
+|         <!-- Basic -->
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 24
+|     Comment: 
+|          // iOS6 is buggy
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 654
+|     Comment: 
+|         /*********************
+|             SERVICES
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 297
+|     Comment: 
+|          // timeout to fix IE blinking
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2735
+|     Comment: 
+|         /* global Tether */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 292
+|     Comment: 
+|          // call onInit event
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 479
+|     Comment: 
+|          // -- API --
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 47
+|     Comment: 
+|         /**
+|         		 * Proxied event handlers.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 286
+|     Comment: 
+|          // cover image if width and height is ready
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 282
+|     Comment: 
+|          // parallax image
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 274
+|     Comment: 
+|          // absolute position if one of parents have transformations or parallax without scroll
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 101
+|     Comment: 
+|         /*************** DARK BLUE ***************/
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 439
+|     Comment: 
+|          // Handler might be "removed" by setting callback to null
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2744
+|     Comment: 
+|         /**
+|         		 * Overridden methods of the carousel.
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 631
+|     Comment: 
+|         /**
+|         	 * Checks window `resize` event.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 257
+|     Comment: 
+|          // check if one of parents have transform style (without this check, scroll transform will be inverted)
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 618
+|     Comment: 
+|         /*********************
+|             PARALLAX
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 237
+|     Comment: 
+|          // use img tag
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 227
+|     Comment: 
+|          // container for parallax image
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 212
+|     Comment: 
+|          // save default user styles
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 188
+|     Comment: 
+|          // Jarallax functions
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 42
+|     Comment: 
+|         /**
+|            * ------------------------------------------------------------------------
+|            * Private TransitionEnd Helpers
+|            * ------------------------------------------------------------------------
+|            */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 172
+|     Comment: 
+|          // Extend like jQuery.extend
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 159
+|     Comment: 
+|          // add transform property with vendor prefixes
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1418
+|     Comment: 
+|          // init video
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1005
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): collapse.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1357
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): dropdown.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 65
+|     Comment: 
+|         /**
+|         		 * Absolute current position.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3007
+|     Comment: 
+|         /**
+|         	 * Gets the current succesor/predecessor position.
+|         	 * @protected
+|         	 * @returns {Number}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 114
+|     Comment: 
+|          // custom element to check if parallax in viewport
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 99
+|     Comment: 
+|          // function() {}
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 381
+|     Comment: 
+|          // clip is not working properly on real IE9 and less
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 87
+|     Comment: 
+|          // type of parallax: scroll, scale, opacity, scale-opacity, scroll-opacity
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 76
+|     Comment: 
+|          // Jarallax instance
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1308
+|     Comment: 
+|          // Prevents Ready event from being called twice
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1
+|     Comment: 
+|         /**
+|          * Owl Carousel v2.2.1
+|          * Copyright 2013-2017 David Deutsch
+|          * Licensed under  ()
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 72
+|     Comment: 
+|          // list with all jarallax instances
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2292
+|     Comment: 
+|          // todo (fat): remove sketch reliance on jQuery position/offset
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3093
+|     Comment: 
+|         /**
+|         		 * Hash index for the items.
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 61
+|     Comment: 
+|          // Edge
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 39
+|     Comment: 
+|          // like "transform"
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 38
+|     Comment: 
+|          // test if css property supported by browser
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 311
+|     Comment: 
+|          // init if width and height already exists
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1655
+|     Comment: 
+|         /**
+|         	 * The jQuery Plugin for the Owl Carousel
+|         	 * @todo Navigation plugin `next` and `prev`
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1776
+|     Comment: 
+|         /**
+|         	 * Refreshes the element.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1357
+|     Comment: 
+|         /*!
+|          * Name    : Video Background Extension for Jarallax
+|          * Version : 1.0.0
+|          * Author  : _nK http://nkdev.info
+|          * GitHub  : https://github.com/nk-o/jarallax
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 132
+|     Comment: 
+|         /**
+|         		 * Current state information for the drag operation.
+|         		 * @todo #261
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 1286
+|     Comment: 
+|         /*********************
+|             FOOTERS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 700
+|     Comment: 
+|         /*!
+|          * Name    : Video Worker (wrapper for Youtube, Vimeo and Local videos)
+|          * Version : 1.2.1
+|          * Author  : _nK https://nkdev.info
+|          * GitHub  : https://github.com/nk-o/jarallax
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2597
+|     Comment: 
+|         /**
+|         	 * Starts the autoplay.
+|         	 * @public
+|         	 * @param {Number} [timeout] - The interval before the next animation starts.
+|         	 * @param {Number} [speed] - The animation speed for the animations.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1820
+|     Comment: 
+|         /**
+|         	 * Creates the lazy plugin.
+|         	 * @class The Lazy Plugin
+|         	 * @param {Owl} carousel - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Name    : Just Another Parallax [Jarallax]
+|          * Version : 1.8.0
+|          * Author  : _nK https://nkdev.info
+|          * GitHub  : https://github.com/nk-o/jarallax
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3258
+|     Comment: 
+|         /* jshint -W053 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 360
+|     Comment: 
+|          // delete all variables
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1467
+|     Comment: 
+|         /**
+|         	 * Detaches from an internal event.
+|         	 * @protected
+|         	 * @param {HTMLElement} element - The event source.
+|         	 * @param {String} event - The event name.
+|         	 * @param {Function} listener - The attached event handler to detach.
+|         	 * @param {Boolean} capture - Wether the attached event handler was registered as a capturing listener or not.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3070
+|     Comment: 
+|         /**
+|          * Hash Plugin
+|          * @version 2.1.0
+|          * @author Artus Kolanowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1284
+|     Comment: 
+|         /**
+|         	 * Replaces the current content.
+|         	 * @public
+|         	 * @param {HTMLElement|jQuery|String} content - The new content.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3048
+|     Comment: 
+|         /**
+|         	 * Slides to the specified item or page.
+|         	 * @public
+|         	 * @param {Number} position - The position of the item or page.
+|         	 * @param {Number} [speed] - The time in milliseconds for the transition.
+|         	 * @param {Boolean} [standard=false] - Whether to use the standard behaviour or not.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 148
+|     Comment: 
+|         /**
+|         		 * Current state information and their tags.
+|         		 * @type {Object}
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1315
+|     Comment: 
+|         /**
+|         	 * Adds an item.
+|         	 * @todo Use `item` instead of `content` for the event arguments.
+|         	 * @public
+|         	 * @param {HTMLElement|jQuery|String} content - The item content to add.
+|         	 * @param {Number} [position] - The relative position at which to insert the item otherwise the item will be added to the end.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1098
+|     Comment: 
+|         /**
+|         	 * Gets the absolute positions of clones for an item.
+|         	 * @public
+|         	 * @param {Number} [position] - The relative position of the item.
+|         	 * @returns {Array.<Number>} - The absolute positions of clones for the item or all if no position was given.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 953
+|     Comment: 
+|         /**
+|         	 * Invalidates the given part of the update routine.
+|         	 * @param {String} [part] - The part to invalidate.
+|         	 * @returns {Array.<String>} - The invalidated parts.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3030
+|     Comment: 
+|         /**
+|         	 * Slides to the next item or page.
+|         	 * @public
+|         	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2942
+|     Comment: 
+|         /**
+|         	 * Draws the user interface.
+|         	 * @todo The option `dotsData` wont work.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1350
+|     Comment: 
+|         /**
+|         	 * Removes an item by its position.
+|         	 * @todo Use `item` instead of `content` for the event arguments.
+|         	 * @public
+|         	 * @param {Number} position - The relative position of the item to remove.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 120
+|     Comment: 
+|          // check if dom element
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 29
+|     Comment: 
+|         /**************************************
+|         CAROUSEL
+|         **************************************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2995
+|     Comment: 
+|         /**
+|         	 * Gets the current page position of the carousel.
+|         	 * @protected
+|         	 * @returns {Number}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2906
+|     Comment: 
+|         /**
+|         	 * Updates the internal state.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 140
+|     Comment: 
+|          // "~~" acts like a faster Math.floor() here
+|     
+|     Path: http://10.10.10.160:80/css/font-awesome.min.css
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+|          *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+|          */
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 475
+|     Comment: 
+|         /* Big half circle */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2809
+|     Comment: 
+|         /**
+|         	 * Default options.
+|         	 * @public
+|         	 * @todo Rename `slideBy` to `navBy`
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1523
+|     Comment: 
+|         /**
+|         	 * Enters a state.
+|         	 * @param name - The state name.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1116
+|     Comment: 
+|         /**
+|         	 * Sets the current animation speed.
+|         	 * @public
+|         	 * @param {Number} [speed] - The animation speed in milliseconds or nothing to leave it unchanged.
+|         	 * @returns {Number} - The current animation speed in milliseconds.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 266
+|     Comment: 
+|          // add transform on parallax container if there is parent with transform
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2697
+|     Comment: 
+|         /**
+|         	 * Creates the navigation plugin.
+|         	 * @class The Navigation Plugin
+|         	 * @param {Owl} carousel - The Owl Carousel.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2731
+|     Comment: 
+|         /**
+|         		 * Markup for an indicator.
+|         		 * @protected
+|         		 * @type {Array.<String>}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2724
+|     Comment: 
+|         /**
+|         		 * All DOM elements of the user interface.
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 59
+|     Comment: 
+|          // shoutout AngusCroll (https://goo.gl/pxwQGp)
+|     
+|     Path: http://10.10.10.160:80/css/bootstrap.css
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
+|          * Copyright 2011-2017 The Bootstrap Authors
+|          * Copyright 2011-2017 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 352
+|     Comment: 
+|          // call onDestroy event
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1593
+|     Comment: 
+|          // down
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2710
+|     Comment: 
+|         /**
+|         		 * Indicates whether the plugin is initialized or not.
+|         		 * @protected
+|         		 * @type {Boolean}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2738
+|     Comment: 
+|         /**
+|         		 * The carousel element.
+|         		 * @type {jQuery}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 8
+|     Comment: 
+|         <!-- Mobile Metas -->
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 7
+|     Comment: 
+|         /*************** GRADIENT 01 (RED & ORANGE) ***************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2634
+|     Comment: 
+|         /**
+|         	 * Sets autoplay in motion.
+|         	 * @private
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1859
+|     Comment: 
+|          // don't move modals dom position
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1640
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): modal.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2481
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): tab.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 247
+|     Comment: 
+|         /**
+|         	 * Enumeration for types.
+|         	 * @public
+|         	 * @readonly
+|         	 * @enum {String}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 548
+|     Comment: 
+|          // KeyboardEvent.which value for right arrow key
+|     
+|     Path: http://10.10.10.160:80/css/bootstrap.css
+|     Line number: 7
+|     Comment: 
+|         /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 699
+|     Comment: 
+|         /**
+|         	 * Handles `touchstart` and `mousedown` events.
+|         	 * @todo Horizontal swipe threshold as option
+|         	 * @todo #261
+|         	 * @protected
+|         	 * @param {Event} event - The event arguments.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 6
+|     Comment: 
+|         /**
+|          * Owl carousel
+|          * @version 2.1.6
+|          * @author Bartosz Wojciechowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          * @todo Lazy Load Icon
+|          * @todo prevent animationend bubling
+|          * @todo itemsScaleUp
+|          * @todo Test Zepto
+|          * @todo stagePadding calculate wrong active classes
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2497
+|     Comment: 
+|         /**
+|         	 * Creates the autoplay plugin.
+|         	 * @class The Autoplay Plugin
+|         	 * @param {Owl} scope - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2487
+|     Comment: 
+|         /**
+|          * Autoplay Plugin
+|          * @version 2.1.0
+|          * @author Bartosz Wojciechowski
+|          * @author Artus Kolanowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1735
+|     Comment: 
+|         /**
+|         		 * All event handlers.
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 1899
+|     Comment: 
+|          // guard against infinite focus loop
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2332
+|     Comment: 
+|         /**
+|         	 * Checks whether an video is currently in full screen mode or not.
+|         	 * @todo Bad style because looks like a readonly method but changes members.
+|         	 * @protected
+|         	 * @returns {Boolean}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 74
+|     Comment: 
+|          // eslint-disable-line prefer-rest-params
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2290
+|     Comment: 
+|         /**
+|         	 * Starts the current video.
+|         	 * @public
+|         	 * @param {Event} event - The event arguments.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2400
+|     Comment: 
+|          // todo (fat) this is kinda sus...
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 444
+|     Comment: 
+|         /*********************
+|             SECTION
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 456
+|     Comment: 
+|          // calculate width relative to height and image size
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1640
+|     Comment: 
+|         /**
+|         	 * Gets the difference of two vectors.
+|         	 * @todo #261
+|         	 * @protected
+|         	 * @param {Object} - The first vector.
+|         	 * @param {Object} - The second vector.
+|         	 * @returns {Object} - The difference.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1165
+|     Comment: 
+|         /**
+|         	 * Calculates the speed for a translation.
+|         	 * @protected
+|         	 * @param {Number} from - The absolute position of the start item.
+|         	 * @param {Number} to - The absolute position of the target item.
+|         	 * @param {Number} [factor=undefined] - The time factor in milliseconds.
+|         	 * @returns {Number} - The time in milliseconds for the translation.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 525
+|     Comment: 
+|          // Ignore exceptions, eg. for SVG elements which can't be
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1019
+|     Comment: 
+|         /**
+|         	 * Gets the maximum position for the current item.
+|         	 * @public
+|         	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
+|         	 * @returns {Number}
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 19
+|     Comment: 
+|          // act on asynchronously loaded content (default is true)
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2045
+|     Comment: 
+|         /**
+|          * Video Plugin
+|          * @version 2.1.0
+|          * @author Bartosz Wojciechowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 570
+|     Comment: 
+|         /**
+|         	 * Updates the view.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1265
+|     Comment: 
+|         /**
+|         	 * Gets viewport width.
+|         	 * @protected
+|         	 * @return {Number} - The width in pixel.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 59
+|     Comment: 
+|         /**
+|         		 * Currently suppressed events to prevent them from beeing retriggered.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 11
+|     Comment: 
+|         <!-- Site Metas -->
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 762
+|     Comment: 
+|         /**
+|         	 * Handles the `touchmove` and `mousemove` events.
+|         	 * @todo #261
+|         	 * @protected
+|         	 * @param {Event} event - The event arguments.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1008
+|     Comment: 
+|         /**
+|         	 * Converts an absolute position of an item into a relative one.
+|         	 * @public
+|         	 * @param {Number} position - The absolute position to convert.
+|         	 * @returns {Number} - The converted position.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2401
+|     Comment: 
+|          // recursively add actives to tested nav-links
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 339
+|     Comment: 
+|          // null occurs if there is no style tag before jarallax init
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 115
+|     Comment: 
+|         /**
+|         		 * Widths of all items.
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 300
+|     Comment: 
+|          // static
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2054
+|     Comment: 
+|         /**
+|         	 * Creates the video plugin.
+|         	 * @class The Video Plugin
+|         	 * @param {Owl} carousel - The Owl Carousel
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1453
+|     Comment: 
+|          // set video width and height
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 20
+|     Comment: 
+|         /**
+|         	 * Creates a carousel.
+|         	 * @class The Owl Carousel.
+|         	 * @public
+|         	 * @param {HTMLElement|jQuery} element - The element to create the carousel for.
+|         	 * @param {Object} [options] - The options
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2737
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): tooltip.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 264
+|     Comment: 
+|         /**
+|         	 * List of workers involved in the update process.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 79
+|     Comment: 
+|         <!-- end wrapper -->
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 237
+|     Comment: 
+|          // public
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1888
+|     Comment: 
+|         /**
+|         	 * Loads all resources of an item at the specified position.
+|         	 * @param {Number} position - The absolute position of the item.
+|         	 * @protected
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1834
+|     Comment: 
+|         /**
+|         		 * Already loaded items.
+|         		 * @protected
+|         		 * @type {Array.<jQuery>}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1791
+|     Comment: 
+|         /**
+|         	 * Destroys the plugin.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/index.html
+|     Line number: 68
+|     Comment: 
+|         <!-- end top-message -->
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 17
+|     Comment: 
+|         /*************** GRADIENT 02 (PURPLE & NAVY) ***************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 126
+|     Comment: 
+|         /**
+|         		 * Ordered list of workers for the update process.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1764
+|     Comment: 
+|         /**
+|         	 * Watches the element.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 15
+|     Comment: 
+|          // animated element css class (default is wow)
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 22
+|     Comment: 
+|          // the argument that is passed in is the DOM node being animated
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2861
+|     Comment: 
+|          // protected
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1755
+|     Comment: 
+|         /**
+|         	 * Default options.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 848
+|     Comment: 
+|          // some weirdness is happening, so we bail
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2277
+|     Comment: 
+|         /**
+|         	 * Stops the current video.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 108
+|     Comment: 
+|         /**
+|         		 * Merge values of all items.
+|         		 * @todo Maybe this could be part of a plugin.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1728
+|     Comment: 
+|         /**
+|         		 * Whether the element is currently visible or not.
+|         		 * @protected
+|         		 * @type {Boolean}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/css/colors.css
+|     Line number: 56
+|     Comment: 
+|         /*************** PURPLE ***************/
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1699
+|     Comment: 
+|         /**
+|          * AutoRefresh Plugin
+|          * @version 2.1.0
+|          * @author Artus Kolanowski
+|          * @author David Deutsch
+|          * @license The MIT License (MIT)
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 488
+|     Comment: 
+|          // call onCoverImage event
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 134
+|     Comment: 
+|          // fix for some devices
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 1481
+|     Comment: 
+|          // set empty image on local video if not defined
+|     
+|     Path: http://10.10.10.160:80/js/parallax.js
+|     Line number: 406
+|     Comment: 
+|          // add clip styles inline (this method need for support IE8 and less browsers)
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2139
+|     Comment: 
+|          // only register focus restorer if modal will actually get shown
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 235
+|     Comment: 
+|          // getters
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 2068
+|     Comment: 
+|          // thx d.walsh
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 3039
+|     Comment: 
+|         /**
+|         	 * Slides to the previous item or page.
+|         	 * @public
+|         	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 2081
+|     Comment: 
+|         /**
+|         		 * All event handlers.
+|         		 * @todo The cloned content removale is too late
+|         		 * @protected
+|         		 * @type {Object}
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/lightbox.js
+|     Line number: 312
+|     Comment: 
+|          // ESC key
+|     
+|     Path: http://10.10.10.160:80/js/all.js
+|     Line number: 21
+|     Comment: 
+|          // the callback is fired every time an animation is started
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 1630
+|     Comment: 
+|         /**
+|         	 * Determines if the input is a Number or something that can be coerced to a Number
+|         	 * @protected
+|         	 * @param {Number|String|Object|Array|Boolean|RegExp|Function|Symbol} - The input to be tested
+|         	 * @returns {Boolean} - An indication if the input is a Number or can be coerced to a Number
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 966
+|     Comment: 
+|         /**
+|         	 * Resets the absolute position of the current item.
+|         	 * @public
+|         	 * @param {Number} position - The absolute position of the new item.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 834
+|     Comment: 
+|         /**
+|         	 * Gets absolute position of the closest item for a coordinate.
+|         	 * @todo Setting `freeDrag` makes `closest` not reusable. See #165.
+|         	 * @protected
+|         	 * @param {Number} coordinate - The coordinate in pixel.
+|         	 * @param {String} direction - The direction to check for the closest item. Ether `left` or `right`.
+|         	 * @return {Number} - The absolute position of the closest item.
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 498
+|     Comment: 
+|         /**
+|         	 * Setups the current settings.
+|         	 * @todo Remove responsive classes. Why should adaptive designs be brought into IE8?
+|         	 * @todo Support for media queries by using `matchMedia` would be nice.
+|         	 * @public
+|         	 */
+|     
+|     Path: http://10.10.10.160:80/js/carousel.js
+|     Line number: 71
+|     Comment: 
+|         /**
+|         		 * Animation speed in milliseconds.
+|         		 * @protected
+|         		 */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 139
+|     Comment: 
+|          // eslint-disable-next-line no-bitwise
+|     
+|     Path: http://10.10.10.160:80/style.css
+|     Line number: 127
+|     Comment: 
+|         /*********************
+|             HEADERS
+|         **********************/
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 33
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): util.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|          */
+|     
+|     Path: http://10.10.10.160:80/js/bootstrap.js
+|     Line number: 525
+|     Comment: 
+|         /**
+|          * --------------------------------------------------------------------------
+|          * Bootstrap (v4.0.0-alpha.6): carousel.js
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * --------------------------------------------------------------------------
+|_         */
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Tue, 15 Sep 2020 13:29:15 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /css/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+|   /images/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+|   /js/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+|_  /upload/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.160:80/js/: 
+|     (1) ip: 
+|_      + 10.10.10.160
+| http-headers: 
+|   Date: Tue, 15 Sep 2020 13:29:11 GMT
+|   Server: Apache/2.4.29 (Ubuntu)
+|   Last-Modified: Sun, 25 Aug 2019 18:34:23 GMT
+|   ETag: "f04-590f549ce0d74"
+|   Accept-Ranges: bytes
+|   Content-Length: 3844
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+| http-internal-ip-disclosure: 
+|_  Internal IP Leaked: 127.0.1.1
+|_http-mobileversion-checker: No mobile version detected.
+| http-referer-checker: 
+| Spidering limited to: maxpagecount=30
+|_  https://oss.maxcdn.com:443/libs/html5shiv/3.7.0/html5shiv.js
+|_http-security-headers: 
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; css: 1; html: 1
+|     /css/
+|       css: 5
+|     /icons/
+|       gif: 1
+|     /images/
+|       ico: 1; png: 1
+|     /js/
+|       Other: 1; js: 7
+|   Longest directory structure:
+|     Depth: 1
+|     Dir: /css/
+|   Total files found (by extension):
+|_    Other: 2; css: 6; gif: 1; html: 1; ico: 1; js: 7; png: 1
+| http-sql-injection: 
+|   Possible sqli for queries:
+|     http://10.10.10.160:80/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.160:80/js/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.160:80/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.160:80/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.160:80/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.160:80/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.160:80/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|_    http://10.10.10.160:80/js/?C=S%3bO%3dD%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: The Cyber Geek's Personal Website
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+6379/tcp  open  redis   Redis key-value store 4.0.9 (64 bits)
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| redis-info: 
+|   Version: 4.0.9
+|   Operating System: Linux 4.15.0-58-generic x86_64
+|   Architecture: 64 bits
+|   Process ID: 587
+|   Used CPU (sys): 0.40
+|   Used CPU (user): 0.13
+|   Connected clients: 1
+|   Connected slaves: 0
+|   Used memory: 821.52K
+|   Role: master
+|   Bind addresses: 
+|     0.0.0.0
+|     ::1
+|   Client connections: 
+|_    10.10.14.78
+10000/tcp open  http    MiniServ 1.910 (Webmin httpd)
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 377.23ms; min: 268.28ms; max: 542.48ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Tue, 15 Sep 2020 13:29:18 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: ERROR: Script execution failed (use -d to debug)
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Server: MiniServ/1.910
+|   Date: Tue, 15 Sep 2020 13:29:18 GMT
+|   Content-type: text/html; Charset=iso-8859-1
+|   Connection: close
+|   
+|_  (Request type: GET)
+| http-litespeed-sourcecode-download: 
+| Litespeed Web Server Source Code Disclosure (CVE-2010-2333)
+| /index.php source code:
+| <h1>Error - Document follows</h1>
+|_<p>This web server is running in SSL mode. Try the URL <a href='https://Postman:10000/'>https://Postman:10000/</a> instead.<br></p>
+|_http-majordomo2-dir-traversal: ERROR: Script execution failed (use -d to debug)
+|_http-mobileversion-checker: No mobile version detected.
+| http-phpmyadmin-dir-traversal: 
+|   VULNERABLE:
+|   phpMyAdmin grab_globals.lib.php subform Parameter Traversal Local File Inclusion
+|     State: UNKNOWN (unable to test)
+|     IDs:  CVE:CVE-2005-3299
+|       PHP file inclusion vulnerability in grab_globals.lib.php in phpMyAdmin 2.6.4 and 2.6.4-pl1 allows remote attackers to include local files via the $__redirect parameter, possibly involving the subform array.
+|       
+|     Disclosure date: 2005-10-nil
+|     Extra information:
+|       ../../../../../etc/passwd :
+|   <h1>Error - Document follows</h1>
+|   <p>This web server is running in SSL mode. Try the URL <a href='https://Postman:10000/'>https://Postman:10000/</a> instead.<br></p>
+|   
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3299
+|_      http://www.exploit-db.com/exploits/1244/
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html; Charset=iso-8859-1).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+| http-vuln-cve2006-3392: 
+|   VULNERABLE:
+|   Webmin File Disclosure
+|     State: VULNERABLE (Exploitable)
+|     IDs:  CVE:CVE-2006-3392
+|       Webmin before 1.290 and Usermin before 1.220 calls the simplify_path function before decoding HTML.
+|       This allows arbitrary files to be read, without requiring authentication, using "..%01" sequences
+|       to bypass the removal of "../" directory traversal sequences.
+|       
+|     Disclosure date: 2006-06-29
+|     References:
+|       http://www.rapid7.com/db/modules/auxiliary/admin/webmin/file_disclosure
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3392
+|_      http://www.exploit-db.com/exploits/1997/
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.160"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22     0       12465.60   2525.25  0.0%
+| 80     0       10755.80   3718.59  0.0%
+| 6379   0       12447.70   2842.99  0.0%
+|_10000  0       12649.30   1901.09  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 84.77 seconds
