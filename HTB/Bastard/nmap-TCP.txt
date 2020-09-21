@@ -1,0 +1,971 @@
+root@Kali:~/HTB/Bastard# nmap -Pn -n -sS -p- 10.10.10.9 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-20 01:22 +08
+Nmap scan report for 10.10.10.9
+Host is up (0.0057s latency).
+Not shown: 65532 filtered ports
+PORT      STATE SERVICE
+80/tcp    open  http
+135/tcp   open  msrpc
+49154/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 105.39 seconds
+
+root@Kali:~/HTB/Bastard# nmap -Pn -n -sV -p80,135,49154 --script=vuln,discovery 10.10.10.9 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-20 11:18 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Stats: 0:06:39 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan
+NSE Timing: About 99.74% done; ETC: 11:24 (0:00:01 remaining)
+Nmap scan report for 10.10.10.9
+Host is up (0.0045s latency).
+
+PORT      STATE SERVICE VERSION
+80/tcp    open  http    Microsoft IIS httpd 7.5
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.9
+|   url                                         method
+|   http://10.10.10.9:80/                       FORM
+|   http://10.10.10.9:80/node?destination=node  FORM
+|   http://10.10.10.9:80/user/                  FORM
+|_  http://10.10.10.9:80/user                   FORM
+|_http-chrono: Request times for /; avg: 6535.69ms; min: 6030.93ms; max: 7345.14ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.9
+|     
+|     Path: http://10.10.10.9:80/user/
+|     Line number: 55
+|     Comment: 
+|         <!--
+|         jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"bartik","theme_token":"Q-YSylgB5Og_ITVNhNKsaeBB3W9Q7D-vlw78yEha7YM","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"themes\/bartik\/css\/layout.css":1,"themes\/bartik\/css\/style.css":1,"themes\/bartik\/css\/colors.css":1,"themes\/bartik\/css\/print.css":1,"themes\/bartik\/css\/ie.css":1,"themes\/bartik\/css\/ie6.css":1}},"urlIsAjaxTrusted":{"\/user\/":true}});
+|         //-->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 296
+|     Comment: 
+|          // IE <= 7 normalizes the URL when assigned to the anchor node similar to
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 148
+|     Comment: 
+|         <!-- /.section, /#footer-wrapper -->
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.once.js?v=1.2
+|     Line number: 58
+|     Comment: 
+|         /**
+|            * Filters elements that have been processed once already.
+|            *
+|            * @param id
+|            *   A required string representing the name of the class which should be used
+|            *   when filtering the elements. This only filters elements that have already
+|            *   been processed by the once function. The id should be the same id that
+|            *   was originally passed to the once() function.
+|            * @param fn
+|            *   (Optional) If given, this function will be called for each element that
+|            *   has not yet been processed. The function's return value follows the same
+|            *   logic as $.each(). Returning true will continue to the next matched
+|            *   element in the set, while returning false will entirely break the
+|            *   iteration.
+|            */
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 128
+|     Comment: 
+|         <!-- /.section, /#content -->
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.cookie.js?v=1.0
+|     Line number: 2
+|     Comment: 
+|         /**
+|          * Cookie plugin 1.0
+|          *
+|          * Copyright (c) 2006 Klaus Hartl (stilbuero.de)
+|          * Dual licensed under the MIT and GPL licenses:
+|          * http://www.opensource.org/licenses/mit-license.php
+|          * http://www.gnu.org/licenses/gpl.html
+|          *
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 430
+|     Comment: 
+|          // Skip displaying the message if the user deliberately aborted (for example,
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 433
+|     Comment: 
+|          // http://stackoverflow.com/questions/699941/handle-ajax-error-when-a-user-clicks-refresh.
+|     
+|     Path: http://10.10.10.9:80/
+|     Line number: 55
+|     Comment: 
+|         <!--
+|         jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"bartik","theme_token":"QN4iPOytptYXdmxXjGJRYG1rE7s4wM8Afr0NM372JAU","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"themes\/bartik\/css\/layout.css":1,"themes\/bartik\/css\/style.css":1,"themes\/bartik\/css\/colors.css":1,"themes\/bartik\/css\/print.css":1,"themes\/bartik\/css\/ie.css":1,"themes\/bartik\/css\/ie6.css":1}},"urlIsAjaxTrusted":{"\/node?destination=node":true}});
+|         //-->
+|     
+|     Path: http://10.10.10.9:80/user/password
+|     Line number: 55
+|     Comment: 
+|         <!--
+|         jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"bartik","theme_token":"-Xz4245Q7cktDK5nv1TlqXs_nuD6V47jVff7_RYShno","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"themes\/bartik\/css\/layout.css":1,"themes\/bartik\/css\/style.css":1,"themes\/bartik\/css\/colors.css":1,"themes\/bartik\/css\/print.css":1,"themes\/bartik\/css\/ie.css":1,"themes\/bartik\/css\/ie6.css":1}},"urlIsAjaxTrusted":{"\/user\/password":true}});
+|         //-->
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 55
+|     Comment: 
+|         <!--
+|         jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"bartik","theme_token":"tLw7nb7rawzsMCsLaEyvbMp-SiBz96A5m9P5Lq7CZP0","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"themes\/bartik\/css\/layout.css":1,"themes\/bartik\/css\/style.css":1,"themes\/bartik\/css\/colors.css":1,"themes\/bartik\/css\/print.css":1,"themes\/bartik\/css\/ie.css":1,"themes\/bartik\/css\/ie6.css":1}},"urlIsAjaxTrusted":{"\/user":true}});
+|         //-->
+|     
+|     Path: http://10.10.10.9:80/node?destination=node
+|     Line number: 118
+|     Comment: 
+|         <!-- /.section, /#sidebar-first -->
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 131
+|     Comment: 
+|         <!-- /#main, /#main-wrapper -->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 507
+|     Comment: 
+|         /**
+|          * The default themes.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 512
+|     Comment: 
+|         /**
+|            * Formats text for emphasized display in a placeholder inside a sentence.
+|            *
+|            * @param str
+|            *   The text to format (plain-text).
+|            * @return
+|            *   The formatted text (html).
+|            */
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.js?v=1.4.4
+|     Line number: 136
+|     Comment: 
+|         /*"}},ajax:function(a){var b=c.extend(true,{},c.ajaxSettings,a),d,e,f,h=b.type.toUpperCase(),l=qb.test(h);b.url=b.url.replace(ub,"");b.context=a&&a.context!=null?a.context:b;if(b.data&&b.processData&&typeof b.data!=="string")b.data=c.param(b.data,b.traditional);if(b.dataType==="jsonp"){if(h==="GET")T.test(b.url)||(b.url+=(ja.test(b.url)?"&":"?")+(b.jsonp||"callback")+"=?");else if(!b.data||
+|         !T.test(b.data))b.data=(b.data?b.data+"&":"")+(b.jsonp||"callback")+"=?";b.dataType="json"}if(b.dataType==="json"&&(b.data&&T.test(b.data)||T.test(b.url))){d=b.jsonpCallback||"jsonp"+mb++;if(b.data)b.data=(b.data+"").replace(T,"="+d+"$1");b.url=b.url.replace(T,"="+d+"$1");b.dataType="script";var k=E[d];E[d]=function(m){if(c.isFunction(k))k(m);else{E[d]=B;try{delete E[d]}catch(p){}}f=m;c.handleSuccess(b,w,e,f);c.handleComplete(b,w,e,f);r&&r.removeChild(A)}}if(b.dataType==="script"&&b.cache===null)b.cache=
+|         false;if(b.cache===false&&l){var o=c.now(),x=b.url.replace(rb,"$1_="+o);b.url=x+(x===b.url?(ja.test(b.url)?"&":"?")+"_="+o:"")}if(b.data&&l)b.url+=(ja.test(b.url)?"&":"?")+b.data;b.global&&c.active++===0&&c.event.trigger("ajaxStart");o=(o=sb.exec(b.url))&&(o[1]&&o[1].toLowerCase()!==location.protocol||o[2].toLowerCase()!==location.host);if(b.dataType==="script"&&h==="GET"&&o){var r=t.getElementsByTagName("head")[0]||t.documentElement,A=t.createElement("script");if(b.scriptCharset)A.charset=b.scriptCharset;
+|         A.src=b.url;if(!d){var C=false;A.onload=A.onreadystatechange=function(){if(!C&&(!this.readyState||this.readyState==="loaded"||this.readyState==="complete")){C=true;c.handleSuccess(b,w,e,f);c.handleComplete(b,w,e,f);A.onload=A.onreadystatechange=null;r&&A.parentNode&&r.removeChild(A)}}}r.insertBefore(A,r.firstChild);return B}var J=false,w=b.xhr();if(w){b.username?w.open(h,b.url,b.async,b.username,b.password):w.open(h,b.url,b.async);try{if(b.data!=null&&!l||a&&a.contentType)w.setRequestHeader("Content-Type",
+|         b.contentType);if(b.ifModified){c.lastModified[b.url]&&w.setRequestHeader("If-Modified-Since",c.lastModified[b.url]);c.etag[b.url]&&w.setRequestHeader("If-None-Match",c.etag[b.url])}o||w.setRequestHeader("X-Requested-With","XMLHttpRequest");w.setRequestHeader("Accept",b.dataType&&b.accepts[b.dataType]?b.accepts[b.dataType]+", */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 297
+|     Comment: 
+|          // the other browsers.
+|     
+|     Path: http://10.10.10.9:80/themes/bartik/css/ie.css?on28x3
+|     Line number: 27
+|     Comment: 
+|         /* Trigger text indent. */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 334
+|     Comment: 
+|          // base URL.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 16
+|     Comment: 
+|          // If the string contains a "#" before a "<", treat it as invalid HTML.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 30
+|     Comment: 
+|         /**
+|          * Attach all registered behaviors to a page element.
+|          *
+|          * Behaviors are event-triggered actions that attach to page elements, enhancing
+|          * default non-JavaScript UIs. Behaviors are registered in the Drupal.behaviors
+|          * object using the method 'attach' and optionally also 'detach' as follows:
+|          * @code
+|          *    Drupal.behaviors.behaviorName = {
+|          *      attach: function (context, settings) {
+|          *        ...
+|          *      },
+|          *      detach: function (context, settings, trigger) {
+|          *        ...
+|          *      }
+|          *    };
+|          * @endcode
+|          *
+|          * Drupal.attachBehaviors is added below to the jQuery ready event and so
+|          * runs on initial page load. Developers implementing AHAH/Ajax in their
+|          * solutions should also call this function after new page content has been
+|          * loaded, feeding in an element to be processed, in order to attach all
+|          * behaviors to the new content.
+|          *
+|          * Behaviors should use
+|          * @code
+|          *   $(selector).once('behavior-name', function () {
+|          *     ...
+|          *   });
+|          * @endcode
+|          * to ensure the behavior is attached only once to a given element. (Doing so
+|          * enables the reprocessing of given elements, which may be needed on occasion
+|          * despite the ability to limit behavior attachment to a particular element.)
+|          *
+|          * @param context
+|          *   An element to attach behaviors to. If none is given, the document element
+|          *   is used.
+|          * @param settings
+|          *   An object containing settings for the current context. If none given, the
+|          *   global Drupal.settings object is used.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 301
+|     Comment: 
+|         /**
+|          * Returns true if the URL is within Drupal's base path.
+|          *
+|          * @param url
+|          *   The URL string to be tested.
+|          *
+|          * @return
+|          *   Boolean true if local.
+|          *
+|          * @see https://github.com/jquery/jquery-ui/blob/1.11.4/ui/tabs.js#L58
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 288
+|     Comment: 
+|          // Decode the URL first; this is required by IE <= 6. Decoding non-UTF-8
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 364
+|     Comment: 
+|         /**
+|          * Freeze the current body height (as minimum height). Used to prevent
+|          * unnecessary upwards scrolling when doing DOM manipulations.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 453
+|     Comment: 
+|          // In some cases, when statusCode == 0, xmlhttp.statusText may not be defined.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 488
+|     Comment: 
+|         /**
+|          * Additions to jQuery.support.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 272
+|     Comment: 
+|         /**
+|          * Returns the passed in URL as an absolute URL.
+|          *
+|          * @param url
+|          *   The URL string to be normalized to an absolute URL.
+|          *
+|          * @return
+|          *   The normalized, absolute URL.
+|          *
+|          * @see https://github.com/angular/angular.js/blob/v1.4.4/src/ng/urlUtils.js
+|          * @see https://grack.com/blog/2009/11/17/absolutizing-url-in-javascript
+|          * @see https://github.com/jquery/jquery-ui/blob/1.11.4/ui/tabs.js#L53
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 151
+|     Comment: 
+|         /**
+|          * Replace placeholders with sanitized values in a string.
+|          *
+|          * @param str
+|          *   A string with placeholders.
+|          * @param args
+|          *   An object of replacements pairs to make. Incidences of any key in this
+|          *   array are replaced with the corresponding value. Based on the first
+|          *   character of the key, the value is escaped and/or themed:
+|          *    - !variable: inserted as is
+|          *    - @variable: escape plain text to HTML (Drupal.checkPlain)
+|          *    - %variable: escape text and theme as a placeholder for user-submitted
+|          *      content (checkPlain + Drupal.theme('placeholder'))
+|          *
+|          * @see Drupal.t()
+|          * @ingroup sanitization
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.once.js?v=1.2
+|     Line number: 2
+|     Comment: 
+|         /**
+|          * jQuery Once Plugin v1.2
+|          * http://plugins.jquery.com/project/once
+|          *
+|          * Dual licensed under the MIT and GPL licenses:
+|          *   http://www.opensource.org/licenses/mit-license.php
+|          *   http://www.gnu.org/licenses/gpl.html
+|          */
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 81
+|     Comment: 
+|         <!-- /#name-and-slogan -->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 386
+|     Comment: 
+|         /**
+|          * Encodes a Drupal path for use in a URL.
+|          *
+|          * For aesthetic reasons slashes are not escaped.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 313
+|     Comment: 
+|          // Always use browser-derived absolute URLs in the comparison, to avoid
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.once.js?v=1.2
+|     Line number: 51
+|     Comment: 
+|          // Remove elements from the set that have already been processed.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 401
+|     Comment: 
+|          // The current selection.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 289
+|     Comment: 
+|          // strings may throw an exception.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 176
+|     Comment: 
+|          // Pass-through.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 432
+|     Comment: 
+|          // request was still ongoing. See, for example, the discussion at
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.once.js?v=1.2
+|     Line number: 41
+|     Comment: 
+|          // Generate a numeric ID if the id passed can't be used as a CSS class.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 81
+|     Comment: 
+|         /**
+|          * Detach registered behaviors from a page element.
+|          *
+|          * Developers implementing AHAH/Ajax in their solutions should call this
+|          * function before page content is about to be removed, feeding in an element
+|          * to be processed, in order to allow special behaviors to detach from the
+|          * content.
+|          *
+|          * Such implementations should look for the class name that was added in their
+|          * corresponding Drupal.behaviors.behaviorName.attach implementation, i.e.
+|          * behaviorName-processed, to ensure the behavior is detached only from
+|          * previously processed elements.
+|          *
+|          * @param context
+|          *   An element to detach behaviors from. If none is given, the document element
+|          *   is used.
+|          * @param settings
+|          *   An object containing settings for the current context. If none given, the
+|          *   global Drupal.settings object is used.
+|          * @param trigger
+|          *   A string containing what's causing the behaviors to be detached. The
+|          *   possible triggers are:
+|          *   - unload: (default) The context element is being removed from the DOM.
+|          *   - move: The element is about to be moved within the DOM (for example,
+|          *     during a tabledrag row swap). After the move is completed,
+|          *     Drupal.attachBehaviors() is called, so that the behavior can undo
+|          *     whatever it did in response to the move. Many behaviors won't need to
+|          *     do anything simply in response to the element being moved, but because
+|          *     IFRAME elements reload their "src" when being moved within the DOM,
+|          *     behaviors bound to IFRAME elements (like WYSIWYG editors) may need to
+|          *     take some action.
+|          *   - serialize: When an Ajax form is submitted, this is called with the
+|          *     form as the context. This provides every behavior within the form an
+|          *     opportunity to ensure that the field elements have correct content
+|          *     in them before the form is serialized. The canonical use-case is so
+|          *     that WYSIWYG editors can update the hidden textarea to which they are
+|          *     bound.
+|          *
+|          * @see Drupal.attachBehaviors
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 492
+|     Comment: 
+|         /**
+|            * Boolean indicating whether or not position:fixed is supported.
+|            */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 416
+|     Comment: 
+|         /**
+|          * Add a global variable which determines if the window is being unloaded.
+|          *
+|          * This is primarily used by Drupal.displayAjaxError().
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 475
+|     Comment: 
+|          // Additional message beyond what the xmlhttp object provides.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 502
+|     Comment: 
+|         
+|         //Attach all behaviors.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 318
+|     Comment: 
+|          // Consider URLs that match this site's base URL but use HTTPS instead of HTTP
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 482
+|     Comment: 
+|         
+|         // Class indicating that JS is enabled; used for styling purpose.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 169
+|     Comment: 
+|          // Transform arguments before inserting them.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 333
+|     Comment: 
+|          // The given URL matches the site's base URL, or has a path under the site's
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.js?v=1.4.4
+|     Line number: 2
+|     Comment: 
+|         /*!
+|          * jQuery JavaScript Library v1.4.4
+|          * http://jquery.com/
+|          *
+|          * Copyright 2010, John Resig
+|          * Dual licensed under the MIT or GPL Version 2 licenses.
+|          * http://jquery.org/license
+|          *
+|          * Includes Sizzle.js
+|          * http://sizzlejs.com/
+|          * Copyright 2010, The Dojo Foundation
+|          * Released under the MIT, BSD, and GPL Licenses.
+|          *
+|          * Date: Thu Nov 11 19:04:53 2010 -0500
+|          */
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 55
+|     Comment: 
+|         <!--//-->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 472
+|     Comment: 
+|          // We don't need readyState except for status == 0.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 426
+|     Comment: 
+|         /**
+|          * Displays a JavaScript error from an Ajax response when appropriate to do so.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 468
+|     Comment: 
+|          // Make the responseText more readable by stripping HTML tags and newlines.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 463
+|     Comment: 
+|          // xmlhttp.responseText is going to throw an exception. So we'll catch it.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 73
+|     Comment: 
+|          // Execute all of them.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 9
+|     Comment: 
+|         /**
+|          * Override jQuery.fn.init to guard against XSS attacks.
+|          *
+|          * See http://bugs.jquery.com/ticket/9521
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 404
+|     Comment: 
+|          // Select all text.
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 89
+|     Comment: 
+|         <!-- /.section, /#header -->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 455
+|     Comment: 
+|          // and the test causes an exception. So we need to catch the exception here.
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 86
+|     Comment: 
+|         <!-- /#main-menu -->
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 48
+|     Comment: 
+|         <!--[if IE 6]>
+|         <link type="text/css" rel="stylesheet" href="http://10.10.10.9/themes/bartik/css/ie6.css?on28x3" media="all" />
+|         <![endif]-->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 172
+|     Comment: 
+|          // Escaped only.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 454
+|     Comment: 
+|          // Unfortunately, testing for it with typeof, etc, doesn't seem to catch that
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 431
+|     Comment: 
+|          // by reloading the page or navigating to a different page) while the Ajax
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 408
+|     Comment: 
+|          // Now we can calculate start and end points.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 4
+|     Comment: 
+|         
+|         // Allow other JavaScript libraries to use $.
+|     
+|     Path: http://10.10.10.9:80/user/register
+|     Line number: 56
+|     Comment: 
+|         <!--
+|         jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"bartik","theme_token":"69vjAbXROqsgXPomDlt5T1piX4MlgPhHbqwcULGlYgo","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"misc\/jquery.cookie.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"themes\/bartik\/css\/layout.css":1,"themes\/bartik\/css\/style.css":1,"themes\/bartik\/css\/colors.css":1,"themes\/bartik\/css\/print.css":1,"themes\/bartik\/css\/ie.css":1,"themes\/bartik\/css\/ie6.css":1}},"urlIsAjaxTrusted":{"\/user\/register":true}});
+|         //-->
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 57
+|     Comment: 
+|         
+|         //--><!]]>
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 325
+|     Comment: 
+|          // Decoding non-UTF-8 strings may throw an exception.
+|     
+|     Path: http://10.10.10.9:80/themes/bartik/css/ie.css?on28x3
+|     Line number: 18
+|     Comment: 
+|         /* LTR */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 319
+|     Comment: 
+|          // as local as well.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 485
+|     Comment: 
+|         
+|         // 'js enabled' cookie.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 314
+|     Comment: 
+|          // attempts to break out of the base path using directory traversal.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 190
+|     Comment: 
+|         /**
+|          * Translate strings to the page language or a given language.
+|          *
+|          * See the documentation of the server-side t() function for further details.
+|          *
+|          * @param str
+|          *   A string containing the English string to translate.
+|          * @param args
+|          *   An object of replacements pairs to make after translation. Incidences
+|          *   of any key in this array are replaced with the corresponding value.
+|          *   See Drupal.formatString().
+|          *
+|          * @param options
+|          *   - 'context' (defaults to the empty context): The context the source string
+|          *     belongs to.
+|          *
+|          * @return
+|          *   The translated string.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 379
+|     Comment: 
+|         /**
+|          * Unfreeze the body height.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 462
+|     Comment: 
+|          // Again, we don't have a way to know for sure whether accessing
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.once.js?v=1.2
+|     Line number: 14
+|     Comment: 
+|         /**
+|            * Filters elements by whether they have not yet been processed.
+|            *
+|            * @param id
+|            *   (Optional) If this is a string, then it will be used as the CSS class
+|            *   name that is applied to the elements for determining whether it has
+|            *   already been processed. The elements will get a class in the form of
+|            *   "id-processed".
+|            *
+|            *   If the id parameter is a function, it will be passed off to the fn
+|            *   parameter and the id will become a unique identifier, represented as a
+|            *   number.
+|            *
+|            *   When the id is neither a string or a function, it becomes a unique
+|            *   identifier, depicted as a number. The element's class will then be
+|            *   represented in the form of "jquery-once-#-processed".
+|            *
+|            *   Take note that the id must be valid for usage as an element's class name.
+|            * @param fn
+|            *   (Optional) If given, this function will be called for each element that
+|            *   has not yet been processed. The function's return value follows the same
+|            *   logic as $.each(). Returning true will continue to the next matched
+|            *   element in the set, while returning false will entirely break the
+|            *   iteration.
+|            */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 179
+|     Comment: 
+|          // Escaped and placeholder.
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 133
+|     Comment: 
+|         /**
+|          * Encode special characters in a plain-text string for display as HTML.
+|          *
+|          * @ingroup sanitization
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 396
+|     Comment: 
+|         /**
+|          * Get the text selection in a textarea.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/jquery.once.js?v=1.2
+|     Line number: 45
+|     Comment: 
+|          // When the fn parameter is not passed, we interpret it from the id.
+|     
+|     Path: http://10.10.10.9:80/node?destination=node
+|     Line number: 55
+|     Comment: 
+|         <!--
+|         jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"bartik","theme_token":"tihHiSmwkPV8pBU1IiIA94iLognkoEXLfbmvmA2G-xY","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/comment\/comment.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"themes\/bartik\/css\/layout.css":1,"themes\/bartik\/css\/style.css":1,"themes\/bartik\/css\/colors.css":1,"themes\/bartik\/css\/print.css":1,"themes\/bartik\/css\/ie.css":1,"themes\/bartik\/css\/ie6.css":1}},"urlIsAjaxTrusted":{"\/node?destination=node":true}});
+|         //-->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 256
+|     Comment: 
+|          // Determine the index of the plural form.
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 44
+|     Comment: 
+|         <!--[if lte IE 7]>
+|         <link type="text/css" rel="stylesheet" href="http://10.10.10.9/themes/bartik/css/ie.css?on28x3" media="all" />
+|         <![endif]-->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 224
+|     Comment: 
+|         /**
+|          * Format a string containing a count of items.
+|          *
+|          * This function ensures that the string is pluralized correctly. Since Drupal.t() is
+|          * called by this function, make sure not to pass already-localized strings to it.
+|          *
+|          * See the documentation of the server-side format_plural() function for further details.
+|          *
+|          * @param count
+|          *   The item count to display.
+|          * @param singular
+|          *   The string for the singular case. Please make sure it is clear this is
+|          *   singular, to ease translation (e.g. use "1 new comment" instead of "1 new").
+|          *   Do not use @count in the singular string.
+|          * @param plural
+|          *   The string for the plural case. Please make sure it is clear this is plural,
+|          *   to ease translation. Use @count in place of the item count, as in "@count
+|          *   new comments".
+|          * @param args
+|          *   An object of replacements pairs to make after translation. Incidences
+|          *   of any key in this array are replaced with the corresponding value.
+|          *   See Drupal.formatString().
+|          *   Note that you do not need to include @count in this array.
+|          *   This replacement is done automatically for the plural case.
+|          * @param options
+|          *   The options to pass to the Drupal.t() function.
+|          * @return
+|          *   A translated string.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 213
+|     Comment: 
+|          // Fetch the localized version of the string.
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 146
+|     Comment: 
+|         <!-- /#footer -->
+|     
+|     Path: http://10.10.10.9:80/user
+|     Line number: 150
+|     Comment: 
+|         <!-- /#page, /#page-wrapper -->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 338
+|     Comment: 
+|         /**
+|          * Generate the themed representation of a Drupal object.
+|          *
+|          * All requests for themed output must go through this function. It examines
+|          * the request and routes it to the appropriate theme function. If the current
+|          * theme does not provide an override function, the generic theme function is
+|          * called.
+|          *
+|          * For example, to retrieve the HTML for text that should be emphasized and
+|          * displayed as a placeholder inside a sentence, call
+|          * Drupal.theme('placeholder', text).
+|          *
+|          * @param func
+|          *   The name of the theme function to call.
+|          * @param ...
+|          *   Additional arguments to pass along to the theme function.
+|          * @return
+|          *   Any data the theme function returns. This could be a plain HTML string,
+|          *   but also a complex object.
+|          */
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 406
+|     Comment: 
+|          // Now move 'dummy' end point to end point of original range.
+|     
+|     Path: http://10.10.10.9:80/misc/
+|     Line number: 7
+|     Comment: 
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         -->
+|     
+|     Path: http://10.10.10.9:80/misc/drupal.js?on28x3
+|     Line number: 439
+|     Comment: 
+|         /**
+|          * Build an error message from an Ajax response.
+|_         */
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.9
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.9:80/
+|     Form id: user-login-form
+|     Form action: /node?destination=node
+|     
+|     Path: http://10.10.10.9:80/user/register
+|     Form id: user-register-form
+|     Form action: /user/register
+|     
+|     Path: http://10.10.10.9:80/user/password
+|     Form id: user-pass
+|     Form action: /user/password
+|     
+|     Path: http://10.10.10.9:80/node?destination=node
+|     Form id: user-login-form
+|     Form action: /node?destination=node
+|     
+|     Path: http://10.10.10.9:80/user/
+|     Form id: user-login
+|     Form action: /user/
+|     
+|     Path: http://10.10.10.9:80/user
+|     Form id: user-login
+|_    Form action: /user
+|_http-date: Sun, 20 Sep 2020 03:19:21 GMT; +2s from local time.
+|_http-devframework: Drupal detected. Found common traces on /
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-drupal-enum: 
+|   Modules: 
+|     ctools
+|_    libraries
+| http-enum: 
+|   /rss.xml: RSS or Atom feed
+|_  /robots.txt: Robots file
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.9
+|   Found the following error pages: 
+|   
+|   Error Code: 403
+|_  	http://10.10.10.9:80/misc/
+|_http-feed: Couldn't find any feeds.
+|_http-generator: Drupal 7 (http://drupal.org)
+| http-grep: 
+|   (1) http://10.10.10.9:80/: 
+|     (1) ip: 
+|_      + 10.10.10.9
+| http-headers: 
+|   Cache-Control: no-cache, must-revalidate
+|   Content-Length: 0
+|   Content-Type: text/html; charset=utf-8
+|   Content-Language: en
+|   Expires: Sun, 19 Nov 1978 05:00:00 GMT
+|   Server: Microsoft-IIS/7.5
+|   X-Powered-By: PHP/5.3.28
+|   X-Content-Type-Options: nosniff
+|   X-Frame-Options: SAMEORIGIN
+|   X-Generator: Drupal 7 (http://drupal.org)
+|   X-Powered-By: ASP.NET
+|   Date: Sun, 20 Sep 2020 03:20:12 GMT
+|   Connection: close
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+| http-php-version: Versions from logo query (less accurate): 5.3.0 - 5.3.29, 5.4.0 - 5.4.45
+| Versions from credits query (more accurate): 5.3.9 - 5.3.29
+|_Version from header x-powered-by: PHP/5.3.28, ASP.NET
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-robots.txt: 36 disallowed entries (15 shown)
+| /includes/ /misc/ /modules/ /profiles/ /scripts/ 
+| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt 
+| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt 
+|_/LICENSE.txt /MAINTAINERS.txt
+| http-security-headers: 
+|   X_Frame_Options: 
+|     Header: X-Frame-Options: SAMEORIGIN
+|     Description: The browser must not display this content in any frame from a page of different origin than the content itself.
+|   X_Content_Type_Options: 
+|     Header: X-Content-Type-Options: nosniff
+|     Description: Will prevent the browser from MIME-sniffing a response away from the declared content-type. 
+|   Cache_Control: 
+|     Header: Cache-Control: no-cache, must-revalidate
+|   Expires: 
+|_    Header: Expires: Sun, 19 Nov 1978 05:00:00 GMT
+|_http-server-header: Microsoft-IIS/7.5
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 3
+|     /misc/
+|       ico: 1; js: 4
+|     /themes/bartik/
+|       png: 1
+|     /themes/bartik/css/
+|       css: 2
+|     /user/
+|       Other: 3
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /themes/bartik/css/
+|   Total files found (by extension):
+|_    Other: 6; css: 2; ico: 1; js: 4; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Welcome to 10.10.10.9 | 10.10.10.9
+|_http-traceroute: ERROR: Script execution failed (use -d to debug)
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 74 names had status 200
+|_53 names had status ERROR
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+135/tcp   open  msrpc   Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+49154/tcp open  msrpc   Microsoft Windows RPC
+|_clamav-exec: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.9"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 80     0       10716.80   3916.00  0.0%
+| 135    0       11575.60   5987.02  0.0%
+|_49154  0       9557.30    4304.74  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2531.54 seconds
