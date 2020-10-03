@@ -1,0 +1,612 @@
+root@Kali:~/CTF/TryHackme/Attacktive-Directory# nmap -Pn -n -sS -p- 10.10.125.7 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-27 14:02 +08
+Nmap scan report for 10.10.125.7
+Host is up (0.36s latency).
+Not shown: 65508 closed ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+3389/tcp  open  ms-wbt-server
+5985/tcp  open  wsman
+9389/tcp  open  adws
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49672/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown
+49675/tcp open  unknown
+49687/tcp open  unknown
+49693/tcp open  unknown
+49784/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 928.69 seconds
+
+root@Kali:~/CTF/TryHackme/Attacktive-Directory# nmap -Pn -n -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,3389,5985,9389,47001,49664,49665,49666,49667,49672,49673,49674,49675,49687,49693,49784 --script=vuln,discovery 10.10.125.7 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-27 14:59 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.125.7
+Host is up (0.36s latency).
+
+PORT      STATE SERVICE       VERSION
+53/tcp    open  domain?
+|_dns-nsec-enum: Can't determine domain for host 10.10.125.7; use dns-nsec-enum.domains script arg.
+|_dns-nsec3-enum: Can't determine domain for host 10.10.125.7; use dns-nsec3-enum.domains script arg.
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+80/tcp    open  http          Microsoft IIS httpd 10.0
+|_http-chrono: Request times for /; avg: 743.92ms; min: 732.21ms; max: 751.13ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.125.7
+|     
+|     Path: http://10.10.125.7:80/
+|     Line number: 7
+|     Comment: 
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 27 Sep 2020 07:02:05 GMT; 0s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Length: 703
+|   Content-Type: text/html
+|   Last-Modified: Sat, 04 Apr 2020 18:32:11 GMT
+|   Accept-Ranges: bytes
+|   ETag: "f317165bafad61:0"
+|   Server: Microsoft-IIS/10.0
+|   Date: Sun, 27 Sep 2020 07:02:10 GMT
+|   Connection: close
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; png: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: IIS Windows Server
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-09-27 06:59:33Z)
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local, Site: Default-First-Site-Name)
+| ldap-rootdse: 
+| LDAP Results
+|   <ROOT>
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|       domainControllerFunctionality: 7
+|       rootDomainNamingContext: DC=spookysec,DC=local
+|       ldapServiceName: spookysec.local:attacktivedirec$@SPOOKYSEC.LOCAL
+|       isGlobalCatalogReady: TRUE
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedControl: 1.2.840.113556.1.4.2330
+|       supportedControl: 1.2.840.113556.1.4.2354
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=spookysec,DC=local
+|       serverName: CN=ATTACKTIVEDIREC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=spookysec,DC=local
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=spookysec,DC=local
+|       namingContexts: DC=spookysec,DC=local
+|       namingContexts: CN=Configuration,DC=spookysec,DC=local
+|       namingContexts: CN=Schema,CN=Configuration,DC=spookysec,DC=local
+|       namingContexts: DC=DomainDnsZones,DC=spookysec,DC=local
+|       namingContexts: DC=ForestDnsZones,DC=spookysec,DC=local
+|       isSynchronized: TRUE
+|       highestCommittedUSN: 32802
+|       dsServiceName: CN=NTDS Settings,CN=ATTACKTIVEDIREC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=spookysec,DC=local
+|       dnsHostName: AttacktiveDirectory.spookysec.local
+|       defaultNamingContext: DC=spookysec,DC=local
+|       currentTime: 20200927070320.0Z
+|_      configurationNamingContext: CN=Configuration,DC=spookysec,DC=local
+|_sslv2-drown: 
+445/tcp   open  microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+464/tcp   open  kpasswd5?
+593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+636/tcp   open  tcpwrapped
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+|_sslv2-drown: 
+3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local, Site: Default-First-Site-Name)
+| ldap-rootdse: 
+| LDAP Results
+|   <ROOT>
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|       domainControllerFunctionality: 7
+|       rootDomainNamingContext: DC=spookysec,DC=local
+|       ldapServiceName: spookysec.local:attacktivedirec$@SPOOKYSEC.LOCAL
+|       isGlobalCatalogReady: TRUE
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedControl: 1.2.840.113556.1.4.2330
+|       supportedControl: 1.2.840.113556.1.4.2354
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=spookysec,DC=local
+|       serverName: CN=ATTACKTIVEDIREC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=spookysec,DC=local
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=spookysec,DC=local
+|       namingContexts: DC=spookysec,DC=local
+|       namingContexts: CN=Configuration,DC=spookysec,DC=local
+|       namingContexts: CN=Schema,CN=Configuration,DC=spookysec,DC=local
+|       namingContexts: DC=DomainDnsZones,DC=spookysec,DC=local
+|       namingContexts: DC=ForestDnsZones,DC=spookysec,DC=local
+|       isSynchronized: TRUE
+|       highestCommittedUSN: 32802
+|       dsServiceName: CN=NTDS Settings,CN=ATTACKTIVEDIREC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=spookysec,DC=local
+|       dnsHostName: AttacktiveDirectory.spookysec.local
+|       defaultNamingContext: DC=spookysec,DC=local
+|       currentTime: 20200927070223.0Z
+|_      configurationNamingContext: CN=Configuration,DC=spookysec,DC=local
+|_sslv2-drown: 
+3269/tcp  open  tcpwrapped
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+|_sslv2-drown: 
+3389/tcp  open  ms-wbt-server Microsoft Terminal Services
+| rdp-enum-encryption: 
+|   Security layer
+|     CredSSP (NLA): SUCCESS
+|     CredSSP with Early User Auth: SUCCESS
+|     RDSTLS: SUCCESS
+|     SSL: SUCCESS
+|_  RDP Protocol Version:  RDP 10.6 server
+| rdp-ntlm-info: 
+|   Target_Name: THM-AD
+|   NetBIOS_Domain_Name: THM-AD
+|   NetBIOS_Computer_Name: ATTACKTIVEDIREC
+|   DNS_Domain_Name: spookysec.local
+|   DNS_Computer_Name: AttacktiveDirectory.spookysec.local
+|   Product_Version: 10.0.17763
+|_  System_Time: 2020-09-27T07:03:18+00:00
+| ssl-cert: Subject: commonName=AttacktiveDirectory.spookysec.local
+| Not valid before: 2020-09-26T05:55:42
+|_Not valid after:  2021-03-28T05:55:42
+|_ssl-date: 2020-09-27T07:32:45+00:00; +1s from scanner time.
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 2048) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|_  least strength: C
+|_sslv2-drown: 
+5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 917.39ms; min: 762.80ms; max: 1333.15ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 27 Sep 2020 07:03:41 GMT; 0s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.125.7
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.125.7:5985/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sun, 27 Sep 2020 07:03:44 GMT
+|   Connection: close
+|   Content-Length: 315
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+9389/tcp  open  mc-nmf        .NET Message Framing
+47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 848.85ms; min: 731.67ms; max: 971.20ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 27 Sep 2020 07:02:02 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.125.7
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.125.7:47001/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sun, 27 Sep 2020 07:03:24 GMT
+|   Connection: close
+|   Content-Length: 315
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+49664/tcp open  msrpc         Microsoft Windows RPC
+49665/tcp open  msrpc         Microsoft Windows RPC
+49666/tcp open  msrpc         Microsoft Windows RPC
+49667/tcp open  msrpc         Microsoft Windows RPC
+49672/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+49673/tcp open  msrpc         Microsoft Windows RPC
+49674/tcp open  msrpc         Microsoft Windows RPC
+49675/tcp open  msrpc         Microsoft Windows RPC
+49687/tcp open  msrpc         Microsoft Windows RPC
+49693/tcp open  msrpc         Microsoft Windows RPC
+49784/tcp open  msrpc         Microsoft Windows RPC
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port53-TCP:V=7.80%I=7%D=9/27%Time=5F703859%P=x86_64-pc-linux-gnu%r(DNSV
+SF:ersionBindReqTCP,20,"\0\x1e\0\x06\x81\x04\0\x01\0\0\0\0\0\0\x07version\
+SF:x04bind\0\0\x10\0\x03");
+Service Info: Host: ATTACKTIVEDIREC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.125.7"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 53    0       392819.20  22050.94  0.0%
+| 80    0       395180.40  34045.14  0.0%
+| 88    0       399287.00  33891.07  0.0%
+| 135   0       389724.70  26163.28  0.0%
+| 139   0       397444.70  40876.15  0.0%
+| 389   0       402394.20  36709.42  0.0%
+| 445   0       409375.00  31447.35  0.0%
+|_464   0       402699.50  43848.61  0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum: 
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols: 
+|   dialects: 
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities: 
+|   2.02: 
+|     Distributed File System
+|   2.10: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11: 
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2020-09-27T07:02:56
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2134.46 seconds

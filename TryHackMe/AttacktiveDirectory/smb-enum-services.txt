@@ -1,0 +1,86 @@
+root@Kali:~/CTF/TryHackme/Attacktive-Directory# nmap -Pn -n -sV -p139,445 --script=smb-enum-services -d 10.10.125.7 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-27 15:40 +08
+--------------- Timing report ---------------
+  hostgroups: min 1, max 100000
+  rtt-timeouts: init 1000, min 100, max 10000
+  max-scan-delay: TCP 1000, UDP 1000, SCTP 1000
+  parallelism: min 0, max 0
+  max-retries: 10, host-timeout: 0
+  min-rate: 0, max-rate: 0
+---------------------------------------------
+NSE: Using Lua 5.3.
+NSE: Arguments from CLI: 
+NSE: Loaded 46 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 2) scan.
+Initiating NSE at 15:40
+Completed NSE at 15:40, 0.00s elapsed
+NSE: Starting runlevel 2 (of 2) scan.
+Initiating NSE at 15:40
+Completed NSE at 15:40, 0.00s elapsed
+Initiating SYN Stealth Scan at 15:40
+Scanning 10.10.125.7 [2 ports]
+Packet capture filter (device tun0): dst host 10.4.6.109 and (icmp or icmp6 or ((tcp or udp or sctp) and (src host 10.10.125.7)))
+Discovered open port 139/tcp on 10.10.125.7
+Discovered open port 445/tcp on 10.10.125.7
+Completed SYN Stealth Scan at 15:40, 0.51s elapsed (2 total ports)
+Overall sending rates: 3.95 packets / s, 173.58 bytes / s.
+Initiating Service scan at 15:40
+Scanning 2 services on 10.10.125.7
+Completed Service scan at 15:40, 28.89s elapsed (2 services on 1 host)
+NSE: Script scanning 10.10.125.7.
+NSE: Starting runlevel 1 (of 2) scan.
+Initiating NSE at 15:40
+NSE: Starting smb-enum-services against 10.10.125.7:139.
+NSE: Starting smb-enum-services against 10.10.125.7:445.
+NSE: [smb-enum-services 10.10.125.7:139] SMB: Added account '' to account list
+NSE: [smb-enum-services 10.10.125.7:139] SMB: Added account 'guest' to account list
+NSE: [smb-enum-services 10.10.125.7:139] Couldn't negotiate a SMBv1 connection:SMB: Failed to receive bytes: ERROR
+NSE: smb-enum-services against 10.10.125.7:139 threw an error!
+/usr/bin/../share/nmap/nselib/smb.lua:1968: bad argument #5 to 'pack' (number expected, got nil)
+stack traceback:
+	[C]: in function 'string.pack'
+	/usr/bin/../share/nmap/nselib/smb.lua:1968: in function 'smb.write_file'
+	/usr/bin/../share/nmap/nselib/msrpc.lua:269: in function 'msrpc.bind'
+	/usr/bin/../share/nmap/scripts/smb-enum-services.nse:865: in function </usr/bin/../share/nmap/scripts/smb-enum-services.nse:857>
+	(...tail calls...)
+
+NSE: [smb-enum-services 10.10.125.7:445] Couldn't negotiate a SMBv1 connection:SMB: Failed to receive bytes: ERROR
+NSE: smb-enum-services against 10.10.125.7:445 threw an error!
+/usr/bin/../share/nmap/nselib/smb.lua:1968: bad argument #5 to 'pack' (number expected, got nil)
+stack traceback:
+	[C]: in function 'string.pack'
+	/usr/bin/../share/nmap/nselib/smb.lua:1968: in function 'smb.write_file'
+	/usr/bin/../share/nmap/nselib/msrpc.lua:269: in function 'msrpc.bind'
+	/usr/bin/../share/nmap/scripts/smb-enum-services.nse:865: in function </usr/bin/../share/nmap/scripts/smb-enum-services.nse:857>
+	(...tail calls...)
+
+Completed NSE at 15:40, 2.92s elapsed
+NSE: Starting runlevel 2 (of 2) scan.
+Initiating NSE at 15:40
+NSE: Starting rpc-grind against 10.10.125.7:445.
+NSE: [rpc-grind 10.10.125.7:445] isRPC didn't receive response.
+NSE: [rpc-grind 10.10.125.7:445] Target port 445 is not a RPC port.
+NSE: Finished rpc-grind against 10.10.125.7:445.
+Completed NSE at 15:40, 0.87s elapsed
+Nmap scan report for 10.10.125.7
+Host is up, received user-set (0.46s latency).
+Scanned at 2020-09-27 15:40:23 +08 for 33s
+
+PORT    STATE SERVICE       REASON          VERSION
+139/tcp open  netbios-ssn   syn-ack ttl 125 Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds? syn-ack ttl 125
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+Final times for host: srtt: 459822 rttvar: 344902  to: 1839430
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 2) scan.
+Initiating NSE at 15:40
+Completed NSE at 15:40, 0.00s elapsed
+NSE: Starting runlevel 2 (of 2) scan.
+Initiating NSE at 15:40
+Completed NSE at 15:40, 0.00s elapsed
+Read from /usr/bin/../share/nmap: nmap-payloads nmap-service-probes nmap-services.
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 33.65 seconds
+           Raw packets sent: 2 (88B) | Rcvd: 2 (88B)
