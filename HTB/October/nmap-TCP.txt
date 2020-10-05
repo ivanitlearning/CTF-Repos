@@ -1,0 +1,961 @@
+root@Kali:~/HTB/October# nmap -Pn -n -sS -p- 10.10.10.16 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-02 23:48 +08
+Nmap scan report for 10.10.10.16
+Host is up (0.0057s latency).
+Not shown: 65533 filtered ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 103.94 seconds
+
+root@Kali:~/HTB/October# nmap -Pn -n -sV -p22,80 --script=vuln,discovery 10.10.10.16 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-03 00:04 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.16
+Host is up (0.0053s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.8
+| ssh-hostkey: 
+|   1024 79:b1:35:b6:d1:25:12:a3:0c:b5:2e:36:9c:33:26:28 (DSA)
+|   2048 16:08:68:51:d1:7b:07:5a:34:66:0d:4c:d0:25:56:f5 (RSA)
+|   256 e3:97:a7:92:23:72:bf:1d:09:88:85:b6:6c:17:4e:85 (ECDSA)
+|_  256 89:85:90:98:20:bf:03:5d:35:7f:4a:a9:e1:1b:65:31 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (8)
+|   server_host_key_algorithms: (4)
+|   encryption_algorithms: (16)
+|   mac_algorithms: (19)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.4.7 ((Ubuntu))
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.16
+|   url                            method
+|_  http://10.10.10.16:80/account  FORM
+|_http-backup-finder: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 2106.55ms; min: 1243.43ms; max: 4076.64ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.16
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1782
+|     Comment: 
+|          // POPOVER PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2140
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: affix.js v3.3.4
+|          * http://getbootstrap.com/javascript/#affix
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1464
+|     Comment: 
+|          // we must check for NaN for ie 8/9
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5881
+|     Comment: 
+|         /* more sprites.less reset */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1460
+|     Comment: 
+|          // manually read margins because getBoundingClientRect includes difference
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 12
+|     Comment: 
+|         /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 195
+|     Comment: 
+|          // push to event loop to allow forms to submit
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery v1.11.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1965
+|     Comment: 
+|          // SCROLLSPY NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1606
+|     Comment: 
+|          // right overflow
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1596
+|     Comment: 
+|          // top overflow
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1759
+|     Comment: 
+|          // this manually by checking the contents.
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 76
+|     Comment: 
+|          // ======================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 479
+|     Comment: 
+|          // CAROUSEL DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1123
+|     Comment: 
+|          // these following methods are used to handle overflowing modals
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 362
+|     Comment: 
+|          // yes, "slid"
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1966
+|     Comment: 
+|          // =====================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 875
+|     Comment: 
+|          // ===================================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 229
+|     Comment: 
+|          // ========================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 151
+|     Comment: 
+|          // ALERT DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 760
+|     Comment: 
+|          // if mobile we use a backdrop because click events don't delegate
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 470
+|     Comment: 
+|          // CAROUSEL NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 525
+|     Comment: 
+|          // COLLAPSE PUBLIC CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1598
+|     Comment: 
+|          // bottom overflow
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 708
+|     Comment: 
+|          // COLLAPSE DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/$this.attr('href')
+|     Line number: 1
+|     Comment: 
+|         /* The combiner file &#039;$this.attr(&#039;href&#039;)&#039; is not found. */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 75
+|     Comment: 
+|          // ALERT CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 287
+|     Comment: 
+|          // CAROUSEL CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 250
+|     Comment: 
+|          // BUTTON NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 874
+|     Comment: 
+|          // APPLY TO STANDARD DROPDOWN ELEMENTS
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 865
+|     Comment: 
+|          // DROPDOWN NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 288
+|     Comment: 
+|          // =========================
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 6086
+|     Comment: 
+|         /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+|            readers do not read off random characters that represent icons */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1205
+|     Comment: 
+|          // MODAL DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1196
+|     Comment: 
+|          // MODAL NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/forgot-password
+|     Line number: 45
+|     Comment: 
+|         <!-- Content -->
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5868
+|     Comment: 
+|         /* Bootstrap 2.0 sprites.less reset */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 513
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: collapse.js v3.3.4
+|          * http://getbootstrap.com/javascript/#collapse
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1175
+|     Comment: 
+|          // MODAL PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2303
+|     Comment: 
+|         /*
+|          * Application
+|          */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 988
+|     Comment: 
+|          // wait for modal to slide in
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 123
+|     Comment: 
+|          // ALERT PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 6078
+|     Comment: 
+|         /* ensure rotation occurs inside anchor tags */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 143
+|     Comment: 
+|          // =================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1735
+|     Comment: 
+|          // NOTE: POPOVER EXTENDS tooltip.js
+|     
+|     Path: http://10.10.10.16:80/forgot-password
+|     Line number: 84
+|     Comment: 
+|         <!-- Scripts -->
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 678
+|     Comment: 
+|          // COLLAPSE PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1758
+|     Comment: 
+|          // IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2284
+|     Comment: 
+|          // AFFIX DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2126
+|     Comment: 
+|          // TAB DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 37
+|     Comment: 
+|          // http://blog.alexmaccaw.com/css-transitions
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 887
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: modal.js v3.3.4
+|          * http://getbootstrap.com/javascript/#modals
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 228
+|     Comment: 
+|          // BUTTON PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5897
+|     Comment: 
+|         /* keeps Bootstrap styles with and without icons the same */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2070
+|     Comment: 
+|          // reflow for transition
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1472
+|     Comment: 
+|          // so we use setOffset directly with our own function B-0
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 170
+|     Comment: 
+|          // BUTTON PUBLIC CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1471
+|     Comment: 
+|          // $.fn.offset doesn't round pixel values
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 737
+|     Comment: 
+|          // DROPDOWN CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1716
+|     Comment: 
+|          // POPOVER PUBLIC CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 111
+|     Comment: 
+|          // detach from parent, fire event then clean up data
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 725
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: dropdown.js v3.3.4
+|          * http://getbootstrap.com/javascript/#dropdowns
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1484
+|     Comment: 
+|          // check to see if placing tip in new offset caused the tip to resize itself
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1825
+|     Comment: 
+|          // SCROLLSPY CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5770
+|     Comment: 
+|         /* increased font size for icon-large */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2098
+|     Comment: 
+|          // TAB PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 15
+|     Comment: 
+|          // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1147
+|     Comment: 
+|          // workaround for missing window.innerWidth in IE8
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 1
+|     Comment: 
+|         /*
+|          *
+|          * !! WARNING !! THIS CSS FILE HAS BEEN AUTOMATICALLY GENERATED !!
+|          *
+|          * Any modifications made to this file will be lost next time it is generated.
+|          * Consider modifying the 'theme.less' file found in the 'less' folder instead
+|          * or create a new custom CSS file to override the rules in this one.
+|          *
+|          * !! YOU HAVE BEEN WARNED !! MODIFY THIS FILE AT YOUR OWN RISK !!
+|          *
+|          */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 966
+|     Comment: 
+|          // don't move modals dom position
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5734
+|     Comment: 
+|         /* FONT PATH
+|          * -------------------------- */
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 193
+|     Comment: 
+|         /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+|     
+|     Path: http://10.10.10.16:80/forgot-password
+|     Line number: 75
+|     Comment: 
+|         <!-- Footer -->
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 93
+|     Comment: 
+|          // strip for ie7
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 259
+|     Comment: 
+|          // BUTTON DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1568
+|     Comment: 
+|          // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 526
+|     Comment: 
+|          // ================================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 846
+|     Comment: 
+|          // DROPDOWN PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 6039
+|     Comment: 
+|         /* Icon rotations and mirroring */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2127
+|     Comment: 
+|          // ============
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 152
+|     Comment: 
+|          // ==============
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5993
+|     Comment: 
+|         /* Prevent stack and spinners from being taken inline when inside a link */
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5985
+|     Comment: 
+|         /* Animated rotating icon */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 807
+|     Comment: 
+|          // down
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5959
+|     Comment: 
+|         /* EXTRAS
+|          * -------------------------- */
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5954
+|     Comment: 
+|         /* Fixes alignment in nav lists */
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5866
+|     Comment: 
+|         /* BOOTSTRAP SPECIFIC CLASSES
+|          * -------------------------- */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1803
+|     Comment: 
+|          // POPOVER NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 171
+|     Comment: 
+|          // ==============================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1998
+|     Comment: 
+|          // TAB CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1945
+|     Comment: 
+|          // SCROLLSPY PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5760
+|     Comment: 
+|         /* makes the font 33% larger relative to the icon container */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1030
+|     Comment: 
+|          // guard against infinite focus loop
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 699
+|     Comment: 
+|          // COLLAPSE NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1582
+|     Comment: 
+|         /* placement == 'right' */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1946
+|     Comment: 
+|          // ===========================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 275
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: carousel.js v3.3.4
+|          * http://getbootstrap.com/javascript/#carousel
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5743
+|     Comment: 
+|         /* FONT AWESOME CORE
+|          * -------------------------- */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1240
+|     Comment: 
+|          // TOOLTIP PUBLIC CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 16
+|     Comment: 
+|          // ============================================================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 34
+|     Comment: 
+|          // explicit for ie8 (  ._.)
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 124
+|     Comment: 
+|          // =======================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1704
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: popover.js v3.3.4
+|          * http://getbootstrap.com/javascript/#popovers
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 447
+|     Comment: 
+|          // CAROUSEL PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2275
+|     Comment: 
+|          // AFFIX NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2255
+|     Comment: 
+|          // AFFIX PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2152
+|     Comment: 
+|          // AFFIX CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 3
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: transition.js v3.3.4
+|          * http://getbootstrap.com/javascript/#transitions
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 2117
+|     Comment: 
+|          // TAB NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1986
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: tab.js v3.3.4
+|          * http://getbootstrap.com/javascript/#tabs
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1974
+|     Comment: 
+|          // SCROLLSPY DATA-API
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1217
+|     Comment: 
+|          // only register focus restorer if modal will actually get shown
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 448
+|     Comment: 
+|          // ==========================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 142
+|     Comment: 
+|          // ALERT NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1813
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: scrollspy.js v3.3.4
+|          * http://getbootstrap.com/javascript/#scrollspy
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 158
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: button.js v3.3.4
+|          * http://getbootstrap.com/javascript/#buttons
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1673
+|     Comment: 
+|          // TOOLTIP PLUGIN DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 421
+|     Comment: 
+|          // force reflow
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1604
+|     Comment: 
+|          // left overflow
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5961
+|     Comment: 
+|         /* Stacked and layered icon */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1695
+|     Comment: 
+|          // ===================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1752
+|     Comment: 
+|          // we use append for html objects to maintain js events
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1694
+|     Comment: 
+|          // TOOLTIP NO CONFLICT
+|     
+|     Path: http://10.10.10.16:80/forgot-password
+|     Line number: 18
+|     Comment: 
+|         <!-- Nav -->
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 260
+|     Comment: 
+|          // ===============
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1241
+|     Comment: 
+|          // ===============================
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1165
+|     Comment: 
+|          // thx walsh
+|     
+|     Path: http://10.10.10.16:80/combine/3445f527768940d896f7b890d240e00a-1492715882
+|     Line number: 5765
+|     Comment: 
+|         /* makes sure icons active on rollover in links */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 899
+|     Comment: 
+|          // MODAL CLASS DEFINITION
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 471
+|     Comment: 
+|          // ====================
+|     
+|     Path: http://10.10.10.16:80/forgot-password
+|     Line number: 15
+|     Comment: 
+|         <!-- Header -->
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 806
+|     Comment: 
+|          // up
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 1227
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: tooltip.js v3.3.4
+|          * http://getbootstrap.com/javascript/#tooltip
+|          * Inspired by the original jQuery.tipsy by Jason Frame
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 63
+|     Comment: 
+|         /* ========================================================================
+|          * Bootstrap: alert.js v3.3.4
+|          * http://getbootstrap.com/javascript/#alerts
+|          * ========================================================================
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          * ======================================================================== */
+|     
+|     Path: http://10.10.10.16:80/combine/7f99e3e85ec97240965196b51e999e4a-1492715882
+|     Line number: 251
+|     Comment: 
+|_         // ==================
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.16
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.16:80/forum/channel/november
+|     Form id: 
+|     Form action: http://10.10.10.16/forum/channel/november
+|     
+|     Path: http://10.10.10.16:80/forum/channel/september
+|     Form id: 
+|     Form action: http://10.10.10.16/forum/channel/september
+|     
+|     Path: http://10.10.10.16:80/forum/channel/autumn-leaves
+|     Form id: 
+|     Form action: http://10.10.10.16/forum/channel/autumn-leaves
+|     
+|     Path: http://10.10.10.16:80/forum/channel/spring-trees
+|     Form id: 
+|     Form action: http://10.10.10.16/forum/channel/spring-trees
+|     
+|     Path: http://10.10.10.16:80/forum/channel/winter-snow
+|     Form id: 
+|     Form action: http://10.10.10.16/forum/channel/winter-snow
+|     
+|     Path: http://10.10.10.16:80/forum/channel/summer-breeze
+|     Form id: 
+|     Form action: http://10.10.10.16/forum/channel/summer-breeze
+|     
+|     Path: http://10.10.10.16:80/forum/channel/october
+|     Form id: 
+|_    Form action: http://10.10.10.16/forum/channel/october
+|_http-date: Fri, 02 Oct 2020 16:04:59 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /blog/: Blog
+|   /forum/: Forum
+|   /blog/wp-login.php: Wordpress login page.
+|   /account/: Potentially interesting folder
+|_  /error/: Potentially interesting folder
+|_http-errors: ERROR: Script execution failed (use -d to debug)
+|_http-feed: Couldn't find any feeds.
+| http-fileupload-exploiter: 
+|   
+|     Couldn't find a file-type field.
+|   
+|     Couldn't find a file-type field.
+|   
+|_    Couldn't find a file-type field.
+| http-grep: 
+|   (1) http://10.10.10.16:80/: 
+|     (1) ip: 
+|_      + 10.10.10.16
+| http-headers: 
+|   Date: Fri, 02 Oct 2020 16:04:38 GMT
+|   Server: Apache/2.4.7 (Ubuntu)
+|   X-Powered-By: PHP/5.5.9-1ubuntu4.21
+|   Cache-Control: no-cache
+|   Set-Cookie: october_session=eyJpdiI6ImFNckZaTkJXTVpJcTZtTkh2N3hsOGc9PSIsInZhbHVlIjoic2d0dzRpUWhuZURsazFra0VqemlYVHIrUEhIWG9nTml1cDVocG01cFwvUHNoTG1mMURpdFRhN0p2eGhZcTFycUtwQm5PSCtNU0R5ZkNGeXpmb0p0UjVRPT0iLCJtYWMiOiI5OTk3OGY1MGQ3NzNlMjRmZGM3YzZhMTBhYzAzYzdkYzU2ZTM4NDIwMDY4NzY0MjRjNTliYmRhZTQ5OGU1NjczIn0%3D; expires=Fri, 02-Oct-2020 18:04:39 GMT; Max-Age=7200; path=/; httponly
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-php-version: Version from header x-powered-by: PHP/5.5.9-1ubuntu4.21
+|_http-phpself-xss: ERROR: Script execution failed (use -d to debug)
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Cache_Control: 
+|_    Header: Cache-Control: no-cache
+|_http-server-header: Apache/2.4.7 (Ubuntu)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 5
+|     /blog/post/
+|       Other: 1
+|     /combine/
+|       Other: 2; attr('href'): 1
+|     /forum/channel/
+|       Other: 7
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /blog/post/
+|   Total files found (by extension):
+|_    Other: 15; attr('href'): 1
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_      http://ha.ckers.org/slowloris/
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: October CMS - Vanilla
+| http-traceroute: 
+|   content-length
+|     Hop #1: 5073
+|     Hop #2: 5071
+|_    Hop #3: 5070
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| dev
+| oracle
+|_125 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.16"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       5332.90    2784.61  0.0%
+|_80    0       4874.90    652.19   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 534.66 seconds
