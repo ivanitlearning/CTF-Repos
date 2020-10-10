@@ -1,0 +1,488 @@
+root@Kali:~/HTB/Traverxec# nmap -Pn -n -sS -p- 10.10.10.165
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-04 13:24 +08
+Nmap scan report for 10.10.10.165
+Host is up (0.0066s latency).
+Not shown: 65533 filtered ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 105.08 seconds
+
+root@Kali:~/HTB/Traverxec# nmap -Pn -n -sV -p22,80 --script=vuln,discovery 10.10.10.165 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-04 13:30 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.165
+Host is up (0.0052s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.9p1 Debian-10+deb10u1
+| ssh-hostkey: 
+|   2048 aa:99:a8:16:68:cd:41:cc:f9:6c:84:01:c7:59:09:5c (RSA)
+|   256 93:dd:1a:23:ee:d7:1f:08:6b:58:47:09:73:a3:88:cc (ECDSA)
+|_  256 9d:d6:62:1e:7a:fb:8f:56:92:e6:37:f1:10:db:9b:ce (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp open  http    nostromo 1.9.6
+|_http-chrono: Request times for /; avg: 166.80ms; min: 156.03ms; max: 186.73ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.165
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 76
+|     Comment: 
+|         <!--H-->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 385
+|     Comment: 
+|         <!-- / copyrights -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 26
+|     Comment: 
+|         <!-- Main Stylesheet File -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 135
+|     Comment: 
+|         <!-- end col-12 -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 15
+|     Comment: 
+|         <!-- Google Fonts -->
+|     
+|     Path: http://10.10.10.165:80/lib/bootstrap/css/bootstrap.min.css
+|     Line number: 5
+|     Comment: 
+|         /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+|     
+|     Path: http://10.10.10.165:80/lib/php-mail-form/validate.js
+|     Line number: 12
+|     Comment: 
+|         
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 334
+|     Comment: 
+|         /* HEADER 2 - PORTFOLIO SECTION */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 50
+|     Comment: 
+|         <!--/row-->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 133
+|     Comment: 
+|         <!-- he wrap -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 290
+|     Comment: 
+|         <!-- portfolio -->
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 291
+|     Comment: 
+|         /* CONTACT SEPARATOR */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 131
+|     Comment: 
+|         <!-- he view -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 367
+|     Comment: 
+|         <!-- / contact -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 296
+|     Comment: 
+|         <!--/.G-->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 102
+|     Comment: 
+|         <!--/.container-->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 292
+|     Comment: 
+|         <!-- portfolio container -->
+|     
+|     Path: http://10.10.10.165:80/lib/jquery/jquery.min.js
+|     Line number: 1
+|     Comment: 
+|         /*! jQuery v1.12.4 | (c) jQuery Foundation | jquery.org/license */
+|     
+|     Path: http://10.10.10.165:80/lib/isotope/isotope.min.js
+|     Line number: 1
+|     Comment: 
+|         /**
+|          * Isotope v1.5.25
+|          * An exquisite jQuery plugin for magical layouts
+|          * http://isotope.metafizzy.co
+|          *
+|          * Commercial use requires one-time purchase of a commercial license
+|          * http://isotope.metafizzy.co/docs/license.html
+|          *
+|          * Non-commercial use is licensed under the MIT License
+|          *
+|          * Copyright 2013 Metafizzy
+|          */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 74
+|     Comment: 
+|         <!--/container-->
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 235
+|     Comment: 
+|         /* GREY SECTION */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 110
+|     Comment: 
+|         /* FORM CONFIGURATION */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 57
+|     Comment: 
+|         <!--/col-md-4-->
+|     
+|     Path: http://10.10.10.165:80/lib/bootstrap/js/bootstrap.min.js
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Bootstrap v3.3.7 (http://getbootstrap.com)
+|          * Copyright 2011-2016 Twitter, Inc.
+|          * Licensed under the MIT license
+|          */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 373
+|     Comment: 
+|         /* Contact Form */
+|     
+|     Path: http://10.10.10.165:80/lib/php-mail-form/validate.js
+|     Line number: 4
+|     Comment: 
+|         
+|     
+|     Path: http://10.10.10.165:80/lib/php-mail-form/validate.js
+|     Line number: 10
+|     Comment: 
+|         
+|     
+|     Path: http://10.10.10.165:80/lib/php-mail-form/validate.js
+|     Line number: 16
+|     Comment: 
+|         
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 488
+|     Comment: 
+|         /* Copyrights */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 278
+|     Comment: 
+|         /* CLIENTS */
+|     
+|     Path: http://10.10.10.165:80/lib/ionicons/css/ionicons.min.css
+|     Line number: 1
+|     Comment: 
+|         /*!
+|           Ionicons, v1.5.2
+|           Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
+|           https://twitter.com/benjsperry  https://twitter.com/ionicframework
+|           MIT License: https://github.com/driftyco/ionicons
+|         */
+|     
+|     Path: http://10.10.10.165:80/lib/bootstrap/css/bootstrap.min.css
+|     Line number: 5
+|     Comment: 
+|         /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 326
+|     Comment: 
+|         <!--/.F-->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 310
+|     Comment: 
+|         <!--/.sep-->
+|     
+|     Path: http://10.10.10.165:80/lib/bootstrap/css/bootstrap.min.css
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Bootstrap v3.3.7 (http://getbootstrap.com)
+|          * Copyright 2011-2016 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 318
+|     Comment: 
+|         /* FOOTER */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 129
+|     Comment: 
+|         <!-- he bg -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 18
+|     Comment: 
+|         <!-- Bootstrap CSS File -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 375
+|     Comment: 
+|         <!--
+|                   You are NOT allowed to delete the credit link to TemplateMag with free version.
+|                   You can delete the credit link only if you bought the pro version.
+|                   Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/basic-bootstrap-personal-template/
+|                   Licensing information: https://templatemag.com/license/
+|                 -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 29
+|     Comment: 
+|         <!-- =======================================================
+|             Template Name: Basic
+|             Template URL: https://templatemag.com/basic-bootstrap-personal-template/
+|             Author: TemplateMag.com
+|             License: https://templatemag.com/license/
+|           ======================================================= -->
+|     
+|     Path: http://10.10.10.165:80/lib/prettyphoto/js/prettyphoto.js
+|     Line number: 1
+|     Comment: 
+|         /* ------------------------------------------------------------------------
+|         	Class: prettyPhoto
+|         	Use: Lightbox clone for jQuery
+|         	Author: Stephane Caron (http://www.no-margin-for-errors.com)
+|         	Version: 3.1.6
+|         ------------------------------------------------------------------------- */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 194
+|     Comment: 
+|         /* HEADER SECTION */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 1
+|     Comment: 
+|         
+|         
+|         
+|         
+|         
+|         */
+|     
+|     Path: http://10.10.10.165:80/css/style.css
+|     Line number: 8
+|     Comment: 
+|         
+|         
+|         ################################################################# */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 112
+|     Comment: 
+|         <!--/col-md-8-->
+|     
+|     Path: http://10.10.10.165:80/lib/hover/hoverdir.js
+|     Line number: 1
+|     Comment: 
+|         /**
+|          * jquery.hoverdir.js v1.1.0
+|          * http://www.codrops.com
+|          *
+|          * Licensed under the MIT license.
+|          * http://www.opensource.org/licenses/mit-license.php
+|          * 
+|          * Copyright 2012, Codrops
+|          * http://www.codrops.com
+|          */
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 93
+|     Comment: 
+|         <!-- /.container -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 43
+|     Comment: 
+|         <!--/logo-->
+|     
+|     Path: http://10.10.10.165:80/js/main.js
+|     Line number: 8
+|     Comment: 
+|         
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 396
+|     Comment: 
+|         <!-- Template Main Javascript File -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 21
+|     Comment: 
+|         <!-- Libraries CSS Files -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 11
+|     Comment: 
+|         <!-- Favicons -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 387
+|     Comment: 
+|         <!-- JavaScript Libraries -->
+|     
+|     Path: http://10.10.10.165:80/
+|     Line number: 84
+|     Comment: 
+|         <!--/col-md-6-->
+|     
+|     Path: http://10.10.10.165:80/lib/bootstrap/css/bootstrap.min.css
+|     Line number: 6
+|     Comment: 
+|_        /*# sourceMappingURL=bootstrap.min.css.map */
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.165
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.165:80/
+|     Form id: contact-name
+|_    Form action: empty.html
+|_http-date: Sun, 04 Oct 2020 05:30:33 GMT; 0s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.165:80/lib/php-mail-form/contactform/contactform.php: 
+|     (1) ip: 
+|_      + 10.10.10.165
+| http-headers: 
+|   Date: Sun, 04 Oct 2020 05:30:45 GMT
+|   Server: nostromo 1.9.6
+|   Connection: close
+|   Last-Modified: Fri, 25 Oct 2019 21:11:09 GMT
+|   Content-Length: 15674
+|   Content-Type: text/html
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: nostromo 1.9.6
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; html: 1
+|     /css/
+|       css: 1
+|     /img/
+|       png: 2
+|     /img/portfolio/
+|       jpg: 6
+|     /js/
+|       js: 1
+|     /lib/bootstrap/css/
+|       css: 1
+|     /lib/bootstrap/js/
+|       js: 1
+|     /lib/hover/
+|       js: 2
+|     /lib/ionicons/css/
+|       css: 1
+|     /lib/isotope/
+|       js: 1
+|     /lib/jquery/
+|       js: 1
+|     /lib/prettyphoto/js/
+|       js: 1
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /lib/ionicons/css/
+|   Total files found (by extension):
+|_    Other: 1; css: 3; html: 1; jpg: 6; js: 7; png: 2
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: TRAVERXEC
+|_http-traceroute: ERROR: Script execution failed (use -d to debug)
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 37 names had status ERROR
+|_90 names had status 200
+| http-vuln-cve2011-3192: 
+|   VULNERABLE:
+|   Apache byterange filter DoS
+|     State: VULNERABLE
+|     IDs:  BID:49303  CVE:CVE-2011-3192
+|       The Apache web server is vulnerable to a denial of service attack when numerous
+|       overlapping byte ranges are requested.
+|     Disclosure date: 2011-08-19
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3192
+|       https://www.tenable.com/plugins/nessus/55976
+|       https://www.securityfocus.com/bid/49303
+|_      https://seclists.org/fulldisclosure/2011/Aug/175
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.165"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       5275.40    504.59   0.0%
+|_80    0       5556.38    1258.63  20.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 76.05 seconds

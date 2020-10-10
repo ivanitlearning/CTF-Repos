@@ -1,0 +1,1001 @@
+www-data@traverxec /tmp $ ./linpeas.sh -a
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.19.0-6-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.67-2+deb10u1 (2019-09-20)
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: traverxec
+Writable folder: /dev/shm
+[+] /usr/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.19.0-6-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.67-2+deb10u1 (2019-09-20)
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 10 (buster)
+Release:	10
+Codename:	buster
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.27
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Sun Oct  4 02:33:07 EDT 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+udev            479M     0  479M   0% /dev
+tmpfs            99M  6.5M   93M   7% /run
+/dev/sda1       3.9G  1.5G  2.3G  40% /
+tmpfs           494M     0  494M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           494M     0  494M   0% /sys/fs/cgroup
+              total        used        free      shared  buff/cache   available
+Mem:        1009948       72056      631120        6632      306772      747400
+Swap:       1046524           0     1046524
+
+[+] CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+Address sizes:       43 bits physical, 48 bits virtual
+CPU(s):              1
+On-line CPU(s) list: 0
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               49
+Model name:          AMD EPYC 7302P 16-Core Processor
+Stepping:            0
+CPU MHz:             2994.375
+BogoMIPS:            5988.75
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            512K
+L3 cache:            131072K
+NUMA node0 CPU(s):   0
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb xsaveopt xsavec xsaves arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+GATEWAY_INTERFACE=CGI/1.1
+HISTFILESIZE=0
+SHLVL=2
+REMOTE_ADDR=10.10.14.78
+DOCUMENT_ROOT=/var/nostromo/htdocs
+REMOTE_PORT=12492
+PS1=\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+SERVER_SIGNATURE=<address>nostromo 1.9.6 at 10.10.10.165 Port 80</address>
+LC_CTYPE=C.UTF-8
+CONTENT_LENGTH=1
+SCRIPT_FILENAME=/var/nostromo/htdocs/../../../../bin/sh
+REQUEST_URI=/../../../../bin/sh
+_=./linpeas.sh
+SERVER_SOFTWARE=nostromo 1.9.6
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+SERVER_PROTOCOL=HTTP/1.1
+HISTSIZE=0
+SHELL=bash
+REQUEST_METHOD=POST
+SERVER_ADMIN=david@traverxec.htb
+SERVER_ADDR=127.0.1.1
+SERVER_PORT=80
+SCRIPT_NAME=/../../../../bin/sh
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+SERVER_NAME=traverxec.htb
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=b94f39a4-394e-4755-bdc1-205c141583a6 /               ext4    errors=remount-ro 0       1
+UUID=4694341c-5642-4505-8593-0e44d799f109 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nc
+/usr/bin/netcat
+/usr/bin/nc.traditional
+/usr/bin/wget
+/usr/bin/ping
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/python3.7
+/usr/bin/perl
+/usr/bin/sudo
+
+[+] Installed Compiler
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+message+   412  0.0  0.4   9052  4388 ?        Ss   01:17   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root         1  0.0  0.9 103692  9924 ?        Ss   01:17   0:01 /sbin/init
+root       244  0.0  0.8  32192  8280 ?        Ss   01:17   0:00 /lib/systemd/systemd-journald
+root       268  0.0  0.4  21920  4876 ?        Ss   01:17   0:00 /lib/systemd/systemd-udevd
+root       414  0.0  0.2   8476  2688 ?        Ss   01:17   0:00 /usr/sbin/cron -f
+root       415  0.0  0.6  19304  6484 ?        Ss   01:17   0:00 /lib/systemd/systemd-logind
+root       423  0.0  0.1   5612  1668 tty1     Ss+  01:17   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root       424  0.0  0.6  15852  7068 ?        Ss   01:17   0:00 /usr/sbin/sshd -D
+root       585  0.0  1.1 152648 11732 ?        Sl   01:17   0:03 /usr/sbin/vmtoolsd
+root       631  0.0  1.0  38660 10356 ?        S    01:17   0:00 /usr/lib/vmware-vgauth/VGAuthService -s
+systemd+   407  0.0  0.6  93080  6432 ?        Ssl  01:17   0:00 /lib/systemd/systemd-timesyncd
+www-data   419  1.7  0.4  10428  4556 ?        S    01:17   1:16 /usr/local/sbin/nhttpd
+www-data   795  0.0  0.2   3736  2840 ?        S    02:25   0:00 bash
+www-data   799  0.0  0.8  17048  8376 ?        S    02:26   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+www-data   800  0.0  0.3   7060  3436 pts/0    Ss+  02:26   0:00 /bin/bash
+www-data   803  0.0  0.2   3736  2896 ?        S    02:26   0:00 bash
+www-data   804  0.0  0.8  17176  8436 ?        S    02:27   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+www-data   805  0.0  0.3   7192  3548 pts/1    Ss   02:27   0:00 /bin/bash
+www-data 18923  0.6  0.2   2772  2072 pts/1    S+   02:33   0:00 /bin/sh ./linpeas.sh -a
+www-data 19462  0.0  0.2  10832  2920 pts/1    R+   02:33   0:00 ps aux
+www-data 19464  0.0  0.0  11984   792 pts/1    S+   02:33   0:00 sort
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root 1168776 Apr 18  2019 /bin/bash
+lrwxrwxrwx 1 root root       4 Oct 25  2019 /bin/sh -> dash
+-rwxr-xr-x 1 root root  145488 Aug 20  2019 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root  231560 Aug 20  2019 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root   55360 Aug 20  2019 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root  678392 Aug 20  2019 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root   64744 Jan 10  2019 /sbin/agetty
+lrwxrwxrwx 1 root root      20 Aug 20  2019 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root  240680 Jun  9  2019 /usr/bin/dbus-daemon[0m
+lrwxrwxrwx 1 root root      37 Nov 12  2019 /usr/lib/vmware-vgauth/VGAuthService -> /usr/lib/vmware-tools/bin64/appLoader
+-r-xr-xr-x 1 root bin    72984 Oct 25  2019 /usr/local/sbin/nhttpd
+-rwxr-xr-x 1 root root   55792 Jun 23  2019 /usr/sbin/cron
+-rwxr-xr-x 1 root root  807336 Oct  6  2019 /usr/sbin/sshd
+lrwxrwxrwx 1 root root      37 Nov 12  2019 /usr/sbin/vmtoolsd -> /usr/lib/vmware-tools/sbin64/vmtoolsd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 Not Found
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root 1042 Jun 23  2019 /etc/crontab
+
+/etc/cron.d:
+total 12
+drwxr-xr-x  2 root root 4096 Oct 25  2019 .
+drwxr-xr-x 73 root root 4096 Nov 12  2019 ..
+-rw-r--r--  1 root root  102 Jun 23  2019 .placeholder
+
+/etc/cron.daily:
+total 36
+drwxr-xr-x  2 root root 4096 Oct 25  2019 .
+drwxr-xr-x 73 root root 4096 Nov 12  2019 ..
+-rw-r--r--  1 root root  102 Jun 23  2019 .placeholder
+-rwxr-xr-x  1 root root 1478 May 28  2019 apt-compat
+-rwxr-xr-x  1 root root  355 Dec 29  2017 bsdmainutils
+-rwxr-xr-x  1 root root 1187 Apr 18  2019 dpkg
+-rwxr-xr-x  1 root root  377 Aug 28  2018 logrotate
+-rwxr-xr-x  1 root root 1123 Feb 10  2019 man-db
+-rwxr-xr-x  1 root root  249 Sep 27  2017 passwd
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Oct 25  2019 .
+drwxr-xr-x 73 root root 4096 Nov 12  2019 ..
+-rw-r--r--  1 root root  102 Jun 23  2019 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 Oct 25  2019 .
+drwxr-xr-x 73 root root 4096 Nov 12  2019 ..
+-rw-r--r--  1 root root  102 Jun 23  2019 .placeholder
+
+/etc/cron.weekly:
+total 16
+drwxr-xr-x  2 root root 4096 Oct 25  2019 .
+drwxr-xr-x 73 root root 4096 Nov 12  2019 ..
+-rw-r--r--  1 root root  102 Jun 23  2019 .placeholder
+-rwxr-xr-x  1 root root  813 Feb 10  2019 man-db
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+[+] Services
+[i] Search for outdated versions
+ [ + ]  apparmor
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ + ]  dbus
+ [ - ]  hwclock.sh
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ + ]  netfilter-persistent
+ [ + ]  networking
+ [ + ]  procps
+ [ - ]  rsyslog
+ [ + ]  ssh
+ [ - ]  sudo
+ [ + ]  udev
+ [ + ]  vmware-tools
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT          LAST                         PASSED       UNIT                         ACTIVATES
+Sun 2020-10-04 06:26:06 EDT  3h 51min left Sun 2020-10-04 01:17:58 EDT  1h 16min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sun 2020-10-04 11:01:30 EDT  8h left       Sun 2020-10-04 01:17:58 EDT  1h 16min ago apt-daily.timer              apt-daily.service
+Mon 2020-10-05 00:00:00 EDT  21h left      Sun 2020-10-04 01:17:58 EDT  1h 16min ago logrotate.timer              logrotate.service
+Mon 2020-10-05 00:00:00 EDT  21h left      Sun 2020-10-04 01:17:58 EDT  1h 16min ago man-db.timer                 man-db.service
+Mon 2020-10-05 01:32:58 EDT  22h left      Sun 2020-10-04 01:32:58 EDT  1h 1min ago  systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                             PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION
+:1.0                             407 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -          -
+:1.2                               1 systemd         root             :1.2          init.scope                -          -
+:1.3                             415 systemd-logind  root             :1.3          systemd-logind.service    -          -
+:1.63                          27997 busctl          www-data         :1.63         nostromo.service          -          -
+org.freedesktop.DBus               1 systemd         root             -             init.scope                -          -
+org.freedesktop.hostname1          - -               -                (activatable) -                         -
+org.freedesktop.locale1            - -               -                (activatable) -                         -
+org.freedesktop.login1           415 systemd-logind  root             :1.3          systemd-logind.service    -          -
+org.freedesktop.network1           - -               -                (activatable) -                         -
+org.freedesktop.resolve1           - -               -                (activatable) -                         -
+org.freedesktop.systemd1           1 systemd         root             :1.2          init.scope                -          -
+org.freedesktop.timedate1          - -               -                (activatable) -                         -
+org.freedesktop.timesync1        407 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -          -
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+traverxec
+127.0.0.1	localhost
+127.0.1.1	traverxec.htb	traverxec
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+domain localdomain
+search localdomain
+nameserver 10.211.55.1
+htb
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+default		0.0.0.0
+loopback	127.0.0.0
+link-local	169.254.0.0
+
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 1000
+    link/ether 00:50:56:b9:be:f3 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.165/24 brd 10.10.10.255 scope global eth0
+       valid_lft forever preferred_lft forever
+
+[+] Networks and neighbours
+10.10.10.2 dev eth0 lladdr 00:50:56:b9:83:d8 REACHABLE
+
+[+] Iptables rules
+*filter
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -i eth0 -p tcp -m tcp --dport 22 -m tcp -m state --state NEW -m recent --set --name SSH --mask 255.255.255.255 --rsource 
+-A INPUT -i eth0 -p tcp -m tcp --dport 22 -m tcp -m state --state NEW -m recent --update --seconds 1 --hitcount 10 --name SSH --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -i eth0 -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -i eth0 -p tcp -m tcp --dport 80 -m tcp -m state --state NEW -m recent --set --name HTTP --mask 255.255.255.255 --rsource 
+-A INPUT -i eth0 -p tcp -m tcp --dport 80 -m tcp -m state --state NEW -m recent --update --seconds 1 --hitcount 40 --name HTTP --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -i eth0 -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+COMMIT
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is enabled (0)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+./linpeas.sh: 1: echo: echo: I/O error
+  Bruteforcing user david...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+david:x:1000:1000:david,,,:/home/david:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=1000(david) gid=1000(david) groups=1000(david),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),109(netdev)
+uid=101(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=102(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=103(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=104(messagebus) gid=110(messagebus) groups=110(messagebus)
+uid=105(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+uid=999(systemd-coredump) gid=999(systemd-coredump) groups=999(systemd-coredump)
+
+[+] Login now
+ 02:35:39 up  1:17,  0 users,  load average: 5.78, 1.90, 0.69
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+reboot   system boot  4.19.0-6-amd64   Tue Nov 12 04:04 - 04:06  (00:01)
+root     tty1                          Tue Nov 12 04:02 - down   (00:02)
+reboot   system boot  4.19.0-6-amd64   Tue Nov 12 04:01 - 04:04  (00:02)
+root     tty1                          Tue Nov 12 03:59 - down   (00:01)
+reboot   system boot  4.19.0-6-amd64   Tue Nov 12 03:59 - 04:01  (00:01)
+root     tty1                          Tue Nov 12 03:56 - down   (00:03)
+root     tty1                          Tue Nov 12 03:51 - 03:56  (00:04)
+reboot   system boot  4.19.0-6-amd64   Tue Nov 12 03:50 - 03:59  (00:08)
+
+wtmp begins Sun Oct 27 16:25:39 2019
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Thu Nov 21 04:25:58 -0500 2019
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+ Not Found
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+cat: '': No such file or directory
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+rsyncd.conf Not Found
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+ChallengeResponseAuthentication no
+UsePAM yes
+  --> Some certificates were found (out limited):
+/etc/vmware-tools/GuestProxyData/server/cert.pem
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/usr/lib/openssh/ssh-keysign
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/umount  --->  BSD/Linux(08-1996)
+/usr/bin/su
+/usr/bin/gpasswd
+/usr/bin/newgrp  --->  HP-UX_10.20
+/usr/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/usr/bin/chsh
+/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/chfn  --->  SuSE_9.3/10
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/usr/sbin/unix_chkpwd
+/usr/bin/dotlockfile
+/usr/bin/wall
+/usr/bin/expiry
+/usr/bin/bsd-write
+/usr/bin/crontab
+/usr/bin/chage
+/usr/bin/ssh-agent
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/vmware-tools-libraries.conf
+/usr/lib/vmware-tools/lib32/libvmGuestLib.so
+/usr/lib/vmware-tools/lib64/libvmGuestLib.so
+/usr/lib/vmware-tools/lib32/libvmGuestLibJava.so
+/usr/lib/vmware-tools/lib64/libvmGuestLibJava.so
+/usr/lib/vmware-tools/lib32/libDeployPkg.so
+/usr/lib/vmware-tools/lib64/libDeployPkg.so
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+/usr/bin/ping = cap_net_raw+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 12
+drwxr-xr-x  2 root root 4096 Oct 25  2019 .
+drwxr-xr-x 73 root root 4096 Nov 12  2019 ..
+-rw-r--r--  1 root root  664 Mar  1  2019 bash_completion.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate 3.14.0
+
+    Default mail command:       /usr/bin/mail
+    Default compress command:   /bin/gzip
+    Default uncompress command: /bin/gunzip
+    Default compress extension: .gz
+    Default state file path:    /var/lib/logrotate/status
+    ACL support:                yes
+    SELinux support:            yes
+
+[+] Files inside /home/www-data (limit 20)
+
+[+] Files inside others home (limit 20)
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rwxr-xr-x 1 root root 34132 Nov 12  2019 /usr/lib/vmware-tools/plugins32/vmsvc/libvmbackup.so
+-rwxr-xr-x 1 root root 38984 Nov 12  2019 /usr/lib/vmware-tools/plugins64/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 9716 Sep 20  2019 /usr/lib/modules/4.19.0-6-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 9716 Aug  7  2019 /usr/lib/modules/4.19.0-5-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 363752 Apr 30  2018 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 7867 Jul 16  1996 /usr/share/doc/telnet/README.old.gz
+-rw-r--r-- 1 root root 303 Oct 26  2018 /usr/share/doc/hdparm/changelog.old.gz
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 1994 Apr 18  2019 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3526 Apr 18  2019 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 807 Apr 18  2019 /etc/skel/.profile
+-rw-r--r-- 1 root root 570 Jan 31  2010 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2778 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+-rw-r--r-- 1 root bin 41 Oct 25  2019 /var/nostromo/conf/.htpasswd
+Reading /var/nostromo/conf/.htpasswd
+david:$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/
+
+-rw-r--r-- 1 root bin 498 Oct 25  2019 /var/nostromo/conf/nhttpd.conf
+Reading /var/nostromo/conf/nhttpd.conf
+servername		traverxec.htb
+serverlisten		*
+serveradmin		david@traverxec.htb
+serverroot		/var/nostromo
+servermimes		conf/mimes
+docroot			/var/nostromo/htdocs
+docindex		index.html
+logpid			logs/nhttpd.pid
+user			www-data
+htaccess		.htaccess
+htpasswd		/var/nostromo/conf/.htpasswd
+/icons			/var/nostromo/icons
+homedirs		/home
+homedirs_public		public_www
+
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+./linpeas.sh: 2517: ./linpeas.sh: f: not found
+./linpeas.sh: 2517: printf: printf: I/O error
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/run/lock
+/tmp
+/tmp/.ICE-unix
+/tmp/.Test-unix
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/tmp/.font-unix
+/tmp/linpeas.sh
+/tmp/lse.sh
+/var/nostromo/logs
+/var/nostromo/logs/nhttpd.pid
+/var/tmp
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+
+[+] Finding passwords inside logs (limit 70)
+
+[+] Finding emails inside logs (limit 70)
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+/etc/nsswitch.conf:passwd:         files systemd
+/etc/pam.d/common-password:password	[success=1 default=ignore]	pam_unix.so obscure sha512
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/ssl/openssl.cnf:challengePassword		= A challenge password
+/etc/ssl/openssl.cnf:challengePassword_max		= 20
+/etc/ssl/openssl.cnf:challengePassword_min		= 4
+/etc/vmware-caf/pme/install/caf-dbg.sh:   local password="$2"
+/etc/vmware-tools/messages/de/VGAuthLib.vmsg:auth.password.invalid = "Benutzername und Kennwort für '%1$s' stimmen nicht überein"
+/etc/vmware-tools/messages/de/VGAuthLib.vmsg:auth.password.valid = "Benutzername und Kennwort wurden erfolgreich für '%1$s' bestätigt"
+/etc/vmware-tools/messages/en/VGAuthLib.vmsg:auth.password.invalid = "Username and password mismatch for '%1$s'"
+/etc/vmware-tools/messages/en/VGAuthLib.vmsg:auth.password.valid = "Username and password successfully validated for '%1$s'"
+/etc/vmware-tools/messages/es/VGAuthLib.vmsg:auth.password.invalid = "El nombre de usuario y la contraseña de '%1$s' no coinciden"
+/etc/vmware-tools/messages/es/VGAuthLib.vmsg:auth.password.valid = "El nombre de usuario y la contraseña de '%1$s' se han validado correctamente"
+/etc/vmware-tools/messages/fr/VGAuthLib.vmsg:auth.password.invalid = "Non-concordance du nom d'utilisateur et du mot de passe pour '%1$s'"
+/etc/vmware-tools/messages/fr/VGAuthLib.vmsg:auth.password.valid = "Validation réussie du nom d'utilisateur et du mot de passe pour '%1$s'"
+/etc/vmware-tools/messages/it/VGAuthLib.vmsg:auth.password.invalid = "Nome utente e password non corrispondenti per '%1$s'"
+/etc/vmware-tools/messages/it/VGAuthLib.vmsg:auth.password.valid = "Nome utente e password convalidati correttamente per '%1$s'"
+/etc/vmware-tools/messages/ja/VGAuthLib.vmsg:auth.password.invalid = "'%1$s' のユーザー名とパスワードが一致しません"
+/etc/vmware-tools/messages/ja/VGAuthLib.vmsg:auth.password.valid = "'%1$s' のユーザー名とパスワードが正しく検証されました"
+/etc/vmware-tools/messages/ko/VGAuthLib.vmsg:auth.password.invalid = "'%1$s'에 대해 사용자 이름과 암호가 일치하지 않습니다."
+/etc/vmware-tools/messages/ko/VGAuthLib.vmsg:auth.password.valid = "'%1$s'에 대해 사용자 이름 및 암호가 유효한 것으로 확인되었습니다."
+/etc/vmware-tools/messages/zh_CN/VGAuthLib.vmsg:auth.password.invalid = "“%1$s”的用户名和密码不匹配"
+/etc/vmware-tools/messages/zh_CN/VGAuthLib.vmsg:auth.password.valid = "已成功验证“%1$s”的用户名和密码"
+/etc/vmware-tools/messages/zh_TW/VGAuthLib.vmsg:auth.password.invalid = "「%1$s」的使用者名稱與密碼不符"
+/etc/vmware-tools/messages/zh_TW/VGAuthLib.vmsg:auth.password.valid = "已成功驗證「%1$s」的使用者名稱和密碼"
+/tmp/linpeas.sh:      SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+/tmp/linpeas.sh:    P)  PASSWORD=$OPTARG;;
+/tmp/linpeas.sh:    echo "  You can login as $USER using password: $PASSWORDTRY" | sed -E "s,.*,${C}[1;31;103m&${C}[0m,"
+/tmp/linpeas.sh:    printf $Y"[+] "$GREEN"Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds\n"$NC
+/tmp/linpeas.sh:  FIND_PASSWORD_RELEVANT_NAMES=$(prep_to_find "$PASSWORD_RELEVANT_NAMES")
+/tmp/linpeas.sh:  PASSWORDTRY=$2
+/tmp/linpeas.sh:  PASSWORD_RELEVANT_NAMES="*password* *credential* creds*"
+/tmp/linpeas.sh:PASSWORD=""
+/tmp/linpeas.sh:processesDump="gdm-password|gnome-keyring-daemon|lightdm|vsftpd|apache2|sshd:"
+/tmp/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/tmp/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) = 0 ] && echo $u; done | grep -v root'
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/tmp/lse.sh:  cecho "${lblue}    Password:${reset} "
+/tmp/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+
+[+] Finding possible password variables inside key folders (limit 70)
+
+[+] Finding possible password in config files
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/adduser.conf
+passwd
+ /etc/nsswitch.conf
+passwd:         files systemd
+ /etc/reportbug.conf
+password for SMTP
+passwd XXX
+
+[+] Finding 'username' string inside key folders (limit 70)
+/etc/vmware-caf/pme/install/caf-dbg.sh:   local username="$1"
+/etc/vmware-caf/pme/scripts/setUpVgAuth:   echo "    subject: Subject that maps to the userName in the SAML [default: $subject]"
+/etc/vmware-caf/pme/scripts/setUpVgAuth:   echo "    userName: The name of the user to be added [default: $userName]"
+/etc/vmware-caf/pme/scripts/setUpVgAuth:   userName=$1
+/etc/vmware-caf/pme/scripts/setUpVgAuth:if [ $userName != "" ]; then
+/etc/vmware-caf/pme/scripts/setUpVgAuth:userName=""
+/etc/vmware-caf/pme/scripts/tearDownVgAuth:   echo "    subject: Subject that maps to the userName in the SAML [default: $subject]"
+/etc/vmware-caf/pme/scripts/tearDownVgAuth:   echo "    userName: The name of the user to be removed [default: $userName]"
+/etc/vmware-caf/pme/scripts/tearDownVgAuth:   userName=$1
+/etc/vmware-caf/pme/scripts/tearDownVgAuth:if [ $userName != "" ]; then
+/etc/vmware-caf/pme/scripts/tearDownVgAuth:userName=""
+/etc/vmware-caf/pme/scripts/vgAuth:			$vgAuthCli add --global --username=$username --file $cert --subject=$subject
+/etc/vmware-caf/pme/scripts/vgAuth:			$vgAuthCli remove --username=$username --file $cert --subject=$subject
+/etc/vmware-caf/pme/scripts/vgAuth:		$vgAuthCli list --username=$username
+/etc/vmware-caf/pme/scripts/vgAuth:		userLineCnt=$($vgAuthCli list --username=$username | wc -l)
+/etc/vmware-caf/pme/scripts/vgAuth:	echo "    Username: The name of the user to add to the alias store [default: $username]"
+/etc/vmware-caf/pme/scripts/vgAuth:	username=$2
+/etc/vmware-caf/pme/scripts/vgAuth:username="testuser"
+/etc/vmware-tools/messages/de/VGAuthCli.vmsg:addoptions.username = "Benutzer, dessen Zertifikatsspeicher hinzugefügt wird zu"
+/etc/vmware-tools/messages/de/VGAuthCli.vmsg:cmdline.summary.username = "Benutzername"
+/etc/vmware-tools/messages/de/VGAuthCli.vmsg:listmapped.username = "Benutzername"
+/etc/vmware-tools/messages/de/VGAuthCli.vmsg:listoptions.username = "Benutzer, dessen Zertifikatsspeicher angefordert wird"
+/etc/vmware-tools/messages/de/VGAuthCli.vmsg:removeoptions.username = "Benutzer, dessen Zertifikatsspeicher entfernt wird von"
+/etc/vmware-tools/messages/en/VGAuthCli.vmsg:addoptions.username = "User whose certificate store is being added to"
+/etc/vmware-tools/messages/en/VGAuthCli.vmsg:cmdline.summary.username = "username"
+/etc/vmware-tools/messages/en/VGAuthCli.vmsg:listmapped.username = "Username"
+/etc/vmware-tools/messages/en/VGAuthCli.vmsg:listoptions.username = "User whose certificate store is being queried"
+/etc/vmware-tools/messages/en/VGAuthCli.vmsg:removeoptions.username = "User whose certificate store is being removed from"
+/etc/vmware-tools/messages/es/VGAuthCli.vmsg:addoptions.username = "El usuario cuyo almacén de certificados se está añadiendo a"
+/etc/vmware-tools/messages/es/VGAuthCli.vmsg:cmdline.summary.username = "nombre de usuario"
+/etc/vmware-tools/messages/es/VGAuthCli.vmsg:listmapped.username = "Nombre de usuario"
+/etc/vmware-tools/messages/es/VGAuthCli.vmsg:listoptions.username = "El usuario cuyo almacén de certificados se está consultando"
+/etc/vmware-tools/messages/es/VGAuthCli.vmsg:removeoptions.username = "El usuario cuyo almacén de certificados se va a eliminar de"
+/etc/vmware-tools/messages/fr/VGAuthCli.vmsg:addoptions.username = "Utilisateur dont le magasin de certificats est ajouté à"
+/etc/vmware-tools/messages/fr/VGAuthCli.vmsg:cmdline.summary.username = "nom d'utilisateur"
+/etc/vmware-tools/messages/fr/VGAuthCli.vmsg:listmapped.username = "Nom d'utilisateur"
+/etc/vmware-tools/messages/fr/VGAuthCli.vmsg:listoptions.username = "Utilisateur dont le magasin de certificats est demandé"
+/etc/vmware-tools/messages/fr/VGAuthCli.vmsg:removeoptions.username = "Utilisateur pour lequel le magasin de certificats est supprimé"
+/etc/vmware-tools/messages/it/VGAuthCli.vmsg:addoptions.username = "Utente a cui viene aggiunto l'archivio certificati"
+/etc/vmware-tools/messages/it/VGAuthCli.vmsg:cmdline.summary.username = "nome utente"
+/etc/vmware-tools/messages/it/VGAuthCli.vmsg:listmapped.username = "Nome utente"
+/etc/vmware-tools/messages/it/VGAuthCli.vmsg:listoptions.username = "Utente il cui archivio certificati è oggetto di query"
+/etc/vmware-tools/messages/it/VGAuthCli.vmsg:removeoptions.username = "Utente da cui viene rimosso l'archivio certificati"
+/etc/vmware-tools/messages/ja/VGAuthCli.vmsg:addoptions.username = "証明書ストアが追加されているユーザー"
+/etc/vmware-tools/messages/ja/VGAuthCli.vmsg:cmdline.summary.username = "ユーザー名"
+/etc/vmware-tools/messages/ja/VGAuthCli.vmsg:listmapped.username = "ユーザー名"
+/etc/vmware-tools/messages/ja/VGAuthCli.vmsg:listoptions.username = "証明書ストアが照会されているユーザー"
+/etc/vmware-tools/messages/ja/VGAuthCli.vmsg:removeoptions.username = "次の場所から証明書ストアが削除されているユーザー"
+/etc/vmware-tools/messages/ko/VGAuthCli.vmsg:addoptions.username = "인증서 저장소를 추가 중인 사용자"
+/etc/vmware-tools/messages/ko/VGAuthCli.vmsg:cmdline.summary.username = "사용자 이름"
+/etc/vmware-tools/messages/ko/VGAuthCli.vmsg:listmapped.username = "사용자 이름"
+/etc/vmware-tools/messages/ko/VGAuthCli.vmsg:listoptions.username = "인증서 저장소를 쿼리 중인 사용자"
+/etc/vmware-tools/messages/ko/VGAuthCli.vmsg:removeoptions.username = "인증서 저장소를 제거 중인 사용자"
+/etc/vmware-tools/messages/zh_CN/VGAuthCli.vmsg:addoptions.username = "要在以下位置添加证书存储的用户"
+/etc/vmware-tools/messages/zh_CN/VGAuthCli.vmsg:cmdline.summary.username = "用户名"
+/etc/vmware-tools/messages/zh_CN/VGAuthCli.vmsg:listmapped.username = "用户名"
+/etc/vmware-tools/messages/zh_CN/VGAuthCli.vmsg:listoptions.username = "要对其证书存储进行查询的用户"
+/etc/vmware-tools/messages/zh_CN/VGAuthCli.vmsg:removeoptions.username = "要从以下位置移除其证书存储的用户"
+/etc/vmware-tools/messages/zh_TW/VGAuthCli.vmsg:addoptions.username = "正將其憑證存放區新增至以下項目的使用者"
+/etc/vmware-tools/messages/zh_TW/VGAuthCli.vmsg:cmdline.summary.username = "使用者名稱"
+/etc/vmware-tools/messages/zh_TW/VGAuthCli.vmsg:listmapped.username = "使用者名稱"
+/etc/vmware-tools/messages/zh_TW/VGAuthCli.vmsg:listoptions.username = "正在查詢其憑證存放區的使用者"
+/etc/vmware-tools/messages/zh_TW/VGAuthCli.vmsg:removeoptions.username = "正從以下項目移除其憑證存放區的使用者"
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/machine-id:5624ff30811344d09d8b70e04d01925e
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/var/backups/dpkg.status.0: 773fb95e98a27947de4a95abb3d3f2a2
+
+[+] Finding URIs with user:password@host inside key folders
