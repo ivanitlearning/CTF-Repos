@@ -1,0 +1,710 @@
+root@Kali:~/HTB/Jarvis# nmap -Pn -n -sS -p- 10.10.10.143 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-07 23:19 +08
+Nmap scan report for 10.10.10.143
+Host is up (0.0061s latency).
+Not shown: 65532 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+80/tcp    open  http
+64999/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 10.64 seconds
+root@Kali:~/HTB/Jarvis# nmap -Pn -n -sV -p22,80,64999 --script=vuln,discovery 10.10.10.143 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-07 23:24 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 3 address(es). 
+| 224.0.0.251
+| 224.0.23.12
+|_10.10.10.165
+Nmap scan report for 10.10.10.143
+Host is up (0.014s latency).
+
+PORT      STATE SERVICE VERSION
+22/tcp    open  ssh     OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u6
+| ssh-hostkey: 
+|   2048 03:f3:4e:22:36:3e:3b:81:30:79:ed:49:67:65:16:67 (RSA)
+|   256 25:d8:08:a8:4d:6d:e8:d2:f8:43:4a:2c:20:c8:5a:f6 (ECDSA)
+|_  256 77:d4:ae:1f:b0:be:15:1f:f8:cd:c8:15:3a:c3:69:e1 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp    open  http    Apache httpd 2.4.25 ((Debian))
+|_http-chrono: Request times for /; avg: 293.67ms; min: 203.72ms; max: 427.11ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.143
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 133
+|     Comment: 
+|         /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+|     
+|     Path: http://10.10.10.143:80/js/magnific-popup-options.js
+|     Line number: 15
+|     Comment: 
+|          // CSS transition easing function
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 34
+|     Comment: 
+|         <!-- Flexslider  -->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1123
+|     Comment: 
+|          // escape
+|     
+|     Path: http://10.10.10.143:80/js/magnific-popup-options.js
+|     Line number: 12
+|     Comment: 
+|          // By default it's false, so don't forget to enable it
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 1626
+|     Comment: 
+|         /* Chrome10-25,Safari5.1-6 */
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 1628
+|     Comment: 
+|         /* IE6-9 */
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 325
+|     Comment: 
+|          // inline datepicker
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1161
+|     Comment: 
+|          // up
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 49
+|     Comment: 
+|         <!-- Modernizr JS -->
+|     
+|     Path: http://10.10.10.143:80/css/magnific-popup.css
+|     Line number: 299
+|     Comment: 
+|         /**
+|                * Remove all paddings around the image on small screen
+|                */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 171
+|     Comment: 
+|         <!-- Bootstrap -->
+|     
+|     Path: http://10.10.10.143:80/css/bootstrap-datepicker.css
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Datepicker for Bootstrap
+|          *
+|          * Copyright 2012 Stefan Petre
+|          * Improvements by Andrew Rowls
+|          * Licensed under the Apache License v2.0
+|          * http://www.apache.org/licenses/LICENSE-2.0
+|          *
+|          */
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap.min.js
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Bootstrap v3.3.5 (http://getbootstrap.com)
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under the MIT license
+|          */
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 465
+|     Comment: 
+|         /* Firefox 19+ */
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1189
+|     Comment: 
+|          // spacebar
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 462
+|     Comment: 
+|         /* Chrome/Opera/Safari */
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 1336
+|     Comment: 
+|         /*-webkit-transform: translate3d(100%, 0, 0);
+|             transform: translate3d(100%, 0, 0);*/
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 175
+|     Comment: 
+|         <!-- Flexslider -->
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 471
+|     Comment: 
+|         /* Firefox 18- */
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 1627
+|     Comment: 
+|         /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+|     
+|     Path: http://10.10.10.143:80/js/magnific-popup-options.js
+|     Line number: 2
+|     Comment: 
+|          // MagnificPopup
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 177
+|     Comment: 
+|         <!-- Owl carousel -->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1162
+|     Comment: 
+|          // down
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 184
+|     Comment: 
+|         <!-- Main -->
+|     
+|     Path: http://10.10.10.143:80/css/magnific-popup.css
+|     Line number: 253
+|     Comment: 
+|         /* The shadow behind the image */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 52
+|     Comment: 
+|         <!--[if lt IE 9]>
+|         	<script src="js/respond.min.js"></script>
+|         	<![endif]-->
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 24
+|     Comment: 
+|         <!-- Animate.css -->
+|     
+|     Path: http://10.10.10.143:80/fonts/flaticon/font/flaticon.css
+|     Line number: 1
+|     Comment: 
+|         /*
+|           	Flaticon icon font: Flaticon
+|           	Creation date: 07/01/2018 05:23
+|           	*/
+|     
+|     Path: http://10.10.10.143:80/fonts/flaticon/font/flaticon.css
+|     Line number: 27
+|     Comment: 
+|         /*font-size: 20px;*/
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 28
+|     Comment: 
+|         <!-- Bootstrap  -->
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 3
+|     Comment: 
+|         /*!
+|         Animate.css - http://daneden.me/animate
+|         Licensed under the MIT license - http://opensource.org/licenses/MIT
+|         
+|         Copyright (c) 2015 Daniel Eden
+|         */
+|     
+|     Path: http://10.10.10.143:80/js/jquery.flexslider-min.js
+|     Line number: 1
+|     Comment: 
+|         /*
+|          * jQuery FlexSlider v2.6.0
+|          * Copyright 2012 WooThemes
+|          * Contributing Author: Tyler Smith
+|          */
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 1625
+|     Comment: 
+|         /* FF3.6-15 */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 37
+|     Comment: 
+|         <!-- Owl Carousel -->
+|     
+|     Path: http://10.10.10.143:80/
+|     Line number: 463
+|     Comment: 
+|         <!-- end half -->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1193
+|     Comment: 
+|          // enter
+|     
+|     Path: http://10.10.10.143:80/css/magnific-popup.css
+|     Line number: 240
+|     Comment: 
+|         /* Main image in popup */
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 1407
+|     Comment: 
+|         /*-webkit-transform: translate3d(0, 100%, 0);
+|             transform: translate3d(0, 100%, 0);*/
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 1266
+|     Comment: 
+|         /*-webkit-transform: translate3d(-100%, 0, 0);
+|             transform: translate3d(-100%, 0, 0);*/
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1207
+|     Comment: 
+|          // tab
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 1196
+|     Comment: 
+|         /*-webkit-transform: translate3d(0, -100%, 0);
+|             transform: translate3d(0, -100%, 0);*/
+|     
+|     Path: http://10.10.10.143:80/js/jquery.waypoints.min.js
+|     Line number: 1
+|     Comment: 
+|         /*!
+|         Waypoints - 4.0.0
+|         Copyright \xC3\x82\xC2\xA9 2011-2015 Caleb Troughton
+|         Licensed under the MIT license.
+|         https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
+|         */
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1134
+|     Comment: 
+|          // right
+|     
+|     Path: http://10.10.10.143:80/js/magnific-popup-options.js
+|     Line number: 14
+|     Comment: 
+|          // duration of the effect, in milliseconds
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 26
+|     Comment: 
+|         <!-- Icomoon Icon Fonts-->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1133
+|     Comment: 
+|          // left
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 297
+|     Comment: 
+|          // single input
+|     
+|     Path: http://10.10.10.143:80/css/magnific-popup.css
+|     Line number: 1
+|     Comment: 
+|         /* Magnific Popup CSS */
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 522
+|     Comment: 
+|         /* Owl Override Style */
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1115
+|     Comment: 
+|          // allow escape to hide and re-show picker
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 46
+|     Comment: 
+|         <!-- Theme style  -->
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 31
+|     Comment: 
+|         <!-- Magnific Popup -->
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 8
+|     Comment: 
+|         /* =======================================================
+|         *
+|         * 	Template Style 
+|         *
+|         * ======================================================= */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 51
+|     Comment: 
+|         <!-- FOR IE9 below -->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 241
+|     Comment: 
+|          // no action
+|     
+|     Path: http://10.10.10.143:80/fonts/flaticon/font/flaticon.css
+|     Line number: 29
+|     Comment: 
+|         /*margin-left: 20px;*/
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 169
+|     Comment: 
+|         <!-- jQuery Easing -->
+|     
+|     Path: http://10.10.10.143:80/css/icomoon.css
+|     Line number: 13
+|     Comment: 
+|         /* use !important to prevent issues with browser extensions that change fonts */
+|     
+|     Path: http://10.10.10.143:80/css/owl.theme.default.min.css
+|     Line number: 3
+|     Comment: 
+|         /*.owl-theme .owl-controls {
+|             margin-top:10px;
+|             text-align:center;
+|             -webkit-tap-highlight-color:transparent
+|         }
+|         .owl-theme .owl-controls .owl-nav[class*=owl-] {
+|             color:#fff;
+|             font-size:14px;
+|             margin:5px;
+|             padding:4px 7px;
+|             background:#d6d6d6;
+|             display:inline-block;
+|             cursor:pointer;
+|             -webkit-border-radius:3px;
+|             -moz-border-radius:3px;
+|             border-radius:3px
+|         }
+|         .owl-theme .owl-controls .owl-nav[class*=owl-]:hover {
+|             background:#869791;
+|             color:#fff;
+|             text-decoration:none
+|         }
+|         .owl-theme .owl-controls .owl-nav .disabled {
+|             opacity:.5;
+|             cursor:default
+|         }
+|         .owl-theme .owl-dots .owl-dot {
+|             display:inline-block;
+|             zoom:1;
+|             *display:inline
+|         }
+|         .owl-theme .owl-dots .owl-dot span {
+|             width:10px;
+|             height:10px;
+|             margin:5px 7px;
+|             background:#d6d6d6;
+|             display:block;
+|             -webkit-backface-visibility:visible;
+|             -webkit-transition:opacity 200ms ease;
+|             -moz-transition:opacity 200ms ease;
+|             -ms-transition:opacity 200ms ease;
+|             -o-transition:opacity 200ms ease;
+|             transition:opacity 200ms ease;
+|             -webkit-border-radius:30px;
+|             -moz-border-radius:30px;
+|             border-radius:30px
+|         }
+|         .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+|             background:#869791
+|         }*/
+|     
+|     Path: http://10.10.10.143:80/css/bootstrap-datepicker.css
+|     Line number: 16
+|     Comment: 
+|         /*.dow {
+|         		border-top: 1px solid #ddd !important;
+|         	}*/
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1643
+|     Comment: 
+|         /* DATEPICKER NO CONFLICT
+|         	* =================== */
+|     
+|     Path: http://10.10.10.143:80/css/animate.css
+|     Line number: 1415
+|     Comment: 
+|         /*visibility: visible;*/
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 167
+|     Comment: 
+|         <!-- jQuery -->
+|     
+|     Path: http://10.10.10.143:80/
+|     Line number: 338
+|     Comment: 
+|         <!-- Tab panes -->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1
+|     Comment: 
+|         /* =========================================================
+|          * bootstrap-datepicker.js
+|          * Repo: https://github.com/eternicode/bootstrap-datepicker/
+|          * Demo: http://eternicode.github.io/bootstrap-datepicker/
+|          * Docs: http://bootstrap-datepicker.readthedocs.org/
+|          * Forked from http://www.eyecon.ro/bootstrap-datepicker
+|          * =========================================================
+|          * Started by Stefan Petre; improvements by Andrew Rowls + contributors
+|          *
+|          * Licensed under the Apache License, Version 2.0 (the "License");
+|          * you may not use this file except in compliance with the License.
+|          * You may obtain a copy of the License at
+|          *
+|          * http://www.apache.org/licenses/LICENSE-2.0
+|          *
+|          * Unless required by applicable law or agreed to in writing, software
+|          * distributed under the License is distributed on an "AS IS" BASIS,
+|          * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+|          * See the License for the specific language governing permissions and
+|          * limitations under the License.
+|          * ========================================================= */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 41
+|     Comment: 
+|         <!-- Date Picker -->
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 468
+|     Comment: 
+|         /* IE 10+ */
+|     
+|     Path: http://10.10.10.143:80/js/respond.min.js
+|     Line number: 2
+|     Comment: 
+|         /*! Respond.js v1.4.2: min/max-width media query polyfill * Copyright 2013 Scott Jehl
+|          * Licensed under https://github.com/scottjehl/Respond/blob/master/LICENSE-MIT
+|          *  */
+|     
+|     Path: http://10.10.10.143:80/css/style.css
+|     Line number: 1624
+|     Comment: 
+|         /* Old browsers */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 173
+|     Comment: 
+|         <!-- Waypoints -->
+|     
+|     Path: http://10.10.10.143:80/css/icomoon.css
+|     Line number: 22
+|     Comment: 
+|         /* Better Font Rendering =========== */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 43
+|     Comment: 
+|         <!-- Flaticons  -->
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 309
+|     Comment: 
+|          // component: input + button
+|     
+|     Path: http://10.10.10.143:80/js/bootstrap-datepicker.js
+|     Line number: 1652
+|     Comment: 
+|         /* DATEPICKER DATA-API
+|         	* ================== */
+|     
+|     Path: http://10.10.10.143:80/room.php?cod=6
+|     Line number: 12
+|     Comment: 
+|_        <!-- Facebook and Twitter integration -->
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Wed, 07 Oct 2020 15:24:53 GMT; +4s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.143
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|   	http://10.10.10.143:80/js/jquery.magnific-popup.min.js
+|   
+|   Error Code: 404
+|   	http://10.10.10.143:80/js/jquery.min.js
+|   
+|   Error Code: 404
+|   	http://10.10.10.143:80/room.php?cod=1
+|   
+|   Error Code: 404
+|   	http://10.10.10.143:80/css/flexslider.css
+|   
+|   Error Code: 404
+|_  	http://10.10.10.143:80/dining-bar.php
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.143:80/: 
+|     (1) email: 
+|_      + supersecurehotel@logger.htb
+| http-headers: 
+|   Date: Wed, 07 Oct 2020 15:24:56 GMT
+|   Server: Apache/2.4.25 (Debian)
+|   Set-Cookie: PHPSESSID=vg5rs0n8kuseaoark774lv0op1; path=/
+|   Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|   Cache-Control: no-store, no-cache, must-revalidate
+|   Pragma: no-cache
+|   IronWAF: 2.0.3
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Cache_Control: 
+|     Header: Cache-Control: no-store, no-cache, must-revalidate
+|   Pragma: 
+|     Header: Pragma: no-cache
+|   Expires: 
+|_    Header: Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|_http-server-header: Apache/2.4.25 (Debian)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 3
+|     /css/
+|       css: 3
+|     /images/
+|       jpg: 5
+|     /js/
+|       js: 4
+|   Longest directory structure:
+|     Depth: 1
+|     Dir: /css/
+|   Total files found (by extension):
+|_    Other: 1; css: 3; jpg: 5; js: 4; php: 3
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Stark Hotel
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 126 names had status 200
+|_xml
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+64999/tcp open  http    Apache httpd 2.4.25 ((Debian))
+|_http-chrono: Request times for /; avg: 261.39ms; min: 224.00ms; max: 290.26ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Wed, 07 Oct 2020 15:25:00 GMT; +3s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Date: Wed, 07 Oct 2020 15:24:55 GMT
+|   Server: Apache/2.4.25 (Debian)
+|   Last-Modified: Mon, 04 Mar 2019 02:10:40 GMT
+|   ETag: "36-5833b43634c39"
+|   Accept-Ranges: bytes
+|   Content-Length: 54
+|   IronWAF: 2.0.3
+|   Connection: close
+|   Content-Type: text/html
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Apache/2.4.25 (Debian)
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.143"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22     0       14723.50   1040.68  0.0%
+| 80     1       13230.80   2263.18  0.0%
+|_64999  1       12001.40   3918.34  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 69.67 seconds

