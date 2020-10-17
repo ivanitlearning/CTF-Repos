@@ -2,7 +2,7 @@
 
 0xdf explains how it [works here](https://0xdf.gitlab.io/2019/01/19/htb-secnotes.html) and IppSec covers it at the end of [his video](https://www.youtube.com/watch?v=PJXb2pK8K84). Here's my understanding of how it works. These PHP files are all found in **C:\inetpub\wwwroot**
 
-Once you login to the Web app, these lines in **home.php** is run to retrieve the notes.
+Once you login to the Web app, these lines in [home.php](home.php) is run to retrieve the notes.
 
 ```php
 $sql = "SELECT id, title, note, created_at FROM posts WHERE username = '" . $username . "'";
@@ -15,7 +15,7 @@ Note for $username there is no checking whether $username contains SQL commands 
 SELECT * FROM Customers WHERE CustomerName = '' OR 1=1;
 ```
 
-This is in contrast to login.php where we see lines like
+This is in contrast to [login.php](login.php) where we see lines like
 
 ```php
 $sql = "SELECT username, password FROM users WHERE username = ?";
