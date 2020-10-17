@@ -1,0 +1,275 @@
+root@Kali:~/HTB/SecNotes# nmap -Pn -n -sS -p- 10.10.10.97 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-11 00:24 +08
+Nmap scan report for 10.10.10.97
+Host is up (0.0063s latency).
+Not shown: 65532 filtered ports
+PORT     STATE SERVICE
+80/tcp   open  http
+445/tcp  open  microsoft-ds
+8808/tcp open  ssports-bcast
+
+Nmap done: 1 IP address (1 host up) scanned in 104.42 seconds
+
+root@Kali:~/HTB/SecNotes# nmap -Pn -n -sV -p80,445,8808 --script=vuln,discovery 10.10.10.97 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-11 00:57 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.97
+Host is up (0.011s latency).
+
+PORT     STATE SERVICE      VERSION
+80/tcp   open  http         Microsoft IIS httpd 10.0
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.97
+|   url                                 method
+|   http://10.10.10.97:80/              FORM
+|   http://10.10.10.97:80/register.php  FORM
+|_  http://10.10.10.97:80/login.php     FORM
+|_http-chrono: Request times for /; avg: 863.48ms; min: 539.87ms; max: 1204.51ms
+|_http-comments-displayer: Couldn't find any comments.
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.97
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.97:80/
+|     Form id: 
+|     Form action: /login.php
+|     
+|     Path: http://10.10.10.97:80/register.php
+|     Form id: 
+|     Form action: /register.php
+|     
+|     Path: http://10.10.10.97:80/login.php
+|     Form id: 
+|_    Form action: /login.php
+|_http-date: Sat, 10 Oct 2020 16:57:40 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|_  /login.php: Possible admin folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Length: 0
+|   Content-Type: text/html; charset=UTF-8
+|   Server: Microsoft-IIS/10.0
+|   X-Powered-By: PHP/7.2.7
+|   Date: Sat, 10 Oct 2020 16:57:40 GMT
+|   Connection: close
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-php-version: Version from header x-powered-by: PHP/7.2.7
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; php: 2
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; php: 2
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+| http-title: Secure Notes - Login
+|_Requested resource was login.php
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Redirected To: login.php
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 126 names had status 302
+|_ldap
+| http-waf-detect: IDS/IPS/WAF detected:
+|_10.10.10.97:80/?p4yl04d3=<script>alert(document.cookie)</script>
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+445/tcp  open  microsoft-ds Windows 10 Enterprise 17134 microsoft-ds (workgroup: HTB)
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+8808/tcp open  http         Microsoft IIS httpd 10.0
+|_http-chrono: Request times for /; avg: 198.79ms; min: 161.64ms; max: 292.63ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.97
+|     
+|     Path: http://10.10.10.97:8808/
+|     Line number: 7
+|     Comment: 
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|         
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 10 Oct 2020 16:57:37 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Length: 696
+|   Content-Type: text/html
+|   Last-Modified: Thu, 21 Jun 2018 15:26:03 GMT
+|   Accept-Ranges: bytes
+|   ETag: "733dc72a749d41:0"
+|   Server: Microsoft-IIS/10.0
+|   Date: Sat, 10 Oct 2020 16:57:39 GMT
+|   Connection: close
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; png: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: IIS Windows
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| test2
+|_126 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: Host: SECNOTES; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.97"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Random Positive Increments
+|_msrpc-enum: NT_STATUS_ACCESS_DENIED
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 80    0       11216.00   2173.78  0.0%
+| 445   0       12011.20   4843.42  0.0%
+|_8808  0       10845.10   3107.49  0.0%
+|_samba-vuln-cve-2012-1182: NT_STATUS_ACCESS_DENIED
+| smb-enum-shares: 
+|   note: ERROR: Enumerating shares failed, guessing at common ones (NT_STATUS_ACCESS_DENIED)
+|   account_used: <blank>
+|   \\10.10.10.97\ADMIN$: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.97\C$: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.97\IPC$: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|_    Anonymous access: READ
+| smb-mbenum: 
+|_  ERROR: Call to Browser Service failed with status = 2184
+| smb-os-discovery: 
+|   OS: Windows 10 Enterprise 17134 (Windows 10 Enterprise 6.3)
+|   OS CPE: cpe:/o:microsoft:windows_10::-
+|   Computer name: SECNOTES
+|   NetBIOS computer name: SECNOTES\x00
+|   Workgroup: HTB\x00
+|_  System time: 2020-10-10T09:57:38-07:00
+| smb-protocols: 
+|   dialects: 
+|     NT LM 0.12 (SMBv1) [dangerous, but default]
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+| smb-security-mode: 
+|   account_used: <blank>
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: NT_STATUS_ACCESS_DENIED
+| smb2-capabilities: 
+|   2.02: 
+|     Distributed File System
+|   2.10: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11: 
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2020-10-10T16:57:56
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 266.49 seconds
