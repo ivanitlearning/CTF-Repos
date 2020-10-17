@@ -9,7 +9,13 @@ $sql = "SELECT id, title, note, created_at FROM posts WHERE username = '" . $use
 $res = mysqli_query($link, $sql);
 ```
 
-Note for $username there is no checking whether $username contains SQL commands which will try to alter the statement. This is in contrast to login.php where we see lines like
+Note for $username there is no checking whether $username contains SQL commands which will try to alter the statement. If you inject $username as `' or 1=1;` which you can [try here](https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_where_number), everything gets retrieved with the query
+
+```sql
+SELECT * FROM Customers WHERE CustomerName = '' OR 1=1;
+```
+
+This is in contrast to login.php where we see lines like
 
 ```php
 $sql = "SELECT username, password FROM users WHERE username = ?";
@@ -56,4 +62,4 @@ if(password_verify($password, $hashed_password)){
 }
 ```
 
-So the upshot is that any input for username like `'or 1=1;-- -` is treated as a username instead of modifying the SQL statements in login.php but since home.php does use mysqli_prepare() it becomes possible to modify the SQL query to retrieve everything.
+So the upshot is that any input for username like `'or 1=1;-- -` is treated as a username instead of modifying the SQL statements in login.php but since home.php doesn't use mysqli_prepare() it becomes possible to modify the SQL query there to retrieve everything.
