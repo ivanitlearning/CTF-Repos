@@ -1,0 +1,1120 @@
+root@Kali:~/HTB/Bitlab# nmap -Pn -n -sS -p- 10.10.10.114 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-20 11:42 +08
+Nmap scan report for 10.10.10.114
+Host is up (0.0057s latency).
+Not shown: 65533 filtered ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 104.58 seconds
+
+root@Kali:~/HTB/Bitlab# nmap -Pn -n -sV -p22,80 --script=vuln,discovery 10.10.10.114 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-20 11:48 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.114
+Host is up (0.0061s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.6p1 Ubuntu-4ubuntu0.3
+| ssh-hostkey: 
+|   2048 a2:3b:b0:dd:28:91:bf:e8:f9:30:82:31:23:2f:92:18 (RSA)
+|   256 e6:3b:fb:b3:7f:9a:35:a8:bd:d0:27:7b:25:d4:ed:dc (ECDSA)
+|_  256 c9:54:3d:91:01:78:03:ab:16:14:6b:cc:f0:b7:3a:55 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp open  http    nginx
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.114
+|   url                                   method
+|_  http://10.10.10.114:80/users/sign_in  FORM
+|_http-chrono: Request times for /users/sign_in; avg: 662.39ms; min: 310.14ms; max: 903.15ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.114
+|     
+|     Path: http://10.10.10.114:80/explore/snippets
+|     Line number: 28
+|     Comment: 
+|         
+|         //<![CDATA[
+|     
+|     Path: http://10.10.10.114:80/assets/application-65608147e85fc52153737ae4622dceaa73f7efd39474bac2e559981baef35c09.css
+|     Line number: 10
+|     Comment: 
+|         /*!
+|          * Cropper v2.3.0
+|          * https://github.com/fengyuanchen/cropper
+|          *
+|          * Copyright (c) 2014-2016 Fengyuan Chen and contributors
+|          * Released under the MIT license
+|          *
+|          * Date: 2016-02-22T02:13:13.332Z
+|          */
+|     
+|     Path: http://10.10.10.114:80/help/bookmarks.html
+|     Line number: 2
+|     Comment: 
+|         <!-- This is an automatically generated file.
+|              It will be read and overwritten.
+|              DO NOT EDIT! -->
+|     
+|     Path: http://10.10.10.114:80/assets/application-65608147e85fc52153737ae4622dceaa73f7efd39474bac2e559981baef35c09.css
+|     Line number: 1
+|     Comment: 
+|         /*!
+|          * Pikaday
+|          * Copyright \xC2\xA9 2014 David Bushell | BSD & MIT license | http://dbushell.com/
+|          */
+|     
+|     Path: http://10.10.10.114:80/explore/snippets
+|     Line number: 30
+|     Comment: 
+|         
+|         //]]>
+|     
+|     Path: http://10.10.10.114:80/assets/application-65608147e85fc52153737ae4622dceaa73f7efd39474bac2e559981baef35c09.css
+|     Line number: 6
+|     Comment: 
+|         /*!
+|          *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+|          *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+|_         */
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Tue, 20 Oct 2020 03:48:28 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum: 
+|   /reg_1.htm: Polycom IP phone (401 Unauthorized)
+|   /adr.htm: Snom IP Phone (401 Unauthorized)
+|   /line_login.htm?l=1: Snom IP Phone (401 Unauthorized)
+|   /tbook.csv: Snom IP Phone (401 Unauthorized)
+|   /login.stm: Belkin G Wireless Router (401 Unauthorized)
+|   /tools_admin.php: D-Link DIR-300 (401 Unauthorized)
+|   /bsc_lan.php: D-Link DIR-300, DIR-320, DIR-615 revD (401 Unauthorized)
+|   /Manage.tri: Linksys WRT54G2 (401 Unauthorized)
+|   /main_configure.cgi: Intellinet IP Camera (401 Unauthorized)
+|   /OvCgi/Toolbar.exe: HP OpenView Network Node Manager (401 Unauthorized)
+|   /awstatstotals/awstatstotals.php: AWStats Totals (401 Unauthorized)
+|   /awstats/awstatstotals.php: AWStats Totals (401 Unauthorized)
+|   /awstatstotals.php: AWStats Totals (401 Unauthorized)
+|   /awstats/index.php: AWStats Totals (401 Unauthorized)
+|   /awstatstotals/index.php: AWStats Totals (401 Unauthorized)
+|   /calendar/cal_search.php: ExtCalendar (401 Unauthorized)
+|   /cal_search.php: ExtCalendar (401 Unauthorized)
+|   /a_viewusers.php: Andys PHP Knowledgebase (401 Unauthorized)
+|   /LightNEasy.php?do=login: LightNEasy (401 Unauthorized)
+|   /channel_detail.php: DzTube (401 Unauthorized)
+|   /vbseo.php: vBSEO (401 Unauthorized)
+|   /admin.php: Possible admin folder (401 Unauthorized)
+|   /admin/account.php: Possible admin folder (401 Unauthorized)
+|   /admin/index.php: Possible admin folder (401 Unauthorized)
+|   /admin/login.php: Possible admin folder (401 Unauthorized)
+|   /admin/admin.php: Possible admin folder (401 Unauthorized)
+|   /login.php: Possible admin folder (401 Unauthorized)
+|   /admin_area/admin.php: Possible admin folder (401 Unauthorized)
+|   /admin_area/login.php: Possible admin folder (401 Unauthorized)
+|   /siteadmin/login.php: Possible admin folder (401 Unauthorized)
+|   /siteadmin/index.php: Possible admin folder (401 Unauthorized)
+|   /admin_area/index.php: Possible admin folder (401 Unauthorized)
+|   /bb-admin/index.php: Possible admin folder (401 Unauthorized)
+|   /bb-admin/login.php: Possible admin folder (401 Unauthorized)
+|   /bb-admin/admin.php: Possible admin folder (401 Unauthorized)
+|   /admin/home.php: Possible admin folder (401 Unauthorized)
+|   /admin/controlpanel.php: Possible admin folder (401 Unauthorized)
+|   /admincp/index.asp: Possible admin folder (401 Unauthorized)
+|   /admincp/login.php: Possible admin folder (401 Unauthorized)
+|   /admin/cp.php: Possible admin folder (401 Unauthorized)
+|   /cp.php: Possible admin folder (401 Unauthorized)
+|   /administrator/index.php: Possible admin folder (401 Unauthorized)
+|   /administrator/login.php: Possible admin folder (401 Unauthorized)
+|   /nsw/admin/login.php: Possible admin folder (401 Unauthorized)
+|   /webadmin/login.php: Possible admin folder (401 Unauthorized)
+|   /admin/admin_login.php: Possible admin folder (401 Unauthorized)
+|   /admin_login.php: Possible admin folder (401 Unauthorized)
+|   /administrator/account.php: Possible admin folder (401 Unauthorized)
+|   /administrator.php: Possible admin folder (401 Unauthorized)
+|   /pages/admin/admin-login.php: Possible admin folder (401 Unauthorized)
+|   /admin/admin-login.php: Possible admin folder (401 Unauthorized)
+|   /admin-login.php: Possible admin folder (401 Unauthorized)
+|   /modelsearch/login.php: Possible admin folder (401 Unauthorized)
+|   /moderator.php: Possible admin folder (401 Unauthorized)
+|   /moderator/login.php: Possible admin folder (401 Unauthorized)
+|   /moderator/admin.php: Possible admin folder (401 Unauthorized)
+|   /account.php: Possible admin folder (401 Unauthorized)
+|   /controlpanel.php: Possible admin folder (401 Unauthorized)
+|   /admincontrol.php: Possible admin folder (401 Unauthorized)
+|   /rcjakar/admin/login.php: Possible admin folder (401 Unauthorized)
+|   /webadmin.php: Possible admin folder (401 Unauthorized)
+|   /webadmin/index.php: Possible admin folder (401 Unauthorized)
+|   /webadmin/admin.php: Possible admin folder (401 Unauthorized)
+|   /adminpanel.php: Possible admin folder (401 Unauthorized)
+|   /user.php: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/login.php: Possible admin folder (401 Unauthorized)
+|   /wp-login.php: Possible admin folder (401 Unauthorized)
+|   /adminLogin.php: Possible admin folder (401 Unauthorized)
+|   /admin/adminLogin.php: Possible admin folder (401 Unauthorized)
+|   /adminarea/index.php: Possible admin folder (401 Unauthorized)
+|   /adminarea/admin.php: Possible admin folder (401 Unauthorized)
+|   /adminarea/login.php: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/index.php: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/admin.php: Possible admin folder (401 Unauthorized)
+|   /modelsearch/index.php: Possible admin folder (401 Unauthorized)
+|   /modelsearch/admin.php: Possible admin folder (401 Unauthorized)
+|   /admincontrol/login.php: Possible admin folder (401 Unauthorized)
+|   /adm/admloginuser.php: Possible admin folder (401 Unauthorized)
+|   /admloginuser.php: Possible admin folder (401 Unauthorized)
+|   /admin2.php: Possible admin folder (401 Unauthorized)
+|   /admin2/login.php: Possible admin folder (401 Unauthorized)
+|   /admin2/index.php: Possible admin folder (401 Unauthorized)
+|   /adm/index.php: Possible admin folder (401 Unauthorized)
+|   /adm.php: Possible admin folder (401 Unauthorized)
+|   /affiliate.php: Possible admin folder (401 Unauthorized)
+|   /adm_auth.php: Possible admin folder (401 Unauthorized)
+|   /memberadmin.php: Possible admin folder (401 Unauthorized)
+|   /administratorlogin.php: Possible admin folder (401 Unauthorized)
+|   /account.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/account.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/index.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /admin.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/admin_login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin_login.cfm: Possible admin folder (401 Unauthorized)
+|   /adminpanel.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/controlpanel.cfm: Possible admin folder (401 Unauthorized)
+|   /admincontrol.cfm: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/cp.cfm: Possible admin folder (401 Unauthorized)
+|   /pages/admin/admin-login.cfm: Possible admin folder (401 Unauthorized)
+|   /admincp/index.cfm: Possible admin folder (401 Unauthorized)
+|   /admincp/login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin_area/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /admin_area/login.cfm: Possible admin folder (401 Unauthorized)
+|   /moderator/login.cfm: Possible admin folder (401 Unauthorized)
+|   /administrator/login.cfm: Possible admin folder (401 Unauthorized)
+|   /moderator.cfm: Possible admin folder (401 Unauthorized)
+|   /modelsearch/index.cfm: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /adm/admloginuser.cfm: Possible admin folder (401 Unauthorized)
+|   /adm.cfm: Possible admin folder (401 Unauthorized)
+|   /adm_auth.cfm: Possible admin folder (401 Unauthorized)
+|   /administratorlogin.cfm: Possible admin folder (401 Unauthorized)
+|   /webadmin.cfm: Possible admin folder (401 Unauthorized)
+|   /webadmin/index.cfm: Possible admin folder (401 Unauthorized)
+|   /modelsearch/login.cfm: Possible admin folder (401 Unauthorized)
+|   /login.cfm: Possible admin folder (401 Unauthorized)
+|   /administrator.cfm: Possible admin folder (401 Unauthorized)
+|   /administrator/account.cfm: Possible admin folder (401 Unauthorized)
+|   /adminLogin.cfm: Possible admin folder (401 Unauthorized)
+|   /siteadmin/login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin2/index.cfm: Possible admin folder (401 Unauthorized)
+|   /adm/index.cfm: Possible admin folder (401 Unauthorized)
+|   /admin_area/index.cfm: Possible admin folder (401 Unauthorized)
+|   /bb-admin/index.cfm: Possible admin folder (401 Unauthorized)
+|   /bb-admin/login.cfm: Possible admin folder (401 Unauthorized)
+|   /bb-admin/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /siteadmin/index.cfm: Possible admin folder (401 Unauthorized)
+|   /memberadmin.cfm: Possible admin folder (401 Unauthorized)
+|   /admin2/login.cfm: Possible admin folder (401 Unauthorized)
+|   /admloginuser.cfm: Possible admin folder (401 Unauthorized)
+|   /admincontrol/login.cfm: Possible admin folder (401 Unauthorized)
+|   /administrator/index.cfm: Possible admin folder (401 Unauthorized)
+|   /modelsearch/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/index.cfm: Possible admin folder (401 Unauthorized)
+|   /adminarea/login.cfm: Possible admin folder (401 Unauthorized)
+|   /adminarea/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /adminarea/index.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/adminLogin.cfm: Possible admin folder (401 Unauthorized)
+|   /webadmin/login.cfm: Possible admin folder (401 Unauthorized)
+|   /webadmin/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /user.cfm: Possible admin folder (401 Unauthorized)
+|   /controlpanel.cfm: Possible admin folder (401 Unauthorized)
+|   /moderator/admin.cfm: Possible admin folder (401 Unauthorized)
+|   /cp.cfm: Possible admin folder (401 Unauthorized)
+|   /admin-login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/admin-login.cfm: Possible admin folder (401 Unauthorized)
+|   /admin/home.cfm: Possible admin folder (401 Unauthorized)
+|   /account.asp: Possible admin folder (401 Unauthorized)
+|   /admin/account.asp: Possible admin folder (401 Unauthorized)
+|   /admin/index.asp: Possible admin folder (401 Unauthorized)
+|   /admin/login.asp: Possible admin folder (401 Unauthorized)
+|   /admin/admin.asp: Possible admin folder (401 Unauthorized)
+|   /admin_area/admin.asp: Possible admin folder (401 Unauthorized)
+|   /admin_area/login.asp: Possible admin folder (401 Unauthorized)
+|   /admin_area/index.asp: Possible admin folder (401 Unauthorized)
+|   /bb-admin/index.asp: Possible admin folder (401 Unauthorized)
+|   /bb-admin/login.asp: Possible admin folder (401 Unauthorized)
+|   /bb-admin/admin.asp: Possible admin folder (401 Unauthorized)
+|   /admin/home.asp: Possible admin folder (401 Unauthorized)
+|   /admin/controlpanel.asp: Possible admin folder (401 Unauthorized)
+|   /admin.asp: Possible admin folder (401 Unauthorized)
+|   /pages/admin/admin-login.asp: Possible admin folder (401 Unauthorized)
+|   /admin/admin-login.asp: Possible admin folder (401 Unauthorized)
+|   /admin-login.asp: Possible admin folder (401 Unauthorized)
+|   /admin/cp.asp: Possible admin folder (401 Unauthorized)
+|   /cp.asp: Possible admin folder (401 Unauthorized)
+|   /administrator/account.asp: Possible admin folder (401 Unauthorized)
+|   /administrator.asp: Possible admin folder (401 Unauthorized)
+|   /login.asp: Possible admin folder (401 Unauthorized)
+|   /modelsearch/login.asp: Possible admin folder (401 Unauthorized)
+|   /moderator.asp: Possible admin folder (401 Unauthorized)
+|   /moderator/login.asp: Possible admin folder (401 Unauthorized)
+|   /administrator/login.asp: Possible admin folder (401 Unauthorized)
+|   /moderator/admin.asp: Possible admin folder (401 Unauthorized)
+|   /controlpanel.asp: Possible admin folder (401 Unauthorized)
+|   /user.asp: Possible admin folder (401 Unauthorized)
+|   /admincp/login.asp: Possible admin folder (401 Unauthorized)
+|   /admincontrol.asp: Possible admin folder (401 Unauthorized)
+|   /adminpanel.asp: Possible admin folder (401 Unauthorized)
+|   /webadmin.asp: Possible admin folder (401 Unauthorized)
+|   /webadmin/index.asp: Possible admin folder (401 Unauthorized)
+|   /webadmin/admin.asp: Possible admin folder (401 Unauthorized)
+|   /webadmin/login.asp: Possible admin folder (401 Unauthorized)
+|   /admin/admin_login.asp: Possible admin folder (401 Unauthorized)
+|   /admin_login.asp: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/login.asp: Possible admin folder (401 Unauthorized)
+|   /adminLogin.asp: Possible admin folder (401 Unauthorized)
+|   /admin/adminLogin.asp: Possible admin folder (401 Unauthorized)
+|   /home.asp: Possible admin folder (401 Unauthorized)
+|   /adminarea/index.asp: Possible admin folder (401 Unauthorized)
+|   /adminarea/admin.asp: Possible admin folder (401 Unauthorized)
+|   /adminarea/login.asp: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/index.asp: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/admin.asp: Possible admin folder (401 Unauthorized)
+|   /modelsearch/index.asp: Possible admin folder (401 Unauthorized)
+|   /modelsearch/admin.asp: Possible admin folder (401 Unauthorized)
+|   /administrator/index.asp: Possible admin folder (401 Unauthorized)
+|   /admincontrol/login.asp: Possible admin folder (401 Unauthorized)
+|   /adm/admloginuser.asp: Possible admin folder (401 Unauthorized)
+|   /admloginuser.asp: Possible admin folder (401 Unauthorized)
+|   /admin2.asp: Possible admin folder (401 Unauthorized)
+|   /admin2/login.asp: Possible admin folder (401 Unauthorized)
+|   /admin2/index.asp: Possible admin folder (401 Unauthorized)
+|   /adm/index.asp: Possible admin folder (401 Unauthorized)
+|   /adm.asp: Possible admin folder (401 Unauthorized)
+|   /adm_auth.asp: Possible admin folder (401 Unauthorized)
+|   /memberadmin.asp: Possible admin folder (401 Unauthorized)
+|   /administratorlogin.asp: Possible admin folder (401 Unauthorized)
+|   /siteadmin/login.asp: Possible admin folder (401 Unauthorized)
+|   /siteadmin/index.asp: Possible admin folder (401 Unauthorized)
+|   /account.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/account.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/index.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /admin_area/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /admin_area/login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin_area/index.aspx: Possible admin folder (401 Unauthorized)
+|   /bb-admin/index.aspx: Possible admin folder (401 Unauthorized)
+|   /bb-admin/login.aspx: Possible admin folder (401 Unauthorized)
+|   /bb-admin/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/home.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/controlpanel.aspx: Possible admin folder (401 Unauthorized)
+|   /admin.aspx: Possible admin folder (401 Unauthorized)
+|   /pages/admin/admin-login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/admin-login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin-login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/cp.aspx: Possible admin folder (401 Unauthorized)
+|   /cp.aspx: Possible admin folder (401 Unauthorized)
+|   /administrator/account.aspx: Possible admin folder (401 Unauthorized)
+|   /administrator.aspx: Possible admin folder (401 Unauthorized)
+|   /login.aspx: Possible admin folder (401 Unauthorized)
+|   /modelsearch/login.aspx: Possible admin folder (401 Unauthorized)
+|   /moderator.aspx: Possible admin folder (401 Unauthorized)
+|   /moderator/login.aspx: Possible admin folder (401 Unauthorized)
+|   /administrator/login.aspx: Possible admin folder (401 Unauthorized)
+|   /moderator/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /controlpanel.aspx: Possible admin folder (401 Unauthorized)
+|   /user.aspx: Possible admin folder (401 Unauthorized)
+|   /admincp/index.aspx: Possible admin folder (401 Unauthorized)
+|   /admincp/login.aspx: Possible admin folder (401 Unauthorized)
+|   /admincontrol.aspx: Possible admin folder (401 Unauthorized)
+|   /adminpanel.aspx: Possible admin folder (401 Unauthorized)
+|   /webadmin.aspx: Possible admin folder (401 Unauthorized)
+|   /webadmin/index.aspx: Possible admin folder (401 Unauthorized)
+|   /webadmin/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /webadmin/login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/admin_login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin_login.aspx: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/login.aspx: Possible admin folder (401 Unauthorized)
+|   /adminLogin.aspx: Possible admin folder (401 Unauthorized)
+|   /admin/adminLogin.aspx: Possible admin folder (401 Unauthorized)
+|   /home.aspx: Possible admin folder (401 Unauthorized)
+|   /adminarea/index.aspx: Possible admin folder (401 Unauthorized)
+|   /adminarea/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /adminarea/login.aspx: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/index.aspx: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /modelsearch/index.aspx: Possible admin folder (401 Unauthorized)
+|   /modelsearch/admin.aspx: Possible admin folder (401 Unauthorized)
+|   /administrator/index.aspx: Possible admin folder (401 Unauthorized)
+|   /admincontrol/login.aspx: Possible admin folder (401 Unauthorized)
+|   /adm/admloginuser.aspx: Possible admin folder (401 Unauthorized)
+|   /admloginuser.aspx: Possible admin folder (401 Unauthorized)
+|   /admin2.aspx: Possible admin folder (401 Unauthorized)
+|   /admin2/login.aspx: Possible admin folder (401 Unauthorized)
+|   /admin2/index.aspx: Possible admin folder (401 Unauthorized)
+|   /adm/index.aspx: Possible admin folder (401 Unauthorized)
+|   /adm.aspx: Possible admin folder (401 Unauthorized)
+|   /adm_auth.aspx: Possible admin folder (401 Unauthorized)
+|   /memberadmin.aspx: Possible admin folder (401 Unauthorized)
+|   /administratorlogin.aspx: Possible admin folder (401 Unauthorized)
+|   /siteadmin/login.aspx: Possible admin folder (401 Unauthorized)
+|   /siteadmin/index.aspx: Possible admin folder (401 Unauthorized)
+|   /account.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/index.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /admin_area/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /admin_area/login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin_area/index.jsp: Possible admin folder (401 Unauthorized)
+|   /bb-admin/index.jsp: Possible admin folder (401 Unauthorized)
+|   /bb-admin/login.jsp: Possible admin folder (401 Unauthorized)
+|   /bb-admin/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/home.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/controlpanel.jsp: Possible admin folder (401 Unauthorized)
+|   /admin.jsp: Possible admin folder (401 Unauthorized)
+|   /pages/admin/admin-login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/admin-login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin-login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/cp.jsp: Possible admin folder (401 Unauthorized)
+|   /cp.jsp: Possible admin folder (401 Unauthorized)
+|   /administrator/account.jsp: Possible admin folder (401 Unauthorized)
+|   /administrator.jsp: Possible admin folder (401 Unauthorized)
+|   /login.jsp: Possible admin folder (401 Unauthorized)
+|   /modelsearch/login.jsp: Possible admin folder (401 Unauthorized)
+|   /moderator.jsp: Possible admin folder (401 Unauthorized)
+|   /moderator/login.jsp: Possible admin folder (401 Unauthorized)
+|   /administrator/login.jsp: Possible admin folder (401 Unauthorized)
+|   /moderator/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /controlpanel.jsp: Possible admin folder (401 Unauthorized)
+|   /user.jsp: Possible admin folder (401 Unauthorized)
+|   /admincp/index.jsp: Possible admin folder (401 Unauthorized)
+|   /admincp/login.jsp: Possible admin folder (401 Unauthorized)
+|   /admincontrol.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/account.jsp: Possible admin folder (401 Unauthorized)
+|   /adminpanel.jsp: Possible admin folder (401 Unauthorized)
+|   /webadmin.jsp: Possible admin folder (401 Unauthorized)
+|   /webadmin/index.jsp: Possible admin folder (401 Unauthorized)
+|   /webadmin/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /webadmin/login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/admin_login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin_login.jsp: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/login.jsp: Possible admin folder (401 Unauthorized)
+|   /adminLogin.jsp: Possible admin folder (401 Unauthorized)
+|   /admin/adminLogin.jsp: Possible admin folder (401 Unauthorized)
+|   /home.jsp: Possible admin folder (401 Unauthorized)
+|   /adminarea/index.jsp: Possible admin folder (401 Unauthorized)
+|   /adminarea/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /adminarea/login.jsp: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/index.jsp: Possible admin folder (401 Unauthorized)
+|   /panel-administracion/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /modelsearch/index.jsp: Possible admin folder (401 Unauthorized)
+|   /modelsearch/admin.jsp: Possible admin folder (401 Unauthorized)
+|   /administrator/index.jsp: Possible admin folder (401 Unauthorized)
+|   /admincontrol/login.jsp: Possible admin folder (401 Unauthorized)
+|   /adm/admloginuser.jsp: Possible admin folder (401 Unauthorized)
+|   /admloginuser.jsp: Possible admin folder (401 Unauthorized)
+|   /admin2.jsp: Possible admin folder (401 Unauthorized)
+|   /admin2/login.jsp: Possible admin folder (401 Unauthorized)
+|   /admin2/index.jsp: Possible admin folder (401 Unauthorized)
+|   /adm/index.jsp: Possible admin folder (401 Unauthorized)
+|   /adm.jsp: Possible admin folder (401 Unauthorized)
+|   /adm_auth.jsp: Possible admin folder (401 Unauthorized)
+|   /memberadmin.jsp: Possible admin folder (401 Unauthorized)
+|   /administratorlogin.jsp: Possible admin folder (401 Unauthorized)
+|   /siteadmin/login.jsp: Possible admin folder (401 Unauthorized)
+|   /siteadmin/index.jsp: Possible admin folder (401 Unauthorized)
+|   /admin1.php: Possible admin folder (401 Unauthorized)
+|   /administr8.asp: Possible admin folder (401 Unauthorized)
+|   /administr8.php: Possible admin folder (401 Unauthorized)
+|   /administr8.jsp: Possible admin folder (401 Unauthorized)
+|   /administr8.aspx: Possible admin folder (401 Unauthorized)
+|   /administr8.cfm: Possible admin folder (401 Unauthorized)
+|   /administracao.php: Possible admin folder (401 Unauthorized)
+|   /administracao.asp: Possible admin folder (401 Unauthorized)
+|   /administracao.aspx: Possible admin folder (401 Unauthorized)
+|   /administracao.cfm: Possible admin folder (401 Unauthorized)
+|   /administracao.jsp: Possible admin folder (401 Unauthorized)
+|   /administracion.php: Possible admin folder (401 Unauthorized)
+|   /administracion.asp: Possible admin folder (401 Unauthorized)
+|   /administracion.aspx: Possible admin folder (401 Unauthorized)
+|   /administracion.jsp: Possible admin folder (401 Unauthorized)
+|   /administracion.cfm: Possible admin folder (401 Unauthorized)
+|   /admins.cfm: Possible admin folder (401 Unauthorized)
+|   /admins.php: Possible admin folder (401 Unauthorized)
+|   /admins.jsp: Possible admin folder (401 Unauthorized)
+|   /admins.asp: Possible admin folder (401 Unauthorized)
+|   /admins.aspx: Possible admin folder (401 Unauthorized)
+|   /AdminLogin.asp: Possible admin folder (401 Unauthorized)
+|   /AdminLogin.php: Possible admin folder (401 Unauthorized)
+|   /AdminLogin.jsp: Possible admin folder (401 Unauthorized)
+|   /AdminLogin.aspx: Possible admin folder (401 Unauthorized)
+|   /AdminLogin.cfm: Possible admin folder (401 Unauthorized)
+|   /admin_cp.asp: Possible admin folder (401 Unauthorized)
+|   /backup.sql: Possible backup (401 Unauthorized)
+|   /backup.sql.gz: Possible backup (401 Unauthorized)
+|   /backup.sql.bz2: Possible backup (401 Unauthorized)
+|   /dbbackup.txt: Possible backup (401 Unauthorized)
+|   /b.sql: Possible database backup (401 Unauthorized)
+|   /db.sql: Possible database backup (401 Unauthorized)
+|   /ddb.sql: Possible database backup (401 Unauthorized)
+|   /users.sql: Possible database backup (401 Unauthorized)
+|   /database.sql: Possible database backup (401 Unauthorized)
+|   /mysql.sql: Possible database backup (401 Unauthorized)
+|   /dump.sql: Possible database backup (401 Unauthorized)
+|   /respaldo.sql: Possible database backup (401 Unauthorized)
+|   /data.sql: Possible database backup (401 Unauthorized)
+|   /old.sql: Possible database backup (401 Unauthorized)
+|   /usuarios.sql: Possible database backup (401 Unauthorized)
+|   /bdb.sql: Possible database backup (401 Unauthorized)
+|   /1.sql: Possible database backup (401 Unauthorized)
+|   /admin/download/backup.sql: Possible database backup (401 Unauthorized)
+|   /clientaccesspolicy.xml: Microsoft Silverlight crossdomain policy (401 Unauthorized)
+|   /atom.aspx: RSS or Atom feed (401 Unauthorized)
+|   /atom.php: RSS or Atom feed (401 Unauthorized)
+|   /atom.xml: RSS or Atom feed (401 Unauthorized)
+|   /atom.jsp: RSS or Atom feed (401 Unauthorized)
+|   /rss.aspx: RSS or Atom feed (401 Unauthorized)
+|   /rss.php: RSS or Atom feed (401 Unauthorized)
+|   /rss.xml: RSS or Atom feed (401 Unauthorized)
+|   /rss.jsp: RSS or Atom feed (401 Unauthorized)
+|   /boot.ini: Webroot might be in root folder (401 Unauthorized)
+|   /mono/1.1/index.aspx: Sample scripts (401 Unauthorized)
+|   /login.htm: Login page (401 Unauthorized)
+|   /login.jsp: Login page (401 Unauthorized)
+|   /test.asp: Test page (401 Unauthorized)
+|   /test.class: Test page (401 Unauthorized)
+|   /test.htm: Test page (401 Unauthorized)
+|   /test.php: Test page (401 Unauthorized)
+|   /test.txt: Test page (401 Unauthorized)
+|   /log.htm: Logs (401 Unauthorized)
+|   /log.php: Logs (401 Unauthorized)
+|   /log.asp: Logs (401 Unauthorized)
+|   /log.aspx: Logs (401 Unauthorized)
+|   /log.jsp: Logs (401 Unauthorized)
+|   /logs.htm: Logs (401 Unauthorized)
+|   /logs.php: Logs (401 Unauthorized)
+|   /logs.asp: Logs (401 Unauthorized)
+|   /logs.aspx: Logs (401 Unauthorized)
+|   /logs.jsp: Logs (401 Unauthorized)
+|   /images/rails.png: Ruby on Rails (401 Unauthorized)
+|   /robots.txt: Robots file
+|   /crossdomain.xml: Adobe Flash crossdomain policy (401 Unauthorized)
+|   /css/cake.generic.css: CakePHP application (401 Unauthorized)
+|   /img/cake.icon.gif: CakePHP application (401 Unauthorized)
+|   /img/cake.icon.png: CakePHP application (401 Unauthorized)
+|   /js/vendors.php: CakePHP application (401 Unauthorized)
+|   /cgi-bin/ffileman.cgi?: Ffileman Web File Manager (401 Unauthorized)
+|   /fshow.php: Horizon Web App (401 Unauthorized)
+|   /admin/upload.php: Admin File Upload (401 Unauthorized)
+|   /upload_multiple_js.php: NAS Uploader (401 Unauthorized)
+|   /uploadtester.asp: Free ASP Upload Shell (401 Unauthorized)
+|   /info.php: Possible information file (401 Unauthorized)
+|   /phpinfo.php: Possible information file (401 Unauthorized)
+|   /kusabax/manage_page.php: Kusabax Image Board (401 Unauthorized)
+|   /plus/lurking.php: phpMyChat Plus (401 Unauthorized)
+|   /adm/barra/assetmanager/assetmanager.php: 360 Web Manager (401 Unauthorized)
+|   /NETWARE.HTM: Planet FPS-1101 (401 Unauthorized)
+|   /setup.cgi: Linksys Cisco Wag120n or similar (401 Unauthorized)
+|   /debug.cgi: Linksys WRT54G (401 Unauthorized)
+|   /tools_admin.cgi?: D-Link WBR-1310 (401 Unauthorized)
+|   /appServer/jvmReport.jsf?instanceName=server&pageTitle=JVM%20Report: Oracle GlashFish Server Information (401 Unauthorized)
+|   /common/appServer/jvmReport.jsf?pageTitle=JVM%20Report: Oracle GlashFish Server Information (401 Unauthorized)
+|   /common/appServer/jvmReport.jsf?reportType=summary&instanceName=server: Oracle GlashFish Server Information (401 Unauthorized)
+|   /console/login/loginForm.jsp: Oracle WebLogic Server Administration Console (401 Unauthorized)
+|   /browserId/wizardForm.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /webline/html/forms/callback.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /webline/html/forms/callbackICM.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /webline/html/agent/AgentFrame.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /webline/html/agent/default/badlogin.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /callme/callForm.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /webline/html/multichatui/nowDefunctWindow.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /browserId/wizard.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /admin/CiscoAdmin.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /msccallme/mscCallForm.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /webline/html/admin/wcs/LoginPage.jhtml: Cisco Collaboration Server (401 Unauthorized)
+|   /restoreinfo.cgi: Sagem router (401 Unauthorized)
+|   /confirminvite.php: phpMyBitTorrent (401 Unauthorized)
+|   /swfupload/index.php: SWFUpload (401 Unauthorized)
+|   /mymarket/shopping/index.php: MyMarket (401 Unauthorized)
+|   /myshop_start.php: FozzCom shopping (401 Unauthorized)
+|   /piranha/secure/passwd.php3: RedHat Piranha Virtual Server (401 Unauthorized)
+|   /upload/scp/ajax.php: osTicket / AJAX File Upload (401 Unauthorized)
+|   /cgi-mod/view_help.cgi: Barracuda Networks Spam & Virus Firewall (401 Unauthorized)
+|   /cgi-mod/index.cgi: Barracuda Web Application Firewall (401 Unauthorized)
+|   /cgi-mod/smtp_test.cgi: Barracuda IM Firewall (401 Unauthorized)
+|   /intruvert/jsp/module/Login.jsp: McAfee Network Security Manager (401 Unauthorized)
+|   /upload/data/settings.cdb: CF Image Hosting DB (401 Unauthorized)
+|   /fm.php: Simple File Manager (401 Unauthorized)
+|   /nagios3/cgi-bin/statuswml.cgi: Nagios3 (401 Unauthorized)
+|   /cal_cat.php: Calendarix (401 Unauthorized)
+|   /calendar/cal_cat.php: Calendarix (401 Unauthorized)
+|   /cal/cal_cat.php: Calendarix (401 Unauthorized)
+|   /private/sdc.tgz: IBM Bladecenter Management Logs (401 Unauthorized)
+|   /cgi-bin/awstats.pl: AWStats (401 Unauthorized)
+|   /wiki/rankings.php: Bit Weaver (401 Unauthorized)
+|   /reqdetails.php: BtiTracker (401 Unauthorized)
+|   /shared/help.php: OpenBiblio/WebBiblio Subject Gateway System (401 Unauthorized)
+|   /seti.php: PHP SETI@home (401 Unauthorized)
+|   /Base/upload.php: MassMirror Uploader (401 Unauthorized)
+|   /Base/example_1.php: MassMirror Uploader (401 Unauthorized)
+|   /tools/filemanager/skins/mobile/admin1.template.php: ispCP Omega (401 Unauthorized)
+|   /updown.php: PHP Uploader Downloader (401 Unauthorized)
+|   /ReqWebHelp/advanced/workingSet.jsp: IBM Rational RequisitePro/ReqWebHelp (401 Unauthorized)
+|   /engine/api/api.class.php: DatalifeEngine (401 Unauthorized)
+|   /jsft_resource.jsf: JSFTemplating/Mojarra Scales/GlassFish Application Server (401 Unauthorized)
+|   /scales_static_resource.jsf: JSFTemplating/Mojarra Scales/GlassFish Application Server (401 Unauthorized)
+|   /S7Web.css: SCADA Siemens PCS7 (401 Unauthorized)
+|   /Portal0000.htm: SCADA Siemens PCS7 (401 Unauthorized)
+|   /arcsight/images/logo-login-arcsight.gif: Arcsight (401 Unauthorized)
+|   /arcsight/images/navbar-icon-logout-on.gif: Arcsight (401 Unauthorized)
+|   /images/logo-arcsight.gif: Arcsight (401 Unauthorized)
+|   /logger/monitor.ftl: Arcsight (401 Unauthorized)
+|   /beef/images/beef.gif: BeEF Browser Exploitation Framework (401 Unauthorized)
+|   /gfx/form_top_left_corner.gif: Secunia NSI (401 Unauthorized)
+|   /gfx/logout_24.png: Secunia NSI (401 Unauthorized)
+|   /gfx/new_logo.gif: Secunia NSI (401 Unauthorized)
+|   /javascript/sorttable.js: Secunia NSI (401 Unauthorized)
+|   /images/btn_help_nml.gif: IBM Proventia (401 Unauthorized)
+|   /images/hdr_icon_homeG.gif: IBM Proventia (401 Unauthorized)
+|   /spControl.php: IBM Proventia (401 Unauthorized)
+|   /images/isslogo.gif: IBM Proventia (401 Unauthorized)
+|   /i18n/EN/css/foundstone.css: Foundstone (401 Unauthorized)
+|   /i18n/EN/images/external_nav_square.gif: Foundstone (401 Unauthorized)
+|   /officescan/console/html/cgi/cgiChkMasterPwd.exe: Trend Micro OfficeScan Server (401 Unauthorized)
+|   /officescan/console/html/ClientInstall/officescannt.htm: Trend Micro OfficeScan Server (401 Unauthorized)
+|   /officescan/console/html/images/icon_refresh.gif: Trend Micro OfficeScan Server (401 Unauthorized)
+|   /picts/BC_bwlogorev.gif: BlueCoat Reporter (401 Unauthorized)
+|   /picts/menu_leaf.gif: BlueCoat Reporter (401 Unauthorized)
+|   /theme/images/en/login1.gif: Fortinet VPN/Firewall (401 Unauthorized)
+|   /NessusClient.swf: Nessus (401 Unauthorized)
+|   /vmware/imx/vmware_boxes-16x16.png: VMWare (401 Unauthorized)
+|   /ui/imx/vmwareLogo-16x16.png: VMWare (401 Unauthorized)
+|   /ui/imx/vmwarePaperBagLogo-16x16.png: VMWare (401 Unauthorized)
+|   /ui/vManage.do: VMWare (401 Unauthorized)
+|   /client/VMware-viclient.exe: VMWare (401 Unauthorized)
+|   /en/welcomeRes.js: VMWare (401 Unauthorized)
+|   /Citrix/MetaFrame/auth/login.aspx: Citrix (401 Unauthorized)
+|   /images/ctxHeader01.jpg: Citrix (401 Unauthorized)
+|   /images/Safeword_Token.jpg: Citrix (401 Unauthorized)
+|   /sw/auth/login.aspx: Citrix (401 Unauthorized)
+|   /vpn/images/AccessGateway.ico: Citrix (401 Unauthorized)
+|   /Citrix//AccessPlatform/auth/clientscripts/cookies.js: Citrix (401 Unauthorized)
+|   /Citrix/AccessPlatform/auth/clientscripts/login.js: Citrix (401 Unauthorized)
+|   /Citrix/PNAgent/config.xml: Citrix (401 Unauthorized)
+|   /cgi-bin/image/shikaku2.png: TeraStation PRO RAID 0/1/5 Network Attached Storage (401 Unauthorized)
+|   /config/public/usergrp.gif: AXIS StorPoint (401 Unauthorized)
+|   /pictures/buttons/file_view_mark.gif: AXIS StorPoint (401 Unauthorized)
+|   /cpqlogin.htm?RedirectUrl=/&RedirectQueryString=: HP System Management Homepage (401 Unauthorized)
+|   /hplogo.gif: HP System Management Homepage (401 Unauthorized)
+|   /ie_index.htm: HP Integrated Lights Out (401 Unauthorized)
+|   /ilo.gif: HP Integrated Lights Out (401 Unauthorized)
+|   /images/icon_server_connected.gif: HP Blade Enclosure (401 Unauthorized)
+|   /mxhtml/images/signin_logo.gif: HP Insight Manager (401 Unauthorized)
+|   /mxhtml/images/status_critical_15.gif: HP Insight Manager (401 Unauthorized)
+|   /mxportal/home/en_US/servicetools.gif: HP Insight Manager (401 Unauthorized)
+|   /mxportal/home/MxPortalFrames.jsp: HP Insight Manager (401 Unauthorized)
+|   /xymon/menu/menu.css: Xymon (401 Unauthorized)
+|   /rrc.htm: Raritan Remote Client (401 Unauthorized)
+|   /axis2/axis2-web/HappyAxis.jsp: Apache Axis2 (401 Unauthorized)
+|   /happyaxis.jsp: Apache Axis2 (401 Unauthorized)
+|   /web-console/ServerInfo.jsp: JBoss Console (401 Unauthorized)
+|   /CFIDE/administrator/enter.cfm: ColdFusion Admin Console (401 Unauthorized)
+|   /CFIDE/administrator/entman/index.cfm: ColdFusion Admin Console (401 Unauthorized)
+|   /cfide/install.cfm: ColdFusion Admin Console (401 Unauthorized)
+|   /CFIDE/administrator/archives/index.cfm: ColdFusion Admin Console (401 Unauthorized)
+|   /CFIDE/wizards/common/_logintowizard.cfm: ColdFusion Admin Console (401 Unauthorized)
+|   /CFIDE/componentutils/login.cfm: ColdFusion Admin Console (401 Unauthorized)
+|   /lib/usermanagement/userInfo.php: Testlink TestManagement (401 Unauthorized)
+|   /security/xamppsecurity.php: XAMPP (401 Unauthorized)
+|   /dm-albums/dm-albums.php: DM FileManager (401 Unauthorized)
+|   /x_logo.gif: Xerox printer (401 Unauthorized)
+|   /gif/hp.gif: HP Printer (401 Unauthorized)
+|   /gif/hp_invent_logo.gif: HP Printer (401 Unauthorized)
+|   /gif/printer.gif: HP Printer (401 Unauthorized)
+|   /hp/device/this.LCDispatcher: HP Printer (401 Unauthorized)
+|   /hp/device/webAccess/index.htm: HP Printer (401 Unauthorized)
+|   /PageSelector.class: HP Printer (401 Unauthorized)
+|   /images/lexbold.gif: Lexmark Printer (401 Unauthorized)
+|   /images/lexlogo.gif: Lexmark Printer (401 Unauthorized)
+|   /images/printer.gif: Lexmark Printer (401 Unauthorized)
+|   /images/mute_alloff.gif: NEC Projector (401 Unauthorized)
+|   /images/pic_bri.gif: NEC Projector (401 Unauthorized)
+|   /scanweb/images/scanwebtm.gif: SCAN Web (Webcam) (401 Unauthorized)
+|   /view/index.shtml: Axis 212 PTZ Network Camera (401 Unauthorized)
+|   /phpMyAdmin-2.2.3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.2.6/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.4/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.5-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.5-rc2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.5/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.5-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.6-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.6-rc2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.6/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.7/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.5.7-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-alpha/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-alpha2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-beta1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-beta2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-rc2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-rc3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-pl2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.0-pl3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.1-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.1-rc2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.1-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.1-pl2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.1-pl3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.2-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.2-beta1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.2-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.3-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.3-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.4-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.4-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.4-pl2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.4-pl3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.4-pl4/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.6.4/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.7.0-beta1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.7.0-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.7.0-pl1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.7.0-pl2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.7.0/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0-beta1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0-rc2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0.1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0.2/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0.3/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.0.4/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.1-rc1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.1/: phpMyAdmin (401 Unauthorized)
+|   /phpMyAdmin-2.8.2/: phpMyAdmin (401 Unauthorized)
+|   /footer1.gif: (possible) Oracle Web server (401 Unauthorized)
+|   /homepage.nsf/homePage.gif?OpenImageResource: Lotus Domino (401 Unauthorized)
+|   /icons/ecblank.gif: Lotus Domino (401 Unauthorized)
+|   /admin4.nsf: Lotus Domino (401 Unauthorized)
+|   /admin5.nsf: Lotus Domino (401 Unauthorized)
+|   /admin.nsf: Lotus Domino (401 Unauthorized)
+|   /agentrunner.nsf: Lotus Domino (401 Unauthorized)
+|   /alog.nsf: Lotus Domino (401 Unauthorized)
+|   /a_domlog.nsf: Lotus Domino (401 Unauthorized)
+|   /bookmark.nsf: Lotus Domino (401 Unauthorized)
+|   /busytime.nsf: Lotus Domino (401 Unauthorized)
+|   /catalog.nsf: Lotus Domino (401 Unauthorized)
+|   /certa.nsf: Lotus Domino (401 Unauthorized)
+|   /certlog.nsf: Lotus Domino (401 Unauthorized)
+|   /certsrv.nsf: Lotus Domino (401 Unauthorized)
+|   /chatlog.nsf: Lotus Domino (401 Unauthorized)
+|   /clbusy.nsf: Lotus Domino (401 Unauthorized)
+|   /cldbdir.nsf: Lotus Domino (401 Unauthorized)
+|   /clusta4.nsf: Lotus Domino (401 Unauthorized)
+|   /collect4.nsf: Lotus Domino (401 Unauthorized)
+|   /da.nsf: Lotus Domino (401 Unauthorized)
+|   /dba4.nsf: Lotus Domino (401 Unauthorized)
+|   /dclf.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASAppDesign.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASLog01.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASLog02.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASLog03.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASLog04.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASLog05.nsf: Lotus Domino (401 Unauthorized)
+|   /DEASLog.nsf: Lotus Domino (401 Unauthorized)
+|   /decsadm.nsf: Lotus Domino (401 Unauthorized)
+|   /decslog.nsf: Lotus Domino (401 Unauthorized)
+|   /DEESAdmin.nsf: Lotus Domino (401 Unauthorized)
+|   /dirassist.nsf: Lotus Domino (401 Unauthorized)
+|   /doladmin.nsf: Lotus Domino (401 Unauthorized)
+|   /domadmin.nsf: Lotus Domino (401 Unauthorized)
+|   /domcfg.nsf: Lotus Domino (401 Unauthorized)
+|   /domguide.nsf: Lotus Domino (401 Unauthorized)
+|   /domlog.nsf: Lotus Domino (401 Unauthorized)
+|   /dspug.nsf: Lotus Domino (401 Unauthorized)
+|   /events4.nsf: Lotus Domino (401 Unauthorized)
+|   /events5.nsf: Lotus Domino (401 Unauthorized)
+|   /events.nsf: Lotus Domino (401 Unauthorized)
+|   /event.nsf: Lotus Domino (401 Unauthorized)
+|   /homepage.nsf: Lotus Domino (401 Unauthorized)
+|   /jotter.nsf: Lotus Domino (401 Unauthorized)
+|   /leiadm.nsf: Lotus Domino (401 Unauthorized)
+|   /leilog.nsf: Lotus Domino (401 Unauthorized)
+|   /leivlt.nsf: Lotus Domino (401 Unauthorized)
+|   /log4a.nsf: Lotus Domino (401 Unauthorized)
+|   /log.nsf: Lotus Domino (401 Unauthorized)
+|   /l_domlog.nsf: Lotus Domino (401 Unauthorized)
+|   /mab.nsf: Lotus Domino (401 Unauthorized)
+|   /mail10.box: Lotus Domino (401 Unauthorized)
+|   /mail1.box: Lotus Domino (401 Unauthorized)
+|   /mail2.box: Lotus Domino (401 Unauthorized)
+|   /mail3.box: Lotus Domino (401 Unauthorized)
+|   /mail4.box: Lotus Domino (401 Unauthorized)
+|   /mail5.box: Lotus Domino (401 Unauthorized)
+|   /mail6.box: Lotus Domino (401 Unauthorized)
+|   /mail7.box: Lotus Domino (401 Unauthorized)
+|   /mail8.box: Lotus Domino (401 Unauthorized)
+|   /mail9.box: Lotus Domino (401 Unauthorized)
+|   /mail.box: Lotus Domino (401 Unauthorized)
+|   /msdwda.nsf: Lotus Domino (401 Unauthorized)
+|   /mtatbls.nsf: Lotus Domino (401 Unauthorized)
+|   /mtstore.nsf: Lotus Domino (401 Unauthorized)
+|   /names.nsf: Lotus Domino (401 Unauthorized)
+|   /nntppost.nsf: Lotus Domino (401 Unauthorized)
+|   /nntp/nd000001.nsf: Lotus Domino (401 Unauthorized)
+|   /nntp/nd000002.nsf: Lotus Domino (401 Unauthorized)
+|   /nntp/nd000003.nsf: Lotus Domino (401 Unauthorized)
+|   /ntsync45.nsf: Lotus Domino (401 Unauthorized)
+|   /perweb.nsf: Lotus Domino (401 Unauthorized)
+|   /qpadmin.nsf: Lotus Domino (401 Unauthorized)
+|   /quickplace/quickplace/main.nsf: Lotus Domino (401 Unauthorized)
+|   /reports.nsf: Lotus Domino (401 Unauthorized)
+|   /sample/siregw46.nsf: Lotus Domino (401 Unauthorized)
+|   /schema50.nsf: Lotus Domino (401 Unauthorized)
+|   /setupweb.nsf: Lotus Domino (401 Unauthorized)
+|   /setup.nsf: Lotus Domino (401 Unauthorized)
+|   /smbcfg.nsf: Lotus Domino (401 Unauthorized)
+|   /smconf.nsf: Lotus Domino (401 Unauthorized)
+|   /smency.nsf: Lotus Domino (401 Unauthorized)
+|   /smhelp.nsf: Lotus Domino (401 Unauthorized)
+|   /smmsg.nsf: Lotus Domino (401 Unauthorized)
+|   /smquar.nsf: Lotus Domino (401 Unauthorized)
+|   /smsolar.nsf: Lotus Domino (401 Unauthorized)
+|   /smtime.nsf: Lotus Domino (401 Unauthorized)
+|   /smtpibwq.nsf: Lotus Domino (401 Unauthorized)
+|   /smtpobwq.nsf: Lotus Domino (401 Unauthorized)
+|   /smtp.box: Lotus Domino (401 Unauthorized)
+|   /smtp.nsf: Lotus Domino (401 Unauthorized)
+|   /smvlog.nsf: Lotus Domino (401 Unauthorized)
+|   /srvnam.htm: Lotus Domino (401 Unauthorized)
+|   /statmail.nsf: Lotus Domino (401 Unauthorized)
+|   /statrep.nsf: Lotus Domino (401 Unauthorized)
+|   /stauths.nsf: Lotus Domino (401 Unauthorized)
+|   /stautht.nsf: Lotus Domino (401 Unauthorized)
+|   /stconfig.nsf: Lotus Domino (401 Unauthorized)
+|   /stconf.nsf: Lotus Domino (401 Unauthorized)
+|   /stdnaset.nsf: Lotus Domino (401 Unauthorized)
+|   /stdomino.nsf: Lotus Domino (401 Unauthorized)
+|   /stlog.nsf: Lotus Domino (401 Unauthorized)
+|   /streg.nsf: Lotus Domino (401 Unauthorized)
+|   /stsrc.nsf: Lotus Domino (401 Unauthorized)
+|   /userreg.nsf: Lotus Domino (401 Unauthorized)
+|   /vpuserinfo.nsf: Lotus Domino (401 Unauthorized)
+|   /webadmin.nsf: Lotus Domino (401 Unauthorized)
+|   /web.nsf: Lotus Domino (401 Unauthorized)
+|   /.nsf/../winnt/win.ini: Lotus Domino (401 Unauthorized)
+|   /icons/ecblank.gif: Lotus Domino (401 Unauthorized)
+|   /_layouts/images/helpicon.gif: MS Sharepoint (401 Unauthorized)
+|   /Pages/Default.aspx: MS Sharepoint (401 Unauthorized)
+|   /PublishingImages/NewsArticleImage.jpg: MS Sharepoint (401 Unauthorized)
+|   /_admin/operations.aspx: MS Sharepoint (401 Unauthorized)
+|   /_layouts/viewlsts.aspx: MS Sharepoint (401 Unauthorized)
+|   /forms/allitems.aspx: MS Sharepoint (401 Unauthorized)
+|   /forms/webfldr.aspx: MS Sharepoint (401 Unauthorized)
+|   /forms/mod-view.aspx: MS Sharepoint (401 Unauthorized)
+|   /forms/my-sub.aspx: MS Sharepoint (401 Unauthorized)
+|   /pages/categoryresults.aspx: MS Sharepoint (401 Unauthorized)
+|   /categories/viewcategory.aspx: MS Sharepoint (401 Unauthorized)
+|   /editdocs.aspx: MS Sharepoint (401 Unauthorized)
+|   /workflowtasks/allitems.aspx: MS Sharepoint (401 Unauthorized)
+|   /categories/allcategories.aspx: MS Sharepoint (401 Unauthorized)
+|   /categories/SOMEOTHERDIR/allcategories.aspx: MS Sharepoint (401 Unauthorized)
+|   /mycategories.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/allitems.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/default.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/allposts.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/archive.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/byauthor.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/calendar.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/mod-view.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/myposts.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/my-sub.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/allcomments.aspx: MS Sharepoint (401 Unauthorized)
+|   /lists/mycomments.aspx: MS Sharepoint (401 Unauthorized)
+|   /_layouts/userdisp.aspx: MS Sharepoint (401 Unauthorized)
+|   /_layouts/help.aspx: MS Sharepoint (401 Unauthorized)
+|   /_layouts/download.aspx: MS Sharepoint (401 Unauthorized)
+|   /projectserver/Home/HomePage.asp: MS Project Server (401 Unauthorized)
+|   /projectserver/images/branding.gif: MS Project Server (401 Unauthorized)
+|   /projectserver/images/pgHome.gif: MS Project Server (401 Unauthorized)
+|   /projectserver/images/pgTask.gif: MS Project Server (401 Unauthorized)
+|   /projectserver/Tasks/Taskspage.asp: MS Project Server (401 Unauthorized)
+|   /exchweb/bin/auth/owalogon.asp: Outlook Web Access (401 Unauthorized)
+|   /images/outlook.jpg: Outlook Web Access (401 Unauthorized)
+|   /owa/8.1.375.2/themes/base/lgntopl.gif: Outlook Web Access (401 Unauthorized)
+|   /icons/icon_set_up_2701XX_01.gif: 2WIRE 2701HG (401 Unauthorized)
+|   /icons/icon_homeportal_2701XX.gif: 2WIRE 2701HG (401 Unauthorized)
+|   /es/images/nav_sl_home_network_01.gif: 2WIRE 2701HG (401 Unauthorized)
+|   /en/images/nav_sl_home_network_01.gif: 2WIRE 2701HG (401 Unauthorized)
+|   /images/stxx__xl.gif: Thomson TG585 (401 Unauthorized)
+|   /images/bbc__xl.gif: Thomson TG585 (401 Unauthorized)
+|   /_vti_bin/shtml.exe: Frontpage file or folder (401 Unauthorized)
+|   /_vti_pvt/authors.pwd: Frontpage file or folder (401 Unauthorized)
+|   /downloadFile.php: NETGEAR WNDAP350 2.0.1 to 2.0.9 potential file download and SSH root password disclosure (401 Unauthorized)
+|   /BackupConfig.php: NETGEAR WNDAP350 2.0.1 to 2.0.9 potential file download and SSH root password disclosure (401 Unauthorized)
+|   /cwhp/auditLog.do?file=..\..\..\..\..\..\..\boot.ini: Possible CiscoWorks (CuOM 8.0 and 8.5) Directory traversal (CVE-2011-0966) (Windows) (401 Unauthorized)
+|   /cwhp/auditLog.do?file=..\..\..\..\..\..\..\Program%20Files\CSCOpx\MDC\Tomcat\webapps\triveni\WEB-INF\classes\schedule.properties: Possible CiscoWorks (CuOM 8.0 and 8.5) Directory traversal (CVE-2011-0966) (Windows) (401 Unauthorized)
+|   /cwhp/auditLog.do?file=..\..\..\..\..\..\..\Program%20Files\CSCOpx\lib\classpath\com\cisco\nm\cmf\dbservice2\DBServer.properties: Possible CiscoWorks (CuOM 8.0 and 8.5) Directory traversal (CVE-2011-0966) (Windows) (401 Unauthorized)
+|   /cwhp/auditLog.do?file=..\..\..\..\..\..\..\Program%20Files\CSCOpx\log\dbpwdChange.log: Possible CiscoWorks (CuOM 8.0 and 8.5) Directory traversal (CVE-2011-0966) (Windows) (401 Unauthorized)
+|   /wp-includes/images/rss.png: Wordpress version 2.2 found. (401 Unauthorized)
+|   /wp-includes/js/scriptaculous/sound.js: Wordpress version 2.3 found. (401 Unauthorized)
+|   /wp-includes/js/jquery/suggest.js: Wordpress version 2.5 found. (401 Unauthorized)
+|   /wp-includes/images/blank.gif: Wordpress version 2.6 found. (401 Unauthorized)
+|   /wp-includes/js/comment-reply.js: Wordpress version 2.7 found. (401 Unauthorized)
+|   /wp-includes/js/codepress/codepress.js: Wordpress version 2.8 found. (401 Unauthorized)
+|   /wp-login.php: Wordpress login page. (401 Unauthorized)
+|   /wordpress/wp-login.php: Wordpress login page. (401 Unauthorized)
+|   /blog/wp-login.php: Wordpress login page. (401 Unauthorized)
+|   /administrator/wp-login.php: Wordpress login page. (401 Unauthorized)
+|   /weblog/wp-login.php: Wordpress login page. (401 Unauthorized)
+|   /wp-admin/upgrade.php: Wordpress login page. (401 Unauthorized)
+|   /changelog.txt: Interesting, a changelog. (401 Unauthorized)
+|   /tinymce/changelog.txt: Interesting, a changelog. (401 Unauthorized)
+|   /cmspages.php: 2Point Solutions CMS (401 Unauthorized)
+|   /sc_webcat/ecat/cms_view.php: Webcat (401 Unauthorized)
+|   /kbcat.cgi: ActivDesk (401 Unauthorized)
+|   /forum_answer.php?que_id=1: Guru JustAnswer (401 Unauthorized)
+|   /templates1/view_product.php: HB ECommerce (401 Unauthorized)
+|   /escort-profile.php: First Escort Marketing CMS (401 Unauthorized)
+|   /pages/indexheader.php: Green Pants CMS (401 Unauthorized)
+|   /pages/searcher.php: Green Pants CMS (401 Unauthorized)
+|   /pages/indexviewentry.php: Green Pants CMS (401 Unauthorized)
+|   /admin/libraries/ajaxfilemanager/ajaxfilemanager.php: Log1 CMS (401 Unauthorized)
+|   /leftmenubody.php: Quicktech (401 Unauthorized)
+|   /dsp_page.cfm: Alcassofts SOPHIA CMS (401 Unauthorized)
+|   /zikula/index.php: Zikula CMS (401 Unauthorized)
+|   /system/admin/header.php: Habari Blog (401 Unauthorized)
+|   /system/admin/comments_items.php: Habari Blog (401 Unauthorized)
+|   /fckeditor/editor/filemanager/connectors/php/config.php: DM File Manager/FCKeditor File upload (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php: PHPnuke/Remote File Download (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/asp/connector.asp: PHPnuke/Remote File Download (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx: PHPnuke/Remote File Download (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/cfm/connector.cfm: PHPnuke/Remote File Download (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/lasso/connector.lasso: PHPnuke/Remote File Download (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/perl/connector.cgi: PHPnuke/Remote File Download (401 Unauthorized)
+|   /includes/FCKeditor/editor/filemanager/browser/default/connectors/py/connector.py: PHPnuke/Remote File Download (401 Unauthorized)
+|   /admin/includes/tiny_mce/plugins/tinybrowser/upload.php: CompactCMS or B-Hind CMS/FCKeditor File upload (401 Unauthorized)
+|   /Backstage/Components/FreeTextBox/ftb.imagegallery.aspx: Luftguitar CMS/File upload (401 Unauthorized)
+|   /html/news_fckeditor/editor/filemanager/upload/php/upload.php: cardinalCms/FCKeditor File upload (401 Unauthorized)
+|   /uploadsnaps.php: ZeeMatri/File upload (401 Unauthorized)
+|   /upload/includes/js/files/upload.php: Digital College/File upload (401 Unauthorized)
+|   /tinybrowser/upload.php: Tinybrowser Remote File Upload (401 Unauthorized)
+|   /photogallery_open.php: Heaven Soft CMS (401 Unauthorized)
+|   /Providers/HtmlEditorProviders/Fck/fcklinkgallery.aspx: DotNetNuke / File Upload (401 Unauthorized)
+|   /assetmanager/assetmanager.asp: Asset Manager/Remote File upload (401 Unauthorized)
+|   /Final/login/ava_upl.php: CH-CMS (401 Unauthorized)
+|   /Final/login/ava_upl2.php: CH-CMS (401 Unauthorized)
+|   /spaw/demo.php: SpawCMS/Remote File upload (401 Unauthorized)
+|   /admin/jscript/upload.php: Lizard Cart/Remote File upload (401 Unauthorized)
+|   /admin/jscript/upload.pl: Lizard Cart/Remote File upload (401 Unauthorized)
+|   /admin/jscript/upload.asp: Lizard Cart/Remote File upload (401 Unauthorized)
+|   /databases/acidcat_3.mdb: Acidcat CMS Database (401 Unauthorized)
+|   /mdb-database/dblog.mdb: dBlog Database (401 Unauthorized)
+|   /db/users.mdb: BlogWorx Database (401 Unauthorized)
+|   /infusions/avatar_studio/avatar_studio.php: PHP-Fusion Mod avatar_studio (401 Unauthorized)
+|   /bnnr.php: vBulletin ads_saed (401 Unauthorized)
+|   /vb/bnnr.php: vBulletin ads_saed (401 Unauthorized)
+|   /forum/bnnr.php: vBulletin ads_saed (401 Unauthorized)
+|   /weblink_cat_list.php: WHMCompleteSolution CMS (401 Unauthorized)
+|   /pix/moodlelogo.gif: Moodle files (401 Unauthorized)
+|   /admin/environment.xml: Moodle files (401 Unauthorized)
+|   /typo3/index.php: Typo3 Installation (401 Unauthorized)
+|   /typo3/README.txt: Typo3 Installation (401 Unauthorized)
+|   /t3lib/README.txt: Typo3 Installation (401 Unauthorized)
+|   /typo3/sysext/t3skin/images/login/typo3logo-white-greyback.gif: Typo3 Installation (401 Unauthorized)
+|   /squirrelmail/images/sm_logo.png: SquirrelMail (401 Unauthorized)
+|   /webmail/images/sm_logo.png: SquirrelMail (401 Unauthorized)
+|   /skins/default/images/roundcube_logo.png: RoundCube (401 Unauthorized)
+|   /archive/flash:home/html/images/Cisco_logo.gif: Cisco SDM (401 Unauthorized)
+|   /TopAccess/images/RioGrande/Rio_PPC.gif: TopAccess Toshiba e-Studio520 (401 Unauthorized)
+|   /jwsappmngr.jnlp: netForensics (401 Unauthorized)
+|   /nfdesktop.jnlp: netForensics (401 Unauthorized)
+|   /na_admin/styles/dfm.css: NetworkAppliance NetApp Release 6.5.3P4 (401 Unauthorized)
+|   /README.txt: Interesting, a readme. (401 Unauthorized)
+|   /cgi.cgi/: Potentially interesting folder (401 Unauthorized)
+|   /content.ie5/: Potentially interesting folder (401 Unauthorized)
+|   /help/: Potentially interesting folder w/ directory listing
+|   /public/: Potentially interesting folder
+|   /root/: Potentially interesting folder
+|   /search/: Potentially interesting folder
+|   /sitecore/shell/sitecore.version.xml: Sitecore.NET login page (401 Unauthorized)
+|   /sitecore/login/default.aspx: Sitecore.NET login page (401 Unauthorized)
+|   /sitecore/admin/stats.aspx: Sitecore.NET (CMS) (401 Unauthorized)
+|   /sitecore/admin/unlock_admin.aspx: Sitecore.NET (CMS) (401 Unauthorized)
+|   /sitecore/shell/Applications/shell.xml: Sitecore.NET (CMS) (401 Unauthorized)
+|   /sitecore/admin/ShowConfig.aspx: Sitecore.NET (CMS) (401 Unauthorized)
+|   /App_Config/Security/Domains.config.xml: Sitecore.NET (CMS) (401 Unauthorized)
+|   /App_Config/Security/GlobalRoles.config.xml: Sitecore.NET (CMS) (401 Unauthorized)
+|_  /sitecore%20modules/staging/service/api.asmx: Sitecore.NET (CMS) (401 Unauthorized)
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep: 
+|   (1) http://10.10.10.114:80/users/sign_in: 
+|     (1) ip: 
+|       + 10.10.10.114
+|   (1) http://10.10.10.114:80/assets/application-65608147e85fc52153737ae4622dceaa73f7efd39474bac2e559981baef35c09.css: 
+|     (1) email: 
+|_      + cursor@2x-10fa8bdc4b52588b90e1d94785978b0a6ae72c4c9278f61d10 ...
+| http-headers: 
+|   Server: nginx
+|   Date: Tue, 20 Oct 2020 03:48:35 GMT
+|   Content-Type: text/html; charset=utf-8
+|   Connection: close
+|   Cache-Control: max-age=0, private, must-revalidate
+|   Etag: W/"815baf4390e63cef846174f97cdb83b4"
+|   Set-Cookie: _gitlab_session=29a30a051f31c1399df66758a7028fae; path=/; expires=Tue, 20 Oct 2020 05:48:35 -0000; HttpOnly
+|   X-Content-Type-Options: nosniff
+|   X-Frame-Options: DENY
+|   X-Request-Id: ZmH1d2YNRe3
+|   X-Runtime: 0.066223
+|   X-Ua-Compatible: IE=edge
+|   X-Xss-Protection: 1; mode=block
+|   X-Accel-Buffering: no
+|   
+|_  (Request type: HEAD)
+|_http-majordomo2-dir-traversal: ERROR: Script execution failed (use -d to debug)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-robots.txt: 55 disallowed entries (15 shown)
+| / /autocomplete/users /search /api /admin /profile 
+| /dashboard /projects/new /groups/new /groups/*/edit /users /help 
+|_/s/ /snippets/new /snippets/*/edit
+| http-security-headers: 
+|   X_Frame_Options: 
+|     Header: X-Frame-Options: DENY
+|     Description: The browser must not display this content in any frame.
+|   X_XSS_Protection: 
+|     Header: X-XSS-Protection: 1; mode=block
+|     Description: The browser will prevent the rendering of the page when XSS is detected.
+|   X_Content_Type_Options: 
+|     Header: X-Content-Type-Options: nosniff
+|     Description: Will prevent the browser from MIME-sniffing a response away from the declared content-type. 
+|   Cache_Control: 
+|_    Header: Cache-Control: max-age=0, private, must-revalidate
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1
+|     /assets/
+|       css: 2; png: 5; svg: 1
+|     /assets/webpack/
+|       js: 5
+|     /help/
+|       Other: 1
+|     /users/
+|       Other: 1
+|     /users/password/
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /assets/webpack/
+|   Total files found (by extension):
+|_    Other: 4; css: 2; js: 5; png: 5; svg: 1
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_      http://ha.ckers.org/slowloris/
+| http-sql-injection: 
+|   Possible sqli for queries:
+|     http://10.10.10.114:80/help/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.114:80/help/?C=S%3bO%3dA%27%20OR%20sqlspider
+|_    http://10.10.10.114:80/help/?C=M%3bO%3dA%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+| http-title: Sign in \xC2\xB7 GitLab
+|_Requested resource was http://10.10.10.114/users/sign_in
+|_http-trane-info: Problem with XML parsing of /evox/about
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Redirected To: http://10.10.10.114/users/sign_in
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 302
+| http-vuln-cve2010-0738: 
+|_  /jmx-console/: Authentication was not required
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+| http-waf-detect: IDS/IPS/WAF detected:
+|_10.10.10.114:80/?p4yl04d3=<script>alert(document.cookie)</script>
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.114"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       5325.50    947.47   0.0%
+|_80    0       6157.40    1849.19  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 156.26 seconds
