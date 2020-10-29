@@ -1,0 +1,231 @@
+root@Kali:~/HTB/Jeeves# nmap -Pn -n -sS -p- 10.10.10.63 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-24 18:29 +08
+Nmap scan report for 10.10.10.63
+Host is up (0.0064s latency).
+Not shown: 65531 filtered ports
+PORT      STATE SERVICE
+80/tcp    open  http
+135/tcp   open  msrpc
+445/tcp   open  microsoft-ds
+50000/tcp open  ibm-db2
+
+Nmap done: 1 IP address (1 host up) scanned in 131.46 seconds
+
+root@Kali:~/HTB/Jeeves# nmap -Pn -n -sV -p80,135,445,50000 --script=vuln,discovery 10.10.10.63 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-10-24 18:32 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.63
+Host is up (0.014s latency).
+
+PORT      STATE SERVICE      VERSION
+80/tcp    open  http         Microsoft IIS httpd 10.0
+|_http-chrono: Request times for /; avg: 210.51ms; min: 165.87ms; max: 329.42ms
+| http-comments-displayer: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.63
+|     
+|     Path: http://10.10.10.63:80/style.css
+|     Line number: 57
+|     Comment: 
+|         
+|         
+|         
+|                 box-shadow: 0 0 2px rgba(0,0,0,.8) inset;*/
+|     
+|     Path: http://10.10.10.63:80/style.css
+|     Line number: 12
+|     Comment: 
+|_        /*-------------------------------------*/
+| http-csrf: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.63
+|   Found the following possible CSRF vulnerabilities: 
+|     
+|     Path: http://10.10.10.63:80/
+|     Form id: 
+|_    Form action: error.html
+|_http-date: Sat, 24 Oct 2020 15:33:13 GMT; +5h00m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Type: text/html
+|   Last-Modified: Mon, 06 Nov 2017 02:34:40 GMT
+|   Accept-Ranges: bytes
+|   ETag: "2277f7cba756d31:0"
+|   Server: Microsoft-IIS/10.0
+|   Date: Sat, 24 Oct 2020 15:33:13 GMT
+|   Connection: close
+|   Content-Length: 503
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 1; PNG: 1; css: 1; html: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; PNG: 1; css: 1; html: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Ask Jeeves
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+135/tcp   open  msrpc        Microsoft Windows RPC
+445/tcp   open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+50000/tcp open  http         Jetty 9.4.z-SNAPSHOT
+|_http-chrono: Request times for /; avg: 187.94ms; min: 162.04ms; max: 241.06ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 24 Oct 2020 15:33:16 GMT; +5h00m02s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.63
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.10.63:50000/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Connection: close
+|   Date: Sat, 24 Oct 2020 15:33:18 GMT
+|   Cache-Control: must-revalidate,no-cache,no-store
+|   Content-Type: text/html;charset=iso-8859-1
+|   Content-Length: 315
+|   Server: Jetty(9.4.z-SNAPSHOT)
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Cache_Control: 
+|_    Header: Cache-Control: must-revalidate,no-cache,no-store
+|_http-server-header: Jetty(9.4.z-SNAPSHOT)
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Error 404 Not Found
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: Host: JEEVES; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.63"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: No accounts left to try
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 80     0       9354.90    4008.02  0.0%
+| 135    0       10608.80   4341.08  0.0%
+| 445    0       11432.00   6061.24  0.0%
+|_50000  0       10344.30   4797.92  0.0%
+|_samba-vuln-cve-2012-1182: No accounts left to try
+| smb-mbenum: 
+|_  ERROR: Failed to connect to browser service: No accounts left to try
+| smb-protocols: 
+|   dialects: 
+|     NT LM 0.12 (SMBv1) [dangerous, but default]
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+| smb-security-mode: 
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: No accounts left to try
+| smb2-capabilities: 
+|   2.02: 
+|     Distributed File System
+|   2.10: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11: 
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2020-10-24T15:33:33
+|_  start_date: 2020-10-24T15:23:25
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 181.24 seconds

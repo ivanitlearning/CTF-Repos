@@ -1,0 +1,76 @@
+PS X:\> Import-Module X:\PowerUp.ps1
+PS X:\> Invoke-AllChecks | Tee-Object "powerup.txt"
+
+[*] Running Invoke-AllChecks
+
+
+[*] Checking if user is in a local group with administrative privileges...
+
+
+[*] Checking for unquoted service paths...
+
+
+[*] Checking service executable and argument permissions...
+
+
+ServiceName                     : jenkins
+Path                            : "C:\Users\Administrator\.jenkins\jenkins.exe"
+ModifiableFile                  : C:\Users\Administrator\.jenkins\jenkins.exe
+ModifiableFilePermissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+ModifiableFileIdentityReference : JEEVES\kohsuke
+StartName                       : .\kohsuke
+AbuseFunction                   : Install-ServiceBinary -Name 'jenkins'
+CanRestart                      : False
+
+
+
+
+
+[*] Checking service permissions...
+
+
+[*] Checking %PATH% for potentially hijackable DLL locations...
+
+
+[*] Checking for AlwaysInstallElevated registry key...
+
+
+[*] Checking for Autologon credentials in registry...
+
+
+[*] Checking for modifidable registry autoruns and configs...
+
+
+[*] Checking for modifiable schtask files/configs...
+
+
+[*] Checking for unattended install files...
+
+
+UnattendPath : C:\Windows\Panther\Unattend.xml
+
+
+
+
+
+[*] Checking for encrypted web.config strings...
+
+
+[*] Checking for encrypted application pool and virtual directory passwords...
+
+
+[*] Checking for plaintext passwords in McAfee SiteList.xml files....
+
+
+
+
+[*] Checking for cached Group Policy Preferences .xml files....
+
+
+PS X:\> Get-ChildItem : Access to the path 'C:\ProgramData\VMware\VMware Tools\GuestProxyData\trusted' is denied.
+At X:\PowerUp.ps1:3704 char:21
++ ... $XMlFiles = Get-ChildItem -Path $AllUsers -Recurse -Include 'Groups.x ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (C:\ProgramData\...oxyData\trusted:String) [Get-ChildItem], Unauthoriz 
+   edAccessException
+    + FullyQualifiedErrorId : DirUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand

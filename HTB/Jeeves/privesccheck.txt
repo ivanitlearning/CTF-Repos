@@ -1,0 +1,743 @@
+root@Kali:~/HTB/Jeeves/PE# cat privesccheck.txt 
+��+------+------------------------------------------------+------+
+| TEST | USER > whoami                                  | INFO |
++------+------------------------------------------------+------+
+| DESC | Gets the name and the SID of the current user.        |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name           SID                                        
+----           ---                                        
+JEEVES\kohsuke S-1-5-21-2851396806-8246019-2289784878-1001
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | USER > whoami /groups                          | INFO |
++------+------------------------------------------------+------+
+| DESC | Gets the non-default groups the current user belongs  |
+|      | to.                                                   |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | USER > Privileges                              | VULN |
++------+------------------------------------------------+------+
+| DESC | Gets the privileges of the current user which can be  |
+|      | leveraged for elevation of privilege.                 |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name                   State   Description                              
+----                   -----   -----------                              
+SeImpersonatePrivilege Enabled Impersonate a client after authentication
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | USER > Environment Variables                   | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks environment variable for sensitive data.       |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Non-default Services                | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks for third-party services.                      |
++------+-------------------------------------------------------+
+[*] Found 31 result(s).
+
+
+Name        : ALG
+DisplayName : @C:\Windows\system32\Alg.exe,-112
+ImagePath   : C:\Windows\System32\alg.exe
+User        : NT AUTHORITY\LocalService
+StartMode   : Manual
+
+Name        : diagnosticshub.standardcollector.service
+DisplayName : @C:\Windows\system32\DiagSvcs\DiagnosticsHub.StandardCollector.ServiceRes.dll,-1000
+ImagePath   : C:\Windows\system32\DiagSvcs\DiagnosticsHub.StandardCollector.Service.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : EFS
+DisplayName : @C:\Windows\system32\efssvc.dll,-100
+ImagePath   : C:\Windows\System32\lsass.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : Fax
+DisplayName : @C:\Windows\system32\fxsresm.dll,-118
+ImagePath   : C:\Windows\system32\fxssvc.exe
+User        : NT AUTHORITY\NetworkService
+StartMode   : Manual
+
+Name        : IEEtwCollectorService
+DisplayName : @C:\Windows\system32\ieetwcollectorres.dll,-1000
+ImagePath   : C:\Windows\system32\IEEtwCollector.exe /V
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : jenkins
+DisplayName : jenkins
+ImagePath   : "C:\Users\Administrator\.jenkins\jenkins.exe"
+User        : .\kohsuke
+StartMode   : Automatic
+
+Name        : KeyIso
+DisplayName : @keyiso.dll,-100
+ImagePath   : C:\Windows\system32\lsass.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : MSDTC
+DisplayName : @comres.dll,-2797
+ImagePath   : C:\Windows\System32\msdtc.exe
+User        : NT AUTHORITY\NetworkService
+StartMode   : Manual
+
+Name        : Netlogon
+DisplayName : @C:\Windows\System32\netlogon.dll,-102
+ImagePath   : C:\Windows\system32\lsass.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : RpcLocator
+DisplayName : @C:\Windows\system32\Locator.exe,-2
+ImagePath   : C:\Windows\system32\locator.exe
+User        : NT AUTHORITY\NetworkService
+StartMode   : Manual
+
+Name        : SamSs
+DisplayName : @C:\Windows\system32\samsrv.dll,-1
+ImagePath   : C:\Windows\system32\lsass.exe
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : SensorDataService
+DisplayName : @C:\Windows\system32\SensorDataService.exe,-101
+ImagePath   : C:\Windows\System32\SensorDataService.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : SNMPTRAP
+DisplayName : @C:\Windows\system32\snmptrap.exe,-3
+ImagePath   : C:\Windows\System32\snmptrap.exe
+User        : NT AUTHORITY\LocalService
+StartMode   : Manual
+
+Name        : sppsvc
+DisplayName : @C:\Windows\system32\sppsvc.exe,-101
+ImagePath   : C:\Windows\system32\sppsvc.exe
+User        : NT AUTHORITY\NetworkService
+StartMode   : Automatic
+
+Name        : TieringEngineService
+DisplayName : @C:\Windows\system32\TieringEngineService.exe,-702
+ImagePath   : C:\Windows\system32\TieringEngineService.exe
+User        : localSystem
+StartMode   : Manual
+
+Name        : TPAutoConnSvc
+DisplayName : TP AutoConnect Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\TPAutoConnSvc.exe"
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : TPVCGateway
+DisplayName : TP VC Gateway Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\TPVCGateway.exe"
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : VaultSvc
+DisplayName : @C:\Windows\system32\vaultsvc.dll,-1003
+ImagePath   : C:\Windows\system32\lsass.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : vds
+DisplayName : @C:\Windows\system32\vds.exe,-100
+ImagePath   : C:\Windows\System32\vds.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : VGAuthService
+DisplayName : VMware Alias Manager and Ticket Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : VMTools
+DisplayName : VMware Tools
+ImagePath   : "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : VMware Physical Disk Helper Service
+DisplayName : VMware Physical Disk Helper Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\vmacthlp.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : VMwareCAFCommAmqpListener
+DisplayName : VMware CAF AMQP Communication Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\CommAmqpListener.exe"
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : VMwareCAFManagementAgentHost
+DisplayName : VMware CAF Management Agent Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\ManagementAgentHost.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : VSS
+DisplayName : @C:\Windows\system32\vssvc.exe,-102
+ImagePath   : C:\Windows\system32\vssvc.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : wbengine
+DisplayName : @C:\Windows\system32\wbengine.exe,-104
+ImagePath   : "C:\Windows\system32\wbengine.exe"
+User        : localSystem
+StartMode   : Manual
+
+Name        : WdNisSvc
+DisplayName : @C:\Program Files (x86)\Windows Defender\MpAsDesc.dll,-320
+ImagePath   : "C:\Program Files (x86)\Windows Defender\NisSrv.exe"
+User        : NT AUTHORITY\LocalService
+StartMode   : Manual
+
+Name        : WinDefend
+DisplayName : @C:\Program Files (x86)\Windows Defender\MpAsDesc.dll,-310
+ImagePath   : "C:\Program Files (x86)\Windows Defender\MsMpEng.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : winexesvc
+DisplayName : 
+ImagePath   : winexesvc.exe
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : wmiApSrv
+DisplayName : @C:\Windows\system32\wbem\wmiapsrv.exe,-110
+ImagePath   : C:\Windows\system32\wbem\WmiApSrv.exe
+User        : localSystem
+StartMode   : Manual
+
+Name        : WMPNetworkSvc
+DisplayName : @C:\Program Files (x86)\Windows Media Player\wmpnetwk.exe,-101
+ImagePath   : "C:\Program Files (x86)\Windows Media Player\wmpnetwk.exe"
+User        : NT AUTHORITY\NetworkService
+StartMode   : Manual
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Permissions - SCM                   | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for services which are modifiable through the  |
+|      | Service Control Manager (sc.exe config VulnService bi |
+|      | npath= C:\Temp\evil.exe).                             |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Permissions - Registry              | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for services which are modifiable through the  |
+|      | registry (reg.exe add HKLM\[...]\Services\VulnService |
+|      |  /v ImagePath /d C:\Temp\evil.exe /f).                |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Binary Permissions                  | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for modifiable service binaries (copy C:\Temp\ |
+|      | evil.exe C:\APPS\MyCustomApp\service.exe).            |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Name              : jenkins
+ImagePath         : "C:\Users\Administrator\.jenkins\jenkins.exe"
+User              : .\kohsuke
+ModifiablePath    : C:\Users\Administrator\.jenkins\jenkins.exe
+IdentityReference : JEEVES\kohsuke
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+Status            : Unknown
+UserCanStart      : False
+UserCanRestart    : False
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Unquoted Paths                      | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for service unquoted image paths (C:\APPS\Foo  |
+|      | Bar\service.exe -> copy C:\Temp\evil.exe C:\APPS\Foo. |
+|      | exe).                                                 |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > System's %PATH%                     | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for system %PATH% folders configured with weak |
+|      |  permissions.                                         |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Hijackable DLLs                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Lists known hijackable DLLs on this system.           |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Name           : WptsExtensions.dll
+Description    : Loaded by the Task Scheduler upon service startup
+RunAs          : LocalSystem
+RebootRequired : True
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Non-default Apps                        | INFO |
++------+------------------------------------------------+------+
+| DESC | Lists non-default and third-party applications.       |
++------+-------------------------------------------------------+
+[*] Found 6 result(s).
+
+Name   FullPath                   
+----   --------                   
+CMAK   C:\Program Files (x86)\CMAK
+Java   C:\Program Files (x86)\Java
+CMAK   C:\Program Files\CMAK      
+rempl  C:\Program Files\rempl     
+UNP    C:\Program Files\UNP       
+VMware C:\Program Files\VMware    
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Modifiable Apps                         | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for non-default applications with a modifiable |
+|      |  executable.                                          |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+ModifiablePath            IdentityReference Permissions                                          
+--------------            ----------------- -----------                                          
+C:\Program Files\UNP\Logs Everyone          {WriteOwner, Delete, WriteAttributes, Synchronize...}
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > ProgramData folders/files               | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks for modifiable files and folders under non def |
+|      | ault ProgramData folders.                             |
++------+-------------------------------------------------------+
+[*] Found 51 result(s).
+
+
+ModifiablePath    : C:\ProgramData\Oracle\Java
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\Oracle\Java\.oracle_jre_usage
+IdentityReference : Everyone
+Permissions       : {Delete, WriteAttributes, Synchronize, ReadControl...}
+
+ModifiablePath    : C:\ProgramData\Oracle\Java\.oracle_jre_usage
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\Oracle\Java\.oracle_jre_usage\cce3fe3b0d8d809d.timestamp
+IdentityReference : Everyone
+Permissions       : {Delete, WriteAttributes, Synchronize, ReadControl...}
+
+ModifiablePath    : C:\ProgramData\VMware\Compatibility
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\logs
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\Compatibility\native
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\Compatibility\virtual
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\virtual
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native\C
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native\C\Windows
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native\C\Windows\System32
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native\C\Windows\System32\spp
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native\C\Windows\System32\spp\store
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\RawdskCompatibility\native\C\Windows\System32\spp\store\2.0
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\config
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\install
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\scripts
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input\invokers
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input\monitor
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input\persistence
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input\providerReg
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input\persistence\protocol
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\input\persistence\protocol\amqpBroker_default
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\log
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\requests
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\schemaCache
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\split-requests
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware 
+                    CAF\pme\data\output\schemaCache\cafTestInfra_CafTestInfraProvider_1_0_0
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\schemaCache\caf_ConfigProvider_1_0_0
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\schemaCache\caf_InstallProvider_1_0_0
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware CAF\pme\data\output\schemaCache\caf_RemoteCommandProvider_1_0_0
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\de
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\en
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\es
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\fr
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\it
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\ja
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\ko
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\zh_CN
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+ModifiablePath    : C:\ProgramData\VMware\VMware VGAuth\msgCatalogs\messages\zh_TW
+IdentityReference : BUILTIN\Users
+Permissions       : {WriteAttributes, AppendData/AddSubdirectory, WriteExtendedAttributes, WriteData/AddFile}
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Apps Run on Startup                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Lists applications which are run on startup.          |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Name         : SunJavaUpdateSched
+Path         : HKLM\Software\Microsoft\Windows\CurrentVersion\Run\SunJavaUpdateSched
+Data         : "C:\Program Files (x86)\Common Files\Java\Java Update\jusched.exe"
+IsModifiable : False
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Modifiable Apps Run on Startup          | VULN |
++------+------------------------------------------------+------+
+| DESC | Lists startup applications that can be modified by th |
+|      | e current user.                                       |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Scheduled Tasks                         | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for scheduled tasks with a modifiable executab |
+|      | le.                                                   |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Running Processes                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Lists processes which are not owned by the current us |
+|      | er. Common processes such as 'svchost.exe' are filter |
+|      | ed out.                                               |
++------+-------------------------------------------------------+
+[*] Found 15 result(s).
+
+Name           PID User Path SessionId
+----           --- ---- ---- ---------
+dasHost       2036 N/A               0
+dllhost       2596 N/A               0
+dllhost       2948 N/A               0
+LogonUI       2276 N/A               1
+lsass          764 N/A               0
+MsMpEng       1780 N/A               0
+NisSrv        2812 N/A               0
+SearchIndexer 3156 N/A               0
+spoolsv       1320 N/A               0
+VGAuthService 1812 N/A               0
+vmacthlp       544 N/A               0
+vmtoolsd      1804 N/A               0
+wininit        652 N/A               0
+winlogon       716 N/A               1
+WmiPrvSE      2472 N/A               0
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > SAM/SYSTEM Backup Files                | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for readable backups of the SAM/SYSTEM files.  |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Unattended Files                       | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for Unattend files containing cleartext passwo |
+|      | rds.                                                  |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > WinLogon                               | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for cleartext passwords in the Winlogon regist |
+|      | ry key. Empty passwords are filtered out.             |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Credential Files                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Lists credential files in the current user's HOME fol |
+|      | der.                                                  |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+
+Type     : Credentials
+FullPath : C:\Users\kohsuke\AppData\Local\Microsoft\Credentials\DFBE70A7E5CC19A398EBF1B96859CE5D
+
+Type     : Protect
+FullPath : C:\Users\kohsuke\AppData\Roaming\Microsoft\Protect\S-1-5-21-2851396806-8246019-2289784878-1001\c3d58751-2ea9
+           -4dd0-b8e7-60bda0adf63d
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Credential Manager                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks for saved credentials in Windows Vault.        |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Credential Manager (web)               | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks for saved web credentials in Windows Vault.    |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > GPP Passwords                          | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks for cached Group Policy Preferences containing |
+|      |  a 'cpassword' field.                                 |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > PowerShell History                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks for saved credentials in the PowerShell histor |
+|      | y file of the current user.                           |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > UAC Settings                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks User Access Control (UAC) configuration.       |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Path      : HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System
+EnableLUA : 1
+Enabled   : True
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > LSA protections                    | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks whether 'lsass' runs as a Protected Process Li |
+|      | ght or if Credential Guard is enabled.                |
++------+-------------------------------------------------------+
