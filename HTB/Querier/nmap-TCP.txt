@@ -1,0 +1,315 @@
+root@Kali:~/HTB/Querier# nmap -Pn -n -sS -p- 10.10.10.125 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-08 00:36 +08
+Nmap scan report for 10.10.10.125
+Host is up (0.0073s latency).
+Not shown: 65521 closed ports
+PORT      STATE SERVICE
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+1433/tcp  open  ms-sql-s
+5985/tcp  open  wsman
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49668/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49671/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 14.04 seconds
+
+root@Kali:~/HTB/Querier# nmap -Pn -n -sV -p135,139,445,1433,5985,47001,49664,49665,49666,49667,49668,49669,49670,49671 --script=vuln,discovery 10.10.10.125 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-08 00:58 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.125
+Host is up (0.0055s latency).
+
+PORT      STATE SERVICE       VERSION
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+445/tcp   open  microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+1433/tcp  open  ms-sql-s      Microsoft SQL Server 2017 14.00.1000.00; RTM
+| ms-sql-config: 
+|   [10.10.10.125:1433]
+|_    ERROR: No login credentials
+| ms-sql-dump-hashes: 
+| [10.10.10.125:1433]
+|_  ERROR: No login credentials
+| ms-sql-hasdbaccess: 
+|   [10.10.10.125:1433]
+|_    ERROR: No login credentials.
+| ms-sql-ntlm-info: 
+|   Target_Name: HTB
+|   NetBIOS_Domain_Name: HTB
+|   NetBIOS_Computer_Name: QUERIER
+|   DNS_Domain_Name: HTB.LOCAL
+|   DNS_Computer_Name: QUERIER.HTB.LOCAL
+|   DNS_Tree_Name: HTB.LOCAL
+|_  Product_Version: 10.0.17763
+| ms-sql-query: 
+|   (Use --script-args=ms-sql-query.query='<QUERY>' to change query.)
+|   [10.10.10.125:1433]
+|_    ERROR: No login credentials
+| ms-sql-tables: 
+|   [10.10.10.125:1433]
+|_    ERROR: No login credentials.
+| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback
+| Not valid before: 2020-11-07T16:20:42
+|_Not valid after:  2050-11-07T16:20:42
+|_ssl-date: 2020-11-07T17:02:06+00:00; +2s from scanner time.
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 2048) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 2048) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp384r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|_  least strength: C
+|_sslv2-drown: 
+|_tls-ticketbleed: ERROR: Script execution failed (use -d to debug)
+5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 179.81ms; min: 157.40ms; max: 263.60ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 07 Nov 2020 16:59:16 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.125
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.10.125:5985/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sat, 07 Nov 2020 16:59:42 GMT
+|   Connection: close
+|   Content-Length: 315
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 168.06ms; min: 153.01ms; max: 216.88ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 07 Nov 2020 16:59:17 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.125
+|   Found the following error pages: 
+|   
+|   Error Code: 404
+|_  	http://10.10.10.125:47001/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sat, 07 Nov 2020 16:59:20 GMT
+|   Connection: close
+|   Content-Length: 315
+|   
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator: 
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester: 
+|   Status for browser useragent: 404
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+49664/tcp open  msrpc         Microsoft Windows RPC
+49665/tcp open  msrpc         Microsoft Windows RPC
+49666/tcp open  msrpc         Microsoft Windows RPC
+49667/tcp open  msrpc         Microsoft Windows RPC
+49668/tcp open  msrpc         Microsoft Windows RPC
+49669/tcp open  msrpc         Microsoft Windows RPC
+49670/tcp open  msrpc         Microsoft Windows RPC
+49671/tcp open  msrpc         Microsoft Windows RPC
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.125"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+| ms-sql-info: 
+|   10.10.10.125:1433: 
+|     Version: 
+|       name: Microsoft SQL Server 2017 RTM
+|       number: 14.00.1000.00
+|       Product: Microsoft SQL Server 2017
+|       Service pack level: RTM
+|       Post-SP patches applied: false
+|_    TCP port: 1433
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 135    0       6937.50    1030.41  0.0%
+| 139    0       6875.00    2064.16  0.0%
+| 445    0       7173.30    1075.37  0.0%
+| 1433   0       6422.00    910.95   10.0%
+| 5985   0       6470.40    1295.71  0.0%
+| 47001  0       6448.40    878.96   0.0%
+| 49664  0       6385.60    2580.44  0.0%
+|_49665  0       6279.30    792.37   0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum: 
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols: 
+|   dialects: 
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities: 
+|   2.02: 
+|     Distributed File System
+|   2.10: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02: 
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11: 
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2020-11-07T16:59:37
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 243.51 seconds

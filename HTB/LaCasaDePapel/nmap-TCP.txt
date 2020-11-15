@@ -1,0 +1,271 @@
+root@Kali:~/HTB/LaCasaDePapel# nmap -Pn -n -sS -p- 10.10.10.131 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-01 11:56 +08
+Nmap scan report for 10.10.10.131
+Host is up (0.0072s latency).
+Not shown: 65530 closed ports
+PORT     STATE    SERVICE
+21/tcp   open     ftp
+22/tcp   open     ssh
+80/tcp   open     http
+443/tcp  open     https
+6200/tcp filtered lm-x
+
+Nmap done: 1 IP address (1 host up) scanned in 15.37 seconds
+
+root@Kali:~/HTB/LaCasaDePapel# nmap -Pn -n -sV -p21,22,80,443,6200 --script=vuln,discovery 10.10.10.131 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-01 11:59 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es). 
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.131
+Host is up (0.0063s latency).
+
+PORT     STATE    SERVICE  VERSION
+21/tcp   open     ftp      vsftpd 2.3.4
+|_banner: 220 (vsFTPd 2.3.4)
+|_sslv2-drown: 
+22/tcp   open     ssh      OpenSSH 7.9 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.9
+| ssh-hostkey: 
+|   2048 03:e1:c2:c9:79:1c:a6:6b:51:34:8d:7a:c3:c7:c8:50 (RSA)
+|   256 41:e4:95:a3:39:0b:25:f9:da:de:be:6a:dc:59:48:6d (ECDSA)
+|_  256 30:0b:c6:66:2b:8f:5e:4f:26:28:75:0e:f5:b1:71:e4 (ED25519)
+| ssh2-enum-algos: 
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp   open     http     Node.js (Express middleware)
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 429.67ms; min: 185.58ms; max: 731.78ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 01 Nov 2020 04:00:20 GMT; 0s from local time.
+|_http-devframework: Express detected. Found Express in X-Powered-By Header
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-fileupload-exploiter: 
+|   
+|_    Couldn't find a file-type field.
+| http-headers: 
+|   X-Powered-By: Express
+|   Content-Type: text/html; charset=utf-8
+|   Content-Length: 1754
+|   ETag: W/"6da-sLxHtJ/mnxmWnTM+BRgr6DDHJnc"
+|   Date: Sun, 01 Nov 2020 04:00:18 GMT
+|   Connection: close
+|   
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers: 
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       Other: 2
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 2
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: La Casa De Papel
+| http-useragent-tester: 
+|   Status for browser useragent: 200
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+443/tcp  open     ssl/http Node.js Express framework
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+| http-auth-finder: 
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.131
+|   url                        method
+|_  https://10.10.10.131:443/  HTTP: Server returned no authentication headers.
+|_http-chrono: Request times for /; avg: 173.52ms; min: 151.25ms; max: 209.98ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sun, 01 Nov 2020 04:00:29 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors: 
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.131
+|   Found the following error pages: 
+|   
+|   Error Code: 401
+|_  	https://10.10.10.131:443/
+|_http-feed: Couldn't find any feeds.
+| http-headers: 
+|   X-Powered-By: Express
+|   Content-Type: text/html; charset=utf-8
+|   Content-Length: 931
+|   ETag: W/"3a3-ltZ9andWBAdO1mJpoSYlrCWcCP0"
+|   Date: Sun, 01 Nov 2020 04:00:37 GMT
+|   Connection: close
+|   
+|_  (Request type: GET)
+| http-method-tamper: 
+|   VULNERABLE:
+|   Authentication bypass by HTTP verb tampering
+|     State: VULNERABLE (Exploitable)
+|       This web server contains password protected resources vulnerable to authentication bypass
+|       vulnerabilities via HTTP verb tampering. This is often found in web servers that only limit access to the
+|        common HTTP methods and in misconfigured .htaccess files.
+|              
+|     Extra information:
+|       
+|   URIs suspected to be vulnerable to HTTP verb tampering:
+|     / [POST]
+|   
+|     References:
+|       http://capec.mitre.org/data/definitions/274.html
+|       https://www.owasp.org/index.php/Testing_for_HTTP_Methods_and_XST_%28OWASP-CM-008%29
+|       http://www.mkit.com.ar/labs/htexploit/
+|_      http://www.imperva.com/resources/glossary/http_verb_tampering.html
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|_    HSTS not configured in HTTPS Server
+| http-sitemap-generator: 
+|   Directory structure:
+|     /
+|       jpg: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    jpg: 1
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: La Casa De Papel
+| http-useragent-tester: 
+|   Status for browser useragent: 401
+|   Allowed User Agents: 
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts: 
+| 93 names had status 401
+|_34 names had status ERROR
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+| ssl-cert: Subject: commonName=lacasadepapel.htb/organizationName=La Casa De Papel
+| Not valid before: 2019-01-27T08:35:30
+|_Not valid after:  2029-01-24T08:35:30
+|_ssl-date: TLS randomness does not represent time
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|_  least strength: A
+|_sslv2-drown: 
+| tls-alpn: 
+|_  http/1.1
+| tls-nextprotoneg: 
+|   http/1.1
+|_  http/1.0
+6200/tcp filtered lm-x
+Service Info: OS: Unix
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.131"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+| firewall-bypass: 
+|_  Firewall vulnerable to bypass through ftp helper. (IPv4)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan: 
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 21    0       11411.70   7231.80   0.0%
+| 22    0       35157.70   51445.61  0.0%
+| 80    0       34513.80   49038.73  0.0%
+|_443   1       51830.60   56352.10  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 210.44 seconds

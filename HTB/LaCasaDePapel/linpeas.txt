@@ -1,0 +1,931 @@
+lacasadepapel [/tmp]$ ./linpeas.sh -a
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.14.78-0-virt (buildozer@build-edge-x86_64) (gcc version 8.2.0 (Alpine 8.2.0)) #1-Alpine SMP Tue Oct 23 11:43:38 UTC 2018
+User & Groups: uid=1002(professor) gid=1002(professor) groups=1002(professor)
+Hostname: lacasadepapel
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+[+] nmap is available for network discover & port scanning, you should use it yourself
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.14.78-0-virt (buildozer@build-edge-x86_64) (gcc version 8.2.0 (Alpine 8.2.0)) #1-Alpine SMP Tue Oct 23 11:43:38 UTC 2018
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.23
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Thu Nov  5 16:58:01 UTC 2020
+
+[+] System stats
+Filesystem                Size      Used Available Use% Mounted on
+devtmpfs                 10.0M         0     10.0M   0% /dev
+shm                     244.9M         0    244.9M   0% /dev/shm
+/dev/sda3                 6.8G    562.3M      5.9G   9% /
+tmpfs                    49.0M    124.0K     48.9M   0% /run
+/dev/sda1                92.8M     12.5M     73.3M  15% /boot
+df and lsblk Not Found
+             total       used       free     shared    buffers     cached
+Mem:        501492     245608     255884        128      21104      50864
+-/+ buffers/cache:     173640     327852
+Swap:      1002492          0    1002492
+
+[+] CPU info
+lscpu Not Found
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+MAIL=/var/mail/professor
+USER=professor
+SSH_CLIENT=10.10.14.46 58158 22
+SHLVL=3
+HOME=/home/professor
+SSH_TTY=/dev/pts/0
+PAGER=less
+PS1=\[\e[1;32m\]\h [\[\e[0m\]\w\[\e[1;32m\]]$ \[\e[0m\]
+LOGNAME=professor
+_=./linpeas.sh
+TERM=xterm-256color
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HISTSIZE=0
+SHELL=/bin/ash
+SSH_CONNECTION=10.10.14.46 58158 10.10.10.131 22
+CHARSET=UTF-8
+HISTFILE=/dev/null
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. AppArmor Not Found
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+sda
+sda1
+sda2
+sda3
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+sed: bad option in substitution expression
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nmap
+/usr/bin/nc
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+
+[+] Installed Compiler
+/usr/bin/gcc
+/usr/bin/g++
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+    1 root      0:00 /sbin/init
+ 2996 root      0:00 /sbin/syslogd -Z
+ 3050 root      0:00 /sbin/acpid
+ 3076 root      0:00 /usr/sbin/crond -c /etc/crontabs
+ 3142 memcache  0:00 /usr/bin/memcached -d -p 11211 -U 11211 -l 127.0.0.1 -m 64 -c 1024 -u memcached -P /var/run/memcached/memcached-11211.pid
+ 3185 root      0:00 /usr/sbin/sshd
+ 3230 root      0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 3267 dali      0:00 /usr/bin/node /home/dali/server.js
+ 3268 nobody    0:00 /usr/bin/node /home/oslo/server.js
+ 3269 berlin    0:00 /usr/bin/node /home/berlin/server.js
+ 3270 nobody    0:02 /usr/bin/node /home/nairobi/server.js
+ 3278 root      0:00 /sbin/getty 38400 tty1
+ 3279 root      0:00 /sbin/getty 38400 tty2
+ 3282 root      0:00 /sbin/getty 38400 tty3
+ 3285 root      0:00 /sbin/getty 38400 tty4
+ 3288 root      0:00 /sbin/getty 38400 tty5
+ 3291 root      0:00 /sbin/getty 38400 tty6
+ 3950 professo  0:00 sshd: professor@pts/0
+ 3951 professo  0:00 -ash
+ 3954 professo  0:00 /bin/bash -p
+ 4031 professo  0:00 {linpeas.sh} /bin/sh ./linpeas.sh -a
+ 4425 root      0:00 /sbin/getty -L 115200 ttyS0 vt100
+ 4450 root      0:00 {supervisord} /sbin/openrc-run /etc/init.d/supervisord restart
+ 4451 root      0:00 {openrc-run.sh} /bin/sh /lib/rc/sh/openrc-run.sh /etc/init.d/supervisord stop
+ 4468 root      0:00 start-stop-daemon[0m --stop --exec /usr/bin/supervisord --pidfile /var/run/supervisord.pid
+ 4587 professo  0:00 ps aux
+ 4589 professo  0:00 sort
+PID   USER     TIME  COMMAND
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd process found (dump creds from memory as root)
+apache2 Not Found
+sshd: process found (dump creds from memory as root)
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+total 12
+drwxr-xr-x    2 root     root          4096 Nov  5  2018 .
+drwxr-xr-x   33 root     root          4096 Mar 12  2019 ..
+-rw-------    1 root     root           119 Nov  5  2018 root
+
+[+] Services
+[i] Search for outdated versions
+Usage: rc-service [options] [-i] <service> <cmd>...
+   or: rc-service [options] -e <service>
+   or: rc-service [options] -l
+   or: rc-service [options] -r <service>
+
+Options: [ ce:ilr:INChqVv ]
+  -e, --exists <arg>                tests if the service exists or not
+  -c, --ifcrashed                   if the service is crashed then run the command
+  -i, --ifexists                    if the service exists then run the command
+  -I, --ifinactive                  if the service is inactive then run the command
+  -N, --ifnotstarted                if the service is not started then run the command
+  -l, --list                        list all available services
+  -r, --resolve <arg>               resolve the service name to an init script
+  -h, --help                        Display this help output
+  -C, --nocolor                     Disable color output
+  -V, --version                     Display software version
+  -v, --verbose                     Run verbosely
+  -q, --quiet                       Run quietly (repeat to suppress errors)
+Runlevel: default
+ iptables                                                                                                                                [  stopped  ]
+ supervisord                                                                                                                             [ stopping  ]
+ sshd                                                                                                                                    [  started  ]
+ acpid                                                                                                                                   [  started  ]
+ ip6tables                                                                                                                               [  stopped  ]
+ vsftpd                                                                                                                                  [  started  ]
+ crond                                                                                                                                   [  started  ]
+ memcached                                                                                                                               [  started  ]
+ local                                                                                                                                   [  started  ]
+Dynamic Runlevel: hotplugged
+Dynamic Runlevel: needed/wanted
+ sysfs                                                                                                                                   [  started  ]
+ fsck                                                                                                                                    [  started  ]
+ root                                                                                                                                    [  started  ]
+ localmount                                                                                                                              [  started  ]
+Dynamic Runlevel: manual
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+busctl Not Found
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+lacasadepapel
+192.168.1.85	lacasadepapel
+127.0.0.1	localhost localhost.localdomain
+::1		localhost localhost.localdomain
+nameserver 192.168.1.1
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+eth0      Link encap:Ethernet  HWaddr 00:50:56:B9:36:8C  
+          inet addr:10.10.10.131  Bcast:0.0.0.0  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:368c/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:368c/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1282 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:801 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:483881 (472.5 KiB)  TX bytes:170666 (166.6 KiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:2095 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2095 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1339575 (1.2 MiB)  TX bytes:1339575 (1.2 MiB)
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.10.10.2      0.0.0.0         UG    0      0        0 eth0
+10.10.10.0      *               255.255.255.0   U     0      0        0 eth0
+? (10.10.10.2) at 00:50:56:b9:c3:ef [ether]  on eth0
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:11211         0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:6200            0.0.0.0:*               LISTEN      -
+tcp        0    596 10.10.10.131:22         10.10.14.46:58158       ESTABLISHED -
+tcp        0      0 127.0.0.1:39528         127.0.0.1:11211         TIME_WAIT   -
+tcp        0      0 127.0.0.1:39534         127.0.0.1:11211         ESTABLISHED -
+tcp        0      0 127.0.0.1:11211         127.0.0.1:39534         ESTABLISHED -
+tcp        0      0 :::22                   :::*                    LISTEN      -
+udp        0      0 127.0.0.1:11211         0.0.0.0:*                           -
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=1002(professor) gid=1002(professor) groups=1002(professor)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is not enabled ()
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user operator...
+  Bruteforcing user postgres...
+  Bruteforcing user dali...
+  Bruteforcing user berlin...
+  Bruteforcing user professor...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/ash
+
+[+] Users with console
+berlin:x:1001:1001:berlin,,,:/home/berlin:/bin/ash
+dali:x:1000:1000:dali,,,:/home/dali:/usr/bin/psysh
+operator:x:11:0:operator:/root:/bin/sh
+postgres:x:70:70::/var/lib/postgresql:/bin/sh
+professor:x:1002:1002:professor,,,:/home/professor:/bin/ash
+root:x:0:0:root:/root:/bin/ash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon[0m),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
+uid=1(bin) gid=1(bin) groups=1(bin),1(bin),2(daemon[0m),3(sys)
+uid=10(uucp) gid=14(uucp) groups=14(uucp),14(uucp)
+uid=100(chrony) gid=101(chrony) groups=101(chrony),101(chrony)
+uid=1000(dali) gid=1000(dali) groups=1000(dali)
+uid=1001(berlin) gid=1001(berlin) groups=1001(berlin)
+uid=1002(professor) gid=1002(professor) groups=1002(professor)
+uid=101(vsftp) gid=21(ftp) groups=21(ftp),21(ftp)
+uid=102(memcached) gid=102(memcached) groups=102(memcached),102(memcached)
+uid=11(operator) gid=0(root) groups=0(root)
+uid=123(ntp) gid=123(ntp) groups=123(ntp)
+uid=13(man) gid=15(man) groups=15(man),15(man)
+uid=14(postmaster) gid=12(mail) groups=12(mail)
+uid=16(cron) gid=16(cron) groups=16(cron),16(cron)
+uid=2(daemon[0m) gid=2(daemon[0m) groups=2(daemon[0m),1(bin),2(daemon[0m),4(adm)
+uid=209(smmsp) gid=209(smmsp) groups=209(smmsp),209(smmsp)
+uid=21(ftp) gid=21(ftp) groups=21(ftp)
+uid=22(sshd) gid=22(sshd) groups=22(sshd)
+uid=25(at) gid=25(at) groups=25(at),25(at)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys),4(adm),6(disk)
+uid=31(squid) gid=31(squid) groups=31(squid),31(squid)
+uid=33(xfs) gid=33(xfs) groups=33(xfs),33(xfs)
+uid=35(games) gid=35(games) groups=35(games),100(users)
+uid=4(lp) gid=7(lp) groups=7(lp),7(lp)
+uid=405(guest) gid=100(users) groups=100(users)
+uid=5(sync) gid=0(root) groups=0(root)
+uid=6(shutdown) gid=0(root) groups=0(root)
+uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+uid=7(halt) gid=0(root) groups=0(root)
+uid=70(postgres) gid=70(postgres) groups=70(postgres)
+uid=8(mail) gid=12(mail) groups=12(mail),12(mail)
+uid=85(cyrus) gid=12(mail) groups=12(mail)
+uid=89(vpopmail) gid=89(vpopmail) groups=89(vpopmail)
+uid=9(news) gid=13(news) groups=13(news),13(news)
+
+[+] Login now
+
+[+] Last logons
+
+wtmp begins Thu Jan  1 00:00 
+
+[+] Last time logon each user
+
+[+] Password policy
+/etc/login.defs Not Found
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+ Not Found
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+cat: can't open '': No such file or directory
+
+[+] Searching supervisord configuration file
+/etc/supervisord.conf /home/berlin/.ash_history
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+rsyncd.conf Not Found
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/home/professor/.bash_history   /usr/include/c++/6.4.0/javax/naming/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+/home/professor/.ssh/authorized_keys
+/home/professor/.ssh/known_hosts   /usr/lib/gcc/x86_64-alpine-linux-musl/6.4.0/plugin/include/config
+PermitRootLogin yes
+
+Searching inside /etc/ssh/ssh_config for interesting info
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/abuild-sudo
+/bin/bbsuid
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/sbin/unix_chkpwd
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+/usr/bin/node = cap_net_bind_service+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/findssl.sh
+/usr/bin/amuFormat.sh
+
+[+] Unexpected folders in root
+/swap
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 16
+drwxr-xr-x    2 root     root          4096 Oct 28  2018 .
+drwxr-xr-x   33 root     root          4096 Mar 12  2019 ..
+-rw-r--r--    1 root     root            17 Oct 27  2018 alias.sh
+-rw-r--r--    1 root     root           295 Jul 27  2018 color_prompt.sh
+find: unrecognized: -writable
+BusyBox v1.29.3 (2018-09-27 10:29:35 UTC) multi-call binary.
+
+Usage: find [-HL] [PATH]... [OPTIONS] [ACTIONS]
+
+Search for files and perform actions on them.
+First failed action stops processing of current file.
+Defaults: PATH is current directory, action is '-print'
+
+	-L,-follow	Follow symlinks
+	-H		...on command line only
+	-xdev		Don't descend directories on other filesystems
+	-maxdepth N	Descend at most N levels. -maxdepth 0 applies
+			actions to command line arguments only
+	-mindepth N	Don't act on first N levels
+	-depth		Act on directory *after* traversing it
+
+Actions:
+	( ACTIONS )	Group actions for -o / -a
+	! ACT		Invert ACT's success/failure
+	ACT1 [-a] ACT2	If ACT1 fails, stop, else do ACT2
+	ACT1 -o ACT2	If ACT1 succeeds, stop, else do ACT2
+			Note: -a has higher priority than -o
+	-name PATTERN	Match file name (w/o directory name) to PATTERN
+	-iname PATTERN	Case insensitive -name
+	-path PATTERN	Match path to PATTERN
+	-ipath PATTERN	Case insensitive -path
+	-regex PATTERN	Match path to regex PATTERN
+	-type X		File type is X (one of: f,d,l,b,c,s,p)
+	-perm MASK	At least one mask bit (+MASK), all bits (-MASK),
+			or exactly MASK bits are set in file's mode
+	-mtime DAYS	mtime is greater than (+N), less than (-N),
+			or exactly N days in the past
+	-mmin MINS	mtime is greater than (+N), less than (-N),
+			or exactly N minutes in the past
+	-newer FILE	mtime is more recent than FILE's
+	-inum N		File has inode number N
+	-user NAME/ID	File is owned by given user
+	-group NAME/ID	File is owned by given group
+	-size N[bck]	File size is N (c:bytes,k:kbytes,b:512 bytes(def.))
+			+/-N: file size is bigger/smaller than N
+	-links N	Number of links is greater than (+N), less than (-N),
+			or exactly N
+	-prune		If current file is directory, don't descend into it
+If none of the following actions is specified, -print is assumed
+	-print		Print file name
+	-print0		Print file name, NUL terminated
+	-exec CMD ARG ;	Run CMD with all instances of {} replaced by
+			file name. Fails if CMD exits with nonzero
+	-exec CMD ARG + Run CMD with {} replaced by list of file names
+	-delete		Delete current file/directory. Turns on -depth option
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+find: unrecognized: -writable
+BusyBox v1.29.3 (2018-09-27 10:29:35 UTC) multi-call binary.
+
+Usage: find [-HL] [PATH]... [OPTIONS] [ACTIONS]
+
+Search for files and perform actions on them.
+First failed action stops processing of current file.
+Defaults: PATH is current directory, action is '-print'
+
+	-L,-follow	Follow symlinks
+	-H		...on command line only
+	-xdev		Don't descend directories on other filesystems
+	-maxdepth N	Descend at most N levels. -maxdepth 0 applies
+			actions to command line arguments only
+	-mindepth N	Don't act on first N levels
+	-depth		Act on directory *after* traversing it
+
+Actions:
+	( ACTIONS )	Group actions for -o / -a
+	! ACT		Invert ACT's success/failure
+	ACT1 [-a] ACT2	If ACT1 fails, stop, else do ACT2
+	ACT1 -o ACT2	If ACT1 succeeds, stop, else do ACT2
+			Note: -a has higher priority than -o
+	-name PATTERN	Match file name (w/o directory name) to PATTERN
+	-iname PATTERN	Case insensitive -name
+	-path PATTERN	Match path to PATTERN
+	-ipath PATTERN	Case insensitive -path
+	-regex PATTERN	Match path to regex PATTERN
+	-type X		File type is X (one of: f,d,l,b,c,s,p)
+	-perm MASK	At least one mask bit (+MASK), all bits (-MASK),
+			or exactly MASK bits are set in file's mode
+	-mtime DAYS	mtime is greater than (+N), less than (-N),
+			or exactly N days in the past
+	-mmin MINS	mtime is greater than (+N), less than (-N),
+			or exactly N minutes in the past
+	-newer FILE	mtime is more recent than FILE's
+	-inum N		File has inode number N
+	-user NAME/ID	File is owned by given user
+	-group NAME/ID	File is owned by given group
+	-size N[bck]	File size is N (c:bytes,k:kbytes,b:512 bytes(def.))
+			+/-N: file size is bigger/smaller than N
+	-links N	Number of links is greater than (+N), less than (-N),
+			or exactly N
+	-prune		If current file is directory, don't descend into it
+If none of the following actions is specified, -print is assumed
+	-print		Print file name
+	-print0		Print file name, NUL terminated
+	-exec CMD ARG ;	Run CMD with all instances of {} replaced by
+			file name. Fails if CMD exits with nonzero
+	-exec CMD ARG + Run CMD with {} replaced by list of file names
+	-delete		Delete current file/directory. Turns on -depth option
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. total 0
+No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+/home/berlin/server.js
+/home/nairobi/node_modules
+/home/nairobi/node_modules/sleep
+/home/nairobi/node_modules/sleep/sleep_posix.cc
+/home/nairobi/node_modules/sleep/index.js
+/home/nairobi/node_modules/sleep/binding.gyp
+/home/nairobi/node_modules/sleep/README.md
+/home/nairobi/node_modules/sleep/module_init.cc
+/home/nairobi/node_modules/sleep/package.json
+/home/nairobi/node_modules/sleep/sleep_win.cc
+/home/nairobi/node_modules/sleep/appveyor.yml
+/home/nairobi/node_modules/sleep/sleep_cpp11.cc
+/home/nairobi/node_modules/sleep/LICENSE.txt
+/home/nairobi/node_modules/sleep/test.js
+/home/nairobi/node_modules/sleep/sleep.h
+/home/nairobi/node_modules/sleep/build
+/home/nairobi/node_modules/sleep/build/Makefile
+/home/nairobi/node_modules/sleep/build/Release
+/home/nairobi/node_modules/sleep/build/Release/.deps
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/node_sleep.node.d
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target/node_sleep.node.d
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target/node_sleep
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target/node_sleep/sleep_win.o.d
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target/node_sleep/sleep_posix.o.d
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target/node_sleep/module_init.o.d
+/home/nairobi/node_modules/sleep/build/Release/.deps/Release/obj.target/node_sleep/sleep_cpp11.o.d
+/home/nairobi/node_modules/sleep/build/Release/obj.target
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/tmp/linpeas.sh
+/tmp/lse.sh
+/tmp/memcached-stdout---supervisor-O9RdE7.log
+/tmp/memcached-stderr---supervisor-4cYAfv.log
+/var/log/messages
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate Not Found
+Writable folder: /tmp/memcached-stdout---supervisor-O9RdE7.log
+Writable folder: /tmp/memcached-stderr---supervisor-4cYAfv.log
+
+[+] Files inside /home/professor (limit 20)
+total 28
+drwxr-sr-x    4 professo professo      4096 Nov  5 16:54 .
+drwxr-xr-x    7 root     root          4096 Feb 16  2019 ..
+lrwxrwxrwx    1 root     professo         9 Nov  6  2018 .ash_history -> /dev/null
+-rw-------    1 professo professo        17 Nov  5 16:54 .bash_history
+drwx------    2 professo professo      4096 Jan 31  2019 .ssh
+-rw-r--r--    1 root     root            88 Jan 29  2019 memcached.ini
+-rw-r-----    1 root     nobody         434 Jan 29  2019 memcached.js
+drwxr-sr-x    9 root     professo      4096 Jan 29  2019 node_modules
+
+[+] Files inside others home (limit 20)
+/home/berlin/node_modules/fresh/LICENSE
+/home/berlin/node_modules/fresh/index.js
+/home/berlin/node_modules/fresh/README.md
+/home/berlin/node_modules/fresh/package.json
+/home/berlin/node_modules/fresh/HISTORY.md
+/home/berlin/node_modules/accepts/LICENSE
+/home/berlin/node_modules/accepts/index.js
+/home/berlin/node_modules/accepts/README.md
+/home/berlin/node_modules/accepts/package.json
+/home/berlin/node_modules/accepts/HISTORY.md
+/home/berlin/node_modules/finalhandler/LICENSE
+/home/berlin/node_modules/finalhandler/index.js
+/home/berlin/node_modules/finalhandler/README.md
+/home/berlin/node_modules/finalhandler/package.json
+/home/berlin/node_modules/finalhandler/HISTORY.md
+/home/berlin/node_modules/ms/license.md
+/home/berlin/node_modules/ms/index.js
+/home/berlin/node_modules/ms/readme.md
+/home/berlin/node_modules/ms/package.json
+/home/berlin/node_modules/destroy/LICENSE
+
+[+] Searching installed mail applications
+sendmail
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r--    1 root     root          7138 Oct 26  1985 /usr/lib/node_modules/npm/node_modules/form-data/README.md.bak
+-rw-r--r--    1 root     root           398 Oct 26  2018 /boot/extlinux.conf.old
+-rw-r--r--    1 root     root          7664 Oct 23  2018 /lib/modules/4.14.78-0-virt/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r--    1 root     root          7138 Feb 13  2018 /home/nairobi/node_modules/form-data/README.md.bak
+-rw-r--r--    1 root     root           155 Oct 26  2018 /etc/fstab.old
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+sh: /home/berlin/.ash_history: unknown operand
+lrwxrwxrwx    1 root     dali             9 Nov  6  2018 /home/dali/.ash_history -> /dev/null
+Searching possible passwords inside /home/dali/.ash_history (limit 100)
+
+lrwxrwxrwx    1 root     professo         9 Nov  6  2018 /home/professor/.ash_history -> /dev/null
+Searching possible passwords inside /home/professor/.ash_history (limit 100)
+
+-rw-------    1 professo professo        17 Nov  5 16:54 /home/professor/.bash_history
+Searching possible passwords inside /home/professor/.bash_history (limit 100)
+
+drwxr-xr-x    8 root     root          4096 Jan 21  2019 /usr/local/src/vsftpd-2.3.4-infected/.git
+-rw-r--r--    1 root     root           297 Jan 21  2019 /usr/local/src/vsftpd-2.3.4-infected/.git/config
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+./linpeas.sh: line 2517: f: not found
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt23168
+/dev/shm
+/home/berlin/downloads
+/home/berlin/downloads/SEASON-1
+/home/berlin/downloads/SEASON-1/Donwload a video
+/home/berlin/downloads/SEASON-2
+/home/berlin/downloads/SEASON-2/Donwload a video
+/home/berlin/downloads/Select a season
+/home/nairobi/static
+/home/nairobi/static/favicon.ico
+/home/oslo/Maildir
+/home/oslo/Maildir/.Sent
+/home/oslo/Maildir/.Sent/cur
+/home/oslo/Maildir/.Sent/new
+/home/oslo/Maildir/.Sent/tmp
+/home/oslo/Maildir/.Spam
+/home/oslo/Maildir/.Spam/cur
+/home/oslo/Maildir/.Spam/new
+/home/oslo/Maildir/.Spam/tmp
+/home/oslo/Maildir/cur
+/home/oslo/Maildir/new
+/home/oslo/Maildir/tmp
+/home/oslo/static
+/home/oslo/static/favicon.ico
+/home/professor
+/tmp
+/tmp/.ICE-unix
+/tmp/.X11-unix
+/tmp/linpeas.sh
+/tmp/lse.sh
+/var/tmp
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group professor:
+
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+
+[+] Finding passwords inside logs (limit 70)
+
+[+] Finding emails inside logs (limit 70)
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+
+[+] Finding possible password variables inside key folders (limit 70)
+
+[+] Finding possible password in config files
+ /etc/update-extlinux.conf
+password
+password using: mkpasswd
+password, you should make this file world-unreadable
+password is assigned, the menu entries can't be edited at boot
+password-protected
+PASSWD" in any custom entries you have in
+password=''
+ /etc/rc.conf
+passwd,
+
+[+] Finding 'username' string inside key folders (limit 70)
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+
+[+] Finding URIs with user:password@host inside key folders
