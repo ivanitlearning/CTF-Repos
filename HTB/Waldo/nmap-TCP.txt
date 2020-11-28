@@ -1,0 +1,141 @@
+root@Kali:~/HTB# nmap -Pn -n -sS -p- 10.10.10.87 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-21 13:56 +08
+Nmap scan report for 10.10.10.87
+Host is up (0.0073s latency).
+Not shown: 65532 closed ports
+PORT     STATE    SERVICE
+22/tcp   open     ssh
+80/tcp   open     http
+8888/tcp filtered sun-answerbook
+
+Nmap done: 1 IP address (1 host up) scanned in 13.72 seconds
+
+root@Kali:~/HTB# nmap -Pn -n -sV -p22,80,8888 --script=vuln,discovery 10.10.10.87 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-21 14:01 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.87
+Host is up (0.0075s latency).
+
+PORT     STATE    SERVICE        VERSION
+22/tcp   open     ssh            OpenSSH 7.5 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.5
+| ssh-hostkey:
+|   2048 c4:ff:81:aa:ac:df:66:9e:da:e1:c8:78:00:ab:32:9e (RSA)
+|   256 b3:e7:54:6a:16:bd:c9:29:1f:4a:8c:cd:4c:01:24:27 (ECDSA)
+|_  256 38:64:ac:57:56:44:d5:69:de:74:a8:88:dc:a0:b4:fd (ED25519)
+| ssh2-enum-algos:
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp   open     http           nginx 1.12.2
+|_http-chrono: Request times for /; avg: 901.77ms; min: 436.41ms; max: 1904.99ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.87
+|
+|     Path: http://10.10.10.87:80/
+|     Line number: 46
+|     Comment:
+|_        /* The rectangle in which to repeat.*/
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 21 Nov 2020 06:02:24 GMT; +2s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Server: nginx/1.12.2
+|   Date: Sat, 21 Nov 2020 06:02:22 GMT
+|   Content-Type: text/html
+|   Content-Length: 1656
+|   Last-Modified: Thu, 03 May 2018 20:48:36 GMT
+|   Connection: close
+|   ETag: "5aeb75a4-678"
+|   Accept-Ranges: bytes
+|
+|_  (Request type: HEAD)
+|_http-majordomo2-dir-traversal: ERROR: Script execution failed (use -d to debug)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: nginx/1.12.2
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       html: 1; js: 1; png: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    html: 1; js: 1; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+| http-title: List Manager
+|_Requested resource was /list.html
+|_http-trane-info: Problem with XML parsing of /evox/about
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Redirected To: /list.html
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_127 names had status 302
+| http-vuln-cve2010-0738:
+|_  /jmx-console/: Authentication was not required
+| http-vuln-cve2011-3192:
+|   VULNERABLE:
+|   Apache byterange filter DoS
+|     State: VULNERABLE
+|     IDs:  BID:49303  CVE:CVE-2011-3192
+|       The Apache web server is vulnerable to a denial of service attack when numerous
+|       overlapping byte ranges are requested.
+|     Disclosure date: 2011-08-19
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3192
+|       https://seclists.org/fulldisclosure/2011/Aug/175
+|       https://www.securityfocus.com/bid/49303
+|_      https://www.tenable.com/plugins/nessus/55976
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+| http-waf-detect: IDS/IPS/WAF detected:
+|_10.10.10.87:80/?p4yl04d3=<script>alert(document.cookie)</script>
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+8888/tcp filtered sun-answerbook
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.87"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       6396.20    1900.12  0.0%
+|_80    0       8392.50    4856.57  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 98.07 seconds
