@@ -1,3 +1,5 @@
+<!-- vim: syntax=Markdown -->
+
 # vhost config
 
 This is the default (non-HTTPS) vhost config
