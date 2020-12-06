@@ -6,9 +6,7 @@ linpeas tells us there's something listening on localhost:5000
 tcp        0      0 127.0.0.1:5000          0.0.0.0:*               LISTEN      -                   
 ```
 
-It's not much actually, just
-
-
+But if you read the [vhost config file](https://github.com/ivanitlearning/CTF-Repos/blob/master/HTB/Doctor/vhost_config.md) this is the webserver to which all Web requests to http://doctors.htb is directed.
 
 ```shell
 web@doctor /etc/apache2/sites-available $ curl http://127.0.0.1:5000
