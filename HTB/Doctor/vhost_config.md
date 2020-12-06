@@ -14,8 +14,7 @@ drwxr-xr-x 8 root root 4,0K Jul 20 22:32 ..
 
 000-default.conf
 
-```text
-web@doctor /etc/apache2/sites-available $ cat 000-default.conf
+```plaintext
 <VirtualHost *:80>
         # The ServerName directive sets the request scheme, hostname and port that
         # the server uses to identify itself. This is used when creating
@@ -51,7 +50,7 @@ web@doctor /etc/apache2/sites-available $ cat 000-default.conf
 
 Apache2Proxy.conf
 
-```text
+```plaintext
 <VirtualHost *:80>
         ServerName doctors.htb
         ServerAlias www.doctors.htb
@@ -77,7 +76,7 @@ Apache2Proxy.conf
 
 default-ssl.conf
 
-```text
+```plaintext
 <IfModule mod_ssl.c>
         <VirtualHost _default_:443>
                 ServerAdmin webmaster@localhost
