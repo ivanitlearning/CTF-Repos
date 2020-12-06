@@ -1,4 +1,6 @@
-# Virtual host file
+# Apache vhost config
+
+<!-- vim: syntax=Markdown -->
 
 Here's the list of vhost config files
 
