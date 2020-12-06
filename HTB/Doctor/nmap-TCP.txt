@@ -1,0 +1,748 @@
+root@Kali:~/HTB/Doctor# nmap -Pn -n -sS -p- 10.10.10.209 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-24 00:15 +08
+Nmap scan report for 10.10.10.209
+Host is up (0.0062s latency).
+Not shown: 65532 filtered ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+8089/tcp open  unknown
+
+root@Kali:~/HTB/Doctor# nmap -Pn -n -sV -p22,80,8089 --script=vuln,discovery 10.10.10.209 -e tun0
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-24 00:17 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.209
+Host is up (0.0046s latency).
+
+PORT     STATE SERVICE  VERSION
+22/tcp   open  ssh      OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.1
+| ssh2-enum-algos:
+|   kex_algorithms: (9)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp   open  http     Apache httpd 2.4.41 ((Ubuntu))
+|_http-chrono: Request times for /; avg: 421.50ms; min: 328.92ms; max: 556.69ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.209
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 257
+|     Comment:
+|          // should be more efficient than using $window.scroll(scroller) and $window.resize(resizer):
+|
+|     Path: http://10.10.10.209:80/js/main.js
+|     Line number: 323
+|     Comment:
+|          // filter items on button click
+|
+|     Path: http://10.10.10.209:80/css/bootstrap.min.css
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * Bootstrap v4.3.1 (https://getbootstrap.com/)
+|          * Copyright 2011-2019 The Bootstrap Authors
+|          * Copyright 2011-2019 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|
+|     Path: http://10.10.10.209:80/departments.html
+|     Line number: 103
+|     Comment:
+|         <!-- MAIN -->
+|
+|     Path: http://10.10.10.209:80/css/aos.css
+|     Line number: 2
+|     Comment:
+|         /*# sourceMappingURL=aos.css.map*/
+|
+|     Path: http://10.10.10.209:80/js/owl.carousel.min.js
+|     Line number: 1
+|     Comment:
+|         /**
+|          * Owl Carousel v2.2.1
+|          * Copyright 2013-2017 David Deutsch
+|          * Licensed under  ()
+|          */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 98
+|     Comment:
+|         /* removes extra width in IE */
+|
+|     Path: http://10.10.10.209:80/js/jquery.countdown.min.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * The Final Countdown for jQuery v2.2.0 (http://hilios.github.io/jQuery.countdown/)
+|          * Copyright (c) 2016 Edson Hilios
+|          *
+|          * Permission is hereby granted, free of charge, to any person obtaining a copy of
+|          * this software and associated documentation files (the "Software"), to deal in
+|          * the Software without restriction, including without limitation the rights to
+|          * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+|          * the Software, and to permit persons to whom the Software is furnished to do so,
+|          * subject to the following conditions:
+|          *
+|          * The above copyright notice and this permission notice shall be included in all
+|          * copies or substantial portions of the Software.
+|          *
+|          * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+|          * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+|          * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+|          * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+|          * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+|          * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+|          */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 8
+|     Comment:
+|
+|         // Website: http://stickyjs.com/
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 51
+|     Comment:
+|         /* support: IE8 */
+|
+|     Path: http://10.10.10.209:80/js/main.js
+|     Line number: 309
+|     Comment:
+|         /* activate jquery isotope */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 18
+|     Comment:
+|          // Node/CommonJS
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 2
+|     Comment:
+|
+|         // =============
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 260
+|     Comment:
+|         /* Component containers
+|         ----------------------------------*/
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 15
+|     Comment:
+|          // AMD. Register as an anonymous module.
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 7
+|     Comment:
+|         /* Layout helpers
+|         ----------------------------------*/
+|
+|     Path: http://10.10.10.209:80/js/jquery.easing.1.3.js
+|     Line number: 1
+|     Comment:
+|         /*
+|          * jQuery Easing v1.3 - http://gsgd.co.uk/sandbox/jquery/easing/
+|          *
+|          * Uses the built in easing capabilities added In jQuery 1.1
+|          * to offer multiple easing options
+|          *
+|          * TERMS OF USE - jQuery Easing
+|          *
+|          * Open source under the BSD License.
+|          *
+|          * Copyright \xC3\x83\xE2\x80\x9A\xC3\x82\xC2\xA9 2008 George McGinley Smith
+|          * All rights reserved.
+|          *
+|          * Redistribution and use in source and binary forms, with or without modification,
+|          * are permitted provided that the following conditions are met:
+|          *
+|          * Redistributions of source code must retain the above copyright notice, this list of
+|          * conditions and the following disclaimer.
+|          * Redistributions in binary form must reproduce the above copyright notice, this list
+|          * of conditions and the following disclaimer in the documentation and/or other materials
+|          * provided with the distribution.
+|          *
+|          * Neither the name of the author nor the names of contributors may be used to endorse
+|          * or promote products derived from this software without specific prior written permission.
+|          *
+|          * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+|          * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+|          * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+|          *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+|          *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+|          *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+|          * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+|          *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+|          * OF THE POSSIBILITY OF SUCH DAMAGE.
+|          *
+|         */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 69
+|     Comment:
+|         /* states and images */
+|
+|     Path: http://10.10.10.209:80/js/jquery.fancybox.min.js
+|     Line number: 3
+|     Comment:
+|
+|         //
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 152
+|     Comment:
+|         /* button icon element(s) */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 6
+|     Comment:
+|
+|         // Created: 02/14/2011
+|
+|     Path: http://10.10.10.209:80/js/jquery.fancybox.min.js
+|     Line number: 2
+|     Comment:
+|
+|         // fancyBox v3.5.6
+|
+|     Path: http://10.10.10.209:80/departments.html
+|     Line number: 473
+|     Comment:
+|         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 571
+|     Comment:
+|         /* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 215
+|     Comment:
+|         /* support: IE8 - See #6727 */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 397
+|     Comment:
+|         /* support: IE8 - See #6059 */
+|
+|     Path: http://10.10.10.209:80/js/jquery.fancybox.min.js
+|     Line number: 8
+|     Comment:
+|
+|         // Copyright 2018 fancyApps
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 293
+|     Comment:
+|         /* Interaction states
+|         ----------------------------------*/
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 433
+|     Comment:
+|         /* positioning */
+|
+|     Path: http://10.10.10.209:80/fonts/icomoon/style.css
+|     Line number: 13
+|     Comment:
+|         /* use !important to prevent issues with browser extensions that change fonts */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 187
+|     Comment:
+|         /* reset extra padding in Firefox, see h5bp.com/l */
+|
+|     Path: http://10.10.10.209:80/js/jquery.fancybox.min.js
+|     Line number: 4
+|     Comment:
+|
+|         // Licensed GPLv3 for open source use
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 4
+|     Comment:
+|
+|         // Improvements by German M. Bravo (Kronuz) and Ruud Kamphuis (ruudk)
+|
+|     Path: http://10.10.10.209:80/js/bootstrap.min.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|           * Bootstrap v4.3.1 (https://getbootstrap.com/)
+|           * Copyright 2011-2019 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+|           * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|           */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 116
+|     Comment:
+|          // Check if sticky has reached end of container and stop sticking
+|
+|     Path: http://10.10.10.209:80/js/isotope.pkgd.min.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * Isotope PACKAGED v3.0.6
+|          *
+|          * Licensed GPLv3 for open source use
+|          * or Isotope Commercial License for commercial use
+|          *
+|          * https://isotope.metafizzy.co
+|          * Copyright 2010-2018 Metafizzy
+|          */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 186
+|     Comment:
+|         /* workarounds */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 177
+|     Comment:
+|         /* button sets */
+|
+|     Path: http://10.10.10.209:80/css/bootstrap.min.css
+|     Line number: 8135
+|     Comment:
+|         /*# sourceMappingURL=bootstrap.min.css.map */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 615
+|     Comment:
+|         /* Corner radius */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 21
+|     Comment:
+|          // Browser globals
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 59
+|     Comment:
+|         /* Interaction Cues
+|         ----------------------------------*/
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 122
+|     Comment:
+|         /* button text element */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 25
+|     Comment:
+|          // save ref to original slice()
+|
+|     Path: http://10.10.10.209:80/js/jquery.fancybox.min.js
+|     Line number: 10
+|     Comment:
+|
+|         // ==================================================
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 78
+|     Comment:
+|         /* Misc visuals
+|         ----------------------------------*/
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 111
+|     Comment:
+|         /* button elements seem to need a little more width */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 107
+|     Comment:
+|         /* to make room for the icon, a width needs to be set here */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 81
+|     Comment:
+|         /* Overlays */
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 147
+|     Comment:
+|         /* no icon support for input elements, provide padding by default */
+|
+|     Path: http://10.10.10.209:80/departments.html
+|     Line number: 484
+|     Comment:
+|         <!-- .site-wrap -->
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 1
+|     Comment:
+|         /*! jQuery UI - v1.11.4 - 2015-12-03
+|         * http://jqueryui.com
+|         * Includes: core.css, button.css, slider.css, theme.css
+|         * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande%2CLucida%20Sans%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=5px&bgColorHeader=5c9ccc&bgTextureHeader=gloss_wave&bgImgOpacityHeader=55&borderColorHeader=4297d7&fcHeader=ffffff&iconColorHeader=d8e7f3&bgColorContent=fcfdfd&bgTextureContent=inset_hard&bgImgOpacityContent=100&borderColorContent=a6c9e2&fcContent=222222&iconColorContent=469bdd&bgColorDefault=dfeffc&bgTextureDefault=glass&bgImgOpacityDefault=85&borderColorDefault=c5dbec&fcDefault=2e6e9e&iconColorDefault=6da8d5&bgColorHover=d0e5f5&bgTextureHover=glass&bgImgOpacityHover=75&borderColorHover=79b7e7&fcHover=1d5987&iconColorHover=217bc0&bgColorActive=f5f8f9&bgTextureActive=inset_hard&bgImgOpacityActive=100&borderColorActive=79b7e7&fcActive=e17009&iconColorActive=f9bd01&bgColorHighlight=fbec88&bgTextureHighlight=flat&bgImgOpacityHighlight=55&borderColorHighlight=fad42e&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=glass&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=flat&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=flat&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
+|         * Copyright jQuery Foundation and other contributors; Licensed MIT */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 10
+|     Comment:
+|
+|         //              It will only set the 'top' and 'position' of your element, you
+|
+|     Path: http://10.10.10.209:80/fonts/icomoon/style.css
+|     Line number: 22
+|     Comment:
+|         /* Better Font Rendering =========== */
+|
+|     Path: http://10.10.10.209:80/js/jquery.easing.1.3.js
+|     Line number: 38
+|     Comment:
+|
+|         // t: current time, b: begInnIng value, c: change In value, d: duration
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 42
+|     Comment:
+|         /* support: IE7 */
+|
+|     Path: http://10.10.10.209:80/js/jquery.easing.1.3.js
+|     Line number: 174
+|     Comment:
+|         /*
+|          *
+|          * TERMS OF USE - EASING EQUATIONS
+|          *
+|          * Open source under the BSD License.
+|          *
+|          * Copyright \xC3\x83\xE2\x80\x9A\xC3\x82\xC2\xA9 2001 Robert Penner
+|          * All rights reserved.
+|          *
+|          * Redistribution and use in source and binary forms, with or without modification,
+|          * are permitted provided that the following conditions are met:
+|          *
+|          * Redistributions of source code must retain the above copyright notice, this list of
+|          * conditions and the following disclaimer.
+|          * Redistributions in binary form must reproduce the above copyright notice, this list
+|          * of conditions and the following disclaimer in the documentation and/or other materials
+|          * provided with the distribution.
+|          *
+|          * Neither the name of the author nor the names of contributors may be used to endorse
+|          * or promote products derived from this software without specific prior written permission.
+|          *
+|          * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+|          * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+|          * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+|          *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+|          *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+|          *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+|          * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+|          *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+|          * OF THE POSSIBILITY OF SUCH DAMAGE.
+|          *
+|          */
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 54
+|     Comment:
+|          //update height in case of dynamic content
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 35
+|     Comment:
+|          // works only when .getWidthFrom is empty
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 106
+|     Comment:
+|          // just reached bottom || just started to stick but bottom is already reached
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 101
+|     Comment:
+|          // sticky is started but it have to be repositioned
+|
+|     Path: http://10.10.10.209:80/js/jquery.sticky.js
+|     Line number: 109
+|     Comment:
+|          // sticky is started && sticked at topSpacing && overflowing from top just finished
+|
+|     Path: http://10.10.10.209:80/css/jquery-ui.css
+|     Line number: 66
+|     Comment:
+|         /* Icons
+|_        ----------------------------------*/
+| http-csrf:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.209
+|   Found the following possible CSRF vulnerabilities:
+|
+|     Path: http://10.10.10.209:80/
+|     Form id: footer-subscribe
+|     Form action: #
+|
+|     Path: http://10.10.10.209:80/services.html
+|     Form id: footer-subscribe
+|     Form action: #
+|
+|     Path: http://10.10.10.209:80/about.html
+|     Form id: footer-subscribe
+|     Form action: #
+|
+|     Path: http://10.10.10.209:80/index.html
+|     Form id: footer-subscribe
+|     Form action: #
+|
+|     Path: http://10.10.10.209:80/departments.html
+|     Form id: footer-subscribe
+|_    Form action: #
+|_http-date: Mon, 23 Nov 2020 16:18:12 GMT; +1s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /css/: Potentially interesting directory w/ listing on 'apache/2.4.41 (ubuntu)'
+|   /images/: Potentially interesting directory w/ listing on 'apache/2.4.41 (ubuntu)'
+|_  /js/: Potentially interesting directory w/ listing on 'apache/2.4.41 (ubuntu)'
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep:
+|   (1) http://10.10.10.209:80/:
+|     (1) email:
+|_      + info@doctors.htb
+| http-headers:
+|   Date: Mon, 23 Nov 2020 16:18:50 GMT
+|   Server: Apache/2.4.41 (Ubuntu)
+|   Last-Modified: Sat, 19 Sep 2020 16:59:55 GMT
+|   ETag: "4d88-5afad8bea6589"
+|   Accept-Ranges: bytes
+|   Content-Length: 19848
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1; html: 3
+|     /images/
+|       jpg: 2; png: 1
+|     /js/
+|       js: 6
+|   Longest directory structure:
+|     Depth: 1
+|     Dir: /js/
+|   Total files found (by extension):
+|_    Other: 1; html: 3; jpg: 2; js: 6; png: 1
+| http-sql-injection:
+|   Possible sqli for queries:
+|_    http://10.10.10.209:80/js/this%5bt%5d.src,%22youtube%22===t?window.onYouTubeIframeAPIReady=function%28%29%7bn%5bt%5d.loaded%3d%210%2cn.done%28t%29%7d%3ae.onload%3dfunction%28%29%7bn%5bt%5d.loaded%3d%210%2cn.done%28t%29%7d%2cdocument.body.appendChild%28e%29%29%7d%2cdone%3afunction%28e%29%7bvar%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Doctor
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+8089/tcp open  ssl/http Splunkd httpd
+| http-auth-finder:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.209
+|   url                                                           method
+|   https://10.10.10.209:8089/servicesNS                          HTTP: Basic
+|   https://10.10.10.209:8089/services                            HTTP: Basic
+|_  https://10.10.10.209:8089/services/auth/user/%7batom:name%7d  HTTP: Basic
+|_http-chrono: Request times for /; avg: 153.01ms; min: 150.02ms; max: 156.06ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.209
+|
+|     Path: https://10.10.10.209:8089/static/atom.xsl
+|     Line number: 2
+|     Comment:
+|         <!--  -->
+|
+|     Path: https://10.10.10.209:8089/
+|     Line number: 2
+|     Comment:
+|_        <!--This is to override browser formatting; see server.conf[httpServer] to disable. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
+| http-csrf:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.209
+|   Found the following possible CSRF vulnerabilities:
+|
+|     Path: https://10.10.10.209:8089/static/atom.xsl
+|     Form id: controlpoint{position()}
+|_    Form action: {@href}
+|_http-date: Mon, 23 Nov 2020 16:18:12 GMT; -29s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /robots.txt: Robots file
+|_  /services/: Potentially interesting folder (401 Unauthorized)
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.209
+|   Found the following error pages:
+|
+|   Error Code: 401
+|       https://10.10.10.209:8089/servicesNS
+|
+|   Error Code: 401
+|       https://10.10.10.209:8089/services/auth/user/%7batom:name%7d
+|
+|   Error Code: 401
+|       https://10.10.10.209:8089/services
+|
+|   Error Code: 404
+|       https://10.10.10.209:8089/static/%7b@href%7d
+|
+|   Error Code: 404
+|       https://10.10.10.209:8089/static
+|
+|   Error Code: 404
+|       https://10.10.10.209:8089/rpc
+|
+|   Error Code: 404
+|_      https://10.10.10.209:8089/static/%7batom:link%5b@rel=
+| http-feed:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.209
+|   Found the following feeds:
+|_    Atom (version 8.0.5): https://10.10.10.209:8089/
+| http-grep:
+|   (1) https://10.10.10.209:8089/:
+|     (1) ip:
+|_      + 10.10.10.209
+| http-headers:
+|   Date: Mon, 23 Nov 2020 16:18:51 GMT
+|   Content-Type: text/xml; charset=UTF-8
+|   X-Content-Type-Options: nosniff
+|   Content-Length: 2178
+|   Connection: Close
+|   X-Frame-Options: SAMEORIGIN
+|   Server: Splunkd
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-robots.txt: 1 disallowed entry
+|_/
+| http-security-headers:
+|   Strict_Transport_Security:
+|     HSTS not configured in HTTPS Server
+|   X_Frame_Options:
+|     Header: X-Frame-Options: SAMEORIGIN
+|     Description: The browser must not display this content in any frame from a page of different origin than the content itself.
+|   X_Content_Type_Options:
+|     Header: X-Content-Type-Options: nosniff
+|_    Description: Will prevent the browser from MIME-sniffing a response away from the declared content-type.
+|_http-server-header: Splunkd
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /static/
+|       xsl: 1
+|   Longest directory structure:
+|     Depth: 1
+|     Dir: /static/
+|   Total files found (by extension):
+|_    Other: 1; xsl: 1
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_      http://ha.ckers.org/slowloris/
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: splunkd
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_127 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+| ssl-cert: Subject: commonName=SplunkServerDefaultCert/organizationName=SplunkUser
+| Not valid before: 2020-09-06T15:57:27
+|_Not valid after:  2023-09-06T15:57:27
+| ssl-enum-ciphers:
+|   TLSv1.2:
+|     ciphers:
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|_  least strength: A
+|_sslv2-drown:
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.209"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       6073.10    764.21   0.0%
+| 80    0       6233.70    1011.47  0.0%
+|_8089  0       5653.20    956.19   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 440.61 seconds

