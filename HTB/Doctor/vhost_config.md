@@ -1,4 +1,4 @@
-# Apache vhost config file
+# Virtual host file
 
 Here's the list of vhost config files
 
