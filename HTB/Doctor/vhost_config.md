@@ -1,6 +1,6 @@
-# Apache vhost config
+# Apache vhost config file
 
-Her'es the list of vhost config files
+Here's the list of vhost config files
 
 ```shell
 web@doctor ~ $ ls -lah /etc/apache2/sites-available/
