@@ -101,4 +101,4 @@ drwxr-xr-x 4 root root 4.0K Nov 29 19:25 ..
 
 It turned to be a nonsensical wave file of a buzzing sound. The last file, D5100_EN.pdf was a digital camera manual.
 
-![95473879aa3d41f6b8d5762bb0c33f3f](.\Pics\95473879aa3d41f6b8d5762bb0c33f3f.png)
+![95473879aa3d41f6b8d5762bb0c33f3f](./Pics/95473879aa3d41f6b8d5762bb0c33f3f.png)
