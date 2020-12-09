@@ -1,5 +1,7 @@
 # Apache vhost config
 
+<!-- vim: syntax=Markdown -->
+
 Apache vhost config files
 
 ```shell
