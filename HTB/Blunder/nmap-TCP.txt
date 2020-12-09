@@ -1,0 +1,623 @@
+root@kali:~/CTF/HTB/Blunder# nmap -Pn -n -sS -p- 10.10.10.191 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-11-29 01:33 +08
+Nmap scan report for 10.10.10.191
+Host is up (0.0058s latency).
+Not shown: 65533 filtered ports
+PORT   STATE  SERVICE
+21/tcp closed ftp
+80/tcp open   http
+
+root@kali:~/CTF/HTB/Blunder# nmap -Pn -n -sV -p21,80 --script=vuln,discovery 10.10.10.191 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-11-29 01:36 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.191
+Host is up (0.013s latency).
+
+PORT   STATE  SERVICE VERSION
+21/tcp closed ftp
+80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-chrono: Request times for /; avg: 626.22ms; min: 494.18ms; max: 690.80ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.191
+|
+|     Path: http://10.10.10.191:80/bl-themes/blogx/css/style.css?version=3.9.2
+|     Line number: 87
+|     Comment:
+|         /* Footer */
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 55
+|     Comment:
+|         <!-- Content -->
+|
+|     Path: http://10.10.10.191:80/bl-kernel/js/bootstrap.bundle.min.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|           * Bootstrap v4.3.1 (https://getbootstrap.com/)
+|           * Copyright 2011-2019 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+|           * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|           */
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 64
+|     Comment:
+|         <!-- Load Plugins: Page Begin -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 66
+|     Comment:
+|         <!-- Cover image -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 74
+|     Comment:
+|         <!-- Creation date -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 59
+|     Comment:
+|         <!-- Blog Posts -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 84
+|     Comment:
+|         <!-- Load Plugins: Page End -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 43
+|     Comment:
+|         <!-- Static pages -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 31
+|     Comment:
+|         <!-- Navbar -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 11
+|     Comment:
+|         <!-- Dynamic description tag -->
+|
+|     Path: http://10.10.10.191:80/
+|     Line number: 78
+|     Comment:
+|         <!-- Breaked content -->
+|
+|     Path: http://10.10.10.191:80/bl-kernel/js/jquery.min.js
+|     Line number: 1
+|     Comment:
+|         /*! jQuery v3.4.1 | (c) JS Foundation and other contributors | jquery.org/license */
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 89
+|     Comment:
+|         <!-- Right Sidebar -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 103
+|     Comment:
+|         <!-- Javascript -->
+|
+|     Path: http://10.10.10.191:80/bl-themes/blogx/css/style.css?version=3.9.2
+|     Line number: 102
+|     Comment:
+|         /* Plugins */
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 48
+|     Comment:
+|         <!-- Social Networks -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 61
+|     Comment:
+|         <!-- Post -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 25
+|     Comment:
+|         <!-- Robots plugin -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 69
+|     Comment:
+|         <!-- Title -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 17
+|     Comment:
+|         <!-- Include Bootstrap CSS file bootstrap.css -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 77
+|     Comment:
+|         <!-- Full content -->
+|
+|     Path: http://10.10.10.191:80/
+|     Line number: 81
+|     Comment:
+|         <!-- "Read more" button -->
+|
+|     Path: http://10.10.10.191:80/bl-themes/blogx/css/style.css?version=3.9.2
+|     Line number: 76
+|     Comment:
+|         /* Navbar */
+|
+|     Path: http://10.10.10.191:80/bl-themes/blogx/css/style.css?version=3.9.2
+|     Line number: 9
+|     Comment:
+|         /* Margin bottom for footer height */
+|
+|     Path: http://10.10.10.191:80/bl-themes/blogx/css/style.css?version=3.9.2
+|     Line number: 7
+|     Comment:
+|         /* Padding top for navbar */
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 8
+|     Comment:
+|         <!-- Dynamic title tag -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 23
+|     Comment:
+|         <!-- Load Plugins: Site head -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 14
+|     Comment:
+|         <!-- Include Favicon -->
+|
+|     Path: http://10.10.10.191:80/bl-kernel/css/bootstrap.min.css?version=3.9.2
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * Bootstrap v4.3.1 (https://getbootstrap.com/)
+|          * Copyright 2011-2019 The Bootstrap Authors
+|          * Copyright 2011-2019 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 107
+|     Comment:
+|         <!-- Load Plugins: Site Body End -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 96
+|     Comment:
+|         <!-- Footer -->
+|
+|     Path: http://10.10.10.191:80/
+|     Line number: 146
+|     Comment:
+|         <!-- Pagination -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 29
+|     Comment:
+|         <!-- Load Plugins: Site Body Begin -->
+|
+|     Path: http://10.10.10.191:80/usb
+|     Line number: 20
+|     Comment:
+|_        <!-- Include CSS Styles from this theme -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 28 Nov 2020 17:37:13 GMT; -30m00s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /admin/: Possible admin folder
+|   /admin/admin/: Possible admin folder
+|   /admin/account.php: Possible admin folder
+|   /admin/index.php: Possible admin folder
+|   /admin/login.php: Possible admin folder
+|   /admin/admin.php: Possible admin folder
+|   /admin/index.html: Possible admin folder
+|   /admin/login.html: Possible admin folder
+|   /admin/admin.html: Possible admin folder
+|   /admin/home.php: Possible admin folder
+|   /admin/controlpanel.php: Possible admin folder
+|   /admin/account.html: Possible admin folder
+|   /admin/admin_login.html: Possible admin folder
+|   /admin/cp.php: Possible admin folder
+|   /admin/admin_login.php: Possible admin folder
+|   /admin/admin-login.php: Possible admin folder
+|   /admin/home.html: Possible admin folder
+|   /admin/admin-login.html: Possible admin folder
+|   /admin/adminLogin.html: Possible admin folder
+|   /admin/controlpanel.html: Possible admin folder
+|   /admin/cp.html: Possible admin folder
+|   /admin/adminLogin.php: Possible admin folder
+|   /admin/account.cfm: Possible admin folder
+|   /admin/index.cfm: Possible admin folder
+|   /admin/login.cfm: Possible admin folder
+|   /admin/admin.cfm: Possible admin folder
+|   /admin/admin_login.cfm: Possible admin folder
+|   /admin/controlpanel.cfm: Possible admin folder
+|   /admin/cp.cfm: Possible admin folder
+|   /admin/adminLogin.cfm: Possible admin folder
+|   /admin/admin-login.cfm: Possible admin folder
+|   /admin/home.cfm: Possible admin folder
+|   /admin/account.asp: Possible admin folder
+|   /admin/index.asp: Possible admin folder
+|   /admin/login.asp: Possible admin folder
+|   /admin/admin.asp: Possible admin folder
+|   /admin/home.asp: Possible admin folder
+|   /admin/controlpanel.asp: Possible admin folder
+|   /admin/admin-login.asp: Possible admin folder
+|   /admin/cp.asp: Possible admin folder
+|   /admin/admin_login.asp: Possible admin folder
+|   /admin/adminLogin.asp: Possible admin folder
+|   /admin/account.aspx: Possible admin folder
+|   /admin/index.aspx: Possible admin folder
+|   /admin/login.aspx: Possible admin folder
+|   /admin/admin.aspx: Possible admin folder
+|   /admin/home.aspx: Possible admin folder
+|   /admin/controlpanel.aspx: Possible admin folder
+|   /admin/admin-login.aspx: Possible admin folder
+|   /admin/cp.aspx: Possible admin folder
+|   /admin/admin_login.aspx: Possible admin folder
+|   /admin/adminLogin.aspx: Possible admin folder
+|   /admin/index.jsp: Possible admin folder
+|   /admin/login.jsp: Possible admin folder
+|   /admin/admin.jsp: Possible admin folder
+|   /admin/home.jsp: Possible admin folder
+|   /admin/controlpanel.jsp: Possible admin folder
+|   /admin/admin-login.jsp: Possible admin folder
+|   /admin/cp.jsp: Possible admin folder
+|   /admin/account.jsp: Possible admin folder
+|   /admin/admin_login.jsp: Possible admin folder
+|   /admin/adminLogin.jsp: Possible admin folder
+|   /admin/backup/: Possible backup
+|   /admin/download/backup.sql: Possible database backup
+|   /robots.txt: Robots file
+|   /admin/upload.php: Admin File Upload
+|   /admin/CiscoAdmin.jhtml: Cisco Collaboration Server
+|   /.gitignore: Revision control ignore file
+|   /admin/libraries/ajaxfilemanager/ajaxfilemanager.php: Log1 CMS
+|   /admin/view/javascript/fckeditor/editor/filemanager/connectors/test.html: OpenCart/FCKeditor File upload
+|   /admin/includes/tiny_mce/plugins/tinybrowser/upload.php: CompactCMS or B-Hind CMS/FCKeditor File upload
+|   /admin/includes/FCKeditor/editor/filemanager/upload/test.html: ASP Simple Blog / FCKeditor File Upload
+|   /admin/jscript/upload.php: Lizard Cart/Remote File upload
+|   /admin/jscript/upload.html: Lizard Cart/Remote File upload
+|   /admin/jscript/upload.pl: Lizard Cart/Remote File upload
+|   /admin/jscript/upload.asp: Lizard Cart/Remote File upload
+|_  /admin/environment.xml: Moodle files
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.191
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.191:80/bl-kernel/js/r.href,v.crossDomain=Ft.protocol+%22/%22+Ft.host!=r.protocol+%22/%22+r.host%7dcatch(e)%7bv.crossDomain=!0%7d%7dif(v.data&&v.processData&&%22string%22!=typeof
+|_http-feed: Couldn't find any feeds.
+| http-fileupload-exploiter:
+|
+|     Couldn't find a file-type field.
+|
+|     Couldn't find a file-type field.
+|
+|     Couldn't find a file-type field.
+|
+|_    Couldn't find a file-type field.
+|_http-generator: Blunder
+| http-grep:
+|   (1) http://10.10.10.191:80/:
+|     (1) ip:
+|_      + 10.10.10.191
+| http-headers:
+|   Date: Sat, 28 Nov 2020 17:37:12 GMT
+|   Server: Apache/2.4.41 (Ubuntu)
+|   X-Powered-By: Bludit
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 5
+|     /bl-kernel/
+|       Other: 1
+|     /bl-kernel/css/
+|       css: 1
+|     /bl-kernel/js/
+|       Other: 1; js: 2; php: 1
+|     /bl-themes/blogx/css/
+|       css: 1
+|     /bl-themes/blogx/img/
+|       png: 1
+|     /icons/
+|       gif: 3
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /bl-themes/blogx/css/
+|   Total files found (by extension):
+|_    Other: 7; css: 2; gif: 3; js: 2; php: 1; png: 1
+| http-sql-injection:
+|   Possible sqli for queries:
+|     http://10.10.10.191:80/bl-kernel/js/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.191:80/bl-kernel/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|_    http://10.10.10.191:80/bl-kernel/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Blunder | A blunder of interesting facts
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+| http-wordpress-enum:
+| Search limited to top 100 themes/plugins
+|   themes
+|     twentyeleven
+|     twentytwelve
+|     twentyten
+|     twentythirteen
+|     twentyfourteen
+|     twentyfifteen
+|     responsive
+|     customizr
+|     zerif-lite
+|     virtue
+|     storefront
+|     atahualpa
+|     twentysixteen
+|     vantage
+|     hueman
+|     spacious
+|     evolve
+|     colorway
+|     graphene
+|     sydney
+|     ifeature
+|     mh-magazine-lite
+|     generatepress
+|     mantra
+|     omega
+|     onetone
+|     coraline
+|     pinboard
+|     thematic
+|     sparkling
+|     catch-box
+|     make
+|     colormag
+|     enigma
+|     custom-community
+|     mystique
+|     alexandria
+|     delicate
+|     lightword
+|     attitude
+|     inove
+|     magazine-basic
+|     raindrops
+|     minamaze
+|     zbench
+|     point
+|     eclipse
+|     portfolio-press
+|     twentyseventeen
+|     travelify
+|     swift-basic
+|     iconic-one
+|     arcade-basic
+|     bouquet
+|     pixel
+|     sliding-door
+|     pilcrow
+|     simple-catch
+|     tempera
+|     destro
+|     p2
+|     sunspot
+|     sundance
+|     dusk-to-dawn
+|     onepress
+|     moesia
+|     dynamic-news-lite
+|     parabola
+|     parament
+|     dazzling
+|     accesspress-lite
+|     optimizer
+|     one-page
+|     chaostheory
+|     business-lite
+|     duster
+|     constructor
+|     nirvana
+|     sixteen
+|     esquire
+|     beach
+|     next-saturday
+|     flat
+|     hatch
+|     minimatica
+|     radiate
+|     accelerate
+|     oxygen
+|     accesspress-parallax
+|     swift
+|     spun
+|     wp-creativix
+|     suevafree
+|     hemingway
+|     pink-touch-2
+|     motion
+|     fruitful
+|     steira
+|     news
+|     llorix-one-lite
+|   plugins
+|     akismet
+|     contact-form-7
+|     wordpress-seo
+|     jetpack
+|     all-in-one-seo-pack
+|     wordfence
+|     woocommerce
+|     google-sitemap-generator
+|     wordpress-importer
+|     nextgen-gallery
+|     google-analytics-for-wordpress
+|     wp-super-cache
+|     tinymce-advanced
+|     wptouch
+|     better-wp-security
+|     siteorigin-panels
+|     updraftplus
+|     w3-total-cache
+|     google-analytics-dashboard-for-wp
+|     wp-pagenavi
+|     si-contact-form
+|     advanced-custom-fields
+|     mailchimp-for-wp
+|     the-events-calendar
+|     add-to-any
+|     duplicator
+|     wysija-newsletters
+|     ninja-forms
+|     wp-smushit
+|     buddypress
+|     ewww-image-optimizer
+|     so-widgets-bundle
+|     really-simple-captcha
+|     ml-slider
+|     black-studio-tinymce-widget
+|     photo-gallery
+|     broken-link-checker
+|     regenerate-thumbnails
+|     google-analyticator
+|     redirection
+|     captcha
+|     duplicate-post
+|     breadcrumb-navxt
+|     backwpup
+|     user-role-editor
+|     yet-another-related-posts-plugin
+|     contact-form-plugin
+|     newsletter
+|     bbpress
+|     all-in-one-wp-security-and-firewall
+|     disable-comments
+|     social-networks-auto-poster-facebook-twitter-g
+|     wp-optimize
+|     addthis
+|     wp-statistics
+|     wp-e-commerce
+|     all-in-one-wp-migration
+|     backupwordpress
+|     si-captcha-for-wordpress
+|     wp-slimstat
+|     wp-google-maps
+|     wp-spamshield
+|     wp-maintenance-mode
+|     googleanalytics
+|     worker
+|     yith-woocommerce-wishlist
+|     wp-multibyte-patch
+|     wp-to-twitter
+|     image-widget
+|     wp-db-backup
+|     shortcodes-ultimate
+|     ultimate-tinymce
+|     share-this
+|     disqus-comment-system
+|     gallery-bank
+|     types
+|     wp-polls
+|     custom-post-type-ui
+|     shareaholic
+|     polylang
+|     post-types-order
+|     gtranslate
+|     bulletproof-security
+|     wp-fastest-cache
+|     facebook
+|     sociable
+|     iwp-client
+|     nextgen-facebook
+|     seo-ultimate
+|     wp-postviews
+|     formidable
+|     squirrly-seo
+|     wp-mail-smtp
+|     tablepress
+|     redux-framework
+|     page-links-to
+|     youtube-embed-plus
+|     contact-bank
+|     maintenance
+|_    wp-retina-2x
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.191"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 21    0       5644.40    3315.96  0.0%
+|_80    0       6823.10    4416.89  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 110.87 seconds
