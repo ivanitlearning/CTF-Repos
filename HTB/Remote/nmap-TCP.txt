@@ -1,0 +1,593 @@
+root@kali:~/CTF/HTB/Remote# nmap -Pn -n -sS -p- 10.10.10.180 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-03 21:56 +08
+Nmap scan report for 10.10.10.180
+Host is up (0.0066s latency).
+Not shown: 65519 closed ports
+PORT      STATE SERVICE
+21/tcp    open  ftp
+80/tcp    open  http
+111/tcp   open  rpcbind
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+2049/tcp  open  nfs
+5985/tcp  open  wsman
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49678/tcp open  unknown
+49679/tcp open  unknown
+49680/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 9.74 seconds
+
+root@kali:~/CTF/HTB/Remote# nmap -Pn -n -sV -p21,80,111,135,139,445,2049,5985,47001,49664-49667,49678-49680 --script=vuln,discovery 10.10.10.    180 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-03 22:01 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.180
+Host is up (0.0099s latency).
+
+PORT      STATE SERVICE       VERSION
+21/tcp    open  ftp           Microsoft ftpd
+|_banner: 220 Microsoft FTP Service
+| ftp-syst:
+|_  SYST: Windows_NT
+|_sslv2-drown:
+80/tcp    open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 292.59ms; min: 166.37ms; max: 369.68ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.180
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 234
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 482
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 498
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 47
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/blog/this-will-be-great/
+|     Line number: 120
+|     Comment:
+|         <!-- todo: implement discus comments -->
+|
+|     Path: http://10.10.10.180:80/people/
+|     Line number: 72
+|     Comment:
+|         <!--
+|                 <nav class="nav-bar nav-bar--center nav-bar--air-bottom">
+|                     <a class="nav-link nav-link--black nav-link--active" href="">All</a>
+|                     <a class="nav-link nav-link--black" href="">Marketing</a>
+|                     <a class="nav-link nav-link--black" href="">Package People</a>
+|                     <a class="nav-link nav-link--black" href="">Designers</a>
+|                     <a class="nav-link nav-link--black" href="">Other</a>
+|                 </nav>
+|                 -->
+|
+|     Path: http://10.10.10.180:80/contact/
+|     Line number: 97
+|     Comment:
+|         <!-- When Umbraco Forms is installed, uncomment this line -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 316
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/blog/?page=2
+|     Line number: 77
+|     Comment:
+|         <!-- TODO: Add links to categories-->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 155
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/people/
+|     Line number: 71
+|     Comment:
+|         <!-- todo: implement department filter -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 472
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/products/
+|     Line number: 71
+|     Comment:
+|         <!-- todo: implement category selector -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 372
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 35
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 487
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 53
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/products/biker-jacket/
+|     Line number: 103
+|     Comment:
+|         <!-- todo: Check if grid is empty via a property value converter -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 388
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 130
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/umbraco/
+|     Line number: 21
+|     Comment:
+|         <!-- help dialog controller by the help button - this also forces the backoffice UI to shift 400px  -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 492
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 491
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 356
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 464
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 486
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 481
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 476
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/products/biker-jacket/
+|     Line number: 22
+|     Comment:
+|         <!-- uncomment this line if you don't want it to appear in the top navigation -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 29
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/products/
+|     Line number: 72
+|     Comment:
+|         <!--
+|                     <nav class="nav-bar nav-bar--center nav-bar--air-bottom">
+|                         <a class="nav-link nav-link--black nav-link--active" href="">All</a>
+|                         <a class="nav-link nav-link--black" href="">Clothing</a>
+|                         <a class="nav-link nav-link--black" href="">Instruments</a>
+|                         <a class="nav-link nav-link--black" href="">Accessories</a>
+|                         <a class="nav-link nav-link--black" href="">Other</a>
+|                     </nav>
+|                 -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 391
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 78
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 381
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 475
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 471
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/products/biker-jacket/
+|     Line number: 61
+|     Comment:
+|         <!-- for the section we want to show the shop header -->
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 365
+|     Comment:
+|
+|
+|     Path: http://10.10.10.180:80/App_Plugins/Terratype.GoogleMapsV3/scripts/Terratype.GoogleMapsV3.Renderer.js?cache=1.0.13
+|     Line number: 131
+|     Comment:
+|_
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 03 Dec 2020 14:02:44 GMT; -30m02s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /blog/: Blog
+|   /home.aspx: Possible admin folder
+|   /contact/: Potentially interesting folder
+|   /home/: Potentially interesting folder
+|_  /intranet/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Cache-Control: private
+|   Content-Length: 6693
+|   Content-Type: text/html; charset=utf-8
+|   Date: Thu, 03 Dec 2020 14:02:44 GMT
+|   Connection: close
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+| http-referer-checker:
+| Spidering limited to: maxpagecount=30
+|   https://ajax.aspnetcdn.com:443/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js
+|   https://maps.googleapis.com:443/maps/api/js?v=3&amp;libraries=places&amp;callback=TerratypeGoogleMapsV3CallbackRender&amp;key=AIzaSyBSjIm2tkaskXtivVDbvlXcWkP6JDCoqA4
+|   https://code.jquery.com:443/jquery-3.1.0.min.js
+|_  https://ajax.aspnetcdn.com:443/ajax/jquery.validate/1.13.1/jquery.validate.min.js
+| http-security-headers:
+|   Cache_Control:
+|_    Header: Cache-Control: private
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /App_Plugins/Terratype.GoogleMapsV3/scripts/
+|       js: 2
+|     /about-us/
+|       Other: 1
+|     /about-us/about-this-starter-kit/
+|       Other: 1
+|     /about-us/todo-list-for-the-starter-kit/
+|       Other: 1
+|     /blog/
+|       Other: 1
+|     /blog/another-one/
+|       Other: 1
+|     /blog/my-blog-post/
+|       Other: 1
+|     /blog/this-will-be-great/
+|       Other: 1
+|     /contact/
+|       Other: 1
+|     /css/
+|       css: 1
+|     /intranet/
+|       Other: 1
+|     /media/1001/
+|       jpg: 1
+|     /people/
+|       Other: 1
+|     /products/
+|       Other: 1
+|     /scripts/
+|       js: 1
+|     /umbraco/
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /App_Plugins/Terratype.GoogleMapsV3/scripts/
+|   Total files found (by extension):
+|_    Other: 13; css: 1; jpg: 1; js: 3
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Home - Acme Widgets
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+111/tcp   open  rpcbind       2-4 (RPC #100000)
+| nfs-ls: Volume /site_backups
+|   access: Read Lookup NoModify NoExtend NoDelete NoExecute
+| PERMISSION  UID         GID         SIZE   TIME                 FILENAME
+| rwx------   4294967294  4294967294  4096   2020-02-23T18:35:48  .
+| ??????????  ?           ?           ?      ?                    ..
+| rwx------   4294967294  4294967294  64     2020-02-20T17:16:39  App_Browsers
+| rwx------   4294967294  4294967294  4096   2020-02-20T17:17:19  App_Data
+| rwx------   4294967294  4294967294  4096   2020-02-20T17:16:40  App_Plugins
+| rwx------   4294967294  4294967294  8192   2020-02-20T17:16:42  Config
+| rwx------   4294967294  4294967294  64     2020-02-20T17:16:40  aspnet_client
+| rwx------   4294967294  4294967294  49152  2020-02-20T17:16:42  bin
+| rwx------   4294967294  4294967294  64     2020-02-20T17:16:42  css
+| rwx------   4294967294  4294967294  152    2018-11-01T17:06:44  default.aspx
+|_
+| nfs-showmount:
+|_  /site_backups
+| nfs-statfs:
+|   Filesystem     1K-blocks   Used        Available   Use%  Maxfilesize  Maxlink
+|_  /site_backups  31119356.0  12169352.0  18950004.0  40%   16.0T        1023
+| rpcinfo:
+|   program version    port/proto  service
+|   100000  2,3,4        111/tcp   rpcbind
+|   100000  2,3,4        111/tcp6  rpcbind
+|   100000  2,3,4        111/udp   rpcbind
+|   100000  2,3,4        111/udp6  rpcbind
+|   100003  2,3         2049/udp   nfs
+|   100003  2,3         2049/udp6  nfs
+|   100003  2,3,4       2049/tcp   nfs
+|   100003  2,3,4       2049/tcp6  nfs
+|   100005  1,2,3       2049/tcp   mountd
+|   100005  1,2,3       2049/tcp6  mountd
+|   100005  1,2,3       2049/udp   mountd
+|   100005  1,2,3       2049/udp6  mountd
+|   100021  1,2,3,4     2049/tcp   nlockmgr
+|   100021  1,2,3,4     2049/tcp6  nlockmgr
+|   100021  1,2,3,4     2049/udp   nlockmgr
+|   100021  1,2,3,4     2049/udp6  nlockmgr
+|   100024  1           2049/tcp   status
+|   100024  1           2049/tcp6  status
+|   100024  1           2049/udp   status
+|_  100024  1           2049/udp6  status
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+445/tcp   open  microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+2049/tcp  open  mountd        1-3 (RPC #100005)
+| nfs-showmount:
+|_  /site_backups
+5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 174.34ms; min: 160.99ms; max: 220.81ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 03 Dec 2020 14:02:46 GMT; -30m02s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.180
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.180:5985/
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Thu, 03 Dec 2020 14:02:49 GMT
+|   Connection: close
+|   Content-Length: 315
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator:
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester:
+|   Status for browser useragent: 404
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 247.03ms; min: 165.78ms; max: 520.56ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 03 Dec 2020 14:02:44 GMT; -30m02s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.180
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.180:47001/
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Thu, 03 Dec 2020 14:02:47 GMT
+|   Connection: close
+|   Content-Length: 315
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator:
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester:
+|   Status for browser useragent: 404
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+49664/tcp open  msrpc         Microsoft Windows RPC
+49665/tcp open  msrpc         Microsoft Windows RPC
+49666/tcp open  msrpc         Microsoft Windows RPC
+49667/tcp open  msrpc         Microsoft Windows RPC
+49678/tcp open  msrpc         Microsoft Windows RPC
+49679/tcp open  msrpc         Microsoft Windows RPC
+49680/tcp open  msrpc         Microsoft Windows RPC
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.180"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 21    0       12497.60   3589.63   0.0%
+| 80    0       13673.20   3550.38   0.0%
+| 111   0       11273.00   5032.57   0.0%
+| 135   0       23947.20   30624.29  0.0%
+| 139   0       11648.10   4006.46   0.0%
+| 445   0       12444.60   3912.04   0.0%
+| 2049  0       12320.10   3942.89   0.0%
+|_5985  0       13448.70   3729.95   0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum:
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols:
+|   dialects:
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled but not required
+| smb2-time:
+|   date: 2020-12-03T14:03:13
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 298.18 seconds
