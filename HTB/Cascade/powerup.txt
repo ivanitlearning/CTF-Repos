@@ -1,0 +1,31 @@
+*Evil-WinRM* PS C:\Users\s.smith\Downloads> Import-Module C:\Users\s.smith\Downloads\PowerUp.ps1
+*Evil-WinRM* PS C:\Users\s.smith\Downloads> Invoke-AllChecks | Tee-Object "powerup.txt"
+Access denied
+At C:\Users\s.smith\Downloads\PowerUp.ps1:2066 char:21
++     $VulnServices = Get-WmiObject -Class win32_service | Where-Object ...
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Get-WmiObject], ManagementException
+    + FullyQualifiedErrorId : GetWMIManagementException,Microsoft.PowerShell.Commands.GetWmiObjectCommand
+
+Access denied
+At C:\Users\s.smith\Downloads\PowerUp.ps1:2133 char:5
++     Get-WMIObject -Class win32_service | Where-Object {$_ -and $_.pat ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Get-WmiObject], ManagementException
+    + FullyQualifiedErrorId : GetWMIManagementException,Microsoft.PowerShell.Commands.GetWmiObjectCommand
+Cannot open Service Control Manager on computer '.'. This operation might require other privileges.
+At C:\Users\s.smith\Downloads\PowerUp.ps1:2189 char:5
++     Get-Service | Test-ServiceDaclPermission -PermissionSet 'ChangeCo ...
++     ~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Get-Service], InvalidOperationException
+    + FullyQualifiedErrorId : System.InvalidOperationException,Microsoft.PowerShell.Commands.GetServiceCommand
+
+UnattendPath                    Name                            Check
+------------                    ----                            -----
+C:\Windows\Panther\Unattend.xml C:\Windows\Panther\Unattend.xml Unattended Install Files
+
+*Evil-WinRM* PS C:\Users\s.smith\Downloads> type powerup.txt
+
+UnattendPath                    Name                            Check
+------------                    ----                            -----
+C:\Windows\Panther\Unattend.xml C:\Windows\Panther\Unattend.xml Unattended Install Files

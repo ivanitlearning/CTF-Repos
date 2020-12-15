@@ -1,0 +1,1131 @@
+root@kali:~/CTF/HTB/Cascade# nmap -Pn -n -sS -p- 10.10.10.182 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-06 01:26 +08
+Nmap scan report for 10.10.10.182
+Host is up (0.0064s latency).
+Not shown: 65520 filtered ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+49154/tcp open  unknown
+49155/tcp open  unknown
+49157/tcp open  unknown
+49158/tcp open  unknown
+49165/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 104.82 seconds
+
+root@kali:~/CTF/HTB/Cascade# nmap -Pn -n -sV -p53,88,135,139,389,445,636,3268,3269,5985,49154,49155,49157,49158,49165 --script=vuln,discovery 10.10.10.182 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-06 01:31 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.182
+Host is up (0.0055s latency).
+
+PORT      STATE SERVICE       VERSION
+53/tcp    open  domain        Microsoft DNS 6.1.7601 (1DB15D39) (Windows Server 2008 R2 SP1)
+|_dns-nsec-enum: Can't determine domain for host 10.10.10.182; use dns-nsec-enum.domains script arg.
+|_dns-nsec3-enum: Can't determine domain for host 10.10.10.182; use dns-nsec3-enum.domains script arg.
+| dns-nsid:
+|_  bind.version: Microsoft DNS 6.1.7601 (1DB15D39)
+88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-12-05 17:31:24Z)
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: cascade.local, Site: Default-First-Site-Name)
+| ldap-rootdse:
+| LDAP Results
+|   <ROOT>
+|       currentTime: 20201205173218.0Z
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|       dsServiceName: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|       namingContexts: DC=cascade,DC=local
+|       namingContexts: CN=Configuration,DC=cascade,DC=local
+|       namingContexts: CN=Schema,CN=Configuration,DC=cascade,DC=local
+|       namingContexts: DC=DomainDnsZones,DC=cascade,DC=local
+|       namingContexts: DC=ForestDnsZones,DC=cascade,DC=local
+|       defaultNamingContext: DC=cascade,DC=local
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=cascade,DC=local
+|       configurationNamingContext: CN=Configuration,DC=cascade,DC=local
+|       rootDomainNamingContext: DC=cascade,DC=local
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       highestCommittedUSN: 319608
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       dnsHostName: CASC-DC1.cascade.local
+|       ldapServiceName: cascade.local:casc-dc1$@CASCADE.LOCAL
+|       serverName: CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       isSynchronized: TRUE
+|       isGlobalCatalogReady: TRUE
+|       domainFunctionality: 4
+|       forestFunctionality: 4
+|_      domainControllerFunctionality: 4
+| ldap-search:
+|   Context: DC=cascade,DC=local
+|     dn: DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: domain
+|         objectClass: domainDNS
+|         distinguishedName: DC=cascade,DC=local
+|         instanceType: 5
+|         whenCreated: 2020/01/09 15:31:32 UTC
+|         whenChanged: 2020/12/05 17:21:53 UTC
+|         subRefs: DC=ForestDnsZones,DC=cascade,DC=local
+|         subRefs: DC=DomainDnsZones,DC=cascade,DC=local
+|         subRefs: CN=Configuration,DC=cascade,DC=local
+|         uSNCreated: 4099
+|         uSNChanged: 319567
+|         name: cascade
+|         objectGUID: 6fd3434-bae0-484b-92be-88e4c5926638
+|         creationTime: 132516625132936207
+|         forceLogoff: -9223372036854775808
+|         lockoutDuration: -18000000000
+|         lockOutObservationWindow: -18000000000
+|         lockoutThreshold: 0
+|         maxPwdAge: -9223372036854775808
+|         minPwdAge: 0
+|         minPwdLength: 5
+|         modifiedCountAtLastProm: 0
+|         nextRid: 1001
+|         pwdProperties: 0
+|         pwdHistoryLength: 0
+|         objectSid: 1-5-21-3332504370-1206983947-1165150453
+|         serverState: 1
+|         uASCompat: 1
+|         modifiedCount: 1
+|         auditingPolicy: \x00\x01
+|         nTMixedDomain: 0
+|         rIDManagerReference: CN=RID Manager$,CN=System,DC=cascade,DC=local
+|         fSMORoleOwner: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         systemFlags: -1946157056
+|         wellKnownObjects: B:32:6227F0AF1FC2410D8E3BB10615BB5B0F:CN=NTDS Quotas,DC=cascade,DC=local
+|         wellKnownObjects: B:32:F4BE92A4C777485E878E9421D53087DB:CN=Microsoft,CN=Program Data,DC=cascade,DC=local
+|         wellKnownObjects: B:32:09460C08AE1E4A4EA0F64AEE7DAA1E5A:CN=Program Data,DC=cascade,DC=local
+|         wellKnownObjects: B:32:22B70C67D56E4EFB91E9300FCA3DC1AA:CN=ForeignSecurityPrincipals,DC=cascade,DC=local
+|         wellKnownObjects: B:32:18E2EA80684F11D2B9AA00C04F79F805:CN=Deleted Objects,DC=cascade,DC=local
+|         wellKnownObjects: B:32:2FBAC1870ADE11D297C400C04FD8D5CD:CN=Infrastructure,DC=cascade,DC=local
+|         wellKnownObjects: B:32:AB8153B7768811D1ADED00C04FD8D5CD:CN=LostAndFound,DC=cascade,DC=local
+|         wellKnownObjects: B:32:AB1D30F3768811D1ADED00C04FD8D5CD:CN=System,DC=cascade,DC=local
+|         wellKnownObjects: B:32:A361B2FFFFD211D1AA4B00C04FD7D83A:OU=Domain Controllers,DC=cascade,DC=local
+|         wellKnownObjects: B:32:AA312825768811D1ADED00C04FD8D5CD:CN=Computers,DC=cascade,DC=local
+|         wellKnownObjects: B:32:A9D1CA15768811D1ADED00C04FD8D5CD:CN=Users,DC=cascade,DC=local
+|         objectCategory: CN=Domain-DNS,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         gPLink: [LDAP://CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=cascade,DC=local;0]
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|         otherWellKnownObjects: B:32:1EB93889E40C45DF9F0C64D23BBB6237:CN=Managed Service Accounts,DC=cascade,DC=local
+|         masteredBy: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         ms-DS-MachineAccountQuota: 10
+|         msDS-Behavior-Version: 4
+|         msDS-PerUserTrustQuota: 1
+|         msDS-AllUsersTrustQuota: 1000
+|         msDS-PerUserTrustTombstonesQuota: 10
+|         msDs-masteredBy: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         msDS-IsDomainFor: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         msDS-NcType: 0
+|         dc: cascade
+|     dn: CN=Users,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Users
+|         description: Default container for upgraded user accounts
+|         distinguishedName: CN=Users,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5696
+|         uSNChanged: 5696
+|         showInAdvancedViewOnly: FALSE
+|         name: Users
+|         objectGUID: d231c67-414-df4d-b413-e4aa7349bc19
+|         systemFlags: -1946157056
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Computers,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Computers
+|         description: Default container for upgraded computer accounts
+|         distinguishedName: CN=Computers,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5697
+|         uSNChanged: 5697
+|         showInAdvancedViewOnly: FALSE
+|         name: Computers
+|         objectGUID: cc859162-1563-fb4f-969a-e073e8e5af24
+|         systemFlags: -1946157056
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: OU=Domain Controllers,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: organizationalUnit
+|         ou: Domain Controllers
+|         description: Default container for domain controllers
+|         distinguishedName: OU=Domain Controllers,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5828
+|         uSNChanged: 5828
+|         showInAdvancedViewOnly: FALSE
+|         name: Domain Controllers
+|         objectGUID: d3dbe943-96bf-cd46-9c8d-390a01eedf
+|         systemFlags: -1946157056
+|         objectCategory: CN=Organizational-Unit,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         gPLink: [LDAP://CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=cascade,DC=local;0]
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: System
+|         description: Builtin system settings
+|         distinguishedName: CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5698
+|         uSNChanged: 5698
+|         showInAdvancedViewOnly: TRUE
+|         name: System
+|         objectGUID: d2fcd93-e48e-ec4b-8ed0-2350af167525
+|         systemFlags: -1946157056
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=LostAndFound,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: lostAndFound
+|         cn: LostAndFound
+|         description: Default container for orphaned objects
+|         distinguishedName: CN=LostAndFound,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5694
+|         uSNChanged: 5694
+|         showInAdvancedViewOnly: TRUE
+|         name: LostAndFound
+|         objectGUID: be642872-5171-bc48-a0b1-fcfdd23757c
+|         systemFlags: -1946157056
+|         objectCategory: CN=Lost-And-Found,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Infrastructure,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: infrastructureUpdate
+|         cn: Infrastructure
+|         distinguishedName: CN=Infrastructure,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5829
+|         uSNChanged: 5829
+|         showInAdvancedViewOnly: TRUE
+|         name: Infrastructure
+|         objectGUID: b884327f-f77d-2e4a-988d-4cbf62a21056
+|         fSMORoleOwner: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         systemFlags: -1946157056
+|         objectCategory: CN=Infrastructure-Update,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=ForeignSecurityPrincipals,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: ForeignSecurityPrincipals
+|         description: Default container for security identifiers (SIDs) associated with objects from external, trusted domains
+|         distinguishedName: CN=ForeignSecurityPrincipals,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5830
+|         uSNChanged: 5830
+|         showInAdvancedViewOnly: FALSE
+|         name: ForeignSecurityPrincipals
+|         objectGUID: cf5ca041-aae5-c746-9342-15c6877cb5d6
+|         systemFlags: -1946157056
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Program Data,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Program Data
+|         description: Default location for storage of application data.
+|         distinguishedName: CN=Program Data,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5831
+|         uSNChanged: 5831
+|         showInAdvancedViewOnly: TRUE
+|         name: Program Data
+|         objectGUID: 6659c410-395a-da40-9994-a8d580f616c3
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Microsoft,CN=Program Data,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Microsoft
+|         description: Default location for storage of Microsoft application data.
+|         distinguishedName: CN=Microsoft,CN=Program Data,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5832
+|         uSNChanged: 5832
+|         showInAdvancedViewOnly: TRUE
+|         name: Microsoft
+|         objectGUID: e05fac4f-55d7-614b-aa62-6166d5825cd
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=NTDS Quotas,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: msDS-QuotaContainer
+|         cn: NTDS Quotas
+|         description: Quota specifications container
+|         distinguishedName: CN=NTDS Quotas,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5833
+|         uSNChanged: 5833
+|         showInAdvancedViewOnly: TRUE
+|         name: NTDS Quotas
+|         objectGUID: 1f7ccf3-be2f-b24b-8b6f-eddb305bfb97
+|         systemFlags: -2147483648
+|         objectCategory: CN=ms-DS-Quota-Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|         msDS-TombstoneQuotaFactor: 100
+|     dn: CN=Managed Service Accounts,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Managed Service Accounts
+|         description: Default container for managed service accounts
+|         distinguishedName: CN=Managed Service Accounts,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5834
+|         uSNChanged: 5834
+|         showInAdvancedViewOnly: FALSE
+|         name: Managed Service Accounts
+|         objectGUID: be185519-f75-1d48-ae3b-88e9ff799d6
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=WinsockServices,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: WinsockServices
+|         distinguishedName: CN=WinsockServices,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5699
+|         uSNChanged: 5699
+|         showInAdvancedViewOnly: TRUE
+|         name: WinsockServices
+|         objectGUID: 95dbb151-af1d-4f40-a567-38aaa2ef81b9
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=RpcServices,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         objectClass: rpcContainer
+|         cn: RpcServices
+|         distinguishedName: CN=RpcServices,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5700
+|         uSNChanged: 5700
+|         showInAdvancedViewOnly: TRUE
+|         name: RpcServices
+|         objectGUID: d7e7f245-e46b-484e-b82d-1e645d80244c
+|         systemFlags: -1946157056
+|         objectCategory: CN=Rpc-Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=FileLinks,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: fileLinkTracking
+|         cn: FileLinks
+|         distinguishedName: CN=FileLinks,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5701
+|         uSNChanged: 5701
+|         showInAdvancedViewOnly: TRUE
+|         name: FileLinks
+|         objectGUID: 298223b7-e113-e642-a2ce-d3e416e4bcf3
+|         systemFlags: -1946157056
+|         objectCategory: CN=File-Link-Tracking,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=VolumeTable,CN=FileLinks,CN=System,DC=cascade,DC=local
+|     dn: CN=ObjectMoveTable,CN=FileLinks,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: fileLinkTracking
+|         objectClass: linkTrackObjectMoveTable
+|         cn: ObjectMoveTable
+|         distinguishedName: CN=ObjectMoveTable,CN=FileLinks,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5703
+|         uSNChanged: 5703
+|         showInAdvancedViewOnly: TRUE
+|         name: ObjectMoveTable
+|         objectGUID: 2615f8f3-18c-f04c-84bd-a592a8b5d8e6
+|         systemFlags: -1946157056
+|         objectCategory: CN=Link-Track-Object-Move-Table,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Default Domain Policy,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: leaf
+|         objectClass: domainPolicy
+|         cn: Default Domain Policy
+|         distinguishedName: CN=Default Domain Policy,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5704
+|         uSNChanged: 5704
+|         showInAdvancedViewOnly: TRUE
+|         name: Default Domain Policy
+|         objectGUID: 12373068-4f1f-e641-b94-51f8c8eda93
+|         objectCategory: CN=Domain-Policy,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=AppCategories,CN=Default Domain Policy,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: classStore
+|         cn: AppCategories
+|         distinguishedName: CN=AppCategories,CN=Default Domain Policy,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5705
+|         uSNChanged: 5705
+|         showInAdvancedViewOnly: TRUE
+|         name: AppCategories
+|         objectGUID: 54b48c16-be8e-564a-a7f0-4b5d7fc930f3
+|         objectCategory: CN=Class-Store,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Meetings,CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Meetings
+|         distinguishedName: CN=Meetings,CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5706
+|         uSNChanged: 5706
+|         showInAdvancedViewOnly: TRUE
+|         name: Meetings
+|         objectGUID: 252c565-13c3-954f-ba18-2af8cf7cebd1
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|
+|
+|_Result limited to 20 objects (see ldap.maxobjects)
+|_sslv2-drown:
+445/tcp   open  microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+636/tcp   open  tcpwrapped
+|_sslv2-drown:
+3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: cascade.local, Site: Default-First-Site-Name)
+| ldap-rootdse:
+| LDAP Results
+|   <ROOT>
+|       currentTime: 20201205173218.0Z
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|       dsServiceName: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|       namingContexts: DC=cascade,DC=local
+|       namingContexts: CN=Configuration,DC=cascade,DC=local
+|       namingContexts: CN=Schema,CN=Configuration,DC=cascade,DC=local
+|       namingContexts: DC=DomainDnsZones,DC=cascade,DC=local
+|       namingContexts: DC=ForestDnsZones,DC=cascade,DC=local
+|       defaultNamingContext: DC=cascade,DC=local
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=cascade,DC=local
+|       configurationNamingContext: CN=Configuration,DC=cascade,DC=local
+|       rootDomainNamingContext: DC=cascade,DC=local
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       highestCommittedUSN: 319608
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       dnsHostName: CASC-DC1.cascade.local
+|       ldapServiceName: cascade.local:casc-dc1$@CASCADE.LOCAL
+|       serverName: CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       isSynchronized: TRUE
+|       isGlobalCatalogReady: TRUE
+|       domainFunctionality: 4
+|       forestFunctionality: 4
+|_      domainControllerFunctionality: 4
+| ldap-search:
+|   Context: DC=cascade,DC=local
+|     dn: DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: domain
+|         objectClass: domainDNS
+|         distinguishedName: DC=cascade,DC=local
+|         instanceType: 5
+|         whenCreated: 2020/01/09 15:31:32 UTC
+|         whenChanged: 2020/12/05 17:21:53 UTC
+|         subRefs: DC=ForestDnsZones,DC=cascade,DC=local
+|         subRefs: DC=DomainDnsZones,DC=cascade,DC=local
+|         subRefs: CN=Configuration,DC=cascade,DC=local
+|         uSNCreated: 4099
+|         uSNChanged: 319567
+|         name: cascade
+|         objectGUID: 6fd3434-bae0-484b-92be-88e4c5926638
+|         objectSid: 1-5-21-3332504370-1206983947-1165150453
+|         wellKnownObjects: B:32:6227F0AF1FC2410D8E3BB10615BB5B0F:CN=NTDS Quotas,DC=cascade,DC=local
+|         wellKnownObjects: B:32:F4BE92A4C777485E878E9421D53087DB:CN=Microsoft,CN=Program Data,DC=cascade,DC=local
+|         wellKnownObjects: B:32:09460C08AE1E4A4EA0F64AEE7DAA1E5A:CN=Program Data,DC=cascade,DC=local
+|         wellKnownObjects: B:32:22B70C67D56E4EFB91E9300FCA3DC1AA:CN=ForeignSecurityPrincipals,DC=cascade,DC=local
+|         wellKnownObjects: B:32:18E2EA80684F11D2B9AA00C04F79F805:CN=Deleted Objects,DC=cascade,DC=local
+|         wellKnownObjects: B:32:2FBAC1870ADE11D297C400C04FD8D5CD:CN=Infrastructure,DC=cascade,DC=local
+|         wellKnownObjects: B:32:AB8153B7768811D1ADED00C04FD8D5CD:CN=LostAndFound,DC=cascade,DC=local
+|         wellKnownObjects: B:32:AB1D30F3768811D1ADED00C04FD8D5CD:CN=System,DC=cascade,DC=local
+|         wellKnownObjects: B:32:A361B2FFFFD211D1AA4B00C04FD7D83A:OU=Domain Controllers,DC=cascade,DC=local
+|         wellKnownObjects: B:32:AA312825768811D1ADED00C04FD8D5CD:CN=Computers,DC=cascade,DC=local
+|         wellKnownObjects: B:32:A9D1CA15768811D1ADED00C04FD8D5CD:CN=Users,DC=cascade,DC=local
+|         objectCategory: CN=Domain-DNS,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         gPLink: [LDAP://CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=cascade,DC=local;0]
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|         masteredBy: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         msDs-masteredBy: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         msDS-IsDomainFor: CN=NTDS Settings,CN=CASC-DC1,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=cascade,DC=local
+|         dc: cascade
+|     dn: CN=Configuration,DC=cascade,DC=local
+|     dn: CN=Users,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Users
+|         description: Default container for upgraded user accounts
+|         distinguishedName: CN=Users,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5696
+|         uSNChanged: 5696
+|         name: Users
+|         objectGUID: d231c67-414-df4d-b413-e4aa7349bc19
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Computers,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Computers
+|         description: Default container for upgraded computer accounts
+|         distinguishedName: CN=Computers,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5697
+|         uSNChanged: 5697
+|         name: Computers
+|         objectGUID: cc859162-1563-fb4f-969a-e073e8e5af24
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: OU=Domain Controllers,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: organizationalUnit
+|         ou: Domain Controllers
+|         description: Default container for domain controllers
+|         distinguishedName: OU=Domain Controllers,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5828
+|         uSNChanged: 5828
+|         name: Domain Controllers
+|         objectGUID: d3dbe943-96bf-cd46-9c8d-390a01eedf
+|         objectCategory: CN=Organizational-Unit,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         gPLink: [LDAP://CN={6AC1786C-016F-11D2-945F-00C04fB984F9},CN=Policies,CN=System,DC=cascade,DC=local;0]
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=System,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: System
+|         description: Builtin system settings
+|         distinguishedName: CN=System,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5698
+|         uSNChanged: 5698
+|         name: System
+|         objectGUID: d2fcd93-e48e-ec4b-8ed0-2350af167525
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=LostAndFound,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: lostAndFound
+|         cn: LostAndFound
+|         description: Default container for orphaned objects
+|         distinguishedName: CN=LostAndFound,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5694
+|         uSNChanged: 5694
+|         name: LostAndFound
+|         objectGUID: be642872-5171-bc48-a0b1-fcfdd23757c
+|         objectCategory: CN=Lost-And-Found,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Infrastructure,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: infrastructureUpdate
+|         cn: Infrastructure
+|         distinguishedName: CN=Infrastructure,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5829
+|         uSNChanged: 5829
+|         name: Infrastructure
+|         objectGUID: b884327f-f77d-2e4a-988d-4cbf62a21056
+|         objectCategory: CN=Infrastructure-Update,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=ForeignSecurityPrincipals,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: ForeignSecurityPrincipals
+|         description: Default container for security identifiers (SIDs) associated with objects from external, trusted domains
+|         distinguishedName: CN=ForeignSecurityPrincipals,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5830
+|         uSNChanged: 5830
+|         name: ForeignSecurityPrincipals
+|         objectGUID: cf5ca041-aae5-c746-9342-15c6877cb5d6
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Program Data,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Program Data
+|         description: Default location for storage of application data.
+|         distinguishedName: CN=Program Data,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5831
+|         uSNChanged: 5831
+|         name: Program Data
+|         objectGUID: 6659c410-395a-da40-9994-a8d580f616c3
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Microsoft,CN=Program Data,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Microsoft
+|         description: Default location for storage of Microsoft application data.
+|         distinguishedName: CN=Microsoft,CN=Program Data,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5832
+|         uSNChanged: 5832
+|         name: Microsoft
+|         objectGUID: e05fac4f-55d7-614b-aa62-6166d5825cd
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=NTDS Quotas,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: msDS-QuotaContainer
+|         cn: NTDS Quotas
+|         description: Quota specifications container
+|         distinguishedName: CN=NTDS Quotas,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5833
+|         uSNChanged: 5833
+|         name: NTDS Quotas
+|         objectGUID: 1f7ccf3-be2f-b24b-8b6f-eddb305bfb97
+|         objectCategory: CN=ms-DS-Quota-Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Managed Service Accounts,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Managed Service Accounts
+|         description: Default container for managed service accounts
+|         distinguishedName: CN=Managed Service Accounts,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:39 UTC
+|         whenChanged: 2020/01/09 15:31:39 UTC
+|         uSNCreated: 5834
+|         uSNChanged: 5834
+|         name: Managed Service Accounts
+|         objectGUID: be185519-f75-1d48-ae3b-88e9ff799d6
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 2020/01/17 03:37:36 UTC
+|         dSCorePropagationData: 2020/01/17 00:14:04 UTC
+|         dSCorePropagationData: 2020/01/09 17:59:34 UTC
+|         dSCorePropagationData: 2020/01/09 15:48:57 UTC
+|         dSCorePropagationData: 1601/07/14 22:36:49 UTC
+|     dn: CN=Schema,CN=Configuration,DC=cascade,DC=local
+|     dn: CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: Operations
+|         distinguishedName: CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:38 UTC
+|         whenChanged: 2020/01/09 15:31:38 UTC
+|         uSNCreated: 5616
+|         uSNChanged: 5616
+|         name: Operations
+|         objectGUID: cbc73462-6c58-4d42-8ab9-c67496fad15c
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|     dn: CN=3467dae5-dedd-4648-9066-f48ac186b20a,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: 3467dae5-dedd-4648-9066-f48ac186b20a
+|         distinguishedName: CN=3467dae5-dedd-4648-9066-f48ac186b20a,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:38 UTC
+|         whenChanged: 2020/01/09 15:31:38 UTC
+|         uSNCreated: 5617
+|         uSNChanged: 5617
+|         name: 3467dae5-dedd-4648-9066-f48ac186b20a
+|         objectGUID: 1d484f68-b241-c740-911e-12671998beb9
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|     dn: CN=33b7ee33-1386-47cf-baa1-b03e06473253,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: 33b7ee33-1386-47cf-baa1-b03e06473253
+|         distinguishedName: CN=33b7ee33-1386-47cf-baa1-b03e06473253,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:38 UTC
+|         whenChanged: 2020/01/09 15:31:38 UTC
+|         uSNCreated: 5618
+|         uSNChanged: 5618
+|         name: 33b7ee33-1386-47cf-baa1-b03e06473253
+|         objectGUID: 391bf027-4ee8-c643-ae7f-44374f6c787c
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|     dn: CN=e9ee8d55-c2fb-4723-a333-c80ff4dfbf45,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: e9ee8d55-c2fb-4723-a333-c80ff4dfbf45
+|         distinguishedName: CN=e9ee8d55-c2fb-4723-a333-c80ff4dfbf45,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:38 UTC
+|         whenChanged: 2020/01/09 15:31:38 UTC
+|         uSNCreated: 5619
+|         uSNChanged: 5619
+|         name: e9ee8d55-c2fb-4723-a333-c80ff4dfbf45
+|         objectGUID: a351f2f6-c653-5048-a0db-2857f68f8a65
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|     dn: CN=ccfae63a-7fb5-454c-83ab-0e8e1214974e,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: ccfae63a-7fb5-454c-83ab-0e8e1214974e
+|         distinguishedName: CN=ccfae63a-7fb5-454c-83ab-0e8e1214974e,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:38 UTC
+|         whenChanged: 2020/01/09 15:31:38 UTC
+|         uSNCreated: 5620
+|         uSNChanged: 5620
+|         name: ccfae63a-7fb5-454c-83ab-0e8e1214974e
+|         objectGUID: fee9667-aef-e141-a24-d8d3af5ad50
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|     dn: CN=ad3c7909-b154-4c16-8bf7-2c3a7870bb3d,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         objectClass: top
+|         objectClass: container
+|         cn: ad3c7909-b154-4c16-8bf7-2c3a7870bb3d
+|         distinguishedName: CN=ad3c7909-b154-4c16-8bf7-2c3a7870bb3d,CN=Operations,CN=ForestUpdates,CN=Configuration,DC=cascade,DC=local
+|         instanceType: 4
+|         whenCreated: 2020/01/09 15:31:38 UTC
+|         whenChanged: 2020/01/09 15:31:38 UTC
+|         uSNCreated: 5621
+|         uSNChanged: 5621
+|         name: ad3c7909-b154-4c16-8bf7-2c3a7870bb3d
+|         objectGUID: 5a1f55c-a114-847-8b70-52141a3eb78e
+|         objectCategory: CN=Container,CN=Schema,CN=Configuration,DC=cascade,DC=local
+|         dSCorePropagationData: 1601/01/01 00:00:00 UTC
+|
+|
+|_Result limited to 20 objects (see ldap.maxobjects)
+|_sslv2-drown:
+3269/tcp  open  tcpwrapped
+|_sslv2-drown:
+5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 197.80ms; min: 152.15ms; max: 365.52ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 05 Dec 2020 17:32:16 GMT; -30m02s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.182
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.182:5985/
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sat, 05 Dec 2020 17:32:27 GMT
+|   Connection: close
+|   Content-Length: 315
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator:
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_      http://ha.ckers.org/slowloris/
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester:
+|   Status for browser useragent: 404
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+49154/tcp open  msrpc         Microsoft Windows RPC
+49155/tcp open  msrpc         Microsoft Windows RPC
+49157/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+49158/tcp open  msrpc         Microsoft Windows RPC
+49165/tcp open  msrpc         Microsoft Windows RPC
+Service Info: Host: CASC-DC1; OSs: Windows, Windows 2008 R2; CPE: cpe:/o:microsoft:windows_server_2008:r2:sp1, cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.182"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 53    0       6929.30    580.99    0.0%
+| 88    0       6538.50    1030.86   0.0%
+| 135   1       6143.00    889.03    0.0%
+| 139   1       6003.50    1045.31   0.0%
+| 389   0       6497.70    1436.18   0.0%
+| 445   0       6332.40    1040.76   0.0%
+| 636   0       15228.90   28054.66  0.0%
+|_3268  0       6614.30    1032.22   0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum:
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols:
+|   dialects:
+|     2.02
+|_    2.10
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled and required
+| smb2-time:
+|   date: 2020-12-05T17:32:17
+|_  start_date: 2020-12-05T17:22:03
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 251.88 seconds
