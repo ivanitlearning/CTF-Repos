@@ -1,0 +1,326 @@
+root@kali:~/CTF/HTB/Admirer# nmap -Pn -n -sS -p- 10.10.10.187 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-27 19:33 +08
+Nmap scan report for 10.10.10.187
+Host is up (0.0072s latency).
+Not shown: 65532 closed ports
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http
+
+root@kali:~/CTF/HTB/Admirer# nmap -Pn -n -sV -p21,22,80 --script=vuln,discovery 10.10.10.187 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2020-12-27 19:34 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.187
+Host is up (0.0042s latency).
+
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+|_banner: 220 (vsFTPd 3.0.3)
+|_sslv2-drown:
+22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u7
+| ssh-hostkey:
+|   2048 4a:71:e9:21:63:69:9d:cb:dd:84:02:1a:23:97:e1:b9 (RSA)
+|   256 c5:95:b6:21:4d:46:a4:25:55:7a:87:3e:19:a8:e7:02 (ECDSA)
+|_  256 d0:2d:dd:d0:5c:42:f8:7b:31:5a:be:57:c4:a9:a7:56 (ED25519)
+| ssh2-enum-algos:
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+|_http-chrono: Request times for /; avg: 208.80ms; min: 182.58ms; max: 231.27ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.187
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 30
+|     Comment:
+|         <!-- Main -->
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 17
+|     Comment:
+|         <!-- Wrapper -->
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 139
+|     Comment:
+|         /* Basic */
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 144
+|     Comment:
+|         <!-- Scripts -->
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 364
+|     Comment:
+|         /* Button */
+|
+|     Path: http://10.10.10.187:80/assets/js/breakpoints.min.js
+|     Line number: 1
+|     Comment:
+|         /* breakpoints.js v1.0 | @ajlkn | MIT licensed */
+|
+|     Path: http://10.10.10.187:80/assets/js/jquery.poptrox.min.js
+|     Line number: 1
+|     Comment:
+|         /* jquery.poptrox.js v2.5.2-dev | (c) @ajlkn | github.com/ajlkn/jquery.poptrox | MIT licensed */
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 120
+|     Comment:
+|         <!-- Still under development... This does not send anything yet, but it looks nice! -->
+|
+|     Path: http://10.10.10.187:80/assets/js/util.js
+|     Line number: 3
+|     Comment:
+|
+|
+|
+|                */
+|
+|     Path: http://10.10.10.187:80/assets/js/browser.min.js
+|     Line number: 1
+|     Comment:
+|         /* browser.js v1.0 | @ajlkn | MIT licensed */
+|
+|     Path: http://10.10.10.187:80/assets/js/util.js
+|     Line number: 37
+|     Comment:
+|
+|
+|
+|
+|                */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 2041
+|     Comment:
+|         /* Footer */
+|
+|     Path: http://10.10.10.187:80/assets/js/jquery.min.js
+|     Line number: 1
+|     Comment:
+|         /*! jQuery v3.4.1 | (c) JS Foundation and other contributors | jquery.org/license */
+|
+|     Path: http://10.10.10.187:80/assets/css/noscript.css
+|     Line number: 13
+|     Comment:
+|         /* Main */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 1055
+|     Comment:
+|         /* Panel */
+|
+|     Path: http://10.10.10.187:80/assets/css/noscript.css
+|     Line number: 20
+|     Comment:
+|         /* Header */
+|
+|     Path: http://10.10.10.187:80/assets/js/util.js
+|     Line number: 299
+|     Comment:
+|
+|
+|
+|                */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 1184
+|     Comment:
+|         /* Poptrox Popup */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 191
+|     Comment:
+|         /* Type */
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 94
+|     Comment:
+|         <!-- Footer -->
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 495
+|     Comment:
+|         /* Form */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 962
+|     Comment:
+|         /* Icons */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 840
+|     Comment:
+|         /* Actions */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 987
+|     Comment:
+|         /* Table */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 752
+|     Comment:
+|         /* Icon */
+|
+|     Path: http://10.10.10.187:80/assets/js/main.js
+|     Line number: 1
+|     Comment:
+|
+|
+|
+|
+|         */
+|
+|     Path: http://10.10.10.187:80/assets/css/main.css
+|     Line number: 789
+|     Comment:
+|         /* List */
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 2
+|     Comment:
+|         <!--
+|               Multiverse by HTML5 UP
+|               html5up.net | @ajlkn
+|               Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+|         -->
+|
+|     Path: http://10.10.10.187:80/assets/js/util.js
+|     Line number: 521
+|     Comment:
+|
+|
+|
+|
+|                */
+|
+|     Path: http://10.10.10.187:80/assets/css/noscript.css
+|     Line number: 7
+|     Comment:
+|         /* Wrapper */
+|
+|     Path: http://10.10.10.187:80/
+|     Line number: 20
+|     Comment:
+|_        <!-- Header -->
+| http-csrf:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.187
+|   Found the following possible CSRF vulnerabilities:
+|
+|     Path: http://10.10.10.187:80/
+|     Form id: name
+|_    Form action: #
+|_http-date: Sun, 27 Dec 2020 11:35:22 GMT; -30m00s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|_  /robots.txt: Robots file
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.187
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.187:80/index.html
+|_http-feed: Couldn't find any feeds.
+| http-fileupload-exploiter:
+|
+|     Couldn't find a file-type field.
+|
+|_    Couldn't find a file-type field.
+| http-grep:
+|   (1) http://10.10.10.187:80/index.html:
+|     (1) ip:
+|_      + 10.10.10.187
+| http-headers:
+|   Date: Sun, 27 Dec 2020 11:35:21 GMT
+|   Server: Apache/2.4.25 (Debian)
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-robots.txt: 1 disallowed entry
+|_/admin-dir
+|_http-security-headers:
+|_http-server-header: Apache/2.4.25 (Debian)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /assets/css/
+|       css: 1
+|     /assets/js/
+|       js: 2
+|     /images/fulls/
+|       jpg: 8
+|     /images/thumbs/
+|       jpg: 7
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /images/fulls/
+|   Total files found (by extension):
+|_    Other: 1; css: 1; jpg: 15; js: 2
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Admirer
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.187"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 21    0       5569.70    833.19  0.0%
+| 22    0       5754.50    903.16  0.0%
+|_80    0       5786.20    858.01  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 52.61 seconds

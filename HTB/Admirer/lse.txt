@@ -1,0 +1,1356 @@
+root@kali:~/CTF/HTB/Admirer/PE# cat lse.txt
+---
+---
+
+ LSE Version: 2.10
+
+        User: waldo
+     User ID: 1000
+    Password: ******
+        Home: /home/waldo
+        Path: /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+       umask: 0022
+
+    Hostname: admirer
+       Linux: 4.9.0-12-amd64
+Distribution: Devuan GNU/Linux 2.1 (ascii)
+Architecture: x86_64
+
+==================================================================( users )=====
+[i] usr000 Current user groups............................................. yes!
+---
+waldo admins
+---
+[*] usr010 Is current user in an administrative group?..................... yes!
+---
+admins:x:1001:waldo,penny
+---
+[*] usr020 Are there other users in an administrative groups?.............. nope
+[*] usr030 Other users with shell.......................................... yes!
+---
+root:x:0:0:root:/root:/bin/bash
+waldo:x:1000:1000:Waldo Cooper:/home/waldo:/bin/bash
+penny:x:1002:1005:Penny Wise:/home/penny:/bin/bash
+rajesh:x:1003:1006:Rajesh Nayyar:/home/rajesh:/bin/bash
+amy:x:1004:1007:Amy Bialik:/home/amy:/bin/bash
+leonard:x:1005:1008:Leonard Galecki:/home/leonard:/bin/bash
+bernadette:x:1007:1010:Bernadette Rauch:/home/bernadette:/bin/bash
+howard:x:1008:1011:Howard Helberg:/home/howard:/bin/bash
+---
+[i] usr040 Environment information......................................... yes!
+---
+MAIL=/var/mail/waldo
+USER=waldo
+SSH_CLIENT=10.10.14.78 36640 22
+LANGUAGE=en_GB:en
+SHLVL=1
+HOME=/home/waldo
+OLDPWD=/tmp
+SSH_TTY=/dev/pts/0
+LOGNAME=waldo
+_=./lse.sh
+XDG_SESSION_ID=145
+TERM=xterm
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/sbin:/usr/sbin
+XDG_RUNTIME_DIR=/run/user/1000
+LANG=en_GB.UTF-8
+SHELL=/bin/bash
+PWD=/var/tmp
+SSH_CONNECTION=10.10.14.78 36640 10.10.10.187 22
+---
+[i] usr050 Groups for other users.......................................... yes!
+---
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+crontab:x:101:
+input:x:102:
+netdev:x:103:
+Debian-exim:x:104:
+avahi-autoipd:x:105:
+messagebus:x:106:
+bluetooth:x:107:
+ssh:x:108:
+waldo:x:1000:
+ssl-cert:x:109:
+mysql:x:110:
+admins:x:1001:waldo,penny
+ftp:x:111:ftpuser
+ftpuser:x:1002:
+developers:x:1003:rajesh,amy,leonard
+designers:x:1004:bernadette,howard
+penny:x:1005:
+rajesh:x:1006:
+amy:x:1007:
+leonard:x:1008:
+bernadette:x:1010:
+howard:x:1011:
+---
+[i] usr060 Other users..................................................... yes!
+---
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/bin/false
+Debian-exim:x:101:104::/var/spool/exim4:/bin/false
+avahi-autoipd:x:102:105:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false
+messagebus:x:103:106::/var/run/dbus:/bin/false
+sshd:x:104:65534::/run/sshd:/usr/sbin/nologin
+waldo:x:1000:1000:Waldo Cooper:/home/waldo:/bin/bash
+mysql:x:105:110:MySQL Server,,,:/nonexistent:/bin/false
+ftp:x:106:111:ftp daemon,,,:/srv/ftp:/bin/false
+ftpuser:x:1001:1002::/srv/ftp:/bin/false
+penny:x:1002:1005:Penny Wise:/home/penny:/bin/bash
+rajesh:x:1003:1006:Rajesh Nayyar:/home/rajesh:/bin/bash
+amy:x:1004:1007:Amy Bialik:/home/amy:/bin/bash
+leonard:x:1005:1008:Leonard Galecki:/home/leonard:/bin/bash
+bernadette:x:1007:1010:Bernadette Rauch:/home/bernadette:/bin/bash
+howard:x:1008:1011:Howard Helberg:/home/howard:/bin/bash
+---
+[*] usr070 PATH variables defined inside /etc.............................. yes!
+---
+/bin
+/sbin
+/usr/bin
+/usr/games
+/usr/local/bin
+/usr/local/games
+/usr/local/sbin
+/usr/sbin
+---
+[!] usr080 Is '.' in a PATH variable defined inside /etc?.................. nope
+===================================================================( sudo )=====
+[!] sud000 Can we sudo without a password?................................. nope
+[!] sud010 Can we list sudo commands without a password?................... nope
+[!] sud020 Can we sudo with a password?.................................... nope
+[!] sud030 Can we list sudo commands with a password?...................... yes!
+---
+Matching Defaults entries for waldo on admirer:
+    env_reset, env_file=/etc/sudoenv, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, listpw=always
+
+User waldo may run the following commands on admirer:
+    (ALL) SETENV: /opt/scripts/admin_tasks.sh
+---
+[*] sud040 Can we read sudoers files?...................................... nope
+[*] sud050 Do we know if any other users used sudo?........................ nope
+============================================================( file system )=====
+[*] fst000 Writable files outside user's home.............................. yes!
+---
+/var/lib/php/sessions
+/var/tmp
+/var/tmp/lse.sh
+/var/tmp/lse.txt
+/var/tmp/linpeas.txt
+/var/tmp/linpeas.sh
+/var/mail/waldo
+/tmp
+/tmp/tmp.BSwbeUuZTg
+/tmp/tmp.dl8Uo3d67q
+/run/user/1000
+/run/user/1000/gnupg
+/run/user/1000/gnupg/S.gpg-agent.ssh
+/run/user/1000/gnupg/S.gpg-agent.browser
+/run/user/1000/gnupg/S.gpg-agent.extra
+/run/user/1000/gnupg/S.gpg-agent
+/run/mysqld/mysqld.sock
+/run/dbus/system_bus_socket
+/run/shm
+/run/lock
+---
+[*] fst010 Binaries with setuid bit........................................ yes!
+---
+/bin/su
+/bin/mount
+/bin/umount
+/bin/fusermount
+/bin/ping
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/sbin/exim4
+/usr/bin/chfn
+/usr/bin/pkexec
+/usr/bin/newgrp
+/usr/bin/passwd
+/usr/bin/chsh
+/usr/bin/gpasswd
+/usr/bin/sudo
+---
+[!] fst020 Uncommon setuid binaries........................................ nope
+[!] fst030 Can we write to any setuid binary?.............................. nope
+[*] fst040 Binaries with setgid bit........................................ skip
+[!] fst050 Uncommon setgid binaries........................................ skip
+[!] fst060 Can we write to any setgid binary?.............................. skip
+[*] fst070 Can we read /root?.............................................. nope
+[*] fst080 Can we read subdirectories under /home?......................... yes!
+---
+total 24
+drwxr-xr-x 2 amy  amy  4096 Dec  2  2019 .
+drwxr-xr-x 9 root root 4096 Dec  2  2019 ..
+lrwxrwxrwx 1 amy  amy     9 Dec  2  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 amy  amy   220 May 15  2017 .bash_logout
+-rw-r--r-- 1 amy  amy  3526 May 15  2017 .bashrc
+-rw-r--r-- 1 amy  amy   675 May 15  2017 .profile
+-rw-r--r-- 1 amy  amy    39 Dec  2  2019 user.txt
+total 24
+drwxr-xr-x 2 bernadette bernadette 4096 Dec  2  2019 .
+drwxr-xr-x 9 root       root       4096 Dec  2  2019 ..
+lrwxrwxrwx 1 bernadette bernadette    9 Dec  2  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 bernadette bernadette  220 May 15  2017 .bash_logout
+-rw-r--r-- 1 bernadette bernadette 3526 May 15  2017 .bashrc
+-rw-r--r-- 1 bernadette bernadette  675 May 15  2017 .profile
+-rw-r--r-- 1 bernadette bernadette   39 Dec  2  2019 user.txt
+total 24
+drwxr-xr-x 2 howard howard 4096 Dec  2  2019 .
+drwxr-xr-x 9 root   root   4096 Dec  2  2019 ..
+lrwxrwxrwx 1 howard howard    9 Dec  2  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 howard howard  220 May 15  2017 .bash_logout
+-rw-r--r-- 1 howard howard 3526 May 15  2017 .bashrc
+-rw-r--r-- 1 howard howard  675 May 15  2017 .profile
+-rw-r--r-- 1 howard howard   39 Dec  2  2019 user.txt
+total 24
+drwxr-xr-x 2 leonard leonard 4096 Dec  2  2019 .
+drwxr-xr-x 9 root    root    4096 Dec  2  2019 ..
+lrwxrwxrwx 1 leonard leonard    9 Dec  2  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 leonard leonard  220 May 15  2017 .bash_logout
+-rw-r--r-- 1 leonard leonard 3526 May 15  2017 .bashrc
+-rw-r--r-- 1 leonard leonard  675 May 15  2017 .profile
+-rw-r--r-- 1 leonard leonard   39 Dec  2  2019 user.txt
+total 24
+drwxr-xr-x 2 penny penny 4096 Dec  2  2019 .
+drwxr-xr-x 9 root  root  4096 Dec  2  2019 ..
+lrwxrwxrwx 1 penny penny    9 Dec  2  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 penny penny  220 May 15  2017 .bash_logout
+-rw-r--r-- 1 penny penny 3526 May 15  2017 .bashrc
+-rw-r--r-- 1 penny penny  675 May 15  2017 .profile
+-rw-r--r-- 1 penny penny   39 Dec  2  2019 user.txt
+total 24
+drwxr-xr-x 2 rajesh rajesh 4096 Dec  2  2019 .
+drwxr-xr-x 9 root   root   4096 Dec  2  2019 ..
+lrwxrwxrwx 1 rajesh rajesh    9 Dec  2  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 rajesh rajesh  220 May 15  2017 .bash_logout
+-rw-r--r-- 1 rajesh rajesh 3526 May 15  2017 .bashrc
+-rw-r--r-- 1 rajesh rajesh  675 May 15  2017 .profile
+-rw-r--r-- 1 rajesh rajesh   39 Dec  2  2019 user.txt
+---
+[*] fst090 SSH files in home directories................................... nope
+[*] fst100 Useful binaries................................................. yes!
+---
+/bin/nc
+/bin/netcat
+/usr/bin/socat
+/usr/bin/wget
+---
+[*] fst110 Other interesting files in home directories..................... nope
+[!] fst120 Are there any credentials in fstab/mtab?........................ nope
+[*] fst130 Does 'waldo' have mail?......................................... yes!
+---
+-rw-rw---- 1 waldo mail 17456 Dec 31 09:17 /var/mail/waldo
+---
+[!] fst140 Can we access other users mail?................................. nope
+[*] fst150 Looking for GIT/SVN repositories................................ nope
+[!] fst160 Can we write to critical files?................................. nope
+[!] fst170 Can we write to critical directories?........................... nope
+[!] fst180 Can we write to directories from PATH defined in /etc?.......... nope
+[!] fst190 Can we read any backup?......................................... nope
+[!] fst200 Are there possible credentials in any shell history file?....... nope
+[i] fst500 Files owned by user 'waldo'..................................... yes!
+---
+-rwxr-xr-x 1 waldo waldo 40580 Dec 31 09:07 /var/tmp/lse.sh
+-rw-r--r-- 1 waldo waldo 12819 Dec 31 09:28 /var/tmp/lse.txt
+-rw-r--r-- 1 waldo waldo 91198 Dec 31 09:13 /var/tmp/linpeas.txt
+-rwxr-xr-x 1 waldo waldo 300193 Dec 31 09:07 /var/tmp/linpeas.sh
+-rw-rw---- 1 waldo mail 17456 Dec 31 09:17 /var/mail/waldo
+-rw------- 1 waldo waldo 0 Dec 31 09:28 /tmp/tmp.BSwbeUuZTg
+-rw------- 1 waldo waldo 0 Dec 31 09:28 /tmp/tmp.dl8Uo3d67q
+-rw-r--r-- 1 waldo waldo 675 Nov 29  2019 /home/waldo/.profile
+-rw------- 1 waldo waldo 32 Dec 31 09:11 /home/waldo/.gnupg/pubring.kbx
+-rw------- 1 waldo waldo 1200 Dec 31 09:11 /home/waldo/.gnupg/trustdb.gpg
+-rw-r--r-- 1 waldo waldo 3526 Nov 29  2019 /home/waldo/.bashrc
+-rw-r--r-- 1 waldo waldo 220 Nov 29  2019 /home/waldo/.bash_logout
+---
+[i] fst510 SSH files anywhere.............................................. nope
+[i] fst520 Check hosts.equiv file and its contents......................... nope
+[i] fst530 List NFS server shares.......................................... nope
+[i] fst540 Dump fstab file................................................. yes!
+---
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=4e29a0b2-5372-4737-bce6-fa1ecc336f68 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=02ec3777-8b93-41aa-9ca7-757a13ecd3d2 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+---
+=================================================================( system )=====
+[i] sys000 Who is logged in................................................ yes!
+---
+ 09:28:46 up  3:40,  1 user,  load average: 0.07, 0.05, 0.08
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+waldo    pts/0    10.10.14.78      09:03    1.00s  0.31s  0.00s ps -ewwwo start_time,pid,user:50,args
+---
+[i] sys010 Last logged in users............................................ yes!
+---
+waldo    pts/0        10.10.14.78      Thu Dec 31 09:03   still logged in
+
+wtmp begins Thu Dec 31 09:03:56 2020
+---
+[!] sys020 Does the /etc/passwd have hashes?............................... nope
+[!] sys022 Does the /etc/group have hashes?................................ nope
+[!] sys030 Can we read shadow files?....................................... nope
+[*] sys040 Check for other superuser accounts.............................. nope
+[*] sys050 Can root user log in via SSH?................................... nope
+[i] sys060 List available shells........................................... yes!
+---
+# /etc/shells: valid login shells
+/bin/sh
+/bin/dash
+/bin/bash
+/bin/rbash
+/bin/false
+---
+[i] sys070 System umask in /etc/login.defs................................. yes!
+---
+UMASK		022
+---
+[i] sys080 System password policies in /etc/login.defs..................... yes!
+---
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+---
+===============================================================( security )=====
+[*] sec000 Is SELinux present?............................................. nope
+[*] sec010 List files with capabilities.................................... nope
+[!] sec020 Can we write to a binary with caps?............................. nope
+[!] sec030 Do we have all caps in any binary?.............................. nope
+[*] sec040 Users with associated capabilities.............................. nope
+[!] sec050 Does current user have capabilities?............................ skip
+========================================================( recurrent tasks )=====
+[*] ret000 User crontab.................................................... nope
+[!] ret010 Cron tasks writable by user..................................... nope
+[*] ret020 Cron jobs....................................................... yes!
+---
+/etc/crontab:SHELL=/bin/sh
+/etc/crontab:PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+/etc/crontab:17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
+/etc/crontab:25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+/etc/crontab:47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+/etc/crontab:52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+/etc/cron.d/php:09,39 *     * * *     root   [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi
+/etc/cron.d/anacron:SHELL=/bin/sh
+/etc/cron.d/anacron:PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+/etc/cron.d/anacron:30 7    * * *   root	[ -x /etc/init.d/anacron ] && if [ ! -d /run/systemd/system ]; then /usr/sbin/invoke-rc.d anacron start >/dev/null; fi
+/etc/anacrontab:SHELL=/bin/sh
+/etc/anacrontab:PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+/etc/anacrontab:HOME=/root
+/etc/anacrontab:LOGNAME=root
+/etc/anacrontab:1	5	cron.daily	run-parts --report /etc/cron.daily
+/etc/anacrontab:7	10	cron.weekly	run-parts --report /etc/cron.weekly
+/etc/anacrontab:@monthly	15	cron.monthly	run-parts --report /etc/cron.monthly
+---
+[*] ret030 Can we read user crontabs....................................... nope
+[*] ret040 Can we list other user cron tasks?.............................. nope
+[*] ret050 Can we write to any paths present in cron jobs.................. yes!
+---
+/dev/null
+/dev/urandom
+---
+[!] ret060 Can we write to executable paths present in cron jobs........... nope
+[i] ret400 Cron files...................................................... yes!
+---
+-rw-r--r-- 1 root root  722 Oct  7  2017 /etc/crontab
+
+/etc/cron.d:
+total 20
+drwxr-xr-x  2 root root 4096 Nov 29  2019 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rw-r--r--  1 root root  285 May 29  2017 anacron
+-rw-r--r--  1 root root  712 Jan  1  2017 php
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.daily:
+total 52
+drwxr-xr-x  2 root root 4096 Nov 29  2019 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rwxr-xr-x  1 root root  311 May 29  2017 0anacron
+-rwxr-xr-x  1 root root  539 Jun 16  2019 apache2
+-rwxr-xr-x  1 root root 1474 Jan 18  2019 apt-compat
+-rwxr-xr-x  1 root root  355 Oct 25  2016 bsdmainutils
+-rwxr-xr-x  1 root root 1597 Jun 26  2018 dpkg
+-rwxr-xr-x  1 root root 4125 Sep  3  2019 exim4-base
+-rwxr-xr-x  1 root root   89 May  5  2015 logrotate
+-rwxr-xr-x  1 root root 1065 Dec 13  2016 man-db
+-rwxr-xr-x  1 root root  249 May 17  2017 passwd
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Nov 29  2019 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.monthly:
+total 16
+drwxr-xr-x  2 root root 4096 Nov 29  2019 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rwxr-xr-x  1 root root  313 May 29  2017 0anacron
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.weekly:
+total 20
+drwxr-xr-x  2 root root 4096 Nov 29  2019 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rwxr-xr-x  1 root root  312 May 29  2017 0anacron
+-rwxr-xr-x  1 root root  723 Dec 13  2016 man-db
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+---
+[*] ret500 User systemd timers............................................. nope
+[!] ret510 Can we write in any system timer?............................... nope
+[i] ret900 Systemd timers.................................................. nope
+================================================================( network )=====
+[*] net000 Services listening only on localhost............................ yes!
+---
+tcp    LISTEN     0      80     127.0.0.1:3306                  *:*                  
+---
+[!] net010 Can we sniff traffic with tcpdump?.............................. nope
+[i] net500 NIC and IP information.......................................... yes!
+---
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.187  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 dead:beef::250:56ff:feb9:12bd  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::250:56ff:feb9:12bd  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:b9:12:bd  txqueuelen 1000  (Ethernet)
+        RX packets 271831  bytes 44674930 (42.6 MiB)
+        RX errors 578  dropped 3754  overruns 0  frame 0
+        TX packets 242744  bytes 113828757 (108.5 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 19  base 0x2000  
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 1484  bytes 205876 (201.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1484  bytes 205876 (201.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+---
+[i] net510 Routing table................................................... yes!
+---
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.10.10.2      0.0.0.0         UG    0      0        0 eth0
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 eth0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 eth0
+---
+[i] net520 ARP table....................................................... yes!
+---
+? (10.10.10.2) at 00:50:56:b9:75:a0 [ether] on eth0
+---
+[i] net530 Namerservers.................................................... yes!
+---
+nameserver 8.8.8.8
+---
+[i] net540 Systemd Nameservers............................................. nope
+[i] net550 Listening TCP................................................... yes!
+---
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp6       0      0 :::80                   :::*                    LISTEN      -                   
+tcp6       0      0 :::21                   :::*                    LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+---
+[i] net560 Listening UDP................................................... yes!
+---
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+---
+===============================================================( services )=====
+[!] srv000 Can we write in service files?.................................. nope
+[!] srv010 Can we write in binaries executed by services?.................. nope
+[*] srv020 Files in /etc/init.d/ not belonging to root..................... nope
+[*] srv030 Files in /etc/rc.d/init.d not belonging to root................. nope
+[*] srv040 Upstart files not belonging to root............................. nope
+[*] srv050 Files in /usr/local/etc/rc.d not belonging to root.............. nope
+[i] srv400 Contents of /etc/inetd.conf..................................... nope
+[i] srv410 Contents of /etc/xinetd.conf.................................... nope
+[i] srv420 List /etc/xinetd.d if used...................................... nope
+[i] srv430 List /etc/init.d/ permissions................................... yes!
+---
+total 260
+drwxr-xr-x  2 root root 4096 Apr 16  2020 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rwxr-xr-x  1 root root 2014 May 29  2017 anacron
+-rwxr-xr-x  1 root root 8181 Jun 16  2019 apache2
+-rwxr-xr-x  1 root root 2489 Jun 16  2019 apache-htcacheclean
+-rwxr-xr-x  1 root root 2948 Sep 13  2017 bluetooth
+-rwxr-xr-x  1 root root 1276 Jun 15  2017 bootlogs
+-rwxr-xr-x  1 root root 1248 Jun 15  2017 bootmisc.sh
+-rwxr-xr-x  1 root root 3807 Jun 15  2017 checkfs.sh
+-rwxr-xr-x  1 root root 1072 Jun 15  2017 checkroot-bootclean.sh
+-rwxr-xr-x  1 root root 9353 Jun 15  2017 checkroot.sh
+-rwxr-xr-x  1 root root 1232 Apr  7  2017 console-setup.sh
+-rwxr-xr-x  1 root root 3049 Oct  7  2017 cron
+-rwxr-xr-x  1 root root 3229 Jun 26  2019 dbus
+-rw-r--r--  1 root root 1080 Apr 16  2020 .depend.boot
+-rw-r--r--  1 root root  718 Apr 16  2020 .depend.start
+-rw-r--r--  1 root root  749 Apr 16  2020 .depend.stop
+-rwxr-xr-x  1 root root 2468 Feb 22  2018 elogind
+-rwxr-xr-x  1 root root 6469 Apr  6  2018 eudev
+-rwxr-xr-x  1 root root 6754 Sep  3  2019 exim4
+-rwxr-xr-x  1 root root 1336 Jun 15  2017 halt
+-rwxr-xr-x  1 root root 1423 Jun 15  2017 hostname.sh
+-rwxr-xr-x  1 root root 3809 May  4  2018 hwclock.sh
+-rwxr-xr-x  1 root root 2448 Dec 30  2016 irqbalance
+-rwxr-xr-x  1 root root 1479 May 19  2016 keyboard-setup.sh
+-rwxr-xr-x  1 root root 1300 Jun 15  2017 killprocs
+-rwxr-xr-x  1 root root 2044 Dec 26  2016 kmod
+-rwxr-xr-x  1 root root  995 Jun 15  2017 motd
+-rwxr-xr-x  1 root root  677 Jun 15  2017 mountall-bootclean.sh
+-rwxr-xr-x  1 root root 2301 Jun 15  2017 mountall.sh
+-rwxr-xr-x  1 root root 1461 Jun 15  2017 mountdevsubfs.sh
+-rwxr-xr-x  1 root root 1564 Jun 15  2017 mountkernfs.sh
+-rwxr-xr-x  1 root root  685 Jun 15  2017 mountnfs-bootclean.sh
+-rwxr-xr-x  1 root root 2456 Jun 15  2017 mountnfs.sh
+-rwxr-xr-x  1 root root 5930 Aug  2  2019 mysql
+-rwxr-xr-x  1 root root 4597 Sep 16  2016 networking
+-rwxr-xr-x  1 root root 1846 Apr  5  2019 open-vm-tools
+-rwxr-xr-x  1 root root 1191 Jun  5  2018 procps
+-rwxr-xr-x  1 root root 6290 Jun  7  2017 rc
+-rwxr-xr-x  1 root root  820 Jun 15  2017 rc.local
+-rwxr-xr-x  1 root root  117 Jun  7  2017 rcS
+-rw-r--r--  1 root root 2427 Jun  7  2017 README
+-rwxr-xr-x  1 root root  661 Jun 15  2017 reboot
+-rwxr-xr-x  1 root root 1042 Jun 15  2017 rmnologin
+-rwxr-xr-x  1 root root 4355 Dec 10  2017 rsync
+-rwxr-xr-x  1 root root 2875 Jan 14  2018 rsyslog
+-rwxr-xr-x  1 root root 3207 Jun 15  2017 sendsigs
+-rwxr-xr-x  1 root root  597 Jun 15  2017 single
+-rw-r--r--  1 root root 1087 Jun 15  2017 skeleton
+-rwxr-xr-x  1 root root 4033 Mar  1  2019 ssh
+-rwxr-xr-x  1 root root  731 Oct 12  2019 sudo
+-rwxr-xr-x  1 root root 2748 Jun 15  2017 umountfs
+-rwxr-xr-x  1 root root 2202 Jun 15  2017 umountnfs.sh
+-rwxr-xr-x  1 root root 1234 Jun 15  2017 umountroot
+-rwxr-xr-x  1 root root 3111 Jun 15  2017 urandom
+-rwxr-xr-x  1 root root 2069 Aug 29  2016 vsftpd
+---
+[i] srv440 List /etc/rc.d/init.d permissions............................... nope
+[i] srv450 List /usr/local/etc/rc.d permissions............................ nope
+[i] srv460 List /etc/init/ permissions..................................... yes!
+---
+total 40
+drwxr-xr-x  2 root root 4096 Apr 16  2020 .
+drwxr-xr-x 87 root root 4096 Apr 22  2020 ..
+-rw-r--r--  1 root root  278 May 29  2017 anacron.conf
+-rw-r--r--  1 root root  579 Sep 10  2014 irqbalance.conf
+-rw-r--r--  1 root root 2493 Jun  2  2015 networking.conf
+-rw-r--r--  1 root root  933 Jun  2  2015 network-interface.conf
+-rw-r--r--  1 root root  530 Jun  2  2015 network-interface-container.conf
+-rw-r--r--  1 root root 1756 Jun  2  2015 network-interface-security.conf
+-rw-r--r--  1 root root  637 Mar  1  2019 ssh.conf
+-rw-r--r--  1 root root  581 Jul 28  2016 startpar-bridge.conf
+---
+[!] srv500 Can we write in systemd service files?.......................... nope
+[!] srv510 Can we write in binaries executed by systemd services?.......... nope
+[*] srv520 Systemd files not belonging to root............................. nope
+[i] srv900 Systemd config files permissions................................ yes!
+---
+/lib/systemd/:
+total 8.0K
+drwxr-xr-x 7 root root 4.0K Apr 16  2020 system
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 system-sleep
+
+/lib/systemd/system:
+total 168K
+drwxr-xr-x 2 root root 4.0K Apr 16  2020 mariadb@bootstrap.service.d
+-rw-r--r-- 1 root root  420 Mar 22  2020 bluetooth.service
+-rw-r--r-- 1 root root  272 Jan 31  2020 sudo.service
+-rw-r--r-- 1 root root 4.9K Jan 30  2020 mariadb.service
+-rw-r--r-- 1 root root 5.9K Jan 30  2020 mariadb@.service
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 basic.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 halt.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 poweroff.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 reboot.target.wants
+-rw-r--r-- 1 root root  346 Oct 13  2019 apache2.service
+-rw-r--r-- 1 root root  418 Oct 13  2019 apache2@.service
+-rw-r--r-- 1 root root  528 Oct 13  2019 apache-htcacheclean.service
+-rw-r--r-- 1 root root  537 Oct 13  2019 apache-htcacheclean@.service
+-rw-r--r-- 1 root root  306 Apr 26  2019 wpa_supplicant.service
+-rw-r--r-- 1 root root  455 Apr 26  2019 wpa_supplicant@.service
+-rw-r--r-- 1 root root  306 Apr  5  2019 open-vm-tools.service
+-rw-r--r-- 1 root root  298 Apr  5  2019 vgauth.service
+-rw-r--r-- 1 root root  445 Mar  1  2019 ssh.service
+-rw-r--r-- 1 root root  196 Mar  1  2019 ssh@.service
+-rw-r--r-- 1 root root  216 Mar  1  2019 ssh.socket
+-rw-r--r-- 1 root root  225 Jan 18  2019 apt-daily.service
+-rw-r--r-- 1 root root  156 Jan 18  2019 apt-daily.timer
+-rw-r--r-- 1 root root  238 Jan 18  2019 apt-daily-upgrade.service
+-rw-r--r-- 1 root root  184 Jan 18  2019 apt-daily-upgrade.timer
+-rw-r--r-- 1 root root  251 Oct  7  2017 cron.service
+-rw-r--r-- 1 root root  224 May 29  2017 anacron.service
+-rw-r--r-- 1 root root  145 May 29  2017 anacron.timer
+-rw-r--r-- 1 root root  333 Mar 10  2017 irqbalance.service
+-rw-r--r-- 1 root root  432 Jan 25  2017 console-kit-daemon.service
+-rw-r--r-- 1 root root  219 Jan 25  2017 console-kit-log-system-restart.service
+-rw-r--r-- 1 root root  201 Jan 25  2017 console-kit-log-system-start.service
+-rw-r--r-- 1 root root  218 Jan 25  2017 console-kit-log-system-stop.service
+-rw-r--r-- 1 root root  552 Jan 10  2017 ifup@.service
+-rw-r--r-- 1 root root  175 Jan  1  2017 phpsessionclean.service
+-rw-r--r-- 1 root root  144 Jan  1  2017 phpsessionclean.timer
+-rw-r--r-- 1 root root  735 Oct 19  2016 networking.service
+-rw-r--r-- 1 root root  312 May 20  2016 console-setup.service
+-rw-r--r-- 1 root root  287 May 19  2016 keyboard-setup.service
+-rw-r--r-- 1 root root  248 Jul 27  2014 vsftpd.service
+-rw-r--r-- 1 root root  188 Feb 24  2014 rsync.service
+
+/lib/systemd/system/mariadb@bootstrap.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 533 Jan 25  2020 use_galera_new_cluster.conf
+
+/lib/systemd/system/basic.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jan 25  2017 console-kit-log-system-start.service -> ../console-kit-log-system-start.service
+
+/lib/systemd/system/halt.target.wants:
+total 0
+lrwxrwxrwx 1 root root 38 Jan 25  2017 console-kit-log-system-stop.service -> ../console-kit-log-system-stop.service
+
+/lib/systemd/system/poweroff.target.wants:
+total 0
+lrwxrwxrwx 1 root root 38 Jan 25  2017 console-kit-log-system-stop.service -> ../console-kit-log-system-stop.service
+
+/lib/systemd/system/reboot.target.wants:
+total 0
+lrwxrwxrwx 1 root root 41 Jan 25  2017 console-kit-log-system-restart.service -> ../console-kit-log-system-restart.service
+
+/lib/systemd/system-sleep:
+total 4.0K
+-rwxr-xr-x 1 root root 92 May 15  2018 hdparm
+
+/etc/systemd/:
+total 4.0K
+drwxr-xr-x 8 root root 4.0K Apr 16  2020 system
+
+/etc/systemd/system:
+total 24K
+drwxr-xr-x 2 root root 4.0K Apr 16  2020 multi-user.target.wants
+drwxr-xr-x 2 root root 4.0K Apr 16  2020 open-vm-tools.service.requires
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 timers.target.wants
+lrwxrwxrwx 1 root root   35 Nov 29  2019 mysqld.service -> /lib/systemd/system/mariadb.service
+lrwxrwxrwx 1 root root   35 Nov 29  2019 mysql.service -> /lib/systemd/system/mariadb.service
+lrwxrwxrwx 1 root root   31 Nov 29  2019 sshd.service -> /lib/systemd/system/ssh.service
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 bluetooth.target.wants
+lrwxrwxrwx 1 root root   37 Nov 29  2019 dbus-org.bluez.service -> /lib/systemd/system/bluetooth.service
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 sysinit.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 29  2019 network-online.target.wants
+
+/etc/systemd/system/multi-user.target.wants:
+total 0
+lrwxrwxrwx 1 root root 38 Apr 16  2020 irqbalance.service -> /lib/systemd/system/irqbalance.service
+lrwxrwxrwx 1 root root 41 Apr 16  2020 open-vm-tools.service -> /lib/systemd/system/open-vm-tools.service
+lrwxrwxrwx 1 root root 34 Dec  1  2019 vsftpd.service -> /lib/systemd/system/vsftpd.service
+lrwxrwxrwx 1 root root 35 Nov 29  2019 mariadb.service -> /lib/systemd/system/mariadb.service
+lrwxrwxrwx 1 root root 33 Nov 29  2019 rsync.service -> /lib/systemd/system/rsync.service
+lrwxrwxrwx 1 root root 35 Nov 29  2019 apache2.service -> /lib/systemd/system/apache2.service
+lrwxrwxrwx 1 root root 31 Nov 29  2019 ssh.service -> /lib/systemd/system/ssh.service
+lrwxrwxrwx 1 root root 35 Nov 29  2019 anacron.service -> /lib/systemd/system/anacron.service
+lrwxrwxrwx 1 root root 41 Nov 29  2019 console-setup.service -> /lib/systemd/system/console-setup.service
+lrwxrwxrwx 1 root root 38 Nov 29  2019 networking.service -> /lib/systemd/system/networking.service
+lrwxrwxrwx 1 root root 32 Nov 29  2019 cron.service -> /lib/systemd/system/cron.service
+
+/etc/systemd/system/open-vm-tools.service.requires:
+total 0
+lrwxrwxrwx 1 root root 34 Apr 16  2020 vgauth.service -> /lib/systemd/system/vgauth.service
+
+/etc/systemd/system/timers.target.wants:
+total 0
+lrwxrwxrwx 1 root root 41 Nov 29  2019 phpsessionclean.timer -> /lib/systemd/system/phpsessionclean.timer
+lrwxrwxrwx 1 root root 33 Nov 29  2019 anacron.timer -> /lib/systemd/system/anacron.timer
+lrwxrwxrwx 1 root root 35 Nov 29  2019 apt-daily.timer -> /lib/systemd/system/apt-daily.timer
+lrwxrwxrwx 1 root root 43 Nov 29  2019 apt-daily-upgrade.timer -> /lib/systemd/system/apt-daily-upgrade.timer
+
+/etc/systemd/system/bluetooth.target.wants:
+total 0
+lrwxrwxrwx 1 root root 37 Nov 29  2019 bluetooth.service -> /lib/systemd/system/bluetooth.service
+
+/etc/systemd/system/sysinit.target.wants:
+total 0
+lrwxrwxrwx 1 root root 42 Nov 29  2019 keyboard-setup.service -> /lib/systemd/system/keyboard-setup.service
+
+/etc/systemd/system/network-online.target.wants:
+total 0
+lrwxrwxrwx 1 root root 38 Nov 29  2019 networking.service -> /lib/systemd/system/networking.service
+---
+===============================================================( software )=====
+[!] sof000 Can we connect to MySQL with root/root credentials?............. nope
+[!] sof010 Can we connect to MySQL as root without password?............... nope
+[!] sof015 Are there credentials in mysql_history file?.................... nope
+[!] sof020 Can we connect to PostgreSQL template0 as postgres and no pass?. nope
+[!] sof020 Can we connect to PostgreSQL template1 as postgres and no pass?. nope
+[!] sof020 Can we connect to PostgreSQL template0 as psql and no pass?..... nope
+[!] sof020 Can we connect to PostgreSQL template1 as psql and no pass?..... nope
+[*] sof030 Installed apache modules........................................ yes!
+---
+Loaded Modules:
+ core_module (static)
+ so_module (static)
+ watchdog_module (static)
+ http_module (static)
+ log_config_module (static)
+ logio_module (static)
+ version_module (static)
+ unixd_module (static)
+ access_compat_module (shared)
+ alias_module (shared)
+ auth_basic_module (shared)
+ authn_core_module (shared)
+ authn_file_module (shared)
+ authz_core_module (shared)
+ authz_host_module (shared)
+ authz_user_module (shared)
+ autoindex_module (shared)
+ deflate_module (shared)
+ dir_module (shared)
+ env_module (shared)
+ filter_module (shared)
+ mime_module (shared)
+ mpm_prefork_module (shared)
+ negotiation_module (shared)
+ php7_module (shared)
+ reqtimeout_module (shared)
+ setenvif_module (shared)
+ status_module (shared)
+---
+[!] sof040 Found any .htpasswd files?...................................... nope
+[!] sof050 Are there private keys in ssh-agent?............................ nope
+[!] sof060 Are there gpg keys cached in gpg-agent?......................... nope
+[!] sof070 Can we write to a ssh-agent socket?............................. nope
+[!] sof080 Can we write to a gpg-agent socket?............................. yes!
+---
+/run/user/1000/gnupg/S.gpg-agent.ssh
+/run/user/1000/gnupg/S.gpg-agent.browser
+/run/user/1000/gnupg/S.gpg-agent.extra
+/run/user/1000/gnupg/S.gpg-agent
+---
+[i] sof500 Sudo version.................................................... yes!
+---
+Sudo version 1.8.19p1
+---
+[i] sof510 MySQL version................................................... yes!
+---
+mysql  Ver 15.1 Distrib 10.1.44-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
+---
+[i] sof520 Postgres version................................................ nope
+[i] sof530 Apache version.................................................. yes!
+---
+Server version: Apache/2.4.25 (Debian)
+Server built:   2019-10-13T15:43:54
+---
+=============================================================( containers )=====
+[*] ctn000 Are we in a docker container?................................... nope
+[*] ctn010 Is docker available?............................................ nope
+[!] ctn020 Is the user a member of the 'docker' group?..................... nope
+[*] ctn200 Are we in a lxc container?...................................... nope
+[!] ctn210 Is the user a member of any lxc/lxd group?...................... nope
+==============================================================( processes )=====
+[i] pro000 Waiting for the process monitor to finish....................... yes!
+---
+76 09:29 881 waldo sleep 1
+74 09:29 732 waldo sleep 1
+32 09:29 6146 waldo sleep 1
+69 09:29 6006 waldo sleep 1
+73 09:29 585 waldo sleep 1
+75 09:29 5854 waldo sleep 1
+73 09:29 5707 waldo sleep 1
+74 09:29 5557 waldo sleep 1
+76 09:29 5403 waldo sleep 1
+72 09:29 5256 waldo sleep 1
+82 09:29 5089 waldo sleep 1
+71 09:29 4944 waldo sleep 1
+72 09:29 4797 waldo sleep 1
+67 09:29 4660 waldo sleep 1
+80 09:29 4498 waldo sleep 1
+73 09:29 4350 waldo sleep 1
+77 09:29 426 waldo sleep 1
+71 09:29 4206 waldo sleep 1
+74 09:29 4057 waldo sleep 1
+76 09:29 3903 waldo sleep 1
+72 09:29 3753 waldo sleep 1
+71 09:29 3608 waldo sleep 1
+64 09:29 3479 waldo sleep 1
+65 09:29 3348 waldo sleep 1
+76 09:29 32741 waldo sleep 1
+59 09:29 32620 waldo sleep 1
+65 09:29 32488 waldo sleep 1
+105 09:29 32276 waldo sleep 1
+67 09:29 32140 waldo sleep 1
+72 09:29 3201 waldo sleep 1
+72 09:29 31993 waldo sleep 1
+75 09:29 3047 waldo sleep 1
+80 09:29 2884 waldo sleep 1
+69 09:29 2740 waldo sleep 1
+75 09:29 2584 waldo sleep 1
+72 09:29 2439 waldo sleep 1
+73 09:29 2291 waldo sleep 1
+78 09:29 2133 waldo sleep 1
+65 09:29 1993 waldo sleep 1
+79 09:29 1805 waldo sleep 1
+75 09:29 1649 waldo sleep 1
+71 09:29 1498 waldo sleep 1
+79 09:29 1329 waldo sleep 1
+72 09:29 1181 waldo sleep 1
+71 09:29 1036 waldo sleep 1
+77 09:28 31836 waldo sleep 1
+81 09:28 31671 waldo sleep 1
+77 09:28 31515 waldo sleep 1
+83 09:28 31348 waldo sleep 1
+80 09:28 31186 waldo sleep 1
+780 09:28 31149 root /usr/sbin/exim4 -Mc 1kuuGN-0007Rg-HN
+79 09:28 31024 waldo sleep 1
+79 09:28 30863 waldo sleep 1
+84 09:28 30692 waldo sleep 1
+79 09:28 30531 waldo sleep 1
+85 09:28 30358 waldo sleep 1
+85 09:28 30185 waldo sleep 1
+89 09:28 30004 waldo sleep 1
+111 09:28 29779 waldo sleep 1
+4383 09:28 29778 waldo /bin/sh ./lse.sh -l2
+21 09:28 29715 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *dockerenv* -exec ls -la {} ;
+21 09:28 29713 waldo /bin/sh ./lse.sh -l2
+3 09:28 29702 waldo apache2 -v
+3 09:28 29701 waldo /bin/sh ./lse.sh -l2
+21 09:28 29602 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *.htpasswd -print -exec cat {} ;
+21 09:28 29601 waldo /bin/sh ./lse.sh -l2
+2 09:28 29593 waldo /usr/sbin/apache2 -M
+2 09:28 29591 waldo /bin/sh /usr/sbin/apache2ctl -M
+2 09:28 29590 waldo /bin/sh ./lse.sh -l2
+21 09:28 29428 waldo sleep 0.2
+21 09:28 29426 waldo grep -i listening on lo
+21 09:28 29425 waldo /bin/sh ./lse.sh -l2
+21 09:28 29424 waldo /bin/sh ./lse.sh -l2
+5 09:28 29345 waldo /bin/sh ./lse.sh -l2
+1 09:28 29257 waldo grep -v root
+1 09:28 29256 waldo /bin/sh ./lse.sh -l2
+1 09:28 29255 waldo /bin/sh ./lse.sh -l2
+1 09:28 29228 waldo find /etc -iname hosts.equiv -exec ls -la {} ; -exec cat {} ;
+1 09:28 29227 waldo /bin/sh ./lse.sh -l2
+12 09:28 29199 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name *id_dsa* -o -name *id_rsa* -o -name known_hosts -o -name authorized_hosts -o -name authorized_keys ) -exec ls -la {} ;
+12 09:28 29198 waldo /bin/sh ./lse.sh -l2
+15 09:28 29152 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -user waldo -type f -exec ls -al {} ;
+15 09:28 29151 waldo /bin/sh ./lse.sh -l2
+10 09:28 29127 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /usr/lib -prune -o -path /usr/share -prune -o -regextype egrep -iregex .*(backup|dump|cop(y|ies)|bak|bkp)[^/]*\.(sql|tgz|tar|zip)?\.?(gz|xz|bzip2|bz2|lz|7z)? -readable -type f -exec ls -al {} ;
+10 09:28 29126 waldo /bin/sh ./lse.sh -l2
+15 09:28 29082 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name .git -o -name .svn ) -print
+15 09:28 29081 waldo /bin/sh ./lse.sh -l2
+3 09:28 29019 waldo /bin/sh ./lse.sh -l2
+10 09:28 28740 waldo /bin/sh ./lse.sh -l2
+13 09:28 28710 waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -perm -4000 -type f -print
+13 09:28 28709 waldo /bin/sh ./lse.sh -l2
+11 09:28 28683 waldo find / -path /home/waldo -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -type l -user waldo -print
+17 09:28 28647 waldo find / -path /home/waldo -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -not -type l -writable -print
+29 09:28 28646 waldo /bin/sh ./lse.sh -l2
+1 09:28 28634 root sudo -S -l
+1 09:28 28631 waldo /bin/sh ./lse.sh -l2
+896 09:28 28624 root sendmail -t
+5 09:28 28624 Debian-exim sendmail -t
+901 09:28 28622 root sudo -nS -l
+5 09:28 28594 waldo sort -u
+5 09:28 28593 waldo tr : 
+
+5 09:28 28592 waldo cut -d= -f2
+5 09:28 28591 waldo tr -d "'
+5 09:28 28590 waldo grep -ERh ^ *PATH=.* /etc/
+5 09:28 28589 waldo /bin/sh ./lse.sh -l2
+5 09:28 28588 waldo /bin/sh ./lse.sh -l2
+4613 09:28 28559 waldo sed s/^ *//g
+4613 09:28 28558 waldo uniq -c
+4613 09:28 28557 waldo sort -Mr
+4613 09:28 28555 waldo grep -v ^START
+4613 09:28 28553 waldo sed s/^ *//g
+4613 09:28 28550 waldo /bin/sh ./lse.sh -l2
+4613 09:28 28549 waldo sleep 60
+4613 09:28 28547 waldo /bin/sh ./lse.sh -l2
+4613 09:28 28546 waldo /bin/sh ./lse.sh -l2
+4613 09:28 28529 waldo tee lse.txt
+4613 09:28 28528 waldo /bin/sh ./lse.sh -l2
+4613 09:17 18805 waldo gpg-agent --homedir /home/waldo/.gnupg --use-standard-socket --daemon
+4613 09:03 3781 waldo -bash
+4613 09:03 3780 waldo sshd: waldo@pts/0
+4613 08:48 3147 ftpuser sshd: ftpuser
+4613 07:18 2771 www-data /usr/sbin/apache2 -k start
+4613 07:18 2768 www-data /usr/sbin/apache2 -k start
+4613 07:18 2764 www-data /usr/sbin/apache2 -k start
+4613 07:18 2757 www-data /usr/sbin/apache2 -k start
+4613 07:18 2751 www-data /usr/sbin/apache2 -k start
+4613 07:18 2695 www-data /usr/sbin/apache2 -k start
+4613 07:18 2685 www-data /usr/sbin/apache2 -k start
+4613 07:18 2648 www-data /usr/sbin/apache2 -k start
+4613 07:18 2646 www-data /usr/sbin/apache2 -k start
+4613 07:17 2638 www-data /usr/sbin/apache2 -k start
+4613 05:48 2053 root /sbin/getty 38400 tty6
+4613 05:48 2052 root /sbin/getty 38400 tty5
+4613 05:48 2051 root /sbin/getty 38400 tty4
+4613 05:48 2050 root /sbin/getty 38400 tty3
+4613 05:48 2049 root /sbin/getty 38400 tty2
+4613 05:48 2048 root /sbin/getty 38400 tty1
+4613 05:48 1890 root logger -t mysqld -p daemon error
+4613 05:48 1889 mysql /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/x86_64-linux-gnu/mariadb18/plugin --user=mysql --skip-log-error --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock --port=3306
+4613 05:48 1742 root /bin/bash /usr/bin/mysqld_safe
+4613 05:48 1710 root /usr/sbin/sshd
+4613 05:48 1676 root /usr/sbin/elogind -D
+4613 05:48 1654 root /usr/sbin/bluetoothd
+4613 05:48 1622 root /usr/sbin/irqbalance --pid=/var/run/irqbalance.pid
+4613 05:48 1618 messagebus /usr/bin/dbus-daemon --system
+4613 05:48 1598 root /usr/sbin/cron
+4613 05:48 1567 root /usr/sbin/vsftpd
+4613 05:48 1485 root /usr/sbin/apache2 -k start
+4613 05:48 1438 root /usr/bin/vmtoolsd
+4613 05:48 1383 root /usr/sbin/rsyslogd
+4613 05:47 439 root udevd --daemon
+---
+[i] pro001 Retrieving process binaries..................................... yes!
+---
+/usr/sbin/apache2
+/bin/bash
+/bin/sh
+/usr/bin/cut
+/usr/bin/find
+/usr/bin/gpg-agent
+/bin/grep
+/usr/bin/logger
+/sbin/getty
+/bin/sed
+/usr/sbin/sendmail
+/bin/sleep
+/usr/bin/sort
+/usr/bin/sudo
+/usr/bin/tee
+/usr/bin/tr
+/sbin/udevd
+/usr/bin/uniq
+/usr/bin/dbus-daemon
+/usr/bin/vmtoolsd
+/usr/sbin/apache2
+/usr/sbin/bluetoothd
+/usr/sbin/cron
+/usr/sbin/elogind
+/usr/sbin/exim4
+/usr/sbin/irqbalance
+/usr/sbin/mysqld
+/usr/sbin/rsyslogd
+/usr/sbin/sshd
+/usr/sbin/vsftpd
+---
+[i] pro002 Retrieving process users........................................ yes!
+---
+Debian-exim
+ftpuser
+messagebus
+mysql
+root
+waldo
+www-data
+---
+[!] pro010 Can we write in any process binary?............................. nope
+[*] pro020 Processes running with root permissions......................... yes!
+---
+START      PID     USER COMMAND
+09:28    31149     root /usr/sbin/exim4 -Mc 1kuuGN-0007Rg-HN
+09:28    28634     root sudo -S -l
+09:28    28624     root sendmail -t
+09:28    28622     root sudo -nS -l
+05:48     2053     root /sbin/getty 38400 tty6
+05:48     2052     root /sbin/getty 38400 tty5
+05:48     2051     root /sbin/getty 38400 tty4
+05:48     2050     root /sbin/getty 38400 tty3
+05:48     2049     root /sbin/getty 38400 tty2
+05:48     2048     root /sbin/getty 38400 tty1
+05:48     1890     root logger -t mysqld -p daemon error
+05:48     1742     root /bin/bash /usr/bin/mysqld_safe
+05:48     1710     root /usr/sbin/sshd
+05:48     1676     root /usr/sbin/elogind -D
+05:48     1654     root /usr/sbin/bluetoothd
+05:48     1622     root /usr/sbin/irqbalance --pid=/var/run/irqbalance.pid
+05:48     1598     root /usr/sbin/cron
+05:48     1567     root /usr/sbin/vsftpd
+05:48     1485     root /usr/sbin/apache2 -k start
+05:48     1438     root /usr/bin/vmtoolsd
+05:48     1383     root /usr/sbin/rsyslogd
+05:47      439     root udevd --daemon
+---
+[*] pro030 Processes running by non-root users with shell.................. yes!
+---
+
+
+------ waldo ------
+
+
+START      PID     USER COMMAND
+09:29      881    waldo sleep 1
+09:29      732    waldo sleep 1
+09:29     6146    waldo sleep 1
+09:29     6006    waldo sleep 1
+09:29      585    waldo sleep 1
+09:29     5854    waldo sleep 1
+09:29     5707    waldo sleep 1
+09:29     5557    waldo sleep 1
+09:29     5403    waldo sleep 1
+09:29     5256    waldo sleep 1
+09:29     5089    waldo sleep 1
+09:29     4944    waldo sleep 1
+09:29     4797    waldo sleep 1
+09:29     4660    waldo sleep 1
+09:29     4498    waldo sleep 1
+09:29     4350    waldo sleep 1
+09:29      426    waldo sleep 1
+09:29     4206    waldo sleep 1
+09:29     4057    waldo sleep 1
+09:29     3903    waldo sleep 1
+09:29     3753    waldo sleep 1
+09:29     3608    waldo sleep 1
+09:29     3479    waldo sleep 1
+09:29     3348    waldo sleep 1
+09:29    32741    waldo sleep 1
+09:29    32620    waldo sleep 1
+09:29    32488    waldo sleep 1
+09:29    32276    waldo sleep 1
+09:29    32140    waldo sleep 1
+09:29     3201    waldo sleep 1
+09:29    31993    waldo sleep 1
+09:29     3047    waldo sleep 1
+09:29     2884    waldo sleep 1
+09:29     2740    waldo sleep 1
+09:29     2584    waldo sleep 1
+09:29     2439    waldo sleep 1
+09:29     2291    waldo sleep 1
+09:29     2133    waldo sleep 1
+09:29     1993    waldo sleep 1
+09:29     1805    waldo sleep 1
+09:29     1649    waldo sleep 1
+09:29     1498    waldo sleep 1
+09:29     1329    waldo sleep 1
+09:29     1181    waldo sleep 1
+09:29     1036    waldo sleep 1
+09:28    31836    waldo sleep 1
+09:28    31671    waldo sleep 1
+09:28    31515    waldo sleep 1
+09:28    31348    waldo sleep 1
+09:28    31186    waldo sleep 1
+09:28    31024    waldo sleep 1
+09:28    30863    waldo sleep 1
+09:28    30692    waldo sleep 1
+09:28    30531    waldo sleep 1
+09:28    30358    waldo sleep 1
+09:28    30185    waldo sleep 1
+09:28    30004    waldo sleep 1
+09:28    29779    waldo sleep 1
+09:28    29778    waldo /bin/sh ./lse.sh -l2
+09:28    29715    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *dockerenv* -exec ls -la {} ;
+09:28    29713    waldo /bin/sh ./lse.sh -l2
+09:28    29702    waldo apache2 -v
+09:28    29701    waldo /bin/sh ./lse.sh -l2
+09:28    29602    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *.htpasswd -print -exec cat {} ;
+09:28    29601    waldo /bin/sh ./lse.sh -l2
+09:28    29593    waldo /usr/sbin/apache2 -M
+09:28    29591    waldo /bin/sh /usr/sbin/apache2ctl -M
+09:28    29590    waldo /bin/sh ./lse.sh -l2
+09:28    29428    waldo sleep 0.2
+09:28    29426    waldo grep -i listening on lo
+09:28    29425    waldo /bin/sh ./lse.sh -l2
+09:28    29424    waldo /bin/sh ./lse.sh -l2
+09:28    29345    waldo /bin/sh ./lse.sh -l2
+09:28    29257    waldo grep -v root
+09:28    29256    waldo /bin/sh ./lse.sh -l2
+09:28    29255    waldo /bin/sh ./lse.sh -l2
+09:28    29228    waldo find /etc -iname hosts.equiv -exec ls -la {} ; -exec cat {} ;
+09:28    29227    waldo /bin/sh ./lse.sh -l2
+09:28    29199    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name *id_dsa* -o -name *id_rsa* -o -name known_hosts -o -name authorized_hosts -o -name authorized_keys ) -exec ls -la {} ;
+09:28    29198    waldo /bin/sh ./lse.sh -l2
+09:28    29152    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -user waldo -type f -exec ls -al {} ;
+09:28    29151    waldo /bin/sh ./lse.sh -l2
+09:28    29127    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /usr/lib -prune -o -path /usr/share -prune -o -regextype egrep -iregex .*(backup|dump|cop(y|ies)|bak|bkp)[^/]*\.(sql|tgz|tar|zip)?\.?(gz|xz|bzip2|bz2|lz|7z)? -readable -type f -exec ls -al {} ;
+09:28    29126    waldo /bin/sh ./lse.sh -l2
+09:28    29082    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name .git -o -name .svn ) -print
+09:28    29081    waldo /bin/sh ./lse.sh -l2
+09:28    29019    waldo /bin/sh ./lse.sh -l2
+09:28    28740    waldo /bin/sh ./lse.sh -l2
+09:28    28710    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -perm -4000 -type f -print
+09:28    28709    waldo /bin/sh ./lse.sh -l2
+09:28    28683    waldo find / -path /home/waldo -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -type l -user waldo -print
+09:28    28647    waldo find / -path /home/waldo -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -not -type l -writable -print
+09:28    28646    waldo /bin/sh ./lse.sh -l2
+09:28    28631    waldo /bin/sh ./lse.sh -l2
+09:28    28594    waldo sort -u
+09:28    28593    waldo tr : 
+09:28    28592    waldo cut -d= -f2
+09:28    28591    waldo tr -d "'
+09:28    28590    waldo grep -ERh ^ *PATH=.* /etc/
+09:28    28589    waldo /bin/sh ./lse.sh -l2
+09:28    28588    waldo /bin/sh ./lse.sh -l2
+09:28    28559    waldo sed s/^ *//g
+09:28    28558    waldo uniq -c
+09:28    28557    waldo sort -Mr
+09:28    28555    waldo grep -v ^START
+09:28    28553    waldo sed s/^ *//g
+09:28    28550    waldo /bin/sh ./lse.sh -l2
+09:28    28549    waldo sleep 60
+09:28    28547    waldo /bin/sh ./lse.sh -l2
+09:28    28546    waldo /bin/sh ./lse.sh -l2
+09:28    28529    waldo tee lse.txt
+09:28    28528    waldo /bin/sh ./lse.sh -l2
+09:17    18805    waldo gpg-agent --homedir /home/waldo/.gnupg --use-standard-socket --daemon
+09:03     3781    waldo -bash
+09:03     3780    waldo sshd: waldo@pts/0
+---
+[i] pro500 Running processes............................................... yes!
+---
+START      PID     USER COMMAND
+09:29      881    waldo sleep 1
+09:29      732    waldo sleep 1
+09:29     6146    waldo sleep 1
+09:29     6006    waldo sleep 1
+09:29      585    waldo sleep 1
+09:29     5854    waldo sleep 1
+09:29     5707    waldo sleep 1
+09:29     5557    waldo sleep 1
+09:29     5403    waldo sleep 1
+09:29     5256    waldo sleep 1
+09:29     5089    waldo sleep 1
+09:29     4944    waldo sleep 1
+09:29     4797    waldo sleep 1
+09:29     4660    waldo sleep 1
+09:29     4498    waldo sleep 1
+09:29     4350    waldo sleep 1
+09:29      426    waldo sleep 1
+09:29     4206    waldo sleep 1
+09:29     4057    waldo sleep 1
+09:29     3903    waldo sleep 1
+09:29     3753    waldo sleep 1
+09:29     3608    waldo sleep 1
+09:29     3479    waldo sleep 1
+09:29     3348    waldo sleep 1
+09:29    32741    waldo sleep 1
+09:29    32620    waldo sleep 1
+09:29    32488    waldo sleep 1
+09:29    32276    waldo sleep 1
+09:29    32140    waldo sleep 1
+09:29     3201    waldo sleep 1
+09:29    31993    waldo sleep 1
+09:29     3047    waldo sleep 1
+09:29     2884    waldo sleep 1
+09:29     2740    waldo sleep 1
+09:29     2584    waldo sleep 1
+09:29     2439    waldo sleep 1
+09:29     2291    waldo sleep 1
+09:29     2133    waldo sleep 1
+09:29     1993    waldo sleep 1
+09:29     1805    waldo sleep 1
+09:29     1649    waldo sleep 1
+09:29     1498    waldo sleep 1
+09:29     1329    waldo sleep 1
+09:29     1181    waldo sleep 1
+09:29     1036    waldo sleep 1
+09:28    31836    waldo sleep 1
+09:28    31671    waldo sleep 1
+09:28    31515    waldo sleep 1
+09:28    31348    waldo sleep 1
+09:28    31186    waldo sleep 1
+09:28    31149     root /usr/sbin/exim4 -Mc 1kuuGN-0007Rg-HN
+09:28    31024    waldo sleep 1
+09:28    30863    waldo sleep 1
+09:28    30692    waldo sleep 1
+09:28    30531    waldo sleep 1
+09:28    30358    waldo sleep 1
+09:28    30185    waldo sleep 1
+09:28    30004    waldo sleep 1
+09:28    29779    waldo sleep 1
+09:28    29778    waldo /bin/sh ./lse.sh -l2
+09:28    29715    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *dockerenv* -exec ls -la {} ;
+09:28    29713    waldo /bin/sh ./lse.sh -l2
+09:28    29702    waldo apache2 -v
+09:28    29701    waldo /bin/sh ./lse.sh -l2
+09:28    29602    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *.htpasswd -print -exec cat {} ;
+09:28    29601    waldo /bin/sh ./lse.sh -l2
+09:28    29593    waldo /usr/sbin/apache2 -M
+09:28    29591    waldo /bin/sh /usr/sbin/apache2ctl -M
+09:28    29590    waldo /bin/sh ./lse.sh -l2
+09:28    29428    waldo sleep 0.2
+09:28    29426    waldo grep -i listening on lo
+09:28    29425    waldo /bin/sh ./lse.sh -l2
+09:28    29424    waldo /bin/sh ./lse.sh -l2
+09:28    29345    waldo /bin/sh ./lse.sh -l2
+09:28    29257    waldo grep -v root
+09:28    29256    waldo /bin/sh ./lse.sh -l2
+09:28    29255    waldo /bin/sh ./lse.sh -l2
+09:28    29228    waldo find /etc -iname hosts.equiv -exec ls -la {} ; -exec cat {} ;
+09:28    29227    waldo /bin/sh ./lse.sh -l2
+09:28    29199    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name *id_dsa* -o -name *id_rsa* -o -name known_hosts -o -name authorized_hosts -o -name authorized_keys ) -exec ls -la {} ;
+09:28    29198    waldo /bin/sh ./lse.sh -l2
+09:28    29152    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -user waldo -type f -exec ls -al {} ;
+09:28    29151    waldo /bin/sh ./lse.sh -l2
+09:28    29127    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /usr/lib -prune -o -path /usr/share -prune -o -regextype egrep -iregex .*(backup|dump|cop(y|ies)|bak|bkp)[^/]*\.(sql|tgz|tar|zip)?\.?(gz|xz|bzip2|bz2|lz|7z)? -readable -type f -exec ls -al {} ;
+09:28    29126    waldo /bin/sh ./lse.sh -l2
+09:28    29082    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name .git -o -name .svn ) -print
+09:28    29081    waldo /bin/sh ./lse.sh -l2
+09:28    29019    waldo /bin/sh ./lse.sh -l2
+09:28    28740    waldo /bin/sh ./lse.sh -l2
+09:28    28710    waldo find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -perm -4000 -type f -print
+09:28    28709    waldo /bin/sh ./lse.sh -l2
+09:28    28683    waldo find / -path /home/waldo -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -type l -user waldo -print
+09:28    28647    waldo find / -path /home/waldo -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -not -type l -writable -print
+09:28    28646    waldo /bin/sh ./lse.sh -l2
+09:28    28634     root sudo -S -l
+09:28    28631    waldo /bin/sh ./lse.sh -l2
+09:28    28624     root sendmail -t
+09:28    28624 Debian-exim sendmail -t
+09:28    28622     root sudo -nS -l
+09:28    28594    waldo sort -u
+09:28    28593    waldo tr : 
+09:28    28592    waldo cut -d= -f2
+09:28    28591    waldo tr -d "'
+09:28    28590    waldo grep -ERh ^ *PATH=.* /etc/
+09:28    28589    waldo /bin/sh ./lse.sh -l2
+09:28    28588    waldo /bin/sh ./lse.sh -l2
+09:28    28559    waldo sed s/^ *//g
+09:28    28558    waldo uniq -c
+09:28    28557    waldo sort -Mr
+09:28    28555    waldo grep -v ^START
+09:28    28553    waldo sed s/^ *//g
+09:28    28550    waldo /bin/sh ./lse.sh -l2
+09:28    28549    waldo sleep 60
+09:28    28547    waldo /bin/sh ./lse.sh -l2
+09:28    28546    waldo /bin/sh ./lse.sh -l2
+09:28    28529    waldo tee lse.txt
+09:28    28528    waldo /bin/sh ./lse.sh -l2
+09:17    18805    waldo gpg-agent --homedir /home/waldo/.gnupg --use-standard-socket --daemon
+09:03     3781    waldo -bash
+09:03     3780    waldo sshd: waldo@pts/0
+08:48     3147  ftpuser sshd: ftpuser
+07:18     2771 www-data /usr/sbin/apache2 -k start
+07:18     2768 www-data /usr/sbin/apache2 -k start
+07:18     2764 www-data /usr/sbin/apache2 -k start
+07:18     2757 www-data /usr/sbin/apache2 -k start
+07:18     2751 www-data /usr/sbin/apache2 -k start
+07:18     2695 www-data /usr/sbin/apache2 -k start
+07:18     2685 www-data /usr/sbin/apache2 -k start
+07:18     2648 www-data /usr/sbin/apache2 -k start
+07:18     2646 www-data /usr/sbin/apache2 -k start
+07:17     2638 www-data /usr/sbin/apache2 -k start
+05:48     2053     root /sbin/getty 38400 tty6
+05:48     2052     root /sbin/getty 38400 tty5
+05:48     2051     root /sbin/getty 38400 tty4
+05:48     2050     root /sbin/getty 38400 tty3
+05:48     2049     root /sbin/getty 38400 tty2
+05:48     2048     root /sbin/getty 38400 tty1
+05:48     1890     root logger -t mysqld -p daemon error
+05:48     1889    mysql /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/x86_64-linux-gnu/mariadb18/plugin --user=mysql --skip-log-error --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock --port=3306
+05:48     1742     root /bin/bash /usr/bin/mysqld_safe
+05:48     1710     root /usr/sbin/sshd
+05:48     1676     root /usr/sbin/elogind -D
+05:48     1654     root /usr/sbin/bluetoothd
+05:48     1622     root /usr/sbin/irqbalance --pid=/var/run/irqbalance.pid
+05:48     1618 messagebus /usr/bin/dbus-daemon --system
+05:48     1598     root /usr/sbin/cron
+05:48     1567     root /usr/sbin/vsftpd
+05:48     1485     root /usr/sbin/apache2 -k start
+05:48     1438     root /usr/bin/vmtoolsd
+05:48     1383     root /usr/sbin/rsyslogd
+05:47      439     root udevd --daemon
+---
+[i] pro510 Running process binaries and permissions........................ yes!
+---
+-rwxr-xr-x 1 root root  1099016 May 15  2017 /bin/bash
+-rwxr-xr-x 1 root root   215360 Jan 23  2017 /bin/grep
+-rwxr-xr-x 1 root root   105808 Feb  4  2017 /bin/sed
+lrwxrwxrwx 1 root root        4 Jan 24  2017 /bin/sh -> dash
+-rwxr-xr-x 1 root root    35592 Feb 22  2017 /bin/sleep
+lrwxrwxrwx 1 root root        6 May  4  2018 /sbin/getty -> agetty
+-rwxr-xr-x 1 root root   331984 Apr  6  2018 /sbin/udevd
+-rwxr-xr-x 1 root root    43880 Feb 22  2017 /usr/bin/cut
+-rwxr-xr-x 1 root root   223224 Jun 26  2019 /usr/bin/dbus-daemon
+-rwxr-xr-x 1 root root   221768 Feb 18  2017 /usr/bin/find
+-rwxr-xr-x 1 root root   385672 Feb  7  2019 /usr/bin/gpg-agent
+-rwxr-xr-x 1 root root    44440 May  4  2018 /usr/bin/logger
+-rwxr-xr-x 1 root root   110096 Feb 22  2017 /usr/bin/sort
+-rwsr-xr-x 1 root root   140944 Jan 31  2020 /usr/bin/sudo
+-rwxr-xr-x 1 root root    35656 Feb 22  2017 /usr/bin/tee
+-rwxr-xr-x 1 root root    47912 Feb 22  2017 /usr/bin/tr
+-rwxr-xr-x 1 root root    43880 Feb 22  2017 /usr/bin/uniq
+-rwxr-xr-x 1 root root    48656 Apr  5  2019 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   666760 Oct 13  2019 /usr/sbin/apache2
+-rwxr-xr-x 1 root root   666760 Oct 13  2019 /usr/sbin/apache2
+lrwxrwxrwx 1 root root       27 Mar 22  2020 /usr/sbin/bluetoothd -> ../lib/bluetooth/bluetoothd
+-rwxr-xr-x 1 root root    48616 Oct  7  2017 /usr/sbin/cron
+-rwxr-xr-x 1 root root   638328 Feb 22  2018 /usr/sbin/elogind
+-rwsr-xr-x 1 root root  1019656 Sep  3  2019 /usr/sbin/exim4
+-rwxr-xr-x 1 root root    56712 Mar 10  2017 /usr/sbin/irqbalance
+-rwxr-xr-x 1 root root 17886280 Jan 30  2020 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root   641416 Jan 14  2018 /usr/sbin/rsyslogd
+lrwxrwxrwx 1 root root        5 Sep  3  2019 /usr/sbin/sendmail -> exim4
+-rwxr-xr-x 1 root root   791024 Jul 15  2019 /usr/sbin/sshd
+-rwxr-xr-x 1 root root   160008 Sep 21  2016 /usr/sbin/vsftpd
+---
+
+==================================( FINISHED )==================================
