@@ -1,0 +1,474 @@
+root@kali:~/CTF/HTB/Fuse# nmap -Pn -n -sS -p- 10.10.10.193
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-16 18:30 +08
+Nmap scan report for 10.10.10.193
+Host is up (0.0072s latency).
+Not shown: 65514 filtered ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49666/tcp open  unknown
+49667/tcp open  unknown
+49675/tcp open  unknown
+49676/tcp open  unknown
+49680/tcp open  unknown
+49694/tcp open  unknown
+49700/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 106.80 seconds
+
+root@kali:~/CTF/HTB/Fuse# nmap -Pn -n -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5985,9389,49666,49667,49675,49676,49680,49694,49700 --script=vuln,discovery 10.10.10.193 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-16 18:42 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.193
+Host is up (0.0083s latency).
+
+PORT      STATE SERVICE      VERSION
+53/tcp    open  domain       Simple DNS Plus
+|_dns-nsec-enum: Can't determine domain for host 10.10.10.193; use dns-nsec-enum.domains script arg.
+|_dns-nsec3-enum: Can't determine domain for host 10.10.10.193; use dns-nsec3-enum.domains script arg.
+80/tcp    open  http         Microsoft IIS httpd 10.0
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 160.87ms; min: 153.19ms; max: 172.12ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 16 Jan 2021 10:56:52 GMT; -17m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Length: 103
+|   Content-Type: text/html
+|   Last-Modified: Sat, 30 May 2020 00:01:51 GMT
+|   Accept-Ranges: bytes
+|   ETag: "2c834e851536d61:0"
+|   Server: Microsoft-IIS/10.0
+|   Date: Sat, 16 Jan 2021 10:57:14 GMT
+|   Connection: close
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Site doesn't have a title (text/html).
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+88/tcp    open  kerberos-sec Microsoft Windows Kerberos (server time: 2021-01-16 10:56:04Z)
+135/tcp   open  msrpc        Microsoft Windows RPC
+139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+389/tcp   open  ldap         Microsoft Windows Active Directory LDAP (Domain: fabricorp.local, Site: Default-First-Site-Name)
+| ldap-rootdse:
+| LDAP Results
+|   <ROOT>
+|       currentTime: 20210116105659.0Z
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=fabricorp,DC=local
+|       dsServiceName: CN=NTDS Settings,CN=FUSE,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=fabricorp,DC=local
+|       namingContexts: DC=fabricorp,DC=local
+|       namingContexts: CN=Configuration,DC=fabricorp,DC=local
+|       namingContexts: CN=Schema,CN=Configuration,DC=fabricorp,DC=local
+|       namingContexts: DC=DomainDnsZones,DC=fabricorp,DC=local
+|       namingContexts: DC=ForestDnsZones,DC=fabricorp,DC=local
+|       defaultNamingContext: DC=fabricorp,DC=local
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=fabricorp,DC=local
+|       configurationNamingContext: CN=Configuration,DC=fabricorp,DC=local
+|       rootDomainNamingContext: DC=fabricorp,DC=local
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       highestCommittedUSN: 143593
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       dnsHostName: Fuse.fabricorp.local
+|       ldapServiceName: fabricorp.local:fuse$@FABRICORP.LOCAL
+|       serverName: CN=FUSE,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=fabricorp,DC=local
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       isSynchronized: TRUE
+|       isGlobalCatalogReady: TRUE
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|_      domainControllerFunctionality: 7
+|_sslv2-drown:
+445/tcp   open  microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: FABRICORP)
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+464/tcp   open  kpasswd5?
+593/tcp   open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+636/tcp   open  tcpwrapped
+|_sslv2-drown:
+3268/tcp  open  ldap         Microsoft Windows Active Directory LDAP (Domain: fabricorp.local, Site: Default-First-Site-Name)
+| ldap-rootdse:
+| LDAP Results
+|   <ROOT>
+|       currentTime: 20210116105707.0Z
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=fabricorp,DC=local
+|       dsServiceName: CN=NTDS Settings,CN=FUSE,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=fabricorp,DC=local
+|       namingContexts: DC=fabricorp,DC=local
+|       namingContexts: CN=Configuration,DC=fabricorp,DC=local
+|       namingContexts: CN=Schema,CN=Configuration,DC=fabricorp,DC=local
+|       namingContexts: DC=DomainDnsZones,DC=fabricorp,DC=local
+|       namingContexts: DC=ForestDnsZones,DC=fabricorp,DC=local
+|       defaultNamingContext: DC=fabricorp,DC=local
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=fabricorp,DC=local
+|       configurationNamingContext: CN=Configuration,DC=fabricorp,DC=local
+|       rootDomainNamingContext: DC=fabricorp,DC=local
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       highestCommittedUSN: 143602
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       dnsHostName: Fuse.fabricorp.local
+|       ldapServiceName: fabricorp.local:fuse$@FABRICORP.LOCAL
+|       serverName: CN=FUSE,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=fabricorp,DC=local
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       isSynchronized: TRUE
+|       isGlobalCatalogReady: TRUE
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|_      domainControllerFunctionality: 7
+|_sslv2-drown:
+3269/tcp  open  tcpwrapped
+|_sslv2-drown:
+5985/tcp  open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 375.87ms; min: 158.25ms; max: 1233.51ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 16 Jan 2021 10:56:52 GMT; -17m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.193
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.193:5985/
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sat, 16 Jan 2021 10:57:08 GMT
+|   Connection: close
+|   Content-Length: 315
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator:
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester:
+|   Status for browser useragent: 404
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+9389/tcp  open  mc-nmf       .NET Message Framing
+49666/tcp open  msrpc        Microsoft Windows RPC
+49667/tcp open  msrpc        Microsoft Windows RPC
+49675/tcp open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+49676/tcp open  msrpc        Microsoft Windows RPC
+49680/tcp open  msrpc        Microsoft Windows RPC
+49694/tcp open  msrpc        Microsoft Windows RPC
+49700/tcp open  msrpc        Microsoft Windows RPC
+Service Info: Host: FUSE; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.193"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: NT_STATUS_ACCESS_DENIED
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 53    0       21071.10   28361.50  0.0%
+| 80    0       12436.90   4393.80   0.0%
+| 88    0       12226.80   4405.32   0.0%
+| 135   0       11587.50   4493.18   0.0%
+| 139   0       12113.00   3957.80   0.0%
+| 389   0       12910.80   3543.89   0.0%
+| 445   0       11003.20   3966.39   0.0%
+|_464   0       12317.70   4334.00   0.0%
+| smb-enum-shares:
+|   note: ERROR: Enumerating shares failed, guessing at common ones (NT_STATUS_ACCESS_DENIED)
+|   account_used: <blank>
+|   \\10.10.10.193\ADMIN$:
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.193\C$:
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.193\IPC$:
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: READ
+|   \\10.10.10.193\NETLOGON:
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.193\PRINT$:
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|_    Anonymous access: <none>
+| smb-mbenum:
+|_  ERROR: Call to Browser Service failed with status = 2184
+| smb-os-discovery:
+|   OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)
+|   Computer name: Fuse
+|   NetBIOS computer name: FUSE\x00
+|   Domain name: fabricorp.local
+|   Forest name: fabricorp.local
+|   FQDN: Fuse.fabricorp.local
+|_  System time: 2021-01-16T02:57:16-08:00
+| smb-protocols:
+|   dialects:
+|     NT LM 0.12 (SMBv1) [dangerous, but default]
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+| smb-security-mode:
+|   account_used: <blank>
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: required
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: NT_STATUS_ACCESS_DENIED
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled and required
+| smb2-time:
+|   date: 2021-01-16T10:57:17
+|_  start_date: 2021-01-16T10:39:21
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 348.98 seconds
