@@ -1,0 +1,1041 @@
+root@kali:~/CTF/HTB/Tabby# nmap -Pn -n -sS -p- 10.10.10.194 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-30 18:05 +08
+Nmap scan report for 10.10.10.194
+Host is up (0.0063s latency).
+Not shown: 65532 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+8080/tcp open  http-proxy
+
+Nmap done: 1 IP address (1 host up) scanned in 9.44 seconds
+root@kali:~/CTF/HTB/Tabby# nmap -Pn -n -sV -p22,80,8080 --script=vuln,discovery 10.10.10.194 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-30 18:06 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.194
+Host is up (0.014s latency).
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_8.2p1 Ubuntu-4
+| ssh-hostkey:
+|   3072 45:3c:34:14:35:56:23:95:d6:83:4e:26:de:c6:5b:d9 (RSA)
+|   256 89:79:3a:9c:88:b0:5c:ce:4b:79:b1:02:23:4b:44:a6 (ECDSA)
+|_  256 1e:e7:b9:55:dd:25:8f:72:56:e8:8e:65:d5:19:b0:8d (ED25519)
+| ssh2-enum-algos:
+|   kex_algorithms: (9)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp   open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-chrono: Request times for /; avg: 261.63ms; min: 225.84ms; max: 294.20ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.194
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 28
+|     Comment:
+|         /*
+|         jQuery Waypoints - v2.0.3
+|         Copyright (c) 2011-2013 Caleb Troughton
+|         Dual licensed under the MIT license and GPL license.
+|         https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 45
+|     Comment:
+|
+|         //Smooth scroll
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 100
+|     Comment:
+|         /* fix for flashing background */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 68
+|     Comment:
+|
+|         //        autoplay: false,
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 3
+|     Comment:
+|         <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 407
+|     Comment:
+|         /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 103
+|     Comment:
+|          //alert(batas);
+|
+|     Path: http://10.10.10.194:80/assets/css/bootstrap.min.css
+|     Line number: 5
+|     Comment:
+|         /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 58
+|     Comment:
+|         <!-- Collect the nav links, forms, and other content for toggling -->
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 94
+|     Comment:
+|
+|         //            }
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 355
+|     Comment:
+|         <!-- STRAT SCROLL TO TOP -->
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 184
+|     Comment:
+|         /*
+|          *    Owl Carousel - Video Plugin
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 12
+|     Comment:
+|
+|         //     ---------------------------------------------*/
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 1
+|     Comment:
+|         /*
+|
+|         Author: Bootstrapthemes
+|         Author URI: http://bootstrapthemes.co
+|
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 308
+|     Comment:
+|         /*
+|         Animate.css
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 81
+|     Comment:
+|         /* position relative and z-index fix webkit rendering fonts issue */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 88
+|     Comment:
+|
+|         //            lineCap: 'square',
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 17
+|     Comment:
+|          // Only stub undefined methods.
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 14
+|     Comment:
+|         <!--<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>-->
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 34
+|     Comment:
+|         <!--[if lt IE 8]>
+|                     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+|                 <![endif]-->
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 62
+|     Comment:
+|         /**
+|          * Copyright (c) 2007-2014 Ariel Flesler - aflesler<a>gmail<d>com | http://flesler.blogspot.com
+|          * Licensed under MIT
+|          * @author Ariel Flesler
+|          * @version 1.4.12
+|          */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 2
+|     Comment:
+|         <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+|
+|     Path: http://10.10.10.194:80/assets/css/responsive.css
+|     Line number: 20
+|     Comment:
+|         /* Portrait tablets and small desktops */
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 787
+|     Comment:
+|         /* scrollup */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 10
+|     Comment:
+|         /*---------------------------------------------*
+|         //     * Mobile menu
+|         //     ---------------------------------------------*/
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 66
+|     Comment:
+|
+|         //    $('.slider').owlCarousel({
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 242
+|     Comment:
+|         /*
+|          *    Default theme - Owl Carousel CSS File
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js
+|     Line number: 1
+|     Comment:
+|         /* Modernizr 2.8.3 (Custom Build) | MIT & BSD
+|          * Build: http://modernizr.com/download/#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-mq-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 92
+|     Comment:
+|
+|         //            onStep: function (from, to, percent) {
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 191
+|     Comment:
+|         /*.home-wrap h1,*/
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 4
+|     Comment:
+|         <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 742
+|     Comment:
+|         /* footer section */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 84
+|     Comment:
+|
+|         //    $('.chart').easyPieChart({
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 45
+|     Comment:
+|
+|         //        time: 2000
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 689
+|     Comment:
+|         /* Call us section */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 5
+|     Comment:
+|         <!--[if gt IE 8]><!-->
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 636
+|     Comment:
+|         /* Pricing Section Css */
+|
+|     Path: http://10.10.10.194:80/assets/css/responsive.css
+|     Line number: 8
+|     Comment:
+|         /* Portrait tablets and medium desktops */
+|
+|     Path: http://10.10.10.194:80/assets/css/responsive.css
+|     Line number: 3
+|     Comment:
+|         /*
+|         Author: XpeedStudio
+|         Author URI: http://themeforest.net/user/XpeedStudio/portfolio
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 10
+|     Comment:
+|
+|         //    /*---------------------------------------------*
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 618
+|     Comment:
+|         /* sewsstory section */
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 37
+|     Comment:
+|
+|         //OWL Carousel
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 594
+|     Comment:
+|         /* overflow: hidden; */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 46
+|     Comment:
+|         <!-- Brand and toggle get grouped for better mobile display -->
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 591
+|     Comment:
+|         /* Home Section */
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 495
+|     Comment:
+|         /* navbar section */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 52
+|     Comment:
+|         /*---------------------------------------------*
+|              * WOW
+|              ---------------------------------------------*/
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 7
+|     Comment:
+|         /* ==========================================================================
+|            Author's custom styles
+|            ========================================================================== */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 5
+|     Comment:
+|         <!--<![endif]-->
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 476
+|     Comment:
+|         /*padding*/
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 112
+|     Comment:
+|
+|         // scroll Up
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 43
+|     Comment:
+|
+|         //    $('.statistic-counter').counterUp({
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 39
+|     Comment:
+|         /*---------------------------------------------*
+|              * Counter
+|              ---------------------------------------------*/
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 14
+|     Comment:
+|         /*!
+|          *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
+|          *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/css/fonticons.css
+|     Line number: 22
+|     Comment:
+|         /* Better Font Rendering =========== */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 62
+|     Comment:
+|
+|         //    /* ---------------------------------------------------------------------
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 28
+|     Comment:
+|         <!--Theme Responsive css-->
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 147
+|     Comment:
+|         /*font-family: 'roboto', sans-serif;*/
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 164
+|     Comment:
+|         /* No Js */
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 296
+|     Comment:
+|         /*
+|         Separator
+|         */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 19
+|     Comment:
+|         <!--        <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">-->
+|
+|     Path: http://10.10.10.194:80/assets/css/responsive.css
+|     Line number: 66
+|     Comment:
+|         /* Landscape phones and smaller */
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 229
+|     Comment:
+|         /*
+|         Section
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 91
+|     Comment:
+|         /*    direction: rtl;*/
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 25
+|     Comment:
+|         /*==========================================
+|         PRE LOADER
+|         ==========================================*/
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 82
+|     Comment:
+|         /*! WOW - v1.0.2 - 2014-09-24
+|         * Copyright (c) 2014 Matthieu Aussaguel; Licensed MIT */
+|
+|     Path: http://10.10.10.194:80/assets/js/vendor/jquery-1.11.2.min.js
+|     Line number: 1
+|     Comment:
+|         /*! jQuery v1.11.2 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 76
+|     Comment:
+|
+|         //               ],
+|
+|     Path: http://10.10.10.194:80/assets/js/jquery.mixitup.min.js
+|     Line number: 1
+|     Comment:
+|         /**!
+|          * MixItUp v2.1.11
+|          *
+|          * @copyright Copyright 2015 KunkaLabs Limited.
+|          * @author    KunkaLabs Limited.
+|          * @link      https://mixitup.kunkalabs.com
+|          *
+|          * @license   Commercial use requires a commercial license.
+|          *            https://mixitup.kunkalabs.com/licenses/
+|          *
+|          *            Non-commercial use permitted under terms of CC-BY-NC license.
+|          *            http://creativecommons.org/licenses/by-nc/3.0/
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/jquery.easypiechart.min.js
+|     Line number: 1
+|     Comment:
+|         /**!
+|          * easyPieChart
+|          * Lightweight plugin to render simple, animated and retina optimized pie charts
+|          *
+|          * @license
+|          * @author Robert Fleischmann <rendro87@gmail.com> (http://robert-fleischmann.de)
+|          * @version 2.1.5
+|          **/
+|
+|     Path: http://10.10.10.194:80/assets/css/responsive.css
+|     Line number: 35
+|     Comment:
+|         /* Landscape phones and portrait tablets */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 38
+|     Comment:
+|         <!--Home page style-->
+|
+|     Path: http://10.10.10.194:80/assets/css/font-awesome.min.css
+|     Line number: 1
+|     Comment:
+|         /*!
+|          *  Font Awesome 4.4.0 by @davegandy - http://fontawesome.io - @fontawesome
+|          *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 72
+|     Comment:
+|         /*!
+|         * jquery.counterup.js 1.0
+|         *
+|         * Copyright 2013, Benjamin Intal http://gambit.ph @bfintal
+|         * Released under the GPL v2 License
+|         *
+|         * Date: Nov 26, 2013
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 24
+|     Comment:
+|
+|         // Place any jQuery/helper plugins in here.
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 52
+|     Comment:
+|
+|         //LocalScroll
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 24
+|     Comment:
+|         /*
+|          *  Owl Carousel - Animate Plugin
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 53
+|     Comment:
+|         /**
+|          * Copyright (c) 2007-2014 Ariel Flesler - aflesler<a>gmail<d>com | http://flesler.blogspot.com
+|          * Licensed under MIT
+|          * @author Ariel Flesler
+|          * @version 1.3.5
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/vendor/isotope.min.js
+|     Line number: 1
+|     Comment:
+|
+|
+|
+|
+|
+|
+|
+|
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/css/bootstrap.min.css
+|     Line number: 5
+|     Comment:
+|         /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 419
+|     Comment:
+|         /*.btn-default:active, .btn-default:hover  {
+|             background: transparent;
+|         }*/
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 87
+|     Comment:
+|         <!--End of header -->
+|
+|     Path: http://10.10.10.194:80/assets/js/vendor/bootstrap.min.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * Bootstrap v3.3.1 (http://getbootstrap.com)
+|          * Copyright 2011-2014 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 72
+|     Comment:
+|
+|         //        nav:false,
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 74
+|     Comment:
+|         /*
+|          *  Core Owl Carousel CSS File
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 90
+|     Comment:
+|
+|         //            trackColor: false,
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 424
+|     Comment:
+|         /*
+|         Extra height css
+|         */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 126
+|     Comment:
+|         <!-- End of Banner Section -->
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 98
+|     Comment:
+|
+|         // main-menu-scroll
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 86
+|     Comment:
+|
+|         //            scaleColor: false,
+|
+|     Path: http://10.10.10.194:80/assets/js/plugins.js
+|     Line number: 48
+|     Comment:
+|
+|         //!function(){function e(){T.keyboardSupport&&f("keydown",a)}function t(){if(!z&&document.body){z=!0;var t=document.body,o=document.documentElement,n=window.innerHeight,a=t.scrollHeight;if(X=document.compatMode.indexOf("CSS")>=0?o:t,S=t,e(),top!=self)C=!0;else if(a>n&&(t.offsetHeight<=n||o.offsetHeight<=n)){var r=document.createElement("div");r.style.cssText="position:absolute; z-index:-10000; top:0; left:0; right:0; height:"+X.scrollHeight+"px",document.body.appendChild(r);var l,i=function(){l||(l=setTimeout(function(){H||(r.style.height="0",r.style.height=X.scrollHeight+"px",l=null)},500))};setTimeout(i,10);var c={attributes:!0,childList:!0,characterData:!1};if(x=new j(i),x.observe(t,c),X.offsetHeight<=n){var u=document.createElement("div");u.style.clear="both",t.appendChild(u)}}T.fixedBackground||H||(t.style.backgroundAttachment="scroll",o.style.backgroundAttachment="scroll")}}function o(e,t,o){if(h(t,o),1!=T.accelerationMax){var n=Date.now(),a=n-N;if(a<T.accelerationDelta){var r=(1+50/a)/2;r>1&&(r=Math.min(r,T.accelerationMax),t*=r,o*=r)}N=Date.now()}if(A.push({x:t,y:o,lastX:0>t?.99:-.99,lastY:0>o?.99:-.99,start:Date.now()}),!K){var l=e===document.body,i=function(n){for(var a=Date.now(),r=0,c=0,u=0;u<A.length;u++){var d=A[u],s=a-d.start,f=s>=T.animationTime,m=f?1:s/T.animationTime;T.pulseAlgorithm&&(m=y(m));var h=d.x*m-d.lastX>>0,p=d.y*m-d.lastY>>0;r+=h,c+=p,d.lastX+=h,d.lastY+=p,f&&(A.splice(u,1),u--)}l?window.scrollBy(r,c):(r&&(e.scrollLeft+=r),c&&(e.scrollTop+=c)),t||o||(A=[]),A.length?P(i,e,1e3/T.frameRate+1):K=!1};P(i,e,0),K=!0}}function n(e){z||t();var n=e.target,a=c(n);if(!a||e.defaultPrevented||e.ctrlKey)return!0;if(m(S,"embed")||m(n,"embed")&&/\.pdf/i.test(n.src)||m(S,"object"))return!0;var r=-e.wheelDeltaX||e.deltaX||0,i=-e.wheelDeltaY||e.deltaY||0;return B&&(e.wheelDeltaX&&w(e.wheelDeltaX,120)&&(r=-120*(e.wheelDeltaX/Math.abs(e.wheelDeltaX))),e.wheelDeltaY&&w(e.wheelDeltaY,120)&&(i=-120*(e.wheelDeltaY/Math.abs(e.wheelDeltaY)))),r||i||(i=-e.wheelDelta||0),1===e.deltaMode&&(r*=40,i*=40),!T.touchpadSupport&&p(i)?!0:(Math.abs(r)>1.2&&(r*=T.stepSize/120),Math.abs(i)>1.2&&(i*=T.stepSize/120),o(a,r,i),e.preventDefault(),void l())}function a(e){var t=e.target,n=e.ctrlKey||e.altKey||e.metaKey||e.shiftKey&&e.keyCode!==L.spacebar;document.contains(S)||(S=document.activeElement);var a=/^(textarea|select|embed|object)$/i,r=/^(button|submit|radio|checkbox|file|color|image)$/i;if(a.test(t.nodeName)||m(t,"input")&&!r.test(t.type)||m(S,"video")||b(e)||t.isContentEditable||e.defaultPrevented||n)return!0;if((m(t,"button")||m(t,"input")&&r.test(t.type))&&e.keyCode===L.spacebar)return!0;var i,u=0,d=0,s=c(S),f=s.clientHeight;switch(s==document.body&&(f=window.innerHeight),e.keyCode){case L.up:d=-T.arrowScroll;break;case L.down:d=T.arrowScroll;break;case L.spacebar:i=e.shiftKey?1:-1,d=-i*f*.9;break;case L.pageup:d=.9*-f;break;case L.pagedown:d=.9*f;break;case L.home:d=-s.scrollTop;break;case L.end:var h=s.scrollHeight-s.scrollTop-f;d=h>0?h+10:0;break;case L.left:u=-T.arrowScroll;break;case L.right:u=T.arrowScroll;break;default:return!0}o(s,u,d),e.preventDefault(),l()}function r(e){S=e.target}function l(){clearTimeout(D),D=setInterval(function(){O={}},1e3)}function i(e,t){for(var o=e.length;o--;)O[q(e[o])]=t;return t}function c(e){var t=[],o=document.body,n=X.scrollHeight;do{var a=O[q(e)];if(a)return i(t,a);if(t.push(e),n===e.scrollHeight){var r=d(X)&&d(o),l=r||s(X);if(C&&u(X)||!C&&l)return i(t,F())}else if(u(e)&&s(e))return i(t,e)}while(e=e.parentElement)}function u(e){return e.clientHeight+10<e.scrollHeight}function d(e){var t=getComputedStyle(e,"").getPropertyValue("overflow-y");return"hidden"!==t}function s(e){var t=getComputedStyle(e,"").getPropertyValue("overflow-y");return"scroll"===t||"auto"===t}function f(e,t){window.addEventListener(e,t,!1)}function m(e,t){return(e.nodeName||"").toLowerCase()===t.toLowerCase()}function h(e,t){e=e>0?1:-1,t=t>0?1:-1,(E.x!==e||E.y!==t)&&(E.x=e,E.y=t,A=[],N=0)}function p(e){return e?(Y.length||(Y=[e,e,e]),e=Math.abs(e),Y.push(e),Y.shift(),clearTimeout(k),k=setTimeout(function(){window.localStorage&&(localStorage.SS_deltaBuffer=Y.join(","))},1e3),!v(120)&&!v(100)):void 0}function w(e,t){return Math.floor(e/t)==e/t}function v(e){return w(Y[0],e)&&w(Y[1],e)&&w(Y[2],e)}function b(e){var t=e.target,o=!1;if(-1!=document.URL.indexOf("www.youtube.com/watch"))do if(o=t.classList&&t.classList.contains("html5-video-controls"))break;while(t=t.parentNode);return o}function g(e){var t,o,n;return e*=T.pulseScale,1>e?t=e-(1-Math.exp(-e)):(o=Math.exp(-1),e-=1,n=1-Math.exp(-e),t=o+n*(1-o)),t*T.pulseNormalize}function y(e){return e>=1?1:0>=e?0:(1==T.pulseNormalize&&(T.pulseNormalize/=g(1)),g(e))}var S,x,D,k,M={frameRate:150,animationTime:400,stepSize:120,pulseAlgorithm:!0,pulseScale:4,pulseNormalize:1,accelerationDelta:20,accelerationMax:1,keyboardSupport:!0,arrowScroll:50,touchpadSupport:!0,fixedBackground:!0,excluded:""},T=M,H=!1,C=!1,E={x:0,y:0},z=!1,X=document.documentElement,Y=[],B=/^Mac/.test(navigator.platform),L={left:37,up:38,right:39,down:40,spacebar:32,pageup:33,pagedown:34,end:35,home:36},T=M,A=[],K=!1,N=Date.now(),q=function(){var e=0;return function(t){return t.uniqueID||(t.uniqueID=e++)}}(),O={};window.localStorage&&localStorage.SS_deltaBuffer&&(Y=localStorage.SS_deltaBuffer.split(","));var R,P=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||function(e,t,o){window.setTimeout(e,o||1e3/60)}}(),j=window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver,F=function(){var e;return function(){if(!e){var t=document.createElement("div");t.style.cssText="height:10000px;width:1px;",document.body.appendChild(t);var o=document.body.scrollTop;document.documentElement.scrollTop;window.scrollBy(0,1),e=document.body.scrollTop!=o?document.body:document.documentElement,window.scrollBy(0,-1),document.body.removeChild(t)}return e}}();"onwheel"in document.createElement("div")?R="wheel":"onmousewheel"in document.createElement("div")&&(R="mousewheel"),R&&(f(R,n),f("mousedown",r),f("load",t))}();
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 63
+|     Comment:
+|         /*
+|          *    Owl Carousel - Auto Height Plugin
+|          */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 117
+|     Comment:
+|         <!--<img src="assets/images/homepc.png" alt="" />-->
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 78
+|     Comment:
+|
+|         //
+|
+|     Path: http://10.10.10.194:80/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js
+|     Line number: 6
+|     Comment:
+|         /*! Respond.js v1.4.2: min/max-width media query polyfill
+|          * Copyright 2014 Scott Jehl
+|          * Licensed under MIT
+|          * http://j.mp/respondjs */
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 25
+|     Comment:
+|         <!--Theme custom css -->
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 22
+|     Comment:
+|         <!--For Plugins external css-->
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 74
+|     Comment:
+|
+|         //                    "<i class='lnr lnr-chevron-left'></i>",
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 305
+|     Comment:
+|
+|         // END OWL Carousel
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 9
+|     Comment:
+|
+|         //Animate CSS
+|
+|     Path: http://10.10.10.194:80/
+|     Line number: 225
+|     Comment:
+|         <!-- End of Pricing Section -->
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 31
+|     Comment:
+|         /*---------------------------------------------*
+|         //     * STICKY scroll
+|         //     ---------------------------------------------*/
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 127
+|     Comment:
+|          //End
+|
+|     Path: http://10.10.10.194:80/assets/css/style.css
+|     Line number: 307
+|     Comment:
+|         /*
+|         Button
+|         */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 64
+|     Comment:
+|
+|         //     ---------------------------------------------------------------------= */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 57
+|     Comment:
+|          // trigger animations on mobile devices (default is true)
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 70
+|     Comment:
+|
+|         //        loop: true,
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 169
+|     Comment:
+|         /*
+|          *    Owl Carousel - Lazy Load Plugin
+|          */
+|
+|     Path: http://10.10.10.194:80/assets/js/main.js
+|     Line number: 62
+|     Comment:
+|         /* ---------------------------------------------------------------------
+|         //     Carousel
+|         //     ---------------------------------------------------------------------= */
+|
+|     Path: http://10.10.10.194:80/assets/css/plugins.css
+|     Line number: 315
+|     Comment:
+|         /*!
+|         Animate.css - http://daneden.me/animate
+|         Licensed under the MIT license
+|
+|         Copyright (c) 2013 Daniel Eden
+|
+|         Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+|
+|         The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+|
+|         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+|_        */
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 30 Jan 2021 10:20:25 GMT; -16m33s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.194
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://10.10.10.194:80/assets/css/bootstrap-theme.min.css
+|_http-feed: Couldn't find any feeds.
+| http-grep:
+|   (2) http://10.10.10.194:80/:
+|     (2) email:
+|       + sales@megahosting.htb
+|       + sales@megahosting.com
+|   (1) http://10.10.10.194:80/assets/js/jquery.easypiechart.min.js:
+|     (1) email:
+|       + rendro87@gmail.com
+|   (1) http://10.10.10.194:80/assets/css/bootstrap-theme.min.css:
+|     (1) ip:
+|_      + 10.10.10.194
+| http-headers:
+|   Date: Sat, 30 Jan 2021 10:20:26 GMT
+|   Server: Apache/2.4.41 (Ubuntu)
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1; png: 1
+|     /assets/css/
+|       css: 6
+|     /assets/fonts/
+|       css: 1
+|     /assets/js/
+|       js: 4
+|     /assets/js/vendor/
+|       js: 4
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /assets/js/vendor/
+|   Total files found (by extension):
+|_    Other: 1; css: 7; js: 8; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Mega Hosting
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+8080/tcp open  http    Apache Tomcat
+| http-auth-finder:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.194
+|   url                                         method
+|   http://10.10.10.194:8080/host-manager/html  HTTP: Basic
+|_  http://10.10.10.194:8080/manager/html       HTTP: Basic
+|_http-chrono: Request times for /; avg: 1074.67ms; min: 210.17ms; max: 4206.04ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.194
+|
+|     Path: http://10.10.10.194:8080/docs/jndi-datasource-examples-howto.html
+|     Line number: 630
+|     Comment:
+|          // and the connection is returned to the pool
+|
+|     Path: http://10.10.10.194:8080/docs/rewrite.html
+|     Line number: 7
+|     Comment:
+|          // Workaround for IE <= 11
+|
+|     Path: http://10.10.10.194:8080/docs/rewrite.html
+|     Line number: 400
+|     Comment:
+|          // calls setParameters(String) with the first parameter if there is only one
+|
+|     Path: http://10.10.10.194:8080/docs/jndi-datasource-examples-howto.html
+|     Line number: 398
+|     Comment:
+|
+|         //etc.</code></pre></div>
+|
+|     Path: http://10.10.10.194:8080/docs/jndi-datasource-examples-howto.html
+|     Line number: 625
+|     Comment:
+|          // Make sure we don't close it twice
+|
+|     Path: http://10.10.10.194:8080/manager/html
+|     Line number: 6
+|     Comment:
+|         <!--
+|             BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;font-size:12px;}
+|             H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;}
+|             PRE, TT {border: 1px dotted #525D76}
+|             A {color : black;}A.name {color : black;}
+|             -->
+|
+|     Path: http://10.10.10.194:8080/docs/jndi-datasource-examples-howto.html
+|     Line number: 629
+|     Comment:
+|          // Always make sure result sets and statements are closed,
+|
+|     Path: http://10.10.10.194:8080/docs/rewrite.html
+|     Line number: 428
+|     Comment:
+|          // nothing to be done here
+|
+|     Path: http://10.10.10.194:8080/docs/jndi-datasource-examples-howto.html
+|     Line number: 613
+|     Comment:
+|          // Or PreparedStatement if needed
+|
+|     Path: http://10.10.10.194:8080/docs/api/index.html
+|     Line number: 1
+|     Comment:
+|         <!--
+|           Licensed to the Apache Software Foundation (ASF) under one or more
+|           contributor license agreements.  See the NOTICE file distributed with
+|           this work for additional information regarding copyright ownership.
+|           The ASF licenses this file to You under the Apache License, Version 2.0
+|           (the "License"); you may not use this file except in compliance with
+|           the License.  You may obtain a copy of the License at
+|
+|               http://www.apache.org/licenses/LICENSE-2.0
+|
+|           Unless required by applicable law or agreed to in writing, software
+|           distributed under the License is distributed on an "AS IS" BASIS,
+|           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+|           See the License for the specific language governing permissions and
+|           limitations under the License.
+|         -->
+|
+|     Path: http://10.10.10.194:8080/docs/jndi-datasource-examples-howto.html
+|     Line number: 624
+|     Comment:
+|          // Return to connection pool
+|
+|     Path: http://10.10.10.194:8080/docs/rewrite.html
+|     Line number: 3
+|     Comment:
+|_         // Enable strict mode
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 30 Jan 2021 10:20:26 GMT; -16m33s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /examples/: Sample scripts
+|   /manager/html/upload: Apache Tomcat (401 )
+|   /manager/html: Apache Tomcat (401 )
+|_  /docs/: Potentially interesting folder
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.194
+|   Found the following error pages:
+|
+|   Error Code: 401
+|       http://10.10.10.194:8080/host-manager/html
+|
+|   Error Code: 401
+|       http://10.10.10.194:8080/manager/html
+|
+|   Error Code: 404
+|_      http://10.10.10.194:8080/docs/extras.html
+|_http-feed: Couldn't find any feeds.
+| http-grep:
+|   (1) http://10.10.10.194:8080/docs/appdev/index.html:
+|     (1) email:
+|       + craigmcc@apache.org
+|   (2) http://10.10.10.194:8080/docs/realm-howto.html:
+|     (2) email:
+|       + j.jones@mycompany.com
+|_      + f.bloggs@mycompany.com
+| http-headers:
+|   Accept-Ranges: bytes
+|   ETag: W/"1895-1589929768022"
+|   Last-Modified: Tue, 19 May 2020 23:09:28 GMT
+|   Content-Type: text/html
+|   Content-Length: 1895
+|   Date: Sat, 30 Jan 2021 10:20:25 GMT
+|   Connection: close
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /docs/
+|       Other: 1; html: 6
+|     /docs/annotationapi/
+|       html: 1
+|     /docs/api/
+|       html: 1
+|     /docs/appdev/
+|       html: 1
+|     /docs/funcspecs/
+|       html: 1
+|     /docs/images/
+|       png: 1; svg: 1
+|     /docs/jspapi/
+|       html: 1
+|     /examples/
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /docs/funcspecs/
+|   Total files found (by extension):
+|_    Other: 3; html: 11; png: 1; svg: 1
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Apache Tomcat
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+| http-waf-detect: IDS/IPS/WAF detected:
+|_10.10.10.194:8080/?p4yl04d3=<script>alert(document.cookie)</script>
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.194"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       8174.50    4277.86  0.0%
+| 80    0       7548.50    3573.22  0.0%
+|_8080  0       7923.00    4182.44  0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 188.72 seconds
