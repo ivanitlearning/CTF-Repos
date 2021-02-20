@@ -73,7 +73,7 @@ Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 
 Then visiting http://10.10.10.209/phpinfo.php we check disable_functions and see that system() is not included.
 
-![959b5204574b4489b0239f7fab0f4d8c](Pics\959b5204574b4489b0239f7fab0f4d8c.png)
+![959b5204574b4489b0239f7fab0f4d8c](Pics/959b5204574b4489b0239f7fab0f4d8c.png)
 
 Then we can upload PHP webshell that uses system()
 
