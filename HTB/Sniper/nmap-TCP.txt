@@ -1,0 +1,1024 @@
+root@kali:~/CTF/HTB/Sniper# nmap -Pn -n -sS -p- 10.10.10.151 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-13 16:03 +08
+Nmap scan report for 10.10.10.151
+Host is up (0.0053s latency).
+Not shown: 65530 filtered ports
+PORT      STATE SERVICE
+80/tcp    open  http
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+49667/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 106.19 seconds
+
+root@kali:~/CTF/HTB/Sniper# nmap -Pn -n -sV -p80,135,139,445,49667 --script=vuln,discovery 10.10.10.151 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-13 16:07 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.151
+Host is up (0.0060s latency).
+
+PORT      STATE SERVICE       VERSION
+80/tcp    open  http          Microsoft IIS httpd 10.0
+| http-auth-finder:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.151
+|   url                                           method
+|   http://10.10.10.151:80/user/index.php         FORM
+|_  http://10.10.10.151:80/user/registration.php  FORM
+|_http-chrono: Request times for /; avg: 388.68ms; min: 185.96ms; max: 1154.09ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.151
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 322
+|     Comment:
+|          // If the start or end date exceed those allowed by the minDate or dateLimit
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1494
+|     Comment:
+|          //update the form inputs above the calendars with the new time
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1533
+|     Comment:
+|          // Set the state such that if the user goes back to using a mouse,
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 648
+|     Comment:
+|          //initialize a 6 rows x 7 columns array for the calendar
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1255
+|     Comment:
+|          //ignore dates that can't be selected
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2473
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 287
+|     Comment:
+|          //if no start/end dates set, check if an input element contains initial values
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1529
+|     Comment:
+|          // Highlight the focused input
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.css
+|     Line number: 202
+|     Comment:
+|         /*  Larger Screen Styling */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 803
+|     Comment:
+|          //grey out the dates in other months displayed at beginning and end of this calendar
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 694
+|     Comment:
+|          // Display the calendar
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1025
+|     Comment:
+|          //ignore mouse movements while an above-calendar text input has focus
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1592
+|     Comment:
+|          //hide on tab or enter
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1312
+|     Comment:
+|          // * if autoapply is enabled, and an end date was chosen, apply the selection
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 761
+|     Comment:
+|          // add week number label
+|
+|     Path: http://10.10.10.151:80/user/js/main.js
+|     Line number: 20
+|     Comment:
+|
+|             [ Validate ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 412
+|     Comment:
+|          // event listeners
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1
+|     Comment:
+|         /**
+|         * @version: 2.1.25
+|         * @author: Dan Grossman http://www.dangrossman.info/
+|         * @copyright: Copyright (c) 2012-2017 Dan Grossman. All rights reserved.
+|         * @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
+|         * @website: http://www.daterangepicker.com/
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 939
+|     Comment:
+|          // minutes
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 13
+|     Comment:
+|          // webpack server rendering
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2289
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 966
+|     Comment:
+|          // seconds
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 18
+|     Comment:
+|          //isomorphic issue
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 205
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 621
+|     Comment:
+|          //highlight any predefined range matching the current start and end dates
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 368
+|     Comment:
+|          //can't be used together for now
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1108
+|     Comment:
+|          // also support mobile devices
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 559
+|     Comment:
+|          //if both dates are visible already, do nothing
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 96
+|     Comment:
+|          //html template for the picker UI
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 92
+|     Comment:
+|          //allow setting options with data attributes
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 448
+|     Comment:
+|          // if attached to a text input, set the initial value
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 93
+|     Comment:
+|          //data-api options will be overwritten with custom javascript options
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 657
+|     Comment:
+|          //populate the calendar with date objects
+|
+|     Path: http://10.10.10.151:80/user/vendor/animate/animate.css
+|     Line number: 71
+|     Comment:
+|         /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 141
+|     Comment:
+|
+|         [ Utility ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 33
+|     Comment:
+|          //default settings for options
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2904
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2
+|     Comment:
+|
+|
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2303
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1112
+|     Comment:
+|          // and also close when focus changes to outside the picker (eg. tabbing between controls)
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1366
+|     Comment:
+|          //This is to cancel the blur event handler if the mouse was in one of the inputs
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1311
+|     Comment:
+|          // * if the time picker is enabled, apply the hour/minute/second from the select boxes to the clicked date
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2270
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 27
+|     Comment:
+|          // Browser globals
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 8
+|     Comment:
+|
+|         // Follow the UMD template https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1252
+|     Comment:
+|          //if (this.container.find('input[name=daterangepicker_start]').is(":focus") || this.container.find('input[name=daterangepicker_end]').is(":focus"))
+|
+|     Path: http://10.10.10.151:80/user/registration.php
+|     Line number: 15
+|     Comment:
+|         <!--===============================================================================================-->
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 823
+|     Comment:
+|          //highlight the currently selected end date
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2402
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2296
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 339
+|     Comment:
+|          //Support unicode chars in the range names.
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2415
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 827
+|     Comment:
+|          //highlight dates in-between the selected dates
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 166
+|     Comment:
+|          //Support unicode chars in the custom range name.
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1551
+|     Comment:
+|          // you can click another, but if you tab out without clicking anything
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1497
+|     Comment:
+|          //re-render the time pickers because changing one selection can affect what's enabled in another
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1102
+|     Comment:
+|          // Create a click proxy that is private to this instance of datepicker, for unbinding
+|
+|     Path: http://10.10.10.151:80/user/vendor/css-hamburgers/hamburgers.min.css
+|     Line number: 1
+|     Comment:
+|
+|
+|
+|
+|
+|
+|          */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1163
+|     Comment:
+|          // itself then call this.hide()
+|
+|     Path: http://10.10.10.151:80/user/vendor/jquery/jquery-3.2.1.min.js
+|     Line number: 1
+|     Comment:
+|         /*! jQuery v3.2.1 | (c) JS Foundation and other contributors | jquery.org/license */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 686
+|     Comment:
+|          //make the calendar object available to hoverDate/clickDate
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2229
+|     Comment:
+|         /* ------------------------------------ */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 865
+|     Comment:
+|          // because an end date hasn't been clicked yet
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 1
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 402
+|     Comment:
+|          //apply CSS classes and labels to buttons
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1491
+|     Comment:
+|          //update the calendars so all clickable dates reflect the new time component
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 995
+|     Comment:
+|          // AM/PM
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 1213
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 907
+|     Comment:
+|          // hours
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 157
+|     Comment:
+|
+|         [ login ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 774
+|     Comment:
+|          //grey out end dates beyond the dateLimit
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 132
+|     Comment:
+|          //
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1317
+|     Comment:
+|          //picking start
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 864
+|     Comment:
+|          // Don't bother updating the time picker if it's currently disabled
+|
+|     Path: http://10.10.10.151:80/
+|     Line number: 17
+|     Comment:
+|         <!-- Bootstrap -->
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 831
+|     Comment:
+|          //apply custom classes for this date
+|
+|     Path: http://10.10.10.151:80/user/js/main.js
+|     Line number: 69
+|     Comment:
+|
+|             [ Show pass ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 17
+|     Comment:
+|          // Node / Browserify
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 819
+|     Comment:
+|          //highlight the currently selected start date
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1418
+|     Comment:
+|          // Month must be Number for new moment versions
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.css
+|     Line number: 11
+|     Comment:
+|         /* Calendars */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1278
+|     Comment:
+|          //skip week numbers, only look at dates
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 785
+|     Comment:
+|          // add week number
+|
+|     Path: http://10.10.10.151:80/user/vendor/animate/animate.css
+|     Line number: 3
+|     Comment:
+|         /*!
+|          * animate.css -http://daneden.me/animate
+|          * Version - 3.5.2
+|          * Licensed under the MIT license - http://opensource.org/licenses/MIT
+|          *
+|          * Copyright (c) 2017 Daniel Eden
+|          */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1534
+|     Comment:
+|          // the calendars are aware we're selecting the end of the range, not
+|
+|     Path: http://10.10.10.151:80/user/vendor/select2/select2.min.js
+|     Line number: 1
+|     Comment:
+|         /*! Select2 4.0.3 | https://github.com/select2/select2/blob/master/LICENSE.md */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/moment.min.js
+|     Line number: 4
+|     Comment:
+|
+|         //! license : MIT
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1162
+|     Comment:
+|          // if the page is clicked anywhere except within the daterangerpicker/button
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1335
+|     Comment:
+|          //but the time of the end date is before the start date
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2469
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2375
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1165
+|     Comment:
+|          // ie modal dialog fix
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 799
+|     Comment:
+|          //highlight weekends
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2354
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2346
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1309
+|     Comment:
+|          // this function needs to do a few things:
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1552
+|     Comment:
+|          // or changing the input value, the old endDate should be retained
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2331
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2317
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 815
+|     Comment:
+|          //don't allow selection of date if a custom function decides it's invalid
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 45
+|     Comment:
+|         /*---------------------------------------------*/
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 5
+|     Comment:
+|
+|         [ FONT ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 631
+|     Comment:
+|          // Build the matrix of dates that will populate the calendar
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 195
+|     Comment:
+|
+|         [ Form ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1314
+|     Comment:
+|          // * if one of the inputs above the calendars was focused, cancel that manual input
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 795
+|     Comment:
+|          //highlight today's date
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1271
+|     Comment:
+|          //highlight the dates between the start date and the date being hovered as a potential end date
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 31
+|     Comment:
+|
+|         [ RESTYLE TAG ]*/
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2274
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/css/util.css
+|     Line number: 2226
+|     Comment:
+|
+|
+|         */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 88
+|     Comment:
+|          //custom options from user
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 397
+|     Comment:
+|          //swap the position of the predefined ranges if opens right
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1105
+|     Comment:
+|          // Bind global datepicker mousedown for hiding and
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/moment.min.js
+|     Line number: 2
+|     Comment:
+|
+|         //! version : 2.13.0
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1138
+|     Comment:
+|          //if a new date range was selected, invoke the user callback function
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1535
+|     Comment:
+|          // the start. This allows someone to edit the end of a date range without
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1550
+|     Comment:
+|          // text input to the second in the UI, the endDate is nulled so that
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 11
+|     Comment:
+|          // AMD. Make globaly available as well
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 323
+|     Comment:
+|          // options, shorten the range to the allowable period.
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 706
+|     Comment:
+|          // add empty cell for week number
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1313
+|     Comment:
+|          // * if single date picker mode, and time picker isn't enabled, apply the selection immediately
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 199
+|     Comment:
+|          // sanity check for bad options
+|
+|     Path: http://10.10.10.151:80/blog/index.php
+|     Line number: 76
+|     Comment:
+|         /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 811
+|     Comment:
+|          //don't allow selection of dates after the maximum date
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1536
+|     Comment:
+|          // re-selecting the beginning, by clicking on the end date input then
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 807
+|     Comment:
+|          //don't allow selection of dates before the minimum date
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1537
+|     Comment:
+|          // using the calendar.
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 276
+|     Comment:
+|          // update day names order to firstDay
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 333
+|     Comment:
+|          // If the end of the range is before the minimum or the start of the range is
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 412
+|     Comment:
+|
+|         [ Responsive ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1382
+|     Comment:
+|          //ignore times when comparing dates if time picker is not enabled
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1337
+|     Comment:
+|          // picking end
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1334
+|     Comment:
+|          //special case: clicking the same date for start/end,
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 880
+|     Comment:
+|          //Preserve the time already selected
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 346
+|     Comment:
+|
+|         [ Button ]*/
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 214
+|     Comment:
+|
+|         [ Input ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1310
+|     Comment:
+|          // * alternate between selecting a start and end date for the range,
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1258
+|     Comment:
+|          //have the text inputs above calendars reflect the date being hovered over
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 334
+|     Comment:
+|          // after the maximum, don't display this range option at all.
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1115
+|     Comment:
+|          // Reposition the picker if the window is resized while it's open
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1253
+|     Comment:
+|          //    return;
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1142
+|     Comment:
+|          //if picker is attached to a text input, update it
+|
+|     Path: http://10.10.10.151:80/user/js/main.js
+|     Line number: 6
+|     Comment:
+|
+|             [ Focus input ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1132
+|     Comment:
+|          //incomplete date selection, revert to last values
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1110
+|     Comment:
+|          // also explicitly play nice with Bootstrap dropdowns, which stopPropagation when clicking them
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 83
+|     Comment:
+|          //some state information
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 133
+|     Comment:
+|          // handle all the possible options overriding defaults
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 1549
+|     Comment:
+|          // this function has one purpose right now: if you tab from the first
+|
+|     Path: http://10.10.10.151:80/user/css/main.css
+|     Line number: 423
+|     Comment:
+|
+|         [ Alert validate ]*/
+|
+|     Path: http://10.10.10.151:80/user/vendor/daterangepicker/daterangepicker.js
+|     Line number: 773
+|     Comment:
+|_         //adjust maxDate to reflect the dateLimit setting in order to
+| http-csrf:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.151
+|   Found the following possible CSRF vulnerabilities:
+|
+|     Path: http://10.10.10.151:80/user/index.php
+|     Form id:
+|     Form action:
+|
+|     Path: http://10.10.10.151:80/user/registration.php
+|     Form id:
+|_    Form action:
+|_http-date: Sat, 13 Feb 2021 15:08:18 GMT; +6h29m59s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|_  /blog/: Blog
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-fileupload-exploiter:
+|
+|     Couldn't find a file-type field.
+|
+|_    Couldn't find a file-type field.
+| http-headers:
+|   Content-Length: 0
+|   Content-Type: text/html; charset=UTF-8
+|   Server: Microsoft-IIS/10.0
+|   X-Powered-By: PHP/7.3.1
+|   Date: Sat, 13 Feb 2021 15:08:18 GMT
+|   Connection: close
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-php-version: Version from header x-powered-by: PHP/7.3.1
+| http-referer-checker:
+| Spidering limited to: maxpagecount=30
+|   https://cdnjs.cloudflare.com:443/ajax/libs/prefixfree/1.0.7/prefixfree.min.js
+|   https://ajax.googleapis.com:443/ajax/libs/jquery/2.2.0/jquery.min.js
+|   http://use.typekit.net:80/tit4ltq.js
+|_  http://cdnjs.cloudflare.com:80/ajax/libs/jquery/2.1.3/jquery.min.js
+|_http-security-headers:
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /blog/
+|       Other: 1; php: 1
+|     /blog/css/
+|       css: 1
+|     /blog/js/
+|       js: 1
+|     /css/
+|       css: 1
+|     /images/
+|       jpg: 2; png: 3
+|     /js/
+|       js: 1
+|     /user/
+|       Other: 1; php: 1
+|     /user/css/
+|       css: 1
+|     /user/vendor/countdowntime/
+|       js: 1
+|     /user/vendor/daterangepicker/
+|       js: 1
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /user/vendor/countdowntime/
+|   Total files found (by extension):
+|_    Other: 3; css: 3; jpg: 2; js: 4; php: 2; png: 3
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Sniper Co.
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+445/tcp   open  microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+49667/tcp open  msrpc         Microsoft Windows RPC
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.151"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Random Positive Increments
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT   FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 80     0       5924.10    1043.61  0.0%
+| 135    0       5670.50    625.11   0.0%
+| 139    0       5923.20    665.35   0.0%
+| 445    0       5775.60    834.56   0.0%
+|_49667  0       5575.70    653.32   0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum:
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols:
+|   dialects:
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled but not required
+| smb2-time:
+|   date: 2021-02-13T15:08:20
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 275.29 seconds
