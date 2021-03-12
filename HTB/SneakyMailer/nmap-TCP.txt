@@ -1,0 +1,315 @@
+root@kali:~/CTF/HTB/SneakyMailer# nmap -Pn -n -sS -p- 10.10.10.197 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-20 02:05 +08
+Nmap scan report for 10.10.10.197
+Host is up (0.0072s latency).
+Not shown: 65528 closed ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+25/tcp   open  smtp
+80/tcp   open  http
+143/tcp  open  imap
+993/tcp  open  imaps
+8080/tcp open  http-proxy
+
+Nmap done: 1 IP address (1 host up) scanned in 10.22 seconds
+
+root@kali:~/CTF/HTB/SneakyMailer# nmap -Pn -n -sV -p21,22,25,80,143,993,8080 --script=vuln,discovery 10.10.10.197 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-20 02:06 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.197
+Host is up (0.013s latency).
+
+PORT     STATE SERVICE  VERSION
+21/tcp   open  ftp      vsftpd 3.0.3
+|_banner: 220 (vsFTPd 3.0.3)
+|_sslv2-drown:
+22/tcp   open  ssh      OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.9p1 Debian-10+deb10u2
+| ssh-hostkey:
+|   2048 57:c9:00:35:36:56:e6:6f:f6:de:86:40:b2:ee:3e:fd (RSA)
+|   256 d8:21:23:28:1d:b8:30:46:e2:67:2d:59:65:f0:0a:05 (ECDSA)
+|_  256 5e:4f:23:4e:d4:90:8e:e9:5e:89:74:b3:19:0c:fc:1a (ED25519)
+| ssh2-enum-algos:
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+25/tcp   open  smtp     Postfix smtpd
+|_banner: 220 debian ESMTP Postfix (Debian/GNU)
+|_smtp-commands: debian, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCOD                                                             ES, 8BITMIME, DSN, SMTPUTF8, CHUNKING,
+|_smtp-open-relay: Server doesn't seem to be an open relay, all tests failed
+| smtp-vuln-cve2010-4344:
+|_  The SMTP server is not Exim: NOT VULNERABLE
+|_sslv2-drown:
+80/tcp   open  http     nginx 1.14.2
+|_http-chrono: ERROR: Script execution failed (use -d to debug)
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Fri, 19 Feb 2021 18:06:57 GMT; -30m00s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'ht                                                             tpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Server: nginx/1.14.2
+|   Date: Fri, 19 Feb 2021 18:07:15 GMT
+|   Content-Type: text/html
+|   Content-Length: 185
+|   Connection: close
+|   Location: http://sneakycorp.htb
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: nginx/1.14.2
+| http-sitemap-generator:
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Did not follow redirect to http://sneakycorp.htb
+| http-useragent-tester:
+|   Status for browser useragent: false
+|   Redirected To: http://sneakycorp.htb
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 301
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+143/tcp  open  imap     Courier Imapd (released 2018)
+|_banner: * OK [CAPABILITY IMAP4rev1 UIDPLUS CHILDREN NAMESPACE THREAD...
+| ssl-cert: Subject: commonName=localhost/organizationName=Courier Mail Server/stateOrProvi                                                             nceName=NY/countryName=US
+| Subject Alternative Name: email:postmaster@example.com
+| Not valid before: 2020-05-14T17:14:21
+|_Not valid after:  2021-05-14T17:14:21
+|_ssl-date: TLS randomness does not represent time
+| ssl-enum-ciphers:
+|   TLSv1.0:
+|     ciphers:
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 3072) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 3072) - A
+|     compressors:
+|       NULL
+|     cipher preference: client
+|   TLSv1.1:
+|     ciphers:
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 3072) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 3072) - A
+|     compressors:
+|       NULL
+|     cipher preference: client
+|   TLSv1.2:
+|     ciphers:
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_128_CCM (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CCM (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 3072) - A
+|       TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (dh 3072) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_128_CCM (rsa 3072) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CCM (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 3072) - A
+|     compressors:
+|       NULL
+|     cipher preference: client
+|_  least strength: A
+|_sslv2-drown:
+993/tcp  open  ssl/imap Courier Imapd (released 2018)
+|_banner: * OK [CAPABILITY IMAP4rev1 UIDPLUS CHILDREN NAMESPACE THREAD...
+| ssl-cert: Subject: commonName=localhost/organizationName=Courier Mail Server/stateOrProvi                                                             nceName=NY/countryName=US
+| Subject Alternative Name: email:postmaster@example.com
+| Not valid before: 2020-05-14T17:14:21
+|_Not valid after:  2021-05-14T17:14:21
+|_ssl-date: TLS randomness does not represent time
+| ssl-enum-ciphers:
+|   TLSv1.0:
+|     ciphers:
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 3072) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 3072) - A
+|     compressors:
+|       NULL
+|     cipher preference: client
+|   TLSv1.1:
+|     ciphers:
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 3072) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 3072) - A
+|     compressors:
+|       NULL
+|     cipher preference: client
+|   TLSv1.2:
+|     ciphers:
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_128_CCM (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_CCM (dh 3072) - A
+|       TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 3072) - A
+|       TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (dh 3072) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_128_CCM (rsa 3072) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_CCM (rsa 3072) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 3072) - A
+|     compressors:
+|       NULL
+|     cipher preference: client
+|_  least strength: A
+|_sslv2-drown:
+8080/tcp open  http     nginx 1.14.2
+|_http-chrono: Request times for /; avg: 167.64ms; min: 156.11ms; max: 187.52ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Fri, 19 Feb 2021 18:07:13 GMT; -30m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'ht                                                             tpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Server: nginx/1.14.2
+|   Date: Fri, 19 Feb 2021 18:07:09 GMT
+|   Content-Type: text/html
+|   Content-Length: 612
+|   Last-Modified: Tue, 04 Dec 2018 14:52:24 GMT
+|   Connection: close
+|   ETag: "5c0694a8-264"
+|   Accept-Ranges: bytes
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: nginx/1.14.2
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Welcome to nginx!
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+| http-vuln-cve2011-3192:
+|   VULNERABLE:
+|   Apache byterange filter DoS
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2011-3192  BID:49303
+|       The Apache web server is vulnerable to a denial of service attack when numerous
+|       overlapping byte ranges are requested.
+|     Disclosure date: 2011-08-19
+|     References:
+|       https://seclists.org/fulldisclosure/2011/Aug/175
+|       https://www.securityfocus.com/bid/49303
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3192
+|_      https://www.tenable.com/plugins/nessus/55976
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: Host:  debian; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.197"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 21    0       14007.70   7553.25   0.0%
+| 22    0       12831.30   9090.77   0.0%
+| 25    0       10447.10   4946.67   0.0%
+| 80    0       12641.60   3537.21   0.0%
+| 143   0       11038.60   4233.40   0.0%
+| 993   0       15174.50   11689.24  0.0%
+|_8080  0       11974.80   3797.80   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit                                                             / .
+Nmap done: 1 IP address (1 host up) scanned in 278.33 seconds
