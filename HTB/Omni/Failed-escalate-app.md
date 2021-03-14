@@ -1,4 +1,4 @@
-# Failed RunAs for app user
+# Failed escalation to user app
 
 Tried RunAs but couldn't work
 
@@ -29,5 +29,31 @@ Help topic.
     + CategoryInfo          : OpenError: (localhost:String) [], PSRemotingTran
    sportException
     + FullyQualifiedErrorId : 1312,PSSessionStateBroken
+```
+
+Secondly I tried winrm but it failed too
+
+```text
+root@kali:~/CTF/HTB/Omni/PE# evil-winrm -i 10.10.10.204 -u app -p "mesh5143"
+
+Evil-WinRM shell v2.3
+
+Info: Establishing connection to remote endpoint
+
+Error: An error of type WinRM::WinRMHTTPTransportError happened, message is Unable to parse authorization header. Headers: {"Server"=>"Microsoft-HTTPAPI/2.0", "Date"=>"Sat, 06 Mar 2021 10:41:54 GMT", "Connection"=>"close", "Content-Length"=>"0"}
+Body:  (404).
+
+Error: Exiting with code 1
+
+root@kali:~/CTF/HTB/Omni/PE# evil-winrm -i 10.10.10.204 -u 'omni\app' -p "mesh5143"
+
+Evil-WinRM shell v2.3
+
+Info: Establishing connection to remote endpoint
+
+Error: An error of type WinRM::WinRMHTTPTransportError happened, message is Unable to parse authorization header. Headers: {"Server"=>"Microsoft-HTTPAPI/2.0", "Date"=>"Sat, 06 Mar 2021 10:42:47 GMT", "Connection"=>"close", "Content-Length"=>"0"}
+Body:  (404).
+
+Error: Exiting with code 1
 ```
 
