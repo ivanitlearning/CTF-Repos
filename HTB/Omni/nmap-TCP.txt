@@ -1,0 +1,83 @@
+root@kali:~/CTF/HTB/Omni# nmap -Pn -n -sS -p- 10.10.10.204 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-03 22:08 +08
+Nmap scan report for 10.10.10.204
+Host is up (0.0065s latency).
+Not shown: 65529 filtered ports
+PORT      STATE SERVICE
+135/tcp   open  msrpc
+5985/tcp  open  wsman
+8080/tcp  open  http-proxy
+29817/tcp open  unknown
+29819/tcp open  unknown
+29820/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 106.91 seconds
+
+root@kali:~/CTF/HTB/Omni# nmap -Pn -n -sV -p135,5985,8080,29817,29819,29820 --script=vuln,discovery 10.10.10.204 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-03 22:11 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.204
+Host is up (0.014s latency).
+
+PORT      STATE SERVICE  VERSION
+135/tcp   open  msrpc    Microsoft Windows RPC
+5985/tcp  open  upnp     Microsoft IIS httpd
+8080/tcp  open  upnp     Microsoft IIS httpd
+|_http-chrono: Request times for /; avg: 191.33ms; min: 153.92ms; max: 323.18ms
+|_http-date: Wed, 03 Mar 2021 21:12:55 GMT; +6h29m58s from local time.
+| http-headers:
+|   Content-Type: text/html; charset=us-ascii
+|   Date: Wed, 03 Mar 2021 21:12:55 GMT
+|   Connection: close
+|   Content-Length: 339
+|
+|_  (Request type: GET)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Bad Request
+| http-vhosts:
+|_128 names had status 401
+| http-waf-detect: IDS/IPS/WAF detected:
+|_10.10.10.204:8080/?p4yl04d3=<script>alert(document.cookie)</script>
+29817/tcp open  unknown
+29819/tcp open  arcserve ARCserve Discovery
+|_banner: PING\x00
+29820/tcp open  unknown
+|_banner: *LY\xA5\xFB`\x04G\xA9m\x1C\xC9}\xC8O\x12
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port29820-TCP:V=7.91%I=7%D=3/3%Time=603F992B%P=x86_64-pc-linux-gnu%r(NU
+SF:LL,10,"\*LY\xa5\xfb`\x04G\xa9m\x1c\xc9}\xc8O\x12")%r(GenericLines,10,"\
+SF:*LY\xa5\xfb`\x04G\xa9m\x1c\xc9}\xc8O\x12")%r(Help,10,"\*LY\xa5\xfb`\x04
+SF:G\xa9m\x1c\xc9}\xc8O\x12")%r(JavaRMI,10,"\*LY\xa5\xfb`\x04G\xa9m\x1c\xc
+SF:9}\xc8O\x12");
+Service Info: Host: PING; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.204"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT   FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 135    0       12528.50   3920.35   0.0%
+| 5985   0       11551.40   4353.56   0.0%
+| 8080   0       12193.00   4144.52   0.0%
+| 29817  0       19781.60   24382.86  0.0%
+| 29819  0       11333.60   4304.11   0.0%
+|_29820  0       11424.60   4657.07   0.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 224.59 seconds
