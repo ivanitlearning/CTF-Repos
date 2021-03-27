@@ -1,0 +1,40 @@
+root@kali:~/CTF/HTB/Worker# nikto -h http://10.10.10.203
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          10.10.10.203
++ Target Hostname:    10.10.10.203
++ Target Port:        80
++ Start Time:         2021-03-08 23:20:20 (GMT8)
+---------------------------------------------------------------------------
++ Server: Microsoft-IIS/10.0
++ Retrieved x-powered-by header: ASP.NET
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ Retrieved x-aspnet-version header: 4.0.30319
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ Allowed HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST
++ Public HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST
++ 7863 requests: 0 error(s) and 7 item(s) reported on remote host
++ End Time:           2021-03-08 23:23:46 (GMT8) (206 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+
+root@kali:~/CTF/HTB/Worker# gobuster dir -u http://10.10.10.203 -w /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-medium.txt -x .php,.txt,.html,.htm,.conf,.bak,.sh,.pl,.cgi.asp,aspx --timeout 50s -t 170
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://10.10.10.203
+[+] Threads:        170
+[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-medium.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Extensions:     txt,htm,conf,sh,pl,cgi.asp,aspx,php,bak,html
+[+] Timeout:        50s
+===============================================================
+2021/03/08 23:21:23 Starting gobuster
+===============================================================
+===============================================================
+2021/03/08 23:42:14 Finished
+===============================================================
