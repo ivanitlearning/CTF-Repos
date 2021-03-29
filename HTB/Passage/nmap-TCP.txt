@@ -1,0 +1,1234 @@
+root@kali:~/CTF/HTB/Passage# nmap -Pn -n -sS -p- 10.10.10.206 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-20 18:59 +08
+Nmap scan report for 10.10.10.206
+Host is up (0.0064s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 9.12 seconds
+
+root@kali:~/CTF/HTB/Passage# nmap -Pn -n -sV -p22,80 --script=vuln,discovery 10.10.10.206 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-20 19:00 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.206
+Host is up (0.014s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.2p2 Ubuntu-4
+| ssh-hostkey:
+|   2048 17:eb:9e:23:ea:23:b6:b1:bc:c6:4f:db:98:d3:d4:a1 (RSA)
+|   256 71:64:51:50:c3:7f:18:47:03:98:3e:5e:b8:10:19:fc (ECDSA)
+|_  256 fd:56:2a:f8:d0:60:a7:f1:a0:a1:47:a4:38:d6:a8:a1 (ED25519)
+| ssh2-enum-algos:
+|   kex_algorithms: (6)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-chrono: Request times for /; avg: 8748.63ms; min: 1113.62ms; max: 16274.14ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.206
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2611
+|     Comment:
+|
+|         // Sort stability
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9370
+|     Comment:
+|
+|         // defaults to document
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2609
+|     Comment:
+|
+|         // One-time assignments
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3852
+|     Comment:
+|
+|         //    Implementation Summary
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7914
+|     Comment:
+|
+|         // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5042
+|     Comment:
+|
+|         // https://code.google.com/p/chromium/issues/detail?id=470258
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1060
+|     Comment:
+|         /* Attributes
+|               ---------------------------------------------------------------------- */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2819
+|     Comment:
+|
+|         // A central reference to the root jQuery(document)
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 6515
+|     Comment:
+|         /* jshint validthis: true */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/bootstrap.min.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * Bootstrap v3.3.6 (http://getbootstrap.com)
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under the MIT license
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3117
+|     Comment:
+|         /*
+|          * Create a callback list using the following parameters:
+|          *
+|          *    options: an optional list of space-separated options that will change how
+|          *                    the callback list behaves or a more traditional option object
+|          *
+|          * By default a callback list will act like an event callback list and can be
+|          * "fired" multiple times.
+|          *
+|          * Possible options:
+|          *
+|          *    once:                   will ensure the callback list can only be fired once (like a Deferred)
+|          *
+|          *    memory:                 will keep track of previous values and will call any callback added
+|          *                                    after the list has been fired right away with the latest "memorized"
+|          *                                    values (like a Deferred)
+|          *
+|          *    unique:                 will ensure a callback can only be added once (no duplicate in the list)
+|          *
+|          *    stopOnFalse:    interrupt callings when a callback returns false
+|          *
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7219
+|     Comment:
+|
+|         // Hooks for boolean attributes
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 6265
+|     Comment:
+|
+|         // Support: Android 2.3
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5586
+|     Comment:
+|
+|         // Called only from within defaultDisplay
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9504
+|     Comment:
+|         /**
+|          * Gets a window from an element
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1466
+|     Comment:
+|         /**
+|          * Document sorting and removing duplicates
+|          * @param {ArrayLike} results
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 960
+|     Comment:
+|         /**
+|          * Returns a function to use in pseudos for input types
+|          * @param {String} type
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2936
+|     Comment:
+|
+|         // Give the init function the jQuery prototype for later instantiation
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 42
+|     Comment:
+|
+|         // the stack via arguments.caller.callee and Firefox dies if
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3430
+|     Comment:
+|         /* , ..., subordinateN */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5038
+|     Comment:
+|
+|         // Do the same for pointerenter/pointerleave and pointerover/pointerout
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2630
+|     Comment:
+|
+|         // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8104
+|     Comment:
+|         /* Handles responses to an ajax request:
+|          * - finds the right dataType (mediates between content-type and expected dataType)
+|          * - returns the corresponding response
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 896
+|     Comment:
+|         /**
+|          * Support testing using an element
+|          * @param {Function} fn Passed the created div and expects a boolean result
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2729
+|     Comment:
+|         /* jshint -W018 */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 971
+|     Comment:
+|         /**
+|          * Returns a function to use in pseudos for buttons
+|          * @param {String} type
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 917
+|     Comment:
+|         /**
+|          * Adds the same handler for all of the specified attrs
+|          * @param {String} attrs Pipe-separated list of attributes
+|          * @param {Function} handler The method that will be applied
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2725
+|     Comment:
+|
+|         // Implement the identical functionality for filter and not
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9786
+|     Comment:
+|
+|         // derived from file names, and jQuery is normally delivered in a lowercase
+|
+|     Path: http://10.10.10.206:80/index.php?do=archives
+|     Line number: 10
+|     Comment:
+|         <!-- **JS Javascripts** -->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5192
+|     Comment:
+|
+|         // Fix IE bugs, see support tests
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9782
+|     Comment:
+|
+|         // Register as a named AMD module, since jQuery can be concatenated with other
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 512
+|     Comment:
+|         /* jshint ignore: start */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 931
+|     Comment:
+|         /**
+|          * Checks document order of two siblings
+|          * @param {Element} a
+|          * @param {Element} b
+|          * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5141
+|     Comment:
+|
+|         // Replace/restore the type attribute of script elements for safe DOM manipulation
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7696
+|     Comment:
+|
+|         // Return jQuery for attributes-only inclusion
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 510
+|     Comment:
+|
+|         // unguarded in another place, it seems safer to just disable JSHint for these
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3856
+|     Comment:
+|
+|         //            paths to a single mechanism.
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1013
+|     Comment:
+|
+|         // Expose support vars for convenience
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8962
+|     Comment:
+|
+|         // Serialize an array of form elements or a set of
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/css/cosmo.min.css
+|     Line number: 11
+|     Comment:
+|         /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1016
+|     Comment:
+|         /**
+|          * Detects XML nodes
+|          * @param {Element|Object} elem An element or a document
+|          * @returns {Boolean} True iff elem is a non-HTML XML node
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1004
+|     Comment:
+|         /**
+|          * Checks a node for validity as a Sizzle context
+|          * @param {Element|Object=} context
+|          * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3858
+|     Comment:
+|
+|         //    4. _Never_ expose "private" data to user code (TODO: Drop _data, _removeData)
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3147
+|     Comment:
+|          // Flag to know if list is currently firing
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/css/cosmo.min.css
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * bootswatch v3.3.6
+|          * Homepage: http://bootswatch.com
+|          * Copyright 2012-2016 Thomas Park
+|          * Licensed under MIT
+|          * Based on Bootstrap
+|         */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7912
+|     Comment:
+|
+|         // Support: Firefox
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1071
+|     Comment:
+|         /* getElement(s)By*
+|               ---------------------------------------------------------------------- */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9684
+|     Comment:
+|
+|         // Support: Safari<7-8+, Chrome<37-44+
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7918
+|     Comment:
+|
+|         // which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1296
+|     Comment:
+|         /* Sorting
+|               ---------------------------------------------------------------------- */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3485
+|     Comment:
+|
+|         // The deferred used on DOM ready
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 508
+|     Comment:
+|
+|         // JSHint would error on this code due to the Symbol not being defined in ES5.
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 516
+|     Comment:
+|         /* jshint ignore: end */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9792
+|     Comment:
+|
+|         // AMD loader is present. jQuery is a special case. For more information, see
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3541
+|     Comment:
+|         /**
+|          * The ready event handler and self cleanup method
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8085
+|     Comment:
+|
+|         // A special extend for ajax options
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5580
+|     Comment:
+|         /**
+|          * Retrieve the actual display of a element
+|          * @param {String} name nodeName of the element
+|          * @param {Object} doc Document object
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5036
+|     Comment:
+|
+|         // Create mouseenter/leave events using mouseover/out and event-time checks
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1160
+|     Comment:
+|         /* QSA/matchesSelector
+|               ---------------------------------------------------------------------- */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9368
+|     Comment:
+|
+|         // Argument "data" should be string of html
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3583
+|     Comment:
+|
+|         // Multifunctional method to get and set values of a collection
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9197
+|     Comment:
+|
+|         // Install script dataType
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8279
+|     Comment:
+|         /*
+|                       timeout: 0,
+|                       data: null,
+|                       dataType: null,
+|                       username: null,
+|                       password: null,
+|                       cache: null,
+|                       throws: false,
+|                       traditional: false,
+|                       headers: {},
+|                       */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2939
+|     Comment:
+|
+|         // Initialize central reference
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2621
+|     Comment:
+|
+|         // Support: Webkit<537.32 - Safari 6.0.3/Chrome 25 (fixed in Chrome 27)
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2053
+|     Comment:
+|
+|         // Easy API for creating new setFilters
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2628
+|     Comment:
+|
+|         // Support: IE<8
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9823
+|     Comment:
+|
+|         // Expose jQuery and $ identifiers, even in AMD
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 867
+|     Comment:
+|         /**
+|          * Create key-value caches of limited size
+|          * @returns {function(string, object)} Returns the Object data after storing it on itself with
+|          *    property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
+|          *    deleting the oldest entry
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3854
+|     Comment:
+|
+|         //    1. Enforce API surface and semantic compatibility with 1.9.x branch
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 37
+|     Comment:
+|
+|         // Pass this if window is not defined yet
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7006
+|     Comment:
+|
+|         // Generate shortcuts for custom animations
+|
+|     Path: http://10.10.10.206:80/CuteNews/rss.php
+|     Line number: 74
+|     Comment:
+|         <!-- News Powered by CuteNews: http://cutephp.com/ -->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9686
+|     Comment:
+|
+|         // Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=29084
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1
+|     Comment:
+|         /*!
+|          * jQuery JavaScript Library v2.2.1
+|          * http://jquery.com/
+|          *
+|          * Includes Sizzle.js
+|          * http://sizzlejs.com/
+|          *
+|          * Copyright jQuery Foundation and other contributors
+|          * Released under the MIT license
+|          * http://jquery.org/license
+|          *
+|          * Date: 2016-02-22T19:11Z
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7677
+|     Comment:
+|
+|         // Radios and checkboxes getter/setter
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 6479
+|     Comment:
+|
+|         // Generate parameters to create a standard animation
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7916
+|     Comment:
+|
+|         // Support: Chrome, Safari
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2618
+|     Comment:
+|
+|         // Initialize against the default document
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 518
+|     Comment:
+|
+|         // Populate the class2type map
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5040
+|     Comment:
+|
+|         // Support: Safari 7 only
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9214
+|     Comment:
+|
+|         // Handle cache's special case and crossDomain
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1268
+|     Comment:
+|         /* Contains
+|               ---------------------------------------------------------------------- */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7999
+|     Comment:
+|         /* Prefilters
+|                * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+|                * 2) These are called:
+|                *    - BEFORE asking for a transport
+|                *    - AFTER param serialization (s.data is a string if s.processData is true)
+|                * 3) key is the dataType
+|                * 4) the catchall symbol "*" can be used
+|                * 5) execution will start with transport dataType and THEN continue down to "*" if needed
+|                */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8163
+|     Comment:
+|         /* Chain conversions given the request and the original response
+|          * Also sets the responseXXX fields on the jqXHR instance
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 887
+|     Comment:
+|         /**
+|          * Mark a function for special use by Sizzle
+|          * @param {Function} fn The function to mark
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7968
+|     Comment:
+|
+|         // Cross-browser xml parsing
+|
+|     Path: http://10.10.10.206:80/CuteNews/rss.php
+|     Line number: 9
+|     Comment:
+|         <!-- <docs>This is an RSS 2.0 file intended to be viewed in a newsreader or syndicated to another site. For more information on RSS check: http://www.feedburner.com/fb/a/aboutrss</docs> -->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/css/cosmo.min.css
+|     Line number: 11
+|     Comment:
+|         /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 6275
+|     Comment:
+|
+|         // These hooks are used by animate to expand properties
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 40
+|     Comment:
+|
+|         // Support: Firefox 18+
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 982
+|     Comment:
+|         /**
+|          * Returns a function to use in pseudos for positionals
+|          * @param {Function} fn
+|          */
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 89
+|     Comment:
+|         <!--/.media-->
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 76
+|     Comment:
+|         <!--img class="avatar img-circle" src="images/blog/avatar1.png" alt=""-->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 4264
+|     Comment:
+|
+|         // Support: IE9
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9825
+|     Comment:
+|
+|         // and CommonJS for browser emulators (#13566)
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9790
+|     Comment:
+|
+|         // Note that for maximum portability, libraries that are not jQuery should
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1569
+|     Comment:
+|         /* matches from matchExpr["CHILD"]
+|                                       1 type (only|nth|...)
+|                                       2 what (child|of-type)
+|                                       3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
+|                                       4 xn-component of xn+y argument ([+-]?\d*n|)
+|                                       5 sign of xn-component
+|                                       6 x of xn-component
+|                                       7 sign of y-component
+|                                       8 y of y-component
+|                               */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 4247
+|     Comment:
+|
+|         // We have to close these tags to support XHTML (#13200)
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9788
+|     Comment:
+|
+|         // to call noConflict to hide this version of jQuery, it will work.
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 58
+|     Comment:
+|         /* c.submit(); */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9784
+|     Comment:
+|
+|         // understands anonymous AMD modules. A named AMD is safest and most robust
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9688
+|     Comment:
+|
+|         // getComputedStyle returns percent when specified for top/left/bottom/right;
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8010
+|     Comment:
+|         /* Transports bindings
+|                * 1) key is the dataType
+|                * 2) the catchall symbol "*" can be used
+|                * 3) selection will start with transport dataType and THEN go to "*" if needed
+|                */
+|
+|     Path: http://10.10.10.206:80/index.php?do=archives
+|     Line number: 6
+|     Comment:
+|         <!-- **CSS - stylesheets** -->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9659
+|     Comment:
+|
+|         // Create scrollLeft and scrollTop methods
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9224
+|     Comment:
+|
+|         // Bind script tag hack transport
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9478
+|     Comment:
+|
+|         // Attach a bunch of functions for handling common AJAX events
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9405
+|     Comment:
+|
+|         // Keep a copy of the old load method
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9360
+|     Comment:
+|
+|         // https://bugs.webkit.org/show_bug.cgi?id=137337
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 65
+|     Comment:
+|         <!--span><i class="icon-folder-close icon-blog-mini"></i> </span-->
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 58
+|     Comment:
+|         /* -------------- Get ID in misc browser ------------------ */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9356
+|     Comment:
+|
+|         // Support: Safari 8+
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9274
+|     Comment:
+|
+|         // Detect, normalize options and install callbacks for jsonp requests
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1028
+|     Comment:
+|         /**
+|          * Sets document-related variables once based on the current document
+|          * @param {Element|Object} [doc] An element or document object to use to set the document
+|          * @returns {Object} Returns the current document
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/css/font-awesome.min.css
+|     Line number: 1
+|     Comment:
+|         /*!
+|          *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
+|          *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9264
+|     Comment:
+|
+|         // Default jsonp settings
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9358
+|     Comment:
+|
+|         // collapse sibling forms: the second one becomes a child of the first one.
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3577
+|     Comment:
+|
+|         // Kick off the DOM ready check even if the user does not
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5875
+|     Comment:
+|
+|         // Return a css property mapped to a potentially vendor prefixed property
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8024
+|     Comment:
+|
+|         // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5599
+|     Comment:
+|         /**
+|          * Try to determine the default display value of an element
+|          * @param {String} nodeName
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 5131
+|     Comment:
+|
+|         // Manipulating tables requires a tbody
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2614
+|     Comment:
+|
+|         // Support: Chrome 14-35+
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8058
+|     Comment:
+|
+|         // Base inspection function for prefilters and transports
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2499
+|     Comment:
+|         /* Internal Use Only */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 44
+|     Comment:
+|
+|         //"use strict";
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2045
+|     Comment:
+|
+|         // Add button/input type pseudos
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 4997
+|     Comment:
+|
+|         // jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/css/cosmo.min.css
+|     Line number: 7
+|     Comment:
+|         /*!
+|          * Bootstrap v3.3.6 (http://getbootstrap.com)
+|          * Copyright 2011-2015 Twitter, Inc.
+|          * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3353
+|     Comment:
+|         /* fnDone, fnFail, fnProgress */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2816
+|     Comment:
+|
+|         // Initialize a jQuery object
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9408
+|     Comment:
+|         /**
+|          * Load a url into a page
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2529
+|     Comment:
+|         /**
+|          * A low-level selection function that works with Sizzle's compiled
+|          *  selector functions
+|          * @param {String|Function} selector A selector or a pre-compiled
+|          *  selector function built with Sizzle.compile
+|          * @param {Element} context
+|          * @param {Array} [results]
+|          * @param {Array} [seed] A set of elements to match against
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 1499
+|     Comment:
+|         /**
+|          * Utility function for retrieving the text value of an array of DOM nodes
+|          * @param {Array|Element} elem
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 704
+|     Comment:
+|
+|         // Optimize for push.apply( _, NodeList )
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 7074
+|     Comment:
+|
+|         // Based off of the plugin by Clint Helfers, with permission.
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 4502
+|     Comment:
+|         /*
+|          * Helper functions for managing events -- not part of the public interface.
+|          * Props to Dean Edwards' addEvent library for many of the ideas.
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 9706
+|     Comment:
+|
+|         // Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 6471
+|     Comment:
+|
+|         // Animations created synchronously will run synchronously
+|
+|     Path: http://10.10.10.206:80/index.php?do=archives
+|     Line number: 56
+|     Comment:
+|         <!-- MAIN CONTENT, FIRST -->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 4287
+|     Comment:
+|
+|         // Mark scripts as having already been evaluated
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 6460
+|     Comment:
+|
+|         // Back Compat <1.8 extension point
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 2642
+|     Comment:
+|
+|         // Support: IE<9
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 8087
+|     Comment:
+|
+|         // Fixes #9887
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 73
+|     Comment:
+|         <!--blog-item-->
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 541
+|     Comment:
+|         /*!
+|          * Sizzle CSS Selector Engine v2.2.1
+|          * http://sizzlejs.com/
+|          *
+|          * Copyright jQuery Foundation and other contributors
+|          * Released under the MIT license
+|          * http://jquery.org/license
+|          *
+|          * Date: 2015-10-17
+|          */
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3860
+|     Comment:
+|
+|         //    6. Provide a clear path for implementation upgrade to WeakMap in 2014
+|
+|     Path: http://10.10.10.206:80/CuteNews/libs/js/jquery.js
+|     Line number: 3108
+|     Comment:
+|
+|         // Convert String-formatted options into Object-formatted ones
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Line number: 58
+|     Comment:
+|_        /* Dealing with cookies */
+| http-csrf:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.206
+|   Found the following possible CSRF vulnerabilities:
+|
+|     Path: http://10.10.10.206:80/index.php?id=1
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?id=6
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?id=8
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?id=4
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?id=3
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?id=2
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?do=rss&id=4
+|     Form id: comment-form
+|     Form action: /index.php
+|
+|     Path: http://10.10.10.206:80/index.php?do=rss&id=3
+|     Form id: comment-form
+|_    Form action: /index.php
+|_http-date: Sat, 20 Mar 2021 11:00:40 GMT; -30m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: ERROR: Script execution failed (use -d to debug)
+| http-feed:
+| Spidering limited to: maxpagecount=40; withinhost=10.10.10.206
+|   Found the following feeds:
+|_    RSS (version 2.0): http://10.10.10.206:80/CuteNews/rss.php
+| http-fileupload-exploiter:
+|
+|     Couldn't find a file-type field.
+|
+|_    Couldn't find a file-type field.
+| http-grep:
+|   (4) http://10.10.10.206:80/:
+|     (4) email:
+|       + nadav@passage.htb
+|       + kim@example.com
+|       + sid@example.com
+|       + paul@passage.htb
+|   (1) http://10.10.10.206:80/index.php?id=3:
+|     (1) email:
+|       + james@example.com
+|   (1) http://10.10.10.206:80/CuteNews/libs/js/urlAnchor.href;:
+|     (1) ip:
+|_      + 10.10.10.206
+| http-headers:
+|   Date: Sat, 20 Mar 2021 11:00:38 GMT
+|   Server: Apache/2.4.18 (Ubuntu)
+|   Set-Cookie: CUTENEWS_SESSION=csai1vn4s4vjmqfomlubhja855; path=/
+|   Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|   Cache-Control: no-store, no-cache, must-revalidate
+|   Pragma: no-cache
+|   Connection: close
+|   Content-Type: text/html; charset=UTF-8
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-phpself-xss: ERROR: Script execution failed (use -d to debug)
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers:
+|   Cache_Control:
+|     Header: Cache-Control: no-store, no-cache, must-revalidate
+|   Pragma:
+|     Header: Pragma: no-cache
+|   Expires:
+|_    Header: Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1; php: 1
+|     /CuteNews/
+|       php: 1
+|     /CuteNews/libs/css/
+|       css: 2
+|     /CuteNews/libs/js/
+|       Other: 1; js: 2
+|     /CuteNews/skins/images/
+|       gif: 1
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /CuteNews/libs/js/
+|   Total files found (by extension):
+|_    Other: 2; css: 2; gif: 1; js: 2; php: 2
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+| http-sql-injection:
+|   Possible sqli for queries:
+|     http://10.10.10.206:80/CuteNews/libs/js/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://10.10.10.206:80/CuteNews/libs/js/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://10.10.10.206:80/CuteNews/libs/js/?C=D%3bO%3dA%27%20OR%20sqlspider
+|_    http://10.10.10.206:80/CuteNews/libs/js/?C=S%3bO%3dA%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Passage News
+|_http-traceroute: ERROR: Script execution failed (use -d to debug)
+| http-useragent-tester:
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+| 119 names had status 200
+| mysql
+| ssh
+| monitor
+| mailgate
+| git
+| dhcp
+| demo
+| chat
+|_aptest
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.206"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 22    0       10571.00   4196.11  0.0%
+|_80    1       4417.00    -nan     90.0%
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 531.17 seconds
