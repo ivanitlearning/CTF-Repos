@@ -1,5 +1,5 @@
 # vhost config
-
+<!-- vim: syntax=Markdown -->
 The vhost config appears to be default
 
 ```text
