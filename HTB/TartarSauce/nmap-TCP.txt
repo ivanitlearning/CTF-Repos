@@ -1,0 +1,125 @@
+root@kali:~/CTF/HTB/TartarSauce# nmap -Pn -n -sS -p- 10.10.10.88 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-23 21:40 +08
+Nmap scan report for 10.10.10.88
+Host is up (0.0062s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 7.79 seconds
+
+root@kali:~/CTF/HTB/TartarSauce# nmap -Pn -n -sV -p80 --script=vuln,discovery 10.10.10.88 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-23 21:40 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 10.10.10.88
+Host is up (0.0055s latency).
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-chrono: Request times for /; avg: 153.71ms; min: 151.58ms; max: 157.58ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.88
+|
+|     Path: http://10.10.10.88:80/
+|     Line number: 563
+|     Comment:
+|_        <!--Carry on, nothing to see here :D-->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Tue, 23 Mar 2021 13:41:04 GMT; -30m01s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|_  /robots.txt: Robots file
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Date: Tue, 23 Mar 2021 13:41:01 GMT
+|   Server: Apache/2.4.18 (Ubuntu)
+|   Last-Modified: Wed, 21 Feb 2018 20:31:20 GMT
+|   ETag: "2a0e-565becf5ff08d"
+|   Accept-Ranges: bytes
+|   Content-Length: 10766
+|   Vary: Accept-Encoding
+|   Connection: close
+|   Content-Type: text/html
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-robots.txt: 5 disallowed entries
+| /webservices/tar/tar/source/
+| /webservices/monstra-3.0.4/ /webservices/easy-file-uploader/
+|_/webservices/developmental/ /webservices/phpmyadmin/
+|_http-security-headers:
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Landing Page
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+
+Host script results:
+|_dns-brute: Can't guess domain of "10.10.10.88"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_path-mtu: PMTU == 1500
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 333.42 seconds
