@@ -1,0 +1,1828 @@
+root@kali:~/CTF/HTB/Book/PE# cat linpeas.txt
+ Starting linpeas. Caching Writable Folders...
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v2.9.4 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs)
+  LightMangeta: Your username
+
+
+====================================( Basic information )=====================================
+OS: Linux version 5.4.1-050401-generic (kernel@tangerine) (gcc version 9.2.1 20191109 (Ubuntu 9.2.1-19ubuntu1)) #201911290555 SMP Fri Nov 29 11:03:47 UTC 2019
+User & Groups: uid=1000(reader) gid=1000(reader) groups=1000(reader)
+Hostname: book
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . DONE
+====================================( System Information )====================================
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 5.4.1-050401-generic (kernel@tangerine) (gcc version 9.2.1 20191109 (Ubuntu 9.2.1-19ubuntu1)) #201911290555 SMP Fri Nov 29 11:03:47 UTC 2019
+Distributor ID: Ubuntu
+Description:    Ubuntu 18.04.2 LTS
+Release:        18.04
+Codename:       bionic
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.21p2
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+[+] Date
+Thu Apr  8 16:46:49 UTC 2021
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+udev            946M     0  946M   0% /dev
+tmpfs           196M  1.2M  195M   1% /run
+/dev/sda2        20G  5.5G   14G  30% /
+tmpfs           980M  372K  980M   1% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           980M     0  980M   0% /sys/fs/cgroup
+/dev/loop0       90M   90M     0 100% /snap/core/8268
+/dev/loop1       92M   92M     0 100% /snap/core/8592
+tmpfs           196M     0  196M   0% /run/user/1000
+              total        used        free      shared  buff/cache   available
+Mem:        2006904      390676      210928        3264     1405300     1425248
+Swap:       2097148           0     2097148
+
+[+] CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              1
+On-line CPU(s) list: 0
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               49
+Model name:          AMD EPYC 7302P 16-Core Processor
+Stepping:            0
+CPU MHz:             2994.375
+BogoMIPS:            5988.75
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            512K
+L3 cache:            131072K
+NUMA node0 CPU(s):   0
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb xsaveopt xsavec xsaves arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+LESSOPEN=| /usr/bin/lesspipe %s
+HISTFILESIZE=0
+MAIL=/var/mail/reader
+USER=reader
+SSH_CLIENT=10.10.14.78 32944 22
+SHLVL=1
+HOME=/home/reader
+SSH_TTY=/dev/pts/2
+LOGNAME=reader
+_=./linpeas.sh
+XDG_SESSION_ID=287
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+XDG_RUNTIME_DIR=/run/user/1000
+LANG=en_US.UTF-8
+HISTSIZE=0
+SHELL=/bin/bash
+LESSCLOSE=/usr/bin/lesspipe %s %s
+SSH_CONNECTION=10.10.14.78 32944 10.10.10.176 22
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+HISTFILE=/dev/null
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a virtual machine? ..... Yes (vmware)
+[+] Is this a container? ........... No
+[+] Any running containers? ........ No
+
+
+=========================================( Devices )==========================================
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+UUID=dfaf120b-7615-423f-84ed-be660d838bf4 / ext4 defaults 0 0
+/swap.img       none    swap    sw      0       0
+
+
+====================================( Available Software )====================================
+[+] Useful software
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+/usr/bin/curl
+/bin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/python3.6
+/usr/bin/perl
+/usr/bin/php
+/usr/bin/sudo
+/usr/bin/lxc
+
+[+] Installed Compiler
+ii  g++                                       4:7.4.0-1ubuntu2.3                              amd64        GNU C++ compiler
+ii  g++-7                                     7.4.0-1ubuntu1~18.04.1                          amd64        GNU C++ compiler
+ii  gcc                                       4:7.4.0-1ubuntu2.3                              amd64        GNU C compiler
+ii  gcc-7                                     7.4.0-1ubuntu1~18.04.1                          amd64        GNU C compiler
+/usr/bin/gcc
+/usr/bin/g++
+
+
+================================( Processes, Cron, Services, Timers & Sockets )================================
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+root          1  0.1  0.4 159640  9048 ?        Ss   15:27   0:04 /sbin/init auto automatic-ubiquity noprompt
+root        490  0.1  0.5 126852 12032 ?        Ss   15:27   0:04 /usr/bin/vmtoolsd
+root        510  0.0  1.1 103384 22216 ?        S<s  15:27   0:01 /lib/systemd/systemd-journald
+root        519  0.0  0.0  97704  1928 ?        Ss   15:27   0:00 /sbin/lvmetad -f
+root        522  0.0  0.2  45412  4068 ?        Ss   15:27   0:00 /lib/systemd/systemd-udevd
+systemd+    623  0.0  0.1 141928  3168 ?        Ssl  15:27   0:00 /lib/systemd/systemd-timesyncd
+systemd+    766  0.0  0.2  71848  5068 ?        Ss   15:27   0:00 /lib/systemd/systemd-networkd
+systemd+    767  0.0  0.3  70896  6160 ?        Ss   15:27   0:00 /lib/systemd/systemd-resolved
+root        883  0.0  0.8 169100 17060 ?        Ssl  15:27   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+daemon[0m      893  0.0  0.1  28328  2228 ?        Ss   15:27   0:00 /usr/sbin/atd -f
+message+    894  0.0  0.2  50168  4576 ?        Ss   15:27   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root        914  0.0  0.0 530904  1824 ?        Ssl  15:28   0:00 /usr/bin/lxcfs /var/lib/lxcfs/
+root        916  0.0  0.2  70640  6008 ?        Ss   15:28   0:00 /lib/systemd/systemd-logind
+root        921  0.0  0.5  88220 10256 ?        Ss   15:28   0:00 /usr/bin/VGAuthService
+root        922  0.3  0.3 286996  7496 ?        Ssl  15:28   0:16 /usr/lib/accountsservice/accounts-daemon[0m
+root        923  0.0  0.1  30024  3128 ?        Ss   15:28   0:00 /usr/sbin/cron -f
+root        940  0.0  0.1  57496  3052 ?        S    15:28   0:00  \_ /usr/sbin/CRON -f
+root        951  0.0  0.0   4624   772 ?        Ss   15:28   0:00      \_ /bin/sh -c /root/reset.sh
+root        953  0.0  0.0   4624  1768 ?        S    15:28   0:00          \_ /bin/sh /root/reset.sh
+root      38055  0.0  0.0   6172   728 ?        S    16:46   0:00              \_ sleep 5
+root        925  0.0  1.2 637996 25868 ?        Ssl  15:28   0:02 /usr/lib/snapd/snapd
+syslog      926  0.0  0.2 267272  4868 ?        Ssl  15:28   0:00 /usr/sbin/rsyslogd -n
+root        934  0.0  0.0  14884  1808 tty1     Ss+  15:28   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root        961  0.0  0.3  72296  6304 ?        Ss   15:28   0:00 /usr/sbin/sshd -D
+reader    37161  0.0  0.2 108100  4528 ?        S    16:44   0:00      \_ sshd: reader@pts/2
+reader    37162  0.0  0.2  21456  5064 pts/2    Ss   16:44   0:00          \_ -bash
+reader    37572  0.2  0.1   5028  2236 pts/2    S+   16:46   0:00              \_ /bin/sh ./linpeas.sh -a
+reader    38209  0.0  0.0   5028   576 pts/2    S+   16:46   0:00              |   \_ /bin/sh ./linpeas.sh -a
+reader    38222  0.0  0.1  38524  3832 pts/2    R+   16:46   0:00              |   |   \_ ps faux
+reader    37573  0.0  0.0   6176   788 pts/2    S+   16:46   0:00              \_ tee linpeas.txt
+root        978  0.0  0.9 185924 19876 ?        Ssl  15:28   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+mysql       992  0.0  9.5 1162460 192624 ?      Sl   15:28   0:02 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
+root       1013  0.0  0.3 288880  6468 ?        Ssl  15:28   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root       1174  0.0  0.9 369196 18540 ?        Ss   15:28   0:00 /usr/sbin/apache2 -k start
+reader     7506  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     7562  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     7612  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     7613  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     7621  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     7846  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     8223  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     8340  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     8398  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader     8402  0.0  0.5 373600 10752 ?        S    16:02   0:00  \_ /usr/sbin/apache2 -k start
+reader    37071  0.0  0.3  76660  6988 ?        Ss   16:44   0:00 /lib/systemd/systemd --user
+reader    37072  0.0  0.1 193624  2376 ?        S    16:44   0:00  \_ (sd-pam)
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+   0 lrwxrwxrwx 1 root root    4 Feb 14  2019 /bin/sh -> dash
+1.6M -rwxr-xr-x 1 root root 1.6M Feb  5  2020 /lib/systemd/systemd
+128K -rwxr-xr-x 1 root root 127K Feb  5  2020 /lib/systemd/systemd-journald
+216K -rwxr-xr-x 1 root root 215K Feb  5  2020 /lib/systemd/systemd-logind
+1.6M -rwxr-xr-x 1 root root 1.6M Feb  5  2020 /lib/systemd/systemd-networkd
+372K -rwxr-xr-x 1 root root 371K Feb  5  2020 /lib/systemd/systemd-resolved
+ 40K -rwxr-xr-x 1 root root  39K Feb  5  2020 /lib/systemd/systemd-timesyncd
+572K -rwxr-xr-x 1 root root 571K Feb  5  2020 /lib/systemd/systemd-udevd
+ 56K -rwxr-xr-x 1 root root  56K Oct 15  2018 /sbin/agetty
+   0 lrwxrwxrwx 1 root root   20 Feb  5  2020 /sbin/init -> /lib/systemd/systemd
+ 84K -rwxr-xr-x 1 root root  83K Apr 12  2018 /sbin/lvmetad
+232K -rwxr-xr-x 1 root root 232K Jun 10  2019 /usr/bin/dbus-daemon[0m
+ 20K -rwxr-xr-x 1 root root  19K Nov 23  2018 /usr/bin/lxcfs
+   0 lrwxrwxrwx 1 root root    9 Oct 25  2018 /usr/bin/python3 -> python3.6
+124K -rwxr-xr-x 1 root root 123K Oct 10  2018 /usr/bin/VGAuthService
+ 48K -rwxr-xr-x 1 root root  47K Oct 10  2018 /usr/bin/vmtoolsd
+180K -rwxr-xr-x 1 root root 179K Dec 18  2017 /usr/lib/accountsservice/accounts-daemon[0m
+ 16K -rwxr-xr-x 1 root root  15K Mar 27  2019 /usr/lib/policykit-1/polkitd
+ 17M -rwxr-xr-x 1 root root  17M Mar 15  2019 /usr/lib/snapd/snapd
+656K -rwxr-xr-x 1 root root 656K Sep 16  2019 /usr/sbin/apache2
+ 28K -rwxr-xr-x 1 root root  27K Feb 20  2018 /usr/sbin/atd
+ 48K -rwxr-xr-x 1 root root  47K Nov 16  2017 /usr/sbin/cron
+ 24M -rwxr-xr-x 1 root root  24M Jan 21  2020 /usr/sbin/mysqld
+668K -rwxr-xr-x 1 root root 665K Apr 24  2018 /usr/sbin/rsyslogd
+772K -rwxr-xr-x 1 root root 769K Mar  4  2019 /usr/sbin/sshd
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 process found (dump creds from memory as root)
+sshd: process found (dump creds from memory as root)
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+    230 /usr/bin/expect -f /root/cron_root
+    230 ssh -i .ssh/id_rsa localhost
+    230 /bin/sh -c /root/cron_root
+    202 sshd: root@pts/1
+     24 sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d > /run/motd.dynamic.new
+     24 run-parts --lsbsysinit /etc/update-motd.d
+     15 /usr/bin/python3 /usr/bin/landscape-sysinfo
+     15 /bin/sh /etc/update-motd.d/50-landscape-sysinfo
+      4 /bin/sh /etc/update-motd.d/91-release-upgrade
+      4 /bin/sh /etc/update-motd.d/80-esm
+      2 /usr/bin/python3 -Es /usr/bin/lsb_release -sd
+      2 /usr/bin/python3 -Es /usr/bin/lsb_release -ds
+      2 cut -d  -f4
+      2 /bin/sh /etc/update-motd.d/80-livepatch
+      1 /usr/bin/python3 -Es /usr/bin/lsb_release -cs
+      1 grep ^livepatch
+      1 /bin/sh /root/log.sh
+      1 /bin/sh -e /usr/lib/update-notifier/update-motd-hwe-eol
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+-rw-r--r-- 1 root root  722 Nov 16  2017 /etc/crontab
+
+/etc/cron.d:
+total 24
+drwxr-xr-x  2 root root 4096 Nov 21  2019 .
+drwxr-xr-x 99 root root 4096 Feb 19  2020 ..
+-rw-r--r--  1 root root  589 Jun 26  2018 mdadm
+-rw-r--r--  1 root root  712 Jan 17  2018 php
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+-rw-r--r--  1 root root  191 Feb 14  2019 popularity-contest
+
+/etc/cron.daily:
+total 68
+drwxr-xr-x  2 root root 4096 Dec  3  2019 .
+drwxr-xr-x 99 root root 4096 Feb 19  2020 ..
+-rwxr-xr-x  1 root root  539 Jul 16  2019 apache2
+-rwxr-xr-x  1 root root  376 Nov 20  2017 apport
+-rwxr-xr-x  1 root root 1478 Apr 20  2018 apt-compat
+-rwxr-xr-x  1 root root  314 Jan 17  2018 aptitude
+-rwxr-xr-x  1 root root  355 Dec 29  2017 bsdmainutils
+-rwxr-xr-x  1 root root 1176 Nov  2  2017 dpkg
+-rwxr-xr-x  1 root root  372 Aug 21  2017 logrotate
+-rwxr-xr-x  1 root root 1065 Apr  7  2018 man-db
+-rwxr-xr-x  1 root root  539 Jun 26  2018 mdadm
+-rwxr-xr-x  1 root root  538 Mar  1  2018 mlocate
+-rwxr-xr-x  1 root root  249 Jan 25  2018 passwd
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+-rwxr-xr-x  1 root root 3477 Feb 21  2018 popularity-contest
+-rwxr-xr-x  1 root root  246 Mar 21  2018 ubuntu-advantage-tools
+-rwxr-xr-x  1 root root  214 Jun 27  2018 update-notifier-common
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Feb 14  2019 .
+drwxr-xr-x 99 root root 4096 Feb 19  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 Feb 14  2019 .
+drwxr-xr-x 99 root root 4096 Feb 19  2020 ..
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+
+/etc/cron.weekly:
+total 20
+drwxr-xr-x  2 root root 4096 Feb 14  2019 .
+drwxr-xr-x 99 root root 4096 Feb 19  2020 ..
+-rwxr-xr-x  1 root root  723 Apr  7  2018 man-db
+-rw-r--r--  1 root root  102 Nov 16  2017 .placeholder
+-rwxr-xr-x  1 root root  211 Jun 27  2018 update-notifier-common
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+[+] Services
+[i] Search for outdated versions
+ [ - ]  acpid
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  apparmor
+ [ + ]  apport
+ [ + ]  atd
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ - ]  cryptdisks
+ [ - ]  cryptdisks-early
+ [ + ]  dbus
+ [ + ]  ebtables
+ [ + ]  grub-common
+ [ - ]  hwclock.sh
+ [ - ]  irqbalance
+ [ + ]  iscsid
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ - ]  lvm2
+ [ + ]  lvm2-lvmetad
+ [ + ]  lvm2-lvmpolld
+ [ + ]  lxcfs
+ [ - ]  lxd
+ [ - ]  mdadm
+ [ - ]  mdadm-waitidle
+ [ + ]  mysql
+ [ - ]  open-iscsi
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ + ]  procps
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ + ]  unattended-upgrades
+ [ - ]  uuidd
+ [ - ]  x11-common
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/etc/systemd/system/book.service is executing some relative path
+/snap/core/8268/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/8268/lib/systemd/system/networking.service is executing some relative path
+/snap/core/8268/lib/systemd/system/rescue.service is executing some relative path
+/snap/core/8592/lib/systemd/system/emergency.service is executing some relative path
+/snap/core/8592/lib/systemd/system/networking.service is executing some relative path
+/snap/core/8592/lib/systemd/system/rescue.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT        LAST                         PASSED       UNIT                         ACTIVATES
+Thu 2021-04-08 16:48:23 UTC  10s left    Thu 2021-04-08 16:47:23 UTC  49s ago      book.timer                   book.service
+Thu 2021-04-08 17:09:00 UTC  20min left  Thu 2021-04-08 16:39:02 UTC  9min ago     phpsessionclean.timer        phpsessionclean.service
+Fri 2021-04-09 01:02:15 UTC  8h left     Thu 2021-04-08 15:28:00 UTC  1h 20min ago apt-daily.timer              apt-daily.service
+Fri 2021-04-09 04:48:13 UTC  12h left    Thu 2021-04-08 15:53:54 UTC  54min ago    motd-news.timer              motd-news.service
+Fri 2021-04-09 06:52:54 UTC  14h left    Thu 2021-04-08 15:28:00 UTC  1h 20min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Fri 2021-04-09 15:42:49 UTC  22h left    Thu 2021-04-08 15:42:49 UTC  1h 5min ago  systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Mon 2021-04-12 00:00:00 UTC  3 days left Thu 2021-04-08 15:28:00 UTC  1h 20min ago fstrim.timer                 fstrim.service
+n/a                          n/a         n/a                          n/a          snapd.snap-repair.timer      snapd.snap-repair.service
+n/a                          n/a         n/a                          n/a          ureadahead-stop.timer        ureadahead-stop.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+Socket /run/snapd.socket owned by root uses HTTP. Response to /index:
+{"type":"sync","status-code":200,"status":"OK","result":["TBD"]}
+Socket /run/snapd-snap.socket owned by root uses HTTP. Response to /index:
+{"type":"error","status-code":401,"status":"Unauthorized","result":{"message":"access denied","kind":"login-required"}}
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/dnsmasq.conf (        <policy user="dnsmasq">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.thermald.conf (        <policy group="power">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                 PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION
+:1.0                                 767 systemd-resolve systemd-resolve  :1.0          systemd-resolved.service  -          -
+:1.1                                 766 systemd-network systemd-network  :1.1          systemd-networkd.service  -          -
+:1.2                                   1 systemd         root             :1.2          init.scope                -          -
+:1.3                                 922 accounts-daemon root             :1.3          accounts-daemon.service   -          -
+:1.300                             57637 busctl          reader           :1.300        session-287.scope         287        -
+:1.5                                 916 systemd-logind  root             :1.5          systemd-logind.service    -          -
+:1.6                                 883 networkd-dispat root             :1.6          networkd-dispatcher.se…ce -          -
+:1.7                                1013 polkitd         root             :1.7          polkit.service            -          -
+:1.8                                 978 unattended-upgr root             :1.8          unattended-upgrades.se…ce -          -
+com.ubuntu.LanguageSelector            - -               -                (activatable) -                         -
+com.ubuntu.SoftwareProperties          - -               -                (activatable) -                         -
+org.freedesktop.Accounts             922 accounts-daemon root             :1.3          accounts-daemon.service   -          -
+org.freedesktop.DBus                   1 systemd         root             -             init.scope                -          -
+org.freedesktop.PolicyKit1          1013 polkitd         root             :1.7          polkit.service            -          -
+org.freedesktop.hostname1              - -               -                (activatable) -                         -
+org.freedesktop.locale1                - -               -                (activatable) -                         -
+org.freedesktop.login1               916 systemd-logind  root             :1.5          systemd-logind.service    -          -
+org.freedesktop.network1             766 systemd-network systemd-network  :1.1          systemd-networkd.service  -          -
+org.freedesktop.resolve1             767 systemd-resolve systemd-resolve  :1.0          systemd-resolved.service  -          -
+org.freedesktop.systemd1               1 systemd         root             :1.2          init.scope                -          -
+org.freedesktop.thermald               - -               -                (activatable) -                         -
+org.freedesktop.timedate1              - -               -                (activatable) -                         -
+
+
+===================================( Network Information )====================================
+[+] Hostname, hosts and DNS
+book
+127.0.0.1       localhost.localdomain   localhost
+::1             localhost6.localdomain6 localhost6
+
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+nameserver 127.0.0.53
+options edns0
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+# symbolic names for networks, see networks(5) for more information
+link-local 169.254.0.0
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.176  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 fe80::250:56ff:feb9:897f  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::250:56ff:feb9:897f  prefixlen 64  scopeid 0x0<global>
+        ether 00:50:56:b9:89:7f  txqueuelen 1000  (Ethernet)
+        RX packets 2392137  bytes 497650192 (497.6 MB)
+        RX errors 0  dropped 15  overruns 0  frame 0
+        TX packets 2712935  bytes 1134253612 (1.1 GB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 16309  bytes 1901825 (1.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16309  bytes 1901825 (1.9 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.10.10.2      0.0.0.0         UG    0      0        0 ens33
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 ens33
+Address                  HWtype  HWaddress           Flags Mask            Iface
+10.10.10.2               ether   00:50:56:b9:83:d8   C                     ens33
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -
+tcp        0      1 10.10.10.176:38714      8.8.8.8:53              SYN_SENT    -
+tcp        0    520 10.10.10.176:22         10.10.14.78:32944       ESTABLISHED -
+tcp6       0      0 :::22                   :::*                    LISTEN      -
+tcp6       0      0 :::80                   :::*                    LISTEN      -
+tcp6       0      0 ::1:38718               ::1:22                  TIME_WAIT   -
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           -
+udp        0      0 127.0.0.1:34278         127.0.0.53:53           ESTABLISHED -
+
+[+] Can I sniff with tcpdump?
+No
+
+[+] Internet Access?
+icmp is not available
+Port 443 is not accessible
+Port 80 is not accessible
+
+
+====================================( Users Information )=====================================
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=1000(reader) gid=1000(reader) groups=1000(reader)
+
+[+] Do I have PGP keys?
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+/proc/sys/kernel/yama/ptrace_scope is not enabled (1)
+gdb wasn't found in PATH
+
+[+] Checking /etc/doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo;unix-group:admin
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+It's not possible to brute-force su.
+
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+reader:x:1000:1000:reader:/home/reader:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1000(reader) gid=1000(reader) groups=1000(reader)
+uid=100(systemd-network) gid=102(systemd-network) groups=102(systemd-network)
+uid=101(systemd-resolve) gid=103(systemd-resolve) groups=103(systemd-resolve)
+uid=102(syslog) gid=106(syslog) groups=106(syslog),4(adm)
+uid=103(messagebus) gid=107(messagebus) groups=107(messagebus)
+uid=104(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=105(lxd) gid=65534(nogroup) groups=65534(nogroup)
+uid=106(uuidd) gid=110(uuidd) groups=110(uuidd)
+uid=107(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=108(landscape) gid=112(landscape) groups=112(landscape)
+uid=109(pollinate) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=110(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=111(mysql) gid=114(mysql) groups=114(mysql)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 16:50:55 up  1:23,  1 user,  load average: 0.12, 0.20, 2.49
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+reader   pts/2    10.10.14.78      16:44    4:23   0.62s  0.00s w
+
+[+] Last logons
+root     pts/1        192.168.142.157  Wed Nov 20 03:47 - 04:00  (00:13)
+reader   pts/0        192.168.142.157  Wed Nov 20 03:46 - 06:40  (02:53)
+reader   pts/0        192.168.142.157  Wed Nov 20 03:43 - 03:45  (00:01)
+reader   tty1                          Wed Nov 20 03:41 - down   (04:14)
+reboot   system boot  4.15.0-70-generi Wed Nov 20 03:40 - 07:55  (04:15)
+reader   pts/0        192.168.142.154  Tue Nov 19 10:26 - crash  (17:13)
+reader   tty1                          Tue Nov 19 10:25 - crash  (17:14)
+reboot   system boot  4.15.0-70-generi Tue Nov 19 10:25 - 07:55  (21:30)
+
+wtmp begins Tue Nov 19 10:25:08 2019
+
+[+] Last time logon each user
+Username         Port     From             Latest
+root             pts/1    ::1              Thu Apr  8 16:50:02 +0000 2021
+www-data         pts/2    192.168.142.160  Fri Nov 29 07:54:15 +0000 2019
+reader           pts/2    10.10.14.78      Thu Apr  8 16:44:05 +0000 2021
+
+[+] Password policy
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+ENCRYPT_METHOD SHA512
+
+
+===================================( Software Information )===================================
+[+] MySQL version
+mysql  Ver 14.14 Distrib 5.7.29, for Linux (x86_64) using  EditLine wrapper
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+From '/etc/mysql/mysql.conf.d/mysqld.cnf' Mysql user: user              = mysql
+Found readable /etc/mysql/my.cnf
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.29 (Ubuntu)
+Server built:   2019-09-16T12:58:48
+PHP exec extensions
+/etc/apache2/mods-enabled/php7.2.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-enabled/php7.2.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-enabled/php7.2.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-enabled/php7.2.conf:    SetHandler application/x-httpd-php-source
+--
+/etc/apache2/mods-available/php7.2.conf-<FilesMatch ".+\.ph(ar|p|tml)$">
+/etc/apache2/mods-available/php7.2.conf:    SetHandler application/x-httpd-php
+--
+/etc/apache2/mods-available/php7.2.conf-<FilesMatch ".+\.phps$">
+/etc/apache2/mods-available/php7.2.conf:    SetHandler application/x-httpd-php-source
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+mongo binary Not Found
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+        comment = public archive
+        path = /var/www/pub
+        use chroot = yes
+        lock file = /var/lock/rsyncd
+        read only = yes
+        list = yes
+        uid = nobody
+        gid = nogroup
+        strict modes = yes
+        ignore errors = no
+        ignore nonreadable = yes
+        transfer logging = no
+        timeout = 600
+        refuse options = checksum dry-run
+        dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+/usr/share/doc/rsync/examples/rsyncd.conf
+[ftp]
+        comment = public archive
+        path = /var/www/pub
+        use chroot = yes
+        lock file = /var/lock/rsyncd
+        read only = yes
+        list = yes
+        uid = nobody
+        gid = nogroup
+        strict modes = yes
+        ignore errors = no
+        ignore nonreadable = yes
+        transfer logging = no
+        timeout = 600
+        refuse options = checksum dry-run
+        dont compress = *.gz *.tgz *.zip *.z *.rpm *.deb *.iso *.bz2 *.tbz
+
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+/home/reader/.ssh/authorized_keys
+/home/reader/.ssh/id_rsa
+/home/reader/.ssh/id_rsa.pub
+PermitRootLogin yes
+ChallengeResponseAuthentication no
+UsePAM yes
+PasswordAuthentication yes
+Possible private SSH keys were found!
+/home/reader/.ssh/id_rsa
+  --> Some certificates were found (out limited):
+/etc/pollinate/entropy.ubuntu.com.pem
+
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+krb5.conf Not Found
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+No Sockets found in /run/screen/S-reader.
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+Found readable /etc/cloud/cloud.cfg
+     lock_passwd: True
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+[+] Searching Keyring files
+Keyring folder: /usr/share/keyrings
+/usr/share/keyrings:
+total 36
+-rw-r--r-- 1 root root 7399 Sep 17  2018 ubuntu-archive-keyring.gpg
+-rw-r--r-- 1 root root 6713 Oct 27  2016 ubuntu-archive-removed-keys.gpg
+-rw-r--r-- 1 root root 4097 Feb  6  2018 ubuntu-cloudimage-keyring.gpg
+-rw-r--r-- 1 root root    0 Jan 17  2018 ubuntu-cloudimage-removed-keys.gpg
+-rw-r--r-- 1 root root 2253 Mar 21  2018 ubuntu-esm-keyring.gpg
+-rw-r--r-- 1 root root 1139 Mar 21  2018 ubuntu-fips-keyring.gpg
+-rw-r--r-- 1 root root 1139 Mar 21  2018 ubuntu-fips-updates-keyring.gpg
+-rw-r--r-- 1 root root 1227 May 27  2010 ubuntu-master-keyring.gpg
+
+[+] Searching Filezilla sites file
+
+[+] Searching backup-manager files
+
+[+] Searching uncommon passwd files (splunk)
+backup-manager file: /etc/cron.daily/passwd
+backup-manager file: /etc/pam.d/passwd
+backup-manager file: /usr/share/bash-completion/completions/passwd
+backup-manager file: /usr/share/lintian/overrides/passwd
+
+[+] Searching GitLab related files
+
+
+====================================( Interesting Files )=====================================
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwsr-xr-x 1 root   root             44K May  7  2014 /snap/core/8592/bin/ping6
+-rwsr-xr-x 1 root   root             44K May  7  2014 /snap/core/8592/bin/ping
+-rwsr-xr-x 1 root   root             44K May  7  2014 /snap/core/8268/bin/ping6
+-rwsr-xr-x 1 root   root             44K May  7  2014 /snap/core/8268/bin/ping
+-rwsr-xr-x 1 root   root             31K Aug 11  2016 /bin/fusermount
+-rwsr-xr-x 1 root   root             19K Mar  9  2017 /usr/bin/traceroute6.iputils
+-rwsr-xr-x 1 root   root             63K Mar  9  2017 /bin/ping
+-rwsr-xr-x 1 root   root             10K Mar 28  2017 /usr/lib/eject/dmcrypt-get-device
+-rwsr-xr-x 1 root   root             59K Jan 25  2018 /usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root   root             37K Jan 25  2018 /usr/bin/newuidmap
+-rwsr-xr-x 1 root   root             40K Jan 25  2018 /usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root   root             37K Jan 25  2018 /usr/bin/newgidmap
+-rwsr-xr-x 1 root   root             75K Jan 25  2018 /usr/bin/gpasswd
+-rwsr-xr-x 1 root   root             44K Jan 25  2018 /usr/bin/chsh
+-rwsr-xr-x 1 root   root             75K Jan 25  2018 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root   root             44K Jan 25  2018 /bin/su
+-rwsr-sr-x 1 daemon daemon           51K Feb 20  2018 /usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+-rwsr-xr-- 1 root   dip             386K Jun 12  2018 /snap/core/8592/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+-rwsr-xr-- 1 root   dip             386K Jun 12  2018 /snap/core/8268/usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+-rwsr-xr-x 1 root   root             27K Oct 15  2018 /bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root   root             43K Oct 15  2018 /bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-xr-x 1 root   root             99K Nov 23  2018 /usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+-rwsr-xr-x 1 root   root            427K Mar  4  2019 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root   root            419K Mar  4  2019 /snap/core/8592/usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root   root            419K Mar  4  2019 /snap/core/8268/usr/lib/openssh/ssh-keysign
+-rwsr-sr-x 1 root   root             99K Mar 15  2019 /usr/lib/snapd/snap-confine
+-rwsr-xr-x 1 root   root             53K Mar 25  2019 /snap/core/8592/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root   root             74K Mar 25  2019 /snap/core/8592/usr/bin/gpasswd
+-rwsr-xr-x 1 root   root             40K Mar 25  2019 /snap/core/8592/usr/bin/chsh
+-rwsr-xr-x 1 root   root             71K Mar 25  2019 /snap/core/8592/usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root   root             53K Mar 25  2019 /snap/core/8268/usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root   root             74K Mar 25  2019 /snap/core/8268/usr/bin/gpasswd
+-rwsr-xr-x 1 root   root             40K Mar 25  2019 /snap/core/8268/usr/bin/chsh
+-rwsr-xr-x 1 root   root             71K Mar 25  2019 /snap/core/8268/usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root   root             39K Mar 25  2019 /snap/core/8592/usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root   root             40K Mar 25  2019 /snap/core/8592/bin/su
+-rwsr-xr-x 1 root   root             39K Mar 25  2019 /snap/core/8268/usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root   root             40K Mar 25  2019 /snap/core/8268/bin/su
+-rwsr-xr-x 1 root   root             14K Mar 27  2019 /usr/lib/policykit-1/polkit-agent-helper-1
+-rwsr-xr-x 1 root   root             22K Mar 27  2019 /usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+-rwsr-xr-- 1 root   messagebus       42K Jun 10  2019 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-- 1 root   systemd-resolve  42K Jun 10  2019 /snap/core/8268/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-x 1 root   root             27K Oct 10  2019 /snap/core/8592/bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root   root             40K Oct 10  2019 /snap/core/8592/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-xr-x 1 root   root             27K Oct 10  2019 /snap/core/8268/bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root   root             40K Oct 10  2019 /snap/core/8268/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-xr-x 1 root   root            134K Oct 11  2019 /snap/core/8592/usr/bin/sudo  --->  /sudo$
+-rwsr-xr-x 1 root   root            134K Oct 11  2019 /snap/core/8268/usr/bin/sudo  --->  /sudo$
+-rwsr-xr-- 1 root   systemd-resolve  42K Nov 29  2019 /snap/core/8592/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-sr-x 1 root   root            105K Dec  6  2019 /snap/core/8268/usr/lib/snapd/snap-confine
+-rwsr-sr-x 1 root   root            105K Jan 28  2020 /snap/core/8592/usr/lib/snapd/snap-confine
+-rwsr-xr-x 1 root   root            146K Jan 31  2020 /usr/bin/sudo  --->  /sudo$
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwxr-sr-x 3 root   mail             15K Dec  3  2012 /snap/core/8592/usr/bin/mail-unlock
+-rwxr-sr-x 3 root   mail             15K Dec  3  2012 /snap/core/8592/usr/bin/mail-touchlock
+-rwxr-sr-x 3 root   mail             15K Dec  3  2012 /snap/core/8592/usr/bin/mail-lock
+-rwxr-sr-x 3 root   mail             15K Dec  3  2012 /snap/core/8268/usr/bin/mail-unlock
+-rwxr-sr-x 3 root   mail             15K Dec  3  2012 /snap/core/8268/usr/bin/mail-touchlock
+-rwxr-sr-x 3 root   mail             15K Dec  3  2012 /snap/core/8268/usr/bin/mail-lock
+-rwxr-sr-x 1 root   mail             15K Dec  7  2013 /snap/core/8592/usr/bin/dotlockfile
+-rwxr-sr-x 1 root   mail             15K Dec  7  2013 /snap/core/8268/usr/bin/dotlockfile
+-rwxr-sr-x 1 root   utmp             10K Mar 11  2016 /usr/lib/x86_64-linux-gnu/utempter/utempter
+-rwxr-sr-x 1 root   systemd-network  36K Apr  5  2016 /snap/core/8592/usr/bin/crontab
+-rwxr-sr-x 1 root   systemd-network  36K Apr  5  2016 /snap/core/8268/usr/bin/crontab
+-rwxr-sr-x 1 root   crontab          39K Nov 16  2017 /usr/bin/crontab
+-rwxr-sr-x 1 root   tty              14K Jan 17  2018 /usr/bin/bsd-write
+-rwxr-sr-x 1 root   shadow           23K Jan 25  2018 /usr/bin/expiry
+-rwxr-sr-x 1 root   shadow           71K Jan 25  2018 /usr/bin/chage
+-rwsr-sr-x 1 daemon daemon           51K Feb 20  2018 /usr/bin/at
+-rwxr-sr-x 1 root   mlocate          43K Mar  1  2018 /usr/bin/mlocate
+-rwxr-sr-x 1 root   shadow           34K Apr  5  2018 /sbin/unix_chkpwd
+-rwxr-sr-x 1 root   shadow           34K Apr  5  2018 /sbin/pam_extrausers_chkpwd
+-rwxr-sr-x 1 root   shadow           35K Apr  9  2018 /snap/core/8592/sbin/unix_chkpwd
+-rwxr-sr-x 1 root   shadow           35K Apr  9  2018 /snap/core/8592/sbin/pam_extrausers_chkpwd
+-rwxr-sr-x 1 root   shadow           35K Apr  9  2018 /snap/core/8268/sbin/unix_chkpwd
+-rwxr-sr-x 1 root   shadow           35K Apr  9  2018 /snap/core/8268/sbin/pam_extrausers_chkpwd
+-rwxr-sr-x 1 root   tty              31K Oct 15  2018 /usr/bin/wall
+-rwxr-sr-x 1 root   ssh             355K Mar  4  2019 /usr/bin/ssh-agent
+-rwxr-sr-x 1 root   crontab         351K Mar  4  2019 /snap/core/8592/usr/bin/ssh-agent
+-rwxr-sr-x 1 root   crontab         351K Mar  4  2019 /snap/core/8268/usr/bin/ssh-agent
+-rwsr-sr-x 1 root   root             99K Mar 15  2019 /usr/lib/snapd/snap-confine
+-rwxr-sr-x 1 root   shadow           23K Mar 25  2019 /snap/core/8592/usr/bin/expiry
+-rwxr-sr-x 1 root   shadow           61K Mar 25  2019 /snap/core/8592/usr/bin/chage
+-rwxr-sr-x 1 root   shadow           23K Mar 25  2019 /snap/core/8268/usr/bin/expiry
+-rwxr-sr-x 1 root   shadow           61K Mar 25  2019 /snap/core/8268/usr/bin/chage
+-rwxr-sr-x 1 root   tty              27K Oct 10  2019 /snap/core/8592/usr/bin/wall
+-rwxr-sr-x 1 root   tty              27K Oct 10  2019 /snap/core/8268/usr/bin/wall
+-rwsr-sr-x 1 root   root            105K Dec  6  2019 /snap/core/8268/usr/lib/snapd/snap-confine
+-rwsr-sr-x 1 root   root            105K Jan 28  2020 /snap/core/8592/usr/lib/snapd/snap-confine
+
+[+] Checking misconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf
+/usr/lib/x86_64-linux-gnu/libfakeroot
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Shell capabilities:
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Files with capabilities:
+/usr/bin/mtr-packet = cap_net_raw+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+
+[+] Files with ACLs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected folders in root
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 40
+drwxr-xr-x  2 root root 4096 Dec  3  2019 .
+drwxr-xr-x 99 root root 4096 Feb 19  2020 ..
+-rw-r--r--  1 root root   96 Aug 19  2018 01-locale-fix.sh
+-rw-r--r--  1 root root  825 Feb  3  2019 apps-bin-path.sh
+-rw-r--r--  1 root root  664 Apr  2  2018 bash_completion.sh
+-rw-r--r--  1 root root 1003 Dec 29  2015 cedilla-portuguese.sh
+-rw-r--r--  1 root root 1941 Jul 16  2018 vte-2.91.sh
+-rw-r--r--  1 root root 1557 Dec  4  2017 Z97-byobu.sh
+-rwxr-xr-x  1 root root  873 Oct  3  2018 Z99-cloudinit-warnings.sh
+-rwxr-xr-x  1 root root 3417 Oct  3  2018 Z99-cloud-locale-test.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/auth.log
+/var/log/lastlog
+/var/log/syslog
+/var/log/kern.log
+/var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/system.journal
+/var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000.journal
+/var/log/wtmp
+/home/reader/.config/lxc/config.yml
+/home/reader/.gnupg/trustdb.gpg
+/home/reader/.gnupg/pubring.kbx
+/home/reader/.gnupg/crls.d/DIR.txt
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+Writable: /home/reader/backups/access.log.1
+Writable: /home/reader/backups/access.log
+
+[+] Files inside /home/reader (limit 20)
+total 88
+drwxr-xr-x 8 reader reader  4096 Apr  8 16:46 .
+drwxr-xr-x 3 root   root    4096 Nov 19  2019 ..
+drwxr-xr-x 2 reader reader  4096 Jan 29  2020 backups
+lrwxrwxrwx 1 reader reader     9 Nov 29  2019 .bash_history -> /dev/null
+-rw-r--r-- 1 reader reader   220 Apr  4  2018 .bash_logout
+-rw-r--r-- 1 reader reader  3771 Apr  4  2018 .bashrc
+drwx------ 2 reader reader  4096 Nov 19  2019 .cache
+drwxr-x--- 3 reader reader  4096 Apr  8 16:46 .config
+drwx------ 4 reader reader  4096 Apr  8 16:50 .gnupg
+drwxrwxr-x 3 reader reader  4096 Nov 20  2019 .local
+-rwxrwxr-x 1 reader reader 34316 Jan 29  2020 lse.sh
+-rw-r--r-- 1 reader reader   807 Apr  4  2018 .profile
+drwx------ 2 reader reader  4096 Nov 28  2019 .ssh
+-r-------- 1 reader reader    33 Apr  8 15:28 user.txt
+-rw------- 1 reader reader   756 Apr  8 16:45 .viminfo
+
+[+] Files inside others home (limit 20)
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup files?
+-rw-r--r-- 1 root root 2765 Feb 14  2019 /etc/apt/sources.list.curtin.old
+-rwxr-xr-x 1 root root 1086 Nov 29  2019 /usr/src/linux-headers-5.4.1-050401/tools/testing/selftests/net/tcp_fastopen_backup_key.sh
+-rw-r--r-- 1 root root 0 Nov 29  2019 /usr/src/linux-headers-5.4.1-050401-generic/include/config/net/team/mode/activebackup.h
+-rw-r--r-- 1 root root 0 Nov 29  2019 /usr/src/linux-headers-5.4.1-050401-generic/include/config/wm831x/backup.h
+-rw-r--r-- 1 root root 236656 Nov 29  2019 /usr/src/linux-headers-5.4.1-050401-generic/.config.old
+-rw-r--r-- 1 nobody reader 7138 Feb 13  2018 /usr/local/lib/node_modules/html-pdf/node_modules/form-data/README.md.bak
+-rw-r--r-- 1 root root 7867 Nov  7  2016 /usr/share/doc/telnet/README.telnet.old.gz
+-rw-r--r-- 1 root root 156 Nov 29  2019 /usr/share/doc/linux-image-unsigned-5.4.1-050401-generic/changelog.Debian.old.gz
+-rw-r--r-- 1 root root 361345 Feb  2  2018 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 11755 Nov 20  2019 /usr/share/info/dir.old
+-rw-r--r-- 1 root root 2746 Apr 12  2018 /usr/share/man/man8/vgcfgbackup.8.gz
+-rwxr-xr-x 1 root root 226 Dec  4  2017 /usr/share/byobu/desktop/byobu.desktop.old
+-rw-r--r-- 1 root root 10142 Dec  7  2015 /usr/share/npm/node_modules/request/node_modules/http-signature/node_modules/ctype/README.old
+-rw-r--r-- 1 root root 35464 Oct 10  2018 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 8617 Nov 29  2019 /lib/modules/5.4.1-050401-generic/kernel/drivers/power/supply/wm831x_backup.ko
+-rw-r--r-- 1 root root 8041 Nov 29  2019 /lib/modules/5.4.1-050401-generic/kernel/drivers/net/team/team_mode_activebackup.ko
+
+[+] Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+Found: /var/lib/mlocate/mlocate.db: regular file, no read permission
+
+[+] Web files?(output limit)
+/var/www/:
+total 12K
+drwxr-xr-x  3 reader reader 4.0K Nov 29  2019 .
+drwxr-xr-x 14 root   root   4.0K Nov 20  2019 ..
+drwxr-xr-x  5 reader reader 4.0K Dec 29  2019 html
+
+/var/www/html:
+total 76K
+drwxr-xr-x 5 reader reader 4.0K Dec 29  2019 .
+drwxr-xr-x 3 reader reader 4.0K Nov 29  2019 ..
+
+[+] Readable *_history, .sudo_as_admin_successful, profile, bashrc, httpd.conf, .plan, .htpasswd, .gitconfig, .git-credentials, .git, .svn, .rhosts, hosts.equiv, Dockerfile, docker-compose.yml
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+-rw-r--r-- 1 root root 2319 Apr  4  2018 /etc/bash.bashrc
+-rw-r--r-- 1 root root 3771 Apr  4  2018 /etc/skel/.bashrc
+-rw-r--r-- 1 root root 807 Apr  4  2018 /etc/skel/.profile
+-rw-r--r-- 1 reader reader 3771 Apr  4  2018 /home/reader/.bashrc
+-rw-r--r-- 1 reader reader 807 Apr  4  2018 /home/reader/.profile
+-rw-r--r-- 1 root root 3106 Aug  6  2018 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2889 Dec  4  2017 /usr/share/byobu/profiles/bashrc
+-rw-r--r-- 1 root root 2778 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+-rw-r--r-- 1 root root 3106 Aug  6  2018 /usr/share/base-files/dot.bashrc
+-rw-r--r-- 1 root root 2889 Dec  4  2017 /usr/share/byobu/profiles/bashrc
+-rw-r--r-- 1 root root 2778 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+-rw-r--r-- 1 root root 802 Aug 13  2017 /usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+
+[+] Readable files inside /tmp, /var/tmp, /var/backups, /private/tmp /private/var/at/tmp /private/var/tmp (limit 70)
+-rw-r--r-- 1 root root 187720 Nov 21  2019 /var/backups/dpkg.status.4.gz
+-rw-r--r-- 1 root root 202 Feb 14  2019 /var/backups/dpkg.diversions.2.gz
+-rw-r--r-- 1 root root 1529 Nov 21  2019 /var/backups/apt.extended_states.2.gz
+-rw-r--r-- 1 root root 202 Feb 14  2019 /var/backups/dpkg.diversions.5.gz
+-rw-r--r-- 1 root root 152 Nov 20  2019 /var/backups/dpkg.statoverride.5.gz
+-rw-r--r-- 1 root root 202 Feb 14  2019 /var/backups/dpkg.diversions.4.gz
+-rw-r--r-- 1 root root 207 Nov 21  2019 /var/backups/dpkg.statoverride.0
+-rw-r--r-- 1 root root 202 Feb 14  2019 /var/backups/dpkg.diversions.1.gz
+-rw-r--r-- 1 root root 1338 Nov 20  2019 /var/backups/apt.extended_states.3.gz
+-rw-r--r-- 1 root root 171 Nov 21  2019 /var/backups/dpkg.statoverride.3.gz
+-rw-r--r-- 1 root root 1651 Nov 29  2019 /var/backups/apt.extended_states.1.gz
+-rw-r--r-- 1 root root 437 Feb 14  2019 /var/backups/dpkg.diversions.0
+-rw-r--r-- 1 root root 2508 Nov 20  2019 /var/backups/alternatives.tar.1.gz
+-rw-r--r-- 1 root root 187720 Nov 21  2019 /var/backups/dpkg.status.3.gz
+-rw-r--r-- 1 root root 1268 Nov 19  2019 /var/backups/apt.extended_states.5.gz
+-rw-r--r-- 1 root root 687565 Nov 29  2019 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 202 Feb 14  2019 /var/backups/dpkg.diversions.3.gz
+-rw-r--r-- 1 root root 61440 Nov 21  2019 /var/backups/alternatives.tar.0
+-rw-r--r-- 1 root root 176289 Nov 20  2019 /var/backups/dpkg.status.5.gz
+-rw-r--r-- 1 root root 19212 Dec  3  2019 /var/backups/apt.extended_states.0
+-rw-r--r-- 1 root root 171 Nov 21  2019 /var/backups/dpkg.statoverride.4.gz
+-rw-r--r-- 1 root root 188205 Nov 28  2019 /var/backups/dpkg.status.1.gz
+-rw-r--r-- 1 root root 171 Nov 21  2019 /var/backups/dpkg.statoverride.1.gz
+-rw-r--r-- 1 root root 187721 Nov 25  2019 /var/backups/dpkg.status.2.gz
+-rw-r--r-- 1 root root 1323 Nov 20  2019 /var/backups/apt.extended_states.4.gz
+-rw-r--r-- 1 root root 171 Nov 21  2019 /var/backups/dpkg.statoverride.2.gz
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/dev/shm/linpeas.sh
+/dev/shm/linpeas.txt
+/dev/shm/lse.sh
+/home/reader
+/run/lock
+/run/lock/apache2
+/run/screen
+/run/screen/S-reader
+/run/user/1000
+/run/user/1000/gnupg
+/run/user/1000/systemd
+/snap/core/8268/run/lock
+/snap/core/8268/tmp
+/snap/core/8268/var/tmp
+/snap/core/8592/run/lock
+/snap/core/8592/tmp
+/snap/core/8592/var/tmp
+/tmp
+/tmp/.font-unix
+/tmp/.ICE-unix
+/tmp/.Test-unix
+/tmp/tmux-1000
+/tmp/.X11-unix
+#)You_can_write_even_more_files_inside_last_directory
+/var/crash
+/var/lib/lxcfs/cgroup/memory/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/accounts-daemon.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/acpid.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/apache2.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/atd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/cron.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dbus.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-hugepages.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/dev-mqueue.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lvm2-lvmetad.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lxcfs.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/lxd.socket/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/mysql.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/networkd-dispatcher.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/open-vm-tools.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/polkit.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/proc-sys-fs-binfmt_misc.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/rsyslog.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snap-core-8268.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snap-core-8592.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snapd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/snapd.socket/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/ssh.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/swap.img.swap/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-fs-fuse-connections.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-kernel-config.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/sys-kernel-debug.mount/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-journald.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-logind.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-networkd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-resolved.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-timesyncd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/systemd-udevd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/system-getty.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/unattended-upgrades.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/uuidd.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/system.slice/vgauth.service/cgroup.event_control
+/var/lib/lxcfs/cgroup/memory/user.slice/cgroup.event_control
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/cgroup.clone_children
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/cgroup.procs
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/dirmngr.service
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/dirmngr.service/cgroup.clone_children
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/dirmngr.service/cgroup.procs
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/dirmngr.service/notify_on_release
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/dirmngr.service/tasks
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/gpg-agent.service
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/gpg-agent.service/cgroup.clone_children
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/gpg-agent.service/cgroup.procs
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/gpg-agent.service/notify_on_release
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/gpg-agent.service/tasks
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/init.scope
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/init.scope/cgroup.clone_children
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/init.scope/cgroup.procs
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/init.scope/notify_on_release
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/init.scope/tasks
+/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-1000.slice/user@1000.service/tasks
+/var/lib/php/sessions
+/var/tmp
+/var/www
+/var/www/html
+/var/www/html/admin
+/var/www/html/admin/collections.php
+/var/www/html/admin/composer.json
+/var/www/html/admin/composer.lock
+/var/www/html/admin/export
+/var/www/html/admin/feedback.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/autoload.php
+/var/www/html/admin/vendor/composer
+/var/www/html/admin/vendor/composer/autoload_classmap.php
+/var/www/html/admin/vendor/composer/autoload_namespaces.php
+/var/www/html/admin/vendor/composer/autoload_psr4.php
+/var/www/html/admin/vendor/composer/autoload_real.php
+/var/www/html/admin/vendor/composer/autoload_static.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/pclzip
+/var/www/html/admin/vendor/pclzip/pclzip
+/var/www/html/admin/vendor/pclzip/pclzip/composer.json
+/var/www/html/admin/vendor/pclzip/pclzip/gnu-lgpl.txt
+/var/www/html/admin/vendor/pclzip/pclzip/pclzip.lib.php
+/var/www/html/admin/vendor/pclzip/pclzip/readme.txt
+/var/www/html/admin/vendor/phpoffice
+/var/www/html/admin/vendor/phpoffice/common
+/var/www/html/admin/vendor/phpoffice/common/CHANGELOG.md
+/var/www/html/admin/vendor/phpoffice/common/composer.json
+/var/www/html/admin/vendor/phpoffice/common/COPYING
+/var/www/html/admin/vendor/phpoffice/common/COPYING.LESSER
+/var/www/html/admin/vendor/phpoffice/common/.gitignore
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/common/src/Common
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Adapter
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Adapter/Zip
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Adapter/Zip/PclZipAdapter.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Adapter/Zip/ZipArchiveAdapter.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Adapter/Zip/ZipInterface.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Autoloader.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Drawing.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/File.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Font.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Microsoft
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Microsoft/OLERead.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Microsoft/PasswordEncoder.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Text.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/XMLReader.php
+/var/www/html/admin/vendor/phpoffice/common/src/Common/XMLWriter.php
+/var/www/html/admin/vendor/phpoffice/common/tests
+/var/www/html/admin/vendor/phpoffice/common/tests/bootstrap.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Adapter
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Adapter/Zip
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Adapter/Zip/AbstractZipAdapterTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Adapter/Zip/PclZipAdapterTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Adapter/Zip/ZipArchiveAdapterTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/AutoloaderTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/DrawingTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/FileTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/FontTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/_includes
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/_includes/TestHelperZip.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/_includes/XmlDocument.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Microsoft
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Microsoft/PasswordEncoderTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/TextTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/XMLReaderTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/XMLWriterTest.php
+/var/www/html/admin/vendor/phpoffice/common/tests/resources
+/var/www/html/admin/vendor/phpoffice/common/tests/resources/files
+/var/www/html/admin/vendor/phpoffice/common/tests/resources/files/reader.zip
+/var/www/html/admin/vendor/phpoffice/common/tests/resources/files/Sample_01_Simple.pptx
+/var/www/html/admin/vendor/phpoffice/common/tests/resources/images
+/var/www/html/admin/vendor/phpoffice/common/.travis_shell_after_success.sh
+/var/www/html/admin/vendor/phpoffice/common/.travis.yml
+/var/www/html/admin/vendor/phpoffice/common/VERSION
+/var/www/html/admin/vendor/phpoffice/phpword
+/var/www/html/admin/vendor/phpoffice/phpword/bootstrap.php
+/var/www/html/admin/vendor/phpoffice/phpword/CHANGELOG.md
+/var/www/html/admin/vendor/phpoffice/phpword/composer.json
+/var/www/html/admin/vendor/phpoffice/phpword/CONTRIBUTING.md
+/var/www/html/admin/vendor/phpoffice/phpword/COPYING
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/.github/ISSUE_TEMPLATE
+/var/www/html/admin/vendor/phpoffice/phpword/.github/ISSUE_TEMPLATE/bug_report.md
+/var/www/html/admin/vendor/phpoffice/phpword/.github/ISSUE_TEMPLATE/feature_request.md
+/var/www/html/admin/vendor/phpoffice/phpword/.github/ISSUE_TEMPLATE/how-to-use.md
+/var/www/html/admin/vendor/phpoffice/phpword/.github/PULL_REQUEST_TEMPLATE.md
+/var/www/html/admin/vendor/phpoffice/phpword/LICENSE
+/var/www/html/admin/vendor/phpoffice/phpword/.php_cs.dist
+/var/www/html/admin/vendor/phpoffice/phpword/phpword.ini.dist
+/var/www/html/admin/vendor/phpoffice/phpword/README.md
+/var/www/html/admin/vendor/phpoffice/phpword/sonar-project.properties
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Collection
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Collection/AbstractCollection.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Collection/Bookmarks.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Collection/Charts.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Collection/Comments.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Collection/Endnotes.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/ComplexType
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/ComplexType/FootnoteProperties.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/ComplexType/ProofState.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/ComplexType/TblWidth.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/ComplexType/TrackChangesView.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Element
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Element/AbstractContainer.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Element/AbstractElement.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Element/Bookmark.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Element/Cell.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Element/Chart.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Escaper
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Escaper/AbstractEscaper.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Escaper/EscaperInterface.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Escaper/RegExp.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Escaper/Rtf.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Escaper/Xml.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Exception
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Exception/CopyFileException.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Exception/CreateTemporaryFileException.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Exception/Exception.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Exception/InvalidImageException.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Exception/InvalidObjectException.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/IOFactory.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Media.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata/Compatibility.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata/DocInfo.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata/Protection.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata/Settings.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/PhpWord.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/AbstractReader.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/HTML.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/MsDoc.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/ODText
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/ODText/AbstractPart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/ODText/Content.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/ODText/Meta.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/ODText.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/ReaderInterface.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/RTF
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/RTF/Document.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/RTF.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/AbstractPart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/DocPropsApp.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/DocPropsCore.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/DocPropsCustom.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/Document.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/Settings.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/Word2007/Styles.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/resources
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Settings.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/AbstractEnum.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/Converter.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/Html.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/OLERead.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/PCLZip
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/PCLZip/pclzip.lib.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/ZipArchive.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/SimpleType
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/SimpleType/DocProtect.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/SimpleType/Jc.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/SimpleType/JcTable.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/SimpleType/LineSpacingRule.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/SimpleType/NumberFormat.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/AbstractStyle.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Border.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Cell.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Chart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Extrusion.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Row.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Section.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Shading.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Shadow.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Style/Shape.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Template.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/TemplateProcessor.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/AbstractWriter.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Element
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Element/AbstractElement.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Element/Bookmark.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Element/Container.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Element/Endnote.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Element/Footnote.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Part
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Part/AbstractPart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Part/Body.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Part/Head.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Style
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Style/AbstractStyle.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Style/Font.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Style/Generic.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Style/Image.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/HTML/Style/Paragraph.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Element
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Element/AbstractElement.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Element/Container.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Element/Image.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Element/Link.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Element/PageBreak.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Part
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Part/AbstractPart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Part/Content.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Part/Manifest.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Part/Meta.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Part/Mimetype.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Style
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Style/AbstractStyle.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Style/Font.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Style/Image.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Style/Paragraph.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/ODText/Style/Section.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/PDF
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/PDF/AbstractRenderer.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/PDF/DomPDF.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/PDF/MPDF.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/PDF.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/PDF/TCPDF.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Element
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Element/AbstractElement.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Element/Container.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Element/Field.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Element/Image.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Element/Link.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Part
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Part/AbstractPart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Part/Document.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Part/Header.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Style
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Style/AbstractStyle.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Style/Border.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Style/Font.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Style/Indentation.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/RTF/Style/Paragraph.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Element
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Element/AbstractElement.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Element/Bookmark.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Element/Chart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Element/CheckBox.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Element/Container.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Part
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Part/AbstractPart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Part/Chart.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Part/Comments.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Part/ContentTypes.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Part/DocPropsApp.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Style
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Style/AbstractStyle.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Style/Cell.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Style/Extrusion.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Style/Fill.php
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/Word2007/Style/Font.php
+#)You_can_write_even_more_files_inside_last_directory
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Writer/WriterInterface.php
+/var/www/html/admin/vendor/zendframework
+/var/www/html/admin/vendor/zendframework/zend-escaper
+/var/www/html/admin/vendor/zendframework/zend-escaper/CHANGELOG.md
+/var/www/html/admin/vendor/zendframework/zend-escaper/composer.json
+/var/www/html/admin/vendor/zendframework/zend-escaper/LICENSE.md
+/var/www/html/admin/vendor/zendframework/zend-escaper/README.md
+/var/www/html/admin/vendor/zendframework/zend-escaper/src
+/var/www/html/admin/vendor/zendframework/zend-escaper/src/Escaper.php
+/var/www/html/admin/vendor/zendframework/zend-escaper/src/Exception
+/var/www/html/admin/vendor/zendframework/zend-escaper/src/Exception/ExceptionInterface.php
+/var/www/html/admin/vendor/zendframework/zend-escaper/src/Exception/InvalidArgumentException.php
+/var/www/html/admin/vendor/zendframework/zend-escaper/src/Exception/RuntimeException.php
+/var/www/html/books.php
+/var/www/html/collections.php
+/var/www/html/contact.php
+/var/www/html/db.php
+/var/www/html/docs
+#)You_can_write_even_more_files_inside_last_directory
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group reader:
+/dev/shm/linpeas.txt
+/dev/shm/lse.sh
+/dev/shm/linpeas.sh
+/var/lib/php/sessions
+
+[+] Searching passwords in config PHP files
+
+[+] Checking for TTY (sudo/su) passwords in audit logs
+
+[+] Finding IPs inside logs (limit 70)
+2205584 /var/log/apache2/access.log:10.10.14.78
+ 220676 /var/log/apache2/access.log:172.16.118.252
+ 220574 /var/log/apache2/error.log:10.10.14.78
+    108 /var/log/apache2/access.log:172.16.118.249
+     97 /var/log/apache2/access.log:172.20.10.3
+     96 /var/log/apache2/error.log:172.20.10.3
+     84 /var/log/apache2/error.log:172.20.10.5
+     82 /var/log/apache2/access.log:172.20.10.5
+     52 /var/log/apache2/access.log:10.10.14.3
+     32 /var/log/cloud-init-output.log:172.16.118.2
+     29 /var/log/apache2/access.log:10.10.10.177
+     28 /var/log/cloud-init-output.log:255.255.255.255
+     26 /var/log/dpkg.log:7.18.04.1
+     25 /var/log/wtmp:192.168.142.158
+     21 /var/log/wtmp:172.16.118.129
+     21 /var/log/apache2/access.log:10.10.10.176
+     18 /var/log/dpkg.log:3.192.1.5
+     18 /var/log/cloud-init-output.log:192.168.142.2
+     17 /var/log/dpkg.log:2.37.1.1
+     16 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-000000000001bdf0-0005985ff619c1dc.journal:172.16.118.129
+     16 /var/log/dpkg.log:18.04.11.9
+     16 /var/log/cloud-init-output.log:172.16.118.249
+     14 /var/log/apache2/error.log:10.10.14.3
+     13 /var/log/wtmp:172.16.118.252
+     13 /var/log/wtmp:172.16.118.248
+     13 /var/log/installer/subiquity-debug.log:192.168.142.155
+     12 /var/log/dpkg.log:1.18.04.8
+     11 /var/log/dpkg.log:2.18.04.3
+     11 /var/log/apache2/error.log:172.16.118.252
+     10 /var/log/wtmp:192.168.142.157
+     10 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-0000000000032f5a-00059ad6cc5a9dbd.journal:172.20.10.3
+     10 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-00000000000141d0-000597c3216bb2af.journal:192.168.142.158
+     10 /var/log/apache2/error.log:172.16.118.249
+      9 /var/log/wtmp:192.168.142.160
+      9 /var/log/wtmp:172.20.10.3
+      9 /var/log/cloud-init-output.log:192.168.142.156
+      9 /var/log/apache2/error.log:10.10.10.177
+      8 /var/log/dpkg.log:6.18.04.1
+      8 /var/log/dpkg.log:5.18.04.3
+      7 /var/log/dpkg.log:1.18.04.1
+      5 /var/log/installer/subiquity-debug.log:192.168.142.255
+      5 /var/log/apache2/error.log:10.10.10.176
+      4 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-000000000001bdf0-0005985ff619c1dc.journal:192.168.142.160
+      4 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-000000000001bdf0-0005985ff619c1dc.journal:172.16.118.252
+      4 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-000000000001bdf0-0005985ff619c1dc.journal:172.16.118.248
+      4 /var/log/apache2/error.log:172.20.10.4
+      4 /var/log/apache2/access.log:172.20.10.4
+      3 /var/log/installer/installer-journal.txt:91.189.89.198
+      3 /var/log/installer/installer-journal.txt:192.168.142.2
+      3 /var/log/installer/installer-journal.txt:192.168.142.155
+      3 /var/log/apt/history.log:7.18.04.1
+      2 /var/log/wtmp:172.16.118.251
+      2 /var/log/wtmp:10.10.14.3
+      2 /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@e99f6ec01bd446ab884c689206682636-0000000000000802-000597b07cfd6b14.journal:192.168.142.157
+      2 /var/log/installer/installer-journal.txt:2.37.1.1
+      2 /var/log/cloud-init-output.log:255.255.255.240
+      2 /var/log/cloud-init-output.log:172.20.10.1
+      2 /var/log/cloud-init-output.log:10.10.10.2
+      2 /var/log/apt/history.log:2.37.1.1
+      2 /var/log/apt/history.log:18.04.11.9
+      1 /var/log/wtmp:192.168.142.154
+      1 /var/log/wtmp:10.10.14.78
+      1 /var/log/lastlog:192.168.142.160
+      1 /var/log/lastlog:10.10.14.78
+      1 /var/log/installer/subiquity-debug.log:192.168.142.2
+      1 /var/log/installer/subiquity-debug.log:127.255.255.255
+      1 /var/log/cloud-init-output.log:172.20.10.5
+      1 /var/log/cloud-init-output.log:10.10.10.177
+      1 /var/log/cloud-init-output.log:10.10.10.176
+      1 /var/log/apt/history.log:6.18.04.1
+
+[+] Finding passwords inside logs (limit 70)
+Binary file /var/log/apache2/access.log matches
+Binary file /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000@0005bf78c15606db-35adbc7cbab6dbdd.journal~ matches
+Binary file /var/log/journal/8af6dac9d80548db9b25b66974ae4eb0/user-1000.journal matches
+/var/log/bootstrap.log: base-passwd depends on libc6 (>= 2.8); however:
+/var/log/bootstrap.log: base-passwd depends on libdebconfclient0 (>= 0.145); however:
+/var/log/bootstrap.log:dpkg: base-passwd: dependency problems, but configuring anyway as you requested:
+/var/log/bootstrap.log:Preparing to unpack .../base-passwd_3.5.44_amd64.deb ...
+/var/log/bootstrap.log:Preparing to unpack .../passwd_1%3a4.5-1ubuntu1_amd64.deb ...
+/var/log/bootstrap.log:Selecting previously unselected package base-passwd.
+/var/log/bootstrap.log:Selecting previously unselected package passwd.
+/var/log/bootstrap.log:Setting up base-passwd (3.5.44) ...
+/var/log/bootstrap.log:Setting up passwd (1:4.5-1ubuntu1) ...
+/var/log/bootstrap.log:Shadow passwords are now on.
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.44) ...
+/var/log/bootstrap.log:Unpacking base-passwd (3.5.44) over (3.5.44) ...
+/var/log/bootstrap.log:Unpacking passwd (1:4.5-1ubuntu1) ...
+/var/log/cloud-init.log:2019-11-19 10:25:22,684 - ssh_util.py[DEBUG]: line 123: option PasswordAuthentication added with yes
+/var/log/cloud-init.log:2019-11-19 10:25:22,726 - cc_set_passwords.py[DEBUG]: Restarted the ssh daemon.
+/var/log/cloud-init.log:2019-11-20 03:40:25,823 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-20 07:56:08,579 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-20 08:24:34,889 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-20 09:03:35,362 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-20 11:12:26,162 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-28 04:45:11,340 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-28 05:14:04,188 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 02:50:09,574 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 11:38:26,328 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 11:47:52,598 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 13:22:39,778 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 13:30:23,368 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 17:28:25,813 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 17:47:42,595 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 18:06:46,277 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 18:20:46,369 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-29 18:26:09,824 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-11-30 13:00:00,268 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-02 14:52:21,979 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-02 15:09:34,129 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-02 15:57:22,895 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-03 13:06:46,808 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-03 13:08:41,341 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-22 01:48:56,817 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-22 02:09:44,420 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-22 02:14:31,906 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2019-12-29 12:23:30,587 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-01-14 06:39:44,509 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2020-02-19 14:07:18,376 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/cloud-init.log:2021-04-08 15:28:03,959 - helpers.py[DEBUG]: config-set-passwords already ran (freq=once-per-instance)
+/var/log/dpkg.log:2019-02-14 09:49:32 configure base-passwd:amd64 3.5.44 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:32 install base-passwd:amd64 <none> 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:32 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:32 status half-installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:32 status installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:32 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:34 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:34 status half-installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:34 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:34 upgrade base-passwd:amd64 3.5.44 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:39 install passwd:amd64 <none> 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-02-14 09:49:39 status half-installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-02-14 09:49:39 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-02-14 09:49:41 configure base-passwd:amd64 3.5.44 <none>
+/var/log/dpkg.log:2019-02-14 09:49:41 status half-configured base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:41 status installed base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:41 status unpacked base-passwd:amd64 3.5.44
+/var/log/dpkg.log:2019-02-14 09:49:43 configure passwd:amd64 1:4.5-1ubuntu1 <none>
+/var/log/dpkg.log:2019-02-14 09:49:43 status half-configured passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-02-14 09:49:43 status installed passwd:amd64 1:4.5-1ubuntu1
+/var/log/dpkg.log:2019-02-14 09:49:43 status unpacked passwd:amd64 1:4.5-1ubuntu1
+/var/log/installer/installer-journal.txt:Nov 19 15:06:03 ubuntu-server systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+
+[+] Finding emails inside logs (limit 70)
+      2 /var/log/bootstrap.log:ftpmaster@ubuntu.com
+      1 /var/log/installer/installer-journal.txt:dm-devel@redhat.com
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70) - only PHP files
+/var/www/html/admin/index.php:.forgot-password:hover {
+/var/www/html/admin/index.php:<input type="password" placeholder="Password" name="password" />
+/var/www/html/admin/index.php:<input type="password" placeholder="Password" name="password"/>
+/var/www/html/admin/index.php:  $stmt=$conn->prepare("select email,password from users where email=? and password=?");
+/var/www/html/admin/vendor/pclzip/pclzip/pclzip.lib.php:define('PCLZIP_ERR_USER_ABORTED', 2);
+/var/www/html/admin/vendor/phpoffice/common/src/Common/Microsoft/PasswordEncoder.php:    private static $passwordMaxLength = 15;
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Microsoft/PasswordEncoderTest.php:        $password = 'test';
+/var/www/html/admin/vendor/phpoffice/common/tests/Common/Tests/Microsoft/PasswordEncoderTest.php:        $password = 'test' . chr(0);
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata/Protection.php:    private $algorithm = PasswordEncoder::ALGORITHM_SHA_1;
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Metadata/Protection.php:        $this->password = $password;
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Shared/PCLZip/pclzip.lib.php:define('PCLZIP_ERR_USER_ABORTED', 2);
+/var/www/html/index.php:.forgot-password:hover {
+/var/www/html/index.php:<input type="password" placeholder="Password" name="password" />
+/var/www/html/index.php:<input type="password" placeholder="Password" name="password"/>
+/var/www/html/index.php:                        $stmt=$conn->prepare("select email,password from users where email=? and password=?");
+
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70) - no PHP files
+/etc/bash_completion.d/grub:__grub_mkpasswd_pbkdf2_program="grub-mkpasswd-pbkdf2"
+/etc/cloud/cloud.cfg:     lock_passwd: True
+/etc/cloud/cloud.cfg:     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+/etc/nsswitch.conf:passwd:         compat systemd
+/etc/pam.d/common-password:password     [success=1 default=ignore]      pam_unix.so obscure sha512
+/etc/profile.d/vte-2.91.sh:  local pwd='~'
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/ssl/openssl.cnf:challengePassword          = A challenge password
+/etc/ssl/openssl.cnf:challengePassword_max              = 20
+/etc/ssl/openssl.cnf:challengePassword_min              = 4
+/etc/vmware-tools/vm-support:         sed 's/password[[:space:]]\+\(.*\)[[:space:]]\+\(.*\)$/password  xxxxxx/g' > \
+/home/reader/lse.sh:  cecho "${lblue}    Password:${reset} "
+/home/reader/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) == 0 ] && echo $u; done | grep -v root'
+/home/reader/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/home/reader/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/home/reader/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+
+[+] Finding possible password variables inside key folders (limit 140)
+/var/www/html/admin/vendor/phpoffice/common/.travis_shell_after_success.sh:echo "TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST"
+
+[+] Finding possible password in config files
+ /etc/sysctl.d/10-ptrace.conf
+credentials that exist in memory (re-using existing SSH connections,
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/apache2/apache2.conf
+passwd files from being
+ /etc/overlayroot.conf
+password is randomly generated
+password will be stored for recovery in
+passwd
+password,mkfs=0
+PASSWORD="foobar"
+PASSWORD" |
+PASSWORD" |
+PASSWORD HERE IN THIS CLEARTEXT CONFIGURATION
+passwords are more secure, but you won't be able to
+passwords are generated by calculating the sha512sum
+ /etc/adduser.conf
+passwd
+ /etc/nsswitch.conf
+passwd:         compat systemd
+
+[+] Finding 'username' string inside key folders (limit 70)
+/home/reader/lse.sh:    'grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50)
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5
+/etc/machine-id:8af6dac9d80548db9b25b66974ae4eb0
+/etc/popularity-contest.conf:"907473d6d32941a393beb35b0ce32977"
+/var/backups/dpkg.status.0: 36de53e7c2d968f951b11c64be101b91
+/var/www/html/admin/vendor/composer/installed.json:"19dd1de9d3f5fc4d7d70175b4c344dee329f45fd"
+/var/www/html/admin/vendor/phpoffice/common/README.md:=b5997ce59ac2816b4514f3a38de9900f6d492c1d)
+/var/www/html/admin/vendor/phpoffice/phpword/src/PhpWord/Reader/MsDoc.php:/ec118f354efebdee9102e41b5b7084fce81125b0/
+/var/www/html/admin/index.php:-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.
+/var/www/html/admin/composer.lock:"c8448d100de228fb9b1b375b7adfffd6"
+/var/www/html/index.php:-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.
+/home/reader/user.txt:ae90ed346a4ef82df9880417fac7de7e
+
+[+] Finding URIs with user:password@host inside key folders
