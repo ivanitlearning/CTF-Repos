@@ -1,0 +1,33 @@
+root@kali:~/CTF/PGPractice/Jacko/PE# cat powerup.txt
+
+
+Privilege   : SeImpersonatePrivilege
+Attributes  : SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+TokenHandle : 868
+ProcessId   : 900
+Name        : 900
+Check       : Process Token Privileges
+
+ModifiablePath    : C:\JavaTemp\
+IdentityReference : NT AUTHORITY\Authenticated Users
+Permissions       : {Delete, WriteAttributes, Synchronize, ReadControl...}
+%PATH%            : C:\JavaTemp\
+Name              : C:\JavaTemp\
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\JavaTemp\\wlbsctrl.dll'
+
+ModifiablePath    : C:\JavaTemp\
+IdentityReference : NT AUTHORITY\Authenticated Users
+Permissions       : {Delete, GenericWrite, GenericExecute, GenericRead}
+%PATH%            : C:\JavaTemp\
+Name              : C:\JavaTemp\
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\JavaTemp\\wlbsctrl.dll'
+
+ModifiablePath    : C:\Users\tony\AppData\Local\Microsoft\WindowsApps
+IdentityReference : JACKO\tony
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Users\tony\AppData\Local\Microsoft\WindowsApps
+Name              : C:\Users\tony\AppData\Local\Microsoft\WindowsApps
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\tony\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll'

@@ -1,0 +1,317 @@
+root@kali:~/CTF/PGPractice/Zino# nmap -Pn -n -sS -p- 192.168.242.64 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-28 00:47 +08
+Nmap scan report for 192.168.242.64
+Host is up (0.24s latency).
+Not shown: 65529 filtered ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3306/tcp open  mysql
+8003/tcp open  mcreport
+
+Nmap done: 1 IP address (1 host up) scanned in 325.04 seconds
+
+root@kali:~/CTF/PGPractice/Zino# nmap -Pn -n -sV -p21,22,139,445,3306,8003 --script=vuln,discovery 192.168.242.64 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-28 01:01 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 192.168.242.64
+Host is up (0.24s latency).
+
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         vsftpd 3.0.3
+|_banner: 220 (vsFTPd 3.0.3)
+|_sslv2-drown:
+22/tcp   open  ssh         OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_7.9p1 Debian-10+deb10u2
+| ssh-hostkey:
+|   2048 b2:66:75:50:1b:18:f5:e9:9f:db:2c:d4:e3:95:7a:44 (RSA)
+|   256 91:2d:26:f1:ba:af:d1:8b:69:8f:81:4a:32:af:9c:77 (ECDSA)
+|_  256 ec:6f:df:8b:ce:19:13:8a:52:57:3e:72:a3:14:6f:40 (ED25519)
+| ssh2-enum-algos:
+|   kex_algorithms: (10)
+|   server_host_key_algorithms: (5)
+|   encryption_algorithms: (6)
+|   mac_algorithms: (10)
+|_  compression_algorithms: (2)
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 4.9.5-Debian (workgroup: WORKGROUP)
+3306/tcp open  mysql?
+|_banner: I\x00\x00\x01\xFFj\x04Host '192.168.49.242' is not allowed t...
+| fingerprint-strings:
+|   DNSStatusRequestTCP, NULL:
+|_    Host '192.168.49.242' is not allowed to connect to this MariaDB server
+|_mysql-vuln-cve2012-2122: ERROR: Script execution failed (use -d to debug)
+|_sslv2-drown:
+8003/tcp open  http        Apache httpd 2.4.38
+|_http-chrono: Request times for /; avg: 555.73ms; min: 528.68ms; max: 640.50ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Thu, 27 May 2021 17:01:55 GMT; -30m00s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /: Root directory w/ listing on 'apache/2.4.38 (debian)'
+|_  /manual/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-grep:
+|   (1) http://192.168.242.64:8003/:
+|     (1) ip:
+|_      + 192.168.242.64
+| http-headers:
+|   Date: Thu, 27 May 2021 17:02:09 GMT
+|   Server: Apache/2.4.38 (Debian)
+|   Connection: close
+|   Content-Type: text/html;charset=UTF-8
+|
+|_  (Request type: HEAD)
+| http-ls: Volume /
+| SIZE  TIME              FILENAME
+| -     2019-02-05 21:02  booked/
+|_
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Apache/2.4.38 (Debian)
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /booked/
+|       Other: 1
+|     /icons/
+|       gif: 2
+|   Longest directory structure:
+|     Depth: 1
+|     Dir: /icons/
+|   Total files found (by extension):
+|_    Other: 2; gif: 2
+| http-sql-injection:
+|   Possible sqli for queries:
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dD%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dD%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dD%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dD%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=S%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=M%3bO%3dA%27%20OR%20sqlspider
+|     http://192.168.242.64:8003/?C=N%3bO%3dA%27%20OR%20sqlspider
+|_    http://192.168.242.64:8003/?C=D%3bO%3dA%27%20OR%20sqlspider
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Index of /
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port3306-TCP:V=7.91%I=7%D=5/28%Time=60AFD072%P=x86_64-pc-linux-gnu%r(NU
+SF:LL,4D,"I\0\0\x01\xffj\x04Host\x20'192\.168\.49\.242'\x20is\x20not\x20al
+SF:lowed\x20to\x20connect\x20to\x20this\x20MariaDB\x20server")%r(DNSStatus
+SF:RequestTCP,4D,"I\0\0\x01\xffj\x04Host\x20'192\.168\.49\.242'\x20is\x20n
+SF:ot\x20allowed\x20to\x20connect\x20to\x20this\x20MariaDB\x20server");
+Service Info: Hosts: ZINO, 127.0.1.1; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.242.64"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_msrpc-enum: NT_STATUS_OBJECT_NAME_NOT_FOUND
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV   LOSS (%)
+| 21    0       239164.60  2368.53  0.0%
+| 22    0       238945.70  1028.02  0.0%
+| 139   0       239156.30  1524.80  0.0%
+| 445   0       241538.80  5852.42  0.0%
+| 3306  0       239945.50  3404.83  0.0%
+|_8003  0       240355.40  3683.32  0.0%
+| smb-enum-domains:
+|   Builtin
+|     Groups: n/a
+|     Users: n/a
+|     Creation time: unknown
+|     Passwords: min length: 5; min age: n/a days; max age: n/a days; history: n/a passwords
+|     Account lockout disabled
+|   ZINO
+|     Groups: n/a
+|     Users: n/a
+|     Creation time: unknown
+|     Passwords: min length: 5; min age: n/a days; max age: n/a days; history: n/a passwords
+|_    Account lockout disabled
+| smb-enum-sessions:
+|_  <nobody>
+| smb-enum-shares:
+|   account_used: guest
+|   \\192.168.242.64\IPC$:
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: IPC Service (Samba 4.9.5-Debian)
+|     Users: 3
+|     Max Users: <unlimited>
+|     Path: C:\tmp
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\192.168.242.64\print$:
+|     Type: STYPE_DISKTREE
+|     Comment: Printer Drivers
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\var\lib\samba\printers
+|     Anonymous access: <none>
+|     Current user access: <none>
+|   \\192.168.242.64\zino:
+|     Type: STYPE_DISKTREE
+|     Comment: Logs
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\home\peter
+|     Anonymous access: READ
+|_    Current user access: READ
+| smb-ls: Volume \\192.168.242.64\zino
+| SIZE   TIME                 FILENAME
+| <DIR>  2020-07-09T19:11:49  .
+| <DIR>  2020-04-28T13:38:53  ..
+| 265    2020-04-28T14:07:32  error.log
+| 33     2020-07-09T19:11:49  local.txt
+| 424    2020-04-28T14:08:15  misc.log
+| 368    2020-04-28T14:07:54  auth.log
+| 5464   2020-04-28T14:07:09  access.log
+| <DIR>  2020-04-28T14:12:56  ftp
+|_
+| smb-mbenum:
+|   DFS Root
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Potential Browser
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Print server
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Server
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Server service
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Unix server
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Windows NT/2000/XP/2003 server
+|     ZINO  0.0  Samba 4.9.5-Debian
+|   Workstation
+|_    ZINO  0.0  Samba 4.9.5-Debian
+| smb-os-discovery:
+|   OS: Windows 6.1 (Samba 4.9.5-Debian)
+|   Computer name: zino
+|   NetBIOS computer name: ZINO\x00
+|   Domain name: \x00
+|   FQDN: zino
+|_  System time: 2021-05-27T13:02:07-04:00
+| smb-protocols:
+|   dialects:
+|     NT LM 0.12 (SMBv1) [dangerous, but default]
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+| smb-security-mode:
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb-system-info: ERROR: Script execution failed (use -d to debug)
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: false
+| smb-vuln-regsvc-dos:
+|   VULNERABLE:
+|   Service regsvc in Microsoft Windows systems vulnerable to denial of service
+|     State: VULNERABLE
+|       The service regsvc in Microsoft Windows 2000 systems is vulnerable to denial of service caused by a null deference
+|       pointer. This script will crash the service if it is vulnerable. This vulnerability was discovered by Ron Bowes
+|       while working on smb-enum-sessions.
+|_
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled but not required
+| smb2-time:
+|   date: 2021-05-27T17:02:09
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 440.74 seconds

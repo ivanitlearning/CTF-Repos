@@ -1,0 +1,21 @@
+root@kali:~/CTF/PGPractice/Shenzi/PE# cat powerup.txt
+
+
+ModifiablePath    : C:\Users\shenzi\AppData\Local\Microsoft\WindowsApps
+IdentityReference : SHENZI\shenzi
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Users\shenzi\AppData\Local\Microsoft\WindowsApps
+Name              : C:\Users\shenzi\AppData\Local\Microsoft\WindowsApps
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\shenzi\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll'
+
+Check         : AlwaysInstallElevated Registry Key
+AbuseFunction : Write-UserAddMSI
+
+DefaultDomainName    : SHENZI
+DefaultUserName      : shenzi
+DefaultPassword      :
+AltDefaultDomainName :
+AltDefaultUserName   :
+AltDefaultPassword   :
+Check                : Registry Autologons

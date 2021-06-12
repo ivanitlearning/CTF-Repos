@@ -1,0 +1,18 @@
+root@kali:~/CTF/PGPractice/Meathead/PE# cat powerup.txt
+
+
+Privilege   : SeImpersonatePrivilege
+Attributes  : SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+TokenHandle : 3412
+ProcessId   : 5448
+Name        : 5448
+Check       : Process Token Privileges
+
+ModifiablePath    : C:\Windows\ServiceProfiles\MSSQL$SQLEXPRESS\AppData\Local\Microsoft\WindowsApps
+IdentityReference : NT SERVICE\MSSQL$SQLEXPRESS
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Windows\ServiceProfiles\MSSQL$SQLEXPRESS\AppData\Local\Microsoft\WindowsApps
+Name              : C:\Windows\ServiceProfiles\MSSQL$SQLEXPRESS\AppData\Local\Microsoft\WindowsApps
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath
+                    'C:\Windows\ServiceProfiles\MSSQL$SQLEXPRESS\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll'

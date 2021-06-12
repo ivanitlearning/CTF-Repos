@@ -1,0 +1,895 @@
+root@kali:~/CTF/PGPractice/Jacko# nmap -Pn -n -sS -p- 192.168.163.66 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-29 17:05 +08
+Nmap scan report for 192.168.163.66
+Host is up (0.24s latency).
+Not shown: 65529 filtered ports
+PORT     STATE SERVICE
+80/tcp   open  http
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+7680/tcp open  pando-pub
+8082/tcp open  blackice-alerts
+
+Nmap done: 1 IP address (1 host up) scanned in 235.42 seconds
+
+root@kali:~/CTF/PGPractice/Jacko# nmap -Pn -n -sV -p80,135,139,445,7680,8082 --script=vuln,discovery 192.168.163.66 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-29 17:19 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 192.168.163.66
+Host is up (0.25s latency).
+
+PORT     STATE    SERVICE       VERSION
+80/tcp   open     http          Microsoft IIS httpd 10.0
+|_http-chrono: Request times for /; avg: 596.54ms; min: 569.30ms; max: 641.45ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.163.66
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 138
+|     Comment:
+|          // skip anything inside an HTML tag
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1542
+|     Comment:
+|          // the trigger is fired
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 33
+|     Comment:
+|          // name of the frameset page
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 179
+|     Comment:
+|         <!-- [close] { -->
+|
+|     Path: http://192.168.163.66:80/html/grammar.html
+|     Line number: 51
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="datetimeFields">
+|             <a href="#${item.link}">${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 30
+|     Comment:
+|          // allow translation
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 90
+|     Comment:
+|         /*
+|             var page = new String(parent.main.location);
+|             alert('first: ' + page);
+|             page = page.split('#')[0];
+|             paramSplit = page.split('?');
+|             page = paramSplit[0];
+|             page += '#firstFound';
+|             if(paramSplit.length > 0) {
+|                 page += '?' + paramSplit[1];
+|             }
+|             top.main.location = page;
+|         */
+|
+|     Path: http://192.168.163.66:80/html/tutorial.html
+|     Line number: 587
+|     Comment:
+|
+|         // start the TCP Server
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 1
+|     Comment:
+|         /*
+|          * Copyright 2004-2019 H2 Group. Multiple-Licensed under the MPL 2.0,
+|          * and the EPL 1.0 (http://h2database.com/html/license.html).
+|          *  * Initial Developer: H2 Group
+|          */
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 18
+|     Comment:
+|         <!-- } -->
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1123
+|     Comment:
+|         /**/
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 30
+|     Comment:
+|         <!-- railroad-start -->
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1043
+|     Comment:
+|
+|         // Application 1:
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 2
+|     Comment:
+|         <!--
+|         Copyright 2004-2019 H2 Group. Multiple-Licensed under the MPL 2.0,
+|         and the EPL 1.0 (http://h2database.com/html/license.html).
+|         Initial Developer: H2 Group
+|         -->
+|
+|     Path: http://192.168.163.66:80/html/grammar.html
+|     Line number: 23
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="literals">
+|             <a href="#${item.link}">${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 177
+|     Comment:
+|         <!--[if lte IE 7]><script language="javascript">switchBnf(null);</script><![endif]-->
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1536
+|     Comment:
+|          // initialize the trigger object is necessary
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 762
+|     Comment:
+|         /*
+|         </td><td>
+|             Directory containing one file for each<br />
+|             BLOB or CLOB value larger than a certain size.<br />
+|             Format: <code>&lt;id&gt;.t&lt;tableId&gt;.lob.db</code>
+|         </td><td>
+|             1 per large object
+|         </td></tr>
+|         <tr><td class="notranslate">
+|             test.123.temp.db
+|         </td><td>
+|             Temporary file.<br />
+|             Contains a temporary blob or a large result set.<br />
+|             Format: <code>&lt;database&gt;.&lt;id&gt;.temp.db</code>
+|         </td><td>
+|             1 per object
+|         </td></tr>
+|         </table>
+|
+|         <h3>Moving and Renaming Database Files</h3>
+|         <p>
+|         Database name and location are not stored inside the database files.
+|         </p><p>
+|         While a database is closed, the files can be moved to another directory, and they can
+|         be renamed as well (as long as all files of the same database start with the same
+|         name and the respective extensions are unchanged).
+|         </p><p>
+|         As there is no platform specific data in the files, they can be moved to other operating systems
+|         without problems.
+|         </p>
+|
+|         <h3>Backup</h3>
+|         <p>
+|         When the database is closed, it is possible to backup the database files.
+|         </p><p>
+|         To backup data while the database is running,
+|         the SQL commands <code>SCRIPT</code> and <code>BACKUP</code> can be used.
+|         </p>
+|
+|         <h2 id="logging_recovery">Logging and Recovery</h2>
+|         <p>
+|         Whenever data is modified in the database and those changes are committed, the changes are written
+|         to the transaction log (except for in-memory objects). The changes to the main data area itself are usually written
+|         later on, to optimize disk access. If there is a power failure, the main data area is not up-to-date,
+|         but because the changes are in the transaction log, the next time the database is opened, the changes
+|         are re-applied automatically.
+|         </p>
+|
+|         <h2 id="compatibility">Compatibility</h2>
+|         <p>
+|         All database engines behave a little bit different. Where possible, H2 supports the ANSI SQL standard,
+|         and tries to be compatible to other databases. There are still a few differences however:
+|         </p>
+|         <p>
+|         In MySQL text columns are case insensitive by default, while in H2 they are case sensitive. However
+|         H2 supports case insensitive columns as well. To create the tables with case insensitive texts, append
+|         <code>IGNORECASE=TRUE</code> to the database URL
+|         (example: <code>jdbc:h2:~/test;IGNORECASE=TRUE</code>).
+|         </p>
+|
+|         <h3>Compatibility Modes</h3>
+|         <p>
+|         For certain features, this database can emulate the behavior of specific databases.
+|         However, only a small subset of the differences between databases are implemented in this way.
+|         Here is the list of currently supported modes and the differences to the regular mode:
+|         </p>
+|
+|         <h3>DB2 Compatibility Mode</h3>
+|         <p>
+|         To use the IBM DB2 mode, use the database URL <code>jdbc:h2:~/test;MODE=DB2</code>
+|         or the SQL statement <code>SET MODE DB2</code>.
+|         </p>
+|         <ul><li>For aliased columns, <code>ResultSetMetaData.getColumnName()</code>
+|             returns the alias name and <code>getTableName()</code> returns
+|             <code>null</code>.
+|         </li><li>Concatenating <code>NULL</code> with another value
+|             results in the other value.
+|         </li><li>Support the pseudo-table SYSIBM.SYSDUMMY1.
+|         </li><li>Timestamps with dash between date and time are supported.
+|         </li><li>Datetime value functions return the same value within a command.
+|         </li></ul>
+|
+|         <h3>Derby Compatibility Mode</h3>
+|         <p>
+|         To use the Apache Derby mode, use the database URL <code>jdbc:h2:~/test;MODE=Derby</code>
+|         or the SQL statement <code>SET MODE Derby</code>.
+|         </p>
+|         <ul><li>For aliased columns, <code>ResultSetMetaData.getColumnName()</code>
+|             returns the alias name and <code>getTableName()</code> returns
+|             <code>null</code>.
+|         </li><li>For unique indexes, <code>NULL</code> is distinct.
+|             That means only one row with <code>NULL</code> in one of the columns is allowed.
+|         </li><li>Concatenating <code>NULL</code> with another value
+|             results in the other value.
+|         </li><li>Support the pseudo-table SYSIBM.SYSDUMMY1.
+|         </li><li>Datetime value functions return the same value within a command.
+|         </li></ul>
+|
+|         <h3>HSQLDB Compatibility Mode</h3>
+|         <p>
+|         To use the HSQLDB mode, use the database URL <code>jdbc:h2:~/test;MODE=HSQLDB</code>
+|         or the SQL statement <code>SET MODE HSQLDB</code>.
+|         </p>
+|         <ul><li>For aliased columns, <code>ResultSetMetaData.getColumnName()</code>
+|             returns the alias name and <code>getTableName()</code> returns
+|             <code>null</code>.
+|         </li><li>When converting the scale of decimal data, the number is only converted if the new scale is
+|             smaller than the current scale. Usually, the scale is converted and 0s are added if required.
+|         </li><li>For unique indexes, <code>NULL</code> is distinct.
+|             That means only one row with <code>NULL</code> in one of the columns is allowed.
+|         </li><li>Text can be concatenated using '+'.
+|         </li><li>Datetime value functions return the same value within a command.
+|         </li></ul>
+|
+|         <h3>MS SQL Server Compatibility Mode</h3>
+|         <p>
+|         To use the MS SQL Server mode, use the database URL <code>jdbc:h2:~/test;MODE=MSSQLServer</code>
+|         or the SQL statement <code>SET MODE MSSQLServer</code>.
+|         </p>
+|         <ul><li>For aliased columns, <code>ResultSetMetaData.getColumnName()</code>
+|             returns the alias name and <code>getTableName()</code> returns
+|             <code>null</code>.
+|         </li><li>Identifiers may be quoted using square brackets as in <code>[Test]</code>.
+|         </li><li>For unique indexes, <code>NULL</code> is distinct.
+|             That means only one row with <code>NULL</code> in one of the columns is allowed.
+|         </li><li>Concatenating <code>NULL</code> with another value
+|             results in the other value.
+|         </li><li>Text can be concatenated using '+'.
+|         </li><li>MONEY data type is treated like NUMERIC(19, 4) data type. SMALLMONEY data type is treated like NUMERIC(10, 4)
+|             data type.
+|         </li><li><code>IDENTITY</code> can be used for automatic id generation on column level.
+|         </li><li>Table hints are discarded. Example: <code>SELECT * FROM table WITH (NOLOCK)</code>.
+|         </li><li>Datetime value functions return the same value within a command.
+|         </li></ul>
+|
+|         <h3>MySQL Compatibility Mode</h3>
+|         <p>
+|         To use the MySQL mode, use the database URL <code>jdbc:h2:~/test;MODE=MySQL;DATABASE_TO_LOWER=TRUE</code>.
+|         Use this mode for compatibility with MariaDB too.
+|         When case-insensitive identifiers are needed append <code>;CASE_INSENSITIVE_IDENTIFIERS=TRUE</code> to URL.
+|         Do not change value of DATABASE_TO_LOWER after creation of database.
+|         </p>
+|         <ul><li>When inserting data, if a column is defined to be <code>NOT NULL</code>
+|             and <code>NULL</code> is inserted,
+|             then a 0 (or empty string, or the current timestamp for timestamp columns) value is used.
+|             Usually, this operation is not allowed and an exception is thrown.
+|         </li><li>Creating indexes in the <code>CREATE TABLE</code> statement is allowed using
+|             <code>INDEX(..)</code> or <code>KEY(..)</code>.
+|             Example: <code>create table test(id int primary key, name varchar(255), key idx_name(name));</code>
+|         </li><li>When converting a floating point number to an integer, the fractional
+|             digits are not truncated, but the value is rounded.
+|         </li><li>Concatenating <code>NULL</code> with another value
+|             results in the other value.
+|         </li><li>ON DUPLICATE KEY UPDATE is supported in INSERT statements, due to this feature VALUES has special non-standard
+|             meaning is some contexts.
+|         </li><li>INSERT IGNORE is partially supported and may be used to skip rows with duplicate keys if ON DUPLICATE KEY
+|             UPDATE is not specified.
+|         </li><li>REGEXP_REPLACE() uses \ for back-references for compatibility with MariaDB.
+|         </li><li>Datetime value functions return the same value within a command.
+|         </li></ul>
+|         <p>
+|         Text comparison in MySQL is case insensitive by default, while in H2 it is case sensitive (as in most other databases).
+|         H2 does support case insensitive text comparison, but it needs to be set separately,
+|         using <code>SET IGNORECASE TRUE</code>.
+|         This affects comparison using <code>=, LIKE, REGEXP</code>.
+|         </p>
+|
+|         <h3>Oracle Compatibility Mode</h3>
+|         <p>
+|         To use the Oracle mode, use the database URL <code>jdbc:h2:~/test;MODE=Oracle</code>
+|         or the SQL statement <code>SET MODE Oracle</code>.
+|         </p>
+|         <ul><li>For aliased columns, <code>ResultSetMetaData.getColumnName()</code>
+|             returns the alias name and <code>getTableName()</code> returns
+|             <code>null</code>.
+|         </li><li>When using unique indexes, multiple rows with <code>NULL</code>
+|             in all columns are allowed, however it is not allowed to have multiple rows with the
+|             same values otherwise.
+|         </li><li>Concatenating <code>NULL</code> with another value
+|             results in the other value.
+|         </li><li>Empty strings are treated like <code>NULL</code> values.
+|         </li><li>REGEXP_REPLACE() uses \ for back-references.
+|         </li><li>DATE data type is treated like TIMESTAMP(0) data type.
+|         </li><li>Datetime value functions return the same value within a command.
+|         </li></ul>
+|
+|         <h3>PostgreSQL Compatibility Mode</h3>
+|         <p>
+|         To use the PostgreSQL mode, use the database URL <code>jdbc:h2:~/test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE</code>.
+|         Do not change value of DATABASE_TO_LOWER after creation of database.
+|         </p>
+|         <ul><li>For aliased columns, <code>ResultSetMetaData.getColumnName()</code>
+|             returns the alias name and <code>getTableName()</code> returns
+|             <code>null</code>.
+|         </li><li>When converting a floating point number to an integer, the fractional
+|             digits are not be truncated, but the value is rounded.
+|         </li><li>The system columns <code>CTID</code> and
+|             <code>OID</code> are supported.
+|         </li><li>LOG(x) is base 10 in this mode.
+|         </li><li>REGEXP_REPLACE():
+|             <ul>
+|             <li>uses \ for back-references;</li>
+|             <li>does not throw an exception when the <code>flagsString</code> parameter contains a 'g';</li>
+|             <li>replaces only the first matched substring in the absence of the 'g' flag in the <code>flagsString</code> parameter.</li>
+|             </ul>
+|         </li><li>Fixed-width strings are padded with spaces.
+|         </li><li>MONEY data type is treated like NUMERIC(19, 2) data type.
+|         </li><li>Datetime value functions return the same value within a transaction.
+|         </li><li>ARRAY_SLICE() out of bounds parameters are silently corrected.
+|         </li><li>EXTRACT function with DOW field returns (0-6), Sunday is 0.
+|         </li></ul>
+|
+|         <h3>Ignite Compatibility Mode</h3>
+|         <p>
+|         To use the Ignite mode, use the database URL <code>jdbc:h2:~/test;MODE=Ignite</code>
+|         or the SQL statement <code>SET MODE Ignite</code>.
+|         </p>
+|         <ul><li>Creating indexes in the <code>CREATE TABLE</code> statement is allowed using
+|             <code>INDEX(..)</code> or <code>KEY(..)</code>.
+|             Example: <code>create table test(id int primary key, name varchar(255), key idx_name(name));</code>
+|         </li><li>AFFINITY KEY and SHARD KEY keywords may be used in index definition.
+|         </li><li>Datetime value functions return the same value within a transaction.
+|         </li></ul>
+|
+|         <h2 id="auto_reconnect">Auto-Reconnect</h2>
+|         <p>
+|         The auto-reconnect feature causes the JDBC driver to reconnect to
+|         the database if the connection is lost. The automatic re-connect only
+|         occurs when auto-commit is enabled; if auto-commit is disabled, an exception is thrown.
+|         To enable this mode, append <code>;AUTO_RECONNECT=TRUE</code> to the database URL.
+|         </p>
+|         <p>
+|         Re-connecting will open a new session. After an automatic re-connect,
+|         variables and local temporary tables definitions (excluding data) are re-created.
+|         The contents of the system table <code>INFORMATION_SCHEMA.SESSION_STATE</code>
+|         contains all client side state that is re-created.
+|         </p>
+|         <p>
+|         If another connection uses the database in exclusive mode (enabled using <code>SET EXCLUSIVE 1</code>
+|         or <code>SET EXCLUSIVE 2</code>), then this connection will try to re-connect until the exclusive mode ends.
+|         </p>
+|
+|         <h2 id="auto_mixed_mode">Automatic Mixed Mode</h2>
+|         <p>
+|         Multiple processes can access the same database without having to start the server manually.
+|         To do that, append <code>;AUTO_SERVER=TRUE</code> to the database URL.
+|         You can use the same database URL independent of whether the database is already open or not.
+|         This feature doesn't work with in-memory databases. Example database URL:
+|         </p>
+|         <pre>
+|         jdbc:h2:/data/test;AUTO_SERVER=TRUE
+|         </pre>
+|         <p>
+|         Use the same URL for all connections to this database. Internally, when using this mode,
+|         the first connection to the database is made in embedded mode, and additionally a server
+|         is started internally (as a daemon thread). If the database is already open in another process,
+|         the server mode is used automatically. The IP address and port of the server are stored in the file
+|         <code>.lock.db</code>, that's why in-memory databases can't be supported.
+|         </p>
+|         <p>
+|         The application that opens the first connection to the database uses the embedded mode,
+|         which is faster than the server mode. Therefore the main application should open
+|         the database first if possible. The first connection automatically starts a server on a random port.
+|         This server allows remote connections, however only to this database (to ensure that,
+|         the client reads <code>.lock.db</code> file and sends the random key that is stored there to the server).
+|         When the first connection is closed, the server stops. If other (remote) connections are still
+|         open, one of them will then start a server (auto-reconnect is enabled automatically).
+|         </p>
+|         <p>
+|         All processes need to have access to the database files.
+|         If the first connection is closed (the connection that started the server), open transactions of other connections will be rolled back
+|         (this may not be a problem if you don't disable autocommit).
+|         Explicit client/server connections (using <code>jdbc:h2:tcp://</code> or <code>ssl://</code>) are not supported.
+|         This mode is not supported for in-memory databases.
+|         </p>
+|         <p>
+|         Here is an example how to use this mode. Application 1 and 2 are not necessarily started
+|         on the same computer, but they need to have access to the database files. Application 1
+|         and 2 are typically two different processes (however they could run within the same process).
+|         </p>
+|         <pre>
+|         // Application 1:
+|         DriverManager.getConnection("jdbc:h2:/data/test;AUTO_SERVER=TRUE");
+|
+|         // Application 2:
+|         DriverManager.getConnection("jdbc:h2:/data/test;AUTO_SERVER=TRUE");
+|         </pre>
+|         <p>
+|         When using this feature, by default the server uses any free TCP port.
+|         The port can be set manually using <code>AUTO_SERVER_PORT=9090</code>.
+|         </p>
+|
+|         <h2 id="page_size">Page Size</h2>
+|         <p>
+|         The page size for new databases is 2 KB (2048), unless the page size is set
+|         explicitly in the database URL using <code>PAGE_SIZE=</code> when
+|         the database is created. The page size of existing databases can not be changed,
+|         so this property needs to be set when the database is created.
+|         </p>
+|
+|         <h2 id="trace_options">Using the Trace Options</h2>
+|         <p>
+|         To find problems in an application, it is sometimes good to see what database operations
+|         where executed. This database offers the following trace features:
+|         </p>
+|         <ul>
+|         <li>Trace to <code>System.out</code> and/or to a file
+|         </li><li>Support for trace levels <code>OFF, ERROR, INFO, DEBUG</code>
+|         </li><li>The maximum size of the trace file can be set
+|         </li><li>It is possible to generate Java source code from the trace file
+|         </li><li>Trace can be enabled at runtime by manually creating a file
+|         </li></ul>
+|
+|         <h3>Trace Options</h3>
+|         <p>
+|         The simplest way to enable the trace option is setting it in the database URL.
+|         There are two settings, one for <code>System.out</code>
+|         (<code>TRACE_LEVEL_SYSTEM_OUT</code>) tracing,
+|         and one for file tracing (<code>TRACE_LEVEL_FILE</code>).
+|         The trace levels are
+|         0 for <code>OFF</code>,
+|         1 for  <code>ERROR</code> (the default),
+|         2 for <code>INFO</code>, and
+|         3 for <code>DEBUG</code>.
+|         A database URL with both levels set to <code>DEBUG</code> is:
+|         </p>
+|         <pre>
+|         jdbc:h2:~/test;TRACE_LEVEL_FILE=3;TRACE_LEVEL_SYSTEM_OUT=3
+|         </pre>
+|         <p>
+|         The trace level can be changed at runtime by executing the SQL command
+|         <code>SET TRACE_LEVEL_SYSTEM_OUT level</code> (for <code>System.out</code> tracing)
+|         or <code>SET TRACE_LEVEL_FILE level</code> (for file tracing).
+|         Example:
+|         </p>
+|         <pre>
+|         SET TRACE_LEVEL_SYSTEM_OUT 3
+|         </pre>
+|
+|         <h3>Setting the Maximum Size of the Trace File</h3>
+|         <p>
+|         When using a high trace level, the trace file can get very big quickly.
+|         The default size limit is 16 MB, if the trace file exceeds this limit, it is renamed to
+|         <code>.old</code> and a new file is created.
+|         If another such file exists, it is deleted.
+|         To limit the size to a certain number of megabytes, use
+|         <code>SET TRACE_MAX_FILE_SIZE mb</code>.
+|         Example:
+|         </p>
+|         <pre>
+|         SET TRACE_MAX_FILE_SIZE 1
+|         </pre>
+|
+|         <h3>Java Code Generation</h3>
+|         <p>
+|         When setting the trace level to <code>INFO</code> or <code>DEBUG</code>,
+|         Java source code is generated as well. This simplifies reproducing problems. The trace file looks like this:
+|         </p>
+|         <pre>
+|         ...
+|         12-20 20:58:09 jdbc[0]:
+|         /**/
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 179
+|     Comment:
+|         <!-- analytics -->
+|
+|     Path: http://192.168.163.66:80/html/advanced.html
+|     Line number: 1606
+|     Comment:
+|         /* PUBLIC.GEO_TABLE_SPATIAL_INDEX:
+|             THE_GEOM &amp;&amp;
+|             'POLYGON ((490 490, 536 490, 536 515, 490 515, 490 490))'::Geometry */
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 69
+|     Comment:
+|          // window.setTimeout('goFirstFound()', 1);
+|
+|     Path: http://192.168.163.66:80/html/navigation.js
+|     Line number: 140
+|     Comment:
+|          // skip anything inside a <script> block
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 48
+|     Comment:
+|         <!-- railroad-end -->
+|
+|     Path: http://192.168.163.66:80/html/tutorial.html
+|     Line number: 468
+|     Comment:
+|          // add application code here
+|
+|     Path: http://192.168.163.66:80/html/grammar.html
+|     Line number: 79
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="otherGrammar">
+|             <a href="#${item.link}" >${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 79
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="commandsOther">
+|             <a href="#${item.link}">${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/stylesheet.css
+|     Line number: 1
+|     Comment:
+|         /*
+|          * Copyright 2004-2019 H2 Group. Multiple-Licensed under the MPL 2.0,
+|          * and the EPL 1.0 (http://h2database.com/html/license.html).
+|          * * Initial Developer: H2 Group
+|          */
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 51
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="commandsDDL">
+|             <a href="#${item.link}">${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/tutorial.html
+|     Line number: 352
+|     Comment:
+|         /*rnd*/
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 23
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="commandsDML">
+|             <a href="#${item.link}">${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/
+|     Line number: 7
+|     Comment:
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|         -->
+|
+|     Path: http://192.168.163.66:80/html/tutorial.html
+|     Line number: 590
+|     Comment:
+|
+|         // stop the TCP Server
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 122
+|     Comment:
+|         <!-- syntax-start
+|         <pre>
+|         ${item.syntax}
+|         </pre>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1546
+|     Comment:
+|          // the database is closed
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1046
+|     Comment:
+|
+|         // Application 2:
+|
+|     Path: http://192.168.163.66:80/html/commands.html
+|     Line number: 14
+|     Comment:
+|         <!-- [search] { -->
+|
+|     Path: http://192.168.163.66:80/html/datatypes.html
+|     Line number: 22
+|     Comment:
+|         <!-- syntax-start
+|         <p class="notranslate">
+|         <c:forEach var="item" items="dataTypes">
+|             <a href="#${item.link}" >${item.topic}</a><br />
+|         </c:forEach>
+|         </p>
+|         syntax-end -->
+|
+|     Path: http://192.168.163.66:80/html/features.html
+|     Line number: 1550
+|     Comment:
+|_         // the trigger was dropped
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 29 May 2021 09:20:39 GMT; -30m02s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=192.168.163.66
+|   Found the following error pages:
+|
+|   Error Code: 403
+|_      http://192.168.163.66:80/html/
+|_http-feed: Couldn't find any feeds.
+| http-grep:
+|   (2) http://192.168.163.66:80/html/tutorial.html:
+|     (2) email:
+|       + bob.meier@abcde.abc
+|       + john.jones@abcde.abc
+|   (2) http://192.168.163.66:80/html/advanced.html:
+|     (1) email:
+|       + 1@sea.gmane.org
+|     (1) ip:
+|_      + 1.0.69.0
+| http-headers:
+|   Content-Length: 1595
+|   Content-Type: text/html
+|   Last-Modified: Wed, 13 Mar 2019 13:36:26 GMT
+|   Accept-Ranges: bytes
+|   ETag: "0e980c1a1d9d41:0"
+|   Server: Microsoft-IIS/10.0
+|   Date: Sat, 29 May 2021 09:20:37 GMT
+|   Connection: close
+|
+|_  (Request type: HEAD)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1
+|     /html/
+|       css: 1; html: 7; js: 1
+|     /html/images/
+|       gif: 1; png: 8
+|   Longest directory structure:
+|     Depth: 2
+|     Dir: /html/images/
+|   Total files found (by extension):
+|_    Other: 1; css: 1; gif: 1; html: 7; js: 1; png: 8
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: H2 Database Engine (redirect)
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+135/tcp  open     msrpc         Microsoft Windows RPC
+139/tcp  open     netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+445/tcp  open     microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+7680/tcp filtered pando-pub
+8082/tcp open     http          H2 database http console
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-chrono: Request times for /; avg: 1975.79ms; min: 514.11ms; max: 7757.84ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.163.66
+|
+|     Path: http://192.168.163.66:8082/stylesheet.css
+|     Line number: 1
+|     Comment:
+|         /*
+|          * Copyright 2004-2019 H2 Group. Multiple-Licensed under the MPL 2.0,
+|          * and the EPL 1.0 (http://h2database.com/html/license.html).
+|          * * Initial Developer: H2 Group
+|          */
+|
+|     Path: http://192.168.163.66:8082/
+|     Line number: 2
+|     Comment:
+|         <!--
+|         Copyright 2004-2019 H2 Group. Multiple-Licensed under the MPL 2.0,
+|         and the EPL 1.0 (http://h2database.com/html/license.html).
+|         Initial Developer: H2 Group
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html
+|   Cache-Control: no-cache
+|   Content-Length: 937
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1; css: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; css: 1
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_      http://ha.ckers.org/slowloris/
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: H2 Console
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status ERROR
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.163.66"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Random Positive Increments
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV  LOSS (%)
+| 80    0       304711.00  -nan    90.0%
+| 135   1       266992.00  -nan    90.0%
+| 139   2       241440.00  -nan    90.0%
+| 445   3       239387.00  -nan    90.0%
+|_8082  4       296657.00  -nan    90.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum:
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols:
+|   dialects:
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled but not required
+| smb2-time:
+|   date: 2021-05-29T09:21:00
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1121.72 seconds

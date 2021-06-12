@@ -1,0 +1,47 @@
+root@kali:~/CTF/PGPractice/Payday# nmap -Pn -n -sU 192.168.238.39 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-26 13:26 +08
+Nmap scan report for 192.168.238.39
+Host is up (0.26s latency).
+Not shown: 996 closed ports
+PORT      STATE         SERVICE
+500/udp   open|filtered isakmp
+1101/udp  open|filtered pt2-discover
+18331/udp open|filtered unknown
+19500/udp open|filtered unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 1072.30 seconds
+
+root@kali:~/CTF/PGPractice/Payday# nmap -Pn -n -sUV -p500,1101,18331,19500 --script=vuln,discovery 192.168.238.39 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-26 13:55 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 3 address(es).
+| 192.168.238.39
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 192.168.238.39
+Host is up (0.24s latency).
+
+PORT      STATE  SERVICE      VERSION
+500/udp   closed isakmp
+1101/udp  closed pt2-discover
+18331/udp closed unknown
+19500/udp closed unknown
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.238.39"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_path-mtu: PMTU == 1500
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 19.78 seconds

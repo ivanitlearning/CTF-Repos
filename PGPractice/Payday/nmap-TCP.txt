@@ -1,0 +1,1471 @@
+root@kali:~/CTF/PGPractice/Payday# nmap -Pn -n -sS -p- 192.168.238.39 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-26 13:26 +08
+Nmap scan report for 192.168.238.39
+Host is up (0.25s latency).
+Not shown: 65527 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+110/tcp open  pop3
+139/tcp open  netbios-ssn
+143/tcp open  imap
+445/tcp open  microsoft-ds
+993/tcp open  imaps
+995/tcp open  pop3s
+
+Nmap done: 1 IP address (1 host up) scanned in 2303.78 seconds
+
+root@kali:~/CTF/PGPractice/Payday# nmap -Pn -n -sV -p22,80,110,139,143,445,993,995 --script=vuln,discovery 192.168.238.39 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-26 14:05 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 192.168.238.39
+Host is up (0.32s latency).
+
+PORT    STATE SERVICE     VERSION
+22/tcp  open  ssh         OpenSSH 4.6p1 Debian 5build1 (protocol 2.0)
+|_banner: SSH-2.0-OpenSSH_4.6p1 Debian-5build1
+| ssh-hostkey:
+|   1024 f3:6e:87:04:ea:2d:b3:60:ff:42:ad:26:67:17:94:d5 (DSA)
+|_  2048 bb:03:ce:ed:13:f1:9a:9e:36:03:e2:af:ca:b2:35:04 (RSA)
+| ssh2-enum-algos:
+|   kex_algorithms: (4)
+|   server_host_key_algorithms: (2)
+|   encryption_algorithms: (13)
+|   mac_algorithms: (6)
+|_  compression_algorithms: (2)
+80/tcp  open  http        Apache httpd 2.2.4 ((Ubuntu) PHP/5.2.3-1ubuntu6)
+|_http-apache-negotiation: mod_negotiation enabled.
+| http-auth-finder:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.238.39
+|   url                                                                                                 method
+|   http://192.168.238.39:80/                                                                           FORM
+|   http://192.168.238.39:80/index.php?target=sitemap                                                   FORM
+|   http://192.168.238.39:80/index.php?target=cart&csid=a2a1d258f17629ee181916a28c4294b4                FORM
+|   http://192.168.238.39:80/index.php?target=exceptions&no_page&csid=27c658bf42f2d38f1f51519cd4345741  FORM
+|   http://192.168.238.39:80/index.php?target=cart                                                      FORM
+|   http://192.168.238.39:80/index.php?target=topics&amp;topic_id=9                                     FORM
+|   http://192.168.238.39:80/index.php?target=pages&amp;page_id=about                                   FORM
+|   http://192.168.238.39:80/index.php                                                                  FORM
+|   http://192.168.238.39:80/index.php?target=auth&amp;mode=recover_password                            FORM
+|   http://192.168.238.39:80/index.php?target=pages&amp;page_id=what_is_cs                              FORM
+|   http://192.168.238.39:80/index.php?mode=catalog                                                     FORM
+|   http://192.168.238.39:80/index.php?target=auth&amp;mode=login_form                                  FORM
+|   http://192.168.238.39:80/index.php?target=search                                                    FORM
+|   http://192.168.238.39:80/index.php?target=pages&amp;page_id=privacy_policy                          FORM
+|   http://192.168.238.39:80/index.php?target=categories&amp;category_id=93                             FORM
+|   http://192.168.238.39:80/index.php?target=categories&amp;category_id=86                             FORM
+|   http://192.168.238.39:80/index.php?target=pages&page_id=about                                       FORM
+|   http://192.168.238.39:80/index.php?target=categories&amp;category_id=114                            FORM
+|_  http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9                FORM
+|_http-chrono: Request times for /; avg: 2333.62ms; min: 1328.95ms; max: 5831.52ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.238.39
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 597
+|     Comment:
+|         /* /Notification box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 352
+|     Comment:
+|         /* /Main boxes styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 406
+|     Comment:
+|         /* /categories side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 335
+|     Comment:
+|         /* Main boxes styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 408
+|     Comment:
+|         /* Site info side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 130
+|     Comment:
+|         /* /General styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 354
+|     Comment:
+|         /* categories side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 687
+|     Comment:
+|         /* category page */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 617
+|     Comment:
+|         /* buttons */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 256
+|     Comment:
+|         /* /Footer styles */
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+|     Line number: 265
+|     Comment:
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|               -->
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 258
+|     Comment:
+|         /* Side boxes styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 203
+|     Comment:
+|         /* /Header styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 547
+|     Comment:
+|         /* /Search side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 472
+|     Comment:
+|         /* authentication side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 315
+|     Comment:
+|         /* /Side boxes styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 495
+|     Comment:
+|         /*  /authentication side box */
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+|     Line number: 644
+|     Comment:
+|
+|
+|         -->
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 785
+|     Comment:
+|         /* checkout pages */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 821
+|     Comment:
+|         /* all levels outer */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 913
+|     Comment:
+|         /* manufacturers style */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 599
+|     Comment:
+|         /* Section in main box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 806
+|     Comment:
+|
+|
+|
+|
+|
+|
+|         */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 555
+|     Comment:
+|         /* /bestsellers side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 766
+|     Comment:
+|         /* form styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 685
+|     Comment:
+|         /* /eMenu */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 497
+|     Comment:
+|         /* Search side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 814
+|     Comment:
+|         /* all levels inner */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 917
+|     Comment:
+|         /* \manufacturers style */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 132
+|     Comment:
+|         /* Header styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 671
+|     Comment:
+|         /* /buttons */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 1
+|     Comment:
+|         /* General styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 673
+|     Comment:
+|         /* eMenu */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 584
+|     Comment:
+|         /* Warning message */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 205
+|     Comment:
+|         /* Footer styles */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 558
+|     Comment:
+|         /* Notification message */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 469
+|     Comment:
+|         /* /Site info side box */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 557
+|     Comment:
+|         /* Notification box */
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+|     Line number: 13
+|     Comment:
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|         -->
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 571
+|     Comment:
+|         /* error message */
+|
+|     Path: http://192.168.238.39:80/skins/new_vision_blue/customer/styles.css
+|     Line number: 549
+|     Comment:
+|_        /* bestsellers side box */
+| http-csrf:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.238.39
+|   Found the following possible CSRF vulnerabilities:
+|
+|     Path: http://192.168.238.39:80/
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=sitemap
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=sitemap
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=sitemap
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=a2a1d258f17629ee181916a28c4294b4
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=a2a1d258f17629ee181916a28c4294b4
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=a2a1d258f17629ee181916a28c4294b4
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=exceptions&no_page&csid=27c658bf42f2d38f1f51519cd4345741
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=exceptions&no_page&csid=27c658bf42f2d38f1f51519cd4345741
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=exceptions&no_page&csid=27c658bf42f2d38f1f51519cd4345741
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=topics&amp;topic_id=9
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=topics&amp;topic_id=9
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=topics&amp;topic_id=9
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=about
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=about
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=about
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=auth&amp;mode=recover_password
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=auth&amp;mode=recover_password
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=auth&amp;mode=recover_password
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=what_is_cs
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=what_is_cs
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=what_is_cs
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?mode=catalog
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?mode=catalog
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?mode=catalog
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=auth&amp;mode=login_form
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=auth&amp;mode=login_form
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=auth&amp;mode=login_form
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=search
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=search
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=search
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=search
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=privacy_policy
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=privacy_policy
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&amp;page_id=privacy_policy
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=93
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=93
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=93
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=86
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=86
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=86
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&page_id=about
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&page_id=about
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=pages&page_id=about
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=114
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=114
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=categories&amp;category_id=114
+|     Form id: subscribe_email
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+|     Form id:
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+|     Form id: login_form2
+|     Form action: index.php
+|
+|     Path: http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+|     Form id: subscribe_email
+|_    Form action: index.php
+|_http-date: Wed, 26 May 2021 06:06:45 GMT; -29m55s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-enum:
+|   /admin.php: Possible admin folder
+|   /admin/: Possible admin folder
+|   /admin/admin/: Possible admin folder
+|   /admin/account.php: Possible admin folder
+|   /admin/index.php: Possible admin folder
+|   /admin/login.php: Possible admin folder
+|   /admin/admin.php: Possible admin folder
+|   /admin/index.html: Possible admin folder
+|   /admin/login.html: Possible admin folder
+|   /admin/admin.html: Possible admin folder
+|   /admin/home.php: Possible admin folder
+|   /admin/controlpanel.php: Possible admin folder
+|   /admin/account.html: Possible admin folder
+|   /admin/admin_login.html: Possible admin folder
+|   /admin/cp.php: Possible admin folder
+|   /admin/admin_login.php: Possible admin folder
+|   /admin/admin-login.php: Possible admin folder
+|   /admin/home.html: Possible admin folder
+|   /admin/admin-login.html: Possible admin folder
+|   /admin/adminLogin.html: Possible admin folder
+|   /admin/controlpanel.html: Possible admin folder
+|   /admin/cp.html: Possible admin folder
+|   /admin/adminLogin.php: Possible admin folder
+|   /admin/account.cfm: Possible admin folder
+|   /admin/index.cfm: Possible admin folder
+|   /admin/login.cfm: Possible admin folder
+|   /admin/admin.cfm: Possible admin folder
+|   /admin/admin_login.cfm: Possible admin folder
+|   /admin/controlpanel.cfm: Possible admin folder
+|   /admin/cp.cfm: Possible admin folder
+|   /admin/adminLogin.cfm: Possible admin folder
+|   /admin/admin-login.cfm: Possible admin folder
+|   /admin/home.cfm: Possible admin folder
+|   /admin/account.asp: Possible admin folder
+|   /admin/index.asp: Possible admin folder
+|   /admin/login.asp: Possible admin folder
+|   /admin/admin.asp: Possible admin folder
+|   /admin/home.asp: Possible admin folder
+|   /admin/controlpanel.asp: Possible admin folder
+|   /admin/admin-login.asp: Possible admin folder
+|   /admin/cp.asp: Possible admin folder
+|   /admin/admin_login.asp: Possible admin folder
+|   /admin/adminLogin.asp: Possible admin folder
+|   /admin/account.aspx: Possible admin folder
+|   /admin/index.aspx: Possible admin folder
+|   /admin/login.aspx: Possible admin folder
+|   /admin/admin.aspx: Possible admin folder
+|   /admin/home.aspx: Possible admin folder
+|   /admin/controlpanel.aspx: Possible admin folder
+|   /admin/admin-login.aspx: Possible admin folder
+|   /admin/cp.aspx: Possible admin folder
+|   /admin/admin_login.aspx: Possible admin folder
+|   /admin/adminLogin.aspx: Possible admin folder
+|   /admin/index.jsp: Possible admin folder
+|   /admin/login.jsp: Possible admin folder
+|   /admin/admin.jsp: Possible admin folder
+|   /admin/home.jsp: Possible admin folder
+|   /admin/controlpanel.jsp: Possible admin folder
+|   /admin/admin-login.jsp: Possible admin folder
+|   /admin/cp.jsp: Possible admin folder
+|   /admin/account.jsp: Possible admin folder
+|   /admin/admin_login.jsp: Possible admin folder
+|   /admin/adminLogin.jsp: Possible admin folder
+|   /admin/backup/: Possible backup
+|   /admin/download/backup.sql: Possible database backup
+|   /admin/upload.php: Admin File Upload
+|   /admin/CiscoAdmin.jhtml: Cisco Collaboration Server
+|   /config/public/usergrp.gif: AXIS StorPoint
+|   /admin/libraries/ajaxfilemanager/ajaxfilemanager.php: Log1 CMS
+|   /admin/view/javascript/fckeditor/editor/filemanager/connectors/test.html: OpenCart/FCKeditor File upload
+|   /admin/includes/tiny_mce/plugins/tinybrowser/upload.php: CompactCMS or B-Hind CMS/FCKeditor File upload
+|   /admin/includes/FCKeditor/editor/filemanager/upload/test.html: ASP Simple Blog / FCKeditor File Upload
+|   /admin/jscript/upload.php: Lizard Cart/Remote File upload
+|   /admin/jscript/upload.html: Lizard Cart/Remote File upload
+|   /admin/jscript/upload.pl: Lizard Cart/Remote File upload
+|   /admin/jscript/upload.asp: Lizard Cart/Remote File upload
+|   /admin/environment.xml: Moodle files
+|   /catalog/: Potentially interesting directory w/ listing on 'apache/2.2.4 (ubuntu) php/5.2.3-1ubuntu6'
+|   /classes/: Potentially interesting directory w/ listing on 'apache/2.2.4 (ubuntu) php/5.2.3-1ubuntu6'
+|   /config/: Potentially interesting folder
+|   /icons/: Potentially interesting directory w/ listing on 'apache/2.2.4 (ubuntu) php/5.2.3-1ubuntu6'
+|   /image/: Potentially interesting folder
+|   /index/: Potentially interesting folder
+|   /install/: Potentially interesting folder
+|_  /payments/: Potentially interesting folder
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Date: Wed, 26 May 2021 06:06:30 GMT
+|   Server: Apache/2.2.4 (Ubuntu) PHP/5.2.3-1ubuntu6
+|   X-Powered-By: PHP/5.2.3-1ubuntu6
+|   Expires: -1
+|   Last-Modified: Wed, 26 May 2021 06:06:30 GMT
+|   Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+|   Pragma: no-cache
+|   Set-Cookie: csid=8e2f3c2aeb2dddf7dac74d9493b0ec67; expires=Wed, 26-May-2021 08:06:30 GMT; path=/; domain=.192.168.238.39
+|   Set-Cookie: csid=8e2f3c2aeb2dddf7dac74d9493b0ec67; path=/; domain=.192.168.238.39
+|   Set-Cookie: cart_languageC=EN; domain=.192.168.238.39
+|   Set-Cookie: cart_languageC=EN; domain=.192.168.238.39
+|   Set-Cookie: secondary_currencyC=usd; domain=.192.168.238.39
+|   Set-Cookie: secondary_currencyC=usd; domain=.192.168.238.39
+|   Connection: close
+|   Content-Type: text/html
+|
+|_  (Request type: HEAD)
+| http-internal-ip-disclosure:
+|_  Internal IP Leaked: 127.0.0.1
+|_http-mobileversion-checker: No mobile version detected.
+| http-php-version: Versions from logo query (less accurate): 5.1.3 - 5.1.6, 5.2.0 - 5.2.17
+| Versions from credits query (more accurate): 5.2.3 - 5.2.5, 5.2.6RC3
+|_Version from header x-powered-by: PHP/5.2.3-1ubuntu6
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+| http-security-headers:
+|   Cache_Control:
+|     Header: Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+|   Pragma:
+|     Header: Pragma: no-cache
+|   Expires:
+|_    Header: Expires: -1
+|_http-server-header: Apache/2.2.4 (Ubuntu) PHP/5.2.3-1ubuntu6
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1; php: 1
+|     /skins/new_vision_blue/customer/
+|       css: 1
+|   Longest directory structure:
+|     Depth: 3
+|     Dir: /skins/new_vision_blue/customer/
+|   Total files found (by extension):
+|_    Other: 1; css: 1; php: 1
+| http-slowloris-check:
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: CS-Cart. Powerful PHP shopping cart software
+|_http-trace: TRACE is enabled
+| http-traceroute:
+|   last-modified
+|     Hop #1: Wed, 26 May 2021 06:06:23 GMT
+|     Hop #2: Wed, 26 May 2021 06:06:24 GMT
+|_    Hop #3: Wed, 26 May 2021 06:06:26 GMT
+| http-unsafe-output-escaping:
+|   Characters [> " '] reflected in parameter csid at http://192.168.238.39:80/index.php?target=cart&csid=a2a1d258f17629ee181916a28c4294b4
+|   Characters [> " '] reflected in parameter csid at http://192.168.238.39:80/index.php?target=exceptions&no_page&csid=27c658bf42f2d38f1f51519cd4345741
+|_  Characters [> " '] reflected in parameter csid at http://192.168.238.39:80/index.php?target=cart&csid=91c5d3961030dbc1082ae7979f88ecd9
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+| 126 names had status 200
+| main
+|_app
+|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+110/tcp open  pop3        Dovecot pop3d
+|_banner: +OK Dovecot ready.
+|_pop3-capabilities: CAPA UIDL TOP STLS SASL PIPELINING RESP-CODES
+| ssl-ccs-injection:
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|
+|     References:
+|       http://www.cvedetails.com/cve/2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|_ssl-date: 2021-05-26T06:15:19+00:00; +6s from scanner time.
+| ssl-dh-params:
+|   VULNERABLE:
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use anonymous
+|       Diffie-Hellman key exchange only provide protection against passive
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks
+|       which could completely compromise the confidentiality and integrity
+|       of any data exchanged over the resulting session.
+|     Check results:
+|       ANONYMOUS DH GROUP 1
+|             Cipher Suite: TLS_DH_anon_EXPORT_WITH_RC4_40_MD5
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://www.ietf.org/rfc/rfc2246.txt
+|
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  BID:74733  CVE:CVE-2015-4000
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|       https://www.securityfocus.com/bid/74733
+|       https://weakdh.org
+|
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers:
+|   SSLv3:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|   TLSv1.0:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|_  least strength: F
+| ssl-poodle:
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  BID:70574  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.securityfocus.com/bid/70574
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|_      https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_sslv2-drown: ERROR: Script execution failed (use -d to debug)
+139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: MSHOME)
+143/tcp open  imap        Dovecot imapd
+|_banner: * OK Dovecot ready.
+| ssl-ccs-injection:
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|
+|     References:
+|       http://www.cvedetails.com/cve/2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+|_ssl-date: 2021-05-26T06:15:25+00:00; +6s from scanner time.
+| ssl-dh-params:
+|   VULNERABLE:
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use anonymous
+|       Diffie-Hellman key exchange only provide protection against passive
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks
+|       which could completely compromise the confidentiality and integrity
+|       of any data exchanged over the resulting session.
+|     Check results:
+|       ANONYMOUS DH GROUP 1
+|             Cipher Suite: TLS_DH_anon_EXPORT_WITH_RC4_40_MD5
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://www.ietf.org/rfc/rfc2246.txt
+|
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  BID:74733  CVE:CVE-2015-4000
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|       https://www.securityfocus.com/bid/74733
+|       https://weakdh.org
+|
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers:
+|   SSLv3:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|   TLSv1.0:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|_  least strength: F
+| ssl-poodle:
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  BID:70574  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.securityfocus.com/bid/70574
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|_      https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_sslv2-drown: ERROR: Script execution failed (use -d to debug)
+445/tcp open  netbios-ssn Samba smbd 3.0.26a (workgroup: MSHOME)
+993/tcp open  ssl/imaps?
+| ssl-ccs-injection:
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|
+|     References:
+|       http://www.cvedetails.com/cve/2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+| ssl-cert: Subject: commonName=ubuntu01/organizationName=OCOSA/stateOrProvinceName=There is no such thing outside US/countryName=XX
+| Not valid before: 2008-04-25T02:02:48
+|_Not valid after:  2008-05-25T02:02:48
+|_ssl-date: 2021-05-26T06:15:28+00:00; +6s from scanner time.
+| ssl-dh-params:
+|   VULNERABLE:
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use anonymous
+|       Diffie-Hellman key exchange only provide protection against passive
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks
+|       which could completely compromise the confidentiality and integrity
+|       of any data exchanged over the resulting session.
+|     Check results:
+|       ANONYMOUS DH GROUP 1
+|             Cipher Suite: TLS_DH_anon_EXPORT_WITH_RC4_40_MD5
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://www.ietf.org/rfc/rfc2246.txt
+|
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  BID:74733  CVE:CVE-2015-4000
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|       https://www.securityfocus.com/bid/74733
+|       https://weakdh.org
+|
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers:
+|   SSLv3:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|   TLSv1.0:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|_  least strength: F
+| ssl-poodle:
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  BID:70574  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.securityfocus.com/bid/70574
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|_      https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_sslv2-drown: ERROR: Script execution failed (use -d to debug)
+995/tcp open  ssl/pop3s?
+| ssl-ccs-injection:
+|   VULNERABLE:
+|   SSL/TLS MITM vulnerability (CCS Injection)
+|     State: VULNERABLE
+|     Risk factor: High
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h
+|       does not properly restrict processing of ChangeCipherSpec messages,
+|       which allows man-in-the-middle attackers to trigger use of a zero
+|       length master key in certain OpenSSL-to-OpenSSL communications, and
+|       consequently hijack sessions or obtain sensitive information, via
+|       a crafted TLS handshake, aka the "CCS Injection" vulnerability.
+|
+|     References:
+|       http://www.cvedetails.com/cve/2014-0224
+|       http://www.openssl.org/news/secadv_20140605.txt
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224
+| ssl-cert: Subject: commonName=ubuntu01/organizationName=OCOSA/stateOrProvinceName=There is no such thing outside US/countryName=XX
+| Not valid before: 2008-04-25T02:02:48
+|_Not valid after:  2008-05-25T02:02:48
+|_ssl-date: 2021-05-26T06:15:20+00:00; +7s from scanner time.
+| ssl-dh-params:
+|   VULNERABLE:
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use anonymous
+|       Diffie-Hellman key exchange only provide protection against passive
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks
+|       which could completely compromise the confidentiality and integrity
+|       of any data exchanged over the resulting session.
+|     Check results:
+|       ANONYMOUS DH GROUP 1
+|             Cipher Suite: TLS_DH_anon_EXPORT_WITH_RC4_40_MD5
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://www.ietf.org/rfc/rfc2246.txt
+|
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  BID:74733  CVE:CVE-2015-4000
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|       https://www.securityfocus.com/bid/74733
+|       https://weakdh.org
+|
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-enum-ciphers:
+|   SSLv3:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|   TLSv1.0:
+|     ciphers:
+|       TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+|       TLS_DHE_RSA_WITH_AES_128_CBC_SHA (dh 1024) - A
+|       TLS_DHE_RSA_WITH_AES_256_CBC_SHA (dh 1024) - A
+|       TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA - F
+|       TLS_DH_anon_EXPORT_WITH_RC4_40_MD5 - F
+|       TLS_DH_anon_WITH_3DES_EDE_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_128_CBC_SHA - F
+|       TLS_DH_anon_WITH_AES_256_CBC_SHA - F
+|       TLS_DH_anon_WITH_RC4_128_MD5 - F
+|       TLS_RSA_EXPORT_WITH_DES40_CBC_SHA - E
+|       TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 - E
+|       TLS_RSA_EXPORT_WITH_RC4_40_MD5 - E
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 1024) - D
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_RC4_128_MD5 (rsa 1024) - D
+|       TLS_RSA_WITH_RC4_128_SHA (rsa 1024) - D
+|     compressors:
+|       DEFLATE
+|       NULL
+|     cipher preference: client
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       64-bit block cipher DES40 vulnerable to SWEET32 attack
+|       64-bit block cipher RC2 vulnerable to SWEET32 attack
+|       Broken cipher RC4 is deprecated by RFC 7465
+|       Ciphersuite uses MD5 for message integrity
+|       Weak certificate signature: SHA1
+|_  least strength: F
+| ssl-poodle:
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  BID:70574  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.securityfocus.com/bid/70574
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|_      https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_sslv2-drown: ERROR: Script execution failed (use -d to debug)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.238.39"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: All zeros
+|_msrpc-enum: NT_STATUS_OBJECT_NAME_NOT_FOUND
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV      LOSS (%)
+| 22    0       278282.80  30529.90    0.0%
+| 80    0       281769.20  39735.83    0.0%
+| 110   0       265562.10  34832.20    0.0%
+| 139   0       275266.40  33511.54    0.0%
+| 143   0       287608.20  43926.53    0.0%
+| 445   0       692035.40  1248979.91  0.0%
+| 993   0       280450.00  33023.55    0.0%
+|_995   0       284299.70  32301.67    0.0%
+| smb-enum-domains:
+|   PAYDAY
+|     Groups: n/a
+|     Users: games\x00, nobody\x00, proxy\x00, syslog\x00, www-data\x00, root\x00, news\x00, bin\x00, mail\x00, dhcp\x00, daemon\x00, sshd\x00, man\x00, lp\x00, mysql\x00, dovecot\x00, gnats\x00, backup\x00, sys\x00, klog\x00, postfix\x00, list\x00, irc\x00, sync\x00, uucp\x00
+|     Creation time: unknown
+|     Passwords: min length: 5; min age: n/a days; max age: n/a days; history: n/a passwords
+|     Account lockout disabled
+|   Builtin
+|     Groups: n/a
+|     Users: n/a
+|     Creation time: unknown
+|     Passwords: min length: 5; min age: n/a days; max age: n/a days; history: n/a passwords
+|_    Account lockout disabled
+|_smb-enum-sessions: ERROR: Script execution failed (use -d to debug)
+| smb-enum-shares:
+|   account_used: <blank>
+|   \\192.168.238.39\IPC$:
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: IPC Service (payday server (Samba, Ubuntu))
+|     Users: 3
+|     Max Users: <unlimited>
+|     Path: C:\tmp
+|     Anonymous access: READ/WRITE
+|   \\192.168.238.39\print$:
+|     Type: STYPE_DISKTREE_HIDDEN
+|     Comment: Printer Drivers
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\var\lib\samba\printers
+|_    Anonymous access: <none>
+| smb-mbenum:
+|   DFS Root
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Potential Browser
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Print server
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Server
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Server service
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Unix server
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Windows NT/2000/XP/2003 server
+|     PAYDAY  0.0  payday server (Samba, Ubuntu)
+|   Workstation
+|_    PAYDAY  0.0  payday server (Samba, Ubuntu)
+| smb-os-discovery:
+|   OS: Unix (Samba 3.0.26a)
+|   Computer name: payday
+|   NetBIOS computer name:
+|   Domain name:
+|   FQDN: payday
+|_  System time: 2021-05-26T02:06:40-04:00
+| smb-protocols:
+|   dialects:
+|_    NT LM 0.12 (SMBv1) [dangerous, but default]
+| smb-security-mode:
+|   account_used: <blank>
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb-system-info: ERROR: Script execution failed (use -d to debug)
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: false
+|_smb-vuln-regsvc-dos: ERROR: Script execution failed (use -d to debug)
+|_smb2-time: Protocol negotiation failed (SMB2)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 637.27 seconds
