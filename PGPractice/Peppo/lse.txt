@@ -1,0 +1,1758 @@
+root@kali:~/CTF/PGPractice/Peppo/PE# cat lse.txt
+---
+---
+
+ LSE Version: 3.2
+
+        User: eleanor
+     User ID: 1000
+    Password: ******
+        Home: /home/eleanor
+        Path: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+       umask: 0022
+
+    Hostname: peppo
+       Linux: 4.9.0-12-amd64
+Distribution: Debian GNU/Linux 9.12 (stretch)
+Architecture: x86_64
+
+==================================================================( users )=====
+[i] usr000 Current user groups............................................. yes!
+---
+eleanor cdrom floppy audio dip video plugdev netdev docker
+---
+[*] usr010 Is current user in an administrative group?..................... nope
+[*] usr020 Are there other users in an administrative groups?.............. nope
+[*] usr030 Other users with shell.......................................... yes!
+---
+root:x:0:0:root:/root:/bin/bash
+eleanor:x:1000:1000:eleanor,,,:/home/eleanor:/bin/rbash
+---
+[i] usr040 Environment information......................................... yes!
+---
+MAIL=/var/mail/eleanor
+USER=eleanor
+SSH_CLIENT=192.168.49.217 49404 22
+SHLVL=2
+HOME=/home/eleanor
+OLDPWD=/home/eleanor
+SSH_TTY=/dev/pts/0
+LOGNAME=eleanor
+_=./lse.sh
+XDG_SESSION_ID=11
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin:/usr/sbin
+XDG_RUNTIME_DIR=/run/user/1000
+LANG=en_US.UTF-8
+SHELL=/bin/rbash
+PWD=/home/eleanor/tmp
+SSH_CONNECTION=192.168.49.217 49404 192.168.217.60 22
+---
+[i] usr050 Groups for other users.......................................... yes!
+---
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:eleanor
+floppy:x:25:eleanor
+tape:x:26:
+sudo:x:27:
+audio:x:29:eleanor
+dip:x:30:eleanor
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:eleanor
+sasl:x:45:
+plugdev:x:46:eleanor
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+systemd-journal:x:101:
+systemd-timesync:x:102:
+systemd-network:x:103:
+systemd-resolve:x:104:
+systemd-bus-proxy:x:105:
+input:x:106:
+crontab:x:107:
+netdev:x:108:eleanor
+Debian-exim:x:109:
+messagebus:x:110:
+ssh:x:111:
+eleanor:x:1000:
+docker:x:999:eleanor
+---
+[i] usr060 Other users..................................................... yes!
+---
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+_apt:x:104:65534::/nonexistent:/bin/false
+Debian-exim:x:105:109::/var/spool/exim4:/bin/false
+messagebus:x:106:110::/var/run/dbus:/bin/false
+sshd:x:107:65534::/run/sshd:/usr/sbin/nologin
+eleanor:x:1000:1000:eleanor,,,:/home/eleanor:/bin/rbash
+identd:x:108:65534::/var/run/identd:/bin/false
+---
+[*] usr070 PATH variables defined inside /etc.............................. yes!
+---
+/bin
+/sbin
+/usr/bin
+/usr/games
+/usr/local/bin
+/usr/local/games
+/usr/local/sbin
+/usr/sbin
+---
+[!] usr080 Is '.' in a PATH variable defined inside /etc?.................. nope
+===================================================================( sudo )=====
+[!] sud000 Can we sudo without a password?................................. nope
+[!] sud010 Can we list sudo commands without a password?................... nope
+[!] sud020 Can we sudo with a password?.................................... nope
+[!] sud030 Can we list sudo commands with a password?...................... nope
+[*] sud040 Can we read sudoers files?...................................... nope
+[*] sud050 Do we know if any other users used sudo?........................ nope
+============================================================( file system )=====
+[*] fst000 Writable files outside user's home.............................. yes!
+---
+/run/vmware/guestServicePipe
+/run/docker.sock
+/run/dbus/system_bus_socket
+/run/user/1000
+/run/user/1000/gnupg
+/run/user/1000/gnupg/S.gpg-agent.ssh
+/run/user/1000/gnupg/S.gpg-agent
+/run/user/1000/gnupg/S.gpg-agent.browser
+/run/user/1000/gnupg/S.gpg-agent.extra
+/run/user/1000/systemd
+/run/user/1000/systemd/private
+/run/user/1000/systemd/notify
+/run/user/1000/systemd/transient
+/run/systemd/journal/socket
+/run/systemd/journal/stdout
+/run/systemd/journal/syslog
+/run/systemd/journal/dev-log
+/run/systemd/private
+/run/systemd/notify
+/run/lock
+/var/mail/eleanor
+/var/tmp
+/tmp
+/tmp/.ICE-unix
+/tmp/tmp.Uh5a5E1zJF
+/tmp/.Test-unix
+/tmp/.XIM-unix
+/tmp/.font-unix
+/tmp/tmp.qgTT7jEpKs
+/tmp/.X11-unix
+---
+[*] fst010 Binaries with setuid bit........................................ yes!
+---
+/bin/su
+/bin/fusermount
+/bin/umount
+/bin/mount
+/bin/ping
+/usr/bin/sudo
+/usr/bin/gpasswd
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/pkexec
+/usr/bin/chsh
+/usr/bin/newgrp
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/sbin/exim4
+---
+[!] fst020 Uncommon setuid binaries........................................ nope
+[!] fst030 Can we write to any setuid binary?.............................. nope
+[*] fst040 Binaries with setgid bit........................................ skip
+[!] fst050 Uncommon setgid binaries........................................ skip
+[!] fst060 Can we write to any setgid binary?.............................. skip
+[*] fst070 Can we read /root?.............................................. nope
+[*] fst080 Can we read subdirectories under /home?......................... nope
+[*] fst090 SSH files in home directories................................... nope
+[*] fst100 Useful binaries................................................. yes!
+---
+/usr/bin/curl
+/usr/bin/dig
+/usr/bin/gcc
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+---
+[*] fst110 Other interesting files in home directories..................... nope
+[!] fst120 Are there any credentials in fstab/mtab?........................ yes!
+---
+/etc/mtab:overlay /var/lib/docker/overlay2/9044167633acb5527fbca7686b0932a351288c1e11a7cc164edc68220cc75f50/merged overlay rw,relatime,lowerdir=/var/lib/docker/overlay2/l/5ZYB55BQ7MLN7L4LQLDGFS4UKW:/var/lib/docker/overlay2/l/SAUUVFQQSYNWW3KP5HCSPP4HSP:/var/lib/docker/overlay2/l/NVWGKA4YJEZORMU5BTDJD3AZQH:/var/lib/docker/overlay2/l/QUUNMUYZ7KS2B2JYKQLKTX2QWD:/var/lib/docker/overlay2/l/FFOL4GGTTBGT5XJCRUVLAP3HMM:/var/lib/docker/overlay2/l/MJ4UPM34PJREEY6NWY2UXFTLDA:/var/lib/docker/overlay2/l/JRIYIFDYQFWCU657FFJET63DYR:/var/lib/docker/overlay2/l/DTQJ2UWRS2R37ENMP26JKGGJPO:/var/lib/docker/overlay2/l/7QAUH2NAL27KM72WNRXTCFSV7P:/var/lib/docker/overlay2/l/KWP67NUIPOPUEZ3NTLRL5VJKPW:/var/lib/docker/overlay2/l/PPTU6XFWLUIWI2UE3GDETXPG2W:/var/lib/docker/overlay2/l/JA67L6K2NRXT5HOPDOJ2H76CXQ:/var/lib/docker/overlay2/l/7XBRXDSA62FZCJZUXCNH577I5I:/var/lib/docker/overlay2/l/BKEHVD5OQVAFOKQVTHQXMZ2ENF:/var/lib/docker/overlay2/l/7FQFNJK4IKDOGYXARETCNFUHX6,upperdir=/var/lib/docker/overlay2/9044167633acb5527fbca7686b0932a351288c1e11a7cc164edc68220cc75f50/diff,workdir=/var/lib/docker/overlay2/9044167633acb5527fbca7686b0932a351288c1e11a7cc164edc68220cc75f50/work 0 0
+---
+[*] fst130 Does 'eleanor' have mail?....................................... yes!
+---
+-rw-rw---- 1 eleanor mail 631 May 31 13:20 /var/mail/eleanor
+---
+[!] fst140 Can we access other users mail?................................. nope
+[*] fst150 Looking for GIT/SVN repositories................................ nope
+[!] fst160 Can we write to critical files?................................. nope
+[!] fst170 Can we write to critical directories?........................... nope
+[!] fst180 Can we write to directories from PATH defined in /etc?.......... nope
+[!] fst190 Can we read any backup?......................................... nope
+[!] fst200 Are there possible credentials in any shell history file?....... nope
+[i] fst500 Files owned by user 'eleanor'................................... yes!
+---
+-rw-rw---- 1 eleanor mail 631 May 31 13:20 /var/mail/eleanor
+-rw-r--r-- 1 eleanor eleanor 30 Jun  1  2020 /home/eleanor/.bashrc
+-rw-r--r-- 1 eleanor eleanor 33 May 31 06:57 /home/eleanor/local.txt
+-rw------- 1 eleanor eleanor 35 May 31 12:51 /home/eleanor/.bash_history
+-rw-r--r-- 1 eleanor eleanor 30 Jun  1  2020 /home/eleanor/.profile
+-rwxr-xr-x 1 eleanor eleanor 341117 May 18 00:08 /home/eleanor/tmp/linpeas.sh
+-rw-r--r-- 1 eleanor eleanor 98288 May 31 13:01 /home/eleanor/tmp/linpeas.txt
+-rw-r--r-- 1 eleanor eleanor 10854 May 31 13:20 /home/eleanor/tmp/lse.txt
+-rwxr-xr-x 1 eleanor eleanor 41177 May 26 04:12 /home/eleanor/tmp/lse.sh
+-rw------- 1 eleanor eleanor 32 May 31 13:00 /home/eleanor/.gnupg/pubring.kbx
+-rw------- 1 eleanor eleanor 1200 May 31 13:00 /home/eleanor/.gnupg/trustdb.gpg
+-rw------- 1 eleanor eleanor 633 May 31 13:19 /home/eleanor/mbox
+-rw-r--r-- 1 eleanor eleanor 270 Jun  1  2020 /home/eleanor/helloworld/index.js
+-rw------- 1 eleanor eleanor 0 May 31 13:20 /tmp/tmp.Uh5a5E1zJF
+-rw------- 1 eleanor eleanor 0 May 31 13:19 /tmp/tmp.qgTT7jEpKs
+---
+[i] fst510 SSH files anywhere.............................................. nope
+[i] fst520 Check hosts.equiv file and its contents......................... nope
+[i] fst530 List NFS server shares.......................................... nope
+[i] fst540 Dump fstab file................................................. yes!
+---
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=dfb79ca2-a7c6-4354-836a-a6442d2dffbd /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=8ef49c13-79bd-417c-818e-02571ed726fe none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+---
+=================================================================( system )=====
+[i] sys000 Who is logged in................................................ yes!
+---
+ 13:20:04 up  6:24,  1 user,  load average: 0.00, 0.00, 0.01
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+eleanor  pts/0    192.168.49.217   12:53    3.00s  0.12s  0.00s ps -ewwwo start_time,pid,user:50,args
+---
+[i] sys010 Last logged in users............................................ yes!
+---
+eleanor  pts/0        192.168.49.217   Mon May 31 12:53   still logged in
+eleanor  pts/0        192.168.49.217   Mon May 31 12:52 - 12:52  (00:00)
+eleanor  pts/0        192.168.49.217   Mon May 31 12:51 - 12:51  (00:00)
+reboot   system boot  4.9.0-12-amd64   Wed Aug 12 17:31   still running
+
+wtmp begins Thu Aug  6 13:15:09 2020
+---
+[!] sys020 Does the /etc/passwd have hashes?............................... nope
+[!] sys022 Does the /etc/group have hashes?................................ nope
+[!] sys030 Can we read shadow files?....................................... nope
+[*] sys040 Check for other superuser accounts.............................. nope
+[*] sys050 Can root user log in via SSH?................................... yes!
+---
+PermitRootLogin yes
+---
+[i] sys060 List available shells........................................... yes!
+---
+# /etc/shells: valid login shells
+/bin/sh
+/bin/dash
+/bin/bash
+/bin/rbash
+---
+[i] sys070 System umask in /etc/login.defs................................. yes!
+---
+UMASK           022
+---
+[i] sys080 System password policies in /etc/login.defs..................... yes!
+---
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+ENCRYPT_METHOD SHA512
+---
+===============================================================( security )=====
+[*] sec000 Is SELinux present?............................................. nope
+[*] sec010 List files with capabilities.................................... yes!
+---
+/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+---
+[!] sec020 Can we write to a binary with caps?............................. nope
+[!] sec030 Do we have all caps in any binary?.............................. nope
+[*] sec040 Users with associated capabilities.............................. nope
+[!] sec050 Does current user have capabilities?............................ skip
+[!] sec060 Can we read the auditd log?..................................... nope
+========================================================( recurrent tasks )=====
+[*] ret000 User crontab.................................................... nope
+[!] ret010 Cron tasks writable by user..................................... nope
+[*] ret020 Cron jobs....................................................... yes!
+---
+/etc/crontab:SHELL=/bin/sh
+/etc/crontab:PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+/etc/crontab:17 *       * * *   root    cd / && run-parts --report /etc/cron.hourly
+/etc/crontab:25 6       * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+/etc/crontab:47 6       * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+/etc/crontab:52 6       1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+---
+[*] ret030 Can we read user crontabs....................................... nope
+[*] ret040 Can we list other user cron tasks?.............................. nope
+[*] ret050 Can we write to any paths present in cron jobs.................. yes!
+---
+/dev/null
+/dev/urandom
+---
+[!] ret060 Can we write to executable paths present in cron jobs........... nope
+[i] ret400 Cron files...................................................... yes!
+---
+-rw-r--r-- 1 root root  722 Oct  7  2017 /etc/crontab
+
+/etc/cron.d:
+total 12
+drwxr-xr-x  2 root root 4096 May 25  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.daily:
+total 44
+drwxr-xr-x  2 root root 4096 May 25  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rwxr-xr-x  1 root root 1474 Jan 18  2019 apt-compat
+-rwxr-xr-x  1 root root  355 Oct 25  2016 bsdmainutils
+-rwxr-xr-x  1 root root 1597 Jun 25  2018 dpkg
+-rwxr-xr-x  1 root root 4125 May 13  2020 exim4-base
+-rwxr-xr-x  1 root root   89 May  5  2015 logrotate
+-rwxr-xr-x  1 root root 1065 Dec 13  2016 man-db
+-rwxr-xr-x  1 root root  249 May 17  2017 passwd
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 May 25  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 May 25  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+
+/etc/cron.weekly:
+total 16
+drwxr-xr-x  2 root root 4096 May 25  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rwxr-xr-x  1 root root  723 Dec 13  2016 man-db
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+---
+[*] ret500 User systemd timers............................................. nope
+[!] ret510 Can we write in any system timer?............................... nope
+[i] ret900 Systemd timers.................................................. yes!
+---
+NEXT                         LEFT     LAST                         PASSED UNIT                         ACTIVATES
+Mon 2021-05-31 19:44:44 EDT  6h left  Mon 2021-05-31 06:57:23 EDT  6h ago apt-daily.timer              apt-daily.service
+Tue 2021-06-01 06:18:34 EDT  16h left Mon 2021-05-31 06:57:23 EDT  6h ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Tue 2021-06-01 07:10:23 EDT  17h left Mon 2021-05-31 07:10:23 EDT  6h ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+3 timers listed.
+---
+================================================================( network )=====
+[*] net000 Services listening only on localhost............................ nope
+[!] net010 Can we sniff traffic with tcpdump?.............................. nope
+[i] net500 NIC and IP information.......................................... yes!
+---
+docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:dd:5c:97:14  txqueuelen 0  (Ethernet)
+        RX packets 1347327  bytes 553041829 (527.4 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1949362  bytes 199317056 (190.0 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.217.60  netmask 255.255.255.0  broadcast 192.168.217.255
+        ether 00:50:56:bf:86:25  txqueuelen 1000  (Ethernet)
+        RX packets 2342318  bytes 259945551 (247.9 MiB)
+        RX errors 0  dropped 2  overruns 0  frame 0
+        TX packets 1594318  bytes 626489386 (597.4 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 4  bytes 380 (380.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4  bytes 380 (380.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth99b6681: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether a6:f3:30:de:2a:26  txqueuelen 0  (Ethernet)
+        RX packets 241  bytes 23410 (22.8 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 319  bytes 27568 (26.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethebb7a08: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether 7a:8a:bd:59:ad:38  txqueuelen 0  (Ethernet)
+        RX packets 1347086  bytes 571880997 (545.3 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1949052  bytes 199290063 (190.0 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+---
+[i] net510 Routing table................................................... yes!
+---
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.217.254 0.0.0.0         UG    0      0        0 ens192
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
+192.168.217.0   0.0.0.0         255.255.255.0   U     0      0        0 ens192
+---
+[i] net520 ARP table....................................................... yes!
+---
+? (172.17.0.3) at 02:42:ac:11:00:03 [ether] on docker0
+? (172.17.0.2) at 02:42:ac:11:00:02 [ether] on docker0
+? (192.168.217.254) at 00:50:56:bf:a4:d8 [ether] on ens192
+---
+[i] net530 Namerservers.................................................... yes!
+---
+nameserver 192.168.217.254
+---
+[i] net540 Systemd Nameservers............................................. yes!
+---
+Global
+         DNS Servers: 192.168.217.254
+          DNSSEC NTA: 10.in-addr.arpa
+                      16.172.in-addr.arpa
+                      168.192.in-addr.arpa
+                      17.172.in-addr.arpa
+                      18.172.in-addr.arpa
+                      19.172.in-addr.arpa
+                      20.172.in-addr.arpa
+                      21.172.in-addr.arpa
+                      22.172.in-addr.arpa
+                      23.172.in-addr.arpa
+                      24.172.in-addr.arpa
+                      25.172.in-addr.arpa
+                      26.172.in-addr.arpa
+                      27.172.in-addr.arpa
+                      28.172.in-addr.arpa
+                      29.172.in-addr.arpa
+                      30.172.in-addr.arpa
+                      31.172.in-addr.arpa
+                      corp
+                      d.f.ip6.arpa
+                      home
+                      internal
+                      intranet
+                      lan
+                      local
+                      private
+                      test
+
+Link 8 (ens192)
+      Current Scopes: LLMNR/IPv4
+       LLMNR setting: yes
+MulticastDNS setting: no
+      DNSSEC setting: no
+    DNSSEC supported: no
+
+Link 7 (veth99b6681)
+      Current Scopes: none
+       LLMNR setting: yes
+MulticastDNS setting: no
+      DNSSEC setting: no
+    DNSSEC supported: no
+
+Link 5 (vethebb7a08)
+      Current Scopes: none
+       LLMNR setting: yes
+MulticastDNS setting: no
+      DNSSEC setting: no
+    DNSSEC supported: no
+
+Link 3 (docker0)
+      Current Scopes: LLMNR/IPv4
+       LLMNR setting: yes
+MulticastDNS setting: no
+      DNSSEC setting: no
+    DNSSEC supported: no
+---
+[i] net550 Listening TCP................................................... yes!
+---
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:10000           0.0.0.0:*               LISTEN      444/node
+tcp        0      0 0.0.0.0:113             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:5355            0.0.0.0:*               LISTEN      -
+tcp6       0      0 :::8080                 :::*                    LISTEN      -
+tcp6       0      0 :::22                   :::*                    LISTEN      -
+tcp6       0      0 :::5432                 :::*                    LISTEN      -
+tcp6       0      0 :::5355                 :::*                    LISTEN      -
+---
+[i] net560 Listening UDP................................................... yes!
+---
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           -
+udp        0      0 0.0.0.0:5355            0.0.0.0:*                           -
+udp6       0      0 :::5355                 :::*                                -
+---
+===============================================================( services )=====
+[!] srv000 Can we write in service files?.................................. nope
+[!] srv010 Can we write in binaries executed by services?.................. nope
+[*] srv020 Files in /etc/init.d/ not belonging to root..................... nope
+[*] srv030 Files in /etc/rc.d/init.d not belonging to root................. nope
+[*] srv040 Upstart files not belonging to root............................. nope
+[*] srv050 Files in /usr/local/etc/rc.d not belonging to root.............. nope
+[i] srv400 Contents of /etc/inetd.conf..................................... nope
+[i] srv410 Contents of /etc/xinetd.conf.................................... nope
+[i] srv420 List /etc/xinetd.d if used...................................... nope
+[i] srv430 List /etc/init.d/ permissions................................... yes!
+---
+total 100
+drwxr-xr-x  2 root root 4096 Jun  1  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rwxr-xr-x  1 root root 1904 Nov 17  2015 cgroupfs-mount
+-rwxr-xr-x  1 root root 1232 Apr  6  2017 console-setup.sh
+-rwxr-xr-x  1 root root 3049 Oct  7  2017 cron
+-rwxr-xr-x  1 root root 2813 Jun  9  2019 dbus
+-rwxr-xr-x  1 root root 3843 May 28  2020 docker
+-rwxr-xr-x  1 root root 6754 May 13  2020 exim4
+-rwxr-xr-x  1 root root 3809 Mar  7  2018 hwclock.sh
+-rwxr-xr-x  1 root root 1479 May 18  2016 keyboard-setup.sh
+-rwxr-xr-x  1 root root 2044 Dec 25  2016 kmod
+-rwxr-xr-x  1 root root 1364 Mar 17  2017 netfilter-persistent
+-rwxr-xr-x  1 root root 4597 Sep 16  2016 networking
+-rwxr-xr-x  1 root root 1846 Apr  5  2019 open-vm-tools
+-rwxr-xr-x  1 root root 1191 May 17  2018 procps
+-rwxr-xr-x  1 root root 4355 Dec 10  2017 rsync
+-rwxr-xr-x  1 root root 2868 Jan 18  2017 rsyslog
+-rwxr-xr-x  1 root root 4033 Mar  1  2019 ssh
+-rwxr-xr-x  1 root root  731 Jan 31  2020 sudo
+-rwxr-xr-x  1 root root 6087 Jul 21  2019 udev
+-rwxr-xr-x  1 root root 1391 May  6  2017 unattended-upgrades
+---
+[i] srv440 List /etc/rc.d/init.d permissions............................... nope
+[i] srv450 List /usr/local/etc/rc.d permissions............................ nope
+[i] srv460 List /etc/init/ permissions..................................... yes!
+---
+total 44
+drwxr-xr-x  2 root root 4096 Jun  1  2020 .
+drwxr-xr-x 84 root root 4096 Aug  6  2020 ..
+-rw-r--r--  1 root root 1875 May 28  2020 docker.conf
+-rw-r--r--  1 root root 2493 Jun  2  2015 networking.conf
+-rw-r--r--  1 root root  933 Jun  2  2015 network-interface.conf
+-rw-r--r--  1 root root  530 Jun  2  2015 network-interface-container.conf
+-rw-r--r--  1 root root 1756 Jun  2  2015 network-interface-security.conf
+-rw-r--r--  1 root root  637 Mar  1  2019 ssh.conf
+-rw-r--r--  1 root root  337 Jul 21  2019 udev.conf
+-rw-r--r--  1 root root  360 Jul 21  2019 udevmonitor.conf
+-rw-r--r--  1 root root  352 Jul 21  2019 udevtrigger.conf
+---
+[!] srv500 Can we write in systemd service files?.......................... nope
+[!] srv510 Can we write in binaries executed by systemd services?.......... nope
+[*] srv520 Systemd files not belonging to root............................. nope
+[i] srv900 Systemd config files permissions................................ yes!
+---
+/lib/systemd/:
+total 5.3M
+drwxr-xr-x 20 root root  12K Jun  1  2020 system
+drwxr-xr-x  2 root root 4.0K May 25  2020 system-sleep
+drwxr-xr-x  2 root root 4.0K May 25  2020 network
+drwxr-xr-x  2 root root 4.0K May 25  2020 system-generators
+drwxr-xr-x  2 root root 4.0K May 25  2020 system-preset
+-rw-r--r--  1 root root 2.2M Jul 21  2019 libsystemd-shared-232.so
+-rw-r--r--  1 root root  484 Jul 21  2019 resolv.conf
+-rwxr-xr-x  1 root root 1.1M Jul 21  2019 systemd
+-rwxr-xr-x  1 root root 6.3K Jul 21  2019 systemd-ac-power
+-rwxr-xr-x  1 root root  19K Jul 21  2019 systemd-backlight
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-binfmt
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-cgroups-agent
+-rwxr-xr-x  1 root root  27K Jul 21  2019 systemd-cryptsetup
+-rwxr-xr-x  1 root root  19K Jul 21  2019 systemd-fsck
+-rwxr-xr-x  1 root root  23K Jul 21  2019 systemd-fsckd
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-hibernate-resume
+-rwxr-xr-x  1 root root  23K Jul 21  2019 systemd-hostnamed
+-rwxr-xr-x  1 root root  15K Jul 21  2019 systemd-initctl
+-rwxr-xr-x  1 root root 119K Jul 21  2019 systemd-journald
+-rwxr-xr-x  1 root root  35K Jul 21  2019 systemd-localed
+-rwxr-xr-x  1 root root 203K Jul 21  2019 systemd-logind
+-rwxr-xr-x  1 root root  15K Jul 21  2019 systemd-modules-load
+-rwxr-xr-x  1 root root 415K Jul 21  2019 systemd-networkd
+-rwxr-xr-x  1 root root  19K Jul 21  2019 systemd-networkd-wait-online
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-quotacheck
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-random-seed
+-rwxr-xr-x  1 root root  15K Jul 21  2019 systemd-remount-fs
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-reply-password
+-rwxr-xr-x  1 root root 315K Jul 21  2019 systemd-resolved
+-rwxr-xr-x  1 root root  19K Jul 21  2019 systemd-rfkill
+-rwxr-xr-x  1 root root  39K Jul 21  2019 systemd-shutdown
+-rwxr-xr-x  1 root root  15K Jul 21  2019 systemd-sleep
+-rwxr-xr-x  1 root root  23K Jul 21  2019 systemd-socket-proxyd
+-rwxr-xr-x  1 root root  15K Jul 21  2019 systemd-sysctl
+-rwxr-xr-x  1 root root 1.3K Jul 21  2019 systemd-sysv-install
+-rwxr-xr-x  1 root root  27K Jul 21  2019 systemd-timedated
+-rwxr-xr-x  1 root root  39K Jul 21  2019 systemd-timesyncd
+-rwxr-xr-x  1 root root 455K Jul 21  2019 systemd-udevd
+-rwxr-xr-x  1 root root  15K Jul 21  2019 systemd-update-utmp
+-rwxr-xr-x  1 root root  11K Jul 21  2019 systemd-user-sessions
+drwxr-xr-x  2 root root 4.0K Jul 21  2019 system-shutdown
+
+/lib/systemd/system:
+total 708K
+drwxr-xr-x 2 root root 4.0K Jun  1  2020 system-update.target.wants
+-rw-r--r-- 1 root root 1.7K May 28  2020 docker.service
+-rw-r--r-- 1 root root  197 May 28  2020 docker.socket
+drwxr-xr-x 2 root root 4.0K May 25  2020 multi-user.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 sockets.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 sysinit.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 getty.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 graphical.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 local-fs.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 rescue.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 timers.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 systemd-resolved.service.d
+drwxr-xr-x 2 root root 4.0K May 25  2020 systemd-timesyncd.service.d
+drwxr-xr-x 2 root root 4.0K May 25  2020 rc-local.service.d
+-rw-r--r-- 1 root root  225 May 12  2020 apt-daily.service
+-rw-r--r-- 1 root root  156 May 12  2020 apt-daily.timer
+-rw-r--r-- 1 root root  238 May 12  2020 apt-daily-upgrade.service
+-rw-r--r-- 1 root root  184 May 12  2020 apt-daily-upgrade.timer
+-rw-r--r-- 1 root root 1.1K May  1  2020 containerd.service
+-rw-r--r-- 1 root root  272 Jan 31  2020 sudo.service
+lrwxrwxrwx 1 root root   14 Jul 21  2019 autovt@.service -> getty@.service
+-rw-r--r-- 1 root root  879 Jul 21  2019 basic.target
+-rw-r--r-- 1 root root  379 Jul 21  2019 bluetooth.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 bootlogd.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 bootlogs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 bootmisc.service -> /dev/null
+-rw-r--r-- 1 root root  358 Jul 21  2019 busnames.target
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 busnames.target.wants
+lrwxrwxrwx 1 root root    9 Jul 21  2019 checkfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 checkroot-bootclean.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 checkroot.service -> /dev/null
+-rw-r--r-- 1 root root  770 Jul 21  2019 console-getty.service
+-rw-r--r-- 1 root root  791 Jul 21  2019 container-getty@.service
+lrwxrwxrwx 1 root root    9 Jul 21  2019 cryptdisks-early.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 cryptdisks.service -> /dev/null
+-rw-r--r-- 1 root root  394 Jul 21  2019 cryptsetup-pre.target
+-rw-r--r-- 1 root root  366 Jul 21  2019 cryptsetup.target
+lrwxrwxrwx 1 root root   13 Jul 21  2019 ctrl-alt-del.target -> reboot.target
+lrwxrwxrwx 1 root root   25 Jul 21  2019 dbus-org.freedesktop.hostname1.service -> systemd-hostnamed.service
+lrwxrwxrwx 1 root root   23 Jul 21  2019 dbus-org.freedesktop.locale1.service -> systemd-localed.service
+lrwxrwxrwx 1 root root   22 Jul 21  2019 dbus-org.freedesktop.login1.service -> systemd-logind.service
+lrwxrwxrwx 1 root root   24 Jul 21  2019 dbus-org.freedesktop.network1.service -> systemd-networkd.service
+lrwxrwxrwx 1 root root   24 Jul 21  2019 dbus-org.freedesktop.resolve1.service -> systemd-resolved.service
+lrwxrwxrwx 1 root root   25 Jul 21  2019 dbus-org.freedesktop.timedate1.service -> systemd-timedated.service
+-rw-r--r-- 1 root root 1010 Jul 21  2019 debug-shell.service
+lrwxrwxrwx 1 root root   16 Jul 21  2019 default.target -> graphical.target
+-rw-r--r-- 1 root root  709 Jul 21  2019 dev-hugepages.mount
+-rw-r--r-- 1 root root  624 Jul 21  2019 dev-mqueue.mount
+-rw-r--r-- 1 root root 1.1K Jul 21  2019 emergency.service
+-rw-r--r-- 1 root root  431 Jul 21  2019 emergency.target
+-rw-r--r-- 1 root root  501 Jul 21  2019 exit.target
+-rw-r--r-- 1 root root  440 Jul 21  2019 final.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 fuse.service -> /dev/null
+-rw-r--r-- 1 root root 1.7K Jul 21  2019 getty@.service
+-rw-r--r-- 1 root root  342 Jul 21  2019 getty-static.service
+-rw-r--r-- 1 root root  460 Jul 21  2019 getty.target
+-rw-r--r-- 1 root root  558 Jul 21  2019 graphical.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 halt.service -> /dev/null
+-rw-r--r-- 1 root root  487 Jul 21  2019 halt.target
+-rw-r--r-- 1 root root  447 Jul 21  2019 hibernate.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 hostname.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 hwclock.service -> /dev/null
+-rw-r--r-- 1 root root  468 Jul 21  2019 hybrid-sleep.target
+-rw-r--r-- 1 root root  630 Jul 21  2019 initrd-cleanup.service
+-rw-r--r-- 1 root root  553 Jul 21  2019 initrd-fs.target
+-rw-r--r-- 1 root root  790 Jul 21  2019 initrd-parse-etc.service
+-rw-r--r-- 1 root root  521 Jul 21  2019 initrd-root-device.target
+-rw-r--r-- 1 root root  526 Jul 21  2019 initrd-root-fs.target
+-rw-r--r-- 1 root root  640 Jul 21  2019 initrd-switch-root.service
+-rw-r--r-- 1 root root  714 Jul 21  2019 initrd-switch-root.target
+-rw-r--r-- 1 root root  723 Jul 21  2019 initrd.target
+-rw-r--r-- 1 root root  664 Jul 21  2019 initrd-udevadm-cleanup-db.service
+-rw-r--r-- 1 root root  501 Jul 21  2019 kexec.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 killprocs.service -> /dev/null
+lrwxrwxrwx 1 root root   28 Jul 21  2019 kmod.service -> systemd-modules-load.service
+-rw-r--r-- 1 root root  677 Jul 21  2019 kmod-static-nodes.service
+-rw-r--r-- 1 root root  395 Jul 21  2019 local-fs-pre.target
+-rw-r--r-- 1 root root  507 Jul 21  2019 local-fs.target
+-rw-r--r-- 1 root root  405 Jul 21  2019 machine.slice
+lrwxrwxrwx 1 root root   28 Jul 21  2019 module-init-tools.service -> systemd-modules-load.service
+lrwxrwxrwx 1 root root    9 Jul 21  2019 motd.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 mountall-bootclean.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 mountall.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 mountdevsubfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 mountkernfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 mountnfs-bootclean.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 mountnfs.service -> /dev/null
+-rw-r--r-- 1 root root  492 Jul 21  2019 multi-user.target
+-rw-r--r-- 1 root root  464 Jul 21  2019 network-online.target
+-rw-r--r-- 1 root root  461 Jul 21  2019 network-pre.target
+-rw-r--r-- 1 root root  480 Jul 21  2019 network.target
+-rw-r--r-- 1 root root  514 Jul 21  2019 nss-lookup.target
+-rw-r--r-- 1 root root  473 Jul 21  2019 nss-user-lookup.target
+-rw-r--r-- 1 root root  354 Jul 21  2019 paths.target
+-rw-r--r-- 1 root root  552 Jul 21  2019 poweroff.target
+-rw-r--r-- 1 root root  377 Jul 21  2019 printer.target
+lrwxrwxrwx 1 root root   22 Jul 21  2019 procps.service -> systemd-sysctl.service
+-rw-r--r-- 1 root root  693 Jul 21  2019 proc-sys-fs-binfmt_misc.automount
+-rw-r--r-- 1 root root  603 Jul 21  2019 proc-sys-fs-binfmt_misc.mount
+-rw-r--r-- 1 root root  568 Jul 21  2019 quotaon.service
+-rw-r--r-- 1 root root  628 Jul 21  2019 rc-local.service
+lrwxrwxrwx 1 root root   16 Jul 21  2019 rc.local.service -> rc-local.service
+lrwxrwxrwx 1 root root    9 Jul 21  2019 rc.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 rcS.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 reboot.service -> /dev/null
+-rw-r--r-- 1 root root  543 Jul 21  2019 reboot.target
+-rw-r--r-- 1 root root  396 Jul 21  2019 remote-fs-pre.target
+-rw-r--r-- 1 root root  482 Jul 21  2019 remote-fs.target
+-rw-r--r-- 1 root root 1022 Jul 21  2019 rescue.service
+-rw-r--r-- 1 root root  486 Jul 21  2019 rescue.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 rmnologin.service -> /dev/null
+-rw-r--r-- 1 root root  500 Jul 21  2019 rpcbind.target
+lrwxrwxrwx 1 root root   15 Jul 21  2019 runlevel0.target -> poweroff.target
+lrwxrwxrwx 1 root root   13 Jul 21  2019 runlevel1.target -> rescue.target
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 runlevel1.target.wants
+lrwxrwxrwx 1 root root   17 Jul 21  2019 runlevel2.target -> multi-user.target
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 runlevel2.target.wants
+lrwxrwxrwx 1 root root   17 Jul 21  2019 runlevel3.target -> multi-user.target
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 runlevel3.target.wants
+lrwxrwxrwx 1 root root   17 Jul 21  2019 runlevel4.target -> multi-user.target
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 runlevel4.target.wants
+lrwxrwxrwx 1 root root   16 Jul 21  2019 runlevel5.target -> graphical.target
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 runlevel5.target.wants
+lrwxrwxrwx 1 root root   13 Jul 21  2019 runlevel6.target -> reboot.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 sendsigs.service -> /dev/null
+-rw-r--r-- 1 root root 1.1K Jul 21  2019 serial-getty@.service
+-rw-r--r-- 1 root root  402 Jul 21  2019 shutdown.target
+-rw-r--r-- 1 root root  362 Jul 21  2019 sigpwr.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 single.service -> /dev/null
+-rw-r--r-- 1 root root  420 Jul 21  2019 sleep.target
+-rw-r--r-- 1 root root  409 Jul 21  2019 slices.target
+-rw-r--r-- 1 root root  380 Jul 21  2019 smartcard.target
+-rw-r--r-- 1 root root  356 Jul 21  2019 sockets.target
+-rw-r--r-- 1 root root  380 Jul 21  2019 sound.target
+lrwxrwxrwx 1 root root    9 Jul 21  2019 stop-bootlogd.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 stop-bootlogd-single.service -> /dev/null
+-rw-r--r-- 1 root root  441 Jul 21  2019 suspend.target
+-rw-r--r-- 1 root root  353 Jul 21  2019 swap.target
+-rw-r--r-- 1 root root  715 Jul 21  2019 sys-fs-fuse-connections.mount
+-rw-r--r-- 1 root root  518 Jul 21  2019 sysinit.target
+-rw-r--r-- 1 root root  719 Jul 21  2019 sys-kernel-config.mount
+-rw-r--r-- 1 root root  662 Jul 21  2019 sys-kernel-debug.mount
+-rw-r--r-- 1 root root 1.3K Jul 21  2019 syslog.socket
+-rw-r--r-- 1 root root  664 Jul 21  2019 systemd-ask-password-console.path
+-rw-r--r-- 1 root root  653 Jul 21  2019 systemd-ask-password-console.service
+-rw-r--r-- 1 root root  592 Jul 21  2019 systemd-ask-password-wall.path
+-rw-r--r-- 1 root root  681 Jul 21  2019 systemd-ask-password-wall.service
+-rw-r--r-- 1 root root  724 Jul 21  2019 systemd-backlight@.service
+-rw-r--r-- 1 root root  959 Jul 21  2019 systemd-binfmt.service
+-rw-r--r-- 1 root root  497 Jul 21  2019 systemd-exit.service
+-rw-r--r-- 1 root root  551 Jul 21  2019 systemd-fsckd.service
+-rw-r--r-- 1 root root  540 Jul 21  2019 systemd-fsckd.socket
+-rw-r--r-- 1 root root  674 Jul 21  2019 systemd-fsck-root.service
+-rw-r--r-- 1 root root  675 Jul 21  2019 systemd-fsck@.service
+-rw-r--r-- 1 root root  544 Jul 21  2019 systemd-halt.service
+-rw-r--r-- 1 root root  631 Jul 21  2019 systemd-hibernate-resume@.service
+-rw-r--r-- 1 root root  501 Jul 21  2019 systemd-hibernate.service
+-rw-r--r-- 1 root root  930 Jul 21  2019 systemd-hostnamed.service
+-rw-r--r-- 1 root root  778 Jul 21  2019 systemd-hwdb-update.service
+-rw-r--r-- 1 root root  519 Jul 21  2019 systemd-hybrid-sleep.service
+-rw-r--r-- 1 root root  480 Jul 21  2019 systemd-initctl.service
+-rw-r--r-- 1 root root  524 Jul 21  2019 systemd-initctl.socket
+-rw-r--r-- 1 root root  607 Jul 21  2019 systemd-journald-audit.socket
+-rw-r--r-- 1 root root 1.1K Jul 21  2019 systemd-journald-dev-log.socket
+-rw-r--r-- 1 root root 1.5K Jul 21  2019 systemd-journald.service
+-rw-r--r-- 1 root root  842 Jul 21  2019 systemd-journald.socket
+-rw-r--r-- 1 root root  731 Jul 21  2019 systemd-journal-flush.service
+-rw-r--r-- 1 root root  557 Jul 21  2019 systemd-kexec.service
+-rw-r--r-- 1 root root  911 Jul 21  2019 systemd-localed.service
+-rw-r--r-- 1 root root 1.4K Jul 21  2019 systemd-logind.service
+-rw-r--r-- 1 root root  693 Jul 21  2019 systemd-machine-id-commit.service
+-rw-r--r-- 1 root root  967 Jul 21  2019 systemd-modules-load.service
+-rw-r--r-- 1 root root 1.5K Jul 21  2019 systemd-networkd.service
+-rw-r--r-- 1 root root  591 Jul 21  2019 systemd-networkd.socket
+-rw-r--r-- 1 root root  685 Jul 21  2019 systemd-networkd-wait-online.service
+-rw-r--r-- 1 root root  553 Jul 21  2019 systemd-poweroff.service
+-rw-r--r-- 1 root root  614 Jul 21  2019 systemd-quotacheck.service
+-rw-r--r-- 1 root root  752 Jul 21  2019 systemd-random-seed.service
+-rw-r--r-- 1 root root  548 Jul 21  2019 systemd-reboot.service
+-rw-r--r-- 1 root root  757 Jul 21  2019 systemd-remount-fs.service
+-rw-r--r-- 1 root root 1.5K Jul 21  2019 systemd-resolved.service
+-rw-r--r-- 1 root root  696 Jul 21  2019 systemd-rfkill.service
+-rw-r--r-- 1 root root  617 Jul 21  2019 systemd-rfkill.socket
+-rw-r--r-- 1 root root  497 Jul 21  2019 systemd-suspend.service
+-rw-r--r-- 1 root root  653 Jul 21  2019 systemd-sysctl.service
+-rw-r--r-- 1 root root  868 Jul 21  2019 systemd-timedated.service
+-rw-r--r-- 1 root root 1.3K Jul 21  2019 systemd-timesyncd.service
+-rw-r--r-- 1 root root  598 Jul 21  2019 systemd-tmpfiles-clean.service
+-rw-r--r-- 1 root root  450 Jul 21  2019 systemd-tmpfiles-clean.timer
+-rw-r--r-- 1 root root  703 Jul 21  2019 systemd-tmpfiles-setup-dev.service
+-rw-r--r-- 1 root root  683 Jul 21  2019 systemd-tmpfiles-setup.service
+-rw-r--r-- 1 root root  595 Jul 21  2019 systemd-udevd-control.socket
+-rw-r--r-- 1 root root  570 Jul 21  2019 systemd-udevd-kernel.socket
+-rw-r--r-- 1 root root  968 Jul 21  2019 systemd-udevd.service
+-rw-r--r-- 1 root root  823 Jul 21  2019 systemd-udev-settle.service
+-rw-r--r-- 1 root root  743 Jul 21  2019 systemd-udev-trigger.service
+-rw-r--r-- 1 root root  757 Jul 21  2019 systemd-update-utmp-runlevel.service
+-rw-r--r-- 1 root root  754 Jul 21  2019 systemd-update-utmp.service
+-rw-r--r-- 1 root root  588 Jul 21  2019 systemd-user-sessions.service
+-rw-r--r-- 1 root root  436 Jul 21  2019 system.slice
+-rw-r--r-- 1 root root  585 Jul 21  2019 system-update.target
+-rw-r--r-- 1 root root  405 Jul 21  2019 timers.target
+-rw-r--r-- 1 root root  395 Jul 21  2019 time-sync.target
+lrwxrwxrwx 1 root root   21 Jul 21  2019 udev.service -> systemd-udevd.service
+lrwxrwxrwx 1 root root    9 Jul 21  2019 umountfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 umountnfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Jul 21  2019 umountroot.service -> /dev/null
+-rw-r--r-- 1 root root  417 Jul 21  2019 umount.target
+lrwxrwxrwx 1 root root   27 Jul 21  2019 urandom.service -> systemd-random-seed.service
+-rw-r--r-- 1 root root  548 Jul 21  2019 user@.service
+-rw-r--r-- 1 root root  392 Jul 21  2019 user.slice
+lrwxrwxrwx 1 root root    9 Jul 21  2019 x11-common.service -> /dev/null
+-rw-r--r-- 1 root root  366 Jun  9  2019 dbus.service
+-rw-r--r-- 1 root root  106 Jun  9  2019 dbus.socket
+-rw-r--r-- 1 root root  306 Apr  5  2019 open-vm-tools.service
+-rw-r--r-- 1 root root  298 Apr  5  2019 vgauth.service
+-rw-r--r-- 1 root root  445 Mar  1  2019 ssh.service
+-rw-r--r-- 1 root root  196 Mar  1  2019 ssh@.service
+-rw-r--r-- 1 root root  216 Mar  1  2019 ssh.socket
+-rw-r--r-- 1 root root  167 May  4  2018 packagekit-offline-update.service
+-rw-r--r-- 1 root root  145 May  4  2018 packagekit.service
+-rw-r--r-- 1 root root  251 Oct  7  2017 cron.service
+-rw-r--r-- 1 root root  175 May 24  2017 polkit.service
+-rw-r--r-- 1 root root  345 May  6  2017 unattended-upgrades.service
+-rw-r--r-- 1 root root  456 Mar 18  2017 netfilter-persistent.service
+-rw-r--r-- 1 root root  290 Jan 18  2017 rsyslog.service
+-rw-r--r-- 1 root root  552 Jan 10  2017 ifup@.service
+-rw-r--r-- 1 root root  735 Oct 19  2016 networking.service
+lrwxrwxrwx 1 root root    9 Jun 10  2016 cgroupfs-mount.service -> /dev/null
+-rw-r--r-- 1 root root  312 May 19  2016 console-setup.service
+-rw-r--r-- 1 root root  287 May 18  2016 keyboard-setup.service
+-rw-r--r-- 1 root root  188 Feb 24  2014 rsync.service
+
+/lib/systemd/system/system-update.target.wants:
+total 0
+lrwxrwxrwx 1 root root 36 May  4  2018 packagekit-offline-update.service -> ../packagekit-offline-update.service
+
+/lib/systemd/system/multi-user.target.wants:
+total 0
+lrwxrwxrwx 1 root root 15 Jul 21  2019 getty.target -> ../getty.target
+lrwxrwxrwx 1 root root 33 Jul 21  2019 systemd-ask-password-wall.path -> ../systemd-ask-password-wall.path
+lrwxrwxrwx 1 root root 25 Jul 21  2019 systemd-logind.service -> ../systemd-logind.service
+lrwxrwxrwx 1 root root 39 Jul 21  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+lrwxrwxrwx 1 root root 32 Jul 21  2019 systemd-user-sessions.service -> ../systemd-user-sessions.service
+lrwxrwxrwx 1 root root 15 Jun  9  2019 dbus.service -> ../dbus.service
+
+/lib/systemd/system/sockets.target.wants:
+total 0
+lrwxrwxrwx 1 root root 25 Jul 21  2019 systemd-initctl.socket -> ../systemd-initctl.socket
+lrwxrwxrwx 1 root root 32 Jul 21  2019 systemd-journald-audit.socket -> ../systemd-journald-audit.socket
+lrwxrwxrwx 1 root root 34 Jul 21  2019 systemd-journald-dev-log.socket -> ../systemd-journald-dev-log.socket
+lrwxrwxrwx 1 root root 26 Jul 21  2019 systemd-journald.socket -> ../systemd-journald.socket
+lrwxrwxrwx 1 root root 31 Jul 21  2019 systemd-udevd-control.socket -> ../systemd-udevd-control.socket
+lrwxrwxrwx 1 root root 30 Jul 21  2019 systemd-udevd-kernel.socket -> ../systemd-udevd-kernel.socket
+lrwxrwxrwx 1 root root 14 Jun  9  2019 dbus.socket -> ../dbus.socket
+
+/lib/systemd/system/sysinit.target.wants:
+total 0
+lrwxrwxrwx 1 root root 20 Jul 21  2019 cryptsetup.target -> ../cryptsetup.target
+lrwxrwxrwx 1 root root 22 Jul 21  2019 dev-hugepages.mount -> ../dev-hugepages.mount
+lrwxrwxrwx 1 root root 19 Jul 21  2019 dev-mqueue.mount -> ../dev-mqueue.mount
+lrwxrwxrwx 1 root root 28 Jul 21  2019 kmod-static-nodes.service -> ../kmod-static-nodes.service
+lrwxrwxrwx 1 root root 36 Jul 21  2019 proc-sys-fs-binfmt_misc.automount -> ../proc-sys-fs-binfmt_misc.automount
+lrwxrwxrwx 1 root root 32 Jul 21  2019 sys-fs-fuse-connections.mount -> ../sys-fs-fuse-connections.mount
+lrwxrwxrwx 1 root root 26 Jul 21  2019 sys-kernel-config.mount -> ../sys-kernel-config.mount
+lrwxrwxrwx 1 root root 25 Jul 21  2019 sys-kernel-debug.mount -> ../sys-kernel-debug.mount
+lrwxrwxrwx 1 root root 36 Jul 21  2019 systemd-ask-password-console.path -> ../systemd-ask-password-console.path
+lrwxrwxrwx 1 root root 25 Jul 21  2019 systemd-binfmt.service -> ../systemd-binfmt.service
+lrwxrwxrwx 1 root root 30 Jul 21  2019 systemd-hwdb-update.service -> ../systemd-hwdb-update.service
+lrwxrwxrwx 1 root root 27 Jul 21  2019 systemd-journald.service -> ../systemd-journald.service
+lrwxrwxrwx 1 root root 32 Jul 21  2019 systemd-journal-flush.service -> ../systemd-journal-flush.service
+lrwxrwxrwx 1 root root 36 Jul 21  2019 systemd-machine-id-commit.service -> ../systemd-machine-id-commit.service
+lrwxrwxrwx 1 root root 31 Jul 21  2019 systemd-modules-load.service -> ../systemd-modules-load.service
+lrwxrwxrwx 1 root root 30 Jul 21  2019 systemd-random-seed.service -> ../systemd-random-seed.service
+lrwxrwxrwx 1 root root 25 Jul 21  2019 systemd-sysctl.service -> ../systemd-sysctl.service
+lrwxrwxrwx 1 root root 37 Jul 21  2019 systemd-tmpfiles-setup-dev.service -> ../systemd-tmpfiles-setup-dev.service
+lrwxrwxrwx 1 root root 33 Jul 21  2019 systemd-tmpfiles-setup.service -> ../systemd-tmpfiles-setup.service
+lrwxrwxrwx 1 root root 24 Jul 21  2019 systemd-udevd.service -> ../systemd-udevd.service
+lrwxrwxrwx 1 root root 31 Jul 21  2019 systemd-udev-trigger.service -> ../systemd-udev-trigger.service
+lrwxrwxrwx 1 root root 30 Jul 21  2019 systemd-update-utmp.service -> ../systemd-update-utmp.service
+
+/lib/systemd/system/getty.target.wants:
+total 0
+lrwxrwxrwx 1 root root 23 Jul 21  2019 getty-static.service -> ../getty-static.service
+
+/lib/systemd/system/graphical.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul 21  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/local-fs.target.wants:
+total 0
+lrwxrwxrwx 1 root root 29 Jul 21  2019 systemd-remount-fs.service -> ../systemd-remount-fs.service
+
+/lib/systemd/system/rescue.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Jul 21  2019 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/timers.target.wants:
+total 0
+lrwxrwxrwx 1 root root 31 Jul 21  2019 systemd-tmpfiles-clean.timer -> ../systemd-tmpfiles-clean.timer
+
+/lib/systemd/system/systemd-resolved.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 551 Jul 21  2019 resolvconf.conf
+
+/lib/systemd/system/systemd-timesyncd.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 251 Jul 21  2019 disable-with-time-daemon.conf
+
+/lib/systemd/system/rc-local.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 290 Jul 21  2019 debian.conf
+
+/lib/systemd/system/busnames.target.wants:
+total 0
+
+/lib/systemd/system/runlevel1.target.wants:
+total 0
+
+/lib/systemd/system/runlevel2.target.wants:
+total 0
+
+/lib/systemd/system/runlevel3.target.wants:
+total 0
+
+/lib/systemd/system/runlevel4.target.wants:
+total 0
+
+/lib/systemd/system/runlevel5.target.wants:
+total 0
+
+/lib/systemd/system-sleep:
+total 4.0K
+-rwxr-xr-x 1 root root 92 May 15  2018 hdparm
+
+/lib/systemd/network:
+total 16K
+-rw-r--r-- 1 root root 605 Jul 21  2019 80-container-host0.network
+-rw-r--r-- 1 root root 678 Jul 21  2019 80-container-ve.network
+-rw-r--r-- 1 root root 664 Jul 21  2019 80-container-vz.network
+-rw-r--r-- 1 root root  80 Jul 21  2019 99-default.link
+
+/lib/systemd/system-generators:
+total 192K
+-rwxr-xr-x 1 root root 23K Jul 21  2019 systemd-cryptsetup-generator
+-rwxr-xr-x 1 root root 15K Jul 21  2019 systemd-debug-generator
+-rwxr-xr-x 1 root root 31K Jul 21  2019 systemd-fstab-generator
+-rwxr-xr-x 1 root root 15K Jul 21  2019 systemd-getty-generator
+-rwxr-xr-x 1 root root 35K Jul 21  2019 systemd-gpt-auto-generator
+-rwxr-xr-x 1 root root 11K Jul 21  2019 systemd-hibernate-resume-generator
+-rwxr-xr-x 1 root root 11K Jul 21  2019 systemd-rc-local-generator
+-rwxr-xr-x 1 root root 11K Jul 21  2019 systemd-system-update-generator
+-rwxr-xr-x 1 root root 31K Jul 21  2019 systemd-sysv-generator
+
+/lib/systemd/system-preset:
+total 4.0K
+-rw-r--r-- 1 root root 923 Jul 21  2019 90-systemd.preset
+
+/lib/systemd/system-shutdown:
+total 0
+
+/etc/systemd/:
+total 36K
+drwxr-xr-x 9 root root 4.0K Jun  1  2020 system
+-rw-r--r-- 1 root root 1014 Jul 21  2019 journald.conf
+-rw-r--r-- 1 root root 1022 Jul 21  2019 logind.conf
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 network
+-rw-r--r-- 1 root root  642 Jul 21  2019 resolved.conf
+-rw-r--r-- 1 root root 1.6K Jul 21  2019 system.conf
+-rw-r--r-- 1 root root  607 Jul 21  2019 timesyncd.conf
+drwxr-xr-x 2 root root 4.0K Jul 21  2019 user
+-rw-r--r-- 1 root root 1.2K Jul 21  2019 user.conf
+
+/etc/systemd/system:
+total 36K
+drwxr-xr-x 2 root root 4.0K Jun  1  2020 multi-user.target.wants
+-rw-r--r-- 1 root root  365 Jun  1  2020 node.service
+drwxr-xr-x 2 root root 4.0K Jun  1  2020 sockets.target.wants
+-rw-r--r-- 1 root root  159 Jun  1  2020 ident2.service
+drwxr-xr-x 2 root root 4.0K Jun  1  2020 open-vm-tools.service.requires
+lrwxrwxrwx 1 root root   31 May 25  2020 sshd.service -> /lib/systemd/system/ssh.service
+drwxr-xr-x 2 root root 4.0K May 25  2020 sysinit.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 network-online.target.wants
+drwxr-xr-x 2 root root 4.0K May 25  2020 timers.target.wants
+lrwxrwxrwx 1 root root   35 May 25  2020 syslog.service -> /lib/systemd/system/rsyslog.service
+drwxr-xr-x 2 root root 4.0K May 25  2020 getty.target.wants
+
+/etc/systemd/system/multi-user.target.wants:
+total 0
+lrwxrwxrwx 1 root root 48 Jun  1  2020 netfilter-persistent.service -> /lib/systemd/system/netfilter-persistent.service
+lrwxrwxrwx 1 root root 32 Jun  1  2020 node.service -> /etc/systemd/system/node.service
+lrwxrwxrwx 1 root root 34 Jun  1  2020 docker.service -> /lib/systemd/system/docker.service
+lrwxrwxrwx 1 root root 33 Jun  1  2020 rsync.service -> /lib/systemd/system/rsync.service
+lrwxrwxrwx 1 root root 38 Jun  1  2020 containerd.service -> /lib/systemd/system/containerd.service
+lrwxrwxrwx 1 root root 34 Jun  1  2020 ident2.service -> /etc/systemd/system/ident2.service
+lrwxrwxrwx 1 root root 41 Jun  1  2020 open-vm-tools.service -> /lib/systemd/system/open-vm-tools.service
+lrwxrwxrwx 1 root root 47 Jun  1  2020 unattended-upgrades.service -> /lib/systemd/system/unattended-upgrades.service
+lrwxrwxrwx 1 root root 31 May 25  2020 ssh.service -> /lib/systemd/system/ssh.service
+lrwxrwxrwx 1 root root 41 May 25  2020 console-setup.service -> /lib/systemd/system/console-setup.service
+lrwxrwxrwx 1 root root 38 May 25  2020 networking.service -> /lib/systemd/system/networking.service
+lrwxrwxrwx 1 root root 35 May 25  2020 rsyslog.service -> /lib/systemd/system/rsyslog.service
+lrwxrwxrwx 1 root root 32 May 25  2020 cron.service -> /lib/systemd/system/cron.service
+lrwxrwxrwx 1 root root 36 May 25  2020 remote-fs.target -> /lib/systemd/system/remote-fs.target
+
+/etc/systemd/system/sockets.target.wants:
+total 0
+lrwxrwxrwx 1 root root 33 Jun  1  2020 docker.socket -> /lib/systemd/system/docker.socket
+
+/etc/systemd/system/open-vm-tools.service.requires:
+total 0
+lrwxrwxrwx 1 root root 34 Jun  1  2020 vgauth.service -> /lib/systemd/system/vgauth.service
+
+/etc/systemd/system/sysinit.target.wants:
+total 0
+lrwxrwxrwx 1 root root 42 May 25  2020 keyboard-setup.service -> /lib/systemd/system/keyboard-setup.service
+lrwxrwxrwx 1 root root 45 May 25  2020 systemd-timesyncd.service -> /lib/systemd/system/systemd-timesyncd.service
+
+/etc/systemd/system/network-online.target.wants:
+total 0
+lrwxrwxrwx 1 root root 38 May 25  2020 networking.service -> /lib/systemd/system/networking.service
+
+/etc/systemd/system/timers.target.wants:
+total 0
+lrwxrwxrwx 1 root root 35 May 25  2020 apt-daily.timer -> /lib/systemd/system/apt-daily.timer
+lrwxrwxrwx 1 root root 43 May 25  2020 apt-daily-upgrade.timer -> /lib/systemd/system/apt-daily-upgrade.timer
+
+/etc/systemd/system/getty.target.wants:
+total 0
+lrwxrwxrwx 1 root root 34 May 25  2020 getty@tty1.service -> /lib/systemd/system/getty@.service
+
+/etc/systemd/network:
+total 0
+
+/etc/systemd/user:
+total 0
+---
+===============================================================( software )=====
+[!] sof000 Can we connect to MySQL with root/root credentials?............. nope
+[!] sof010 Can we connect to MySQL as root without password?............... nope
+[!] sof015 Are there credentials in mysql_history file?.................... nope
+[!] sof020 Can we connect to PostgreSQL template0 as postgres and no pass?. nope
+[!] sof020 Can we connect to PostgreSQL template1 as postgres and no pass?. nope
+[!] sof020 Can we connect to PostgreSQL template0 as psql and no pass?..... nope
+[!] sof020 Can we connect to PostgreSQL template1 as psql and no pass?..... nope
+[*] sof030 Installed apache modules........................................ nope
+[!] sof040 Found any .htpasswd files?...................................... nope
+[!] sof050 Are there private keys in ssh-agent?............................ nope
+[!] sof060 Are there gpg keys cached in gpg-agent?......................... nope
+[!] sof070 Can we write to a ssh-agent socket?............................. nope
+[!] sof080 Can we write to a gpg-agent socket?............................. yes!
+---
+/run/user/1000/gnupg/S.gpg-agent.ssh
+/run/user/1000/gnupg/S.gpg-agent
+/run/user/1000/gnupg/S.gpg-agent.browser
+/run/user/1000/gnupg/S.gpg-agent.extra
+---
+[i] sof500 Sudo version.................................................... yes!
+---
+Sudo version 1.8.19p1
+---
+[i] sof510 MySQL version................................................... nope
+[i] sof520 Postgres version................................................ nope
+[i] sof530 Apache version.................................................. nope
+=============================================================( containers )=====
+[*] ctn000 Are we in a docker container?................................... nope
+[*] ctn010 Is docker available?............................................ yes!
+---
+Docker version 19.03.10, build 9424aeaee9
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+326cfee15738        postgres            "docker-entrypoint.s…"   12 months ago       Up 9 months         0.0.0.0:5432->5432/tcp   postgres
+71aa857fe988        redmine             "/docker-entrypoint.…"   12 months ago       Up 9 months         0.0.0.0:8080->3000/tcp   redmine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+redmine             latest              0c8429c66e07        12 months ago       542MB
+postgres            latest              adf2b126dda8        12 months ago       313MB
+---
+[!] ctn020 Is the user a member of the 'docker' group?..................... yes!
+---
+docker
+---
+[*] ctn200 Are we in a lxc container?...................................... nope
+[!] ctn210 Is the user a member of any lxc/lxd group?...................... nope
+==============================================================( processes )=====
+[i] pro000 Waiting for the process monitor to finish....................... yes!
+---
+77 13:21 6472 eleanor sleep 1
+150 13:20 958 eleanor sleep 1
+141 13:20 673 eleanor sleep 1
+140 13:20 6191 eleanor sleep 1
+139 13:20 5910 eleanor sleep 1
+146 13:20 5615 eleanor sleep 1
+130 13:20 5352 eleanor sleep 1
+147 13:20 5059 eleanor sleep 1
+137 13:20 4782 eleanor sleep 1
+143 13:20 4493 eleanor sleep 1
+138 13:20 4214 eleanor sleep 1
+146 13:20 3919 eleanor sleep 1
+129 13:20 378 eleanor sleep 1
+145 13:20 3628 eleanor sleep 1
+148 13:20 3332 eleanor sleep 1
+143 13:20 32554 eleanor sleep 1
+143 13:20 32266 eleanor sleep 1
+142 13:20 31981 eleanor sleep 1
+148 13:20 31685 eleanor sleep 1
+148 13:20 31387 eleanor sleep 1
+145 13:20 31095 eleanor sleep 1
+148 13:20 30796 eleanor sleep 1
+143 13:20 30509 eleanor sleep 1
+148 13:20 3036 eleanor sleep 1
+128 13:20 30250 eleanor sleep 1
+144 13:20 29961 eleanor sleep 1
+142 13:20 29675 eleanor sleep 1
+133 13:20 29407 eleanor sleep 1
+142 13:20 29120 eleanor sleep 1
+1 13:20 28877 999 postgres: autovacuum worker postgres
+143 13:20 28830 eleanor sleep 1
+125 13:20 28579 eleanor sleep 1
+123 13:20 28330 eleanor sleep 1
+141 13:20 28046 eleanor sleep 1
+130 13:20 27784 eleanor sleep 1
+128 13:20 2768 eleanor sleep 1
+140 13:20 27503 eleanor sleep 1
+134 13:20 27233 eleanor sleep 1
+138 13:20 26955 eleanor sleep 1
+140 13:20 26672 eleanor sleep 1
+143 13:20 26385 eleanor sleep 1
+143 13:20 26097 eleanor sleep 1
+138 13:20 25819 eleanor sleep 1
+144 13:20 25528 eleanor sleep 1
+134 13:20 25257 eleanor sleep 1
+138 13:20 24979 eleanor sleep 1
+146 13:20 2475 eleanor sleep 1
+134 13:20 24709 eleanor sleep 1
+131 13:20 24444 eleanor sleep 1
+142 13:20 24158 eleanor sleep 1
+142 13:20 23873 eleanor sleep 1
+145 13:20 23582 eleanor sleep 1
+7679 13:20 23581 eleanor /bin/sh ./lse.sh -l2
+2 13:20 23552 eleanor docker images
+2 13:20 23540 eleanor docker ps -a
+11 13:20 23510 eleanor docker --version
+17 13:20 23509 eleanor /bin/sh ./lse.sh -l2
+12 13:20 23483 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *dockerenv* -exec ls -la {} ;
+12 13:20 23480 eleanor /bin/sh ./lse.sh -l2
+2 13:20 23427 eleanor /bin/sh ./lse.sh -l2
+3 13:20 23388 eleanor /bin/sh ./lse.sh -l2
+13 13:20 23348 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *.htpasswd -print -exec cat {} ;
+13 13:20 23347 eleanor /bin/sh ./lse.sh -l2
+1 13:20 23292 eleanor /bin/sh ./lse.sh -l2
+1 13:20 23275 eleanor /bin/sh ./lse.sh -l2
+1 13:20 23230 eleanor /bin/sh ./lse.sh -l2
+7750 13:20 23218 systemd-resolve /lib/systemd/systemd-resolved
+1 13:20 23218 root (resolved)
+1 13:20 23218 root /lib/systemd/systemd-resolved
+5 13:20 23214 eleanor systemd-resolve --status
+5 13:20 23213 eleanor /bin/sh ./lse.sh -l2
+28 13:20 23137 eleanor sleep 0.2
+28 13:20 23135 eleanor grep -i listening on lo
+28 13:20 23134 eleanor /bin/sh ./lse.sh -l2
+28 13:20 23133 eleanor /bin/sh ./lse.sh -l2
+1 13:20 23121 root /sbin/modprobe -q -- net-pf-16-proto-4-type-2
+2 13:20 23119 eleanor ss -tunlp
+2 13:20 23118 eleanor grep 127.0.0.1:
+2 13:20 23117 eleanor /bin/sh ./lse.sh -l2
+2 13:20 23115 eleanor /bin/sh ./lse.sh -l2
+6 13:20 23042 eleanor /bin/sh ./lse.sh -l2
+38 13:20 22925 eleanor getcap -r /
+38 13:20 22924 eleanor /bin/sh ./lse.sh -l2
+7 13:20 22857 eleanor grep -v root
+7 13:20 22856 eleanor /bin/sh ./lse.sh -l2
+7 13:20 22855 eleanor /bin/sh ./lse.sh -l2
+1 13:20 22836 eleanor /bin/sh ./lse.sh -l2
+17 13:20 22784 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name *id_dsa* -o -name *id_rsa* -o -name known_hosts -o -name authorized_hosts -o -name authorized_keys ) -exec ls -la {} ;
+17 13:20 22782 eleanor /bin/sh ./lse.sh -l2
+16 13:20 22731 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -user eleanor -type f -exec ls -al {} ;
+16 13:20 22730 eleanor /bin/sh ./lse.sh -l2
+11 13:20 22702 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /usr/lib -prune -o -path /usr/share -prune -o -regextype egrep -iregex .*(backup|dump|cop(y|ies)|bak|bkp)[^/]*\.(sql|tgz|tar|zip)?\.?(gz|xz|bzip2|bz2|lz|7z)? -readable -type f -exec ls -al {} ;
+11 13:20 22701 eleanor /bin/sh ./lse.sh -l2
+1 13:20 22690 eleanor /bin/sh ./lse.sh -l2
+13 13:20 22662 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name .git -o -name .svn ) -print
+13 13:20 22660 eleanor /bin/sh ./lse.sh -l2
+1 13:20 22633 eleanor /bin/sh ./lse.sh -l2
+3 13:20 22604 eleanor /bin/sh ./lse.sh -l2
+20 13:20 22313 eleanor /bin/sh ./lse.sh -l2
+13 13:20 22284 eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -perm -4000 -type f -print
+13 13:20 22282 eleanor /bin/sh ./lse.sh -l2
+11 13:20 22257 eleanor find / -path /home/eleanor -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -type l -user eleanor -print
+175 13:20 22244 eleanor /usr/sbin/exim4 -Mc 1lnla6-0005lq-La
+5 13:20 22235 root /usr/sbin/exim4 -Mc 1lnla6-0005m0-LN
+181 13:20 22234 root /usr/sbin/exim4 -Mc 1lnla6-0005lq-La
+19 13:20 22214 eleanor find / -path /home/eleanor -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -not -type l -writable -print
+30 13:20 22213 eleanor /bin/sh ./lse.sh -l2
+8 13:20 22196 root sendmail -t
+3 13:20 22196 Debian-exim sendmail -t
+12 13:20 22193 root sudo -S id
+1 13:20 22188 eleanor /bin/sh ./lse.sh -l2
+10 13:20 22186 root sendmail -t
+3 13:20 22186 Debian-exim sendmail -t
+13 13:20 22184 root sudo -nS -l
+33 13:20 22101 eleanor sort -u
+33 13:20 22100 eleanor tr :
+
+33 13:20 22099 eleanor cut -d= -f2
+33 13:20 22098 eleanor tr -d "'
+33 13:20 22097 eleanor grep -ERh ^ *PATH=.* /etc/
+33 13:20 22096 eleanor /bin/sh ./lse.sh -l2
+33 13:20 22095 eleanor /bin/sh ./lse.sh -l2
+8035 13:20 22061 eleanor sed s/^ *//g
+8035 13:20 22060 eleanor uniq -c
+8035 13:20 22059 eleanor sort -Mr
+8035 13:20 22057 eleanor grep -v ^START
+8035 13:20 22055 eleanor sed s/^ *//g
+8035 13:20 22053 eleanor /bin/sh ./lse.sh -l2
+8034 13:20 22051 eleanor sleep 60
+8034 13:20 22049 eleanor /bin/sh ./lse.sh -l2
+8035 13:20 22048 eleanor /bin/sh ./lse.sh -l2
+144 13:20 2186 eleanor sleep 1
+142 13:20 1897 eleanor sleep 1
+146 13:20 1604 eleanor sleep 1
+147 13:20 1306 eleanor sleep 1
+8035 13:19 22034 eleanor tee lse.txt
+8035 13:19 22033 eleanor /bin/sh ./lse.sh -l2
+8035 13:00 11624 eleanor /usr/bin/gpg-agent --supervised
+8035 12:54 2911 eleanor /bin/bash
+8035 12:54 2910 eleanor sh -c /bin/bash
+8035 12:54 2909 eleanor ed
+8035 12:53 2898 eleanor -rbash
+8035 12:53 2897 eleanor sshd: eleanor@pts/0
+8035 12:53 2891 eleanor (sd-pam)
+8035 12:53 2890 eleanor /lib/systemd/systemd --user
+8035 06:55 516 root /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+8035 06:55 514 root /usr/bin/containerd
+8035 06:55 509 root /sbin/agetty --noclear tty1 linux
+8035 06:55 508 root /usr/sbin/sshd -D
+8035 06:55 502 nobody /usr/sbin/ident2
+8035 06:55 474 messagebus /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+8035 06:55 473 root /usr/sbin/rsyslogd -n
+8035 06:55 448 root /usr/bin/VGAuthService
+8035 06:55 446 root /usr/sbin/cron -f
+8035 06:55 444 eleanor /usr/bin/node /home/eleanor/helloworld/index.js
+8035 06:55 442 root /lib/systemd/systemd-logind
+8035 06:55 309 systemd-timesync /lib/systemd/systemd-timesyncd
+8035 06:55 271 root /lib/systemd/systemd-udevd
+8035 06:55 240 root /usr/bin/vmtoolsd
+8035 06:55 239 root /lib/systemd/systemd-journald
+8035 06:55 1 root /sbin/init
+8035 06:55 1176 999 postgres: logical replication launcher
+8035 06:55 1175 999 postgres: stats collector
+8035 06:55 1174 999 postgres: autovacuum launcher
+8035 06:55 1173 999 postgres: walwriter
+8035 06:55 1172 999 postgres: background writer
+8035 06:55 1171 999 postgres: checkpointer
+8035 06:55 1069 999 /usr/local/bin/ruby bin/rails server -b 0.0.0.0
+8035 06:55 1063 999 postgres
+8035 06:55 1032 root containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/71aa857fe988d500a65dd1699c6f699c0170e2d54f1f985c0ce92ec5d18f9a3c -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+8035 06:55 1028 root containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/326cfee157384615c872763b1a690d34c59650bfc4a9007be1df15b81b6d7bfb -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+8035 06:55 1021 root /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8080 -container-ip 172.17.0.2 -container-port 3000
+8035 06:55 1010 root /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 5432 -container-ip 172.17.0.3 -container-port 5432
+---
+[i] pro001 Retrieving process binaries..................................... yes!
+---
+/bin/bash
+/bin/sh
+/usr/bin/containerd-shim
+/usr/bin/cut
+/usr/bin/docker
+/bin/ed
+/usr/bin/find
+/sbin/getcap
+/bin/grep
+/lib/systemd/systemd
+/lib/systemd/systemd-journald
+/lib/systemd/systemd-logind
+/lib/systemd/systemd-resolved
+/lib/systemd/systemd-timesyncd
+/lib/systemd/systemd-udevd
+/sbin/agetty
+/sbin/init
+/sbin/modprobe
+/bin/sed
+/usr/sbin/sendmail
+/bin/sh
+/bin/sleep
+/usr/bin/sort
+/bin/ss
+/usr/bin/sudo
+/usr/bin/systemd-resolve
+/usr/bin/tee
+/usr/bin/tr
+/usr/bin/uniq
+/usr/bin/containerd
+/usr/bin/dbus-daemon
+/usr/bin/dockerd
+/usr/bin/docker-proxy
+/usr/bin/gpg-agent
+/usr/bin/node
+/usr/bin/VGAuthService
+/usr/bin/vmtoolsd
+/usr/sbin/cron
+/usr/sbin/exim4
+/usr/sbin/ident2
+/usr/sbin/rsyslogd
+/usr/sbin/sshd
+---
+[i] pro002 Retrieving process users........................................ yes!
+---
+999
+Debian-exim
+eleanor
+messagebus
+nobody
+root
+systemd-resolve
+systemd-timesync
+---
+[!] pro010 Can we write in any process binary?............................. nope
+[*] pro020 Processes running with root permissions......................... yes!
+---
+START      PID     USER COMMAND
+13:20    23218     root (resolved)
+13:20    23218     root /lib/systemd/systemd-resolved
+13:20    23121     root /sbin/modprobe -q -- net-pf-16-proto-4-type-2
+13:20    22235     root /usr/sbin/exim4 -Mc 1lnla6-0005m0-LN
+13:20    22234     root /usr/sbin/exim4 -Mc 1lnla6-0005lq-La
+13:20    22196     root sendmail -t
+13:20    22193     root sudo -S id
+13:20    22186     root sendmail -t
+13:20    22184     root sudo -nS -l
+06:55      516     root /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+06:55      514     root /usr/bin/containerd
+06:55      509     root /sbin/agetty --noclear tty1 linux
+06:55      508     root /usr/sbin/sshd -D
+06:55      473     root /usr/sbin/rsyslogd -n
+06:55      448     root /usr/bin/VGAuthService
+06:55      446     root /usr/sbin/cron -f
+06:55      442     root /lib/systemd/systemd-logind
+06:55      271     root /lib/systemd/systemd-udevd
+06:55      240     root /usr/bin/vmtoolsd
+06:55      239     root /lib/systemd/systemd-journald
+06:55        1     root /sbin/init
+06:55     1032     root containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/71aa857fe988d500a65dd1699c6f699c0170e2d54f1f985c0ce92ec5d18f9a3c -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+06:55     1028     root containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/326cfee157384615c872763b1a690d34c59650bfc4a9007be1df15b81b6d7bfb -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+06:55     1021     root /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8080 -container-ip 172.17.0.2 -container-port 3000
+06:55     1010     root /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 5432 -container-ip 172.17.0.3 -container-port 5432
+---
+[*] pro030 Processes running by non-root users with shell.................. yes!
+---
+
+
+------ eleanor ------
+
+
+START      PID     USER COMMAND
+13:21     6472  eleanor sleep 1
+13:20      958  eleanor sleep 1
+13:20      673  eleanor sleep 1
+13:20     6191  eleanor sleep 1
+13:20     5910  eleanor sleep 1
+13:20     5615  eleanor sleep 1
+13:20     5352  eleanor sleep 1
+13:20     5059  eleanor sleep 1
+13:20     4782  eleanor sleep 1
+13:20     4493  eleanor sleep 1
+13:20     4214  eleanor sleep 1
+13:20     3919  eleanor sleep 1
+13:20      378  eleanor sleep 1
+13:20     3628  eleanor sleep 1
+13:20     3332  eleanor sleep 1
+13:20    32554  eleanor sleep 1
+13:20    32266  eleanor sleep 1
+13:20    31981  eleanor sleep 1
+13:20    31685  eleanor sleep 1
+13:20    31387  eleanor sleep 1
+13:20    31095  eleanor sleep 1
+13:20    30796  eleanor sleep 1
+13:20    30509  eleanor sleep 1
+13:20     3036  eleanor sleep 1
+13:20    30250  eleanor sleep 1
+13:20    29961  eleanor sleep 1
+13:20    29675  eleanor sleep 1
+13:20    29407  eleanor sleep 1
+13:20    29120  eleanor sleep 1
+13:20    28830  eleanor sleep 1
+13:20    28579  eleanor sleep 1
+13:20    28330  eleanor sleep 1
+13:20    28046  eleanor sleep 1
+13:20    27784  eleanor sleep 1
+13:20     2768  eleanor sleep 1
+13:20    27503  eleanor sleep 1
+13:20    27233  eleanor sleep 1
+13:20    26955  eleanor sleep 1
+13:20    26672  eleanor sleep 1
+13:20    26385  eleanor sleep 1
+13:20    26097  eleanor sleep 1
+13:20    25819  eleanor sleep 1
+13:20    25528  eleanor sleep 1
+13:20    25257  eleanor sleep 1
+13:20    24979  eleanor sleep 1
+13:20     2475  eleanor sleep 1
+13:20    24709  eleanor sleep 1
+13:20    24444  eleanor sleep 1
+13:20    24158  eleanor sleep 1
+13:20    23873  eleanor sleep 1
+13:20    23582  eleanor sleep 1
+13:20    23581  eleanor /bin/sh ./lse.sh -l2
+13:20    23552  eleanor docker images
+13:20    23540  eleanor docker ps -a
+13:20    23510  eleanor docker --version
+13:20    23509  eleanor /bin/sh ./lse.sh -l2
+13:20    23483  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *dockerenv* -exec ls -la {} ;
+13:20    23480  eleanor /bin/sh ./lse.sh -l2
+13:20    23427  eleanor /bin/sh ./lse.sh -l2
+13:20    23388  eleanor /bin/sh ./lse.sh -l2
+13:20    23348  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *.htpasswd -print -exec cat {} ;
+13:20    23347  eleanor /bin/sh ./lse.sh -l2
+13:20    23292  eleanor /bin/sh ./lse.sh -l2
+13:20    23275  eleanor /bin/sh ./lse.sh -l2
+13:20    23230  eleanor /bin/sh ./lse.sh -l2
+13:20    23214  eleanor systemd-resolve --status
+13:20    23213  eleanor /bin/sh ./lse.sh -l2
+13:20    23137  eleanor sleep 0.2
+13:20    23135  eleanor grep -i listening on lo
+13:20    23134  eleanor /bin/sh ./lse.sh -l2
+13:20    23133  eleanor /bin/sh ./lse.sh -l2
+13:20    23119  eleanor ss -tunlp
+13:20    23118  eleanor grep 127.0.0.1:
+13:20    23117  eleanor /bin/sh ./lse.sh -l2
+13:20    23115  eleanor /bin/sh ./lse.sh -l2
+13:20    23042  eleanor /bin/sh ./lse.sh -l2
+13:20    22925  eleanor getcap -r /
+13:20    22924  eleanor /bin/sh ./lse.sh -l2
+13:20    22857  eleanor grep -v root
+13:20    22856  eleanor /bin/sh ./lse.sh -l2
+13:20    22855  eleanor /bin/sh ./lse.sh -l2
+13:20    22836  eleanor /bin/sh ./lse.sh -l2
+13:20    22784  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name *id_dsa* -o -name *id_rsa* -o -name known_hosts -o -name authorized_hosts -o -name authorized_keys ) -exec ls -la {} ;
+13:20    22782  eleanor /bin/sh ./lse.sh -l2
+13:20    22731  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -user eleanor -type f -exec ls -al {} ;
+13:20    22730  eleanor /bin/sh ./lse.sh -l2
+13:20    22702  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /usr/lib -prune -o -path /usr/share -prune -o -regextype egrep -iregex .*(backup|dump|cop(y|ies)|bak|bkp)[^/]*\.(sql|tgz|tar|zip)?\.?(gz|xz|bzip2|bz2|lz|7z)? -readable -type f -exec ls -al {} ;
+13:20    22701  eleanor /bin/sh ./lse.sh -l2
+13:20    22690  eleanor /bin/sh ./lse.sh -l2
+13:20    22662  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name .git -o -name .svn ) -print
+13:20    22660  eleanor /bin/sh ./lse.sh -l2
+13:20    22633  eleanor /bin/sh ./lse.sh -l2
+13:20    22604  eleanor /bin/sh ./lse.sh -l2
+13:20    22313  eleanor /bin/sh ./lse.sh -l2
+13:20    22284  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -perm -4000 -type f -print
+13:20    22282  eleanor /bin/sh ./lse.sh -l2
+13:20    22257  eleanor find / -path /home/eleanor -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -type l -user eleanor -print
+13:20    22244  eleanor /usr/sbin/exim4 -Mc 1lnla6-0005lq-La
+13:20    22214  eleanor find / -path /home/eleanor -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -not -type l -writable -print
+13:20    22213  eleanor /bin/sh ./lse.sh -l2
+13:20    22188  eleanor /bin/sh ./lse.sh -l2
+13:20    22101  eleanor sort -u
+13:20    22100  eleanor tr :
+13:20    22099  eleanor cut -d= -f2
+13:20    22098  eleanor tr -d "'
+13:20    22097  eleanor grep -ERh ^ *PATH=.* /etc/
+13:20    22096  eleanor /bin/sh ./lse.sh -l2
+13:20    22095  eleanor /bin/sh ./lse.sh -l2
+13:20    22061  eleanor sed s/^ *//g
+13:20    22060  eleanor uniq -c
+13:20    22059  eleanor sort -Mr
+13:20    22057  eleanor grep -v ^START
+13:20    22055  eleanor sed s/^ *//g
+13:20    22053  eleanor /bin/sh ./lse.sh -l2
+13:20    22051  eleanor sleep 60
+13:20    22049  eleanor /bin/sh ./lse.sh -l2
+13:20    22048  eleanor /bin/sh ./lse.sh -l2
+13:20     2186  eleanor sleep 1
+13:20     1897  eleanor sleep 1
+13:20     1604  eleanor sleep 1
+13:20     1306  eleanor sleep 1
+13:19    22034  eleanor tee lse.txt
+13:19    22033  eleanor /bin/sh ./lse.sh -l2
+13:00    11624  eleanor /usr/bin/gpg-agent --supervised
+12:54     2911  eleanor /bin/bash
+12:54     2910  eleanor sh -c /bin/bash
+12:54     2909  eleanor ed
+12:53     2898  eleanor -rbash
+12:53     2897  eleanor sshd: eleanor@pts/0
+12:53     2891  eleanor (sd-pam)
+12:53     2890  eleanor /lib/systemd/systemd --user
+06:55      444  eleanor /usr/bin/node /home/eleanor/helloworld/index.js
+---
+[i] pro500 Running processes............................................... yes!
+---
+START      PID     USER COMMAND
+13:21     6472  eleanor sleep 1
+13:20      958  eleanor sleep 1
+13:20      673  eleanor sleep 1
+13:20     6191  eleanor sleep 1
+13:20     5910  eleanor sleep 1
+13:20     5615  eleanor sleep 1
+13:20     5352  eleanor sleep 1
+13:20     5059  eleanor sleep 1
+13:20     4782  eleanor sleep 1
+13:20     4493  eleanor sleep 1
+13:20     4214  eleanor sleep 1
+13:20     3919  eleanor sleep 1
+13:20      378  eleanor sleep 1
+13:20     3628  eleanor sleep 1
+13:20     3332  eleanor sleep 1
+13:20    32554  eleanor sleep 1
+13:20    32266  eleanor sleep 1
+13:20    31981  eleanor sleep 1
+13:20    31685  eleanor sleep 1
+13:20    31387  eleanor sleep 1
+13:20    31095  eleanor sleep 1
+13:20    30796  eleanor sleep 1
+13:20    30509  eleanor sleep 1
+13:20     3036  eleanor sleep 1
+13:20    30250  eleanor sleep 1
+13:20    29961  eleanor sleep 1
+13:20    29675  eleanor sleep 1
+13:20    29407  eleanor sleep 1
+13:20    29120  eleanor sleep 1
+13:20    28877      999 postgres: autovacuum worker postgres
+13:20    28830  eleanor sleep 1
+13:20    28579  eleanor sleep 1
+13:20    28330  eleanor sleep 1
+13:20    28046  eleanor sleep 1
+13:20    27784  eleanor sleep 1
+13:20     2768  eleanor sleep 1
+13:20    27503  eleanor sleep 1
+13:20    27233  eleanor sleep 1
+13:20    26955  eleanor sleep 1
+13:20    26672  eleanor sleep 1
+13:20    26385  eleanor sleep 1
+13:20    26097  eleanor sleep 1
+13:20    25819  eleanor sleep 1
+13:20    25528  eleanor sleep 1
+13:20    25257  eleanor sleep 1
+13:20    24979  eleanor sleep 1
+13:20     2475  eleanor sleep 1
+13:20    24709  eleanor sleep 1
+13:20    24444  eleanor sleep 1
+13:20    24158  eleanor sleep 1
+13:20    23873  eleanor sleep 1
+13:20    23582  eleanor sleep 1
+13:20    23581  eleanor /bin/sh ./lse.sh -l2
+13:20    23552  eleanor docker images
+13:20    23540  eleanor docker ps -a
+13:20    23510  eleanor docker --version
+13:20    23509  eleanor /bin/sh ./lse.sh -l2
+13:20    23483  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *dockerenv* -exec ls -la {} ;
+13:20    23480  eleanor /bin/sh ./lse.sh -l2
+13:20    23427  eleanor /bin/sh ./lse.sh -l2
+13:20    23388  eleanor /bin/sh ./lse.sh -l2
+13:20    23348  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -name *.htpasswd -print -exec cat {} ;
+13:20    23347  eleanor /bin/sh ./lse.sh -l2
+13:20    23292  eleanor /bin/sh ./lse.sh -l2
+13:20    23275  eleanor /bin/sh ./lse.sh -l2
+13:20    23230  eleanor /bin/sh ./lse.sh -l2
+13:20    23218 systemd-resolve /lib/systemd/systemd-resolved
+13:20    23218     root (resolved)
+13:20    23218     root /lib/systemd/systemd-resolved
+13:20    23214  eleanor systemd-resolve --status
+13:20    23213  eleanor /bin/sh ./lse.sh -l2
+13:20    23137  eleanor sleep 0.2
+13:20    23135  eleanor grep -i listening on lo
+13:20    23134  eleanor /bin/sh ./lse.sh -l2
+13:20    23133  eleanor /bin/sh ./lse.sh -l2
+13:20    23121     root /sbin/modprobe -q -- net-pf-16-proto-4-type-2
+13:20    23119  eleanor ss -tunlp
+13:20    23118  eleanor grep 127.0.0.1:
+13:20    23117  eleanor /bin/sh ./lse.sh -l2
+13:20    23115  eleanor /bin/sh ./lse.sh -l2
+13:20    23042  eleanor /bin/sh ./lse.sh -l2
+13:20    22925  eleanor getcap -r /
+13:20    22924  eleanor /bin/sh ./lse.sh -l2
+13:20    22857  eleanor grep -v root
+13:20    22856  eleanor /bin/sh ./lse.sh -l2
+13:20    22855  eleanor /bin/sh ./lse.sh -l2
+13:20    22836  eleanor /bin/sh ./lse.sh -l2
+13:20    22784  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name *id_dsa* -o -name *id_rsa* -o -name known_hosts -o -name authorized_hosts -o -name authorized_keys ) -exec ls -la {} ;
+13:20    22782  eleanor /bin/sh ./lse.sh -l2
+13:20    22731  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -user eleanor -type f -exec ls -al {} ;
+13:20    22730  eleanor /bin/sh ./lse.sh -l2
+13:20    22702  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /usr/lib -prune -o -path /usr/share -prune -o -regextype egrep -iregex .*(backup|dump|cop(y|ies)|bak|bkp)[^/]*\.(sql|tgz|tar|zip)?\.?(gz|xz|bzip2|bz2|lz|7z)? -readable -type f -exec ls -al {} ;
+13:20    22701  eleanor /bin/sh ./lse.sh -l2
+13:20    22690  eleanor /bin/sh ./lse.sh -l2
+13:20    22662  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o ( -name .git -o -name .svn ) -print
+13:20    22660  eleanor /bin/sh ./lse.sh -l2
+13:20    22633  eleanor /bin/sh ./lse.sh -l2
+13:20    22604  eleanor /bin/sh ./lse.sh -l2
+13:20    22313  eleanor /bin/sh ./lse.sh -l2
+13:20    22284  eleanor find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -perm -4000 -type f -print
+13:20    22282  eleanor /bin/sh ./lse.sh -l2
+13:20    22257  eleanor find / -path /home/eleanor -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -type l -user eleanor -print
+13:20    22244  eleanor /usr/sbin/exim4 -Mc 1lnla6-0005lq-La
+13:20    22235     root /usr/sbin/exim4 -Mc 1lnla6-0005m0-LN
+13:20    22234     root /usr/sbin/exim4 -Mc 1lnla6-0005lq-La
+13:20    22214  eleanor find / -path /home/eleanor -prune -o -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -not -type l -writable -print
+13:20    22213  eleanor /bin/sh ./lse.sh -l2
+13:20    22196     root sendmail -t
+13:20    22196 Debian-exim sendmail -t
+13:20    22193     root sudo -S id
+13:20    22188  eleanor /bin/sh ./lse.sh -l2
+13:20    22186     root sendmail -t
+13:20    22186 Debian-exim sendmail -t
+13:20    22184     root sudo -nS -l
+13:20    22101  eleanor sort -u
+13:20    22100  eleanor tr :
+13:20    22099  eleanor cut -d= -f2
+13:20    22098  eleanor tr -d "'
+13:20    22097  eleanor grep -ERh ^ *PATH=.* /etc/
+13:20    22096  eleanor /bin/sh ./lse.sh -l2
+13:20    22095  eleanor /bin/sh ./lse.sh -l2
+13:20    22061  eleanor sed s/^ *//g
+13:20    22060  eleanor uniq -c
+13:20    22059  eleanor sort -Mr
+13:20    22057  eleanor grep -v ^START
+13:20    22055  eleanor sed s/^ *//g
+13:20    22053  eleanor /bin/sh ./lse.sh -l2
+13:20    22051  eleanor sleep 60
+13:20    22049  eleanor /bin/sh ./lse.sh -l2
+13:20    22048  eleanor /bin/sh ./lse.sh -l2
+13:20     2186  eleanor sleep 1
+13:20     1897  eleanor sleep 1
+13:20     1604  eleanor sleep 1
+13:20     1306  eleanor sleep 1
+13:19    22034  eleanor tee lse.txt
+13:19    22033  eleanor /bin/sh ./lse.sh -l2
+13:00    11624  eleanor /usr/bin/gpg-agent --supervised
+12:54     2911  eleanor /bin/bash
+12:54     2910  eleanor sh -c /bin/bash
+12:54     2909  eleanor ed
+12:53     2898  eleanor -rbash
+12:53     2897  eleanor sshd: eleanor@pts/0
+12:53     2891  eleanor (sd-pam)
+12:53     2890  eleanor /lib/systemd/systemd --user
+06:55      516     root /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+06:55      514     root /usr/bin/containerd
+06:55      509     root /sbin/agetty --noclear tty1 linux
+06:55      508     root /usr/sbin/sshd -D
+06:55      502   nobody /usr/sbin/ident2
+06:55      474 messagebus /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+06:55      473     root /usr/sbin/rsyslogd -n
+06:55      448     root /usr/bin/VGAuthService
+06:55      446     root /usr/sbin/cron -f
+06:55      444  eleanor /usr/bin/node /home/eleanor/helloworld/index.js
+06:55      442     root /lib/systemd/systemd-logind
+06:55      309 systemd-timesync /lib/systemd/systemd-timesyncd
+06:55      271     root /lib/systemd/systemd-udevd
+06:55      240     root /usr/bin/vmtoolsd
+06:55      239     root /lib/systemd/systemd-journald
+06:55        1     root /sbin/init
+06:55     1176      999 postgres: logical replication launcher
+06:55     1175      999 postgres: stats collector
+06:55     1174      999 postgres: autovacuum launcher
+06:55     1173      999 postgres: walwriter
+06:55     1172      999 postgres: background writer
+06:55     1171      999 postgres: checkpointer
+06:55     1069      999 /usr/local/bin/ruby bin/rails server -b 0.0.0.0
+06:55     1063      999 postgres
+06:55     1032     root containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/71aa857fe988d500a65dd1699c6f699c0170e2d54f1f985c0ce92ec5d18f9a3c -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+06:55     1028     root containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/326cfee157384615c872763b1a690d34c59650bfc4a9007be1df15b81b6d7bfb -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+06:55     1021     root /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8080 -container-ip 172.17.0.2 -container-port 3000
+06:55     1010     root /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 5432 -container-ip 172.17.0.3 -container-port 5432
+---
+[i] pro510 Running process binaries and permissions........................ yes!
+---
+-rwxr-xr-x 1 root root   1099016 May 15  2017 /bin/bash
+-rwxr-xr-x 1 root root     51552 Feb 20  2016 /bin/ed
+-rwxr-xr-x 1 root root    215360 Jan 23  2017 /bin/grep
+-rwxr-xr-x 1 root root    105808 Feb  4  2017 /bin/sed
+lrwxrwxrwx 1 root root         4 Jan 24  2017 /bin/sh -> dash
+lrwxrwxrwx 1 root root         4 Jan 24  2017 /bin/sh -> dash
+-rwxr-xr-x 1 root root     35592 Feb 22  2017 /bin/sleep
+-rwxr-xr-x 1 root root    128176 Nov 24  2017 /bin/ss
+-rwxr-xr-x 1 root root   1120992 Jul 21  2019 /lib/systemd/systemd
+-rwxr-xr-x 1 root root    121256 Jul 21  2019 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root    207336 Jul 21  2019 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root    321952 Jul 21  2019 /lib/systemd/systemd-resolved
+-rwxr-xr-x 1 root root     39248 Jul 21  2019 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root    465680 Jul 21  2019 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root     57680 Mar  7  2018 /sbin/agetty
+-rwxr-xr-x 1 root root     10232 May 18  2016 /sbin/getcap
+lrwxrwxrwx 1 root root        20 Jul 21  2019 /sbin/init -> /lib/systemd/systemd
+lrwxrwxrwx 1 root root         9 Dec 25  2016 /sbin/modprobe -> /bin/kmod
+-rwxr-xr-x 1 root root  49098144 May  1  2020 /usr/bin/containerd
+-rwxr-xr-x 1 root root   6121192 May  1  2020 /usr/bin/containerd-shim
+-rwxr-xr-x 1 root root     43880 Feb 22  2017 /usr/bin/cut
+-rwxr-xr-x 1 root root    224208 Jun  9  2019 /usr/bin/dbus-daemon
+-rwxr-xr-x 1 root root  84959304 May 28  2020 /usr/bin/docker
+-rwxr-xr-x 1 root root 102055440 May 28  2020 /usr/bin/dockerd
+-rwxr-xr-x 1 root root   3742416 May 28  2020 /usr/bin/docker-proxy
+-rwxr-xr-x 1 root root    221768 Feb 18  2017 /usr/bin/find
+-rwxr-xr-x 1 root root    385672 Feb  7  2019 /usr/bin/gpg-agent
+-rwxr-xr-x 1 root root  48614160 May 26  2020 /usr/bin/node
+-rwxr-xr-x 1 root root    110096 Feb 22  2017 /usr/bin/sort
+-rwsr-xr-x 1 root root    140944 Jan 31  2020 /usr/bin/sudo
+-rwxr-xr-x 1 root root     80216 Jul 21  2019 /usr/bin/systemd-resolve
+-rwxr-xr-x 1 root root     35656 Feb 22  2017 /usr/bin/tee
+-rwxr-xr-x 1 root root     47912 Feb 22  2017 /usr/bin/tr
+-rwxr-xr-x 1 root root     43880 Feb 22  2017 /usr/bin/uniq
+-rwxr-xr-x 1 root root    152232 Apr  5  2019 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root     48656 Apr  5  2019 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root     48616 Oct  7  2017 /usr/sbin/cron
+-rwsr-xr-x 1 root root   1019656 May 13  2020 /usr/sbin/exim4
+-rwxr-xr-x 1 root root     23608 Nov 24  2010 /usr/sbin/ident2
+-rwxr-xr-x 1 root root    651576 Jan 18  2017 /usr/sbin/rsyslogd
+lrwxrwxrwx 1 root root         5 May 13  2020 /usr/sbin/sendmail -> exim4
+-rwxr-xr-x 1 root root    791024 Jul 15  2019 /usr/sbin/sshd
+---
+
+==================================( FINISHED )==================================

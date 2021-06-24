@@ -1,0 +1,1090 @@
+root@kali:~/CTF/PGPractice/Hutch# nmap -Pn -n -sS -p- 192.168.135.122 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-06-19 13:19 +08
+Nmap scan report for 192.168.135.122
+Host is up (0.24s latency).
+Not shown: 65514 filtered ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49666/tcp open  unknown
+49668/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49672/tcp open  unknown
+49688/tcp open  unknown
+49765/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 254.07 seconds
+
+root@kali:~/CTF/PGPractice/Hutch# nmap -Pn -n -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5985,9389,49666-49672,49688,49675 -sC -A 192.168.135.122 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-06-19 13:45 +08
+Nmap scan report for 192.168.135.122
+Host is up (0.30s latency).
+
+PORT      STATE    SERVICE       VERSION
+53/tcp    open     domain        Simple DNS Plus
+80/tcp    open     http          Microsoft IIS httpd 10.0
+| http-methods:
+|_  Potentially risky methods: TRACE COPY PROPFIND DELETE MOVE PROPPATCH MKCOL LOCK UNLOCK PUT
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: IIS Windows Server
+| http-webdav-scan:
+|   Server Type: Microsoft-IIS/10.0
+|   Public Options: OPTIONS, TRACE, GET, HEAD, POST, PROPFIND, PROPPATCH, MKCOL, PUT, DELETE, COPY, MOVE, LOCK, UNLOCK
+|   Allowed Methods: OPTIONS, TRACE, GET, HEAD, POST, COPY, PROPFIND, DELETE, MOVE, PROPPATCH, MKCOL, LOCK, UNLOCK
+|   WebDAV type: Unknown
+|_  Server Date: Sat, 19 Jun 2021 05:46:49 GMT
+88/tcp    open     kerberos-sec  Microsoft Windows Kerberos (server time: 2021-06-19 05:45:48Z)
+135/tcp   open     msrpc         Microsoft Windows RPC
+139/tcp   open     netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp   open     ldap          Microsoft Windows Active Directory LDAP (Domain: hutch.offsec0., Site: Default-First-Site-Name)
+445/tcp   open     microsoft-ds?
+464/tcp   open     kpasswd5?
+593/tcp   open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp   open     tcpwrapped
+3268/tcp  open     ldap          Microsoft Windows Active Directory LDAP (Domain: hutch.offsec0., Site: Default-First-Site-Name)
+3269/tcp  open     tcpwrapped
+5985/tcp  open     http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+9389/tcp  open     mc-nmf        .NET Message Framing
+49666/tcp open     msrpc         Microsoft Windows RPC
+49667/tcp filtered unknown
+49668/tcp open     msrpc         Microsoft Windows RPC
+49669/tcp open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+49670/tcp open     msrpc         Microsoft Windows RPC
+49671/tcp filtered unknown
+49672/tcp open     msrpc         Microsoft Windows RPC
+49675/tcp filtered unknown
+49688/tcp open     msrpc         Microsoft Windows RPC
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+OS fingerprint not ideal because: Missing a closed TCP port so results incomplete
+No OS matches for host
+Network Distance: 2 hops
+Service Info: Host: HUTCHDC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: -1s
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled and required
+| smb2-time:
+|   date: 2021-06-19T05:46:48
+|_  start_date: N/A
+
+TRACEROUTE (using port 139/tcp)
+HOP RTT       ADDRESS
+1   311.80 ms 192.168.49.1
+2   311.80 ms 192.168.135.122
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 117.29 seconds
+
+root@kali:~/CTF/PGPractice/Hutch# nmap -Pn -n -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5985,9389,49666-49672,49688,49675 --script=vuln,discov    ery 192.168.135.122 -e tun0
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-06-19 13:48 +08
+Pre-scan script results:
+|_broadcast-igmp-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-pim-discovery: ERROR: Script execution failed (use -d to debug)
+|_broadcast-ping: false
+|_hostmap-robtex: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https://www.ro                                                                  btex.com/api/
+|_http-robtex-shared-ns: *TEMPORARILY DISABLED* due to changes in Robtex's API. See https:/                                                                  /www.robtex.com/api/
+|_lltd-discovery: false
+|_mrinfo: ERROR: Script execution failed (use -d to debug)
+| targets-asn:
+|_  targets-asn.asn is a mandatory parameter
+| targets-sniffer: Sniffed 2 address(es).
+| 224.0.0.251
+|_224.0.23.12
+Nmap scan report for 192.168.135.122
+Host is up (0.30s latency).
+
+PORT      STATE    SERVICE       VERSION
+53/tcp    open     domain        Simple DNS Plus
+|_dns-nsec-enum: Can't determine domain for host 192.168.135.122; use dns-nsec-enum.domains script arg.
+|_dns-nsec3-enum: Can't determine domain for host 192.168.135.122; use dns-nsec3-enum.domains script arg.
+80/tcp    open     http          Microsoft IIS httpd 10.0
+|_http-chrono: Request times for /; avg: 4414.76ms; min: 523.79ms; max: 19815.28ms
+| http-comments-displayer:
+| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.135.122
+|
+|     Path: http://192.168.135.122:80/
+|     Line number: 7
+|     Comment:
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|_        -->
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 19 Jun 2021 05:50:07 GMT; -30m01s from local time.
+|_http-devframework: ASP.NET detected. Found related header.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-errors: Couldn't find any error pages.
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html
+|   Last-Modified: Wed, 04 Nov 2020 05:35:35 GMT
+|   Accept-Ranges: bytes
+|   ETag: "965c9516cb2d61:0"
+|   Server: Microsoft-IIS/10.0
+|   X-Powered-By: ASP.NET
+|   Date: Sat, 19 Jun 2021 05:50:11 GMT
+|   Connection: close
+|   Content-Length: 703
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-IIS/10.0
+| http-sitemap-generator:
+|   Directory structure:
+|     /
+|       Other: 1; png: 1
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_    Other: 1; png: 1
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: IIS Windows Server
+| http-useragent-tester:
+|   Status for browser useragent: 200
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 200
+| http-webdav-scan:
+|   Server Type: Microsoft-IIS/10.0
+|   Allowed Methods: OPTIONS, TRACE, GET, HEAD, POST, COPY, PROPFIND, DELETE, MOVE, PROPPATCH, MKCOL, LOCK, UNLOCK
+|   Server Date: Sat, 19 Jun 2021 05:50:32 GMT
+|   WebDAV type: Unknown
+|_  Public Options: OPTIONS, TRACE, GET, HEAD, POST, PROPFIND, PROPPATCH, MKCOL, PUT, DELETE, COPY, MOVE, LOCK, UNLOCK
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+88/tcp    open     kerberos-sec  Microsoft Windows Kerberos (server time: 2021-06-19 05:49:07Z)
+135/tcp   open     msrpc         Microsoft Windows RPC
+139/tcp   open     netbios-ssn   Microsoft Windows netbios-ssn
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+389/tcp   open     ldap          Microsoft Windows Active Directory LDAP (Domain: hutch.offsec, Site: Default-First-Site-Name)
+| ldap-rootdse:
+| LDAP Results
+|   <ROOT>
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|       domainControllerFunctionality: 7
+|       rootDomainNamingContext: DC=hutch,DC=offsec
+|       ldapServiceName: hutch.offsec:hutchdc$@HUTCH.OFFSEC
+|       isGlobalCatalogReady: TRUE
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedControl: 1.2.840.113556.1.4.2330
+|       supportedControl: 1.2.840.113556.1.4.2354
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|       serverName: CN=HUTCHDC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=hutch,DC=offsec
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|       namingContexts: DC=hutch,DC=offsec
+|       namingContexts: CN=Configuration,DC=hutch,DC=offsec
+|       namingContexts: CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|       namingContexts: DC=DomainDnsZones,DC=hutch,DC=offsec
+|       namingContexts: DC=ForestDnsZones,DC=hutch,DC=offsec
+|       isSynchronized: TRUE
+|       highestCommittedUSN: 73801
+|       dsServiceName: CN=NTDS Settings,CN=HUTCHDC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=hutch,DC=offsec
+|       dnsHostName: hutchdc.hutch.offsec
+|       defaultNamingContext: DC=hutch,DC=offsec
+|       currentTime: 20210619055048.0Z
+|_      configurationNamingContext: CN=Configuration,DC=hutch,DC=offsec
+| ldap-search:
+|   Context: DC=hutch,DC=offsec
+|     dn: DC=hutch,DC=offsec
+|     dn: CN=Administrator,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Guest,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: person
+|         objectClass: organizationalPerson
+|         objectClass: user
+|         cn: Guest
+|         description: Built-in account for guest access to the computer/domain
+|         distinguishedName: CN=Guest,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:25:40 UTC
+|         whenChanged: 2020/11/04 05:25:40 UTC
+|         uSNCreated: 8197
+|         memberOf: CN=Guests,CN=Builtin,DC=hutch,DC=offsec
+|         uSNChanged: 8197
+|         name: Guest
+|         objectGUID: 044ab54-390-f248-bc3c-a441b3bc47f8
+|         userAccountControl: 66082
+|         badPwdCount: 0
+|         codePage: 0
+|         countryCode: 0
+|         badPasswordTime: Never
+|         lastLogoff: 0
+|         lastLogon: Never
+|         pwdLastSet: Never
+|         primaryGroupID: 514
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-501
+|         accountExpires: 30828-09-13T18:27:29+00:00
+|         logonCount: 0
+|         sAMAccountName: Guest
+|         sAMAccountType: 805306368
+|         objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=krbtgt,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Domain Computers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Domain Computers
+|         description: All workstations and servers joined to the domain
+|         distinguishedName: CN=Domain Computers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12330
+|         uSNChanged: 12332
+|         name: Domain Computers
+|         objectGUID: bf57e04a-cee1-fd4a-b485-2f62b5d85cee
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-515
+|         sAMAccountName: Domain Computers
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Schema Admins,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Enterprise Admins,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Cert Publishers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Cert Publishers
+|         description: Members of this group are permitted to publish certificates to the directory
+|         distinguishedName: CN=Cert Publishers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12342
+|         memberOf: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         uSNChanged: 12344
+|         name: Cert Publishers
+|         objectGUID: df7594ea-e87f-bf40-8148-c9d1a63ca68c
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-517
+|         sAMAccountName: Cert Publishers
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Domain Admins,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Domain Users,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Domain Users
+|         description: All domain users
+|         distinguishedName: CN=Domain Users,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12348
+|         memberOf: CN=Users,CN=Builtin,DC=hutch,DC=offsec
+|         uSNChanged: 12350
+|         name: Domain Users
+|         objectGUID: 2803cd3-fced-d543-8a4-a6dfd0de8541
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-513
+|         sAMAccountName: Domain Users
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Domain Guests,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Domain Guests
+|         description: All domain guests
+|         distinguishedName: CN=Domain Guests,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12351
+|         memberOf: CN=Guests,CN=Builtin,DC=hutch,DC=offsec
+|         uSNChanged: 12353
+|         name: Domain Guests
+|         objectGUID: ba7583f0-90f-94a-8525-51adcc21367b
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-514
+|         sAMAccountName: Domain Guests
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Group Policy Creator Owners,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Group Policy Creator Owners
+|         description: Members in this group can modify group policy for the domain
+|         member: CN=Administrator,CN=Users,DC=hutch,DC=offsec
+|         distinguishedName: CN=Group Policy Creator Owners,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12354
+|         memberOf: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         uSNChanged: 12391
+|         name: Group Policy Creator Owners
+|         objectGUID: 20f62f8-c24-a64f-9191-289c1149958
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-520
+|         sAMAccountName: Group Policy Creator Owners
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=RAS and IAS Servers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: RAS and IAS Servers
+|         description: Servers in this group can access remote access properties of users
+|         distinguishedName: CN=RAS and IAS Servers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12357
+|         uSNChanged: 12359
+|         name: RAS and IAS Servers
+|         objectGUID: 76c688f-de10-7e4d-8cd1-7327f0532256
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-553
+|         sAMAccountName: RAS and IAS Servers
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Allowed RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Allowed RODC Password Replication Group
+|         description: Members in this group can have their passwords replicated to all read-only domain controllers in the domain
+|         distinguishedName: CN=Allowed RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12402
+|         uSNChanged: 12404
+|         name: Allowed RODC Password Replication Group
+|         objectGUID: 71f24ae4-97-a34d-a932-d7fc7124d21
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-571
+|         sAMAccountName: Allowed RODC Password Replication Group
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Denied RODC Password Replication Group
+|         description: Members in this group cannot have their passwords replicated to any read-only domain controllers in the domain
+|         member: CN=Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Group Policy Creator Owners,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Domain Admins,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Cert Publishers,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Enterprise Admins,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Schema Admins,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         member: CN=krbtgt,CN=Users,DC=hutch,DC=offsec
+|         distinguishedName: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12405
+|         uSNChanged: 12433
+|         name: Denied RODC Password Replication Group
+|         objectGUID: 1e2a4623-2fb7-e14f-b2ac-f2b2f232fb60
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-572
+|         sAMAccountName: Denied RODC Password Replication Group
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Enterprise Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Enterprise Read-only Domain Controllers
+|         description: Members of this group are Read-Only Domain Controllers in the enterprise
+|         distinguishedName: CN=Enterprise Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12429
+|         uSNChanged: 12431
+|         name: Enterprise Read-only Domain Controllers
+|         objectGUID: 42844bc6-c387-f947-a4be-989c3580f2ab
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-498
+|         sAMAccountName: Enterprise Read-only Domain Controllers
+|         sAMAccountType: 268435456
+|         groupType: -2147483640
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Cloneable Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Cloneable Domain Controllers
+|         description: Members of this group that are domain controllers may be cloned.
+|         distinguishedName: CN=Cloneable Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12440
+|         uSNChanged: 12442
+|         name: Cloneable Domain Controllers
+|         objectGUID: 178be320-6cb-1d4f-acce-7f87d6419286
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-522
+|         sAMAccountName: Cloneable Domain Controllers
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Protected Users,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Protected Users
+|         description: Members of this group are afforded additional protections against authentication security threats. See http://go.microsoft.com/fwlink/?LinkId=298939 for more information.
+|         distinguishedName: CN=Protected Users,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12445
+|         uSNChanged: 12447
+|         name: Protected Users
+|         objectGUID: 9f5e98-fe2c-3b4a-bf7e-c0d7c791ce86
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-525
+|         sAMAccountName: Protected Users
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         isCriticalSystemObject: TRUE
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|
+|
+|_Result limited to 20 objects (see ldap.maxobjects)
+|_sslv2-drown:
+445/tcp   open     microsoft-ds?
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+464/tcp   open     kpasswd5?
+593/tcp   open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+636/tcp   open     tcpwrapped
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+|_sslv2-drown:
+3268/tcp  open     ldap          Microsoft Windows Active Directory LDAP (Domain: hutch.offsec, Site: Default-First-Site-Name)
+| ldap-rootdse:
+| LDAP Results
+|   <ROOT>
+|       domainFunctionality: 7
+|       forestFunctionality: 7
+|       domainControllerFunctionality: 7
+|       rootDomainNamingContext: DC=hutch,DC=offsec
+|       ldapServiceName: hutch.offsec:hutchdc$@HUTCH.OFFSEC
+|       isGlobalCatalogReady: TRUE
+|       supportedSASLMechanisms: GSSAPI
+|       supportedSASLMechanisms: GSS-SPNEGO
+|       supportedSASLMechanisms: EXTERNAL
+|       supportedSASLMechanisms: DIGEST-MD5
+|       supportedLDAPVersion: 3
+|       supportedLDAPVersion: 2
+|       supportedLDAPPolicies: MaxPoolThreads
+|       supportedLDAPPolicies: MaxPercentDirSyncRequests
+|       supportedLDAPPolicies: MaxDatagramRecv
+|       supportedLDAPPolicies: MaxReceiveBuffer
+|       supportedLDAPPolicies: InitRecvTimeout
+|       supportedLDAPPolicies: MaxConnections
+|       supportedLDAPPolicies: MaxConnIdleTime
+|       supportedLDAPPolicies: MaxPageSize
+|       supportedLDAPPolicies: MaxBatchReturnMessages
+|       supportedLDAPPolicies: MaxQueryDuration
+|       supportedLDAPPolicies: MaxDirSyncDuration
+|       supportedLDAPPolicies: MaxTempTableSize
+|       supportedLDAPPolicies: MaxResultSetSize
+|       supportedLDAPPolicies: MinResultSets
+|       supportedLDAPPolicies: MaxResultSetsPerConn
+|       supportedLDAPPolicies: MaxNotificationPerConn
+|       supportedLDAPPolicies: MaxValRange
+|       supportedLDAPPolicies: MaxValRangeTransitive
+|       supportedLDAPPolicies: ThreadMemoryLimit
+|       supportedLDAPPolicies: SystemMemoryLimitPercent
+|       supportedControl: 1.2.840.113556.1.4.319
+|       supportedControl: 1.2.840.113556.1.4.801
+|       supportedControl: 1.2.840.113556.1.4.473
+|       supportedControl: 1.2.840.113556.1.4.528
+|       supportedControl: 1.2.840.113556.1.4.417
+|       supportedControl: 1.2.840.113556.1.4.619
+|       supportedControl: 1.2.840.113556.1.4.841
+|       supportedControl: 1.2.840.113556.1.4.529
+|       supportedControl: 1.2.840.113556.1.4.805
+|       supportedControl: 1.2.840.113556.1.4.521
+|       supportedControl: 1.2.840.113556.1.4.970
+|       supportedControl: 1.2.840.113556.1.4.1338
+|       supportedControl: 1.2.840.113556.1.4.474
+|       supportedControl: 1.2.840.113556.1.4.1339
+|       supportedControl: 1.2.840.113556.1.4.1340
+|       supportedControl: 1.2.840.113556.1.4.1413
+|       supportedControl: 2.16.840.1.113730.3.4.9
+|       supportedControl: 2.16.840.1.113730.3.4.10
+|       supportedControl: 1.2.840.113556.1.4.1504
+|       supportedControl: 1.2.840.113556.1.4.1852
+|       supportedControl: 1.2.840.113556.1.4.802
+|       supportedControl: 1.2.840.113556.1.4.1907
+|       supportedControl: 1.2.840.113556.1.4.1948
+|       supportedControl: 1.2.840.113556.1.4.1974
+|       supportedControl: 1.2.840.113556.1.4.1341
+|       supportedControl: 1.2.840.113556.1.4.2026
+|       supportedControl: 1.2.840.113556.1.4.2064
+|       supportedControl: 1.2.840.113556.1.4.2065
+|       supportedControl: 1.2.840.113556.1.4.2066
+|       supportedControl: 1.2.840.113556.1.4.2090
+|       supportedControl: 1.2.840.113556.1.4.2205
+|       supportedControl: 1.2.840.113556.1.4.2204
+|       supportedControl: 1.2.840.113556.1.4.2206
+|       supportedControl: 1.2.840.113556.1.4.2211
+|       supportedControl: 1.2.840.113556.1.4.2239
+|       supportedControl: 1.2.840.113556.1.4.2255
+|       supportedControl: 1.2.840.113556.1.4.2256
+|       supportedControl: 1.2.840.113556.1.4.2309
+|       supportedControl: 1.2.840.113556.1.4.2330
+|       supportedControl: 1.2.840.113556.1.4.2354
+|       supportedCapabilities: 1.2.840.113556.1.4.800
+|       supportedCapabilities: 1.2.840.113556.1.4.1670
+|       supportedCapabilities: 1.2.840.113556.1.4.1791
+|       supportedCapabilities: 1.2.840.113556.1.4.1935
+|       supportedCapabilities: 1.2.840.113556.1.4.2080
+|       supportedCapabilities: 1.2.840.113556.1.4.2237
+|       subschemaSubentry: CN=Aggregate,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|       serverName: CN=HUTCHDC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=hutch,DC=offsec
+|       schemaNamingContext: CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|       namingContexts: DC=hutch,DC=offsec
+|       namingContexts: CN=Configuration,DC=hutch,DC=offsec
+|       namingContexts: CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|       namingContexts: DC=DomainDnsZones,DC=hutch,DC=offsec
+|       namingContexts: DC=ForestDnsZones,DC=hutch,DC=offsec
+|       isSynchronized: TRUE
+|       highestCommittedUSN: 73801
+|       dsServiceName: CN=NTDS Settings,CN=HUTCHDC,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=hutch,DC=offsec
+|       dnsHostName: hutchdc.hutch.offsec
+|       defaultNamingContext: DC=hutch,DC=offsec
+|       currentTime: 20210619055002.0Z
+|_      configurationNamingContext: CN=Configuration,DC=hutch,DC=offsec
+| ldap-search:
+|   Context: DC=hutch,DC=offsec
+|     dn: DC=hutch,DC=offsec
+|     dn: CN=Configuration,DC=hutch,DC=offsec
+|     dn: CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|     dn: CN=Administrator,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Guest,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: person
+|         objectClass: organizationalPerson
+|         objectClass: user
+|         cn: Guest
+|         description: Built-in account for guest access to the computer/domain
+|         distinguishedName: CN=Guest,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:25:40 UTC
+|         whenChanged: 2020/11/04 05:25:40 UTC
+|         uSNCreated: 8197
+|         memberOf: CN=Guests,CN=Builtin,DC=hutch,DC=offsec
+|         uSNChanged: 8197
+|         name: Guest
+|         objectGUID: 044ab54-390-f248-bc3c-a441b3bc47f8
+|         userAccountControl: 66082
+|         primaryGroupID: 514
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-501
+|         sAMAccountName: Guest
+|         sAMAccountType: 805306368
+|         objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=krbtgt,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Domain Computers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Domain Computers
+|         description: All workstations and servers joined to the domain
+|         distinguishedName: CN=Domain Computers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12330
+|         uSNChanged: 12332
+|         name: Domain Computers
+|         objectGUID: bf57e04a-cee1-fd4a-b485-2f62b5d85cee
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-515
+|         sAMAccountName: Domain Computers
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Schema Admins,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Enterprise Admins,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Cert Publishers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Cert Publishers
+|         description: Members of this group are permitted to publish certificates to the directory
+|         distinguishedName: CN=Cert Publishers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12342
+|         memberOf: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         uSNChanged: 12344
+|         name: Cert Publishers
+|         objectGUID: df7594ea-e87f-bf40-8148-c9d1a63ca68c
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-517
+|         sAMAccountName: Cert Publishers
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Domain Admins,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Domain Users,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Domain Users
+|         description: All domain users
+|         distinguishedName: CN=Domain Users,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12348
+|         memberOf: CN=Users,CN=Builtin,DC=hutch,DC=offsec
+|         uSNChanged: 12350
+|         name: Domain Users
+|         objectGUID: 2803cd3-fced-d543-8a4-a6dfd0de8541
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-513
+|         sAMAccountName: Domain Users
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Domain Guests,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Domain Guests
+|         description: All domain guests
+|         distinguishedName: CN=Domain Guests,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12351
+|         memberOf: CN=Guests,CN=Builtin,DC=hutch,DC=offsec
+|         uSNChanged: 12353
+|         name: Domain Guests
+|         objectGUID: ba7583f0-90f-94a-8525-51adcc21367b
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-514
+|         sAMAccountName: Domain Guests
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Group Policy Creator Owners,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Group Policy Creator Owners
+|         description: Members in this group can modify group policy for the domain
+|         member: CN=Administrator,CN=Users,DC=hutch,DC=offsec
+|         distinguishedName: CN=Group Policy Creator Owners,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12354
+|         memberOf: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         uSNChanged: 12391
+|         name: Group Policy Creator Owners
+|         objectGUID: 20f62f8-c24-a64f-9191-289c1149958
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-520
+|         sAMAccountName: Group Policy Creator Owners
+|         sAMAccountType: 268435456
+|         groupType: -2147483646
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=RAS and IAS Servers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: RAS and IAS Servers
+|         description: Servers in this group can access remote access properties of users
+|         distinguishedName: CN=RAS and IAS Servers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12357
+|         uSNChanged: 12359
+|         name: RAS and IAS Servers
+|         objectGUID: 76c688f-de10-7e4d-8cd1-7327f0532256
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-553
+|         sAMAccountName: RAS and IAS Servers
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Allowed RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Allowed RODC Password Replication Group
+|         description: Members in this group can have their passwords replicated to all read-only domain controllers in the domain
+|         distinguishedName: CN=Allowed RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12402
+|         uSNChanged: 12404
+|         name: Allowed RODC Password Replication Group
+|         objectGUID: 71f24ae4-97-a34d-a932-d7fc7124d21
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-571
+|         sAMAccountName: Allowed RODC Password Replication Group
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Denied RODC Password Replication Group
+|         description: Members in this group cannot have their passwords replicated to any read-only domain controllers in the domain
+|         member: CN=Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Group Policy Creator Owners,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Domain Admins,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Cert Publishers,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Enterprise Admins,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Schema Admins,CN=Users,DC=hutch,DC=offsec
+|         member: CN=Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         member: CN=krbtgt,CN=Users,DC=hutch,DC=offsec
+|         distinguishedName: CN=Denied RODC Password Replication Group,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12405
+|         uSNChanged: 12433
+|         name: Denied RODC Password Replication Group
+|         objectGUID: 1e2a4623-2fb7-e14f-b2ac-f2b2f232fb60
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-572
+|         sAMAccountName: Denied RODC Password Replication Group
+|         sAMAccountType: 536870912
+|         groupType: -2147483644
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|     dn: CN=Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|     dn: CN=Enterprise Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         objectClass: top
+|         objectClass: group
+|         cn: Enterprise Read-only Domain Controllers
+|         description: Members of this group are Read-Only Domain Controllers in the enterprise
+|         distinguishedName: CN=Enterprise Read-only Domain Controllers,CN=Users,DC=hutch,DC=offsec
+|         instanceType: 4
+|         whenCreated: 2020/11/04 05:26:23 UTC
+|         whenChanged: 2020/11/04 05:26:23 UTC
+|         uSNCreated: 12429
+|         uSNChanged: 12431
+|         name: Enterprise Read-only Domain Controllers
+|         objectGUID: 42844bc6-c387-f947-a4be-989c3580f2ab
+|         objectSid: 1-5-21-2216925765-458455009-2806096489-498
+|         sAMAccountName: Enterprise Read-only Domain Controllers
+|         sAMAccountType: 268435456
+|         groupType: -2147483640
+|         objectCategory: CN=Group,CN=Schema,CN=Configuration,DC=hutch,DC=offsec
+|         dSCorePropagationData: 2020/11/04 05:35:13 UTC
+|         dSCorePropagationData: 2020/11/04 05:26:23 UTC
+|         dSCorePropagationData: 1601/01/01 00:04:17 UTC
+|
+|
+|_Result limited to 20 objects (see ldap.maxobjects)
+|_sslv2-drown:
+3269/tcp  open     tcpwrapped
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+|_sslv2-drown:
+5985/tcp  open     http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-chrono: Request times for /; avg: 536.57ms; min: 519.96ms; max: 565.27ms
+|_http-comments-displayer: Couldn't find any comments.
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-date: Sat, 19 Jun 2021 05:50:24 GMT; -30m00s from local time.
+|_http-devframework: Couldn't determine the underlying framework or CMS. Try increasing 'httpspider.maxpagecount' value to spider more pages.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-errors:
+| Spidering limited to: maxpagecount=40; withinhost=192.168.135.122
+|   Found the following error pages:
+|
+|   Error Code: 404
+|_      http://192.168.135.122:5985/
+|_http-feed: Couldn't find any feeds.
+| http-headers:
+|   Content-Type: text/html; charset=us-ascii
+|   Server: Microsoft-HTTPAPI/2.0
+|   Date: Sat, 19 Jun 2021 05:50:31 GMT
+|   Connection: close
+|   Content-Length: 315
+|
+|_  (Request type: GET)
+|_http-mobileversion-checker: No mobile version detected.
+|_http-referer-checker: Couldn't find any cross-domain scripts.
+|_http-security-headers:
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| http-sitemap-generator:
+|   Directory structure:
+|   Longest directory structure:
+|     Depth: 0
+|     Dir: /
+|   Total files found (by extension):
+|_
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-title: Not Found
+| http-useragent-tester:
+|   Status for browser useragent: 404
+|   Allowed User Agents:
+|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
+|     libwww
+|     lwp-trivial
+|     libcurl-agent/1.0
+|     PHP/
+|     Python-urllib/2.5
+|     GT::WWW
+|     Snoopy
+|     MFC_Tear_Sample
+|     HTTP::Lite
+|     PHPCrawl
+|     URI::Fetch
+|     Zend_Http_Client
+|     http client
+|     PECL::HTTP
+|     Wget/1.13.4 (linux-gnu)
+|_    WWW-Mechanize/1.34
+| http-vhosts:
+|_128 names had status 404
+|_http-xssed: ERROR: Script execution failed (use -d to debug)
+9389/tcp  open     mc-nmf        .NET Message Framing
+49666/tcp open     msrpc         Microsoft Windows RPC
+49667/tcp filtered unknown
+49668/tcp open     msrpc         Microsoft Windows RPC
+49669/tcp open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+|_banner: ncacn_http/1.0
+49670/tcp open     msrpc         Microsoft Windows RPC
+49671/tcp filtered unknown
+49672/tcp open     msrpc         Microsoft Windows RPC
+49675/tcp filtered unknown
+49688/tcp open     msrpc         Microsoft Windows RPC
+Service Info: Host: HUTCHDC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_dns-brute: Can't guess domain of "192.168.135.122"; use dns-brute.domain script argument.
+|_fcrdns: FAIL (No PTR record)
+|_ipidseq: Unknown
+|_msrpc-enum: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+|_path-mtu: PMTU == 1500
+| qscan:
+| PORT  FAMILY  MEAN (us)  STDDEV    LOSS (%)
+| 53    0       291002.60  23833.38  0.0%
+| 80    0       286941.90  22718.63  0.0%
+| 88    0       294578.50  26595.92  0.0%
+| 135   0       295131.60  34401.17  0.0%
+| 139   1       305510.80  5441.86   0.0%
+| 389   0       279228.80  29227.60  0.0%
+| 445   0       288948.20  33635.19  0.0%
+|_464   0       298581.90  27253.54  0.0%
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-mbenum:
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb-protocols:
+|   dialects:
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: ERROR
+| smb2-capabilities:
+|   2.02:
+|     Distributed File System
+|   2.10:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.00:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.02:
+|     Distributed File System
+|     Leasing
+|     Multi-credit operations
+|   3.11:
+|     Distributed File System
+|     Leasing
+|_    Multi-credit operations
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled and required
+| smb2-time:
+|   date: 2021-06-19T05:50:30
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1473.22 seconds
