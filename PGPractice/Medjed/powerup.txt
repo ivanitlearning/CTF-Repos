@@ -1,0 +1,68 @@
+root@kali:~/CTF/PGPractice/Medjed/PE# cat powerup.txt
+
+
+ServiceName                     : bd
+Path                            : "C:\bd\bd.exe"
+ModifiableFile                  : C:\bd\bd.exe
+ModifiableFilePermissions       : {Delete, WriteAttributes, Synchronize, ReadControl...}
+ModifiableFileIdentityReference : NT AUTHORITY\Authenticated Users
+StartName                       : LocalSystem
+AbuseFunction                   : Install-ServiceBinary -Name 'bd'
+CanRestart                      : False
+Name                            : bd
+Check                           : Modifiable Service Files
+
+ModifiablePath    : C:\Ruby26-x64\bin
+IdentityReference : NT AUTHORITY\Authenticated Users
+Permissions       : {Delete, WriteAttributes, Synchronize, ReadControl...}
+%PATH%            : C:\Ruby26-x64\bin
+Name              : C:\Ruby26-x64\bin
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Ruby26-x64\bin\wlbsctrl.dll'
+
+ModifiablePath    : C:\Ruby26-x64\bin
+IdentityReference : NT AUTHORITY\Authenticated Users
+Permissions       : {Delete, GenericWrite, GenericExecute, GenericRead}
+%PATH%            : C:\Ruby26-x64\bin
+Name              : C:\Ruby26-x64\bin
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Ruby26-x64\bin\wlbsctrl.dll'
+
+ModifiablePath    : C:\Users\Jerren\AppData\Local\Microsoft\WindowsApps
+IdentityReference : MEDJED\Jerren
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Users\Jerren\AppData\Local\Microsoft\WindowsApps
+Name              : C:\Users\Jerren\AppData\Local\Microsoft\WindowsApps
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\Jerren\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll'
+
+ModifiablePath    : C:\Users\Jerren\AppData\Local\Yarn\bin
+IdentityReference : MEDJED\Jerren
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Users\Jerren\AppData\Local\Yarn\bin
+Name              : C:\Users\Jerren\AppData\Local\Yarn\bin
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\Jerren\AppData\Local\Yarn\bin\wlbsctrl.dll'
+
+ModifiablePath    : C:\Users\Jerren\AppData\Roaming\npm
+IdentityReference : MEDJED\Jerren
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Users\Jerren\AppData\Roaming\npm
+Name              : C:\Users\Jerren\AppData\Roaming\npm
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\Jerren\AppData\Roaming\npm\wlbsctrl.dll'
+
+DefaultDomainName    :
+DefaultUserName      : Jerren
+DefaultPassword      : CatastropheToes543
+AltDefaultDomainName :
+AltDefaultUserName   :
+AltDefaultPassword   :
+Check                : Registry Autologons
+
+Key            : HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\bdctl
+Path           : "C:\bd\bdctl.exe"
+ModifiableFile : @{ModifiablePath=C:\bd\bdctl.exe; IdentityReference=NT AUTHORITY\Authenticated Users;
+                 Permissions=System.Object[]}
+Name           : HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\bdctl
+Check          : Modifiable Registry Autorun

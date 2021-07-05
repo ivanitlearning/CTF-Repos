@@ -1,0 +1,909 @@
+root@kali:~/CTF/PGPractice/Billyboss/PE# cat privesccheck.txt
++------+------------------------------------------------+------+
+| TEST | USER > Identity                                | INFO |
++------+------------------------------------------------+------+
+| DESC | Get the full name of the current user (domain +       |
+|      | username) along with the associated Security          |
+|      | Identifier (SID).                                     |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Name             : BILLYBOSS\nathan
+SID              : S-1-5-21-2389609380-2620298947-1153829925-1001
+IntegrityLevel   : High Mandatory Level (S-1-16-12288)
+SessionId        : 0
+TokenId          : 00000000-0163b9aa
+AuthenticationId : 00000000-0001c1be
+OriginId         : 00000000-000003e7
+ModifiedId       : 00000000-0001c1ed
+Source           : Advapi (00000000-0001c174)
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | USER > Groups                                  | INFO |
++------+------------------------------------------------+------+
+| DESC | List all the groups that are associated to the        |
+|      | current user's token.                                 |
++------+-------------------------------------------------------+
+[*] Found 12 result(s).
+
+Name                                 Type           SID
+----                                 ----           ---
+BILLYBOSS\None                       Group          S-1-5-21-2389609380-2620298947-1153829925-513
+Everyone                             WellKnownGroup S-1-1-0
+BUILTIN\Users                        Alias          S-1-5-32-545
+NT AUTHORITY\SERVICE                 WellKnownGroup S-1-5-6
+CONSOLE LOGON                        WellKnownGroup S-1-2-1
+NT AUTHORITY\Authenticated Users     WellKnownGroup S-1-5-11
+NT AUTHORITY\This Organization       WellKnownGroup S-1-5-15
+NT AUTHORITY\Local account           WellKnownGroup S-1-5-113
+LOCAL                                WellKnownGroup S-1-2-0
+NT AUTHORITY\LogonSessionId_0_115088 LogonSession   S-1-5-5-0-115088
+NT AUTHORITY\NTLM Authentication     WellKnownGroup S-1-5-64-10
+Mandatory Label\High Mandatory Level Label          S-1-16-12288
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | USER > Restricted SIDs                         | INFO |
++------+------------------------------------------------+------+
+| DESC | List the restricted SIDs that are associated to the   |
+|      | current user's token, if it is WRITE RESTRICTED.      |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | USER > Privileges                              | INFO |
++------+------------------------------------------------+------+
+| DESC | List the current user's privileges and identify the   |
+|      | ones that can be leveraged for local privilege        |
+|      | escalation.                                           |
++------+-------------------------------------------------------+
+[*] Found 7 result(s).
+
+Name                          State    Description                               Exploitable
+----                          -----    -----------                               -----------
+SeShutdownPrivilege           Disabled Shut down the system                            False
+SeChangeNotifyPrivilege       Enabled  Bypass traverse checking                        False
+SeUndockPrivilege             Disabled Remove computer from docking station            False
+SeImpersonatePrivilege        Enabled  Impersonate a client after authentication        True
+SeCreateGlobalPrivilege       Enabled  Create global objects                           False
+SeIncreaseWorkingSetPrivilege Disabled Increase a process working set                  False
+SeTimeZonePrivilege           Disabled Change the time zone                            False
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | USER > Environment Variables                   | INFO |
++------+------------------------------------------------+------+
+| DESC | List the environment variables of the current process |
+|      | and try to identify any potentially sensitive         |
+|      | information such as passwords or API secrets. This    |
+|      | check is simply based on keyword matching and might   |
+|      | not be entirely reliable.                             |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Non-default Services                | INFO |
++------+------------------------------------------------+------+
+| DESC | List all registered services and filter out the ones  |
+|      | that are built into Windows. It does so by parsing    |
+|      | the target executable's metadata.                     |
++------+-------------------------------------------------------+
+[*] Found 6 result(s).
+
+
+Name        : Sonatype Nexus
+DisplayName : Sonatype Nexus
+ImagePath   : "C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe"
+User        : .\nathan
+StartMode   : Automatic
+
+Name        : ssh-agent
+DisplayName : OpenSSH Authentication Agent
+ImagePath   : C:\Windows\System32\OpenSSH\ssh-agent.exe
+User        : LocalSystem
+StartMode   : Disabled
+
+Name        : VGAuthService
+DisplayName : VMware Alias Manager and Ticket Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : VMTools
+DisplayName : VMware Tools
+ImagePath   : "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"
+User        : LocalSystem
+StartMode   : Automatic
+
+Name        : VMwareCAFCommAmqpListener
+DisplayName : VMware CAF AMQP Communication Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\CommAmqpListener.exe"
+User        : LocalSystem
+StartMode   : Manual
+
+Name        : VMwareCAFManagementAgentHost
+DisplayName : VMware CAF Management Agent Service
+ImagePath   : "C:\Program Files\VMware\VMware Tools\VMware CAF\pme\bin\ManagementAgentHost.exe"
+User        : LocalSystem
+StartMode   : Manual
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Service Permissions                 | VULN |
++------+------------------------------------------------+------+
+| DESC | Interact with the Service Control Manager (SCM) and   |
+|      | check whether the current user can modify any         |
+|      | registered service.                                   |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Registry Permissions                | VULN |
++------+------------------------------------------------+------+
+| DESC | Parse the registry and check whether the current user |
+|      | can modify the configuration of any registered        |
+|      | service.                                              |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Binary Permissions                  | VULN |
++------+------------------------------------------------+------+
+| DESC | List all services and check whether the current user  |
+|      | can modify the target executable or write files in    |
+|      | its parent folder.                                    |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+
+Name              : Sonatype Nexus
+ImagePath         : "C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe"
+User              : .\nathan
+ModifiablePath    : C:\Users\nathan\Nexus\nexus-3.21.0-05\bin
+IdentityReference : BILLYBOSS\nathan
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+Status            : Running
+UserCanStart      : False
+UserCanStop       : False
+
+Name              : Sonatype Nexus
+ImagePath         : "C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe"
+User              : .\nathan
+ModifiablePath    : C:\Users\nathan\Nexus\nexus-3.21.0-05\bin\nexus.exe
+IdentityReference : BILLYBOSS\nathan
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+Status            : Running
+UserCanStart      : False
+UserCanStop       : False
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > Unquoted Path                       | VULN |
++------+------------------------------------------------+------+
+| DESC | List registered services and check whether any of     |
+|      | them is configured with an unquoted path that can be  |
+|      | exploited.                                            |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | SERVICES > SCM Permissions                     | VULN |
++------+------------------------------------------------+------+
+| DESC | Check whether the current user can perform any        |
+|      | privileged actions on the Service Control Manager     |
+|      | (SCM).                                                |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Non-default Apps                        | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate non-default and third-party applications by |
+|      | parsing the registry.                                 |
++------+-------------------------------------------------------+
+[*] Found 5 result(s).
+
+Name         FullName
+----         --------
+IIS          C:\Program Files (x86)\IIS
+IIS          C:\Program Files\IIS
+UNP          C:\Program Files\UNP
+VMware       C:\Program Files\VMware
+VMware Tools C:\Program Files\VMware\VMware Tools
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Modifiable Apps                         | VULN |
++------+------------------------------------------------+------+
+| DESC | List non-default and third-party applications and     |
+|      | report the ones that can be modified by the current   |
+|      | user.                                                 |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Startup Apps                            | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate the system-wide applications that are run   |
+|      | on start-up.                                          |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+
+Name         : SecurityHealth
+Path         : HKLM\Software\Microsoft\Windows\CurrentVersion\Run\SecurityHealth
+Data         : %windir%\system32\SecurityHealthSystray.exe
+IsModifiable : False
+
+Name         : VMware User Process
+Path         : HKLM\Software\Microsoft\Windows\CurrentVersion\Run\VMware User Process
+Data         : "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe" -n vmusr
+IsModifiable : False
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Modifiable Startup Apps                 | VULN |
++------+------------------------------------------------+------+
+| DESC | Enumerate the system-wide applications that are run   |
+|      | on start-up and check whether they can be modified by |
+|      | the current user.                                     |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | APPS > Running Processes                       | INFO |
++------+------------------------------------------------+------+
+| DESC | List processes that are not owned by the current user |
+|      | and filter out common processes such as               |
+|      | 'svchost.exe'.                                        |
++------+-------------------------------------------------------+
+[*] Found 21 result(s).
+
+Name                    Id Path SessionId User
+----                    -- ---- --------- ----
+CompatTelRunner       5044              0
+conhost               2444              0
+conhost               4600              0
+dllhost               2656              0
+fontdrvhost            708              1
+fontdrvhost            716              0
+LogonUI               2980              1
+lsass                  592              0
+MsMpEng               2020              0
+SearchFilterHost      2288              0
+SearchIndexer         1752              0
+SearchProtocolHost    2160              0
+SecurityHealthService 4744              0
+SgrmBroker            3136              0
+spoolsv               1540              0
+VGAuthService         1976              0
+vmtoolsd              1988              0
+w3wp                  5052              0
+wininit                492              0
+winlogon               560              1
+WmiPrvSE              2780              0
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | SCHEDULED TASKS > Binary Permissions           | VULN |
++------+------------------------------------------------+------+
+| DESC | Enumerate the scheduled tasks that are not owned by   |
+|      | the current user and checks whether the target binary |
+|      | can be modified. Note that, as a low-privileged user, |
+|      | it's not possible to enumerate all the scheduled      |
+|      | tasks.                                                |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | SCHEDULED TASKS > Unquoted Path                | VULN |
++------+------------------------------------------------+------+
+| DESC | Enumerate the scheduled tasks that are not owned by   |
+|      | the current user and checks whether the corresponding |
+|      | command uses an exploitable unquoted path. Note that, |
+|      | as a low-privileged user, it's not possible to        |
+|      | enumerate all the scheduled tasks.                    |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > SAM/SYSTEM Backup Files                | VULN |
++------+------------------------------------------------+------+
+| DESC | Check whether some backup files of the SAM/SYSTEM     |
+|      | hives were created with insecure permissions.         |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Unattend Files                         | VULN |
++------+------------------------------------------------+------+
+| DESC | Locate 'Unattend' files and check whether they        |
+|      | contain any clear-text credentials.                   |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > WinLogon                               | VULN |
++------+------------------------------------------------+------+
+| DESC | Parse the Winlogon registry keys and check whether    |
+|      | they contain any clear-text password. Entries that    |
+|      | have an empty password field are filtered out.        |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Credential Files                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate the credential files that are present in    |
+|      | the current user's HOME folder. This is purely        |
+|      | informative.                                          |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+
+Type     : Credentials
+FullPath : C:\Users\nathan\AppData\Local\Microsoft\Credentials\DFBE70A7E5CC19A398EBF1B96859CE5D
+
+Type     : Protect
+FullPath : C:\Users\nathan\AppData\Roaming\Microsoft\Protect\S-1-5-21-2389609380-2620298947-1153829925-1001\5ba95ab4-4e
+           91-4807-b725-4804308215db
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Vault Creds                            | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate the credentials that are saved in the       |
+|      | current user's vault.                                 |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > Vault List                             | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate the web credentials that are saved in the   |
+|      | current user's Vault.                                 |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > GPP Passwords                          | VULN |
++------+------------------------------------------------+------+
+| DESC | Locate old cached Group Policy Preference files that  |
+|      | contain a 'cpassword' field and extract the           |
+|      | clear-text credentials.                               |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CREDS > PowerShell History                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Locate the current user's PowerShell history file and |
+|      | check whether it contains some clear-text             |
+|      | credentials. This check is simply based on keyword    |
+|      | matching and might not be entirely reliable.          |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Path          : C:\Users\nathan\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+CreationTime  : 5/28/2020 10:00:19 PM
+LastWriteTime : 5/28/2020 10:14:49 PM
+Lines         : 5
+Matches       : 0
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > UAC Settings                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Retrieve the User Access Control (UAC) configuration  |
+|      | and check whether it is enabled.                      |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Path      : HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System
+EnableLUA : 1
+Enabled   : True
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > LSA Protection (RunAsPPL)          | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks whether LSA protection (a.k.a. RunAsPPL) is    |
+|      | supported and enabled.                                |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name     Status Description
+----     ------ -----------
+RunAsPPL  False RunAsPPL is not configured
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > Credential Guard                   | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks whether Credential Guard is supported and      |
+|      | enabled.                                              |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name             Status Description
+----             ------ -----------
+Credential Guard  False Credential Guard is not configured
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > UEFI & Secure Boot                 | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks whether UEFI and Secure are supported and      |
+|      | enabled.                                              |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+Name        Status Description
+----        ------ -----------
+UEFI          True BIOS mode is UEFI
+Secure Boot   True Secure Boot is enabled
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > LAPS Settings                      | INFO |
++------+------------------------------------------------+------+
+| DESC | Parse the registry and determine whether LAPS is      |
+|      | configured and enabled.                               |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > PowerShell Transcription           | INFO |
++------+------------------------------------------------+------+
+| DESC | Check whether PowerShell Transcription is configured  |
+|      | and enabled. If so, the path of the output log file   |
+|      | will be returned.                                     |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | HARDENING > BitLocker                          | INFO |
++------+------------------------------------------------+------+
+| DESC | Check whether BitLocker is configured and enabled on  |
+|      | the system drive. Note that this check will yield a   |
+|      | false positive if another encryption software is in   |
+|      | use.                                                  |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Name        : HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BitLockerStatus
+BootStatus  : 0
+Description : BitLocker isn't enabled.
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | CONFIG > PATH Folder Permissions               | VULN |
++------+------------------------------------------------+------+
+| DESC | Retrieve the list of SYSTEM %PATH% folders and check  |
+|      | whether the current user has some write permissions   |
+|      | in any of them.                                       |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > Hijackable DLLs                         | INFO |
++------+------------------------------------------------+------+
+| DESC | List Windows services that are prone to Ghost DLL     |
+|      | hijacking. This is particularly relevant if the       |
+|      | current user can create files in one of the SYSTEM    |
+|      | %PATH% folders.                                       |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+
+Name           : cdpsgshims.dll
+Description    : Loaded by CDPSvc upon service startup
+RunAs          : NT AUTHORITY\LocalService
+RebootRequired : True
+
+Name           : WptsExtensions.dll
+Description    : Loaded by the Task Scheduler upon service startup
+RunAs          : LocalSystem
+RebootRequired : True
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | CONFIG > AlwaysInstallElevated                 | VULN |
++------+------------------------------------------------+------+
+| DESC | Check whether the 'AlwaysInstallElevated' registry    |
+|      | keys are configured and enabled. If so any user might |
+|      | be able to run arbitary MSI files with SYSTEM         |
+|      | privileges.                                           |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CONFIG > WSUS Configuration                    | VULN |
++------+------------------------------------------------+------+
+| DESC | If WSUS is in use, this check will determine whether  |
+|      | or not it uses a secure URL. If not, it might be      |
+|      | vulnerable to MitM attacks (c.f. 'WSUXploit' /        |
+|      | 'WSuspicious').                                       |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | CONFIG > SCCM Cache Folder                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Checks whether the SCCM cache folder exists. Manual   |
+|      | investigation might be required during                |
+|      | post-exploitation.                                    |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | CONFIG > SCCM Cache Folder                     | VULN |
++------+------------------------------------------------+------+
+| DESC | Checks whether the current user can browse the SCCM   |
+|      | cache folder. If so, hardcoded credentials might be   |
+|      | extracted from MSI package files or scripts.          |
++------+-------------------------------------------------------+
+[!] Not vulnerable.
+
+
++------+------------------------------------------------+------+
+| TEST | NETWORK > Interfaces                           | INFO |
++------+------------------------------------------------+------+
+| DESC | Collect detailed information about all active         |
+|      | Ethernet adapters.                                    |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+
+Name            : {8A0A5B68-645B-41A3-95E1-D063AC17914C}
+FriendlyName    : Ethernet0
+Type            : Ethernet
+Status          : Up
+DnsSuffix       :
+Description     : vmxnet3 Ethernet Adapter
+PhysicalAddress : 00:50:56:bf:88:9c
+Flags           : DdnsEnabled, NetbiosOverTcpipEnabled, Ipv4Enabled
+IPv6            :
+IPv4            : 192.168.98.61 (/24)
+Gateway         : 192.168.98.254
+DHCPv4Server    :
+DHCPv6Server    :
+DnsServers      : 192.168.98.254
+DNSSuffixList   :
+
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | NETWORK > TCP Endpoints                        | INFO |
++------+------------------------------------------------+------+
+| DESC | List all TCP ports that are in a LISTEN state. For    |
+|      | each one, the corresponding process is also returned. |
++------+-------------------------------------------------------+
+[*] Found 24 result(s).
+
+IP   Proto LocalAddress      State      PID Name
+--   ----- ------------      -----      --- ----
+IPv4 TCP   0.0.0.0:21        LISTENING 1848 svchost
+IPv4 TCP   0.0.0.0:80        LISTENING    4 System
+IPv4 TCP   0.0.0.0:135       LISTENING  812 svchost
+IPv4 TCP   0.0.0.0:445       LISTENING    4 System
+IPv4 TCP   0.0.0.0:5040      LISTENING  996 svchost
+IPv4 TCP   0.0.0.0:8081      LISTENING 2100 nexus
+IPv4 TCP   0.0.0.0:49664     LISTENING  592 lsass
+IPv4 TCP   0.0.0.0:49665     LISTENING  492 wininit
+IPv4 TCP   0.0.0.0:49666     LISTENING  272 svchost
+IPv4 TCP   0.0.0.0:49667     LISTENING  784 svchost
+IPv4 TCP   0.0.0.0:49668     LISTENING 1540 spoolsv
+IPv4 TCP   0.0.0.0:49669     LISTENING  584 services
+IPv4 TCP   127.0.0.1:49670   LISTENING 2100 nexus
+IPv4 TCP   192.168.98.61:139 LISTENING    4 System
+IPv6 TCP   [::]:21           LISTENING 1848 svchost
+IPv6 TCP   [::]:80           LISTENING    4 System
+IPv6 TCP   [::]:135          LISTENING  812 svchost
+IPv6 TCP   [::]:445          LISTENING    4 System
+IPv6 TCP   [::]:49664        LISTENING  592 lsass
+IPv6 TCP   [::]:49665        LISTENING  492 wininit
+IPv6 TCP   [::]:49666        LISTENING  272 svchost
+IPv6 TCP   [::]:49667        LISTENING  784 svchost
+IPv6 TCP   [::]:49668        LISTENING 1540 spoolsv
+IPv6 TCP   [::]:49669        LISTENING  584 services
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | NETWORK > UDP Endpoints                        | INFO |
++------+------------------------------------------------+------+
+| DESC | List all UDP ports that are in a LISTEN state. For    |
+|      | each one, the corresponding process is also returned. |
+|      | DNS is filtered out to minimize the output.           |
++------+-------------------------------------------------------+
+[*] Found 18 result(s).
+
+IP   Proto LocalAddress        State  PID Name
+--   ----- ------------        -----  --- ----
+IPv4 UDP   0.0.0.0:123         N/A   3976 svchost
+IPv4 UDP   0.0.0.0:500         N/A    784 svchost
+IPv4 UDP   0.0.0.0:4500        N/A    784 svchost
+IPv4 UDP   0.0.0.0:5050        N/A    996 svchost
+IPv4 UDP   0.0.0.0:5353        N/A    580 svchost
+IPv4 UDP   0.0.0.0:5355        N/A    580 svchost
+IPv4 UDP   127.0.0.1:1900      N/A   3812 svchost
+IPv4 UDP   127.0.0.1:57987     N/A    784 svchost
+IPv4 UDP   127.0.0.1:63767     N/A   3812 svchost
+IPv4 UDP   192.168.98.61:137   N/A      4 System
+IPv4 UDP   192.168.98.61:138   N/A      4 System
+IPv4 UDP   192.168.98.61:1900  N/A   3812 svchost
+IPv4 UDP   192.168.98.61:63766 N/A   3812 svchost
+IPv6 UDP   [::]:123            N/A   3976 svchost
+IPv6 UDP   [::]:500            N/A    784 svchost
+IPv6 UDP   [::]:4500           N/A    784 svchost
+IPv6 UDP   [::1]:1900          N/A   3812 svchost
+IPv6 UDP   [::1]:63765         N/A   3812 svchost
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | NETWORK > Saved Wifi Profiles                  | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate saved Wifi profiles and extract clear-text  |
+|      | WEP/WPA pre-shared keys and passphrases (if           |
+|      | applicable).                                          |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | UPDATES > Last Windows Update Date             | INFO |
++------+------------------------------------------------+------+
+| DESC | Interact with the Windows Update service and          |
+|      | determine when the system was last updated. Note that |
+|      | this check might be unreliable.                       |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | UPDATES > Installed Updates and Hotfixes       | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate the installed updates and hotfixes by       |
+|      | parsing the registry. If this fails, the check will   |
+|      | fall back to the built-in 'Get-HotFix' cmdlet.        |
++------+-------------------------------------------------------+
+[*] Found 5 result(s).
+
+HotFixID  Description     InstalledBy         InstalledOn
+--------  -----------     -----------         -----------
+KB4552152 Security Update NT AUTHORITY\SYSTEM 5/25/2020 8:56:44 PM
+KB4497165 Update          NT AUTHORITY\SYSTEM 5/25/2020 8:56:39 PM
+KB4552931 Update          NT AUTHORITY\SYSTEM 5/25/2020 8:49:35 PM
+KB4537759 Security Update NT AUTHORITY\SYSTEM 5/25/2020 8:48:54 PM
+KB4497727 Security Update                     4/1/2019 4:05:37 PM
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | UPDATES > System up to date?                   | VULN |
++------+------------------------------------------------+------+
+| DESC | Enumerate the installed updates and hotfixes and      |
+|      | check whether a patch was applied in the last 31      |
+|      | days.                                                 |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+HotFixID  Description     InstalledBy         InstalledOn
+--------  -----------     -----------         -----------
+KB4552152 Security Update NT AUTHORITY\SYSTEM 5/25/2020 8:56:44 PM
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > Endpoint Protection                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate installed security products (AV, EDR). This |
+|      | check is based on keyword matching (loaded DLLs,      |
+|      | running processes, installed applications and         |
+|      | registered services).                                 |
++------+-------------------------------------------------------+
+[*] Found 24 result(s).
+
+ProductName      Source                Pattern
+-----------      ------                -------
+AMSI             Loaded DLL            OriginalFilename=amsi.dll
+AMSI             Loaded DLL            InternalName=amsi.dll
+AMSI             Loaded DLL            FileName=C:\Windows\SYSTEM32\amsi.dll
+Windows Defender Installed application Name=Windows Defender
+Windows Defender Installed application Name=Windows Defender
+Windows Defender Installed application Name=Windows Defender Advanced Threat Protection
+Windows Defender Loaded DLL            FileName=C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2005.4-0\MPC...
+Windows Defender Loaded DLL            FileName=C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2005.4-0\MpO...
+Windows Defender Running process       Name=MsMpEng
+Windows Defender Running process       ProcessName=MsMpEng
+Windows Defender Running process       ProcessName=SecurityHealthService
+Windows Defender Running process       Name=SecurityHealthService
+Windows Defender Service               DisplayName=@C:\Program Files\Windows Defender\MpAsDesc.dll,-320
+Windows Defender Service               DisplayName=@C:\Program Files\Windows Defender\MpAsDesc.dll,-370
+Windows Defender Service               DisplayName=@C:\Program Files\Windows Defender\MpAsDesc.dll,-330
+Windows Defender Service               ImagePath="C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2005.4-0\M...
+Windows Defender Service               DisplayName=@C:\Program Files\Windows Defender\MpAsDesc.dll,-310
+Windows Defender Service               ImagePath="C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2005.4-0\N...
+Windows Defender Service               RegistryPath=Microsoft.PowerShell.Core\Registry::HKLM\SYSTEM\CurrentControlSe...
+Windows Defender Service               ImagePath=C:\Windows\system32\SecurityHealthService.exe
+Windows Defender Service               Name=SecurityHealthService
+Windows Defender Service               DisplayName=@C:\Program Files\Windows Defender\MpAsDesc.dll,-390
+Windows Defender Service               ImagePath="C:\Program Files\Windows Defender Advanced Threat Protection\MsSen...
+Windows Defender Service               DisplayName=@C:\Program Files\Windows Defender Advanced Threat Protection\MsS...
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > OS Version                              | INFO |
++------+------------------------------------------------+------+
+| DESC | Print the detailed version number of the Operating    |
+|      | System. If we can't get the update history, this      |
+|      | might be useful.                                      |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name           Version
+----           -------
+Windows 10 Pro 10.0.18362 Version 1903 (18362.719)
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > Local Admin Group                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate the users and groups that belong to the     |
+|      | local 'Administrators' group.                         |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name          Type IsLocal IsEnabled
+----          ---- ------- ---------
+Administrator User    True      True
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > User Home Folders                       | INFO |
++------+------------------------------------------------+------+
+| DESC | Enumerate local HOME folders and check for            |
+|      | potentially weak permissions.                         |
++------+-------------------------------------------------------+
+[*] Found 4 result(s).
+
+HomeFolderPath          Read NamWritee
+--------------          ---- ---------
+C:\Users\Administrator False     False
+C:\Users\BaGet         False     False
+C:\Users\nathan         True      True
+C:\Users\Public         True      True
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > Machine Role                            | INFO |
++------+------------------------------------------------+------+
+| DESC | Simply return the machine's role. It can be either    |
+|      | 'Workstation', 'Server' or 'Domain Controller'.       |
++------+-------------------------------------------------------+
+[*] Found 1 result(s).
+
+Name  Role
+----  ----
+WinNT WorkStation
+
+
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > System Startup History                  | INFO |
++------+------------------------------------------------+------+
+| DESC | Retrieve the machine's startup history. This might be |
+|      | useful to figure out how often a server is rebooted.  |
+|      | In the case of a workstation, such metric isn't as    |
+|      | relevant.                                             |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > Last System Startup                     | INFO |
++------+------------------------------------------------+------+
+| DESC | Determine the last system startup date and time based |
+|      | on the current tick count. Note that this might be    |
+|      | unreliable.                                           |
++------+-------------------------------------------------------+
+[!] Nothing found.
+
+
++------+------------------------------------------------+------+
+| TEST | MISC > Filesystem Drives                       | INFO |
++------+------------------------------------------------+------+
+| DESC | List partitions, removable storage and mapped network |
+|      | shares.                                               |
++------+-------------------------------------------------------+
+[*] Found 2 result(s).
+
+Root DisplayRoot Description
+---- ----------- -----------
+C:\
+D:\
